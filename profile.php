@@ -1,159 +1,201 @@
 <?php
-    require 'layout_top.php';
+  require 'core/required/layout_top.php';
 
-    $Profile_Info = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM members WHERE id = '" . $_GET['id'] . "'"));
-	$Pokemon_Info = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM pokemon WHERE Owner_Current = '" . $_GET['id'] . "'"));
-	$Profile_Check = mysqli_num_rows(mysqli_query($con, "SELECT * FROM members WHERE id = '" . $_GET['id'] . "'"));
+  $Profile_Search = Text($_GET['id'])->in();
+  try
+  {
+    $Fetch_Profile_User = $PDO->prepare("SELECT `id`, `Username`, `Avatar`, `Rank`, `Money`, `Last_Active`, `Date_Registered`, `Playtime` FROM `users` WHERE `id` = ? OR `Username` = ? LIMIT 1");
+    $Fetch_Profile_User->execute([$Profile_Search, $Profile_Search]);
+    $Profile_Data = $Fetch_Profile_User->fetch();
+
+    $Fetch_Profile_Pokemon = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
+    $Fetch_Profile_Pokemon->execute([$Profile_Search]);
+    $Fetch_Profile_Pokemon->setFetchMode(PDO::FETCH_ASSOC);
+		$Fetch_Roster = $Fetch_Profile_Pokemon->fetchAll();
+  }
+  catch ( PDOException $e )
+  {
+    echo $e->getMessage();
+  }
 	
-    if ( $Profile_Check == 1 )
-    {
+  if ( isset($Profile_Data['id']) )
+  {
+    $Current_Time = time();
+		$Calc_Difference = $Current_Time - $Profile_Data['Last_Active'];
 ?>
 
 <div class='content'>
-    <div class='head'><?php echo "Profile of {$Profile_Info['Username']}"; ?></div>
-    <div class='box profile'>
-      <div class='row'>
-        <div class='left-col'>
-            <div class='panel'>
-                <div class='panel-heading'>
-                  <?php echo $Profile_Info['Username'] . " - #" . $Profile_Info['id']; ?>              
-                </div>
-                <div class='panel-body'>
-                    <?php echo "<img src='{$Profile_Info['Avatar']}' /><br />"; ?>
-                    <?php echo "<img src='images/Assets/{$Profile_Info['Gender']}.svg' style='height: 20px; margin-left: -70px; margin-top: -78px; position: absolute; width: 20px;' />"; ?>
-                    <?php
-                      if ( $Profile_Info['Rank'] === '12' ) {
-                        echo	"<span class='cmod'>Chat Moderator</span><br />";
-                      }
-                      if ( $Profile_Info['Rank'] === '69' ) {
-                        echo	"<span class='gmod'>Global Moderator</span><br />";
-                      }
-                      if ( $Profile_Info['Rank'] === '420' ) {
-                        echo	"<span class='admin'>Administrator</span><br />";
-                      }
-                    ?>
-                    <div class='info'>
-                        <div>Last Active</div>
-                        <div>
-                          <?php
-                            if ( $Profile_Info['Last_Online'] !== null )
-                            {
-                              echo $Profile_Info['Last_Online'];
-                            }
-                            else
-                            {
-                              echo "Unknown";
-                            }
-                          ?>
-                        </div>
-                    </div>
-                    <div class='info'>
-                        <div>Joined On</div>
-                        <div><?php echo $Profile_Info['Date_Registered']; ?></div>
-                    </div>
-                </div>
-            </div>
+  <div class='head'><?= $Profile_Data['Username']; ?>'s Profile</div>
+  <div class='box profile'>
+    <?php
+      if ( $User_Data['Power'] > 5 )
+      {
+        if ( $User_Data['Style'] === '1' )  
+        {
+          $Border_Color = "#4A618F";
+          $Background_Hover = "#253147";
+        }
+        else
+        {
+          $BorderColor = "#fff";
+        }
 
+        echo "
+          <style>
+            .content .box.profile .staff_options div:hover
+            { background: " . $Background_Hover . "; }
+          </style>
+        ";
+    ?>
+    <div class='row' style='margin-bottom: 5px;'>
+      <div class='panel'>
+        <div class='panel-heading'>Staff Options</div>
+        <div class='panel-body staff_options'>
+          <div style='border-right: 1px solid <?= $Border_Color; ?>; float: left; padding: 3px; width: 25%;'><a style='display: block;' href='warn_user.php?id=<?= $Profile_Data['id']; ?>'>Warn <?= $Profile_Data['Username']; ?></a></div>
+          <div style='border-right: 1px solid <?= $Border_Color; ?>; float: left; padding: 3px; width: 25%;'><a style='display: block;' href='ban_user.php?<?= $Profile_Data['id']; ?>'>Ban <?= $Profile_Data['Username']; ?></a></div>
+          <div style='border-right: 1px solid <?= $Border_Color; ?>; float: left; padding: 3px; width: 25%;'><a style='display: block;' href='edit_user.php?<?= $Profile_Data['id']; ?>'>Edit <?= $Profile_Data['Username']; ?></a></div>
+          <div style='float: left; padding: 3px; width: 25%;'><a style='display: block;' href='logs_user.php?id=<?= $Profile_Data['id']; ?>'><?= $Profile_Data['Username']; ?>'s Logs</a></div>
+        </div>
+      </div>
+    </div>
+    <?php
+      }
+    ?>
+
+    <div class='row'>
+      <div class='panel' style='float: left; margin-right: 0.5%; width: 49.75%;'>
+        <div class='panel-heading'><?= $Profile_Data['Username']; ?> - #<?= number_format($Profile_Data['id']); ?></div>
+        <div class='panel-body' style='padding: 5.5px;'>
+          <div style='float: left; width: 35%;'>
+            <img src='<?= $Profile_Data['Avatar']; ?>' />
+          </div>
+          <div style='float: left; width: 65%;'>
             <?php
-              if ( $row['Rank'] >= 69 ) {
+              if ( $Profile_Data['Rank'] === '420' )
+                echo	"<div><span class='admin'>Administrator</span></div>";
+              else if ( $Profile_Data['Rank'] === '69' )
+                echo	"<div><span class='gmod'>Global Moderator</span></div>";
+              else if ( $Profile_Data['Rank'] === '12' )
+                echo	"<div><span class='cmod'>Chat Moderator</span></div>";
+              else 
+                echo  "<div><span class='member'>Member</span></div>";
             ?>
-            <div class='panel' style='margin-top: 3px;'>
-              <div class='panel-heading'>Staff Options</div>
-              <div class='panel-body interactions' style='border-top: none;'>
-                <a href='warn_user.php?id=<?php echo $Profile_Info['id']; ?>'>Warn <?php echo $Profile_Info['Username']; ?></a>
-                <a href='ban_user.php?<?php echo $Profile_Info['id']; ?>'>Ban <?php echo $Profile_Info['Username']; ?></a>
-                <a href='edit_user.php?<?php echo $Profile_Info['id']; ?>'>Edit <?php echo $Profile_Info['Username']; ?></a>
-                <a href='logs_user.php?id=<?php echo $Profile_Info['id']; ?>'><?php echo $Profile_Info['Username']; ?>'s Logs</a>
-              </div>
-            </div>
+            <div style='font-size: 12px;'><b>Joined On:</b> <?= $Profile_Data['Date_Registered']; ?></div>
+            <div style='font-size: 12px;'><b>Last Active:</b> <?= lastseen($Profile_Data['Last_Active'], 'week'); ?></div>
             <?php
+              $Playtime_Sec = $Profile_Data['Playtime'];
+              if ($Playtime_Sec == 0) {
+                $Playtime_Is = "None";
+              } elseif ($Playtime_Sec <= 59) {
+                $Playtime_Is = $Playtime_Sec." Second(s)";
+              } elseif ($Playtime_Sec >= 60 && $Playtime_Sec <= 3599) {
+                $Playtime_Is = floor($Playtime_Sec / 60)." Minute(s)";
+              } elseif ($Playtime_Sec >= 3600 && $Playtime_Sec <= 86399) {
+                $Playtime_Is = round($Playtime_Sec / 3600, 1)." Hour(s)";
+              } else {
+                $Playtime_Is = round($Playtime_Sec / 86400, 2)." Day(s)";
               }
             ?>
-
-            <div class='panel' style='margin-top: 3px;'>
-                <div class='panel-heading'>Interactions</div>
-                <div class='panel-body interactions'>
-                  <a href='messages.php?id=<?php echo $Profile_Info['id']; ?>'>Message <?php echo $Profile_Info['Username']; ?></a>
-                  <a href='trade_create.php?id=<?php echo $Profile_Info['id']; ?>'>Trade <?php echo $Profile_Info['Username']; ?></a>
-                  <a href='report_user.php?id=<?php echo $Profile_Info['id']; ?>'>Report <?php echo $Profile_Info['Username']; ?></a>
-                </div>
-            </div>
+            <div style='font-size: 12px;'><b>Playtime:</b> <?= $Playtime_Is; ?></div>
+            <?php
+              if ( $Calc_Difference / 60 < 15 )
+                echo "<div style='color: #00ff00; font-size: 18px;'>Online</div>";
+              else
+                echo "<div style='color: #ff0000; font-size: 18px;'>Offline</div>";
+            ?>
+          </div>
         </div>
+      </div>
 
-        <div class='right-col'>
-            <div class='nav'>
-                <a href='javascript:void(0);' onclick='showProfile("roster", <?php echo $Profile_Info['id']; ?>)'>Roster</a>
-                <a href='javascript:void(0);' onclick='showProfile("box", <?php echo $Profile_Info['id']; ?>)'>Box</a>
-                <a href='javascript:void(0);' onclick='showProfile("stats", <?php echo $Profile_Info['id']; ?>)'>Stats</a>
-            </div>
-
-            <div class='panel'>
-                <div class='panel-heading'>Tab Title</div>
-                <div class='panel-body'>
-                    Tab Data
-                </div>
-            </div>
+      <div class='panel' style='float: left; margin-bottom: 6px; width: 49.75%;'>
+        <div class='panel-heading'>Interactions</div>
+        <div class='panel-body interactions'>
+          <div>
+            <div style='float: left; padding: 3px; width: 50%;'><a href='#' style='display: block;'>Trade With <?= $Profile_Data['Username']; ?></a></div>
+            <div style='float: left; padding: 3px; width: 50%;'><a href='#' style='display: block;'>Message <?= $Profile_Data['Username']; ?></a></div>
+            <div style='float: left; padding: 3px; width: 50%;'><a href='#' style='display: block;'>Befriend <?= $Profile_Data['Username']; ?></a></div>
+            <div style='float: left; padding: 3px; width: 50%;'><a href='#' style='display: block;'>Report <?= $Profile_Data['Username']; ?></a></div>
+          </div>
         </div>
-            </div>
+      </div>
+
+      <div class='panel' style='float: left; width: 49.75%;'>
+        <div class='panel-heading'>Navigation</div>
+        <div class='panel-body navi'>
+          <div>
+            <div style='float: left; padding: 2px; width: calc(100% / 3);'><a href='javascript:void(0);' onclick='profileTab("Roster");' style='display: block;'>Roster</a></div>
+            <div style='float: left; padding: 2px; width: calc(100% / 3);'><a href='javascript:void(0);' onclick='profileTab("Box");' style='display: block;'>Box</a></div>
+            <!--<div style='float: left; padding: 2px; width: 25%;'><a href='javascript:void(0);' onclick='profileTab("Inventory");' style='display: block;'>Inventory</a></div>-->
+            <div style='float: left; padding: 2px; width: calc(100% / 3);'><a href='javascript:void(0);' onclick='profileTab("Stats");' style='display: block;'>Statistics</a></div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <div class='row' id='profileAJAX' style='margin-top: 5px;'>
+      <div class='panel'>
+        <div class='panel-heading'>Roster</div>
+        <div class='panel-body'>
+          <?php
+            for ( $i = 0; $i <= 5; $i++ )
+            {
+              if ( isset($Fetch_Roster[$i]['ID']) )
+              {
+                $Roster_Slot[$i] = $PokeClass->FetchPokemonData($Fetch_Roster[$i]['ID']);
+              }
+              else
+              {
+                $Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
+                $Roster_Slot[$i]['Display_Name'] = 'Empty';
+                $Roster_Slot[$i]['Level'] = '0';
+                $Roster_Slot[$i]['Experience'] = '0';
+              }
+
+              echo "
+                <div class='roster_slot'>
+                  <img src='{$Roster_Slot[$i]['Sprite']}' ?><br />
+                  <b>{$Roster_Slot[$i]['Display_Name']}</b>
+                  <div class='info'>
+                    <div>Level</div>
+                    <div>{$Roster_Slot[$i]['Level']}</div>
+                  </div>
+                  <div class='info'>
+                    <div>Experience</div>
+                    <div>{$Roster_Slot[$i]['Experience']}</div>
+                  </div>
+                </div>
+              ";
+            }
+          ?>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script type='text/javascript'>
-	function showProfile(request, id) {
-		$('.right-col').prepend("<div class='description'>Loading..</div>");
-		
-		$.ajax({
-			type: 'POST',
-			url: 'ajax/ajax_profiles.php',
-			data: { request: request, id: id },
-			success: function(data) {
-				$('.right-col').html(data);
-        $('.description').hide();
-			},
-			error: function(data) {
-				$('.description').html(data);
-			}
-		});
+  function profileTab(tab)
+  {
+    $('#profileAJAX').html("<div class='panel'><div class='panel-heading'>Loading</div><div class='panel-body' style='padding: 5px;'>Loading..</div></div>");
+    $.get('core/ajax/profile/' + tab + '.php', { id: '<?= $_GET['id']; ?>' }, function(data)
+    {
+      $('#profileAJAX').html(data);
+    });
   }
-  
-  function displayPokemon(id) {
-		$('.overlay').css({ "visibility":"visible" });
-
-		$.ajax({
-			type: 'post',
-			url: 'ajax/ajax_profiles.php',
-			data: { request: 'pokemon_stats', id: id },
-			success: function(data) {
-				$('.overlay').css({ "display":"none" });
-				$('#selectedPokemon').html(data);
-			},
-			error: function() {
-				$('.overlay').css({ "display":"none" });
-				$('#selectedPokemon').html('An error has occurred while retrieving this Pokemon\'s data.<br /> Please contact <a href=\'profile.php?id=1\'>Toxocious</a> or <a href=\'profile.php?id=2\'>Ephenia</a>.');
-			}
-		});
-	}
-	
-	$(function() {
-		showProfile('roster', <?php echo $Profile_Info['id']; ?>);
-	});
 </script>
 
 <?php
-    }
-    else 
-    {
-?>
-
-<div class='content'>
-    <div class='head'>Profile</div>
-    <div class='box'>
-        <font style='color: #ff0000;'>There is no data on the profile of this ID.</font>
-    </div>
-</div>
-
-<?php
-    }
-
-    require 'layout_bottom.php';
+  }
+  else
+  {
+    echo "
+      <div class='content'>
+        <div class='head'>Nonexistent Profile</div>
+        <div class='box'>
+          <div class='error'>This user does not exist.</div>
+        </div>
+      </div>
+    ";
+  }
+  require 'core/required/layout_bottom.php';
 ?>

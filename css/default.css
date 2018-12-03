@@ -1,4 +1,5 @@
 /* Main Tags */
+* { outline: none; }
 html { background: #0e131c; color: #fff; height: 100%; }
 body { background: #161d2ab4; border-left: 2px solid #4A618F; border-right: 2px solid #4A618F; color: #fff; height: 100%; margin: 0 auto; width: 1100px; }
 a:link { color: rgb(94, 123, 180); text-decoration: none; }
@@ -31,7 +32,11 @@ ul li { float: left; list-style-type: none; width: 25%; }
 
 /* Banner */
 .banner { border-bottom: 2px solid #4A618F; }
-.banner div { background: rgba(0,0,0,0.5); border-bottom: 2px solid #4A618F; border-right: 2px solid #4A618F; padding: 3px; position: absolute; text-align: center; top: 0; width: 220px;}
+.banner > div:nth-child(2) { background: rgba(0, 0, 0, 0.5); border-bottom: 2px solid #4A618F; border-right: 2px solid #4A618F; padding: 3px; position: absolute; text-align: center; top: 0; width: 220px;}
+.banner > div:nth-child(3) { background: rgba(0, 0, 0, 0.7); font-weight: bold; margin-top: -31px; padding: 5px; position: absolute; text-align: center; width: 1096px; }
+.banner > div.error { border-top: 1px solid #FF0000; }
+.banner > div.notice { border-top: 1px solid #FFA500; }
+.banner > div.success { border-top: 1px solid #00FF00; }
 
 /* Userbar */
 .userbar { background: #161d2ab4; border-bottom: 2px solid #4A618F; height: 32px; width: 100%; }
@@ -90,7 +95,7 @@ div.userbar > div.messages > div > .msidebar > div:nth-child(2) { padding: 3px; 
 
 /* Sidebar */
 .sidebar { float: left; margin: 5px; width: 190px; }
-.sidebar .button { background: #161d2ab4; border: 2px solid #4A618F; border-radius: 4px; margin-bottom: 5px; text-align: center; }
+.sidebar .button { background: #161d2ab4; border: 2px solid #4A618F; border-radius: 4px; margin-bottom: 6px; text-align: center; }
 .sidebar .button:hover { background: #2c3a55; cursor: pointer; }
 .sidebar .button a { display: block; padding: 5px; }
 .sidebar .material { border: 2px solid #4A618F; border-radius: 4px; margin-top: 5px; text-align: center; }
@@ -102,9 +107,9 @@ div.userbar > div.messages > div > .msidebar > div:nth-child(2) { padding: 3px; 
 .sidebar .material .subhead { background: #333; padding: 3px; }
 
 /* Sidebar 'Chat' */
-.chat { border: 2px solid #4A618F; border-radius: 4px; float: left; margin-top: 5px; width: 190px; }
+.chat { border: 2px solid #4A618F; border-radius: 4px; float: left; /*margin-top: 5px;*/ width: 190px; }
 .chat .head { background: #4A618F; background: -moz-linear-gradient(top, #888 0%, #4A618F 100%, #4A618F 100%); background: -webkit-linear-gradient(top, #888 0%, #4A618F 100%, #4A618F 100%); background: linear-gradient(to bottom, #888 0%, #4A618F 100%, #4A618F 100%); border-bottom: 1px solid #4A618F; font-weight: bold; padding: 3px; text-align: center; }
-.chat .box { background: rgba(74,97,143, 0.2); border-bottom: 1px solid #4A618F; height: 283px; overflow-y: auto; padding: 3px; text-align: center; }
+.chat .box { background: rgba(74,97,143, 0.2); border-bottom: 1px solid #4A618F; height: 353px; overflow-y: auto; padding: 3px; text-align: center; } /* OLD HEIGHT : 283px */
 .chat .box div[class^='message'] { border: 1px solid #4A618F; border-radius: 4px; font-size: 12px; padding: 2px; }
 .chat .box div[class^='message'] a { font-size: 14px; }
 .chat .box div[class^='message'] .userSprite { float: left; margin-right: -18px; }
@@ -123,15 +128,11 @@ div.userbar > div.messages > div > .msidebar > div:nth-child(2) { padding: 3px; 
 .content .head { background: #4A618F; background: -moz-linear-gradient(top, #888 0%, #4A618F 100%, #4A618F 100%); background: -webkit-linear-gradient(top, #888 0%, #4A618F 100%, #4A618F 100%); background: linear-gradient(to bottom, #888 0%, #4A618F 100%, #4A618F 100%); border-bottom: 1px solid #4A618F; font-weight: bold; padding: 3px; text-align: center; }
 .content .box { background: rgba(74,97,143, 0.2); padding: 3px; text-align: center; }
 .content .row { margin-left: 0px; margin-right: 0px; }
-.content .description { background: #253147; border: 1px solid #4A618F; border-radius: 4px; margin-left: auto; margin-right: auto; margin-top: 5px; padding: 5px; width: 99.5%; }
 
-/* Success / Error */
-body #dialog
-{ bottom: 0; display: none; position: absolute; width: 1000px; z-index: 1000; }
-body .success 
-{ background: #2c3a55; border: 2px solid #00ff00; border-radius: 4px; bottom: 0; margin: 10px -190px; padding: 5px; position: absolute; text-align: center; width: 1066px; z-index: 1000; }
-body .error 
-{ background: #2c3a55; border: 2px solid #ff0000; border-radius: 4px; bottom: 0; margin: 10px -190px; padding: 5px; position: absolute; text-align: center; width: 1066px; z-index: 1000; }
+.content div.description { background: #2c3a55; border: 2px solid #4A618F; border-radius: 4px; margin-left: auto; margin-right: auto; padding: 5px; width: 100%; }
+.content div.success { background: #2c3a55; border: 2px solid #00FF00; border-radius: 4px; margin-left: auto; margin-right: auto; padding: 5px; width: 100%; }
+.content div.notice { background: #2c3a55; border: 2px solid #FFA500; border-radius: 4px; margin-left: auto; margin-right: auto; padding: 5px; width: 100%; }
+.content div.error { background: #2c3a55; border: 2px solid #FF0000; border-radius: 4px; margin-left: auto; margin-right: auto; padding: 5px; width: 100%; }
 
 /* General 'Table' Styling */
 .content .box table.special { -webkit-border-radius: 4px;	background: #4A618F; border: 0px solid #4A618F; border-collapse: separate; border-radius: 4px; border-spacing: 2px;	color: #fff; display: table; margin: 0 auto; width: 90%; }
@@ -163,9 +164,32 @@ body .error
 .panel .panel-body { border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; padding: 0px; }
 
 /* Staff Colors */
-.cmod, #cmod { border-color: #fcbc19 !important; color: #fcbc19 !important; font-weight: bold; }
-.gmod, #gmod { border-color: #25e1e8 !important; color: #25e1e8 !important; font-weight: bold; }
-.admin, #admin { border-color: #bf00ff !important; color: #bf00ff !important; font-weight: bold; }
+@keyframes rainbow {
+  from {-webkit-filter: hue-rotate(360deg); filter: hue-rotate(360deg);}
+  to {-webkit-filter: hue-rotate(0deg); filter: hue-rotate(0deg);}
+}
+@keyframes gmod {
+  from {-webkit-filter: hue-rotate(360deg); filter: hue-rotate(360deg);}
+  to {-webkit-filter: hue-rotate(0deg); filter: hue-rotate(0deg);}
+}
+@keyframes cmod {
+  from {-webkit-filter: hue-rotate(360deg); filter: hue-rotate(360deg);}
+  to {-webkit-filter: hue-rotate(0deg); filter: hue-rotate(0deg);}
+}
+.member, #member { border-color: #111 !important; color: #111 !important; font-size: 18px; font-weight: bold; }
+.cmod, #cmod { border-color: #fcbc19 !important; color: #fcbc19 !important; font-size: 18px; font-weight: bold; }
+.gmod, #gmod { border-color: #25e1e8 !important; color: #25e1e8 !important; font-size: 18px; font-weight: bold; }
+/*.admin, #admin { border-color: #bf00ff !important; color: #bf00ff !important; font-size: 18px; font-weight: bold; }*/
+.admin, #admin {
+  color: #bf00ff;
+  font-size: 18px;
+  text-shadow: 0 0 15px #bf00ff;
+  animation-name: rainbow;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
 
 /* 'news.php' */
 .content .box.news .panel { background: #334364; border: 1px solid #4A618F; margin-bottom: 0px; }
@@ -190,30 +214,41 @@ body .error
 .content .box.testing .equippedItem .equipTooltip .eTooltipCategory { top: 165px; left: 10px; font-size: 0.9em; }
 
 /* 'profile.php' */
-.content .box.profile { background: rgba(74,97,143, 0.2); }
-.content .box.profile .panel { border: 2px solid #4A618F; }
-.content .box.profile .panel .panel-heading { border-bottom: 1px solid #4A618F; }
-.content .box.profile .left-col { float: left; margin-right: 0px; width: 250px; }
-.content .box.profile .left-col .info div:nth-child(1) { background: #4A618F; font-weight: bold; }
-.content .box.profile .left-col .interactions a { display: block; padding: 2px; width: 100%; }
-.content .box.profile .left-col .interactions a:not(:last-child) { border-bottom: 1px solid #4A618F; }
-.content .box.profile .right-col { float: left; margin-left: 3px; width: 627px; }
-.content .box.profile .right-col .nav a { background: #4A618F; background: -moz-linear-gradient(top, #4A618F 0%, #888 100%, #888 100%); background: -webkit-linear-gradient(top, #4A618F 0%, #888 100%, #888 100%); background: linear-gradient(to bottom, #4A618F 0%, #888 100%, #888 100%); border: 2px solid #4A618F; border-bottom: none; border-top-left-radius: 4px; border-top-right-radius: 4px; color: #fff; float: left; font-weight: bold; margin-right: 5px; padding: 3px; text-align: center; width: 125px; }
-.content .box.profile .right-col .nav a:hover { background: #4A618F; background: -moz-linear-gradient(top, #4A618F 0%, #777 100%, #777 100%); background: -webkit-linear-gradient(top, #4A618F 0%, #777 100%, #777 100%); background: linear-gradient(to bottom, #4A618F 0%, #777 100%, #777 100%); color: #fff !important; cursor: pointer; }
-.content .box.profile .right-col .panel#profilePanel,
-.content .box.profile .right-col .panel#profilePanel .panel-heading { border-top-left-radius: 0px; }
-.content .box.profile .right-col .panel .panel-body .roster_slot { border-bottom: 2px solid #4A618F; float: left; height: 198px; width: calc(100% / 3); }
-.content .box.profile .right-col .panel .panel-body .roster_slot:nth-child(3n+2) { border-left: 2px solid #4A618F; border-right: 2px solid #4A618F; }
-.content .box.profile .right-col .panel .panel-body .roster_slot:nth-child(1n+4) { border-bottom: none; }
-.content .box.profile .right-col .panel .panel-body .roster_slot img.gender { height: 20px; margin-left: 127px; margin-top: 5px; position: absolute; width: 20px; }
-.content .box.profile .right-col .panel#profilePanel div.panel-body .roster_slot .info div:nth-child(1) { background: #4A618F; font-weight: bold; }
-.content .box.profile .right-col .panel .panel-body .box_slot { float: left; padding: 5px; }
-.content .box.profile .right-col .panel .panel-body .box_slot:nth-child(odd) { background: #3b4d72; }
-.content .box.profile .right-col .panel .panel-body#selectedPokemon .pokemon_cont { background: rgba(29, 33, 43, 1); border: 2px solid #4A618F; border-radius: 4px; float: left; margin: 2px; }
-.content .box.profile .right-col .panel .panel-body#selectedPokemon .pokemon_cont .info div:nth-child(1) { background: #4A618F; font-weight: bold; }
-.content .box.profile .right-col .panel .panel-body .statistic { float: left; padding: 7px; width: calc(100% / 3); }
-.content .box.profile .right-col .panel .panel-body .statistic:nth-child(2n+1) { background: #3b4d72; }
-.content .box.profile .right-col .panel .panel-body .statistic:nth-child(2n+2) { background: #253047; }
+.content .box.profile .interactions div div:hover,
+.content .box.profile .navi div div:hover
+{ background: #253147; }
+.content .box.profile .interactions div div:nth-child(odd),
+.content .box.profile .navi div div:not(:nth-last-child(1))
+{ border-right: 1px solid #4A618F; }
+.content .box.profile .interactions div div:nth-child(-n+2)
+{ border-bottom: 1px solid #4A618F; }
+.content .box.profile #profileAJAX .page_nav { border-bottom: 2px solid #4A618F; height: 30px; padding: 3px; }
+.content .box.profile #profileAJAX .page_nav .pagi { display: block; }
+.content .box.profile #profileAJAX .page_nav .pagi div { float: left; padding: 1px; }
+.content .box.profile #profileAJAX .page_nav .pagi div:not(:last-child) { border-right: 1px solid #4A618F; }
+.content .box.profile #profileAJAX .roster_slot { float: left; width: calc(100% / 3); }
+.content .box.profile #profileAJAX .roster_slot:not(:nth-child(3n)) { border-right: 1px solid #4A618F; }
+.content .box.profile #profileAJAX .roster_slot:nth-child(-n+3) { border-bottom: 1px solid #4A618F; }
+.content .box.profile #profileAJAX .roster_slot .info div:nth-child(1) { background: #4A618F; font-weight: bold; }
+.content .box.profile #profileAJAX .box_slot { padding: 3px; width: calc(100% / 3); }
+.content .box.profile #profileAJAX .box_slot:hover { background: #253147; cursor: pointer; }
+.content .box.profile #profileAJAX .box_slot:not(:nth-child(3n)) { border-right: 1px solid #4A618F; }
+.content .box.profile #profileAJAX table.box_cont tr:nth-last-child(n+2) td:nth-last-child(n+1) { border-bottom: 1px solid #4A618F; }
+.content .box.profile #profileAJAX .filter div div:hover { background: #253047; font-weight: bold; }
+.content .box.profile #profileAJAX .filter .p_search { border-bottom: 1px solid #4A618F; margin-top: 5px; }
+.content .box.profile #profileAJAX .filter .p_search input { width: 45%; }
+.content .box.profile #profileAJAX .filter .p_search select { padding: 4px; width: 45%; }
+.content .box.profile #profileAJAX .filter .p_type div { border-bottom: 1px solid #4A618F; float: left; width: 25%; }
+.content .box.profile #profileAJAX .filter .p_type div:not(:nth-child(4n)) { border-right: 1px solid #4A618F; }
+.content .box.profile #profileAJAX .filter .p_type div a { display: block; padding: 3px; }
+.content .box.profile #profileAJAX .filter .p_gender div { border-bottom: 1px solid #4A618F; float: left; width: 25%; }
+.content .box.profile #profileAJAX .filter .p_gender div:not(:nth-child(4n)) { border-right: 1px solid #4A618F; }
+.content .box.profile #profileAJAX .filter .p_gender div a { display: block; padding: 3px; }
+.content .box.profile #profileAJAX .filter .p_sortby div { border-bottom: 1px solid #4A618F; float: left; width: 50%; }
+.content .box.profile #profileAJAX .filter .p_sortby div a { display: block; padding: 3px; }
+.content .box.profile #profileAJAX .filter .p_sortby div:nth-child(odd) { border-right: 1px solid #4A618F; }
+.content .box.profile #profileAJAX .filter .search div { float: left; width: 100%; }
+.content .box.profile #profileAJAX .filter .search div a { display: block; padding: 3px; }
 
 /* 'pokemon_center.php' */
 .content .box.pokecenter .slotLink { border-top: 1px solid #4A618F; color: #999; display: inline-block; padding-bottom: -5px; width: calc(100% / 6); }
@@ -222,21 +257,22 @@ body .error
 .content .box.pokecenter .slotLink.void:hover { color: #111 !important; cursor: default; }
 .content .box.pokecenter .slotLink.odd { background: #4A618F; }
 .content .box.pokecenter .slotLink.even { background: #2c3a55; }
-
 .content .box.pokecenter .nav { margin-bottom: 5px; margin-top: -4px; }
 .content .box.pokecenter .nav div { background: #2c3a55; border-bottom: 1px solid #4A618F; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; border-top-left-radius: 0px; border-top-right-radius: 0px; color: #999; float: left; padding: 5px; width: calc(100% / 6 - 5px); }
 /*.content .box.pokecenter .nav div:nth-last-child(1) { border-right: none; }*/
 .content .box.pokecenter .nav div:hover { background: #253047; color: #fff; cursor: pointer; }
-
 .content .box.pokecenter .panel img.gender { height: 20px; margin-left: 95px; margin-top: 3px; position: absolute; width: 20px; }
 .content .box.pokecenter .panel img.item { margin-left: -15px; position: absolute; }
-.content .box.pokecenter .panel .roster_slot { border-right: 1px solid #4A618F; float: left; min-height: 247px !important; padding: 5px 0px 0px; width: calc(100% / 6); }
+.content .box.pokecenter .panel .roster_slot { border-right: 1px solid #4A618F; float: left; padding: 5px 0px 0px; width: calc(100% / 6); }
 .content .box.pokecenter .panel .roster_slot .info div:nth-child(1) { background: #4A618F; font-weight: bold; }
 .content .box.pokecenter .panel .roster_slot img.item { margin-left: -10px; position: absolute; }
 .content .box.pokecenter .panel .roster_slot:nth-last-child(1) { border-right: none; }
-.content .box.pokecenter .panel .roster_slot:hover { background: #3b4d72; }
+.content .box.pokecenter .panel .roster_slot:nth-child(-n+3) { border-bottom: 1px solid #4A618F; } /* border-right: 1px solid #4A618F;  */
+.content .box.pokecenter .panel .roster_slot:nth-child(3n) { border-right: none; }
+.content .box.pokecenter .panel .roster_slot img:nth-child(3):hover { background: #4A618F !important; border-radius: 50% !important; cursor: pointer !important; }
+
 .content .box.pokecenter .panel .boxed_pokemon { padding: 5px; }
-.content .box.pokecenter .panel .boxed_pokemon img:hover { background: #4A618F; border-radius: 50%; cursor: pointer; }
+.content .box.pokecenter .panel .boxed_pokemon img:hover { background: #4A618F !important; border-radius: 50% !important; cursor: pointer !important; }
 .content .box.pokecenter .panel .items img:hover { background: #4A618F; border-radius: 50%; cursor: pointer; }
 .content .box.pokecenter .panel .panel-heading { border-bottom: none; }
 .content .box.pokecenter .panel .panel-body.item_body { border-bottom: 1px solid #4A618F; }
@@ -254,17 +290,16 @@ body .error
 .content .box.pokecenter .panel .panel-body.nickContainer .roster_slot:hover { background: #3b4d72; }
 .content .box.pokecenter .panel .panel-body.releaseList { padding: 3px; }
 #pokemon_center > div > div.panel-body.releaseList > div:nth-child(2n) { margin-left: 1.25%; margin-right: 1.25%; }
-
 #pokemon_center div.panel-body.attacheditems > div:nth-child(odd) { margin-right: 0.5%; }
-.content .box.pokecenter .panel .rslot:not(:nth-child(2n)) { border-right: 1px solid #4A618F; }
-.content .box.pokecenter .panel .rslot:nth-child(-n+4) { border-bottom: 1px solid #4A618F; }
+.content .box.pokecenter .panel .rslot:not(:nth-child(3n)) { border-right: 1px solid #4A618F; }
+.content .box.pokecenter .panel .rslot:nth-child(-n+3) { border-bottom: 1px solid #4A618F; }
+#pokemon_center > div:nth-child(2) > div.panel-body > img:hover { background: #3b4d72; border-radius: 45%; cursor: pointer; }
 .content .box.pokecenter #pokemon_center .panel .panel-body.inventory > div:nth-child(1) > div { background: #3b4d72; border-bottom: 2px solid #4A618F; }
 .content .box.pokecenter #pokemon_center .panel .panel-body.inventory > div:nth-child(1) > div:hover { background: #253047; cursor: pointer; }
 .content .box.pokecenter #pokemon_center .panel .panel-body.inventory > div:nth-child(1) > div:not(:nth-child(6n)) { border-right: 1px solid #4A618F; }
 .content .box.pokecenter #pokemon_center .panel .panel-body.inventory > div:nth-child(2) > div.item_cont { float: left; padding: 3px; width: 20%; }
 .content .box.pokecenter #pokemon_center .panel .panel-body.inventory > div:nth-child(2) > div.item_cont:hover { background: #253047; cursor: pointer; }
 .content .box.pokecenter #pokemon_center .panel .panel-body.inventory > div:nth-child(2) > div.item_cont:not(:nth-child(5n)) { border-right: 1px solid #4A618F; }
-
 
 /* 'evolution_center.php' */
 body > div.content > div.box.evolution_center > div.row > div:nth-child(1) > div.panel-body.roster > div { float: left; width: 50%; }
@@ -330,11 +365,24 @@ body > div.content > div.box.evolution_center > div.row > div:nth-child(1) > div
 .content .box.staff .pokemon_stats .bio { text-align: center; }
 .content .box.staff .pokemon_stats .bio textarea { border-color: #4A618F; border-bottom: none; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; }
 
-/* 'online.php' */
-.content .box.online_list .online_user { background: #2c3a55; border: 2px solid #4A618F; border-radius: 4px; height: 58px; padding: 3px; text-align: left; }
-.content .box.online_list .online_user img { background: #444; border: 2px solid #111; border-radius: 50%; float: left; height: 48px; margin-right: 5px; padding: 3px; width: 48px; }
-.content .box.online_list .online_user div:nth-child(2) { padding-top: 5px; }
-.content .box.online_list .online_user div:nth-child(3) { float: right; margin-right: 3px; margin-top: -30px; }
+.content .box.online_list .online_admin,
+.content .box.online_list .online_gmod,
+.content .box.online_list .online_cmod,
+.content .box.online_list .online_member
+{ float: left; margin-bottom: 3px; width: 33%; }
+.content .box.online_list .online_admin:nth-child(3n+3),
+.content .box.online_list .online_gmod:nth-child(3n+3),
+.content .box.online_list .online_cmod:nth-child(3n+3),
+.content .box.online_list .online_member :nth-child(3n+3)
+{ margin-left: 0.5%; margin-right: 0.5%; }
+.content .box.online_list .online_admin
+{ border: 2px solid hsl(0, 100%, 50%); border-radius: 4px; animation: rainbow 5s infinite alternate; }
+.content .box.online_list .online_gmod 
+{ animation: gmod 5s infinite alternate; border: 2px solid #25e1e8; border-radius: 4px; }
+.content .box.online_list .online_cmod 
+{ animation: cmod 5s infinite alternate; border: 2px solid #fcbc19; border-radius: 4px; }
+.content .box.online_list .online_member
+{ border: 2px solid #4A618F; border-radius: 4px; }
 
 /* 'battle.php' */
 #battleWindow .rosters .battle_slot { background: #111; border: 1px solid #4A618F; border-bottom: none; border-top-left-radius: 4px; border-top-right-radius: 4px; float: left; margin-left: 4.3px; margin-right: 6px; width: calc(100% / 7); }
@@ -460,7 +508,6 @@ body > div.content > div.box.evolution_center > div.row > div:nth-child(1) > div
   border-bottom: 3px solid rgba(74, 97, 143, .15);
   border-top: 3px solid rgba(74, 97, 143, .8);
   border-radius: 100%;
-
 }
 
 @-webkit-keyframes rotation {

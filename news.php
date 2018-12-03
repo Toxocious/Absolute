@@ -1,72 +1,73 @@
 <?php
-	require	'php/layout_top.php';
+	require 'core/required/layout_top.php';
+
+	try {
+		$Fetch_News = $PDO->query("SELECT * FROM `news` ORDER BY `id` DESC LIMIT 1");
+		$News_Post = $Fetch_News->fetch();
+
+		$Fetch_News_Poster = $PDO->prepare("SELECT `Username`, `id`, `Avatar`, `Rank` FROM `users` WHERE `id` = ? LIMIT 1");
+		$Fetch_News_Poster->execute([$News_Post['Poster_ID']]);
+		$News_Poster = $Fetch_News_Poster->fetch();
+	} catch (PDOException $e) {
+		echo $e->getMessage();
+	}
 ?>
 
 <div class='content'>
 	<div class='head'>News</div>
 	<div class='box news'>
-		<div class='row'>
-			<?php
-				$News_Post = mysqli_query($con, "SELECT * FROM `news` ORDER BY `id` DESC LIMIT 1");
-					
-				while ( $Query = mysqli_fetch_assoc($News_Post) ) {
-					$Poster_Data = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM members WHERE id = '" . $Query['Poster_ID'] . "'"));
-						
-					echo	"<div class='panel panel-default'>";
-					echo		"<div class='panel-heading'>";
-						
-										if ( $User_Data['Rank'] >= '21' ) {
-											echo	"<div class='col-xs-3'>";
-											echo		"<a href='news_edit.php?id=" . $Query['id'] . "'>Edit Post</a>";
-											echo	"</div>";
-												
-											echo	"<div class='col-xs-9'>";
-											echo		"<b>" . $Query['News_Title'] . "</b>";
-											echo	"</div>";
-										} else {
-											echo	"<div class='col-xs-12'>";
-											echo		$Query['News_Title'];
-											echo	"</div>";
-										}
-						
-					echo		"</div>";
-						
-					echo		"<div class='panel-body'>";
-					echo			"<div class='col-xs-3'>";
-					echo				"<div>";
-					echo					"<img src='" . $Poster_Data['Avatar'] . "' /><br />";
-
-					if ( $Poster_Data['Rank'] === '12' ) {
-						echo "<a class='cmod' href='profile.php?id=" . $Query['Poster_ID'] . "'>" . $Poster_Data['Username'] . "</a><br />";
+		<div class='panel'>
+			<div class='panel-heading'>
+				<?php
+					if ( isset($_SESSION['abso_user']) )
+					{
+						if ( $User_Data['Rank'] >= '21' ) {
+							echo	"<div style='float: left; width: 25%;'>";
+							echo		"<a href='news_edit.php?id=" . $News_Post['id'] . "'>Edit Post</a>";
+							echo	"</div>";
+								
+							echo	"<div style='float: left; width: 75%;'>";
+							echo		"<b>" . $News_Post['News_Title'] . "</b>";
+							echo	"</div>";
+						} else {
+							echo	"<div class='col-xs-12'>";
+							echo		$News_Post['News_Title'];
+							echo	"</div>";
+						}
 					}
-
-					if ( $Poster_Data['Rank'] === '69' ) {
-						echo "<a class='gmod' href='profile.php?id=" . $Query['Poster_ID'] . "'>" . $Poster_Data['Username'] . "</a><br />";
+					else
+					{
+						echo	"<div class='col-xs-12'>";
+						echo		$News_Post['News_Title'];
+						echo	"</div>";
 					}
+				?>
+			</div>
+			<div class='panel-body'>
+				<div style='float: left; padding-top: 5px; width: 25%;'>
+					<img src='<?= $News_Poster['Avatar']; ?>' /><br />
+					<?php
+						if ( $News_Poster['Rank'] === '12' ) {
+							echo "<a class='cmod' href='profile.php?id=" . $News_Poster['id'] . "'>" . $News_Poster['Username'] . "</a><br />";
+						}
 
-					if ( $Poster_Data['Rank'] === '420' ) {
-						echo "<a class='admin' href='profile.php?id=" . $Query['Poster_ID'] . "'>" . $Poster_Data['Username'] . "</a><br />";
-					}
+						if ( $News_Poster['Rank'] === '69' ) {
+							echo "<a class='gmod' href='profile.php?id=" . $News_Poster['id'] . "'>" . $News_Poster['Username'] . "</a><br />";
+						}
 
-					echo					"<span>" . $Query['News_Date'] . "</span>";
-
-					echo				"</div>";
-
-					//echo				"<a href='profile.php?id=" . $Query['Poster_ID'] . "'>" . $Poster_Data['Username'] . "</a><br />";
-					
-					echo			"</div>";
-						
-					echo			"<div class='col-xs-9'>";
-					echo				nl2br($Query['News_Text']);
-					echo			"</div>";
-					echo		"</div>";
-					echo	"</div>";
-				}
-			?>
+						if ( $News_Poster['Rank'] === '420' ) {
+							echo "<a class='admin' href='profile.php?id=" . $News_Poster['id'] . "'>" . $News_Poster['Username'] . "</a><br />";
+						}
+					?>
+					<?= $News_Post['News_Date']; ?>
+				</div>
+				<div style='float: left; padding: 5px; width: 75%;'>
+					<?= nl2br($News_Post['News_Text']); ?>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
 
 <?php
-	require	'php/layout_bottom.php';
-?>
+	require 'core/required/layout_bottom.php';
