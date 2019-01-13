@@ -1,6 +1,5 @@
 <?php
-  require '../../required/db.php';
-  require '../../functions/global_functions.php';
+  require '../../required/session.php';
 
   if ( isset($_GET['id']) )
   {

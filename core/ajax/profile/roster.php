@@ -12,7 +12,7 @@
     }
     catch ( PDOException $e )
     {
-      echo $e->getMessage();
+      HandleError( $e->getMessage() );
     }
 
     echo "

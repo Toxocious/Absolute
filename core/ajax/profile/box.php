@@ -34,19 +34,26 @@
   }
 
   if ( $Filter_Dir != 'ASC' )
+  {
     $Filter_Dir = 'DESC';
+  }
   else
+  {
     $Filter_Dir = 'ASC';
+  }
 
   $Query .= " ORDER BY `Pokedex_ID` ASC";
 
-  try {
+  try
+  {
     $Box_Query = $PDO->prepare($Query . " LIMIT " . $Begin . ",30");
     $Box_Query->execute($Inputs);
     $Box_Query->setFetchMode(PDO::FETCH_ASSOC);
     $Box_Pokemon = $Box_Query->fetchAll();
-  } catch (PDOException $e) {
-    throw $e;
+  }
+  catch ( PDOException $e )
+  {
+    HandleError( $e->getMessage() );
   }
   
   if ( isset($User_ID) )
@@ -71,7 +78,7 @@
             }
         ?>
 
-            <td class='box_slot popup cboxElement' href='ajax/ajax_pokemon.php?id=<?= $Poke_Data['ID']; ?>'>
+            <td class='box_slot popup cboxElement' href='<?= Domain(1); ?>/core/ajax/pokemon.php?id=<?= $Poke_Data['ID']; ?>'>
               <!--<img src='images/Assets/<?= $Poke_Data['Gender']; ?>.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />-->
               <img src='images/Assets/Female.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
               <span style='float: left;'>
@@ -209,5 +216,5 @@
 <?php
   }
 
-	//exit();
+	exit();
 ?>

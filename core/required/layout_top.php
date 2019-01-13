@@ -13,18 +13,103 @@
 
 		<script type='text/javascript' src='<?= Domain(1); ?>/js/libraries.js'></script>
 		<script type='text/javascript' src='<?= Domain(1); ?>/js/main.js'></script>
+		<?php
+			/**
+			 * Adds snowstorm.js if the current date is sometime in December.
+			 */
+			if ( isBetweenDates('2018-12-01', '2018-12-31') )
+			{
+				echo "<script type='text/javascript' src='" . Domain(1) . "/js/snowstorm.js'></script>";	
+			}
+		?>
+
+		<script type='text/javascript' src='<?= Domain(1); ?>/js/absochat.js'></script>
+		<script type='text/javascript'>
+			CHATERPIE_PORT = "3000";
+			DOMAIN = "localhost/";
+
+			$(function()
+			{
+				Chaterpie.user = {
+					block_string: [],
+					postcode: "<?= $User_Data['Auth_Code']; ?>",
+					user_name: "<?= $User_Data['Username']; ?>",
+					user_id: <?= $User_Data['id']; ?>, 
+					chat_size: "0" ,
+					auto_caps: "no",
+				}
+
+				Chaterpie.enable();
+
+				// message box handling
+				$('#chatMessage').keydown(function(e)
+				{
+					if (e.keyCode == 13)
+					{
+						let text = $('#chatMessage').val().trim();
+						if (text != '' && Chaterpie.isConnected())
+						{
+							socket.emit("input",
+							{
+								text: text,
+								username: "<?= $User_Data['Username']; ?>" //Need to authenticate like before
+							});
+							$('#chatMessage').val('').trigger('input');
+						}
+
+						return false;
+					}
+				});
+
+				<?php
+					if ( $User_Data['Power'] >= 3 )
+					{
+				?>
+					Chaterpie.isStaff = true;
+
+					Chaterpie.staff = {
+						kick: function( uID ) {
+							socket.emit("chaterpie-kick-user", uID, $('#chatMessage').val());
+							$('#chatMessage').val('');
+
+							Chaterpie.changeWindow('chat');
+							return false;
+						},
+
+						ban: function( uID, time ) {
+							if (!confirm("Do you really want to ban user #"+uID+"?")) {
+								return;
+							}
+
+							var banTime = time ? time : $('#messageBanTimeStaff').val();
+							socket.emit("chaterpie-ban-user", uID, $('#chatMessage').val(), banTime);
+							$('#chatMessage').val('');
+
+							Chaterpie.changeWindow('chat');
+							return false;
+						},
+
+						quickBan: function ( uID ) {
+							if ( confirm("Do you really want to ban user #"+uID+" for 5 minutes?") )
+							{
+								Chaterpie.staff.ban(uID, 300);
+							}
+						}
+					};
+				<?php
+					}
+				?>
+			});
+		</script>
 	</head>
 
 	<body>
 		<div class='banner'>
-			<a href=<?= (isset($_SESSION['abso_user'])) ? Domain(1) . '/news.php' : Domain(1) . '/index.php' ?>>
+			<a href= <?= (isset($_SESSION['abso_user'])) ? Domain(1) . '/news.php' : Domain(1) . '/index.php' ?>>
 				<img src='<?= Domain(1); ?>/images/Assets/banner.png' />
 			</a>
-			<div style='border-bottom-right-radius: 4px;'>
-				<?= $Date; ?>
-			</div>
 			<?php
-				if ( $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] >= 7 )
+				if ( isset($User_Data) && $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] >= 7 )
 				{
 					echo "<div class='notice'>Despite this page being down for maintenance, you seem to be authorized to be here.</div>";
 				}
@@ -38,20 +123,29 @@
 
 		<div class='userbar'>
 			<div class='user'>
-				<a href='profile.php?id=<?= $User_Data['id']; ?>'>
+				<a href='<?= Domain(1); ?>/profile.php?id=<?= $User_Data['id']; ?>'>
 					<?php
-						if ( $User_Data['Rank'] === '420' )
+						if ( $User_Data['Rank'] === 'Administrator' )
+						{
 							echo	"<div><span class='admin' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span></div>";
-						else if ( $User_Data['Rank'] === '69' )
+						}
+						else if ( $User_Data['Rank'] === 'Moderator' )
+						{
 							echo	"<div><span class='gmod' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span></div>";
-						else if ( $User_Data['Rank'] === '12' )
+						}
+						else if ( $User_Data['Rank'] === 'Chat Moderator' )
+						{
 							echo	"<div><span class='cmod' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span></div>";
+						}
 						else 
+						{
 							echo  "<div><span class='member' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span></div>";
+						}
 					?>
 				</a>
 			</div>
-
+			
+			<!--
 			<div class='notifications' style='display: block; font-size: 14px; height: 30px; padding: 5px 3px 3px 3px;'>
 				<a href='testing2.php'>Spawn Pokemon</a>
 			</div>
@@ -62,6 +156,7 @@
 				</span>
 				<div style='display: none;'></div>
 			</div>
+			-->
 
 			<div class='money'>
 				$<?= number_format($User_Data['Money']); ?>
@@ -82,6 +177,7 @@
 							$RosterPoke[$i]['Display_Name'] = "Empty";
 							$RosterPoke[$i]['Level'] = '0';
 							$RosterPoke[$i]['Experience'] = '0';
+							$RosterPoke[$i]['Gender_Icon'] = null;
 							$RosterPoke[$i]['Gender'] = null;
 							$RosterPoke[$i]['Item'] = null;
 						}
@@ -94,9 +190,9 @@
 								<div class='roster_tooltip' id='rosterTooltip{$i}'>
 						";
 
-						if ( $RosterPoke[$i]['Gender'] != null )
+						if ( $RosterPoke[$i]['Gender_Icon'] != null && $RosterPoke[$i]['Gender_Icon'] != 'G' && $RosterPoke[$i]['Gender_Icon'] != "(?)" )
 						{
-							echo "<img src='{$RosterPoke[$i]['Gender']}' style='height: 20px; margin: 10px 0px 0px -20px; position: absolute; width: 20px;' />";
+							echo "<img src='{$RosterPoke[$i]['Gender_Icon']}' style='height: 20px; margin: 10px 0px 0px -20px; position: absolute; width: 20px;' />";
 						}
 
 						echo "<img src='{$RosterPoke[$i]['Sprite']}' />";
@@ -122,6 +218,10 @@
 					}
 				?>
 			</div>
+
+			<div class='money' style='border-left: none; float: left; width: 200px;'>
+				<?= $Date; ?>
+			</div>
 		</div>
 		
 	<?php
@@ -131,7 +231,7 @@
 
 		<div class='sidebar'>
 			<?php
-				if ( $User_Data['Rank'] >= 21 )
+				if ( $User_Data['Power'] >= 4 )
 				{
 					echo 	"<div class='button'>";
 					echo		"<a href='staff'>Staff Panel</a>";
@@ -141,9 +241,7 @@
 
 			<div class='chat' id='AbsoChat'>
 				<div class='head'>
-					<img src='<?= Domain(1); ?>/images/Assets/options.png' style='cursor: pointer; height: 20px; margin-left: -70px; position: absolute; width: 20px;' onclick='/*AbsoChat.changeWindow("settings");*/' />
 					Chat
-					<img src='<?= Domain(1); ?>/images/Assets/options.png' style='cursor: pointer; height: 20px; margin-left: 50px; position: absolute; width: 20px;' onclick='/*AbsoChat.reset();*/' />
 				</div>
 				<div class='user_options' id='user_options' style='display: none'></div>
 				<div class='box' id='chatContent'>
@@ -153,7 +251,7 @@
 				</div>
 				<div class='subhead'>
 					<?php
-						if ( $User_Data['ChatBanned'] != '1' )
+						if ( $User_Data['ChatBanned'] != 1 )
 						{
 							echo 	"<form name='chat_form'>";
 							echo 		"<input type='text' name='chatMessage' id='chatMessage' autocomplete='off' />";
@@ -230,7 +328,7 @@
 					<ul class='dropdown-content'>
 						<li><a href='achievements.php'>Achievements</a></li>
 						<li><a href='settings.php'>Player Settings</a></li>
-						<li><a href='logout.php'>Logout</a></li>
+						<li><a href='login.php?Logout'>Logout</a></li>
 					</ul>
 				</li>
 			</ul>
@@ -239,7 +337,7 @@
 	<?php
 		}
 
-		if ( $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] <= 6 )
+		if ( $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] <= 4 )
 		{
 			echo "
 				<div class='content'>
@@ -249,6 +347,23 @@
 					</div>
 				</div>
 			";
+
+			exit();
+		}
+	}
+	else
+	{
+		if ( $Current_Page['Logged_In'] == 'yes' )
+		{
+			echo "
+				<div class='content' style='margin: 5px; width: calc(100% - 10px);'>
+					<div class='head'>Error</div>
+					<div class='box'>
+						You must be logged in to view this page.
+					</div>
+				</div>
+			";
+
 			exit();
 		}
 	}

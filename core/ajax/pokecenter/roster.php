@@ -12,7 +12,7 @@
     }
     catch ( PDOException $e )
     {
-      echo $e->getMessage();
+      HandleError( $e->getMessage() );
     }
 ?>
 <div class='panel' style='margin-bottom: 5px; width: 100%;'>
@@ -35,19 +35,41 @@
           }
           
           echo "
-            <div class='roster_slot' style='width: calc(100% / 3);'>
-              <div style='float: left;'>
-                <div style='background: #334364; border-right: 1px solid #4A618F; height: calc(132px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 1);\" style='display: block; padding: 10px;'>1</a></div>
-                <div style='background: #425780; border-right: 1px solid #4A618F; height: calc(131px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 2);\" style='display: block; padding: 10px;'>2</a></div>
-                <div style='background: #334364; border-right: 1px solid #4A618F; height: calc(131px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 3);\" style='display: block; padding: 10px;'>3</a></div>
-              </div>
-              <img src='{$Roster_Slot[$i]['Gender']}' style='height: 20px; margin: 10px 0px 0px -20px; position: absolute; width: 20px;' />
-              <img src='{$Roster_Slot[$i]['Sprite']}' ?>
-              $Item
-              <div style='float: right;'>
-                <div style='background: #334364; border-left: 1px solid #4A618F; height: calc(132px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 4);\" style='display: block; padding: 10px;'>4</a></div>
-                <div style='background: #425780; border-left: 1px solid #4A618F; height: calc(131px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 5);\" style='display: block; padding: 10px;'>5</a></div>
-                <div style='background: #334364; border-left: 1px solid #4A618F; height: calc(131px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 6);\" style='display: block; padding: 10px;'>6</a></div>
+            <div class='roster_slot full' style='/*width: calc(100% / 3);*/'>
+              <div style='float: left;' class='slots left'>
+          ";
+
+          for ($x = 1; $x <= 3; ++$x) {
+            if ( $x == $i + 1 || $x > count($Fetch_Roster) )
+            {
+              echo "<div><span style='color: #000; display: block; padding: 13px;'>$x</span></div>";
+            }
+            else
+            {
+              echo "<div><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='display: block; padding: 13px;'>$x</a></div>";
+            }
+          }
+
+          echo "
+            </div>
+            <img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; margin: 10px 0px 0px -20px; position: absolute; width: 20px;' />
+            <img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
+            $Item
+            <div style='float: right;' class='slots right'>
+          ";
+
+          for ($x = 4; $x <= 6; ++$x) {
+            if ( $x == $i + 1 || $x > count($Fetch_Roster) )
+            {
+              echo "<div><span style='color: #000; display: block; padding: 13px;'>$x</span></div>";
+            }
+            else
+            {
+              echo "<div><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='display: block; padding: 13px;'>$x</a></div>";
+            }
+          }
+
+          echo "
               </div>
               <div><b>{$Roster_Slot[$i]['Display_Name']}</b></div>
               <div class='info'>
@@ -58,7 +80,7 @@
                 <div>Experience</div>
                 <div>{$Roster_Slot[$i]['Experience']}</div>
               </div>
-          </div>
+            </div>
           ";
         }
         else
@@ -69,7 +91,7 @@
           $Roster_Slot[$i]['Experience'] = '0';
 
           echo "
-            <div class='roster_slot' style='width: calc(100% / 3);'>
+            <div class='roster_slot full' style='/*width: calc(100% / 3);*/'>
               <img src='{$Roster_Slot[$i]['Sprite']}' />
               <div><b>{$Roster_Slot[$i]['Display_Name']}</b></div>
               <div class='info'>
@@ -107,7 +129,7 @@
       foreach ( $Box_Pokemon as $Index => $Pokemon )
       {
         $Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
-        echo "<img class='popup cboxElement' src='{$Pokemon['Icon']}' href='core/ajax/pokemon.php?id={$Pokemon['ID']}' />";
+        echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
       }
 
       if ( count($Box_Pokemon) == 0 )
@@ -120,7 +142,7 @@
 
 <div class='panel' style='float: right; width: calc(100% / 2 - 2.5px);'>
   <div class='panel-heading'>Selected Pokemon</div>
-  <div class='panel-body' style='padding: 3px;' id='dataDiv'>
+  <div class='panel-body' style='padding: 3px;' id='pokeData'>
     <div style='padding: 5px;'>Please select a Pokemon to view it's statistics.</div>
   </div>
 </div>
@@ -130,8 +152,4 @@
 </script>
 
 <?php
-  }
-  else
-  {
-    echo "Your session has expired, or an error has been thrown while attempting to retrieve your roster and boxed Pokemon.";
   }

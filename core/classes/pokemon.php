@@ -27,14 +27,24 @@
 				$Pokemon = $FetchPokemon->fetch();
 
 				$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
-				$FetchPokedex->execute([$Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']]);
+				$FetchPokedex->execute([$Pokemon['ID'], $Pokemon['Alt_ID']]);
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokedex = $FetchPokedex->fetch();
 
-				$FetchItem = $PDO->prepare("SELECT * FROM `items` WHERE `Item_ID` = ? LIMIT 1");
+				$FetchItem = $PDO->prepare("SELECT * FROM `item_dex` WHERE `Item_ID` = ? LIMIT 1");
 				$FetchItem->execute([$Pokemon['Item']]);
 				$FetchItem->setFetchMode(PDO::FETCH_ASSOC);
 				$Item = $FetchItem->fetch();
+
+				$Fetch_Owner = $PDO->prepare("SELECT `Username` FROM `users` WHERE `id` = ? LIMIT 1");
+				$Fetch_Owner->execute([$Pokemon['Owner_Current']]);
+				$Fetch_Owner->setFetchMode(PDO::FETCH_ASSOC);
+				$Current_Owner = $Fetch_Owner->fetch();
+
+				$Fetch_Original = $PDO->prepare("SELECT `Username` FROM `users` WHERE `id` = ? LIMIT 1");
+				$Fetch_Original->execute([$Pokemon['Owner_Original']]);
+				$Fetch_Original->setFetchMode(PDO::FETCH_ASSOC);
+				$Original_Owner = $Fetch_Original->fetch();
 
 				if ( !isset($Pokemon) )
 				{
@@ -43,7 +53,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				echo $e->getMessage();
+				HandleError( $e->getMessage() );
 			}
 			
 			switch($Pokemon['Gender'])
@@ -135,9 +145,11 @@
 				"Location" => $Pokemon['Location'],
 				"Slot" => $Pokemon['Slot'],
 				"Item" => $Item['Item_Name'],
+				"Item_ID" => $Item['Item_ID'],
 				"Item_Icon" => Domain(1) . "/images/Items/" . $Item['Item_Name'] . ".png",
-				"Gender" => Domain(1) . "/images/Assets/" . $Gender . ".svg",
+				"Gender" => $Gender,
 				"GenderShort" => $GenderShort,
+				"Gender_Icon" => Domain(1) . "/images/Assets/" . $Gender . ".svg",
 				"Level" => number_format($Level),
 				"Experience" => number_format($Pokemon['Experience']),
 				"Nature" => $Pokemon['Nature'],
@@ -145,13 +157,18 @@
       	"Stats" => $Stats,
 				"IVs" => $IVs,
 				"EVs" => $EVs,
-				"Moves" => $Moves,
+				"Move_1" => $Moves[0],
+				"Move_2" => $Moves[1],
+				"Move_3" => $Moves[2],
+				"Move_4" => $Moves[3],
 				"Owner_Current" => $Pokemon['Owner_Current'],
+				"Owner_Current_Username" => $Current_Owner['Username'],
 				"Owner_Original" => $Pokemon['Owner_Original'],
+				"Owner_Original_Username" => $Original_Owner['Username'],
 				"Trade_Interest" => $Pokemon['Trade_Interest'],
 				"Challenge_Status" => $Pokemon['Challenge_Status'],
 				"Biography" => $Pokemon['Biography'],
-				"Creation_Date" => $Pokemon['Creation_Date'],
+				"Creation_Date" => date("F j, Y (g:i A)", $Pokemon['Creation_Date']),
 				"Creation_Location" => $Pokemon['Creation_Location'],
 				"Sprite" => Domain(1) . $Sprite,
 				"Icon" => Domain(1) . $Icon,
@@ -159,11 +176,58 @@
 		}
 
 		/**
-		 * Spawn a Pokemon into the game.
+		 * Fetch any Pokemon's Pokedex data, given their Pokedex ID.
 		 */
-		public function CreatePokemon()
+		public function FetchPokedexData($Pokedex_ID, $Alt_ID = 0)
 		{
+			global $PDO;
 
+			try
+			{
+				$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+				$FetchPokedex->execute([$Pokedex_ID, $Alt_ID]);
+				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
+				$Pokedex = $FetchPokedex->fetch();
+
+				if ( !isset($Pokedex) )
+				{
+					return "Error";
+				}
+			}
+			catch ( PDOException $e )
+			{
+				echo $e->getMessage();
+			}
+
+			$BaseStats = [
+				round($Pokedex['hp']),
+				round($Pokedex['attack']),
+				round($Pokedex['defense']),
+				round($Pokedex['spatk']),
+				round($Pokedex['spdef']),
+				round($Pokedex['speed']),
+			];
+
+			if ( $Pokedex['Alt_ID'] !== 0 )
+			{
+				$Sprite = "/images/Pokemon/Sprites/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokedex['Alt_ID'] . ".png";
+				$Icon = "/images/Pokemon/Icons/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokedex['Alt_ID'] . ".png";
+			}
+			else
+			{
+				$Sprite = "/images/Pokemon/Sprites/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
+				$Icon = "/images/Pokemon/Icons/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
+			}
+
+			return [
+				"ID" => $Pokedex['id'],
+				"Pokedex_ID" => $Pokedex['Pokedex_ID'],
+				"Alt_ID" => $Pokedex['Alt_ID'],
+				"Name" => $Pokedex['poke_name'],
+				"Base_Stats" => $BaseStats,
+				"Sprite" => Domain(1) . $Sprite,
+				"Icon" => Domain(1) . $Icon,
+			];
 		}
 
 		/**
@@ -259,11 +323,70 @@
 		}
 
 		/**
-		 * Fetch the data of a given move via it's `moves` DB ID.
+		 * Spawn a Pokemon into the game.
 		 */
-		public function FetchMoveData()
+		public function CreatePokemon()
 		{
 
+		}
+
+		/**
+		 * Fetch the data of a given move via it's `moves` DB ID.
+		 */
+		public function FetchMoveData($Move_ID)
+		{
+			global $PDO;
+
+			try
+			{
+				$Fetch_Move = $PDO->prepare("SELECT * FROM `moves` WHERE `id` = ?");
+				$Fetch_Move->execute([$Move_ID]);
+				$Fetch_Move->setFetchMode(PDO::FETCH_ASSOC);
+				$Move = $Fetch_Move->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
+
+			return [
+				"ID" => $Move['id'],
+				"Name" => $Move['name'],
+				"Type" => $Move['type'],
+				"Category" => $Move['category'],
+				"Power" => $Move['power'],
+				"Accuracy" => $Move['accuracy'],
+				"Priority" => $Move['priority'],
+				"PP" => $Move['pp'],
+				"Description" => $Move['desc'],
+			];
+		}
+
+		/**
+		 * Fetch the item data of the item that a Pokemon is holding.
+		 */
+		public function FetchItemData($Item_ID)
+		{
+			global $PDO;
+
+			try
+			{
+				$Fetch_Item = $PDO->prepare("SELECT * FROM `item_dex` WHERE `Item_ID` = ?");
+				$Fetch_Item->execute([$Item_ID]);
+				$Fetch_Item->setFetchMode(PDO::FETCH_ASSOC);
+				$Item = $Fetch_Item->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
+
+			return [
+				"ID" => $Item['Item_ID'],
+				"Name" => $Item['Item_Name'],
+				"Category" => $Item['Item_Type'],
+				"Description" => $Item['Item_Description'],
+			];
 		}
 
 		/**

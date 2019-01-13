@@ -1,0 +1,552 @@
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 00:54:56 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 27 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 00:59:40 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 13 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:04:36 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 2 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:08:28 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 35 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Server: absolute :: Port: 3000
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 01:11:44 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 2 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:16:04 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 6 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:22:09 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 29 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:22:39 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 6 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:23:39 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 9 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:27:26 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+TypeError: Cannot read property 'split' of undefined
+    at check_ban_user (C:\xampp\htdocs\absochat\scyther.js:826:31)
+    at Query.<anonymous> (C:\xampp\htdocs\absochat\scyther.js:773:9)
+    at Query.<anonymous> (C:\xampp\htdocs\absochat\node_modules\mysql\lib\Connection.js:502:10)
+    at Query._callback (C:\xampp\htdocs\absochat\node_modules\mysql\lib\Connection.js:468:16)
+    at Query.Sequence.end (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)
+    at Query._handleFinalResultPacket (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\sequences\Query.js:139:8)
+    at Query.EofPacket (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\sequences\Query.js:123:8)
+    at Protocol._parsePacket (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\Protocol.js:278:23)
+    at Parser.write (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\Parser.js:76:12)
+    at Protocol.write (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+
+Scyther lasted for 0 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 01:27:57 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+TypeError: user.ChatBanned.split is not a function
+    at check_ban_user (C:\xampp\htdocs\absochat\scyther.js:826:35)
+    at Query.<anonymous> (C:\xampp\htdocs\absochat\scyther.js:773:9)
+    at Query.<anonymous> (C:\xampp\htdocs\absochat\node_modules\mysql\lib\Connection.js:502:10)
+    at Query._callback (C:\xampp\htdocs\absochat\node_modules\mysql\lib\Connection.js:468:16)
+    at Query.Sequence.end (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\sequences\Sequence.js:83:24)
+    at Query._handleFinalResultPacket (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\sequences\Query.js:139:8)
+    at Query.EofPacket (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\sequences\Query.js:123:8)
+    at Protocol._parsePacket (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\Protocol.js:278:23)
+    at Parser.write (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\Parser.js:76:12)
+    at Protocol.write (C:\xampp\htdocs\absochat\node_modules\mysql\lib\protocol\Protocol.js:38:16)
+
+Scyther lasted for 12 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:29:46 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 15 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:30:29 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:31:13 .. undefined: POGGERS
+m >> 12/27/18 01:34:55 .. undefined: /clear
+
+************** CRASH *****************
+
+Scyther lasted for 5 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 01:35:37 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:35:44 .. undefined: POGGERS
+m >> 12/27/18 01:35:49 .. undefined: /clear
+m >> 12/27/18 01:35:52 .. undefined: z z z
+m >> 12/27/18 01:35:56 .. undefined: not picking up user data?
+
+************** CRASH *****************
+
+Scyther lasted for 22 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:38:01 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 32 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 01:38:38 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:38:53 .. undefined: n n n nani?!
+
+************** CRASH *****************
+
+Scyther lasted for 80 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:40:00 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:40:02 .. undefined: zzzzzzzzz
+
+************** CRASH *****************
+
+Scyther lasted for 26 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:40:30 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:40:42 .. undefined: jknqwerk
+
+************** CRASH *****************
+
+Scyther lasted for 54 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:41:26 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:41:28 .. undefined: qwer
+
+************** CRASH *****************
+
+Scyther lasted for 90 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+m >> 12/27/18 01:42:58 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:43:09 .. Toxocious: qwerqwer
+
+************** CRASH *****************
+
+Scyther lasted for 2 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:45:10 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:45:15 .. Toxocious: z z z
+m >> 12/27/18 01:45:18 .. Toxocious: big derp
+m >> 12/27/18 01:45:23 .. Toxocious: LF MESSAGE HISTORY
+
+************** CRASH *****************
+
+Scyther lasted for 112 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:47:05 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 40 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:47:46 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 6 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:47:56 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:48:58 .. Toxocious: klnqwerlkjqwer
+m >> 12/27/18 01:48:59 .. Toxocious: qowejroiqwer
+m >> 12/27/18 01:49:00 .. Toxocious: asdklmla
+m >> 12/27/18 01:49:01 .. Toxocious: asdfkp;
+m >> 12/27/18 01:49:02 .. Toxocious: asdflk
+m >> 12/27/18 01:49:02 .. Toxocious: spam
+
+************** CRASH *****************
+
+Scyther lasted for 3 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:51:14 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:54:15 .. Toxocious: qwer
+m >> 12/27/18 01:55:05 .. Toxocious: z z z z
+m >> 12/27/18 01:55:49 .. Toxocious: qwerqwer
+
+************** CRASH *****************
+
+Scyther lasted for 4 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:56:00 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:57:01 .. Toxocious: crash scyther
+
+************** CRASH *****************
+Error: A User initiated crash has occurred.
+    at Timeout._onTimeout (C:\xampp\htdocs\absochat\scyther.js:191:17)
+    at ontimeout (timers.js:498:11)
+    at tryOnTimeout (timers.js:323:5)
+    at Timer.listOnTimeout (timers.js:290:5)
+
+Scyther lasted for 63 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:57:10 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 57 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 01:58:08 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 01:58:15 .. Toxocious: jqweklrnqwejkrnklvqw
+
+************** CRASH *****************
+
+Scyther lasted for 22 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 02:21:56 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 1 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 02:22:17 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 4 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 02:22:47 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 02:25:50 .. Toxocious: qwer
+
+************** CRASH *****************
+
+Scyther lasted for 3 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 02:26:50 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 02:27:04 .. Toxocious: fucking hello?!
+m >> 12/27/18 02:28:08 .. Toxocious: jklansdfklj
+m >> 12/27/18 02:28:11 .. Toxocious: pogchamp?
+
+************** CRASH *****************
+
+Scyther lasted for 2 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 02:28:52 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 02:28:56 .. Toxocious: qwer
+m >> 12/27/18 02:28:56 .. Toxocious: qwer
+m >> 12/27/18 02:28:57 .. Toxocious: qwer
+m >> 12/27/18 02:28:57 .. Toxocious: qwer
+m >> 12/27/18 02:28:57 .. Toxocious: qwer
+m >> 12/27/18 02:28:57 .. Toxocious: qwer
+m >> 12/27/18 02:28:58 .. Toxocious: qwer
+m >> 12/27/18 02:28:58 .. Toxocious: wer
+m >> 12/27/18 02:28:58 .. Toxocious: werqwr
+m >> 12/27/18 02:28:59 .. Toxocious: qwr
+m >> 12/27/18 02:29:22 .. Toxocious: qwer
+m >> 12/27/18 02:30:52 .. Toxocious: zzz
+m >> 12/27/18 02:32:24 .. Toxocious: qwer
+m >> 12/27/18 02:35:02 .. Toxocious: UNDEFINED?!
+
+************** CRASH *****************
+
+Scyther lasted for 6 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 02:40:03 .. Scyther: Chaterpie activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 117 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Server: absolute :: Port: 3000
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 02:42:11 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 02:44:20 .. Toxocious: /clear
+
+************** CRASH *****************
+
+Scyther lasted for 7 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 02:49:14 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 02:49:22 .. Error: The chat has been cleared by undefined.
+m >> 12/27/18 02:51:36 .. Error: The chat has been cleared by undefined.
+m >> 12/27/18 02:52:55 .. Error: The chat has been cleared by undefined.
+m >> 12/27/18 02:52:58 .. Error: The chat has been cleared by undefined.
+
+************** CRASH *****************
+
+Scyther lasted for 4 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 02:53:26 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 02:53:31 .. Toxocious: zzz
+m >> 12/27/18 02:55:26 .. Toxocious: qwerqwerqqwer
+
+************** CRASH *****************
+
+Scyther lasted for 3 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 02:57:24 .. Scyther: Chaterpie activated. Say, hey.
+m >> 12/27/18 16:41:45 .. Toxocious: z z z
+m >> 12/27/18 16:41:49 .. Toxocious: ???
+m >> 12/27/18 16:42:21 .. Toxocious: ?
+
+************** CRASH *****************
+
+Scyther lasted for 13.86 hours.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Server: absolute :: Port: 3000
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 16:49:11 .. Scyther: Absolute Chat has been activated. Say, hey.
+
+************** CRASH *****************
+
+Scyther lasted for 2 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 12/27/18 16:51:13 .. Absol: Absolute Chat has been activated. Say, hey.
+
+************** CRASH *****************
+
+Absolute Chat lasted for 24 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Server: absolute :: Port: 3000
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 12/27/18 16:51:38 .. Absol: Absolute Chat has been activated. Say, hey.
+m >> 12/28/18 16:05:29 .. Toxocious: ???
+
+************** CRASH *****************
+
+Absolute Chat lasted for 26.65 hours.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+m >> 01/07/19 20:45:58 .. Absol: Long have we waited. Absolute activated.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+************** CRASH *****************
+
+Absolute Chat lasted for 74 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/09/19 03:07:27 .. Absol: Long have we waited. Absolute activated.
+Server: absolute :: Port: 3000
+m >> 01/09/19 03:07:41 .. Toxocious: o-o
+m >> 01/09/19 04:57:12 .. Toxocious: .-.

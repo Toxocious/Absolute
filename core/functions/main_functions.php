@@ -1,7 +1,8 @@
 <?php
 	define("GAME_DATABASE", "absolute");
 	define("GAME_DATABASE_USER", "root");
-	define("GAME_DATABASE_PASS", "DvkDcU44QPsMnVsxDDKdcW");
+	define("GAME_DATABASE_PASS", '$bQ721qb9oS3WIh#SQgEGzA7');
+	define("GAME_DEFAULT_SALT", "5rrx4YP64TIuxqclMLaV1elGheNxJJRggMxzQjv5gQeFl84NFgXvR3NxcHuOc31SSZBTzUFEt0mYQ4Oo");
 
 	function DatabaseConnect($DB = GAME_DATABASE, $User = GAME_DATABASE_USER, $Pass = GAME_DATABASE_PASS)
 	{
@@ -26,7 +27,7 @@
 					Please contact a staff member.
 				</div>
 			";
-			HandleError( $e->getMessage() );
+			echo $e->getMessage();
 			exit();
 		}
 	
@@ -44,6 +45,50 @@
 		if ( $Message != '' )
 		{
 			file_put_contents('txt/logs.txt', "[".$FetchDate."] Error: ".$Message.PHP_EOL , FILE_APPEND | LOCK_EX);
+		}
+	}
+
+	/**
+	 * Filters user inputs.
+	 * Add more parameters later on for more diversity.
+	 */
+	function Purify($input)
+	{
+		$text = $input;
+
+		if ( is_array($text) )
+		{
+			foreach ( $text as $key => $T )
+			{
+				$T = htmlentities($T, ENT_NOQUOTES, "UTF-8");
+				$T = nl2br($T, false);
+				$text[$key] = $T;
+			}
+		}
+		else
+		{
+			$text = htmlentities($text, ENT_NOQUOTES, "UTF-8");
+			$text = nl2br($text, false);
+		}
+
+		return $text;
+	}
+	
+	/**
+	 * Performs a check to see if the current date is between two dates.
+	 */
+	function isBetweenDates($date1, $date2)
+	{
+		$paymentDate = new DateTime(); // Today
+		$contractDateBegin = new DateTime($date1);
+		$contractDateEnd = new DateTime($date2);
+
+		if (
+			$paymentDate->getTimestamp() > $contractDateBegin->getTimestamp() &&
+			$paymentDate->getTimestamp() < $contractDateEnd->getTimestamp()) {
+			return true;
+		} else {
+			return false;
 		}
 	}
 
@@ -182,7 +227,7 @@
 			$Text = $this->Text;
 
 			if (strlen($Text) < $Q['min'] || strlen($Text) > $Q['max']) {
-				return $Q['pre']." must be between ".Format($Q['min'])." and ".Format($Q['max'])." characters long.";
+				return $Q['pre']." must be between ".number_format($Q['min'])." and ".number_format($Q['max'])." characters long.";
 			}
 			if (isset($Q['numbersonly']) && is_numeric($Text)) {
 				return $Q['pre']." cannot be made out of just numbers.";
@@ -306,24 +351,15 @@
 	*/
 	function Domain($Area)
 	{
-		if ($Area == "1")
+		if ( $Area === 1 )
 		{
-			if ($_SERVER['HTTP_HOST'] == "localhost")
+			if ( $_SERVER['HTTP_HOST'] == "localhost" )
 			{
-				return "absolute.localhost.com";
+				return;
 			}
-
-			return "http://absolute.localhost.com";
 		}
-		elseif ($Area == "2")
+		else
 		{
-			if ($_SERVER['HTTP_HOST'] == "localhost")
-			{
-				return "absolute.localhost.com";
-			}
-			else
-			{
-				return "https://sprites.absolute.net";
-			}
+			return;
 		}
 	}

@@ -1,4 +1,22 @@
 <?php
+	// Timer function.
+	function timer()
+	{
+		static $Timer_Start;
+
+		if ( is_null($Timer_Start) )
+		{
+			$Timer_Start = microtime(true);
+		}
+		else
+		{
+			$Difference = round((microtime(true) - $Timer_Start), 4);
+			$Timer_Start = null;
+
+			return $Difference;
+		}
+	}
+
   // Set the timezone that Absolute is based on.
 	date_default_timezone_set('America/Los_Angeles');
 	$Date = date("M dS, Y g:i:s A");
@@ -19,14 +37,6 @@
 		$cache_expire = session_cache_expire();
 	}
 
-	header("Content-Type: text/html; charset=UTF-8");
-  header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
-  header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
-  header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-  header("Cache-Control: post-check=0, pre-check=0", false);
-  header("Pragma: no-cache");
-
-
 	// Start the session before doing anything else.
 	if ( !isset($_SESSION) )
 	{
@@ -45,10 +55,12 @@
 	require_once $Dir_Root . '/core/functions/global_functions.php';
 
 	// Require Pokemon and User classes.
-	require_once $Dir_Root . '/core/classes/user.php';
-	$User_Class = new User();
 	require_once $Dir_Root . '/core/classes/pokemon.php';
 	$PokeClass = new Pokemon();
+	require_once $Dir_Root . '/core/classes/user.php';
+	$UserClass = new User();
+	require_once $Dir_Root . '/core/classes/item.php';
+	$Item_Class = new Item();
 
 	// Proxies sometimes send the X-Forwarded-For header to indicate the actual
 	// IP address of the client. This cannot really be trusted, because the header
@@ -58,14 +70,17 @@
 	{
 	  $IP_List = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
 
-		if ( $IP_List[0] && $IP_List[0] != '127.0.0.1' )
+		if ( $IP_List[0] != '127.0.0.1' )
 		{
 	    $_SERVER['REMOTE_ADDR'] = $IP_List[0]; // The first proxy in the list is the client IP.
 	  }
 	}
-
-	$Parse_URL = parse_url((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 	
+	/**
+	 * Get page data.
+	 */
+	$Parse_URL = parse_url((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+
 	$Fetch_Page = $PDO->prepare("SELECT * FROM `pages` WHERE `URL` = ? LIMIT 1");
 	$Fetch_Page->execute([$Parse_URL['path']]);
 	$Fetch_Page->setFetchMode(PDO::FETCH_ASSOC);
@@ -76,6 +91,7 @@
 	 * Fetch their database information.
 	 * Update their overall playtime.
 	 * Fetch their roster.
+	 * Fetch page data.
 	 */
 	if ( isset($_SESSION['abso_user']) )
 	{
@@ -83,6 +99,11 @@
 		$Fetch_User->execute([$_SESSION['abso_user']]);
 		$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 		$User_Data = $Fetch_User->fetch();
+
+		if ( isset($Current_Page) )
+		{
+			$Page = $Current_Page['ID'];
+		}
 
 		if ( !isset($_SESSION['Playtime']) )
 		{
@@ -95,8 +116,8 @@
 
 		try
 		{
-			$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Playtime` = `Playtime` + ?,  `Last_Page` = ? WHERE `id` = ? LIMIT 1");
-			$Update_User->execute([$Time, $Playtime, $Current_Page['Name'], $User_Data['id']]);
+			$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
+			$Update_User->execute([$Time, $Current_Page['Name'], $Playtime, $User_Data['id']]);
 
 			$Fetch_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
 			$Fetch_Roster->execute([$User_Data['id']]);
@@ -107,6 +128,6 @@
 		}
 		catch ( PDOException $e )
 		{
-			echo $e->getMessage();
+			HandleError( $e->getMessage() );
 		}
 	}
