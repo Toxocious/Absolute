@@ -21,7 +21,7 @@
   if ( isset($Profile_Data['id']) )
   {
     $Current_Time = time();
-		$Calc_Difference = $Current_Time - $Profile_Data['Last_Active'];
+    $Calc_Difference = $Current_Time - $Profile_Data['Last_Active'];
 ?>
 
 <div class='content'>
@@ -70,18 +70,13 @@
             <img src='<?= $Profile_Data['Avatar']; ?>' />
           </div>
           <div style='float: left; width: 65%;'>
-            <?php
-              if ( $Profile_Data['Rank'] === '420' )
-                echo	"<div><span class='admin'>Administrator</span></div>";
-              else if ( $Profile_Data['Rank'] === '69' )
-                echo	"<div><span class='gmod'>Global Moderator</span></div>";
-              else if ( $Profile_Data['Rank'] === '12' )
-                echo	"<div><span class='cmod'>Chat Moderator</span></div>";
-              else 
-                echo  "<div><span class='member'>Member</span></div>";
-            ?>
-            <div style='font-size: 12px;'><b>Joined On:</b> <?= $Profile_Data['Date_Registered']; ?></div>
-            <div style='font-size: 12px;'><b>Last Active:</b> <?= lastseen($Profile_Data['Last_Active'], 'week'); ?></div>
+            <?= $UserClass->DisplayUserRank($Profile_Data['id']); ?>
+            <div style='font-size: 12px;'>
+              <b>Joined On:</b> <?= date("F j, Y (g:i A)", $Profile_Data['Date_Registered']); ?>
+            </div>
+            <div style='font-size: 12px;'>
+              <b>Last Active:</b> <?= lastseen($Profile_Data['Last_Active'], 'week'); ?>
+            </div>
             <?php
               $Playtime_Sec = $Profile_Data['Playtime'];
               if ($Playtime_Sec == 0) {
@@ -99,9 +94,13 @@
             <div style='font-size: 12px;'><b>Playtime:</b> <?= $Playtime_Is; ?></div>
             <?php
               if ( $Calc_Difference / 60 < 15 )
+              {
                 echo "<div style='color: #00ff00; font-size: 18px;'>Online</div>";
+              }
               else
+              {
                 echo "<div style='color: #ff0000; font-size: 18px;'>Offline</div>";
+              }
             ?>
           </div>
         </div>
@@ -181,6 +180,36 @@
     {
       $('#profileAJAX').html(data);
     });
+  }
+
+  var currentFilter = [
+    0,0,0,0
+  ];
+
+  function filterSelect(row, type)
+  {
+    console.log(this);
+    switch (row)
+    {
+      case 1: var Cells = ['normal', 'shiny', 'soulless', 'forest', 'cloud', 'spirit']; break;
+      case 2: var Cells = ['m','f','g','?']; break;
+      case 3: var Cells = ['level','pokedex','id','abc','iv','item']; break;
+      case 4: var Cells = ['asc','desc']; break;
+    }
+
+    for (var i = 0; i < Cells.length; ++i)
+    {
+      $('#'+row+'_'+Cells[i]).attr('class', 'searchColor').css({"color":"", "cursor":"pointer"});
+    }
+
+    if (currentFilter[row-1] != type)
+    {
+      currentFilter[row-1] = type;
+    }
+    else
+    {
+      currentFilter[row-1] = 0;
+    }
   }
 </script>
 

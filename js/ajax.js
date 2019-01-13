@@ -94,7 +94,7 @@ function openMessages()
 	});
 	*/
 
-	/* ============= Private Messaging ============= *
+	/* ============= Private Messaging ============= */
 	function showInbox(id) {
 			$('#messages').html("<div class='description' style='margin: 5px 0px 0px 0px'>Loading..</div>");
 			
@@ -159,7 +159,7 @@ function openMessages()
 			});
 		}
 		
-		/* ============= POKEMON CENTER AJAX REQUESTS ============= 
+		// ============= POKEMON CENTER AJAX REQUESTS ============= //
 		if ( document.URL.indexOf('pokemon_center.php') >= 0 ) {
 			function showPokemon(id, tab) {
 				$('.overlay').css({ "visibility":"visible" });
@@ -329,7 +329,7 @@ function openMessages()
 			}
 		}
 		
-	/* ========== Evolution Center ========== 
+	/* ========== Evolution Center ========== */
 	if ( document.URL.indexOf('evolution_center.php') >= 0 ) {
 		function showPokemon(id) {
 			$('#selectedPokemon').html("Loading..");

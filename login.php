@@ -11,7 +11,7 @@
 		);
 		session_destroy();
 		unset($_SESSION);
-		//header("Location: login.php");
+		header("Location: login.php");
 	}
 
 	if ( isset($_SESSION['abso_user']) )
@@ -24,6 +24,7 @@
 				</div>
 			</div>
 		";
+		
 		require_once 'core/required/layout_bottom.php';
 		exit();
 	}
@@ -34,13 +35,16 @@
 		$Password = Text($_POST['password'])->in();
 		$IP = $_SERVER["REMOTE_ADDR"];
 
-		try {
-			$Query_User = $PDO->prepare("SELECT * FROM `users` WHERE `Username` = ? or `id` = ?  LIMIT 1");
+		try
+		{
+			$Query_User = $PDO->prepare("SELECT * FROM `users` WHERE `Username` = ? or `id` = ? LIMIT 1");
 			$Query_User->execute([$Username, $Username]);
 			$Query_User->setFetchMode(PDO::FETCH_ASSOC);
 			$User_Info = $Query_User->fetch();
-		} catch ( PDOException $e ) {
-			echo $e->getMessage();
+		}
+		catch ( PDOException $e )
+		{
+			HandleError( $e->getMessage() );
 		}
 
 		if ( !isset($User_Info['Username']) )
@@ -60,7 +64,7 @@
 			if ( !isset($Oops) )
 			{
 				$_SESSION['abso_user'] = $User_Info['id'];
-      	//header("Location: index.php");
+      	header("Location: index.php");
 			}
 		}
 	}

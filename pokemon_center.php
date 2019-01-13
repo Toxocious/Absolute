@@ -10,7 +10,7 @@
 	}
 	catch ( PDOException $e )
 	{
-		echo $e->getMessage();
+		HandleError( $e->getMessage() );
 	}
 ?>
 
@@ -36,10 +36,10 @@
 					<?php
 						for ( $i = 0; $i <= 5; $i++ )
 						{
-              if ( isset($Fetch_Roster[$i]['ID']) )
-              {
+							if ( isset($Fetch_Roster[$i]['ID']) )
+							{
 								$Roster_Slot[$i] = $PokeClass->FetchPokemonData($Fetch_Roster[$i]['ID']);
-
+			
 								if ( $Roster_Slot[$i]['Item'] != null )
 								{
 									$Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin: 5px 0px 0px -10px; position: absolute;' />";
@@ -50,19 +50,41 @@
 								}
 								
 								echo "
-									<div class='roster_slot' style='width: calc(100% / 3);'>
-										<div style='float: left;'>
-											<div style='background: #334364; border-right: 1px solid #4A618F; height: calc(132px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 1);\" style='display: block; padding: 10px;'>1</a></div>
-											<div style='background: #425780; border-right: 1px solid #4A618F; height: calc(131px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 2);\" style='display: block; padding: 10px;'>2</a></div>
-											<div style='background: #334364; border-right: 1px solid #4A618F; height: calc(131px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 3);\" style='display: block; padding: 10px;'>3</a></div>
-										</div>
-										<img src='{$Roster_Slot[$i]['Gender']}' style='height: 20px; margin: 10px 0px 0px -20px; position: absolute; width: 20px;' />
-										<img src='{$Roster_Slot[$i]['Sprite']}' ?>
-										$Item
-										<div style='float: right;'>
-											<div style='background: #334364; border-left: 1px solid #4A618F; height: calc(132px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 4);\" style='display: block; padding: 10px;'>4</a></div>
-											<div style='background: #425780; border-left: 1px solid #4A618F; height: calc(131px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 5);\" style='display: block; padding: 10px;'>5</a></div>
-											<div style='background: #334364; border-left: 1px solid #4A618F; height: calc(131px / 3); margin-top: -5px;'><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, 6);\" style='display: block; padding: 10px;'>6</a></div>
+									<div class='roster_slot full' style='/*width: calc(100% / 3);*/'>
+										<div style='float: left;' class='slots left'>
+								";
+			
+								for ($x = 1; $x <= 3; ++$x) {
+									if ( $x == $i + 1 || $x > count($Fetch_Roster) )
+									{
+										echo "<div><span style='color: #000; display: block; padding: 13px;'>$x</span></div>";
+									}
+									else
+									{
+										echo "<div><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='display: block; padding: 13px;'>$x</a></div>";
+									}
+								}
+			
+								echo "
+									</div>
+									<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; margin: 10px 0px 0px -20px; position: absolute; width: 20px;' />
+									<img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
+									$Item
+									<div style='float: right;' class='slots right'>
+								";
+			
+								for ($x = 4; $x <= 6; ++$x) {
+									if ( $x == $i + 1 || $x > count($Fetch_Roster) )
+									{
+										echo "<div><span style='color: #000; display: block; padding: 13px;'>$x</span></div>";
+									}
+									else
+									{
+										echo "<div><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='display: block; padding: 13px;'>$x</a></div>";
+									}
+								}
+			
+								echo "
 										</div>
 										<div><b>{$Roster_Slot[$i]['Display_Name']}</b></div>
 										<div class='info'>
@@ -73,18 +95,18 @@
 											<div>Experience</div>
 											<div>{$Roster_Slot[$i]['Experience']}</div>
 										</div>
-                </div>
+									</div>
 								";
-              }
-              else
-              {
-                $Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
-                $Roster_Slot[$i]['Display_Name'] = 'Empty';
-                $Roster_Slot[$i]['Level'] = '0';
+							}
+							else
+							{
+								$Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
+								$Roster_Slot[$i]['Display_Name'] = 'Empty';
+								$Roster_Slot[$i]['Level'] = '0';
 								$Roster_Slot[$i]['Experience'] = '0';
-
+			
 								echo "
-									<div class='roster_slot' style='width: calc(100% / 3);'>
+									<div class='roster_slot full' style='/*width: calc(100% / 3);*/'>
 										<img src='{$Roster_Slot[$i]['Sprite']}' />
 										<div><b>{$Roster_Slot[$i]['Display_Name']}</b></div>
 										<div class='info'>
@@ -97,8 +119,8 @@
 										</div>
 									</div>
 								";
-              }
-            }
+							}
+						}
 					?>
         </div>
       </div>
@@ -122,7 +144,7 @@
 						foreach ( $Box_Pokemon as $Index => $Pokemon )
 						{
 							$Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
-							echo "<img class='popup cboxElement' src='{$Pokemon['Icon']}' href='core/ajax/pokemon.php?id={$Pokemon['ID']}' />";
+							echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
 						}
 			
 						if ( count($Box_Pokemon) == 0 )
@@ -135,7 +157,7 @@
 
       <div class='panel' style='float: right; width: calc(100% / 2 - 2.5px);'>
         <div class='panel-heading'>Selected Pokemon</div>
-        <div class='panel-body' style='padding: 3px;' id='dataDiv'>
+        <div class='panel-body' style='padding: 3px;' id='pokeData'>
           <div style='padding: 5px;'>Please select a Pokemon to view it's statistics.</div>
         </div>
       </div>
@@ -159,10 +181,6 @@
 			this.className += "active";
 		});
 	}
-
-	/**
-	 * REFACTOR TIME
-	 */
 	 
 	 /**
 	 	* Handle AJAX requests pertaining to moving Pokemon around, as well as displaying their stats if necessary.
@@ -210,55 +228,90 @@
 			}
 		});
 	}
-	
-	/**
-	 * this needs to be recoded into a single function..
-	 */
 
+	/**
+	 * Display a Pokemon's data to the user.
+	 */
+	function displayPokeData(PokeID)
+	{
+		$.ajax({
+			type: 'POST',
+			url: 'core/ajax/pokecenter/pokemon.php',
+			data: { PokeID: PokeID },
+			success: function(data)
+			{
+				$("#pokeData").html(data);
+			},
+			error: function(data)
+			{
+				$("#pokeData").html(data);
+			}
+		});
+	}
+
+	/**
+	 * Handle swapping between inventory tabs, as well as displaying item data.
+	 */
+	function itemHandler(request, category = null, id = null, pokeid = null)
+	{
+		$.ajax({
+			type: 'POST',
+			url: 'core/ajax/pokecenter/inventory.php',
+			data: { request: request, category: category, id: id, pokeid: pokeid },
+			success: function(data)
+			{
+				if ( request == 'item_data' )
+				{
+					$('#itemData').html(data);
+				}
+				else if ( request == 'item_tab' )
+				{
+					$('#activeTab').html(data);
+				}
+				else if ( request == 'attach' || request == 'detach' || request == 'detachall' )
+				{
+					$('#pokemon_center').html(data);
+				}
+			},
+			error: function(data)
+			{
+				$('#pokemon_center').html(data);
+			}
+		});
+	}
+
+	/**
+	 * Handle nicknaming Pokemon.
+	 */
+	function Nickname(PokeID)
+	{
+		$.ajax({
+			type: 'POST',
+			url: 'core/ajax/pokecenter/nickname.php',
+			data: { PokeID: PokeID, Nickname: $("[name='" + PokeID + "_nick']").val() },
+			success: function(data)
+			{
+				$('#pokemon_center').html(data);
+			},
+			error: function(data)
+			{
+				$('#pokemon_center').html(data);
+			}
+		});
+	}
+
+	/**
+	 * Swap between tab content.
+	 */
 	function showTab(tab)
 	{
 		$.get('core/ajax/pokecenter/' + tab + '.php', function(data)
 		{
 			$('#pokemon_center').html(data);
-		});
-	}
-
-
-	function inventoryTab(tab, req, item_tab)
-	{
-		$.get('core/ajax/pokecenter/' + tab + '.php', { tab: tab, req: req, item_tab: item_tab }, function(data)
-		{
-			$('#activeTab').html(data);
-		});
-	}
-	
-	function showData(tab, req, id)
-	{
-		console.log("Page: " + tab + "\nRequest: " + req + "\nPokemon ID: " + id);
-
-		$.get('core/ajax/pokecenter/' + tab + '.php', { page: tab, req: req, id: id }, function(data)
-		{
-			$('#dataDiv').html(data);
-		});
-	}
-
-	function changeNick(req, id, slot)
-	{
-		$.post('core/ajax/pokecenter/' + tab + '.php', { req: req, id: id, nickname: $('#nickname').val(), slot: slot }, function(data)
-		{
-			$('#dataDiv').html(data);
-		});
-	}
-
-	function selectItem(tab, req, id)
-	{
-		$.get('core/ajax/pokecenter/' + tab + '.php', { tab: tab, req: req, id: id }, function(data)
-		{
-			$('#dataDiv').html(data);
+			$("img.popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
 		});
 	}
 </script>
 
 <?php
 	require 'core/required/layout_bottom.php';
-?>

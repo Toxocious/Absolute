@@ -1,15 +1,18 @@
 <?php
 	require 'core/required/layout_top.php';
 
-	try {
+	try
+	{
 		$Fetch_News = $PDO->query("SELECT * FROM `news` ORDER BY `id` DESC LIMIT 1");
 		$News_Post = $Fetch_News->fetch();
 
 		$Fetch_News_Poster = $PDO->prepare("SELECT `Username`, `id`, `Avatar`, `Rank` FROM `users` WHERE `id` = ? LIMIT 1");
 		$Fetch_News_Poster->execute([$News_Post['Poster_ID']]);
 		$News_Poster = $Fetch_News_Poster->fetch();
-	} catch (PDOException $e) {
-		echo $e->getMessage();
+	}
+	catch ( PDOException $e )
+	{
+		HandleError( $e->getMessage() );
 	}
 ?>
 
@@ -17,27 +20,30 @@
 	<div class='head'>News</div>
 	<div class='box news'>
 		<div class='panel'>
-			<div class='panel-heading'>
+			<div class='panel-heading' style='height: 27px;'>
 				<?php
 					if ( isset($_SESSION['abso_user']) )
 					{
-						if ( $User_Data['Rank'] >= '21' ) {
+						if ( $User_Data['Power'] >= '3' )
+						{
 							echo	"<div style='float: left; width: 25%;'>";
-							echo		"<a href='news_edit.php?id=" . $News_Post['id'] . "'>Edit Post</a>";
+							echo		"<a href='news_edit.php?id=" . $News_Post['id'] . "' style='color: #888;'>Edit Post</a>";
 							echo	"</div>";
 								
 							echo	"<div style='float: left; width: 75%;'>";
 							echo		"<b>" . $News_Post['News_Title'] . "</b>";
 							echo	"</div>";
-						} else {
-							echo	"<div class='col-xs-12'>";
+						}
+						else
+						{
+							echo	"<div style='width: 100%;'>";
 							echo		$News_Post['News_Title'];
 							echo	"</div>";
 						}
 					}
 					else
 					{
-						echo	"<div class='col-xs-12'>";
+						echo	"<div style='width: 100%;'>";
 						echo		$News_Post['News_Title'];
 						echo	"</div>";
 					}
@@ -47,19 +53,33 @@
 				<div style='float: left; padding-top: 5px; width: 25%;'>
 					<img src='<?= $News_Poster['Avatar']; ?>' /><br />
 					<?php
-						if ( $News_Poster['Rank'] === '12' ) {
-							echo "<a class='cmod' href='profile.php?id=" . $News_Poster['id'] . "'>" . $News_Poster['Username'] . "</a><br />";
+						switch( $News_Poster['Rank'] )
+						{
+							case "Administrator":
+								echo "<a class='admin' href='profile.php?id={$News_Poster['id']}'>{$News_Poster['Username']}</a><br />";
+								break;
+							case "Bot":
+								echo "<a class='bot' href='profile.php?id={$News_Poster['id']}'>{$News_Poster['Username']}</a><br />";
+								break;
+							case "Developer":
+								echo "<a class='dev' href='profile.php?id={$News_Poster['id']}'>{$News_Poster['Username']}</a><br />";
+								break;
+							case "Super Moderator":
+								echo "<a class='super_mod' href='profile.php?id={$News_Poster['id']}'>{$News_Poster['Username']}</a><br />";
+								break;
+							case "Moderator":
+								echo "<a class='mod' href='profile.php?id={$News_Poster['id']}'>{$News_Poster['Username']}</a><br />";
+								break;
+							case "Chat Moderator":
+								echo "<a class='chat_mod' href='profile.php?id={$News_Poster['id']}'>{$News_Poster['Username']}</a><br />";
+								break;
+							case "Member":
+								echo "<a class='member' href='profile.php?id={$News_Poster['id']}'>{$News_Poster['Username']}</a><br />";
+								break;
 						}
 
-						if ( $News_Poster['Rank'] === '69' ) {
-							echo "<a class='gmod' href='profile.php?id=" . $News_Poster['id'] . "'>" . $News_Poster['Username'] . "</a><br />";
-						}
-
-						if ( $News_Poster['Rank'] === '420' ) {
-							echo "<a class='admin' href='profile.php?id=" . $News_Poster['id'] . "'>" . $News_Poster['Username'] . "</a><br />";
-						}
+						echo $News_Post['News_Date'];
 					?>
-					<?= $News_Post['News_Date']; ?>
 				</div>
 				<div style='float: left; padding: 5px; width: 75%;'>
 					<?= nl2br($News_Post['News_Text']); ?>

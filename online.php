@@ -1,5 +1,24 @@
 <?php
 	require 'core/required/layout_top.php';
+
+	$Last_Active = time() - 60 * 10;
+
+	try
+	{
+		$Fetch_Online_Staff = $PDO->prepare("SELECT * FROM `users` WHERE `Power` >= 3 AND `Last_Active` > ?");
+		$Fetch_Online_Staff->execute([$Last_Active]);
+		$Fetch_Online_Staff->setFetchMode(PDO::FETCH_ASSOC);
+		$Online_Staff = $Fetch_Online_Staff->fetchAll();
+
+		$Fetch_Online_Users = $PDO->prepare("SELECT * FROM `users` WHERE `Power` = 1 AND `Last_Active` > ?");
+		$Fetch_Online_Users->execute([$Last_Active]);
+		$Fetch_Online_Users->setFetchMode(PDO::FETCH_ASSOC);
+		$Online_Users = $Fetch_Online_Users->fetchAll();
+	}
+	catch( PDOException $e )
+	{
+		HandleError( $e->getMessage() );
+	}
 ?>
 
 <div class='content'>
@@ -12,68 +31,44 @@
 		<div class='row'>
 			<div class='admin'>Staff</div>
 			<?php
-				$Online_Staff = mysqli_query($con, "SELECT * FROM members WHERE Rank > 1 ORDER BY Last_Active DESC");
-
-				foreach( $Online_Staff as $Key => $User )
+				foreach( $Online_Staff as $Key => $Value )
 				{
-					if ( $User['Rank'] === '420' )
-						$User_Rank = "admin";
-					else if ( $User['Rank'] === '69' )
-						$User_Rank = "gmod";
-					else if ( $User['Rank'] === '12' )
-						$User_Rank = "cmod";
-									
-					$Current_Time = time();
-					$Calc_Difference = $Current_Time - $User['Last_Active'];
-								
-					if ( $Calc_Difference / 60 < 15 )
-					{
-						if ( $User['RPG_Ban'] === '1' )
-							$CSS_Background = " style='background: #680000;'";
-						else
-							$CSS_Background = "";
-
-							echo "
-							<div class='online_" . $User_Rank . "'" . $CSS_Background . ">
-								<div>
-									<div class='" . $User['Rank'] . "'>" . $User['Username'] . "</div>
-									<div>" . lastseen($User['Last_Active'], 'week') . "</div>
-									<div>" . $User['Last_Page'] . "</div>
-								</div>
+					echo "
+						<div class='panel' style='float: left; margin-right: 5px; width: 200px;'>
+							<div class='panel-heading'>
+								<div class='{$Value['Rank']}' style='font-size: 14px; text-align: left;'>{$Value['Username']}</div>
+								<div style='margin-top: -20px; text-align: right;'>#" . number_format($Value['id']) . "</div>
 							</div>
-						";
-					}
+							<div class='panel-body' style='padding: 3px;'>
+								<div style='height: 100px;'><img src='{$Value['Avatar']}' /></div>
+								<a href='" . Domain(1) . "/profile.php?id={$Value['id']}'><b>{$Value['Username']}</b></a><br />
+								";
+								$UserClass->DisplayUserRank($Value['id']);
+					echo "
+							</div>
+						</div>
+					";
 				}
 			?>
 		</div>
 
 		<div class='row'>
-			<div class='member' style='width: 100% !important;'>Members</div>
+			<div class='member' style='margin-top: 15px; width: 100% !important;'>Members</div>
 			<?php
-				$Online_Staff = mysqli_query($con, "SELECT * FROM members WHERE Rank = 1 ORDER BY Last_Active DESC");
-
-				foreach( $Online_Staff as $Key => $User )
-				{									
-					$Current_Time = time();
-					$Calc_Difference = $Current_Time - $User['Last_Active'];
-								
-					if ( $Calc_Difference / 60 < 15 )
-					{
-						if ( $User['RPG_Ban'] === '1' )
-							$CSS_Background = " style='background: #680000;'";
-						else
-							$CSS_Background = "";
-
-							echo "
-							<div class='online_member'" . $CSS_Background . ">
-								<div>
-									<div>" . $User['Username'] . "</div>
-									<div>" . lastseen($User['Last_Active'], 'week') . "</div>
-									<div>" . $User['Last_Page'] . "</div>
-								</div>
+				foreach( $Online_Users as $Key => $Value )
+				{
+					echo "
+						<div class='panel' style='float: left; margin-right: 5px; width: 200px;'>
+							<div class='panel-heading'>
+								<div class='{$Value['Rank']}' style='font-size: 14px; text-align: left;'>{$Value['Username']}</div>
+								<div style='margin-top: -20px; text-align: right;'>#" . number_format($Value['id']) . "</div>
 							</div>
-						";
-					}
+							<div class='panel-body' style='padding: 3px;'>
+								<div style='height: 100px;'><img src='{$Value['Avatar']}' /></div>
+								<a href='" . Domain(1) . "/profile.php?id={$Value['id']}'><b>{$Value['Username']}</b></a>
+							</div>
+						</div>
+					";
 				}
 			?>
 		</div>

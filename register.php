@@ -1,4 +1,16 @@
 <?php
+	/**
+	 * $Starter_List = [
+	 * 		[001: Bulbasaur], etc
+	 * ];
+	 * 
+	 * foreach ( $Starter_List as $Index => $Key )
+	 * {
+	 * 		show sprite + radio input
+	 * }
+	 */
+
+
 	require 'core/required/layout_top.php';
 
 	if ( isset($_SESSION['abso_user']) )
@@ -14,7 +26,6 @@
 		require 'core/required/layout_bottom.php';
 		exit();
 	}
-
 	else
 	{
 		if ( isset($_POST["register"]) )
@@ -22,12 +33,11 @@
 			$Username = ( isset($_POST["username"]) ) ? Text($_POST['username'])->in() : '';
 			$Password = ( isset($_POST["password"]) ) ? Text($_POST["password"])->in() : '';
 			$Password_Confirm = ( isset($_POST["password_confirm"]) ) ? Text($_POST["password_confirm"])->in() : '';
-			$Gender = ( isset($_POST['gender']) ) ? Text($_POST["genderYou"])->in() : '';
+			$Gender = ( isset($_POST['gender']) ) ? Text($_POST["gender"])->in() : 'u';
 			$Starter = ( isset($_POST['starter']) ) ? Text($_POST["starter"])->in() : '';
 			$Avatar = ( isset($_POST['avatar']) ) ? Text($_POST["avatar"])->in() : '1';
 
 			try {
-				//Check if username is taken.
 				$Check_Username = $PDO->prepare("SELECT COUNT(*) FROM `users` WHERE LOWER(`Username`) = LOWER(?) LIMIT 1");
 				$Check_Username->execute([$Username]);
 				$Username_Available = $Check_Username->fetchColumn();
@@ -67,76 +77,88 @@
 			{
 				$Oops = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid gender.</div>";
 			}
-			else if ( !in_array($Pokemon, ['1', '4', '7', '152', '155', '158', '252', '255', '258', '387', '390', '393', '495', '498', '501', '650', '653', '656', '722', '725', '728']) )
+			else if ( !in_array($Starter, ['1', '4', '7', '152', '155', '158', '252', '255', '258', '387', '390', '393', '495', '498', '501', '650', '653', '656', '722', '725', '728']) )
 			{
 				$Oops = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid starter Pokemon.</div>";
 			}
 
-			// No errors have been found; proceed with the user's registration.
 			if ( !isset($Oops) )
 			{
-
-				$Base_Salt = PHP_SALT;
+				$Base_Salt = GAME_DEFAULT_SALT;
 				$Base_Key = RandomSalt(80);
-				$Hashed_Password = hash_hmac('sha512', $Password.$Base_Key, $Base_Salt);
+				$Hashed_Password = hash_hmac('sha512', $Password . $Base_Key, $Base_Key);
 				$Signed_Up_On = time();
+				$Auth_Code = mt_rand(100000, 99999999);
 
-				$Gender = (mt_rand(1, 7) == 1) ? 'Female' : 'Male';
+				switch ($Gender)
+				{
+					case 'f':
+						$Gender = 'Female';
+						break;
+					case 'm':
+						$Gender = 'Male';
+						break;
+					case 'u':
+						$Gender = 'Ungendered';
+						break;
+				}
 
-				// Create the user, as well as their starter.
-				try {
+				try
+				{
 					$User_Create = $PDO->prepare("
-          INSERT INTO members (
-						`Username`,
-						`Password`,
-						`Password_Salt`,
-            `Gender`,
-						`Date_Registered`
-						`Avatar`)
-						VALUES (?, ?, ?)
+						INSERT INTO `users` (
+							`Username`,
+							`Password`,
+							`Password_Salt`,
+							`Gender`,
+							`Date_Registered`,
+							`Avatar`,
+							`Auth_Code`
+						)
+						VALUES (?, ?, ?, ?, ?, ?, ?)
 					");
-					$User_Create->execute([$Username, $Hashed_Password, $Base_Key, $Gender, $Signed_Up_On, $Avatar]);
+					$User_Create->execute([ $Username, $Hashed_Password, $Base_Key, $Gender, time(), "images/Avatars/".$Avatar.".png", $Auth_Code ]);
 					$User_ID = $PDO->lastInsertId();
 
-					$Starter_Query = $PDO->prepare("SELECT * FROM `pokedex` WHERE `ID` = ? LIMIT 1");
-					$Starter_Query->execute([$Starter]);
-					$Starter_Data = $Starter_Query->fetch();
+					$Nature_List = [
+						'Lonely',	'Adamant', 'Naughty', 'Brave', 'Bold', 'Impish', 'Lax', 'Relaxed', 'Modest', 'Mild', 'Rash', 'Quiet', 'Calm', 'Gentle', 'Careful', 'Sassy', 'Timid', 'Hasty', 'Jolly', 'Naive', 'Bashful', 'Docile', 'Hardy', 'Quirky', 'Serious',	
+					];
+					$Nature_Random = array_rand($Nature_List, 1);
+					$Nature = $Nature_List[$Nature_Random];
+
+					$Poke_Gender = (mt_rand(1, 7) == 1) ? 'Female' : 'Male';
+					$IVs = mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31);
+					$Starter_Data = $PokeClass->FetchPokedexData($Starter);
 
 					$Starter_Create = $PDO->prepare("
 						INSERT INTO `pokemon` (
 							`Pokedex_ID`,
+							`Alt_ID`,
 							`Name`,
-							`Owner_Original`,
-							`Owner_Current`,
+							`Location`,
 							`Slot`,
+							`Owner_Current`,
+							`Owner_Original`,
 							`Gender`,
-							`HP`,
-							`Attack`,
-							`Defense`,
-							`SpAttack`,
-							`SpDefense`,
-							`Speed`,
-							`IV_HP`,
-							`IV_Attack`,
-							`IV_Defense`,
-							`IV_SpAttack`,
-							`IV_SpDefense`,
-							`IV_Speed`,
+							`IVs`,
+							`Nature`,
 							`Creation_Date`,
 							`Creation_Location`
 						) 
 						VALUES
-						(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+						(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 					");
-					$Starter_Create->execute([ $Starter_Data['ID'], $Starter_Data['Name'], $User_ID['id'], $User_ID['id'], '1', $Gender, $Starter_Data['HP'], $Stater_Data['Attack'], $Starter_Data['Defense'], $Starter_Data['SpAttack'], $Starter_Data['SpDefense'], $Starter_Data['Speed'], mt_rand(0, 31), mt_rand(0, 31), mt_rand(0, 31), mt_rand(0, 31), mt_rand(0, 31), mt_rand(0, 31), $Signed_Up_On, 'Starter' ]);
-				} catch ( PDOException $e ) {
-					echo $e->getMessage();
+					$Starter_Create->execute([ $Starter_Data['Pokedex_ID'], $Starter_Data['Alt_ID'], $Starter_Data['Name'], 'Roster', 1, $User_ID, $User_ID, $Poke_Gender, $IVs, $Nature, time(), 'Starter Pokemon' ]);
+				}
+				catch ( PDOException $e )
+				{
+					HandleError( $e->getMessage() );
 				}
 
 				$Oops = "
-					<div style='border: 2px solid #007f00; background: #001900; margin-bottom: 3px; width: 70%;'>
+					<div class='success' style='margin-bottom: -15px; width: 70%;'>
 						You've successfully registered an account on The Pokemon Absolute!<br />
-						<a href=\"login.php\">Login</a>
+						<a href='login.php'><b>Click Here To Login</b></a>
 					</div>
 				";
 			}
@@ -152,10 +174,17 @@
 			<div><a href='register.php' style='display: block;'>Register</a></div>
 			<div><a href='discord.php' style='display: block;'>Discord</a></div>
 		</div>
+
+		<?php
+			if ( isset($Oops) )
+			{
+				echo $Oops . "<br />";
+			}
+		?>
 		
 		<div class='description' style='background: #334364; margin-bottom: 5px; width: 70%;'>Please fill out the form below in order to begin your journey as a Pokemon Trainer.</div>
 
-		<form action="/action_page.php">
+		<form action="/register.php" method="post">
 			<div class='panel' style='margin-bottom: 5px;'>
 				<div class='panel-heading'>User Details</div>
 				<div class='panel-body' style='padding: 3px;'>
@@ -172,12 +201,12 @@
 						</select>
 					</div>
 
-					<div style='floaT: left; width: calc(100% / 3);'>
+					<div style='float: left; width: calc(100% / 3);'>
 						<b>Password</b><br />
 						<input type='password' name='password'>
 						<br />
 						<b>Confirm Password</b><br />
-						<input type='password' name='password_conf' />
+						<input type='password' name='password_confirm' />
 					</div>
 
 					<div style='padding-top: 40px;'>
@@ -187,7 +216,7 @@
 			</div>
 
 			<div class='row'>
-				<div class='panel' style='float: left; width: calc(100% / 2 - 2.5px);'>
+				<div class='panel' style='float: left; margin-left: 15px; width: calc(100% / 2 - 20px);'>
 					<div class='panel-heading'>Select A Starter</div>
 					<div class='panel-body'>
 						<div class='row'>
@@ -359,7 +388,7 @@
 					</div>
 				</div>
 
-				<div class='panel' style='float: left; margin-left: 5px; width: calc(100% / 2 - 2.5px);'>
+				<div class='panel' style='float: left; margin-left: 5px; width: calc(100% / 2 - 15px);'>
 					<div class='panel-heading'>Select An Avatar</div>
 					<div class='panel-body' style='max-height: 552px; overflow: auto;'>
 						<div class='row'>
