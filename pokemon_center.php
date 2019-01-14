@@ -26,7 +26,7 @@
 			<div onclick="showTab('moves');">Moves</div>
 			<div onclick="showTab('inventory');">Inventory</div>
 			<div onclick="showTab('nickname');">Nickname</div>
-			<div onclick="showTab('release');">Release</div>
+			<!--<div onclick="showTab('release');">Release</div>-->
 		</div>
     
     <div class='row' id='pokemon_center'>
@@ -241,6 +241,7 @@
 			success: function(data)
 			{
 				$("#pokeData").html(data);
+				$("img.popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
 			},
 			error: function(data)
 			{

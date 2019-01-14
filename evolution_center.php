@@ -5,8 +5,6 @@
 <div class='content'>
 	<div class='head'>Evolution Center</div>
 	<div class='box'>
-		<div class='description' style='margin-bottom: 5px;'>Evolution center dialog!</div>
-
 		<div class='panel' style='margin-bottom: 5px;'>
 			<div class='panel-heading'>Roster</div>
 			<div class='panel-body'>

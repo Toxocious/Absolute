@@ -4,9 +4,9 @@
  * A welcome way to spend your holiday 
  */
  
-var method = Chaterpie.prototype;
+var method = .prototype;
 
-function Chaterpie(socket, conn) {
+function (socket, conn) {
 	this.socket = socket;
 	this.conn = conn;
 	
@@ -39,4 +39,4 @@ method.auth = function(userID, postcode) {
 };
 
 
-module.exports = Chaterpie;
+module.exports = ;

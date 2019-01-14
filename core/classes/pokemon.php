@@ -219,11 +219,20 @@
 				$Icon = "/images/Pokemon/Icons/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
 			}
 
+			if ( $Pokedex['alter_poke_name'] !== null )
+			{
+				$Name = $Pokedex['poke_name'] . " " . $Pokedex['alter_poke_name'];
+			}
+			else
+			{
+				$Name = $Pokedex['poke_name'];
+			}
+
 			return [
 				"ID" => $Pokedex['id'],
 				"Pokedex_ID" => $Pokedex['Pokedex_ID'],
 				"Alt_ID" => $Pokedex['Alt_ID'],
-				"Name" => $Pokedex['poke_name'],
+				"Name" => $Name,
 				"Base_Stats" => $BaseStats,
 				"Sprite" => Domain(1) . $Sprite,
 				"Icon" => Domain(1) . $Icon,

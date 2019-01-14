@@ -26,11 +26,11 @@
 		<script type='text/javascript' src='<?= Domain(1); ?>/js/absochat.js'></script>
 		<script type='text/javascript'>
 			CHATERPIE_PORT = "3000";
-			DOMAIN = "localhost/";
+			DOMAIN = "<?= Domain(1); ?>";
 
 			$(function()
 			{
-				Chaterpie.user = {
+				Absolute.user = {
 					block_string: [],
 					postcode: "<?= $User_Data['Auth_Code']; ?>",
 					user_name: "<?= $User_Data['Username']; ?>",
@@ -39,7 +39,7 @@
 					auto_caps: "no",
 				}
 
-				Chaterpie.enable();
+				Absolute.enable();
 
 				// message box handling
 				$('#chatMessage').keydown(function(e)
@@ -47,7 +47,7 @@
 					if (e.keyCode == 13)
 					{
 						let text = $('#chatMessage').val().trim();
-						if (text != '' && Chaterpie.isConnected())
+						if (text != '' && Absolute.isConnected())
 						{
 							socket.emit("input",
 							{
@@ -65,14 +65,14 @@
 					if ( $User_Data['Power'] >= 3 )
 					{
 				?>
-					Chaterpie.isStaff = true;
+					Absolute.isStaff = true;
 
-					Chaterpie.staff = {
+					Absolute.staff = {
 						kick: function( uID ) {
 							socket.emit("chaterpie-kick-user", uID, $('#chatMessage').val());
 							$('#chatMessage').val('');
 
-							Chaterpie.changeWindow('chat');
+							Absolute.changeWindow('chat');
 							return false;
 						},
 
@@ -85,14 +85,14 @@
 							socket.emit("chaterpie-ban-user", uID, $('#chatMessage').val(), banTime);
 							$('#chatMessage').val('');
 
-							Chaterpie.changeWindow('chat');
+							Absolute.changeWindow('chat');
 							return false;
 						},
 
 						quickBan: function ( uID ) {
 							if ( confirm("Do you really want to ban user #"+uID+" for 5 minutes?") )
 							{
-								Chaterpie.staff.ban(uID, 300);
+								Absolute.staff.ban(uID, 300);
 							}
 						}
 					};
@@ -219,7 +219,7 @@
 				?>
 			</div>
 
-			<div class='money' style='border-left: none; float: left; width: 200px;'>
+			<div class='money' style='border-left: none; float: left; width: 199px;'>
 				<?= $Date; ?>
 			</div>
 		</div>

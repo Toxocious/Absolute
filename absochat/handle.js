@@ -1,9 +1,9 @@
 /*!
- * Chaterpie.js (c) B0sh 2015-2018
+ * Absolute.js (c) B0sh 2015-2018
  */
 
 var socket;
-Chaterpie = {
+Absolute = {
   version: '2.2',
   lastupdated: '12/8/2018',
   active:'',
@@ -41,11 +41,11 @@ Chaterpie = {
       return;
     } 
 
-    Chaterpie.socket.connect();
+    Absolute.socket.connect();
   },
 
   enable: function() {
-    Chaterpie.active = true;
+    Absolute.active = true;
     $('#ChaterpieContainer').css('display', 'block');
 
     // If the Socket is not created We need to set all the commands
@@ -59,15 +59,15 @@ Chaterpie = {
 
       socket.on("connect", function () {
         // console.log("connected to chaterpie");
-        // Chaterpie.addErrorMessage('connected to chaterpie.');
+        // Absolute.addErrorMessage('connected to chaterpie.');
 
         ChatMessage.purge();
-        Chaterpie.setTextarea();
+        Absolute.setTextarea();
         this.failed_connects = 0;
 
         socket.emit('auth', {
-          user: Chaterpie.user.user_id,
-          postcode: Chaterpie.user.postcode
+          user: Absolute.user.user_id,
+          postcode: Absolute.user.postcode
         });
 
       });
@@ -75,22 +75,22 @@ Chaterpie = {
       socket.on("disconnect", function() {
         // console.log("disconnected from chaterpie");
 
-        // Chaterpie.addErrorMessage('You have been disconnected from Chaterpie. Please refresh the page.');
-        Chaterpie.setTextarea();
+        // Absolute.addErrorMessage('You have been disconnected from Absolute. Please refresh the page.');
+        Absolute.setTextarea();
 
         setTimeout(function () {
-          Chaterpie.reconnect();
+          Absolute.reconnect();
         }, 2500);
       });
 
       socket.on("nick-list", function(data) {
-        Chaterpie.NickList = data;
-        Chaterpie.changeWindow('settings');
+        Absolute.NickList = data;
+        Absolute.changeWindow('settings');
       });
 
       socket.on("chaterpie-user-info", function(data) {
-        Chaterpie.UserInfo = data;
-        Chaterpie.changeWindow('userinfo');
+        Absolute.UserInfo = data;
+        Absolute.changeWindow('userinfo');
       });
 
       socket.on("irc-message", function(data) {
@@ -100,25 +100,25 @@ Chaterpie = {
       socket.on("irc-kick", function(data) {
         ChatMessage.add(data);
 
-        if (typeof data.users[0].userID !== 'undefined' && data.users[0].userID == Chaterpie.user.user_id) {
-          Chaterpie.kickinfo = data;
-          Chaterpie.changeWindow('kick');
+        if (typeof data.users[0].userID !== 'undefined' && data.users[0].userID == Absolute.user.user_id) {
+          Absolute.kickinfo = data;
+          Absolute.changeWindow('kick');
         }
       });
 
       socket.on("irc-ban", function(data) {
         ChatMessage.add(data);
 
-        if (typeof data.users[0].userID !== 'undefined' && data.users[0].userID == Chaterpie.user.user_id) {
-          Chaterpie.baninfo = data;
-          Chaterpie.changeWindow('ban');
+        if (typeof data.users[0].userID !== 'undefined' && data.users[0].userID == Absolute.user.user_id) {
+          Absolute.baninfo = data;
+          Absolute.changeWindow('ban');
         }
       });
 
       socket.on("irc-fail", function(data) {
         if (data == 'auth_fail') {
-          Chaterpie.active = false;
-          Chaterpie.addErrorMessage("An error has occurred. Please refresh the page.");
+          Absolute.active = false;
+          Absolute.addErrorMessage("An error has occurred. Please refresh the page.");
         }
       });
 
@@ -127,26 +127,26 @@ Chaterpie = {
   },
 
   help: function() {
-    Chaterpie.changeWindow('chat');
+    Absolute.changeWindow('chat');
     socket.emit("input", {
       text: "~scyther list",
-      username: Chaterpie.user_name // Need to authenticate like before
+      username: Absolute.user_name // Need to authenticate like before
     });
   },
 
   settings: function() {
-    if (Chaterpie.active != true)
+    if (Absolute.active != true)
       return;
 
-    if (Chaterpie.window != 'settings') {
+    if (Absolute.window != 'settings') {
       socket.emit('nicklist', true);
     } else {
-      Chaterpie.changeWindow('chat');
+      Absolute.changeWindow('chat');
     }
   },
 
   userinfo: function(userid) {
-    if (Chaterpie.active != true || userid == -1)
+    if (Absolute.active != true || userid == -1)
       return;
 
     socket.emit('chaterpie-user-info', userid);
@@ -164,7 +164,7 @@ Chaterpie = {
 
   addErrorMessage: function(error_message) {
     var msg = ChatMessage.MSGS[ChatMessage.MSGS.length-1] || {};
-    if (Chaterpie.active != true || msg.text == "Scyther & Chaterpie have been terminated. Please refresh the page.")
+    if (Absolute.active != true || msg.text == "Scyther & Absolute have been terminated. Please refresh the page.")
       return false;
 
     ChatMessage.add({
@@ -177,23 +177,23 @@ Chaterpie = {
   },
 
   changeWindow: function(window) {
-    Chaterpie.window = window;
+    Absolute.window = window;
     switch(window) {
       case 'settings':
         TEXT = `
-            <div class="msg1"><b>Chaterpie Settings</b><br>
-                &nbsp;&nbsp;<a href="/title.php" target="_blank">Change Chaterpie Icon</a><br>
-                &nbsp;&nbsp;<a href="/chaterpie.php" target="_blank">Full Screen Chaterpie</a><br>
+            <div class="msg1"><b>Absolute Settings</b><br>
+                &nbsp;&nbsp;<a href="/title.php" target="_blank">Change Absolute Icon</a><br>
+                &nbsp;&nbsp;<a href="/chaterpie.php" target="_blank">Full Screen Absolute</a><br>
                 &nbsp;&nbsp;<a href="/options.php" target="_blank">More Settings</a><br>
             </div>
 
             <div class="msg0"><b>Chat Information</b><br>
                 &nbsp;&nbsp;<a href="/rules.php" target="_blank">Chat Rules</a><br>
-                &nbsp;&nbsp;<a href="" onclick="Chaterpie.help(); return false;">Scyther Chat Commands</a>
+                &nbsp;&nbsp;<a href="" onclick="Absolute.help(); return false;">Scyther Chat Commands</a>
             </div>
         `;
 
-        var nicks = Chaterpie.NickList[0],
+        var nicks = Absolute.NickList[0],
           RPGOnline = [];
         for (var prop in nicks) {
           if (nicks.hasOwnProperty(prop)) {
@@ -209,21 +209,21 @@ Chaterpie = {
           return 0;
         });
 
-        var nicks = Chaterpie.NickList[1];
+        var nicks = Absolute.NickList[1];
 
         TEXT += '<div class="msg1"><b>Online Users:</b> ('+RPGOnline.length+')<br>';
         for (var prop in RPGOnline) {
           if (RPGOnline.hasOwnProperty(prop)) {
             u = RPGOnline[prop];
-            TEXT += '&nbsp;&nbsp;<a href="javascript:void;" onclick="Chaterpie.userinfo(\''+u.user_id+'\'); return false;">'+u.user_name+'</a><br>';
+            TEXT += '&nbsp;&nbsp;<a href="javascript:void;" onclick="Absolute.userinfo(\''+u.user_id+'\'); return false;">'+u.user_name+'</a><br>';
           }
         }
 
         TEXT += '</div>';
 
-        TEXT += '<div class="msg0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Chaterpie is TPK\'s in-game chat. <a href="'+DOMAIN+'irc.php">More information</a>.<br><br>';
+        TEXT += '<div class="msg0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Absolute is TPK\'s in-game chat. <a href="'+DOMAIN+'irc.php">More information</a>.<br><br>';
 
-        TEXT += '<div class="msg1"><div class="userSprite" style="margin:-5px;"> <img src="http://sprites.tpkrpg.net/pokemon/icons/normal/010.png">  </div>Scyther & Chaterpie<br>&nbsp;&nbsp;&nbsp;&nbsp;&copy; <b>B0sh</b> 2015-2018 </div>';
+        TEXT += '<div class="msg1"><div class="userSprite" style="margin:-5px;"> <img src="http://sprites.tpkrpg.net/pokemon/icons/normal/010.png">  </div>Scyther & Absolute<br>&nbsp;&nbsp;&nbsp;&nbsp;&copy; <b>B0sh</b> 2015-2018 </div>';
 
         TEXT += ' </div> ';
 
@@ -232,7 +232,7 @@ Chaterpie = {
         break;
 
     case 'userinfo':
-        var u =Chaterpie.UserInfo.user;
+        var u =Absolute.UserInfo.user;
 
         if (u.lastactive < 60)
           lastactive = u.lastactive + " Second(s) Ago";
@@ -244,8 +244,8 @@ Chaterpie = {
         TEXT = '<div class="msg0" style="min-height:95%;"><div style="width:95%;text-align:center;"><a class="userLink" id="'+u.rank+'" href="'+DOMAIN+'user/'+u.userID+'">'+u.username+'</a> (ID #'+u.userID+')<br>';
 
         if (u.position == 'Bot') {
-          TEXT += '<img src="http://sprites.tpkrpg.net/avatars/'+u.avatar+'.png" style="margin:0 auto;"><br><br><a href="" onclick="Chaterpie.changeWindow(\'chat\'); return false;"> Return To Chat </a>';
-          TEXT += '<div style="width:100%;text-align:left;padding:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scyther is the official TPK Bot. Scyther runs Chaterpie, and has many useful commands. All Scyther commands begin with an exclamation mark (Example: !level). Using commands is as simple as typing them in Chaterpie.</div><br><div style="width:100%;text-align:left;padding:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For a list of commands use "!scyther list". You can find out help information about all commands by typing "!scyther [CommandName]".';
+          TEXT += '<img src="http://sprites.tpkrpg.net/avatars/'+u.avatar+'.png" style="margin:0 auto;"><br><br><a href="" onclick="Absolute.changeWindow(\'chat\'); return false;"> Return To Chat </a>';
+          TEXT += '<div style="width:100%;text-align:left;padding:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Scyther is the official TPK Bot. Scyther runs Absolute, and has many useful commands. All Scyther commands begin with an exclamation mark (Example: !level). Using commands is as simple as typing them in Absolute.</div><br><div style="width:100%;text-align:left;padding:5px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;For a list of commands use "!scyther list". You can find out help information about all commands by typing "!scyther [CommandName]".';
 
         } else {
           if (u.position != "Member") {
@@ -253,7 +253,7 @@ Chaterpie = {
           }
           TEXT += '<img src="http://sprites.tpkrpg.net/avatars/'+u.avatar+'.png" style="margin:0 auto;"><br><b>Last Active:</b><Br>'+lastactive+'<br>';
 
-          TEXT += '<br><div style="width:100%;text-align:center;"><a href="" onclick="Chaterpie.changeWindow(\'chat\'); return false;"> Return To Chat </a></div><br><b>Interact</b></div>';
+          TEXT += '<br><div style="width:100%;text-align:center;"><a href="" onclick="Absolute.changeWindow(\'chat\'); return false;"> Return To Chat </a></div><br><b>Interact</b></div>';
 
           TEXT += '&nbsp;&nbsp;<a target="_blank" href="'+DOMAIN+'user/'+u.userID+'">View Profile</a><br>';
 
@@ -262,9 +262,9 @@ Chaterpie = {
           TEXT += '&nbsp;&nbsp;<a target="_blank" href="'+DOMAIN+'friends.php?userID='+u.userID+'">Friend '+u.username+'</a><br>';
           TEXT += '&nbsp;&nbsp;<a target="_blank" href="'+DOMAIN+'battle_create.php?Battle=Trainer&Trainer='+u.userID+'">Battle '+u.username+'</a><br><br>';
 
-          if (Chaterpie.isStaff == true) {
-            TEXT += '&nbsp;&nbsp;<a href="javascript:void" onclick="Chaterpie.staff.kick(\''+u.userID+'\');">Kick '+u.username+'</a><br>';
-            TEXT += '&nbsp;&nbsp;<a href="javascript:void" onclick="Chaterpie.staff.ban(\''+u.userID+'\');">Ban '+u.username+'</a><br><i>Textbox is reason</i><br><br>';
+          if (Absolute.isStaff == true) {
+            TEXT += '&nbsp;&nbsp;<a href="javascript:void" onclick="Absolute.staff.kick(\''+u.userID+'\');">Kick '+u.username+'</a><br>';
+            TEXT += '&nbsp;&nbsp;<a href="javascript:void" onclick="Absolute.staff.ban(\''+u.userID+'\');">Ban '+u.username+'</a><br><i>Textbox is reason</i><br><br>';
             TEXT += '&nbsp;&nbsp;<b>Ban Length (sec.):</b><br><input type="text" size="6" id="messageBanTimeStaff" value="300"><br><br>';
           }
         }
@@ -273,14 +273,14 @@ Chaterpie = {
         break;
       // Kick screen. Has a rejoin button
       case 'kick':
-        reason = Chaterpie.kickinfo;
+        reason = Absolute.kickinfo;
 
-        TEXT = '<table style="width:100%;height:100%;"><tr><td style="width:100%; height:100%;" valign="middle"><b class="error_text" style="font-size:14px;">You have been kicked from the chatroom.</b><br><br><b>Kicked By:</b><br>'+reason.users[1].nick+'<br><br><b>Reason:</b><br>'+reason.info.reason+' <br><br> <a href="javascript:void" onclick="Chaterpie.changeWindow(\'chat\'); ">Rejoin Chat</a></td></tr></table>'
+        TEXT = '<table style="width:100%;height:100%;"><tr><td style="width:100%; height:100%;" valign="middle"><b class="error_text" style="font-size:14px;">You have been kicked from the chatroom.</b><br><br><b>Kicked By:</b><br>'+reason.users[1].nick+'<br><br><b>Reason:</b><br>'+reason.info.reason+' <br><br> <a href="javascript:void" onclick="Absolute.changeWindow(\'chat\'); ">Rejoin Chat</a></td></tr></table>'
 
         $('.chatWindow').html(TEXT).scrollTop(0);
       // Ban screen. Displays Time remaining
       case 'ban':
-        reason = Chaterpie.baninfo;
+        reason = Absolute.baninfo;
         if (reason.info.banlength > 3600) {
           t = Math.round(reason.info.banlength/360)/10 + " hours"
         } else if (reason.info.banlength > 60) {
@@ -320,14 +320,14 @@ ChatMessage = {
   },
   
   add: function(msg) {
-    if (Chaterpie.active == true) {
-      if (msg.text == "Scyther & Chaterpie have been terminated. Please refresh the page.") {
+    if (Absolute.active == true) {
+      if (msg.text == "Scyther & Absolute have been terminated. Please refresh the page.") {
         ChatMessage.add({
           users: [{nick: "Error", userID: -1, rank: 'admin', image:''}],
           timestamp: Math.floor(Date.now() / 1000),
           info: {},
           id: ChatMessage.MSGS.length,
-          text: "Chaterpie has stopped. Please refresh the page."
+          text: "Absolute has stopped. Please refresh the page."
         });
         return;
       }
@@ -347,7 +347,7 @@ ChatMessage = {
     max = ChatMessage.msg_display;
     wasatbottom = isAtBottom();
 
-    if (Chaterpie.window != 'chat')
+    if (Absolute.window != 'chat')
       return false;
 
     ChatMessage.temp_chat = '';
@@ -358,12 +358,12 @@ ChatMessage = {
     else  start = 0;
 
     if (ChatMessage.msg_display < 200 && len > 20) {
-      ChatMessage.temp_chat = '<div style="width:100%;text-align:center;padding-bottom:5px;"> <a href="javascript:void" onclick="Chaterpie.requestMore(); return false;">Go Back Further</a> </div>';
+      ChatMessage.temp_chat = '<div style="width:100%;text-align:center;padding-bottom:5px;"> <a href="javascript:void" onclick="Absolute.requestMore(); return false;">Go Back Further</a> </div>';
     }
 
     // removed blocked users messages
     for (var i = start; i <= len; ++i) {
-      if (Chaterpie.user.block_string.indexOf(ChatMessage.MSGS[i].users[0].userID) === -1)
+      if (Absolute.user.block_string.indexOf(ChatMessage.MSGS[i].users[0].userID) === -1)
         ChatMessage.render(ChatMessage.MSGS[i]);
     //  else
       //  console.log("BLOCKED");
@@ -372,7 +372,7 @@ ChatMessage = {
     ChatMessage.finishRendering();
 
 
-    switch (Chaterpie.user.chat_size+'') {
+    switch (Absolute.user.chat_size+'') {
         // normal side chaterpie
         case '0': s= 'height:300px';break;
         // extended chaterpie
@@ -414,7 +414,7 @@ ChatMessage = {
 
   finishRendering: function() {
     if (ChatMessage.temp_chat == '') {
-      ChatMessage.temp_chat = '<table style="width:100%;height:100%;"><tr><td style="width:100%; height:100%;" valign="middle"><b class="error_text" style="font-size:14px;">Chaterpie is offline.</b><br><br>Scyther is currently not running.</td></tr></table>';
+      ChatMessage.temp_chat = '<table style="width:100%;height:100%;"><tr><td style="width:100%; height:100%;" valign="middle"><b class="error_text" style="font-size:14px;">Absolute is offline.</b><br><br>Scyther is currently not running.</td></tr></table>';
     }
   },
 
@@ -452,7 +452,7 @@ ChatMessage = {
 
     ChatMessage.renderBackgroundID = ChatMessage.renderBackgroundID + 1;
 
-    if (Chaterpie.user.auto_caps == "yes") {
+    if (Absolute.user.auto_caps == "yes") {
       text = text.autocapsify();
     }
 
@@ -466,8 +466,8 @@ ChatMessage = {
     } else {
       var banLink1 = '';
       var banLink2 = '';
-      if (userID && userID != 3 && Chaterpie.isStaff) {
-        banLink1 = '<span onclick="Chaterpie.staff.quickBan(\''+userID+'\')">';
+      if (userID && userID != 3 && Absolute.isStaff) {
+        banLink1 = '<span onclick="Absolute.staff.quickBan(\''+userID+'\')">';
         banLink2 = '</span>';
       }
 
@@ -489,7 +489,7 @@ ChatMessage = {
     if (user.rank == '') user.rank = 'member';
 
     if (user.userID != undefined)
-      var Link = image+' <a class="userLink" id="'+user.rank+'" href="javascript:void;" onclick="Chaterpie.userinfo(\''+user.userID+'\'); return false;">'+user.nick+'</a>';
+      var Link = image+' <a class="userLink" id="'+user.rank+'" href="javascript:void;" onclick="Absolute.userinfo(\''+user.userID+'\'); return false;">'+user.nick+'</a>';
     else
       var Link = image+' <a class="userLink" href="javascript:void;" id="'+user.rank+'">'+user.nick+'</a>';
 
@@ -536,51 +536,6 @@ String.prototype.emotify = function() {
       ':403:' : ['40', '30', 'http://sprites.tpkrpg.net/pokemon/icons/normal/403.png'],
       ':681:' : ['40', '30', 'http://sprites.tpkrpg.net/pokemon/icons/normal/681.png'],
       ':800:' : ['40', '30', 'http://sprites.tpkrpg.net/pokemon/icons/normal/800.png'],
-      ':salt:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/SaltOre.png'],
-      ':aluminum:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/AluminumOre.png'],
-      ':copper:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/CopperOre.png'],
-      ':iron:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/IronOre.png'],
-      ':lead:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/LeadOre.png'],
-      ':nickel:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/NickelOre.png'],
-      ':tin:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/TinOre.png'],
-      ':coal:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/CoalOre.png'],
-      ':fermium:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/FermiumOre.png'],
-      ':tungsten:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/TungstenOre.png'],
-      ':palladium:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/PalladiumOre.png'],
-      ':chromium:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/ChromiumOre.png'],
-      ':silver:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/SilverOre.png'],
-      ':cobalt:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/CobaltOre.png'],
-      ':iridium:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/IridiumOre.png'],
-      ':plutonium:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/PlutoniumOre.png'],
-      ':gold:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/GoldOre.png'],
-      ':titanium:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/TitaniumOre.png'],
-      ':obsidian:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/ObsidianOre.png'],
-      ':antimatter:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/AntimatterOre.png'],
-      ':unobtanium:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/UnobtainiumOre.png'],
-      ':uranium:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/UraniumOre.png'],
-      ':plat:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/PlatinumOre.png'],
-      ':platinum:' : ['24', '24', 'http://sprites.tpkrpg.net/mines/PlatinumOre.png'],
-      ':fish:' : ['24', '24', 'http://sprites.tpkrpg.net/items/270.png'],
-      ':candy:' : ['24', '24', 'http://sprites.tpkrpg.net/items/263.png'],
-      ':lemonade:' : ['24', '24', 'http://sprites.tpkrpg.net/items/350.png'],
-      ':packet:' : ['24', '24', 'http://sprites.tpkrpg.net/items/251.png'],
-      ':egg:' : ['24', '24', 'http://sprites.tpkrpg.net/items/155.png'],
-      ':stick:' : ['24', '24', 'http://sprites.tpkrpg.net/items/214.png'],
-      ':happy:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Happy.png'],
-      ':veryhappy:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Veryhappy.png'],
-      ':tongue:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Tongue.png'],
-      ':laugh:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Laugh.png'],
-      ':cool:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Cool.png'],
-      ':wink:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Wink.png'],
-      ':sad:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Sad.png'],
-      ':mad:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Mad.png'],
-      ':verymad:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Verymad.png'],
-      ':hmm:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Hmm.png'],
-      ':roll:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Roll.png'],
-      ':neutral:' : ['15', '15', 'http://sprites.tpkrpg.net/misc/smiles/Neutral.png'],
-      ':thinking:' : ['30', '33', 'http://sprites.tpkrpg.net/misc/smiles/Thinking.png'],
-      ':pepothink:' : ['32', '32', 'http://sprites.tpkrpg.net/misc/smiles/Pepothink.png'],
-      // ':XD8:' : ['32', '18', 'http://sprites.tpkrpg.net/misc/smiles/XD.png'],
     }, url = '', patterns = [],
      metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
 
@@ -627,7 +582,7 @@ String.prototype.highlightify = function() {
       url = DOMAIN,
       patterns = [],
      metachars = /[[\]{}()*+?.\\|^$\-,&#\s]/g;
-      emoticons[Chaterpie.user.user_name] = '';
+      emoticons[Absolute.user.user_name] = '';
 
     // build a regex pattern for each defined property
     for (var i in emoticons) {

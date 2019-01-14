@@ -17,6 +17,8 @@
 				<b>Experience:</b> " . number_format($Pokemon_Data['Experience']) . "<br />
 				<b>Gender:</b> " . $Pokemon_Data['Gender'] . "
 			</div>
+
+			// roster slots here
 		";
 	}
 	else

@@ -770,9 +770,6 @@ ul li {
   border-bottom: 1px solid #4A618F;
 }
 
-
-/* border-right: 1px solid #4A618F;  */
-
 .content .panel .panel-body .roster_slot.full:nth-child(3n) {
   border-right: none;
 }
@@ -818,8 +815,13 @@ img.spricon:hover {
 }
 
 .content .panel .panel-body .evolution {
-  height: 117px;
+  height: 118px;
   width: 100%;
+}
+
+.content .panel .panel-body .evolution:not(:last-child)
+{
+  border-bottom: 1px solid #4A618F;
 }
 
 .content .panel .panel-body .evolution .image {
@@ -830,6 +832,7 @@ img.spricon:hover {
 
 .content .panel .panel-body .evolution .image div {
   background: #3b4d72;
+  border-bottom: 1px solid #4A618F;
   border-top: 1px solid #4A618F;
   width: 200px;
 }
@@ -838,30 +841,36 @@ img.spricon:hover {
   border-left: 1px solid #4A618F;
   border-right: 1px solid #4A618F;
   float: left;
-  height: 117px;
+  height: 118px;
   width: 500px;
 }
 
-.content .panel .panel-body .evolution .requirements div {
+.content .panel .panel-body .evolution .requirements div:first-child {
   background: #3b4d72;
   border-bottom: 1px solid #4A618F;
+  border-right: none;
   width: 498px;
+}
+
+.content .panel .panel-body .evolution .requirements div:not(:first-child) {
+  background: #2c3a55;
+  border-bottom: none;
+  border-right: 1px solid #4A618F;
+  float: left;
+  height: 96px;
+  width: 20%;
 }
 
 .content .panel .panel-body .evolution .button {
   float: left;
-  height: 117px;
+  height: 118px;
   padding-top: 50px;
-  width: 178px;
+  width: 176px;
 }
 
 .content .panel .panel-body .evolution .button:hover {
   background: #3b4d72;
   cursor: pointer;
-}
-
-.content .panel .panel-body .evolution:nth-last-child(1) {
-  border-top: 1px solid #4A618F;
 }
 
 
@@ -905,7 +914,7 @@ img.spricon:hover {
 }
 
 .content .box.profile #profileAJAX .box_slot:hover {
-  background: #2c3a55;
+  background: #3b4d72;
   cursor: pointer;
 }
 

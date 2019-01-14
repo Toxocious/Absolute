@@ -1,18 +1,13 @@
-/* *********************
- * message.js
- *
- * Hopefully a way for Scyther to manage adding messages etc
+/**
+ * Message handler for Absol.
  */
  
 var fn = require('./commands/functions.js');
 var fs = require('fs');
 var os = require("os");
 
-var SPAM =
-[
-	5, //Limit is 5 messages in 
-	5  //5 seconds
-];
+// Setting the spam limit to 5 messages in 5 seconds.
+let SPAM = [ 5, 5 ];
 
 //Send all messages
 var LogMessages = true;
@@ -23,16 +18,19 @@ function messageHandler()
 {
 	this.MessageLog = [];
 }    
+
 String.prototype.repeat = function(num)
 {
   return new Array(num + 1).join(this);
 }
 
-function filter (msg)
+function filter(message)
 {
 	let Filter_List =
 	[
 		'fuck',
+		'fuckin',
+		'fucking',
 		'faggot',
 		'fgt',
 		'shit',
@@ -40,17 +38,21 @@ function filter (msg)
 		'pussy',
 		'bitch',
 		'dick',
+		'ass',
 		'asshole',
 		'slut',
 		'whore',
 		'fag',
-		'nigger',
+		'nig',
 		'nigga',
+		'nigger',
 		'queer',
-		'dildo'
+		'dildo',
+		'porn',
+		'hentai',
 	];
 	
-	txt = msg;
+	let text = message;
 
 	// iterate over all words
 	for ( let i = 0; i < Filter_List.length; i++ )
@@ -61,11 +63,11 @@ function filter (msg)
 		// Create a new string filled with '*'
 		let replacement = '*' . repeat(Filter_List[i].length);
 
-		txt = txt.replace(pattern, replacement);
+		text = text.replace(pattern, replacement);
   }
 
-	// returning txt will set the new text value for the current element
-	return txt;
+	// returning text will set the new text value for the current element
+	return text;
 }
 
 messageHandler.prototype.clear = function(users, message, chaterpie)
@@ -75,15 +77,22 @@ messageHandler.prototype.clear = function(users, message, chaterpie)
 
 messageHandler.prototype.add = function(users, message, chaterpie, logfile)
 {
-	if (typeof users[0] === "undefined") 
+	if ( typeof users[0] === "undefined" )
+	{
 		users = [users];
-	if (typeof chaterpie === "undefined" )
+	}
+
+	if ( typeof chaterpie === "undefined" )
+	{
 		chaterpie = {};
+	}
 	
-	if (users[0].rank == 'bot')
+	if ( users[0].rank == 'bot' )
+	{
 		message = fn.decodeHTML(message);
+	}
 	
-	var timestamp = Math.round(Date.now());
+	var timestamp = Math.round( Date.now() );
 	msg = {
 		users: users,
 		text: filter(message),
@@ -92,7 +101,7 @@ messageHandler.prototype.add = function(users, message, chaterpie, logfile)
 		info: chaterpie,
 	}
 	
-	if (LogMessages)
+	if ( LogMessages )
 	{
 		var date = new Date(timestamp);
 		
@@ -115,10 +124,14 @@ messageHandler.prototype.add = function(users, message, chaterpie, logfile)
 
 messageHandler.prototype.self = function(users, message, chaterpie, logfile)
 {
-	if (typeof users[0] === "undefined") 
+	if ( typeof users[0] === "undefined" )
+	{
 		users = [users];
-	if (typeof chaterpie === "undefined" )
+	}
+	if ( typeof chaterpie === "undefined" )
+	{
 		chaterpie = {};
+	}
 		
 	let timestamp = Math.round(Date.now());
 	msg = {
@@ -128,10 +141,10 @@ messageHandler.prototype.self = function(users, message, chaterpie, logfile)
 		id: this.MessageLog.length,
 		info: chaterpie,
 	}
-	if (LogMessages && typeof chaterpie.do_not_log === "undefined")
+
+	if ( LogMessages && typeof chaterpie.do_not_log === "undefined" )
 	{
 		let date = new Date(timestamp);
-
 		let year = date.getYear();
 		let month = date.getMonth() + 1;
 		let day = date.getDate();
@@ -143,6 +156,7 @@ messageHandler.prototype.self = function(users, message, chaterpie, logfile)
 		
 		fn.log(log, logfile);
 	}
+	
 	return msg;
 }
 

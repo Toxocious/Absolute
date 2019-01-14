@@ -32,11 +32,47 @@
         $Roster_Slot[$i]['Display_Name'] = 'Empty';
         $Roster_Slot[$i]['Level'] = '0';
         $Roster_Slot[$i]['Experience'] = '0';
+        $Roster_Slot[$i]['Item'] = null;
+        $Roster_Slot[$i]['Gender_Icon'] = null;
       }
+
+      //echo "
+      //  <div class='roster_slot'>
+      //    <div style='width: 100%;'>
+      //      <b>{$Roster_Slot[$i]['Display_Name']}</b>
+      //    </div>
+      //    <div style='float: left; width: 50%;'>
+      //      <img src='{$Roster_Slot[$i]['Sprite']}' />
+      //    </div>
+      //    <div style='float: left; height: 110px; width: 50%;'>
+      //";
+
+      //if ( $Roster_Slot[$i]['Gender_Icon'] != null )
+      //{
+      //  echo "<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; width: 20px;' />";
+      //}
+
+      //if ( $Roster_Slot[$i]['Item'] != null || $Roster_Slot[$i]['Item'] != 0 )
+      //{
+      //  echo "<img src='{$Roster_Slot[$i]['Item_Icon']}' />";
+      //}
+
+      //echo "
+      //      <div class='info'>
+      //        <div>Level</div>
+      //        <div>{$Roster_Slot[$i]['Level']}</div>
+      //      </div>
+      //      <div class='info'>
+      //        <div>Experience</div>
+      //        <div>{$Roster_Slot[$i]['Experience']}</div>
+      //      </div>
+      //    </div>
+      //  </div>
+      //";
 
       echo "
         <div class='roster_slot'>
-          <img src='{$Roster_Slot[$i]['Sprite']}' ?><br />
+          <img src='{$Roster_Slot[$i]['Sprite']}' /><br />
           <b>{$Roster_Slot[$i]['Display_Name']}</b>
           <div class='info'>
             <div>Level</div>

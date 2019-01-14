@@ -1,6 +1,6 @@
 var socket;
 
-Chaterpie = {
+Absolute = {
   updatedOn: '5-1-2019',
   version: '1.0',
   window: 'chat',
@@ -27,10 +27,10 @@ Chaterpie = {
     }
   },
 
-  // Chaterpie has been enabled.
+  // Absolute has been enabled.
   enable: function()
   {
-    Chaterpie.active = true;
+    Absolute.active = true;
     $('#chatContent').css('display', 'block');
 
     // Create the socket commands.
@@ -46,29 +46,29 @@ Chaterpie = {
 
       socket.emit('auth',
       {
-        user: Chaterpie.user.user_id,
-        postcode: Chaterpie.user.postcode
+        user: Absolute.user.user_id,
+        postcode: Absolute.user.postcode
       });
 
       socket.on("connect", function()
       {
-        Chaterpie.setTextarea();
+        Absolute.setTextarea();
 
         this.failed_connects = 0;
 
         socket.emit('auth',
         {
-          user: Chaterpie.user.user_id,
-          postcode: Chaterpie.user.postcode
+          user: Absolute.user.user_id,
+          postcode: Absolute.user.postcode
         });
       });
 
       socket.on("disconnect", function()
       {
-        Chaterpie.active = false;
-        Chaterpie.addErrorMessage('You have been disconnected from Absolute Chat. Please refresh the page.');
+        Absolute.active = false;
+        Absolute.addErrorMessage('You have been disconnected from Absolute Chat. Please refresh the page.');
 
-        Chaterpie.setTextarea();
+        Absolute.setTextarea();
       });
 
       socket.on("irc-message", function(data)
@@ -78,28 +78,28 @@ Chaterpie = {
 
       socket.on("nick-list", function(data)
       {
-        Chaterpie.NickList = data;
-        Chaterpie.changeWindow('settings');
+        Absolute.NickList = data;
+        Absolute.changeWindow('settings');
       });
 
-      socket.on("Chaterpie-user-info", function(data)
+      socket.on("Absolute-user-info", function(data)
       {
-        Chaterpie.UserInfo = data;
-        Chaterpie.changeWindow('userinfo');
+        Absolute.UserInfo = data;
+        Absolute.changeWindow('userinfo');
       });
     }
   },
 
   disable: function()
   {
-    Chaterpie.active = true;
-    $('#Chaterpie').css('display', 'none');
+    Absolute.active = true;
+    $('#Absolute').css('display', 'none');
   },
 
   addErrorMessage: function(error_message)
   {
     var msg = ChatMessage.Messages[ChatMessage.Messages.length-1] || {};
-    if ( Chaterpie.active != true || msg.text == "Absol & Absolute Chat have been terminated. Please refresh the page." )
+    if ( Absolute.active != true || msg.text == "Absol & Absolute Chat have been terminated. Please refresh the page." )
     {
       return false;
     }
@@ -121,10 +121,7 @@ ChatMessage = {
 
   debug: function()
   {
-    //console.log(ChatMessage.Messages.text);
-    console.log("~~~~~~~~~~~~~~~ DEBUG FUNCTION HAS BEEN EXECUTED ~~~~~~~~~~~~~~~");
-    console.log("now.. what to debug..?");
-    console.log("~~~~~~~~~~~~~~~ DEBUG FUNCTION HAS BEEN EXECUTED ~~~~~~~~~~~~~~~");
+    
   },
 
   purge: function()
@@ -134,7 +131,7 @@ ChatMessage = {
 
   add: function(message)
   {
-    if ( Chaterpie.active == true )
+    if ( Absolute.active == true )
     {
       if ( message.text == "Absol & Absolute Chat have been terminated. Please refresh the page." )
       {
@@ -178,7 +175,7 @@ ChatMessage = {
     {
       ChatMessage.Temporary_Chat = `
         <div style="width: 100%; text-align: center; padding-bottom: 5px;">
-          <a href="javascript:void(0);" onclick="Chaterpie.requestMore(); return false;">
+          <a href="javascript:void(0);" onclick="Absolute.requestMore(); return false;">
             Go Back Further
           </a>
         </div>
@@ -259,7 +256,7 @@ ChatMessage = {
       let banLink1 = '';
       let banLink2 = '';
 
-      if ( Chaterpie.isStaff )
+      if ( Absolute.isStaff )
       {
         banLink1 = '<span onclick="AbsoChat.staff.quickBan(\''+userID+'\')">';
         banLink2 = '</span>';
@@ -320,7 +317,7 @@ ChatMessage = {
 
     if ( user.userID != undefined )
     {
-      var Link = image+' <a class="userLink" id="'+user.rank+'" href="javascript:void(0);" onclick="Chaterpie.userinfo(\''+user.userID+'\'); return false;">'+user.nick+'</a>';
+      var Link = image+' <a class="userLink" id="'+user.rank+'" href="javascript:void(0);" onclick="Absolute.userinfo(\''+user.userID+'\'); return false;">'+user.nick+'</a>';
     }
     else
     {

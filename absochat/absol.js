@@ -9,23 +9,28 @@ var fn = require('./commands/functions.js');
 var runner = require("child_process"); // http://promincproductions.com/blog/run-php-script-node-js/
 
 var COMMAND_PHP_PATH = "command.php";
-var FULL_DEBUG = true;
 var PHP_ARG_SEPERATOR = '~szpAAce~';
+var FULL_DEBUG = true;
 
 // Get the command line argument for which config is activated at this time.
 var server = 'absolute';
 var script_location = '';
-process.argv.forEach(function (val, index, array) {
-    if (index == 2) {
+
+process.argv.forEach(function (val, index, array)
+{
+    if (index == 2)
+    {
         server = val;
     }
-    if (index == 3) {
+    if (index == 3)
+    {
         script_location = val;
     }
 });
 
-if (server != 'tpk6' && server != 'tpk7' && server != 'absolute' ) {
-  console.log('Set the server: tpk6 or tpk7 or absolute');
+if ( server != 'absolute' )
+{
+  console.log('Set the server: absolute');
   process.exit();
 }
 
@@ -51,7 +56,7 @@ var Commands = [
 
 var conn;
 var config = {
-  absolute : {
+  absolute: {
     logfile        : 'log.txt',
     host           : 'localhost',
     user           : 'root',
@@ -66,9 +71,9 @@ var config = {
 
 var config = config[server];
 
-fn.log(os.EOL+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", config.logfile);
-fn.log(     "~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~", config.logfile);
-fn.log(     "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + os.EOL, config.logfile);
+fn.log(os.EOL + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", config.logfile);
+fn.log(         "~               Absol has begun; prepare for trouble.               ~", config.logfile);
+fn.log(         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + os.EOL, config.logfile);
 fn.log("Server: "+server+" :: Port: " + config.chaterpie_port + "", config.logfile)
 
 var options = {
@@ -82,43 +87,53 @@ var options = {
 var messages_server = https.createServer(options)
 var chaterpie_server = https.createServer(options)
 
-var TPK_Messages = require('socket.io').listen(messages_server);
-var Chaterpie = require('socket.io').listen(chaterpie_server);
+var Absolute_Messages = require('socket.io').listen(messages_server);
+var Absolute = require('socket.io').listen(chaterpie_server);
 
 messages_server.listen(config.messages_port);
 chaterpie_server.listen(config.chaterpie_port);
 
-Chaterpie.on('connection', function (socket) {
-
+Absolute.on('connection', function (socket)
+{
   // On main client connection
-  socket.on('connection', function(client) {
-    if (FULL_DEBUG) {
+  socket.on('connection', function(client)
+  {
+    if (FULL_DEBUG)
+    {
       console.log("Client Connected");
     }
   });
 
   // On page disconnect
-  socket.on('disconnect', function() {
-    delete CLIENTS["user" + socket['tpk_clientID']];
+  socket.on('disconnect', function()
+  {
+    delete CLIENTS["user" + socket['absolute_clientID']];
   });
 
   // After page load, auth call made
-  socket.on('auth', function(client) {
-    socket['tpk_clientID'] = CLIENT_ID;
+  socket.on('auth', function(client)
+  {
+    socket['absolute_clientID'] = CLIENT_ID;
     CLIENT_ID++;
 
-    CLIENTS["user" + socket['tpk_clientID']] = {};
+    CLIENTS["user" + socket['absolute_clientID']] = {};
 
     auth_user(socket, client.user, client.postcode);
   });
 
   // Request messages to display in chaterpie
-  socket.on('chaterpie-request-msg', function(data) {
+  socket.on('chaterpie-request-msg', function(data)
+  {
     console.log("Requesting message history...");
-    if (chat_check(socket)) return false;
-    user = CLIENTS["user"+socket['tpk_clientID']];
+    if ( chat_check(socket) )
+    {
+      return false;
+    }
 
-    if (data > 500) {
+    user = CLIENTS["user"+socket['absolute_clientID']];
+
+    if ( data > 500 )
+    {
       data = 500;
     }
 
@@ -126,33 +141,38 @@ Chaterpie.on('connection', function (socket) {
     length = MessageLog.length;
 
     //Return the last 30 messages to the connecting client
-    for(var i = data; i > 0; i--) {
-      if (
-        typeof MessageLog[length-i] !== "undefined" &&
-        (
-          MessageLog[length-i].info.private_to == user['id'] ||
-          typeof MessageLog[length-i].info.private_to === "undefined"
-        )
-      ) {
+    for( let i = data; i > 0; i-- )
+    {
+      if ( typeof MessageLog[length-i] !== "undefined" && ( MessageLog[length-i].info.private_to == user['id'] || typeof MessageLog[length-i].info.private_to === "undefined" ) )
+      {
         socket.emit("irc-message", MessageLog[length-i]);
       }
     }
   });
 
   // Send a message
-  socket.on('input', function(data) {
-    if (chat_check(socket)) return false;
+  socket.on('input', function(data)
+  {
+    if ( chat_check(socket) )
+    {
+      return false;
+    }
 
-    user = CLIENTS["user"+socket['tpk_clientID']];
+    user = CLIENTS["user"+socket['absolute_clientID']];
+
     conn.query({
-      sql: "SELECT `id`, `Username`, `Rank`, `Power` FROM users WHERE id = ? LIMIT 1",
+      sql: "SELECT `id`, `Username`, `Rank`, `Power` FROM `users` WHERE `id` = ? LIMIT 1",
       values: [user.id]
-    }, function (error, results, fields) {
-      if (error) {
+    },
+    function (error, results, fields)
+    {
+      if ( error )
+      {
         return console.error(error);
       }
 
-      if (results.length === 0) {
+      if ( results.length === 0 )
+      {
         return false;
       }
 
@@ -164,7 +184,8 @@ Chaterpie.on('connection', function (socket) {
         rank: user.Rank
       };
 
-      if (messageHandler.isSpam(user)) {
+      if ( messageHandler.isSpam(user) )
+      {
         socket.emit("irc-message", messageHandler.self({
           nick: 'Error',
           userID: -1,
@@ -172,7 +193,9 @@ Chaterpie.on('connection', function (socket) {
         }, "You have sent too many message in the last few seconds. Please wait and try again.", {private_to:user['id']}, config.logfile));
 
         return false;
-      } else if (data.text.length > 250) {
+      }
+      else if ( data.text.length > 250 )
+      {
         socket.emit("irc-message", messageHandler.self({
           nick: 'Error',
           userID: -1,
@@ -184,21 +207,24 @@ Chaterpie.on('connection', function (socket) {
 
       info = {}
       if ( data.text == "crash absolute" && user['id'] <= 2 )
-      {  
+      {
         setTimeout(function()
         {
-          throw new Error("An Administrator initiated AbsoChat crash has occurred.");
+          throw new Error("Absol has crashed due to an Administrator.");
         }, 2000);
       } 
       
-      if (data.text.substring(0, 4) == "/me ") {
+      if ( data.text.substring(0, 4) == "/me " )
+      {
         data.text = data.text.replace("/me", "");
         info.command = "action";
         userinfo.display = 0;
 
-        Chaterpie.sockets.emit("irc-message", messageHandler.add(userinfo, data.text, info, config.logfile));
+        Absolute.sockets.emit("irc-message", messageHandler.add(userinfo, data.text, info, config.logfile));
         return false;
-      } else if (data.text.substring(0, 6) == "/kick " && user.Power >= 3) {
+      }
+      else if ( data.text.substring(0, 6) == "/kick " && user.Power >= 3 )
+      {
         var parts = data.text.split(/\s+/);
         var id = parts[1];
         var reason = parts.slice(2).join(' ');
@@ -206,37 +232,44 @@ Chaterpie.on('connection', function (socket) {
         conn.query({
           sql: "SELECT * FROM users WHERE id=? OR Username=? LIMIT 1",
           values: [id, id]
-        }, function(error, results) {
-          if (error) {
+        },
+        function(error, results)
+        {
+          if ( error )
+          {
             return console.error(error);
           }
 
-          if (results.length == 1) {
+          if ( results.length == 1 )
+          {
             u = results[0];
             kickUser(socket, u['id'], reason);
           }
         });
         return false;
       }
+
       else if ( data.text.substring(0, 6) == "/clear" && user.Power >= 3 )
       {
         messageHandler.clear();
-        Chaterpie.sockets.emit("irc-message",
+        Absolute.sockets.emit("irc-message",
           messageHandler.add(
             { nick: 'Absol', userID: 3, rank: 'bot', image: '', clear: true },
-            "The chat has been cleared by "+user.Username+".", undefined, config.logfile
+            "The chat has been cleared by " + user.Username + ".", undefined, config.logfile
           )
         );
         return false;
       }
-      else if (data.text.substring(0, 5) == "/ban " && user.Power >= 3)
+
+      else if ( data.text.substring(0, 5) == "/ban " && user.Power >= 3 )
       {
         var parts = data.text.split(/\s+/);
         var id = parts[1];
         var time = parts[2];
         var reason = parts.slice(3).join(' ');
 
-        if (time === '' || isNaN(time)) {
+        if ( time === '' || isNaN(time) )
+        {
           time = 300;
           reason = parts.slice(2).join(' ');
         }
@@ -244,35 +277,50 @@ Chaterpie.on('connection', function (socket) {
         conn.query({
           sql: "SELECT * FROM users WHERE id=? OR Username=? LIMIT 1",
           values: [id, id]
-        }, function(error, results) {
-          if (error) {
+        },
+        function(error, results)
+        {
+          if ( error )
+          {
             return console.error(error);
           }
 
-          if (results.length == 1) {
+          if ( results.length == 1 )
+          {
             u = results[0];
             banUser(socket, u['id'], reason, time);
           }
         });
         return false;
-      } else if (data.text.substring(0, 7) == "/unban " && user.Power >= 3) {
-        // TODO
+      } 
+      
+      /**
+       * Still needs coded.
+       */
+      else if ( data.text.substring(0, 7) == "/unban " && user.Power >= 3 )
+      {
         return false;
-      } else if (user.chat_sprite != '') {
+      }
+      
+      else if ( user.chat_sprite != '' )
+      {
         userinfo.image = user.chat_sprite;
       }
 
-      if (data.text.charAt(0) == '~' && isCommand(data.text.substring(1).split(' ')[0].toLowerCase())) {
+      if ( data.text.charAt(0) == '~' && isCommand( data.text.substring(1).split(' ')[0].toLowerCase() ) )
+      {
         info.private_to = user.id;
         socket.emit("irc-message", messageHandler.self(userinfo, data.text, info, config.logfile));
-      } else {
-        Chaterpie.sockets.emit("irc-message", messageHandler.add(userinfo, data.text, info, config.logfile));
+      }
+      else
+      {
+        Absolute.sockets.emit("irc-message", messageHandler.add(userinfo, data.text, info, config.logfile));
       }
 
-      var cmd = parseCommand(user.nick, data.text, 'Chaterpie', socket);
+      var cmd = parseCommand(user.nick, data.text, 'Absolute', socket);
 
       // update online list for chatting users
-      // 28 is page_id of Chaterpie
+      // 28 is page_id of Absolute
       //conn.query({
       //  sql: "UPDATE `users` SET `online_time`=?, `on_page`=? WHERE `id`=? LIMIT 1",
       //  values: [ Math.floor(Date.now()/1000), 28, user.id ]
@@ -284,31 +332,44 @@ Chaterpie.on('connection', function (socket) {
   });
 
   // the nick list of both online users in TPK, and from the #TPK_Test Channel.
-  socket.on('nicklist', function() {
-    if (chat_check(socket))
-    return false;
+  socket.on('nicklist', function()
+  {
+    if ( chat_check(socket) )
+    {
+      return false;
+    }
 
     conn.query({
-      sql: "SELECT id, username FROM `users` WHERE `online_time` > ? ORDER BY `online_time` DESC",
-      values: [ Math.floor(Date.now()/1000) - 60 * 10]
-    }, function (error, results, fields) {
+      sql: "SELECT `id`, `Username` FROM `users` WHERE `Last_Active` > ? ORDER BY `Last_Active` DESC",
+      values: [ Math.floor(Date.now()/1000) - 60 * 10 ]
+    },
+    function (error, results, fields)
+    {
       socket.emit("nick-list", [ results,  {} ]);
     });
   });
 
   // Returns information about a user to construct a User Info page
-  socket.on('chaterpie-user-info', function(id) {
-    if (chat_check(socket)) return false;
+  socket.on('chaterpie-user-info', function(id)
+  {
+    if ( chat_check(socket) )
+    {
+      return false;
+    }
 
     conn.query({
-      sql: "SELECT * FROM users WHERE id=? LIMIT 1",
-      values: [id]
-    }, function(error, results, fields) {
-      if (error) {
+      sql: "SELECT * FROM `users` WHERE `id` = ? LIMIT 1",
+      values: [ id ]
+    },
+    function(error, results, fields)
+    {
+      if ( error )
+      {
         return console.error(error);
       }
 
-      if (results.length == 1) {
+      if ( results.length == 1 )
+      {
         u = results[0];
         socket.emit("chaterpie-user-info", {
           user: {
@@ -324,14 +385,17 @@ Chaterpie.on('connection', function (socket) {
   socket.on('chaterpie-ban-user', function (userid, reason, time) { return banUser(socket, userid, reason, time); });
 });
 
-function updateClient(clientID, thing, val) {
+function updateClient(clientID, thing, val)
+{
   CLIENTS["user"+clientID][thing] = val;
   return true;
 }
 
 // Socket.io connection from inside TPK
-TPK_Messages.on('connection', function (socket) {
-  socket.on('msg', function(msg) {
+Absolute_Messages.on('connection', function (socket)
+{
+  socket.on('msg', function(msg)
+  {
     scyther({}, msg);
   });
 });
@@ -341,23 +405,36 @@ var startTime = Math.floor(Date.now() / 1000);
 
 // Command called when a Scyther command response is made.
 // Logs, and sends a chat from Scyther
-function scyther(cmd, message) {
-  if (cmd.private_message != true) {
-    if (cmd.image == "null")
+function scyther(cmd, message)
+{
+  if ( cmd.private_message != true )
+  {
+    if ( cmd.image == "null" )
+    {
       cmd.image = []
-    else if (typeof cmd.image === "undefined")
-      cmd.image = fn.getPokeIcon(359, 0, "shiny");
-    else
-      cmd.image = fn.getPokeIcon(cmd.image[0], cmd.image[1], cmd.image[2]);
+    }
 
-    if (cmd.hidden_command != true || typeof cmd.socket === "undefined") {
-      Chaterpie.sockets.emit('irc-message', messageHandler.add({
+    else if ( typeof cmd.image === "undefined" )
+    {
+      cmd.image = fn.getPokeIcon(359, 0, "shiny");
+    }
+
+    else
+    {
+      cmd.image = fn.getPokeIcon(cmd.image[0], cmd.image[1], cmd.image[2]);
+    }
+
+    if ( cmd.hidden_command != true || typeof cmd.socket === "undefined" )
+    {
+      Absolute.sockets.emit('irc-message', messageHandler.add({
         nick: cmd.nick ? cmd.nick : 'Absol',
         userID: 3,
         rank: 'bot',
         image: cmd.image
       }, message, undefined, config.logfile));
-    } else {
+    }
+    else
+    {
       cmd.socket.emit('irc-message', messageHandler.self({
         nick: cmd.nick ? cmd.nick : 'Absol',
         userID: 3,
@@ -368,27 +445,41 @@ function scyther(cmd, message) {
   }
 }
 
-function kickUser(socket, userid, reason) {
-  if (chat_check(socket)) return false;
-  user = CLIENTS["user"+socket['tpk_clientID']];
+function kickUser(socket, userid, reason)
+{
+  if ( chat_check(socket) )
+  {
+    return false;
+  }
 
-  if (user['power'] < 3)
-  return;
+  user = CLIENTS["user"+socket['absolute_clientID']];
 
-  if (typeof reason === "undefined" || reason.trim() == '')
-  reason = '';
+  if ( user['power'] < 3 )
+  {
+    return;
+  }
+
+  if ( typeof reason === "undefined" || reason.trim() == '' )
+  {
+    reason = '';
+  }
   else
-  reason = "("+reason+")";
+  {
+    reason = "(" + reason + ")";
+  }
 
   //Loop through CLIENTS to see if one of them has the user ID of a person
-  for (var cl in CLIENTS) {
-    if (CLIENTS.hasOwnProperty(cl) && CLIENTS[cl]['id'] == userid) {
+  for ( var cl in CLIENTS )
+  {
+    if ( CLIENTS.hasOwnProperty(cl) && CLIENTS[cl]['id'] == userid )
+    {
       var KickedUser = CLIENTS[cl];
     }
   }
 
-  if (typeof KickedUser !== "undefined") {
-    Chaterpie.sockets.emit('irc-kick', messageHandler.add([
+  if ( typeof KickedUser !== "undefined" )
+  {
+    Absolute.sockets.emit('irc-kick', messageHandler.add([
       {
         nick: KickedUser.nick,
         userID: KickedUser.id,
@@ -401,45 +492,68 @@ function kickUser(socket, userid, reason) {
         rank: user.rank,
         display: 20
       }
-    ], " has been kicked by . "+reason+"", {
+    ], " has been kicked by . " + reason + "", {
       command: 'kick',
       reason: reason
     }, config.logfile));
 
-    scyther({private_message:true}, KickedUser['username']+ " has been kicked by "+user['username']+". "+reason+"");
+    scyther({private_message:true}, KickedUser['username'] + " has been kicked by " + user['username'] + ". " + reason + "");
   }
 }
 
-function banUser(socket, userid, reason, time) {
-  if (chat_check(socket)) return false;
-  user = CLIENTS["user"+socket['tpk_clientID']];
+function banUser(socket, userid, reason, time)
+{
+  if ( chat_check(socket) )
+  {
+    return false;
+  }
 
-  if (user['power'] < 3 || typeof time === "undefined")
-  return;
+  user = CLIENTS["user"+socket['absolute_clientID']];
 
-  if (typeof reason === "undefined" || reason.trim() == '')
-  reason = '';
+  if ( user['power'] < 3 || typeof time === "undefined" )
+  {
+    return;
+  }
+
+  if ( typeof reason === "undefined" || reason.trim() == '' )
+  {
+    reason = '';
+  }
   else
-  reason = "("+reason+")";
+  {
+    reason = "("+reason+")";
+  }
 
   var chat_ban = parseInt((parseInt(time) + parseInt(Math.round(Date.now()/1000))))+'"'+user['id']+'"'+reason+'"'+parseInt(Math.round(Date.now()/1000));
 
   //Loop through CLIENTS to see if one of them has the user ID of a person
   BannedYet = false;
-  for (var cl in CLIENTS) {
-    if (CLIENTS.hasOwnProperty(cl) && CLIENTS[cl]['id'] == userid) {
+  for ( var cl in CLIENTS )
+  {
+    if ( CLIENTS.hasOwnProperty(cl) && CLIENTS[cl]['id'] == userid )
+    {
       var BannedUser = CLIENTS[cl];
       CLIENTS[cl]['authenticated'] = false;
 
-      if (BannedYet == false) {
+      if ( BannedYet == false )
+      {
         BannedYet = true;
 
         var timeText = "";
-        if(time <= 120) timeText = ""+time+" seconds";
-        else if(time >= 120 && time <= 3599*2+1) timeText = Math.floor(time / 60)+" minutes";
-        else if(time >= 3600*2) timeText = numeral(time / 3600).format('0.[00]')+" hours";
+        if ( time <= 120 )
+        {
+          timeText = "" + time + " seconds";
+        }
+        else if( time >= 120 && time <= 3599*2+1 )
+        {
+          timeText = Math.floor(time / 60) + " minutes";
+        }
+        else if( time >= 3600*2 )
+        {
+          timeText = numeral(time / 3600).format('0.[00]') + " hours";
+        }
 
-        Chaterpie.sockets.emit('irc-ban', messageHandler.add([
+        Absolute.sockets.emit('irc-ban', messageHandler.add([
           {
             nick: BannedUser.nick,
             userID: BannedUser.id,
@@ -452,51 +566,64 @@ function banUser(socket, userid, reason, time) {
             rank: user.rank,
             display: 20
           }
-        ], " has been banned by  for "+timeText+". "+reason, {
+        ], " has been banned by  for " + timeText + ". " + reason, {
           command: 'ban',
           reason: reason,
           banlength: parseInt(time)
         }, config.logfile));
 
         conn.query({
-          sql: "UPDATE users SET ChatBanned=? WHERE id=? LIMIT 1",
+          sql: "UPDATE `users` SET `ChatBanned` = ? WHERE `id` = ? LIMIT 1",
           values: [chat_ban, BannedUser['id']]
-        }, function (error, results, fields) {
+        },
+        function (error, results, fields)
+        {
 
         });
 
-        scyther({private_message:true}, BannedUser['username']+" has been banned by "+user['username']+" for "+timeText+". "+reason);
+        scyther({private_message:true}, BannedUser['username'] + " has been banned by " + user['username'] + " for " + timeText + ". " + reason);
       }
     }
   }
 }
 
-function isCommand(c) {
+function isCommand(c)
+{
   return Commands.indexOf(c) !== -1;
 }
 
 //This function is seriously improvable
-function parseCommand(nick, msg, location, socket) {
+function parseCommand(nick, msg, location, socket)
+{
   parsed = msg.substring(1).split(' ');
-  if ((msg.charAt(0) != '!' && msg.charAt(0) != '~') || !isCommand(parsed[0].toLowerCase())) {
-    return false; //no command called
+
+  if ( (msg.charAt(0) != '!' && msg.charAt(0) != '~') || !isCommand(parsed[0].toLowerCase()) )
+  {
+    return false;
   }
 
   var cmd = parsed;
   cmd.hidden_command = msg.charAt(0) == '~';
 
-  if (cmd !== false) {
+  if ( cmd !== false )
+  {
     cmd.nick = nick;
     cmd.private_message = false;
 
-    if (location == 'Chaterpie')
+    if (location == 'Absolute')
+    {
       cmd.socket = socket;
+    }
 
     argsString = '';
-    for (var property in cmd) {
-      if (cmd.hasOwnProperty(property) && (property%1)===0) {
+    for ( var property in cmd )
+    {
+      if ( cmd.hasOwnProperty(property) && ( property % 1 )===0 )
+      {
         if (argsString != '')
+        {
           argsString += PHP_ARG_SEPERATOR;
+        }
         argsString += cmd[property];
       }
     }
@@ -506,13 +633,15 @@ function parseCommand(nick, msg, location, socket) {
     var php_input = buffer.toString('base64');
 
     //Execute a php script; send the command
-    runner.exec("php " + COMMAND_PHP_PATH + " " +php_input + " "+config['game'], function(err, response, stderr) {
-      if (err) {
+    runner.exec("php " + COMMAND_PHP_PATH + " " + php_input + " " + config['game'], function(err, response, stderr)
+    {
+      if ( err )
+      {
         console.log(""); /* log error */
         console.log("Command Error! args: "+argsString.replace(/~szpAAce~/g, " ")); /* log error */
         console.log(""); /* log error */
         console.log(err); /* log error */
-        Chaterpie.sockets.emit("irc-message", messageHandler.add({
+        Absolute.sockets.emit("irc-message", messageHandler.add({
           nick: 'Error',
           userID: -1,
           rank: 'admin'
@@ -520,12 +649,15 @@ function parseCommand(nick, msg, location, socket) {
         return;
       }
 
-      try {
+      try
+      {
         response = JSON.parse(response); // parse the message
-      } catch (e) {
+      }
+      catch (e)
+      {
         console.log("Command Error! args: "+argsString); /* log error */
         console.log(response); /* log error */
-        Chaterpie.sockets.emit("irc-message", messageHandler.add({
+        Absolute.sockets.emit("irc-message", messageHandler.add({
           nick: 'Error',
           userID: -1,
           rank: 'admin'
@@ -534,17 +666,21 @@ function parseCommand(nick, msg, location, socket) {
       }
 
       //Send the Scyther messages as appropriate
-      for (var property in response.messages){
-        if (response.messages.hasOwnProperty(property)){
+      for ( var property in response.messages )
+      {
+        if ( response.messages.hasOwnProperty(property) )
+        {
           cmd.image = response.messages[property]['image'];
           cmd.nick = '';
-          scyther(cmd, ""+response.messages[property]['message']);
+          scyther(cmd, "" + response.messages[property]['message']);
         }
       }
 
       //Send the Scyther messages as appropriate
-      for (var property in response.log){
-        if (response.log.hasOwnProperty(property)){
+      for ( var property in response.log )
+      {
+        if ( response.log.hasOwnProperty(property) )
+        {
           console.log(""+response.log[property]['message']);
         }
       }
@@ -553,49 +689,67 @@ function parseCommand(nick, msg, location, socket) {
 }
 
 var AlreadySaid = [];
-var RetrieveGameMessage = setInterval(function () {
+var RetrieveGameMessage = setInterval(function()
+{
   results = [];
   conn.query({
-    sql: "SELECT * FROM chat WHERE type='scyther_message'",
+    sql: "SELECT * FROM `chat` WHERE `type` = 'scyther_message'",
     values: []
-  }, function (error, results, fields) {
-    if (error) {
+  },
+  function (error, results, fields)
+  {
+    if ( error )
+    {
       return console.error(error);
     }
 
-    if (results.length == 0) {
+    if ( results.length == 0 )
+    {
       return;
     }
 
-    for (var i = 0; i < results.length; i++) {
-      if (AlreadySaid.indexOf(results[i]['id']) == -1) {
+    for ( var i = 0; i < results.length; i++ )
+    {
+      if ( AlreadySaid.indexOf(results[i]['id']) == -1 )
+      {
         data = {};
 
-        if (results[i]['icon'].split(';').length == 3) {
+        if ( results[i]['icon'].split(';').length == 3 )
+        {
           var image = results[i]['icon'].split(';');
           data.image = [image[1], image[2], image[0]];
         }
 
-        if (results[i]['title']) { data.nick = results[i]['title']; }
+        if ( results[i]['title'] )
+        {
+          data.nick = results[i]['title'];
+        }
 
-        if (results[i]['private_to'] != 0 && results[i]['private_to'] != null) {
+        if ( results[i]['private_to'] != 0 && results[i]['private_to'] != null )
+        {
           data.hidden_command = true;
-          for (var property in CLIENTS) {
-            if (CLIENTS.hasOwnProperty(property)) {
-              if (results[i]['private_to'] == CLIENTS[property]['id']) {
+          for ( var property in CLIENTS )
+          {
+            if ( CLIENTS.hasOwnProperty(property) )
+            {
+              if ( results[i]['private_to'] == CLIENTS[property]['id'] )
+              {
                 data.socket = CLIENTS[property].socket;
               }
             }
           }
 
-          if (typeof data.socket === "undefined") {
+          if ( typeof data.socket === "undefined" )
+          {
             messageHandler.add({
               nick: results[i]['title'],
               userID: -1,
               rank: '',
               image: data.image
             }, results[i]['message'], {background:'white', private_to:results[i]['private_to']}, config.logfile);
-          } else {
+          }
+          else
+          {
             data.socket.emit('irc-message', messageHandler.add({
               nick: results[i]['title'],
               userID: -1,
@@ -603,80 +757,114 @@ var RetrieveGameMessage = setInterval(function () {
               image: data.image
             }, results[i]['message'], {background:'white', private_to:results[i]['private_to']}, config.logfile));
           }
-        } else {
+        }
+        else
+        {
           scyther(data, results[i]['message']);
         }
+
         AlreadySaid[AlreadySaid.length] = results[i]['id'];
       }
       conn.query({
-        sql: "DELETE FROM chat WHERE type='scyther_message' AND id=?",
+        sql: "DELETE FROM `chat` WHERE `type` = 'scyther_message' AND `id` = ?",
         values: [results[i]['id']]
-      }, function (errorf, results, fields) {});
+      },
+      function (errorf, results, fields)
+      {
+
+      });
     }
   });
 }, 500);
 
-function handleDisconnect() {
+function handleDisconnect()
+{
   conn = mysql.createConnection(config); 
 
-  conn.connect(function(err) {
-    if(err) { 
-      console.log('error when connecting to db:', err);
-      // attempt to reconnect to database
+  conn.connect(function(err)
+  {
+    if ( err )
+    {
+      console.log('An error occurred while attemping to connect to the DB: ', err);
       setTimeout(handleDisconnect, 2000); 
     }
   });
 
-  conn.on('error', function(err) {
+  conn.on('error', function(err)
+  {
     console.log('db error', err);
+    
     // if a fatal error has occurred, quit. force restart
-    if (err.fatal && err.fatal == true) {
-      throw new Error("A MySQL Fatal Error has occurred.");
+    if ( err.fatal && err.fatal == true )
+    {
+      throw new Error("A Fatal MySQL Error has occurred.");
     }
 
-    if(err.code === 'PROTOCOL_CONNECTION_LOST') { 
+    if ( err.code === 'PROTOCOL_CONNECTION_LOST' )
+    {
       handleDisconnect();
-    } else {
+    }
+    else
+    {
       throw err;
     }
-
   });
 }
-
 handleDisconnect();
 
 process.stdin.resume();//so the program will not close instantly
 
 var scytherHasCrashedAndSaidItsThing = false;
-function exitHandler(options, err) {
-  if (!scytherHasCrashedAndSaidItsThing) {
+function exitHandler(options, err)
+{
+  if ( !scytherHasCrashedAndSaidItsThing )
+  {
     scytherHasCrashedAndSaidItsThing = true;
 
     scyther({private_message: false}, "Absol & Absolute Chat have been terminated. Please refresh the page.");
 
     var Seconds = Math.floor(Date.now() / 1000) - startTime;
 
-    if(Seconds <= 120)
+    if ( Seconds <= 120 )
+    {
       lastseen = ""+Seconds+" seconds";
-    else if(Seconds >= 120 && Seconds <= 3599*2+1)
-      lastseen = Math.floor(Seconds / 60)+" minutes";
-    else if(Seconds >= 3600*2)
-      lastseen = numeral(Seconds / 3600).format('0.[00]')+" hours";
+    }
+    else if ( Seconds >= 120 && Seconds <= 3599 * 2 + 1 )
+    {
+      lastseen = Math.floor(Seconds / 60) + " minutes";
+    }
+    else if ( Seconds >= 3600 * 2 )
+    {
+      lastseen = numeral(Seconds / 3600).format('0.[00]') + " hours";
+    }
 
-    fn.logSync(os.EOL+"************** CRASH *****************", config.logfile);
+    fn.logSync(os.EOL+"**** Absol has crashed. ****", config.logfile);
 
-    if (err)
+    if ( err )
+    {
       fn.logSync(err.stack, config.logfile)
+    }
 
-    if (options.nodemon)
+    if ( options.nodemon )
+    {
       fn.logSync("Nodemon: File(s) Updated", config.logfile);
+    }
 
-    fn.logSync(os.EOL+'Absolute Chat lasted for '+lastseen+'.', config.logfile);
+    fn.logSync(os.EOL+'Absolute Chat lasted for ' + lastseen + '.', config.logfile);
   }
 
-  if (options.cleanup) console.log('clean');
-  if (options.exit) process.exit();
-  if (options.nodemon) process.kill(process.pid, 'SIGUSR2');
+  if ( options.cleanup )
+  {
+    console.log('clean');
+  }
+  if ( options.exit )
+  {
+    process.exit();
+  }
+  if ( options.nodemon )
+  {
+    process.kill(process.pid, 'SIGUSR2');
+  }
 }
 
 //do something when app is closing
@@ -692,41 +880,51 @@ process.once('SIGUSR2', exitHandler.bind(null, {nodemon:true}));
 process.on('uncaughtException', exitHandler.bind(null, {exit:true}));
 
 
-function determineUserRank(position) {
-  switch (position) {
-    case 'Root Administrator':
+function determineUserRank(position)
+{
+  switch ( position )
+  {
     case 'Administrator':
-      return 'admin'; break;
+      return 'admin'; 
+      break;
+    case 'Developer':
+      return 'dev';
+      break;
     case 'Super Moderator':
-      return 'super_mod'; break;
+      return 'super_mod';
+      break;
     case 'Moderator':
-    case 'Moderator/Artist':
-      return 'mod'; break;
-    case 'Trial Moderator':
-    case 'Trial Mod/Artist':
-      return 'temp_mod'; break;
+      return 'mod';
+      break;
     case 'Chat Moderator':
-    case 'Chat Mod/Artist':
-      return 'chat_mod'; break;
-    case 'Artist':
-      return 'artist'; break;
+      return 'chat_mod';
+      break;
+    case 'Bot':
+      return 'bot';
+      break;
   }
+
   return '';
 }
-function pad(n, len) {
+
+function pad(n, len)
+{
   return (new Array(len + 1).join('0') + n).slice(-len);
 }
 
 //Chat check
-function chat_check(socket) {
-  if (typeof CLIENTS["user"+socket['tpk_clientID']] === "undefined") {
+function chat_check(socket)
+{
+  if ( typeof CLIENTS["user"+socket['absolute_clientID']] === "undefined" )
+  {
     console.log("This user is no longer authenticated");
     socket.emit("irc-fail", "auth_fail");
     socket.disconnect();
     return true;
   }
 
-  if (CLIENTS["user"+socket['tpk_clientID']].authenticated != true) {
+  if ( CLIENTS["user"+socket['absolute_clientID']].authenticated != true )
+  {
     console.log("This user failed authentication test");
     socket.emit("irc-fail", "auth_fail");
     socket.disconnect();
@@ -747,19 +945,21 @@ function auth_user(socket, userID, postcode)
   conn.query({
     sql: "SELECT * FROM users WHERE id = ? LIMIT 1",
     values: [userID]
-  }, function (error, results, fields) {
-    if (error)
+  },
+  function (error, results, fields)
+  {
+    if ( error )
     {
       return console.error(error);
     }
 
-    if (results.length == 0)
+    if ( results.length == 0 )
     {
       console.log("WARNING: User not found");
       socket.disconnect();
       return false;
     } 
-    else if (results[0]['Auth_Code'] != postcode)
+    else if ( results[0]['Auth_Code'] != postcode )
     {
       if (FULL_DEBUG)
       {
@@ -773,51 +973,52 @@ function auth_user(socket, userID, postcode)
     var user = results[0];
 
     //If you are banned from chat, disconnect now.
-    if (check_ban_user(socket, user) == true)
+    if ( check_ban_user(socket, user) == true )
+    {
       return false;
-
-    CLIENTS["user"+socket['tpk_clientID']] = user;
-    CLIENTS["user"+socket['tpk_clientID']].nick = user.Username;
-    CLIENTS["user"+socket['tpk_clientID']].socket = socket;
-    CLIENTS["user"+socket['tpk_clientID']].authenticated = true;
-
-    CLIENTS["user"+socket['tpk_clientID']].rank  = determineUserRank(user['position']);
-
-    //Get the rank of the client
-    if (user['donator_status'] != null) {
-      donator = user['donator_status'].split(',');
-      if (donator.length == 2 && donator[1] > (Date.now()/1000))
-        CLIENTS["user"+socket['tpk_clientID']].rank  = 'voice';
     }
+
+    CLIENTS["user"+socket['absolute_clientID']] = user;
+    CLIENTS["user"+socket['absolute_clientID']].nick = user.Username;
+    CLIENTS["user"+socket['absolute_clientID']].socket = socket;
+    CLIENTS["user"+socket['absolute_clientID']].authenticated = true;
+
+    CLIENTS["user"+socket['absolute_clientID']].rank = determineUserRank(user['position']);
 
     //Master Titles equate to the sprite in your chatroom
     conn.query({
       sql: "SELECT * FROM pokemon WHERE id=? LIMIT 1",
       values: [userID, 'yes']
-    }, function (error, results, fields) {
-      if (error) {
+    },
+    function (error, results, fields)
+    {
+      if ( error )
+      {
         return console.error(error);
       }
 
-      if (chat_check(socket)) return false;
+      if ( chat_check(socket) )
+      {
+        return false;
+      }
 
-      if (results.length === 0) {
-        CLIENTS["user"+socket['tpk_clientID']].chat_sprite = '';
-      } else {
-        CLIENTS["user"+socket['tpk_clientID']].chat_sprite = results[0].icon;
+      if ( results.length === 0 )
+      {
+        CLIENTS["user"+socket['absolute_clientID']].chat_sprite = '';
+      }
+      else
+      {
+        CLIENTS["user"+socket['absolute_clientID']].chat_sprite = results[0].icon;
       }
     });
 
     // Return the last 30 messages to the connecting client
     length = messageHandler.MessageLog.length;
     MessageLog = messageHandler.MessageLog;
-    for(var i = 30; i > 0; i--) {
-      if (typeof MessageLog[length-i] !== "undefined" &&
-        (
-          MessageLog[length-i].info.private_to == CLIENTS["user"+socket['tpk_clientID']]['id'] ||
-          typeof MessageLog[length-i].info.private_to === "undefined"
-        )
-      ) {
+    for( let i = 30; i > 0; i-- )
+    {
+      if ( typeof MessageLog[length-i] !== "undefined" && ( MessageLog[length-i].info.private_to == CLIENTS["user"+socket['absolute_clientID']]['id'] || typeof MessageLog[length-i].info.private_to === "undefined" ) )
+      {
         socket.emit("irc-message", MessageLog[length-i]);
       }
     }
@@ -882,7 +1083,7 @@ setTimeout(function()
         //scyther({private_message:false}, "Absolute Chat has been activated. Say, hey.");
         let icon = fn.getPokeIcon(359, 0, "shiny");
         messageHandler.clear();
-        Chaterpie.sockets.emit("irc-message",
+        Absolute.sockets.emit("irc-message",
           messageHandler.add(
             { nick: 'Absol', userID: 3, rank: 'bot', image: icon, clear: true },
             "Long have we waited. Absolute activated.", undefined, config.logfile

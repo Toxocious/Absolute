@@ -550,3 +550,100 @@ m >> 01/09/19 03:07:27 .. Absol: Long have we waited. Absolute activated.
 Server: absolute :: Port: 3000
 m >> 01/09/19 03:07:41 .. Toxocious: o-o
 m >> 01/09/19 04:57:12 .. Toxocious: .-.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/13/19 19:23:58 .. Absol: Long have we waited. Absolute activated.
+m >> 01/13/19 19:24:09 .. Toxocious: :010:
+
+************** CRASH *****************
+
+Absolute Chat lasted for 108 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/13/19 19:25:47 .. Absol: Long have we waited. Absolute activated.
+
+************** CRASH *****************
+
+Absolute Chat lasted for 51 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/13/19 19:33:40 .. Absol: Long have we waited. Absolute activated.
+
+************** CRASH *****************
+
+Absolute Chat lasted for 26 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/13/19 19:34:07 .. Absol: Long have we waited. Absolute activated.
+
+************** CRASH *****************
+
+Absolute Chat lasted for 68 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~ Scyther is loading. Prepare to get your chat handed to you. -B0sh ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/13/19 19:35:16 .. Absol: Long have we waited. Absolute activated.
+
+************** CRASH *****************
+
+Absolute Chat lasted for 43 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/13/19 20:18:30 .. Absol: Long have we waited. Absolute activated.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 45 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/13/19 20:19:16 .. Absol: Long have we waited. Absolute activated.
+m >> 01/13/19 20:19:20 .. Toxocious: .-.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 57 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+~               Absol has begun; prepare for trouble.               ~
+Server: absolute :: Port: 3000
+m >> 01/13/19 20:20:20 .. Absol: Long have we waited. Absolute activated.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 43 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/13/19 20:21:36 .. Absol: Long have we waited. Absolute activated.
