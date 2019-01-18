@@ -58,7 +58,7 @@
 			
 			if ( $User_Info['Password'] != $Pass_Hash )
 			{
-				$Oops = "<div class='description' style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>You've entered an incorrect username or password. Please try again.</div>";
+				$Oops = "<div class='description' style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>You've entered an incorrect username or password.<br />Please try again.</div>";
 			}
 
 			if ( !isset($Oops) )

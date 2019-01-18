@@ -647,3 +647,83 @@ Absolute Chat lasted for 43 seconds.
 
 Server: absolute :: Port: 3000
 m >> 01/13/19 20:21:36 .. Absol: Long have we waited. Absolute activated.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 19 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/15/19 05:10:08 .. Absol: Long have we waited. Absolute activated.
+m >> 01/15/19 05:10:45 .. Toxocious: u wot
+m >> 01/15/19 05:11:20 .. Toxocious: ???
+m >> 01/15/19 05:11:46 .. Absol: The chat has been cleared by Toxocious.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 2 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/15/19 05:12:39 .. Absol: Long have we waited. Absolute activated.
+m >> 01/15/19 05:12:43 .. Toxocious: tset
+m >> 01/15/19 05:12:44 .. Absol: The chat has been cleared by Toxocious.
+m >> 01/15/19 05:12:45 .. Toxocious: POG
+m >> 01/15/19 05:12:48 .. Absol: The chat has been cleared by Toxocious.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 54 seconds.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Server: absolute :: Port: 3000
+~               Absol has begun; prepare for trouble.               ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/15/19 05:13:34 .. Absol: Long have we waited. Absolute activated.
+m >> 01/15/19 05:13:40 .. Toxocious: hmm?
+m >> 01/15/19 05:13:43 .. Absol: The chat has been cleared by Toxocious.
+m >> 01/15/19 05:18:45 .. Absol: The chat has been cleared by Toxocious.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 5 minutes.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/15/19 05:18:49 .. Absol: Long have we waited. Absolute activated.
+m >> 01/15/19 05:18:54 .. Toxocious: /claer
+m >> 01/15/19 05:18:56 .. Absol: The chat has been cleared by Toxocious.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/15/19 11:59:10 .. Absol: Long have we waited. Absolute activated.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/17/19 05:10:31 .. Absol: Long have we waited. Absolute activated.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/17/19 16:58:14 .. Absol: Long have we waited. Absolute activated.
+Server: absolute :: Port: 3000
+m >> 01/17/19 16:58:22 .. Toxocious: !!!
+m >> 01/17/19 20:48:26 .. Toxocious: ...
+m >> 01/17/19 21:07:21 .. Absol: The chat has been cleared by Toxocious.

@@ -13,7 +13,7 @@
 		switch ($Object)
 		{
 			case 'Pokemon':
-				return floor(pow($Experience + 1, 1 / 3));
+				return floor( pow( $Experience + 1, 1 / 3 ) );
 			default:
 				return false;
 		}

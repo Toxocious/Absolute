@@ -44,7 +44,7 @@
 		$FetchDate = date("Y-m-d H:i:s");
 		if ( $Message != '' )
 		{
-			file_put_contents('txt/logs.txt', "[".$FetchDate."] Error: ".$Message.PHP_EOL , FILE_APPEND | LOCK_EX);
+			file_put_contents('logs/php_logs.txt', "[" . $FetchDate . "] Error: " . $Message.PHP_EOL, FILE_APPEND | LOCK_EX);
 		}
 	}
 
@@ -83,11 +83,16 @@
 		$contractDateBegin = new DateTime($date1);
 		$contractDateEnd = new DateTime($date2);
 
-		if (
-			$paymentDate->getTimestamp() > $contractDateBegin->getTimestamp() &&
-			$paymentDate->getTimestamp() < $contractDateEnd->getTimestamp()) {
+		if
+			(
+				$paymentDate->getTimestamp() > $contractDateBegin->getTimestamp() &&
+				$paymentDate->getTimestamp() < $contractDateEnd->getTimestamp()
+			)
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}

@@ -251,10 +251,11 @@ Absolute.on('connection', function (socket)
 
       else if ( data.text.substring(0, 6) == "/clear" && user.Power >= 3 )
       {
+        let icon = fn.getPokeIcon(359, 0, "shiny");
         messageHandler.clear();
         Absolute.sockets.emit("irc-message",
           messageHandler.add(
-            { nick: 'Absol', userID: 3, rank: 'bot', image: '', clear: true },
+            { nick: 'Absol', userID: 3, rank: 'bot', image: icon, clear: true },
             "The chat has been cleared by " + user.Username + ".", undefined, config.logfile
           )
         );

@@ -95,6 +95,7 @@
 			$IVs = explode(',', $Pokemon['IVs']);
 			$Moves = explode(',', $Pokemon['Moves']);
 			$Level = FetchLevel($Pokemon['Experience'], 'Pokemon');
+			$Experience = number_format($Pokemon['Experience']);
 
 			$BaseStats = [
 				round($Pokedex['hp'] + $StatBonus),
@@ -135,7 +136,7 @@
 			}
 
 			return [
-				"ID" => $Pokemon['ID'],
+				"ID" => number_format($Pokemon['ID']),
 				"Pokedex_ID" => $Pokemon['Pokedex_ID'],
 				"Alt_ID" => $Pokemon['Alt_ID'],
 				"Nickname" => $Pokemon['Nickname'],
@@ -151,7 +152,7 @@
 				"GenderShort" => $GenderShort,
 				"Gender_Icon" => Domain(1) . "/images/Assets/" . $Gender . ".svg",
 				"Level" => number_format($Level),
-				"Experience" => number_format($Pokemon['Experience']),
+				"Experience" => $Experience,
 				"Nature" => $Pokemon['Nature'],
 				"BaseStats" => $BaseStats,
       	"Stats" => $Stats,
@@ -161,6 +162,7 @@
 				"Move_2" => $Moves[1],
 				"Move_3" => $Moves[2],
 				"Move_4" => $Moves[3],
+				"Happiness" => $Pokemon['Happiness'],
 				"Owner_Current" => $Pokemon['Owner_Current'],
 				"Owner_Current_Username" => $Current_Owner['Username'],
 				"Owner_Original" => $Pokemon['Owner_Original'],
@@ -256,7 +258,7 @@
 
 			if ( !in_array($Slot, [1, 2, 3, 4, 5, 6, 7]) )
 			{
-				return "<div class='error'>You chose an invalid slot.</div>";
+				return "<div class='error'>You have chosen an invalid slot.</div>";
 			}
 
 			if ( $Poke_Data['Owner_Current'] !== $User_Data['id'] )
@@ -264,9 +266,18 @@
 				return "<div class='error'>You are not the owner of the Pokemon that you have attempted to move.</div>";
 			}
 
+			if ( $Slot < 7 )
+			{
+				$Location = 'Roster';
+			}
+			else
+			{
+				$Location = 'Box';
+			}
+
 			try
 			{
-				$Roster_Fetch = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
+				$Roster_Fetch = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6 ORDER BY `Slot` ASC LIMIT 6");
 				$Roster_Fetch->execute([$User_Data['id']]);
 				$Roster_Fetch->setFetchMode(PDO::FETCH_ASSOC);
 				$Roster = $Roster_Fetch->fetchAll();
@@ -276,7 +287,7 @@
 				HandleError( $e->getMessage() );
 			}
 
-			if ( $Slot === 7 )
+			if ( $Slot == 7 )
 			{
 				try
 				{
@@ -294,11 +305,11 @@
 				{
 					try
 					{
-						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = ?, `Slot` = ? WHERE `ID` = ? LIMIT 1");
-      			$Roster_Move->execute([$Poke_Data['Location'], $Slot, $Poke_Data['ID']]);
+						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
+      			$Roster_Move->execute([$Slot, $Poke_Data['ID']]);
 							
-        		$Roster_Remove = $PDO->prepare("UPDATE `pokemon` SET `Location` = ?, `Slot` = ? WHERE `ID` = ? LIMIT 1");
-        		$Roster_Remove->execute([$Poke_Data['Location'], $Poke_Data['Slot'], $Roster[$Slot - 1]['ID']]);
+        		$Roster_Remove = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
+        		$Roster_Remove->execute([$Poke_Data['Slot'], $Roster[$Slot - 1]['ID']]);
 					}
 					catch ( PDOException $e )
 					{
@@ -309,8 +320,8 @@
 				{
 					try
 					{
-						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = ?, `Slot` = ? WHERE `ID` = ? LIMIT 1");
-						$Roster_Move->execute([$Poke_Data['Location'], count($Roster) + 1, $Poke_Data['ID']]);
+						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
+						$Roster_Move->execute([count($Roster) + 1, $Poke_Data['ID']]);
 					}
 					catch (PDOException $e)
 					{

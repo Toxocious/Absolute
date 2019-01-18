@@ -52,7 +52,7 @@
 			table
 			{
 				background: #4A618F;
-				border-color: #4A618F !important;
+				border-color: #4A618F;
 				border-radius: 4px;
 
 				margin-left: 5px;
@@ -66,10 +66,9 @@
 			table thead
 			{
 				background: #4A618F;
-				background: -moz-linear-gradient(top, #888 0%, #4A618F 100%, #4A618F 100%);
-				background: -webkit-linear-gradient(top, #888 0%, #4A618F 100%, #4A618F 100%);
-				background: linear-gradient(to bottom, #888 0%, #4A618F 100%, #4A618F 100%);
-				border-bottom: 1px solid #4A618F;
+				background: -moz-linear-gradient(top, #8090b0 0%, #4A618F 100%, #4A618F 100%);
+				background: -webkit-linear-gradient(top, #8090b0 0%, #4A618F 100%, #4A618F 100%);
+				background: linear-gradient(to bottom, #8090b0 0%, #4A618F 100%, #4A618F 100%);
 				border-color: #4A618F !important;
 			}
 			table thead tr
@@ -102,7 +101,7 @@
 	<body>
 		<div class='content' style='float: left; margin: 5px 0px 5px 5px; width: 200px;'>
 			<div class='head'><?= $Pokemon['Display_Name']; ?></div>
-			<div class='box' style='padding: 0px;'>
+			<div class='box' style='padding: 16px;'>
 				<img src='<?= $Pokemon['Sprite']; ?>' />
 			</div>
 		</div>
@@ -188,20 +187,30 @@
 					<td><?= $Pokemon['Experience']; ?></td>
 				</tr>
 				<tr>
-					<td colspan='2'><i><?= $Move_1['Name']; ?></i></td>
-					<td colspan='2'><i><?= $Move_2['Name']; ?></i></td>
-				</tr>
-				<tr>
-					<td colspan='2'><i><?= $Move_3['Name']; ?></i></td>
-					<td colspan='2'><i><?= $Move_4['Name']; ?></i></td>
-				</tr>
-				<tr>
 					<td colspan='1'><b>Place Obtained</b></td>
 					<td colspan='3'><?= $Pokemon['Creation_Location']; ?></td>
 				</tr>
 				<tr>
 					<td colspan='1'><b>Obtained On</b></td>
 					<td colspan='3'><?= $Pokemon['Creation_Date']; ?> by <a href='<?= Domain(1); ?>/profile.php?id=<?= $Pokemon['Original_Owner']; ?>'><?= $Pokemon['Owner_Original_Username']; ?></a></td>
+				</tr>
+			</tbody>
+		</table>
+
+		<table style='float: left; margin: 0px 0px 5px 5px; width: 670px;'> <!-- width: 460px; -->
+			<thead>
+				<tr>
+					<th colspan='4'>Moves</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan='2'><i><?= $Move_1['Name']; ?></i></td>
+					<td colspan='2'><i><?= $Move_2['Name']; ?></i></td>
+				</tr>
+				<tr>
+					<td colspan='2'><i><?= $Move_3['Name']; ?></i></td>
+					<td colspan='2'><i><?= $Move_4['Name']; ?></i></td>
 				</tr>
 			</tbody>
 		</table>

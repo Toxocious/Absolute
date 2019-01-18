@@ -22,12 +22,14 @@
 		 */
 		if ( $_POST['Request'] == 'Move' && isset($_POST['PokeID']) && isset($_POST['Slot']) )
 		{
-			$Pokemon_Data = $PokeClass->FetchPokemonData($_POST['PokeID']);
-			$Pokemon_Move = $PokeClass->MovePokemon($Pokemon_Data['ID'], $_POST['Slot']);
+			$Slot = Purify($_POST['Slot']);
+			$Poke_ID = Purify($_POST['PokeID']);
+			$Pokemon_Data = $PokeClass->FetchPokemonData($Poke_ID);
+			$Pokemon_Move = $PokeClass->MovePokemon($Pokemon_Data['ID'], $Slot);
 
-			if ( $Pokemon_Move === true )
+			if ( $Pokemon_Move == true )
 			{
-				if ( $_POST['Slot'] === 7 )
+				if ( $Slot == 7 )
 				{
 					echo "<div class='success'><b>{$Pokemon_Data['Display_Name']}</b> has been moved to your box.</div>";
 				}
@@ -48,92 +50,102 @@
 			";
 
 			for ( $i = 0; $i <= 5; $i++ )
-      {
-        if ( isset($Roster[$i]['ID']) )
-        {
-          $Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
+			{
+				if ( isset($Roster[$i]['ID']) )
+				{
+					$Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
+			
+					if ( $Roster_Slot[$i]['Item'] != null )
+					{
+						$Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin-top: 48px;' />";
+					}
+					else
+					{
+						$Item = "";
+					}
 
-          if ( $Roster_Slot[$i]['Item'] != null )
-          {
-            $Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin: 5px 0px 0px -10px; position: absolute;' />";
-          }
-          else
-          {
-            $Item = "";
-          }
-          
-          echo "
-            <div class='roster_slot full' style='/*width: calc(100% / 3);*/'>
-              <div style='float: left;' class='slots left'>
-          ";
+					$Slots = '';
+					for ( $x = 1; $x <= 7; ++$x )
+					{
+						if ( $x == 7 )
+						{
+							$Slots .= "
+								<div>
+									<a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='padding: 0px 13px; width: calc(100% / 7);'>X</a>
+								</div>
+							";
+						}
+						else if ( $x == $i + 1 || $x > count($Roster) )
+						{
+							$Slots .= "
+								<div>
+									<span style='color: #000; padding: 0px 13px; width: calc(100% / 7);'>$x</span>
+								</div>
+							";
+						}
+						else
+						{
+							$Slots .= "
+								<div>
+									<a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='padding: 0px 13px; width: calc(100% / 7);'>$x</a>
+								</div>
+							";
+						}
+					}
+								
+					echo "
+						<div class='roster_slot full'>
+							<div class='slots'>
+								$Slots
+							</div>
 
-          for ($x = 1; $x <= 3; ++$x) {
-            if ( $x == $i + 1 || $x > count($Fetch_Roster) )
-            {
-              echo "<div><span style='color: #000; display: block; padding: 13px;'>$x</span></div>";
-            }
-            else
-            {
-              echo "<div><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='display: block; padding: 13px;'>$x</a></div>";
-            }
-          }
+							<div style='float: left; padding-top: 3px; text-align: center; width: 30px;'>
+								<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; width: 20px;' /><br />
+								$Item
+							</div>
 
-          echo "
-            </div>
-            <img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; margin: 10px 0px 0px -20px; position: absolute; width: 20px;' />
-            <img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' ?>
-            $Item
-            <div style='float: right;' class='slots right'>
-          ";
+							<div style='float: left; margin-left: -30px; padding: 3px;'>
+								<img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
+							</div>
 
-          for ($x = 4; $x <= 6; ++$x) {
-            if ( $x == $i + 1 || $x > count($Fetch_Roster) )
-            {
-              echo "<div><span style='color: #000; display: block; padding: 13px;'>$x</span></div>";
-            }
-            else
-            {
-              echo "<div><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='display: block; padding: 13px;'>$x</a></div>";
-            }
-          }
+							<div class='info_cont' style='float: right; width: 189px;'>
+								<div style='font-weight: bold; padding: 2px;'>
+									{$Roster_Slot[$i]['Display_Name']}
+								</div>
+								<div class='info'>Level</div>
+								<div>{$Roster_Slot[$i]['Level']}</div>
+								<div class='info'>Experience</div>
+								<div>{$Roster_Slot[$i]['Experience']}</div>
+							</div>
+						</div>
+					";
+				}
+				else
+				{
+					$Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
+					$Roster_Slot[$i]['Display_Name'] = 'Empty';
+					$Roster_Slot[$i]['Level'] = '0';
+					$Roster_Slot[$i]['Experience'] = '0';
+			
+					echo "
+						<div class='roster_slot full' style='height: 131px; padding: 0px;'>
+							<div style='float: left; padding: 18px 3px 3px;'>
+								<img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' />
+							</div>
 
-          echo "
-              </div>
-              <div><b>{$Roster_Slot[$i]['Display_Name']}</b></div>
-              <div class='info'>
-                <div>Level</div>
-                <div>{$Roster_Slot[$i]['Level']}</div>
-              </div>
-              <div class='info'>
-                <div>Experience</div>
-                <div>{$Roster_Slot[$i]['Experience']}</div>
-              </div>
-            </div>
-          ";
-        }
-        else
-        {
-          $Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
-          $Roster_Slot[$i]['Display_Name'] = 'Empty';
-          $Roster_Slot[$i]['Level'] = '0';
-          $Roster_Slot[$i]['Experience'] = '0';
-
-          echo "
-            <div class='roster_slot full' style='/*width: calc(100% / 3);*/'>
-              <img src='{$Roster_Slot[$i]['Sprite']}' />
-              <div><b>{$Roster_Slot[$i]['Display_Name']}</b></div>
-              <div class='info'>
-                <div>Level</div>
-                <div>{$Roster_Slot[$i]['Level']}</div>
-              </div>
-              <div class='info'>
-                <div>Experience</div>
-                <div>{$Roster_Slot[$i]['Experience']}</div>
-              </div>
-            </div>
-          ";
-        }
-      }
+							<div class='info_cont' style='float: right; height: 131px; padding-top: 15px; width: 189px;'>
+								<div style='font-weight: bold; padding: 2px;'>
+									{$Roster_Slot[$i]['Display_Name']}
+								</div>
+								<div class='info'>Level</div>
+								<div>{$Roster_Slot[$i]['Level']}</div>
+								<div class='info'>Experience</div>
+								<div>{$Roster_Slot[$i]['Experience']}</div>
+							</div>
+						</div>
+					";
+				}
+			}
 			
 			echo "
 					</div>
@@ -159,7 +171,7 @@
 			foreach ( $Box_Pokemon as $Index => $Pokemon )
 			{
 				$Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
-				echo "<img class='spricon popup cboxElement' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
+				echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
 			}
 			
 			if ( count($Box_Pokemon) == 0 )
@@ -171,9 +183,9 @@
 					</div>
 				</div>
 
-				<div class='panel' style='float: right; width: calc(100% / 2 - 2.5px);'>
+				<div class='panel' id='pokeData' style='float: right; width: calc(100% / 2 - 2.5px);'>
 					<div class='panel-heading'>Selected Pokemon</div>
-					<div class='panel-body' style='padding: 3px;' id='pokeData'>
+					<div class='panel-body' style='padding: 3px;'>
 						<div style='padding: 5px;'>Please select a Pokemon to view it's statistics.</div>
 					</div>
 				</div>
@@ -220,93 +232,101 @@
 			{
 				for ( $i = 0; $i <= 5; $i++ )
 				{
-          if ( isset($Roster[$i]['ID']) )
-          {
+					if ( isset($Roster[$i]['ID']) )
+					{
 						$Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
-
+				
 						if ( $Roster_Slot[$i]['Item'] != null )
 						{
-							$Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin: 5px 0px 0px -10px; position: absolute;' />";
+							$Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin-top: 48px;' />";
 						}
 						else
 						{
 							$Item = "";
 						}
-								
-						echo "
-							<div class='roster_slot full' style='width: calc(100% / 3);'>
-								<div style='float: left;' class='slots left'>
-						";
 
-						for ( $x = 1; $x <= 3; ++$x )
+						$Slots = '';
+						for ( $x = 1; $x <= 7; ++$x )
 						{
-							if ( $x == $i + 1 || $x > $Roster_Count )
+							if ( $x == 7 )
 							{
-								echo "<div><span style='color: #000; display: block; padding: 13px;'>$x</span></div>";
+								$Slots .= "
+									<div>
+										<a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='padding: 0px 13px; width: calc(100% / 7);'>X</a>
+									</div>
+								";
+							}
+							else if ( $x == $i + 1 || $x > count($Roster) )
+							{
+								$Slots .= "
+									<div>
+										<span style='color: #000; padding: 0px 13px; width: calc(100% / 7);'>$x</span>
+									</div>
+								";
 							}
 							else
 							{
-								echo "<div><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='display: block; padding: 13px;'>$x</a></div>";
+								$Slots .= "
+									<div>
+										<a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='padding: 0px 13px; width: calc(100% / 7);'>$x</a>
+									</div>
+								";
 							}
 						}
-
+									
 						echo "
-							</div>
-							<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; margin: 10px 0px 0px -20px; position: absolute; width: 20px;' />
-							<img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
-							$Item
-							<div style='float: right;' class='slots right'>
-						";
-
-						for ( $x = 4; $x <= 6; ++$x )
-						{
-							if ( $x == $i + 1 || $x > $Roster_Count )
-							{
-								echo "<div><span style='color: #000; display: block; padding: 13px;'>$x</span></div>";
-							}
-							else
-							{
-								echo "<div><a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='display: block; padding: 13px;'>$x</a></div>";
-							}
-						}
-
-						echo "
+							<div class='roster_slot full'>
+								<div class='slots'>
+									$Slots
 								</div>
-								<div><b>{$Roster_Slot[$i]['Display_Name']}</b></div>
-								<div class='info'>
-									<div>Level</div>
+
+								<div style='float: left; padding-top: 3px; text-align: center; width: 30px;'>
+									<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; width: 20px;' /><br />
+									$Item
+								</div>
+
+								<div style='float: left; margin-left: -30px; padding: 3px;'>
+									<img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
+								</div>
+
+								<div class='info_cont' style='float: right; width: 189px;'>
+									<div style='font-weight: bold; padding: 2px;'>
+										{$Roster_Slot[$i]['Display_Name']}
+									</div>
+									<div class='info'>Level</div>
 									<div>{$Roster_Slot[$i]['Level']}</div>
-								</div>
-								<div class='info'>
-									<div>Experience</div>
+									<div class='info'>Experience</div>
 									<div>{$Roster_Slot[$i]['Experience']}</div>
 								</div>
-            	</div>
+							</div>
 						";
-          }
-          else
-          {
-            $Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
-            $Roster_Slot[$i]['Display_Name'] = 'Empty';
-            $Roster_Slot[$i]['Level'] = '0';
+					}
+					else
+					{
+						$Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
+						$Roster_Slot[$i]['Display_Name'] = 'Empty';
+						$Roster_Slot[$i]['Level'] = '0';
 						$Roster_Slot[$i]['Experience'] = '0';
-
+				
 						echo "
-							<div class='roster_slot full' style='width: calc(100% / 3);'>
-								<img src='{$Roster_Slot[$i]['Sprite']}' />
-								<div><b>{$Roster_Slot[$i]['Display_Name']}</b></div>
-								<div class='info'>
-									<div>Level</div>
-									<div>{$Roster_Slot[$i]['Level']}</div>
+							<div class='roster_slot full' style='height: 131px; padding: 0px;'>
+								<div style='float: left; padding: 18px 3px 3px;'>
+									<img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' />
 								</div>
-								<div class='info'>
-									<div>Experience</div>
+
+								<div class='info_cont' style='float: right; height: 131px; padding-top: 15px; width: 189px;'>
+									<div style='font-weight: bold; padding: 2px;'>
+										{$Roster_Slot[$i]['Display_Name']}
+									</div>
+									<div class='info'>Level</div>
+									<div>{$Roster_Slot[$i]['Level']}</div>
+									<div class='info'>Experience</div>
 									<div>{$Roster_Slot[$i]['Experience']}</div>
 								</div>
 							</div>
 						";
-          }
-        }
+					}
+				}
 			}
 			else if ( $_POST['Location'] == 'userbar' )
 			{

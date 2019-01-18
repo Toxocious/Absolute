@@ -84,8 +84,15 @@
               <span style='float: left;'>
                 <img src='<?= $Poke_Data['Icon']; ?>' />
               </span>
-              <div style='margin-top: 5px;'>
-                <?= $Poke_Data['Display_Name'] . " (Level: " . $Poke_Data['Level'] . ")"; ?>
+              <div>
+                <?php
+                  echo "
+                    <span style='font-size: 12px;'>
+                      {$Poke_Data['Display_Name']} <br />
+                      (Level: {$Poke_Data['Level']})
+                    </span>
+                  ";
+                ?>
               </div>
             </td>
 

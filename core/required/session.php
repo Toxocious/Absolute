@@ -80,7 +80,6 @@
 	 * Get page data.
 	 */
 	$Parse_URL = parse_url((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
-
 	$Fetch_Page = $PDO->prepare("SELECT * FROM `pages` WHERE `URL` = ? LIMIT 1");
 	$Fetch_Page->execute([$Parse_URL['path']]);
 	$Fetch_Page->setFetchMode(PDO::FETCH_ASSOC);
@@ -88,10 +87,12 @@
   
   /**
 	 * If the user is currently in a session, run the following code at the start of every page load.
+	 * ===================================>
 	 * Fetch their database information.
 	 * Update their overall playtime.
 	 * Fetch their roster.
 	 * Fetch page data.
+	 * ===================================>
 	 */
 	if ( isset($_SESSION['abso_user']) )
 	{

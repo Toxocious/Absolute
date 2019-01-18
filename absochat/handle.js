@@ -460,7 +460,7 @@ ChatMessage = {
       ChatMessage.temp_chat +=
         '<div class="msg'+(ChatMessage.renderBackgroundID%2)+'"'+style+'> <span class="time">'+ (("0" + hr).slice(-2)+":" +
 ("0" + time.getMinutes()).slice(-2) + ":" +
-("0" + time.getSeconds()).slice(-2))+' '+AMPM+'</span><div style="clear:right;text-indent:10px;font-style: italic;">'+
+("0" + time.getSeconds()).slice(-2))+' '+AMPM+'</span><div style="clear:right;font-style: italic;">'+
           text.destroyHTML().linkify().emotify().userify(msg).highlightify()
         +'</div></div>';
     } else {
@@ -474,7 +474,7 @@ ChatMessage = {
       ChatMessage.temp_chat +=
         '<div class="msg'+(ChatMessage.renderBackgroundID%2)+'"'+style+'>'+ChatMessage.user(msg.users[0])+' <span class="time">'+banLink1+(("0" + hr).slice(-2)   + ":" +
 ("0" + time.getMinutes()).slice(-2) + ":" +
-("0" + time.getSeconds()).slice(-2))+' '+AMPM+banLink2+'</span><div style="clear:right;text-indent:10px;">'+
+("0" + time.getSeconds()).slice(-2))+' '+AMPM+banLink2+'</span><div style="clear:right;">'+
           text.destroyHTML().linkify().emotify().highlightify()
         +'</div></div>';
     }

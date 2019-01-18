@@ -245,7 +245,7 @@ ChatMessage = {
             ("0" + time.getMinutes()).slice(-2) + `:` +
             ("0" + time.getSeconds()).slice(-2)) + ` ` + AMPM +
           `</span>
-          <div style="clear: right; text-indent: 10px;">` +
+          <div style="clear: right;">` +
             text +
           `</div>
         </div>
@@ -273,7 +273,7 @@ ChatMessage = {
             ("0" + time.getSeconds()).slice(-2)) + ` ` + AMPM +
             banLink2 +
           `</span>
-          <div style="clear: right; text-indent: 10px;">` +
+          <div style="clear: right;">` +
             text +
           `</div>
         </div>

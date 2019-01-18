@@ -68,7 +68,8 @@
 					Absolute.isStaff = true;
 
 					Absolute.staff = {
-						kick: function( uID ) {
+						kick: function( uID )
+						{
 							socket.emit("chaterpie-kick-user", uID, $('#chatMessage').val());
 							$('#chatMessage').val('');
 
@@ -77,7 +78,8 @@
 						},
 
 						ban: function( uID, time ) {
-							if (!confirm("Do you really want to ban user #"+uID+"?")) {
+							if (!confirm("Do you really want to ban user #"+uID+"?"))
+							{
 								return;
 							}
 
@@ -89,7 +91,8 @@
 							return false;
 						},
 
-						quickBan: function ( uID ) {
+						quickBan: function( uID )
+						{
 							if ( confirm("Do you really want to ban user #"+uID+" for 5 minutes?") )
 							{
 								Absolute.staff.ban(uID, 300);
@@ -231,11 +234,20 @@
 
 		<div class='sidebar'>
 			<?php
-				if ( $User_Data['Power'] >= 4 )
+				if ( $User_Data['Power'] >= 3 )
 				{
-					echo 	"<div class='button'>";
-					echo		"<a href='staff'>Staff Panel</a>";
-					echo	"</div>";
+					if ( $Current_Page['URL'] != '/staff/' )
+					{
+						echo 	"<div class='button'>";
+						echo		"<a href='" . Domain(1) . "/staff'>Staff Panel</a>";
+						echo	"</div>";
+					}
+					else
+					{
+						echo 	"<div class='button'>";
+						echo		"<a href='" . Domain(1) . "/index.php'>Index</a>";
+						echo	"</div>";
+					}
 				}
 			?>
 
@@ -262,79 +274,102 @@
 			</div>
 		</div>
 
-		<div class='navigation'>
-			<ul>
-				<li class='dropdown'>
-					<a href='javascript:void(0);'>Pokemon</a>
-					<ul class='dropdown-content'>
-						<li><a href='pokemon_center.php'>Pokemon Center</a></li>
-						<li><a href='evolution_center.php'>Evolution Center</a></li>
-						<li><a href='lab.php'>Pokemon Laboratory</a></li>
-					</ul>
-				</li>
-				
-				<li class='dropdown'>
-					<a href='javascript:void(0);'>Economy</a>
-					<ul class='dropdown-content'>
-						<li><a href='trade_central.php'>Trade Central</a></li>
-						<li><a href='trade_interest.php'>Trade Interest</a></li>
-						<li><a href='shop_plaza.php'>Shop Plaza</a></li>
-					</ul>
-				</li>
-				
-				<li class='dropdown'>
-					<a href='javascript:void(0);'>Exploration</a>
-					<ul class='dropdown-content'>
-						<?php
-							if ( $User_Data['Clan'] != '0' )
-							{
-								echo	"<li><a href='clan.php'>Clan HQ</a></li>";
-							}
-							else
-							{
-								echo	"<li><a href='clan_create.php'>Create A Clan</a></li>";
-							}
-						?>
-						<li><a href='clan_list.php'>Clan Listings</a></li>
-						<li><a href='faction.php'>Faction Headquarters</a></li>
-						<li><a href='mining_select.php'>Mining Selection</a></li>
-						<li><a href='map_select.php'>Map Selection</a></li>
-					</ul>
-				</li>
-				
-				<li class='dropdown'>
-					<a href='javascript:void(0);'>Battle</a>
-					<ul class='dropdown-content'>
-						<li><a href='battle_trainer.php'>Battle A Trainer</a></li>
-						<li><a href='battle_challenge.php'>Training Challenge</a></li>
-						<li><a href='battle_regions.php'>Regional Challenges</a></li>
-					</ul>
-				</li>
-				
-				<li class='dropdown'>
-					<a href='javascript:void(0);'>Community</a>
-					<ul class='dropdown-content'>
-						<li><a href='forums.php'>Forums</a></li>
-						<li><a href='online.php'>Online List</a></li>
-						<li><a href='messages.php'>Private Messages</a></li>
-						<li><a href='rankings.php'>Global Rankings</a></li>
-						<li><a href='staff_list.php'>Staff List</a></li>
-						<li><a href='profile_view.php'>View A Profile</a></li>
-					</ul>
-				</li>
-				
-				<li class='dropdown'>
-					<a href='javascript:void(0);'>Settings</a>
-					<ul class='dropdown-content'>
-						<li><a href='achievements.php'>Achievements</a></li>
-						<li><a href='settings.php'>Player Settings</a></li>
-						<li><a href='login.php?Logout'>Logout</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
+		<?php
+			if ( $Current_Page['URL'] != "/staff/" )
+			{
+		?>
+			<div class='navigation'>
+				<ul>
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Pokemon</a>
+						<ul class='dropdown-content'>
+							<li><a href='<?= Domain(1); ?>/pokemon_center.php'>Pokemon Center</a></li>
+							<li><a href='<?= Domain(1); ?>/evolution_center.php'>Evolution Center</a></li>
+							<li><a href='<?= Domain(1); ?>/lab.php'>Pokemon Laboratory</a></li>
+						</ul>
+					</li>
+					
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Economy</a>
+						<ul class='dropdown-content'>
+							<li><a href='<?= Domain(1); ?>/trade_central.php'>Trade Central</a></li>
+							<li><a href='<?= Domain(1); ?>/trade_interest.php'>Trade Interest</a></li>
+							<li><a href='<?= Domain(1); ?>/shop_plaza.php'>Shop Plaza</a></li>
+						</ul>
+					</li>
+					
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Exploration</a>
+						<ul class='dropdown-content'>
+							<?php
+								if ( $User_Data['Clan'] != '0' )
+								{
+									echo	"<li><a href='" . Domain(1) . "/clan.php'>Clan HQ</a></li>";
+								}
+								else
+								{
+									echo	"<li><a href='" . Domain(1) . "/clan_create.php'>Create A Clan</a></li>";
+								}
+							?>
+							<li><a href='<?= Domain(1); ?>/clan_list.php'>Clan Listings</a></li>
+							<li><a href='<?= Domain(1); ?>/faction.php'>Faction Headquarters</a></li>
+							<li><a href='<?= Domain(1); ?>/mining_select.php'>Mining Selection</a></li>
+							<li><a href='<?= Domain(1); ?>/map_select.php'>Map Selection</a></li>
+						</ul>
+					</li>
+					
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Battle</a>
+						<ul class='dropdown-content'>
+							<li><a href='<?= Domain(1); ?>/battle_trainer.php'>Battle A Trainer</a></li>
+							<li><a href='<?= Domain(1); ?>/battle_challenge.php'>Training Challenge</a></li>
+							<li><a href='<?= Domain(1); ?>/battle_regions.php'>Regional Challenges</a></li>
+						</ul>
+					</li>
+					
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Community</a>
+						<ul class='dropdown-content'>
+							<li><a href='<?= Domain(1); ?>/forums.php'>Forums</a></li>
+							<li><a href='<?= Domain(1); ?>/online.php'>Online List</a></li>
+							<li><a href='<?= Domain(1); ?>/messages.php'>Private Messages</a></li>
+							<li><a href='<?= Domain(1); ?>/rankings.php'>Global Rankings</a></li>
+							<li><a href='<?= Domain(1); ?>/staff_list.php'>Staff List</a></li>
+						</ul>
+					</li>
+					
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Settings</a>
+						<ul class='dropdown-content'>
+							<li><a href='<?= Domain(1); ?>/achievements.php'>Achievements</a></li>
+							<li><a href='<?= Domain(1); ?>/settings.php'>Player Settings</a></li>
+							<li><a href='<?= Domain(1); ?>/login.php?Logout'>Logout</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		<?php
+			}
+			else
+			{
+		?>
 
-	<?php
+			<div class='navigation'>
+				<ul>
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Settings</a>
+						<ul class='dropdown-content'>
+							<li><a href='<?= Domain(1); ?>/staff/settings.php'>Staff Panel Settings</a></li>
+							<li><a href='<?= Domain(1); ?>/staff/message.php'>Staff Message</a></li>
+							<li><a href='<?= Domain(1); ?>/staff/maintenance.php'>Game Maintenance</a></li>
+							<li><a href='<?= Domain(1); ?>/staff/announcement.php'>Game Announcement</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+
+		<?php
+			}
 		}
 
 		if ( $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] <= 4 )

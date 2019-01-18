@@ -5,6 +5,8 @@
 <div class='content'>
 	<div class='head'>Evolution Center</div>
 	<div class='box'>
+		<div id='status'></div>
+
 		<div class='panel' style='margin-bottom: 5px;'>
 			<div class='panel-heading'>Roster</div>
 			<div class='panel-body'>
@@ -66,10 +68,26 @@
 			{
 				$('#evoData').html(data);
 			}
-		})
+		});
+	}
+
+	function evolve(evo_id, evo_to = null, evo_alt = null)
+	{
+		$.ajax({
+			type: 'post',
+			url: 'core/ajax/evocenter/evolutions.php',
+			data: { evo_id: evo_id, evo_to: evo_to, evo_alt: evo_alt },
+			success: function(data)
+			{
+				$('#status').html(data);
+			},
+			error: function(data)
+			{
+				$('#status').html(data);
+			}
+		});
 	}
 </script>
 
 <?php
 	require 'core/required/layout_bottom.php';
-?>

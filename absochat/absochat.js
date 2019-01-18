@@ -1,12 +1,6 @@
-/* ****************************
- * chaterpie.js
- *
- * A welcome way to spend your holiday 
- */
- 
-var method = .prototype;
+var method = Absolute.prototype;
 
-function (socket, conn) {
+function Absolute(socket, conn) {
 	this.socket = socket;
 	this.conn = conn;
 	
@@ -39,4 +33,4 @@ method.auth = function(userID, postcode) {
 };
 
 
-module.exports = ;
+module.exports = Absolute;
