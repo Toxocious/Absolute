@@ -18,7 +18,18 @@
   {
     if ( $User_Power < $Required_Power )
     {
-      exit("<div class='content'><div class='head'>Unauthorized Access</div><div class='box'>You do not have the appropriate power to access this page.</div></div>");
+      echo "
+        <div class='content'>
+          <div class='head'>Unauthorized Access</div>
+          <div class='box'>
+            You do not have the appropriate power to access this page.
+          </div>
+        </div>
+      ";
+
+      require 'core/required/layout_bottom.php';
+
+      exit();
     }
   }
 

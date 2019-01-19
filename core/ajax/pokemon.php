@@ -18,6 +18,11 @@
 		exit();
 	}
 
+	if ( $Pokemon['Item'] == null )
+	{
+		$Pokemon['Item'] = "None";
+	}
+
 	$Move_1 = $PokeClass->FetchMoveData($Pokemon['Move_1']);
   $Move_2 = $PokeClass->FetchMoveData($Pokemon['Move_2']);
   $Move_3 = $PokeClass->FetchMoveData($Pokemon['Move_3']);
@@ -176,7 +181,7 @@
 				</tr>
 				<tr>
 					<td><b>Item</b></td>
-					<td>Amulet Coin</td>
+					<td><?= $Pokemon['Item']; ?></td>
 					<td><b>Trade Interest</b></td>
 					<td><?= $Pokemon['Trade_Interest']; ?></td>
 				</tr>

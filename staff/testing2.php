@@ -1,8 +1,7 @@
 <?php
-	require 'core/required/layout_top.php';
+	require '../core/required/layout_top.php';
 	
-	if ( $User_Data['Power'] < 4 )
-		header('Location: news.php');
+	checkUserPower($User_Data['Power'], 7);
 ?>
 
 <style>
@@ -477,5 +476,5 @@
 </script>
 
 <?php
-  require 'core/required/layout_bottom.php';
+  require '../core/required/layout_bottom.php';
 ?>

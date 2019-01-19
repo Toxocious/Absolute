@@ -126,40 +126,39 @@
 
 		<div class='userbar'>
 			<div class='user'>
-				<a href='<?= Domain(1); ?>/profile.php?id=<?= $User_Data['id']; ?>'>
-					<?php
-						if ( $User_Data['Rank'] === 'Administrator' )
-						{
-							echo	"<div><span class='admin' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span></div>";
-						}
-						else if ( $User_Data['Rank'] === 'Moderator' )
-						{
-							echo	"<div><span class='gmod' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span></div>";
-						}
-						else if ( $User_Data['Rank'] === 'Chat Moderator' )
-						{
-							echo	"<div><span class='cmod' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span></div>";
-						}
-						else 
-						{
-							echo  "<div><span class='member' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span></div>";
-						}
-					?>
-				</a>
+				<ul>
+					<li class='dropdown' style='height: 30px; width: 198px;'>
+						<a href='<?= Domain(1); ?>/profile.php?id=<?= $User_Data['id']; ?>'>
+							<?php
+								if ( $User_Data['Rank'] === 'Administrator' )
+								{
+									echo	"<span class='admin' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span>";
+								}
+								else if ( $User_Data['Rank'] === 'Moderator' )
+								{
+									echo	"<span class='gmod' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span>";
+								}
+								else if ( $User_Data['Rank'] === 'Chat Moderator' )
+								{
+									echo	"<span class='cmod' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span>";
+								}
+								else 
+								{
+									echo  "<span class='member' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span>";
+								}
+							?>
+						</a>
+						<ul class='dropdown-content'>
+							<li>
+								<a href='<?= Domain(1); ?>/settings.php'>Settings & Options</a>
+							</li>
+							<li>
+								<a href='<?= Domain(1); ?>/login.php?Logout'>Logout</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
 			</div>
-			
-			<!--
-			<div class='notifications' style='display: block; font-size: 14px; height: 30px; padding: 5px 3px 3px 3px;'>
-				<a href='testing2.php'>Spawn Pokemon</a>
-			</div>
-
-			<div class='messages'>
-				<span style='display: block; font-size: 14px; height: 30px; padding: 5px 3px 3px 3px;'>
-					<a href='javascript:void(0);' onclick='toggleMessages();'><img src='' />Msgs</a>
-				</span>
-				<div style='display: none;'></div>
-			</div>
-			-->
 
 			<div class='money'>
 				$<?= number_format($User_Data['Money']); ?>
@@ -285,7 +284,7 @@
 						<ul class='dropdown-content'>
 							<li><a href='<?= Domain(1); ?>/pokemon_center.php'>Pokemon Center</a></li>
 							<li><a href='<?= Domain(1); ?>/evolution_center.php'>Evolution Center</a></li>
-							<li><a href='<?= Domain(1); ?>/lab.php'>Pokemon Laboratory</a></li>
+							<li><a href='<?= Domain(1); ?>/lab.php'>Laboratory</a></li>
 						</ul>
 					</li>
 					
@@ -294,12 +293,31 @@
 						<ul class='dropdown-content'>
 							<li><a href='<?= Domain(1); ?>/trade_central.php'>Trade Central</a></li>
 							<li><a href='<?= Domain(1); ?>/trade_interest.php'>Trade Interest</a></li>
-							<li><a href='<?= Domain(1); ?>/shop_plaza.php'>Shop Plaza</a></li>
+							<li><a href='<?= Domain(1); ?>/shops.php'>Shops</a></li>
 						</ul>
 					</li>
 					
 					<li class='dropdown'>
 						<a href='javascript:void(0);'>Exploration</a>
+						<ul class='dropdown-content'>
+							<li><a href='<?= Domain(1); ?>/faction.php'>Faction HQ</a></li>
+							<li><a href='<?= Domain(1); ?>/mining_select.php'>Mining Selection</a></li>
+							<li><a href='<?= Domain(1); ?>/map_select.php'>Map Selection</a></li>
+						</ul>
+					</li>
+					
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Battle</a>
+						<ul class='dropdown-content'>
+							<li><a href='<?= Domain(1); ?>/battle_trainer.php'>Battle A Trainer</a></li>
+							<li><a href='<?= Domain(1); ?>/battle_challenge.php'>Training Challenge</a></li>
+							<li><a href='<?= Domain(1); ?>/battle_regions.php'>Regional Challenges</a></li>
+							<li><a href='<?= Domain(1); ?>/battle_regions.php'>Battle Frontier</a></li>
+						</ul>
+					</li>
+					
+					<li class='dropdown'>
+						<a href='javascript:void(0);'>Clans</a>
 						<ul class='dropdown-content'>
 							<?php
 								if ( $User_Data['Clan'] != '0' )
@@ -312,21 +330,10 @@
 								}
 							?>
 							<li><a href='<?= Domain(1); ?>/clan_list.php'>Clan Listings</a></li>
-							<li><a href='<?= Domain(1); ?>/faction.php'>Faction Headquarters</a></li>
-							<li><a href='<?= Domain(1); ?>/mining_select.php'>Mining Selection</a></li>
-							<li><a href='<?= Domain(1); ?>/map_select.php'>Map Selection</a></li>
+							<li><a href='<?= Domain(1); ?>/clan_raids.php'>Clan Raids</a></li>
 						</ul>
 					</li>
-					
-					<li class='dropdown'>
-						<a href='javascript:void(0);'>Battle</a>
-						<ul class='dropdown-content'>
-							<li><a href='<?= Domain(1); ?>/battle_trainer.php'>Battle A Trainer</a></li>
-							<li><a href='<?= Domain(1); ?>/battle_challenge.php'>Training Challenge</a></li>
-							<li><a href='<?= Domain(1); ?>/battle_regions.php'>Regional Challenges</a></li>
-						</ul>
-					</li>
-					
+
 					<li class='dropdown'>
 						<a href='javascript:void(0);'>Community</a>
 						<ul class='dropdown-content'>
@@ -335,15 +342,6 @@
 							<li><a href='<?= Domain(1); ?>/messages.php'>Private Messages</a></li>
 							<li><a href='<?= Domain(1); ?>/rankings.php'>Global Rankings</a></li>
 							<li><a href='<?= Domain(1); ?>/staff_list.php'>Staff List</a></li>
-						</ul>
-					</li>
-					
-					<li class='dropdown'>
-						<a href='javascript:void(0);'>Settings</a>
-						<ul class='dropdown-content'>
-							<li><a href='<?= Domain(1); ?>/achievements.php'>Achievements</a></li>
-							<li><a href='<?= Domain(1); ?>/settings.php'>Player Settings</a></li>
-							<li><a href='<?= Domain(1); ?>/login.php?Logout'>Logout</a></li>
 						</ul>
 					</li>
 				</ul>

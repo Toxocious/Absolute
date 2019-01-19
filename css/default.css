@@ -202,6 +202,74 @@ ul li {
   cursor: pointer;
 }
 
+.userbar>.user>ul {
+  list-style: none;
+}
+
+.userbar>.user>ul>li {
+  float: left;
+  width: calc(100% / 6);
+}
+
+.userbar>.user>ul>li:not(:last-child) {
+  border-right: 1px solid #4A618F;
+}
+
+.userbar>.user>ul>li:hover {
+  background: #2c3a55;
+}
+
+.userbar>.user>ul>li>a {
+  display: block;
+  line-height: 1.5;
+  padding: 5px;
+}
+
+.userbar>.user>ul>.dropdown {
+  display: inline-block;
+  position: relative;
+  z-index: 10001;
+}
+
+.userbar>.user>ul>.dropdown>.dropdown-content {
+  background: #161d2a;
+  border-bottom: 2px solid #4A618F;
+  border-left: 2px solid #4A618F;
+  border-top: 1px solid #4A618F;
+  border-bottom-left-radius: 4px;
+  display: none;
+  margin-left: -2px;
+  position: absolute;
+  width: 200px;
+  z-index: 10001;
+}
+
+.userbar>.user>ul>.dropdown>.dropdown-content>li {
+  border: none;
+  clear: both;
+  width: 100%;
+}
+
+.userbar>.user>ul>.dropdown>.dropdown-content>li:not(:last-child)
+{
+  border-bottom: 1px solid #4A618F;
+}
+
+.userbar>.user>ul>.dropdown>.dropdown-content>li:hover {
+  background: #2c3a55;
+}
+
+.userbar>.user>ul>.dropdown>.dropdown-content>li>a {
+  display: block;
+  line-height: 1.5;
+  padding: 5px;
+}
+
+.userbar>.user>ul>.dropdown:hover>.dropdown-content {
+  display: block;
+  z-index: 10001;
+}
+
 .userbar>.money {
   background: #253047;
   border-left: 2px solid #4A618F;
@@ -333,6 +401,11 @@ ul li {
   margin-left: -1px;
   position: absolute;
   width: 149px;
+}
+
+.navigation>ul>.dropdown>.dropdown-content>li:not(:last-child)
+{
+  border-bottom: 1px solid #4A618F;
 }
 
 .navigation>ul>.dropdown>.dropdown-content>li {

@@ -1,16 +1,4 @@
 <?php
-	/**
-	 * $Starter_List = [
-	 * 		[001: Bulbasaur], etc
-	 * ];
-	 * 
-	 * foreach ( $Starter_List as $Index => $Key )
-	 * {
-	 * 		show sprite + radio input
-	 * }
-	 */
-
-
 	require 'core/required/layout_top.php';
 
 	if ( isset($_SESSION['abso_user']) )

@@ -120,6 +120,9 @@
 			$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
 			$Update_User->execute([$Time, $Current_Page['Name'], $Playtime, $User_Data['id']]);
 
+			$Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Data`, `User_ID`) VALUES ('pageview', '{$Parse_URL['path']}', {$User_Data['id']})");
+			$Update_Activity->execute();
+
 			$Fetch_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
 			$Fetch_Roster->execute([$User_Data['id']]);
 			$Fetch_Roster->setFetchMode(PDO::FETCH_ASSOC);
