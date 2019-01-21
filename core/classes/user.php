@@ -14,6 +14,8 @@
 
 		/**
 		 * Fetch the complete data set of a specific user via their `users` DB ID.
+		 * =========
+		 * Username, ID, Rank, Power, Playtime, Registration Date, Last Active, Signature, Chat/RPG Ban Details, Currencies
 		 */
 		public function FetchUserData($UserID)
 		{

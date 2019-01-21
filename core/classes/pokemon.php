@@ -1,5 +1,5 @@
 <?php
-	class Pokemon
+	Class Pokemon
 	{
 		public $PDO;
 
@@ -180,7 +180,7 @@
 		/**
 		 * Fetch any Pokemon's Pokedex data, given their Pokedex ID.
 		 */
-		public function FetchPokedexData($Pokedex_ID, $Alt_ID = 0)
+		public function FetchPokedexData($Pokedex_ID, $Alt_ID = 0, $Type = "Normal")
 		{
 			global $PDO;
 
@@ -210,15 +210,15 @@
 				round($Pokedex['speed']),
 			];
 
-			if ( $Pokedex['Alt_ID'] !== 0 )
+			if ( $Pokedex['Alt_ID'] != 0 )
 			{
-				$Sprite = "/images/Pokemon/Sprites/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokedex['Alt_ID'] . ".png";
-				$Icon = "/images/Pokemon/Icons/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokedex['Alt_ID'] . ".png";
+				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokedex['Alt_ID'] . ".png";
+				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokedex['Alt_ID'] . ".png";
 			}
 			else
 			{
-				$Sprite = "/images/Pokemon/Sprites/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
-				$Icon = "/images/Pokemon/Icons/Normal/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
+				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
+				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
 			}
 
 			if ( $Pokedex['alter_poke_name'] !== null )
@@ -345,9 +345,239 @@
 		/**
 		 * Spawn a Pokemon into the game.
 		 */
-		public function CreatePokemon()
+		public function CreatePokemon($Pokedex_ID, $Alt_ID, $Level = 5, $Type = "Normal", $Gender = 'M', $Obtained_At = "Unknown", $Location, $Slot, $Owner, $Nature = null, $IVs = null, $EVs = null)
 		{
+			global $PDO;
 
+			$Pokemon = $this->FetchPokedexData($Pokedex_ID, $Alt_ID, $Type);
+
+			/**
+			 * Check the variable inputs.
+			 */
+			if ( !is_numeric($Level) || !in_array($Gender, ['M', 'F', 'G', '?']) )
+			{
+				die(
+					"Some expected inputs for the CreatePokemon() function weren't valid.<br />" .
+					"Please try again."
+				);
+			}
+
+			/**
+			 * Verify that the Pokemon exists in the `pokedex` database table.
+			 */
+			if ( $Pokemon['ID'] == null )
+			{
+				die(
+					"The Pokemon that was being created does not exist in the database."
+				);
+			}
+
+			try
+			{
+				$Query_User = $PDO->prepare("SELECT * FROM `users` WHERE `id` = ? LIMIT 1");
+				$Query_User->execute([ $Owner ]);
+				$Query_User->setFetchMode(PDO::FETCH_ASSOC);
+				$User = $Query_User->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
+
+			if ( $Alt_ID != 0 )
+			{
+				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . "." . $Alt_ID . ".png";
+				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . "." . $Alt_ID . ".png";
+			}
+			else
+			{
+				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . ".png";
+				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . ".png";
+			}
+
+			if ( $Type !== "Normal" )
+			{
+				$Name = $Type . $Pokemon['Name'];
+			}
+			else
+			{
+				$Name = $Pokemon['Name'];
+			}
+
+			switch($Gender)
+			{
+				case 'M': $Gender = 'Male'; break;
+				case 'F': $Gender = 'Female'; break;
+				case 'G': $Gender = 'Genderless'; break;
+				case '?': $Gender = '(?)'; break;
+			}
+
+			try
+			{
+				$Query_Party = $PDO->prepare("SELECT DISTINCT(`Slot`) FROM `pokemon` WHERE `Owner_Current` = ? AND (Slot = 1 OR Slot = 2 OR Slot = 3 OR Slot = 4 OR Slot = 5 OR Slot = 6) AND `Location` = 'Roster' LIMIT 6");
+				$Query_Party->execute([ $User['id'] ]);
+				$Query_Party->setFetchMode(PDO::FETCH_ASSOC);
+			}
+			catch ( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
+
+			$Slots_Used = [0, 0, 0, 0, 0, 0, 0];
+			while ( $Party = $Query_Party->fetch() )
+			{
+				$Slots_Used[$Party['Slot']] = 1;
+			}
+
+			if ( $Slots_Used[1] == 0 )
+			{
+				$Location = "Roster";
+				$Slot = 1;
+			}
+			else if ( $Slots_Used[2] == 0 )
+			{
+				$Location = "Roster";
+				$Slot = 2;
+			}
+			else if ( $Slots_Used[3] == 0 )
+			{
+				$Location = "Roster";
+				$Slot = 3;
+			}
+			else if ( $Slots_Used[4] == 0 )
+			{
+				$Location = "Roster";
+				$Slot = 4;
+			}
+			else if ( $Slots_Used[5] == 0 )
+			{
+				$Location = "Roster";
+				$Slot = 5;
+			}
+			else if ( $Slots_Used[6] == 0 )
+			{
+				$Location = "Roster";
+				$Slot = 6;
+			}
+			else
+			{
+				$Location = "Box";
+				$Slot = 7;
+			}
+
+			$Experience = FetchExperience($Level, 'Pokemon');
+
+			if ( $IVs == null )
+			{
+				$IVs = mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31);
+			}
+			$IVTotal = array_sum(explode(',', $IVs));
+
+			if ( $EVs == null )
+			{
+				$EVs = "0,0,0,0,0,0";
+			}
+
+			if ( $Nature == null )
+			{
+				$Nature_List = $this->Natures();
+	    	$Nature = $Nature_List[mt_rand(0, count($Nature_List) - 1)];
+			}
+
+			$Pokemon_Create = $PDO->prepare("
+				INSERT INTO `pokemon` (
+					`Pokedex_ID`,
+					`Alt_ID`,
+					`Name`,
+					`Type`,
+					`Experience`,
+					`Location`,
+					`Slot`,
+					`Owner_Current`,
+					`Owner_Original`,
+					`Gender`,
+					`IVs`,
+					`EVs`,
+					`Nature`,
+					`Creation_Date`,
+					`Creation_Location`
+				) 
+				VALUES
+				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+			");
+			$Pokemon_Create->execute(
+				[
+					$Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender, $IVs, $EVs, $Nature, time(), $Obtained_At
+				]
+			);
+			$Poke_DB_ID = $PDO->lastInsertId();
+
+			return [
+				"Name" => $Name,
+				"Exp" => $Experience,
+				"Gender" => $Gender,
+				"Location" => $Location,
+				"Slot" => $Slot,
+				"PokeID" => $Poke_DB_ID,
+				"Stats" => $Pokemon['Base_Stats'],
+				"IVs" => explode(',', $IVs),
+				"EVs" => explode(',', $EVs),
+				"Nature" => $Nature,
+				"Sprite" => $Sprite,
+				"Icon" => $Icon,
+			];	
+		}
+
+		/**
+		 * Fetch a random gender given a Pokemon's gender ratio.
+		 */
+		public function GenerateGender($Pokedex_ID, $Alt_ID)
+		{
+			global $PDO;
+
+			try
+			{
+				$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+				$FetchPokedex->execute([ $Pokedex_ID, $Alt_ID ]);
+				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
+				$Pokemon = $FetchPokedex->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
+
+			if ( $Pokemon['genderless'] == 100 )
+			{
+				$Gender = "G";
+			}
+			else
+			{
+				if ( $Pokemon['male'] == 100 )
+				{
+					$Gender = "M";
+				}
+				else if ( $Pokemon['female'] == 100 )
+				{
+					$Gender = "F";
+				}
+				else
+				{
+					$Chance_M = mt_rand(1, $Pokemon['male']);
+					$Chance_F = mt_rand(1, $Pokemon['female']);
+
+					if ( $Chance_M > $Chance_F )
+					{
+						$Gender = "M";
+					}
+					else
+					{
+						$Gender = "F";
+					}
+				}
+			}
+
+			return $Gender;
 		}
 
 		/**

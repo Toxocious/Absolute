@@ -14,9 +14,18 @@
 	{
 		HandleError( $e->getMessage() );
 	}
+
+	if ( !isset($_SESSION['abso_user']) )
+	{
+		$width = " style='margin: 5px; width: calc(100% - 10px);'";
+	}
+	else
+	{
+		$width = '';
+	}
 ?>
 
-<div class='content'>
+<div class='content'<?= $width; ?>>
 	<div class='head'>News</div>
 	<div class='box news'>
 		<div class='panel'>

@@ -293,7 +293,7 @@
 						<ul class='dropdown-content'>
 							<li><a href='<?= Domain(1); ?>/trade_central.php'>Trade Central</a></li>
 							<li><a href='<?= Domain(1); ?>/trade_interest.php'>Trade Interest</a></li>
-							<li><a href='<?= Domain(1); ?>/shops.php'>Shops</a></li>
+							<li><a href='<?= Domain(1); ?>/shop.php'>Shops</a></li>
 						</ul>
 					</li>
 					

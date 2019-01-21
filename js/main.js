@@ -1,20 +1,10 @@
-$(function() {	
-	// do w/e
-});
+/**
+ * Userbar roster tooltip hovering functionality.
+ */
+function showSlot(slot) {
+	$('#rosterTooltip' + slot).css({ 'display':'block' });
+}
 
-function toggleMessages()
-{
-	if ( $('div.userbar > div.messages > div').css('display') === 'none' )
-	{
-		$('div.userbar > div.messages > div').css('display', 'block').html("Loading..");
-
-		$.get('ajax/messages.php', function(data)
-		{
-			$('div.userbar > div.messages > div').html(data);
-		});
-	}
-	else
-	{
-		$('div.userbar > div.messages > div').css('display', 'none').html("");
-	}
+function hideSlot(slot) {
+	$('#rosterTooltip' + slot).css({ 'display':'none' });
 }

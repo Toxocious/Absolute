@@ -11,6 +11,16 @@
 	echo "<img src='".setImgDownload('images/Pokemon/Normal/001.png')."' />";
 	*/
 
+	for ( $i = 0; $i < 100; $i++ )
+	{
+		$Fetch_Gender = $PokeClass->GenerateGender(359, 0);
+		echo $Fetch_Gender . "<br />";
+	}
+
+
+	echo "<br />";
+	echo "<hr />";
+
 	echo strtotime("Aug 16th, 2017 8:00:35 PM") . "<br />";
 	echo strtotime("May 18th, 2018 4:28:00 PM") . "<br />";
 	echo strtotime("Jul 23rd, 2018 5:26:51 PM") . "<br />";

@@ -49,18 +49,22 @@
 		$Dir_Root = realpath($_SERVER["DOCUMENT_ROOT"]);
 	}
 
-	// Require some files.
-	require_once $Dir_Root . '/core/functions/formulas.php';
-	require_once $Dir_Root . '/core/functions/main_functions.php';
-	require_once $Dir_Root . '/core/functions/global_functions.php';
+	// Require Constants.
+	require_once $Dir_Root . '/core/classes/constants.php';
+	$Constants = new Constants();
 
-	// Require Pokemon and User classes.
+	// Require Pokemon, User, and Item classes.
 	require_once $Dir_Root . '/core/classes/pokemon.php';
 	$PokeClass = new Pokemon();
 	require_once $Dir_Root . '/core/classes/user.php';
 	$UserClass = new User();
 	require_once $Dir_Root . '/core/classes/item.php';
 	$Item_Class = new Item();
+
+	// Require some files.
+	require_once $Dir_Root . '/core/functions/formulas.php';
+	require_once $Dir_Root . '/core/functions/main_functions.php';
+	require_once $Dir_Root . '/core/functions/global_functions.php';
 
 	// Proxies sometimes send the X-Forwarded-For header to indicate the actual
 	// IP address of the client. This cannot really be trusted, because the header

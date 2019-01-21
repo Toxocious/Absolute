@@ -98,6 +98,32 @@
 	}
 
 	/**
+	 * Generate an array of prices given a string.
+	 */
+	function GeneratePrice($Prices)
+	{
+		global $Constants;
+
+		$Price_Array = [];
+		$Fetch_Price = explode(',', $Prices);
+
+		foreach ( $Fetch_Price as $Key => $String )
+		{
+			$Currency = explode(':', $String);
+			if ( isset($Constants->Currency[$Currency[0]]) )
+			{
+				$Price_Array[ $Currency[0] ] = [
+					'Value'		=> $Constants->Currency[$Currency[0]]['Value'],
+					'Name'		=> $Constants->Currency[$Currency[0]]['Name'],
+					'Amount'	=> $Currency[1],
+				];
+			}
+		}
+
+		return $Price_Array;
+	}
+
+	/**
 	 * Generate a randomly salted key.
 	 */
 	function randomSalt($charCount)

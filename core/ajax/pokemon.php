@@ -53,53 +53,6 @@
 				padding: 2px;
 				text-align: center;
 			}
-
-			table
-			{
-				background: #4A618F;
-				border-color: #4A618F;
-				border-radius: 4px;
-
-				margin-left: 5px;
-				width: 304px;
-
-				display: table;
-    		border-collapse: separate;
-    		border-spacing: 2px;
-			}
-
-			table thead
-			{
-				background: #4A618F;
-				background: -moz-linear-gradient(top, #8090b0 0%, #4A618F 100%, #4A618F 100%);
-				background: -webkit-linear-gradient(top, #8090b0 0%, #4A618F 100%, #4A618F 100%);
-				background: linear-gradient(to bottom, #8090b0 0%, #4A618F 100%, #4A618F 100%);
-				border-color: #4A618F !important;
-			}
-			table thead tr
-			{
-				border-color: #4A618F !important;
-			}
-			table thead tr th
-			{
-				border-color: #4A618F !important;
-				padding: 3px;
-			}
-			table thead tr th:nth-child(1)
-			{
-				border-top-left-radius: 4px;
-			}
-			table thead tr th:nth-child(4)
-			{
-				border-top-right-radius: 4px;
-			}
-			
-			table tr td
-			{
-				background: #253147;
-				padding: 2px;
-				text-align: center;
-			}
 		</style>
 	</head>
 	
@@ -111,11 +64,11 @@
 			</div>
 		</div>
 
-		<table style='float: left; margin: 5px 0px 5px 5px; width: 460px;'>
+		<table class='standard' style='float: left; margin: 5px 0px 5px 5px; width: 460px;'>
 			<thead>
 				<tr>
 					<th style='width: 25%;'>Stat</th>
-					<th style='width: 25%;'>Values</th>
+					<th style='width: 25%;'>Base</th>
 					<th style='width: 25%;'>IV's</th>
 					<th style='width: 25%;'>EV's</th>
 				</tr>
@@ -160,7 +113,7 @@
 			</tbody>
 		</table>
 
-		<table style='float: left; margin: 0px 0px 5px 5px; width: calc(100% - 10px);'>
+		<table class='standard' style='float: left; margin: 0px 0px 5px 5px; width: calc(100% - 10px);'>
 			<thead>
 				<tr>
 					<th colspan='4'>Details</th>
@@ -202,7 +155,7 @@
 			</tbody>
 		</table>
 
-		<table style='float: left; margin: 0px 0px 5px 5px; width: 670px;'> <!-- width: 460px; -->
+		<table class='standard' style='float: left; margin: 0px 0px 5px 5px; width: 670px;'> <!-- width: 460px; -->
 			<thead>
 				<tr>
 					<th colspan='4'>Moves</th>
