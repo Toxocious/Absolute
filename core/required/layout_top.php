@@ -25,7 +25,7 @@
 
 		<script type='text/javascript' src='<?= Domain(1); ?>/js/absochat.js'></script>
 		<script type='text/javascript'>
-			CHATERPIE_PORT = "3000";
+			ABSOLUTE_PORT = "3000";
 			DOMAIN = "<?= Domain(1); ?>";
 
 			$(function()
@@ -319,16 +319,7 @@
 					<li class='dropdown'>
 						<a href='javascript:void(0);'>Clans</a>
 						<ul class='dropdown-content'>
-							<?php
-								if ( $User_Data['Clan'] != '0' )
-								{
-									echo	"<li><a href='" . Domain(1) . "/clan.php'>Clan HQ</a></li>";
-								}
-								else
-								{
-									echo	"<li><a href='" . Domain(1) . "/clan_create.php'>Create A Clan</a></li>";
-								}
-							?>
+							<li><a href='<?= Domain(1); ?>/clan.php'>Clan Home</a></li>
 							<li><a href='<?= Domain(1); ?>/clan_list.php'>Clan Listings</a></li>
 							<li><a href='<?= Domain(1); ?>/clan_raids.php'>Clan Raids</a></li>
 						</ul>

@@ -105,11 +105,6 @@
 		$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 		$User_Data = $Fetch_User->fetch();
 
-		if ( isset($Current_Page) )
-		{
-			$Page = $Current_Page['ID'];
-		}
-
 		if ( !isset($_SESSION['Playtime']) )
 		{
 			$_SESSION['Playtime'] = $Time;
@@ -122,7 +117,7 @@
 		try
 		{
 			$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
-			$Update_User->execute([$Time, $Current_Page['Name'], $Playtime, $User_Data['id']]);
+			$Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['id'] ]);
 
 			$Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Data`, `User_ID`) VALUES ('pageview', '{$Parse_URL['path']}', {$User_Data['id']})");
 			$Update_Activity->execute();

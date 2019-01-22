@@ -33,7 +33,7 @@
 		switch ($Object)
 		{
 			case 'Pokemon':
-				return pow($Level, 3);
+				return pow( $Level, 3 );
 			default: 
 				return false;
 		}

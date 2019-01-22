@@ -33,7 +33,13 @@
 		 * Maps
 		 */
 
-
+		/**
+		 * Clans
+		 */
+		public $Clan = [
+			"Creation_Cost" => 69420,
+		];
+		
 		/**
 		 * Achievements
 		 */

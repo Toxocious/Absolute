@@ -734,3 +734,25 @@ m >> 01/20/19 13:50:01 .. Absol: Long have we waited. Absolute activated.
 Server: absolute :: Port: 3000
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+m >> 01/20/19 20:51:28 .. Toxocious: huh
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 7.03 hours.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+Server: absolute :: Port: 3000
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+m >> 01/20/19 20:51:40 .. Absol: Long have we waited. Absolute activated.
+m >> 01/20/19 20:51:43 .. Toxocious: test
+m >> 01/20/19 21:29:39 .. Toxocious: ..
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~               Absol has begun; prepare for trouble.               ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Server: absolute :: Port: 3000
+m >> 01/21/19 14:26:47 .. Absol: Long have we waited. Absolute activated.
+m >> 01/21/19 17:32:57 .. Toxocious: ..

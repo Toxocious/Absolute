@@ -1,9 +1,19 @@
 <?php
+	/**
+	 * Define core variables.
+	 * - Game Database
+	 * - Database Username
+	 * - Database Password
+	 * - Salt String
+	 */
 	define("GAME_DATABASE", "absolute");
 	define("GAME_DATABASE_USER", "root");
 	define("GAME_DATABASE_PASS", '$bQ721qb9oS3WIh#SQgEGzA7');
 	define("GAME_DEFAULT_SALT", "5rrx4YP64TIuxqclMLaV1elGheNxJJRggMxzQjv5gQeFl84NFgXvR3NxcHuOc31SSZBTzUFEt0mYQ4Oo");
 
+	/**
+	 * Function that allows us to connect to the database.
+	 */
 	function DatabaseConnect($DB = GAME_DATABASE, $User = GAME_DATABASE_USER, $Pass = GAME_DATABASE_PASS)
 	{
 		$Host = 'localhost';
@@ -73,6 +83,29 @@
 
 		return $text;
 	}
+
+	/**
+   * Determine the current power level of the user.
+   * !! Should move this to the user class file once it's made. (/core/classes/user.php)
+   */
+  function checkUserPower($User_Power, $Required_Power)
+  {
+    if ( $User_Power < $Required_Power )
+    {
+      echo "
+        <div class='content'>
+          <div class='head'>Unauthorized Access</div>
+          <div class='box'>
+            You do not have the appropriate power to access this page.
+          </div>
+        </div>
+      ";
+
+      require 'core/required/layout_bottom.php';
+
+      exit();
+    }
+  }
 	
 	/**
 	 * Performs a check to see if the current date is between two dates.
@@ -138,6 +171,103 @@
 		return $salty;
 	}
 
+	/**
+   * Last seen functions.
+   * Converts unix timestamp to a readable format.
+   */
+  function lastseen($ts, $totimestamp = '')
+  {
+    $getseconds = time() - $ts;
+
+		if ($totimestamp == 'hour' && $getseconds > 3600)
+		{
+      $lastseen = date("F j, Y (g:i A)", $ts);
+		}
+		elseif ($totimestamp == 'day' && $getseconds > 86400)
+		{
+      $lastseen = date("F j, Y (g:i A)", $ts);
+		}
+		elseif ($totimestamp == 'week' && $getseconds > 604800)
+		{
+      $lastseen = date("F j, Y (g:i A)", $ts);
+		}
+		elseif ($totimestamp == 'month' && $getseconds > 2419200)
+		{
+      $lastseen = date("F j, Y (g:i A)", $ts);
+		}
+		elseif ($totimestamp == 'year' && $getseconds > 29030400)
+		{
+      $lastseen = date("F j, Y (g:i A)", $ts);
+		}
+		else
+		{
+			if ( $getseconds <= 59 )
+			{
+        $lastseen = "".$getseconds." Second(s) Ago";
+			}
+			elseif ($getseconds >= 60 && $getseconds <= 3599)
+			{
+        $minutes = floor($getseconds / 60);
+        $lastseen = "".$minutes." Minute(s) Ago";
+			}
+			elseif ($getseconds >= 3600 && $getseconds <= 86399)
+			{
+        $hours = floor($getseconds / 3600);
+        $lastseen = "".$hours." Hour(s) Ago";
+			}
+			elseif ($getseconds >= 86400 && $getseconds <= 604799)
+			{
+        $days = floor($getseconds / 86400);
+        $lastseen = "".$days." Day(s) Ago";
+			}
+			elseif ($getseconds >= 604800 && $getseconds <= 2419199)
+			{
+        $weeks = floor($getseconds / 604800);
+        $lastseen = "".$weeks." Week(s) Ago";
+			}
+			elseif ($getseconds >= 2419200 && $getseconds <= 29030399)
+			{
+        $months = floor($getseconds / 2419200);
+        $lastseen = "".$months." Month(s) Ago";
+			}
+			elseif ($getseconds > 365 * 86400 * 10)
+			{
+        $years = floor($getseconds / 29030400);
+        $lastseen = "".$years." Year(s) Ago";
+			}
+			else
+			{
+        $lastseen = "Never";
+      }
+    }
+
+    return $lastseen;
+  }
+
+	/**
+	 * Determine which domain to tack onto URLs.
+	 */
+	function Domain($Area)
+	{
+		if ( $Area === 1 )
+		{
+			if ( $_SERVER['HTTP_HOST'] == "localhost" )
+			{
+				return;
+			}
+		}
+		else
+		{
+			return;
+		}
+	}
+
+	/******************************************************************************************************************
+	 * Handle text/input data.
+	 * --------
+	 * Refactor this later?
+	 * Remove Purify() function above upon refactor?
+	 *******************************************************************************************************************/
 	function Text($t)
 	{
 	  return new Text($t);
@@ -374,23 +504,5 @@
 			$this->Text = $text;
 
 			return $text;
-		}
-	}
-
-	/*
-		* DETERMINE THE DOMAIN
-	*/
-	function Domain($Area)
-	{
-		if ( $Area === 1 )
-		{
-			if ( $_SERVER['HTTP_HOST'] == "localhost" )
-			{
-				return;
-			}
-		}
-		else
-		{
-			return;
 		}
 	}

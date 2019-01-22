@@ -75,9 +75,9 @@ textarea {
 }
 
 hr {
-  background: #4A618F;
   border: 1px solid #4A618F;
-  margin: 4px;
+  margin: 0px 0px 0px -1px;
+  width: 100%;
 }
 
 ul {
@@ -372,13 +372,13 @@ table.standard tr td
   position: absolute;
 }
 
-.userbar>.roster>.roster_slot>.roster_tooltip>.info>div:nth-child(1) {
+.info>div:nth-child(odd) {
   background: #4A618F;
   padding-top: 2px;
   font-weight: bold;
 }
 
-.userbar>.roster>.roster_slot>.roster_tooltip>.info>div:nth-child(2) {
+.info>div:nth-child(even) {
   padding-top: 2px;
 }
 
@@ -711,6 +711,8 @@ table.standard tr td
 
 .content>.box {
   background: rgba(74, 97, 143, 0.2);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   padding: 3px;
   text-align: center;
 }
@@ -1329,7 +1331,11 @@ img.spricon:hover {
 }
 
 .mod,
-#mod {
+#mod,
+.moderator,
+#moderator,
+.Moderator,
+#Moderator {
   border-color: #fcbc19 !important;
   color: #fcbc19 !important;
   font-size: 18px;
@@ -1358,6 +1364,8 @@ img.spricon:hover {
 
 .admin,
 #admin,
+.administrator,
+#administrator,
 .Administrator,
 #Administrator {
   color: #bf00ff;
