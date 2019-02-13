@@ -32,12 +32,18 @@
 			{
 				HandleError( $e->getMessage() );
 			}
+
+			return [
+				'ID' => $User['id'],
+				'Username' => $User['Username'],
+				'Avatar' => Domain(1) . $User['Avatar'],
+			];
 		}
 		
 		/**
 		 * Displays the user rank where applicable (staff page, profiles, etc).
 		 */
-		public function DisplayUserRank($UserID)
+		public function DisplayUserRank($UserID, $Font_Size = null)
 		{
 			global $PDO;
 
@@ -53,28 +59,30 @@
 				HandleError( $e->getMessage() );
 			}
 
+			if ( $Font_Size == null )
+			{
+				$Font_Size = 18;
+			}
+
 			switch($Rank['Rank'])
 			{
 				case 'Administrator':
-					echo "<div class='admin'>Administrator</div>";
+					return "<div class='admin' style='font-size: {$Font_Size}px'>Administrator</div>";
 					break;
 				case 'Bot':
-					echo "<div class='bot'>Bot</div>";
+					return "<div class='bot' style='font-size: {$Font_Size}px'>Bot</div>";
 					break;
 				case 'Developer':
-					echo "<div class='dev'>Developer</div>";
+					return "<div class='dev' style='font-size: {$Font_Size}px'>Developer</div>";
 					break;
 				case 'Super Moderator':
-					echo "<div class='super_mod'>Super Moderator</div>";
+					return "<div class='super_mod' style='font-size: {$Font_Size}px'>Super Moderator</div>";
 					break;
 				case 'Moderator':
-					echo "<div class='mod'>Moderator</div>";
+					return "<div class='mod' style='font-size: {$Font_Size}px'>Moderator</div>";
 					break;
 				case 'Chat Moderator':
-					echo "<div class='chat_mod'>Chat Moderator</div>";
-					break;
-				case 'Member':
-					echo "<div class='member'>Member</div>";
+					return "<div class='chat_mod' style='font-size: {$Font_Size}px'>Chat Moderator</div>";
 					break;
 			}
 		}

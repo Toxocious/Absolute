@@ -1,5 +1,5 @@
 <?php
-	require_once '../required/session.php';
+	require '../required/session.php';
 
 	if ( isset($_GET['id']) )
 	{
@@ -113,7 +113,7 @@
 			</tbody>
 		</table>
 
-		<table class='standard' style='float: left; margin: 0px 0px 5px 5px; width: calc(100% - 10px);'>
+		<table class='standard' style='float: left; margin: 0px 0px 5px 5px; width: 669px;'>
 			<thead>
 				<tr>
 					<th colspan='4'>Details</th>
@@ -142,7 +142,7 @@
 					<td><b>Level</b></td>
 					<td><?= $Pokemon['Level']; ?></td>
 					<td><b>Experience</b></td>
-					<td><?= $Pokemon['Experience']; ?></td>
+					<td><?= number_format($Pokemon['Experience']); ?></td>
 				</tr>
 				<tr>
 					<td colspan='1'><b>Place Obtained</b></td>

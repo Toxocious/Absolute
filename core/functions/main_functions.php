@@ -31,13 +31,16 @@
 		}
 		catch (PDOException $e)
 		{
+			$FetchDate = date("Y-m-d H:i:s");
 			echo "
 				<div>
+					<b>[{$FetchDate}]</b><br />
 					The database has failed to connect.<br />
 					Please contact a staff member.
 				</div>
 			";
 			echo $e->getMessage();
+			HandleError( $e->getMessage() );
 			exit();
 		}
 	
@@ -170,6 +173,113 @@
 
 		return $salty;
 	}
+
+	/**
+	 * Pagination function.
+	 */
+	function Pagi($Query, $User, $Parameters, $Page, $Link, $Limit = 35)
+  {
+    global $PDO;
+
+    try
+    {
+      $Prepare = $PDO->prepare($Query);
+      $Prepare->execute($Parameters);
+      $Total = $Prepare->fetchColumn();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError( $e->getMessage() );
+    }
+
+		$Pages = ceil($Total / $Limit);
+
+    if ( $Page == 0 )
+    {
+      $Page = 1;
+    }
+    
+    /**
+     * Render pagination navigation links.
+     */
+		$Adjacent = 1;
+    $Link_Previous = '';
+    $Link_Next = '';
+    $Text = '';
+
+    if ( $Page != 1 )
+    {
+      $Link_Previous .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(1);'> << </a></div>";
+    }
+    else
+    {
+      $Link_Previous .= "<div style='width: 10%;'><span> << </span></div>";
+    }
+
+    if ( $Page > 1 )
+    {
+      $Link_Previous .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page - 1 ) . ");'> < </a></div>";
+    }
+    else
+    {
+      $Link_Previous .= "<div style='width: 10%;'><span> < </span></div>";
+    }
+
+    if ( $Page < $Pages )
+    {
+      $Link_Next .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page + 1 ) . ");'> > </a></div>";
+    }
+    else
+    {
+      $Link_Next .= "<div style='width: 10%;'><span> > </span></div>";
+    }
+
+    if ( $Page != $Pages )
+    {
+      $Link_Next .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . $Pages . ");'> >> </a></div>";
+    }
+    else
+    {
+      $Link_Next .= "<div style='width: 10%;'><span> >> </span></div>";
+		}
+
+    for ( $x = ( $Page - $Adjacent ); $x < ( ( $Page + $Adjacent ) + 1 ); $x++ )
+    {
+      if ( ( $x > 0 ) && ( $x <= $Pages ) )
+      {
+				if ( $Page == 1 && $Pages == 1 )
+				{
+					$Width = '60%';
+				}
+				else if ( $Page == 1 || $Page == $Pages )
+				{
+					$Width = '30%';
+				}
+				else
+				{
+					$Width = '20%;';
+				}
+
+        if ( $x == $Page )
+        {
+          $Text .= "<div style='width: {$Width}'><b style='display: block;'>$x</b></div>";
+        }
+        else
+        {
+          $Text .= "<div style='width: {$Width}'><a style='display: block;' href='javascript:void(0);' onclick=\"updateBox('$x');\">$x</a></div>";
+        }
+			}
+    }
+
+    /**
+     * Echo the pagination navigation bar.
+     */
+		echo "
+      <div class='pagi'>
+        {$Link_Previous} {$Text} {$Link_Next}
+      </div>
+    ";
+  }
 
 	/**
    * Last seen functions.

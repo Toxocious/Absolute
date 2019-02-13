@@ -33,8 +33,8 @@
 				echo $e->getMessage();
 			}
 			
-			$Validate_Username = Text($Username)->validate('username');
-			$Validate_Password = Text($Password)->validate('password');
+			$Validate_Username = Purify($Username)->Validate('username');
+			$Validate_Password = Purify($Password)->Validate('password');
 			
 			// Field Check
 			if ( $Username == '' || $Password == '' || $Password_Confirm == '' || $Gender == '' )

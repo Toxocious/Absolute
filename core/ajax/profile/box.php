@@ -7,14 +7,14 @@
   if ( isset($_GET['id']) )
     $User_ID = $_GET['id'];
 
-  $Page = (isset($_POST['page'])) ? $_POST['page'] : '1';
+  $Page = (isset($_POST['page'])) ? $_POST['page'] : 1;
   $Filter_Type = (isset($_POST['filter_type'])) ? $_POST['filter_type'] : '0';
   $Filter_Gender = (isset($_POST['filter_gender'])) ? $_POST['filter_gender'] : '0';
   $Filter_Dir = (isset($_POST['filter_search_order'])) ? $_POST['filter_search_order'] : 'ASC';
 
-  $Begin = ($Page - 1) * 30;
+  $Begin = ($Page - 1) * 36;
   if ( $Begin < 0 )
-    $Begin = 10;
+    $Begin = 1;
 
   $Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ?";
   $Inputs = [$User_ID];
@@ -27,10 +27,18 @@
 
   switch ($Filter_Gender)
   {
-    case 'm': $Query .= " AND `gender` = 'Male'"; break;
-    case 'f': $Query .= " AND `gender` = 'Female'"; break;
-    case 'g': $Query .= " AND `gender` = 'Genderless'"; break;
-    case 'q': $Query .= " AND `gender` = '(?)'"; break;
+    case 'm':
+      $Query .= " AND `gender` = 'Male'";
+      break;
+    case 'f':
+      $Query .= " AND `gender` = 'Female'";
+      break;
+    case 'g':
+      $Query .= " AND `gender` = 'Genderless'";
+      break;
+    case '?':
+      $Query .= " AND `gender` = '(?)'";
+      break;
   }
 
   if ( $Filter_Dir != 'ASC' )
@@ -42,11 +50,11 @@
     $Filter_Dir = 'ASC';
   }
 
-  $Query .= " ORDER BY `Pokedex_ID` ASC";
+  $Query .= " ORDER BY `Pokedex_ID`, `ID` ASC";
 
   try
   {
-    $Box_Query = $PDO->prepare($Query . " LIMIT " . $Begin . ",30");
+    $Box_Query = $PDO->prepare($Query . " LIMIT " . $Begin . ",36");
     $Box_Query->execute($Inputs);
     $Box_Query->setFetchMode(PDO::FETCH_ASSOC);
     $Box_Pokemon = $Box_Query->fetchAll();
@@ -59,70 +67,12 @@
   if ( isset($User_ID) )
   {
 ?>
-  <div class='panel'>
-    <div class='panel-heading'>Box</div>
-    <div class='panel-body'>
-      <div class='page_nav'>
-        <?= pagination(str_replace('SELECT `ID`, `Pokedex_ID`, `Type`, `Name`, `Gender`, `Level`', 'SELECT COUNT(*)', $Query), $User_ID, $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"'); ?>
-      </div>
-      <table class='box_cont' style='width: 100%;'>
-        <?php                  
-          $Pokemon_Count = 0;
-          foreach ( $Box_Pokemon as $Index => $Pokemon )
-          {
-            $Poke_Data = $PokeClass->FetchPokemonData($Pokemon['ID']);
 
-            if ( $Pokemon_Count % 3 == 0)
-            {
-              echo "</tr><tr>";
-            }
-        ?>
-
-            <td class='box_slot popup cboxElement' href='<?= Domain(1); ?>/core/ajax/pokemon.php?id=<?= $Poke_Data['ID']; ?>'>
-              <!--<img src='images/Assets/<?= $Poke_Data['Gender']; ?>.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />-->
-              <img src='images/Assets/Female.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
-              <span style='float: left;'>
-                <img src='<?= $Poke_Data['Icon']; ?>' />
-              </span>
-              <div>
-                <?php
-                  echo "
-                    <span style='font-size: 12px;'>
-                      {$Poke_Data['Display_Name']} <br />
-                      (Level: {$Poke_Data['Level']})
-                    </span>
-                  ";
-                ?>
-              </div>
-            </td>
-
-        <?php
-            $Pokemon_Count++;
-          }
-
-          if ( $Pokemon_Count == 0 )
-          {
-            echo "<div style='padding: 5px;'>No Pokemon have been found given your search parameters.</div>";
-          }
-
-          if ( $Pokemon_Count % 3 == 1 )
-          {
-            echo "<td class='box_slot'></td>";
-            echo "<td class='box_slot'></td>";
-          }
-
-          if ( $Pokemon_Count % 3 == 2 )
-          {
-            echo "<td class='box_slot'></td>";
-          }
-        ?>
-      </table>
-    </div>
-	</div>
-				
-	<div class='panel' style='margin-top: 5px;'>
+  <!--
+  <div class='panel' style='margin-bottom: 5px;'>
     <div class='panel-heading'>Filter</div>
-    <div class='panel-body filter'>
+    <div class='panel-body toggle' style='cursor: pointer; padding: 3px;' onclick='toggleFilter();'>Toggle Filter Options</div>
+    <div class='panel-body filter' style='display: none;'>
       <div class='p_search'>
         <input type='text' name='pokemon_search' placeholder='Search For a Pokemon' />
         <select name='pokemon_select'>
@@ -154,9 +104,86 @@
       </div>
     </div>
   </div>
+  -->
+  
+  <div class='panel'>
+    <div class='panel-heading'>
+      Box
+      <div style='float: right;'>
+        <a href='#'>Filter</a>
+      </div>
+    </div>
+    <div class='panel-body'>
+      <div class='page_nav'>
+        <?php
+          Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_ID, $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"');
+        ?>
+      </div>
+      <table class='box_cont' style='width: 100%;'>
+        <?php                  
+          $Pokemon_Count = 0;
+          foreach ( $Box_Pokemon as $Index => $Pokemon )
+          {
+            $Poke_Data = $PokeClass->FetchPokemonData($Pokemon['ID']);
+
+            if ( $Pokemon_Count % 3 == 0 )
+            {
+              echo "</tr><tr>";
+            }
+        ?>
+
+            <td class='box_slot popup cboxElement' href='<?= Domain(1); ?>/core/ajax/pokemon.php?id=<?= $Poke_Data['ID']; ?>'>
+              <img src='images/Assets/<?= $Poke_Data['Gender']; ?>.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
+              <!--<img src='images/Assets/Female.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />-->
+              <span style='float: left;'>
+                <img src='<?= $Poke_Data['Icon']; ?>' />
+              </span>
+              <div style='padding-top: 5px;'>
+                <span style='font-size: 12px; padding-top: 0px;'>
+                  <?= $Poke_Data['Display_Name']; ?>
+                  (Level: <?= $Poke_Data['Level']; ?>)
+                </span>
+              </div>
+            </td>
+
+        <?php
+            $Pokemon_Count++;
+          }
+
+          if ( $Pokemon_Count == 0 )
+          {
+            echo "<div style='padding: 5px;'>No Pokemon have been found given your search parameters.</div>";
+          }
+
+          if ( $Pokemon_Count % 3 == 1 )
+          {
+            echo "<td class='box_slot'></td>";
+            echo "<td class='box_slot'></td>";
+          }
+
+          if ( $Pokemon_Count % 3 == 2 )
+          {
+            echo "<td class='box_slot'></td>";
+          }
+        ?>
+      </table>
+    </div>
+	</div>
 
   <script type='text/javascript'>
     $("td.popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
+
+    function toggleFilter()
+    {
+      if ( $('div.panel-body.filter').css('display') == 'none' )
+      {
+        $('div.panel-body.filter').css('display', 'block');
+      }
+      else
+      {
+        $('div.panel-body.filter').css('display', 'none');
+      }
+    }
 
     var CurrentSearch = [
       0, 0, 0

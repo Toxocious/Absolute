@@ -12,6 +12,7 @@
 		<link href='<?= Domain(1); ?>/css/default.css' rel='stylesheet'>
 
 		<script type='text/javascript' src='<?= Domain(1); ?>/js/libraries.js'></script>
+		<script type='text/javascript' src='<?= Domain(1); ?>/js/popup.js'></script>
 		<script type='text/javascript' src='<?= Domain(1); ?>/js/main.js'></script>
 		<?php
 			/**
@@ -41,7 +42,6 @@
 
 				Absolute.enable();
 
-				// message box handling
 				$('#chatMessage').keydown(function(e)
 				{
 					if (e.keyCode == 13)
@@ -111,12 +111,6 @@
 			<a href= <?= (isset($_SESSION['abso_user'])) ? Domain(1) . '/news.php' : Domain(1) . '/index.php' ?>>
 				<img src='<?= Domain(1); ?>/images/Assets/banner.png' />
 			</a>
-			<?php
-				if ( isset($User_Data) && $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] >= 7 )
-				{
-					echo "<div class='notice'>Despite this page being down for maintenance, you seem to be authorized to be here.</div>";
-				}
-			?>
 		</div>
 
 <?php
@@ -212,7 +206,7 @@
 									</div>
 									<div class='info'>
 										<div>Experience</div>
-										<div>{$RosterPoke[$i]['Experience']}</div>
+										<div>" . number_format($RosterPoke[$i]['Experience']) . "</div>
 									</div>
 								</div>
 							</div>
@@ -284,7 +278,7 @@
 						<ul class='dropdown-content'>
 							<li><a href='<?= Domain(1); ?>/pokemon_center.php'>Pokemon Center</a></li>
 							<li><a href='<?= Domain(1); ?>/evolution_center.php'>Evolution Center</a></li>
-							<li><a href='<?= Domain(1); ?>/lab.php'>Laboratory</a></li>
+							<!--<li><a href='<?= Domain(1); ?>/lab.php'>Laboratory</a></li>-->
 						</ul>
 					</li>
 					
@@ -300,7 +294,7 @@
 					<li class='dropdown'>
 						<a href='javascript:void(0);'>Exploration</a>
 						<ul class='dropdown-content'>
-							<li><a href='<?= Domain(1); ?>/faction.php'>Faction HQ</a></li>
+							<!--<li><a href='<?= Domain(1); ?>/faction.php'>Faction HQ</a></li>-->
 							<li><a href='<?= Domain(1); ?>/mining_select.php'>Mining Selection</a></li>
 							<li><a href='<?= Domain(1); ?>/map_select.php'>Map Selection</a></li>
 						</ul>
@@ -312,7 +306,7 @@
 							<li><a href='<?= Domain(1); ?>/battle_trainer.php'>Battle A Trainer</a></li>
 							<li><a href='<?= Domain(1); ?>/battle_challenge.php'>Training Challenge</a></li>
 							<li><a href='<?= Domain(1); ?>/battle_regions.php'>Regional Challenges</a></li>
-							<li><a href='<?= Domain(1); ?>/battle_regions.php'>Battle Frontier</a></li>
+							<li><a href='<?= Domain(1); ?>/battle_frontier.php'>Battle Frontier</a></li>
 						</ul>
 					</li>
 					
@@ -321,18 +315,18 @@
 						<ul class='dropdown-content'>
 							<li><a href='<?= Domain(1); ?>/clan.php'>Clan Home</a></li>
 							<li><a href='<?= Domain(1); ?>/clan_list.php'>Clan Listings</a></li>
-							<li><a href='<?= Domain(1); ?>/clan_raids.php'>Clan Raids</a></li>
+							<!--<li><a href='<?= Domain(1); ?>/clan_raids.php'>Clan Raids</a></li>-->
 						</ul>
 					</li>
 
 					<li class='dropdown'>
 						<a href='javascript:void(0);'>Community</a>
 						<ul class='dropdown-content'>
-							<li><a href='<?= Domain(1); ?>/forums.php'>Forums</a></li>
-							<li><a href='<?= Domain(1); ?>/online.php'>Online List</a></li>
+							<li><a href='<?= Domain(1); ?>/forums'>Forums</a></li>
+							<li><a href='<?= Domain(1); ?>/rankings.php'>Rankings</a></li>
 							<li><a href='<?= Domain(1); ?>/messages.php'>Private Messages</a></li>
-							<li><a href='<?= Domain(1); ?>/rankings.php'>Global Rankings</a></li>
-							<li><a href='<?= Domain(1); ?>/staff_list.php'>Staff List</a></li>
+							<li><a href='<?= Domain(1); ?>/online.php'>Online List</a></li>
+							<li><a href='<?= Domain(1); ?>/staff.php'>Staff List</a></li>
 						</ul>
 					</li>
 				</ul>
@@ -361,7 +355,11 @@
 			}
 		}
 
-		if ( $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] <= 4 )
+		if ( $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] >= 7 )
+		{
+			echo "<div class='maintenance'>Despite this page being down for maintenance, you seem to be authorized to be here.</div>";
+		}
+		else if ( $Current_Page['Maintenance'] == 'yes' && $User_Data['Power'] < 7 )
 		{
 			echo "
 				<div class='content'>

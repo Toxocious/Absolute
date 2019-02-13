@@ -115,7 +115,7 @@
 								<div class='info'>Level</div>
 								<div>{$Roster_Slot[$i]['Level']}</div>
 								<div class='info'>Experience</div>
-								<div>{$Roster_Slot[$i]['Experience']}</div>
+								<div>" . number_format($Roster_Slot[$i]['Experience']) . "</div>
 							</div>
 						</div>
 					";
@@ -140,50 +140,93 @@
 								<div class='info'>Level</div>
 								<div>{$Roster_Slot[$i]['Level']}</div>
 								<div class='info'>Experience</div>
-								<div>{$Roster_Slot[$i]['Experience']}</div>
+								<div>" . number_format($Roster_Slot[$i]['Experience']) . "</div>
 							</div>
 						</div>
 					";
 				}
 			}
+
+			$Page = (isset($_POST['page'])) ? $_POST['page'] : 1;
+			$Filter_Type = (isset($_POST['filter_type'])) ? $_POST['filter_type'] : '0';
+			$Filter_Gender = (isset($_POST['filter_gender'])) ? $_POST['filter_gender'] : '0';
+			$Filter_Dir = (isset($_POST['filter_search_order'])) ? $_POST['filter_search_order'] : 'ASC';
+
+			$Begin = ($Page - 1) * 35;
+			if ( $Begin < 0 )
+				$Begin = 1;
+
+			$Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Box'";
+			$Inputs = [$User_Data['id']];
+
+			if ( $Filter_Type != '0' )
+			{
+				$Query .= " AND `type` = ?";
+				$Inputs[] = $Filter_Type;
+			}
+
+			switch ($Filter_Gender)
+			{
+				case 'm': $Query .= " AND `gender` = 'Male'"; break;
+				case 'f': $Query .= " AND `gender` = 'Female'"; break;
+				case 'g': $Query .= " AND `gender` = 'Genderless'"; break;
+				case '?': $Query .= " AND `gender` = '(?)'"; break;
+			}
+
+			if ( $Filter_Dir != 'ASC' )
+			{
+				$Filter_Dir = 'DESC';
+			}
+			else
+			{
+				$Filter_Dir = 'ASC';
+			}
+
+			$Query .= " ORDER BY `Pokedex_ID`, `ID` ASC";
 			
 			echo "
 					</div>
 				</div>
 
-				<div class='panel' style='float: left; width: calc(100% / 2 - 2.5px);'>
+				<div class='panel' style='float: left; width: calc(100% / 3);'>
 					<div class='panel-heading'>Box</div>
-					<div class='panel-body boxed_pokemon' style='padding: 3px;'>
+					<div class='panel-body' id='Pokebox'>
+						<div class='page_nav'>";
+						Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"');
+			echo "
+						</div>
 			";
 
 			try
-			{
-				$Box_Query = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` = 7 ORDER BY `Pokedex_ID` ASC LIMIT 50");
-				$Box_Query->execute([$User_Data['id']]);
-				$Box_Query->setFetchMode(PDO::FETCH_ASSOC);
-				$Box_Pokemon = $Box_Query->fetchAll();
-			}
-			catch (PDOException $e)
-			{
-				HandleError( $e->getMessage() );
-			}
-			
-			foreach ( $Box_Pokemon as $Index => $Pokemon )
-			{
-				$Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
-				echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
+      {
+        $Box_Query = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` = 7 ORDER BY `Pokedex_ID` ASC LIMIT 35");
+        $Box_Query->execute([$User_Data['id']]);
+        $Box_Query->setFetchMode(PDO::FETCH_ASSOC);
+        $Box_Pokemon = $Box_Query->fetchAll();
+      }
+      catch (PDOException $e)
+      {
+        HandleError( $e->getMessage() );
 			}
 			
-			if ( count($Box_Pokemon) == 0 )
-			{
-				echo "No Pokemon were found in your box.";
-			}
+			echo "<div style='height: 156px; padding: 3px;'>";
+      foreach ( $Box_Pokemon as $Index => $Pokemon )
+      {
+        $Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
+        echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
+      }
+      echo "</div>";
+
+      if ( count($Box_Pokemon) == 0 )
+      {
+        echo "<div style='padding: 3px;'>No Pokemon were found in your box.</div>";
+      }
 
 			echo "
 					</div>
 				</div>
 
-				<div class='panel' id='pokeData' style='float: right; width: calc(100% / 2 - 2.5px);'>
+				<div class='panel' id='pokeData' style='float: right; width: calc(100% / 1.5 - 5px);'>
 					<div class='panel-heading'>Selected Pokemon</div>
 					<div class='panel-body' style='padding: 3px;'>
 						<div style='padding: 5px;'>Please select a Pokemon to view it's statistics.</div>
@@ -211,7 +254,7 @@
 						<div style='text-align: left;'>
 							<div style='text-align: center;'><b>{$Pokemon['Display_Name']}</b></div>
 							<b>Level</b>: {$Pokemon['Level']}<br />
-							<b>Exp</b>: {$Pokemon['Experience']}<br />
+							<b>Exp</b>: " . number_format($Pokemon['Experience']) . "<br />
 						</div>
 						<div>
 							Choose a slot to put your Pokemon in.<br />
@@ -296,7 +339,7 @@
 									<div class='info'>Level</div>
 									<div>{$Roster_Slot[$i]['Level']}</div>
 									<div class='info'>Experience</div>
-									<div>{$Roster_Slot[$i]['Experience']}</div>
+									<div>" . number_format($Roster_Slot[$i]['Experience']) . "</div>
 								</div>
 							</div>
 						";
@@ -321,7 +364,7 @@
 									<div class='info'>Level</div>
 									<div>{$Roster_Slot[$i]['Level']}</div>
 									<div class='info'>Experience</div>
-									<div>{$Roster_Slot[$i]['Experience']}</div>
+									<div>" . number_format($Roster_Slot[$i]['Experience']) . "</div>
 								</div>
 							</div>
 						";
@@ -376,7 +419,7 @@
 									</div>
 									<div class='info'>
 										<div>Experience</div>
-										<div>{$RosterPoke[$i]['Experience']}</div>
+										<div>" . number_format($Roster_Slot[$i]['Experience']) . "</div>
 									</div>
 								</div>
 							</div>

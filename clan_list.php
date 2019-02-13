@@ -17,12 +17,18 @@
 <div class='content'>
 	<div class='head'>Clan Listings</div>
 	<div class='box'>
+		<div class='description' style='margin-bottom: 5px;'>
+			Every clan that has been created can be found below.<br />
+			Can you make it to the top?
+		</div>
+
 		<table class='standard' style='margin: 0 auto; width: 80%;'>
 			<thead>
 				<tr>
-					<th>Rank</th>
-					<th>Name</th>
-					<th>Level</th>
+					<th style='width: 15%;'>Rank</th>
+					<th style='width: 45%;'>Name</th>
+					<th style='width: 20%;'>Level</th>
+					<th style='width: 20%;'>Money</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -32,9 +38,10 @@
 					{
 						echo "
 							<tr>
-								<td>#{$i}</td>
+								<td>#" . number_format($i) . "</td>
 								<td>{$Value['Name']}</td>
-								<td>{$Value['Experience']}</td>
+								<td>" . number_format($Value['Experience']) . "</td>
+								<td>" . number_format($Value['Money']) . "</td>
 							</tr>
 						";
 

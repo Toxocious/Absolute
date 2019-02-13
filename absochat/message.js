@@ -112,7 +112,7 @@ messageHandler.prototype.add = function(users, message, chaterpie, logfile)
 		var minutes = date.getMinutes();
 		var seconds = date.getSeconds();
 
-		var log = "m >> "+('0'+month).slice(-2) + "/" + ('0'+day).slice(-2) + "/" + ('0'+year).slice(-2) + " " + ('0'+hours).slice(-2) + ":" + ('0'+minutes).slice(-2) + ":" + ('0'+seconds).slice(-2)+" .. "+users[0].nick +": "+filter(message)+"";
+		var log = "[" + ('0' + month).slice(-2) + "/" + ('0'+day).slice(-2) + "/" + ('0'+year).slice(-2) + " " + ('0'+hours).slice(-2) + ":" + ('0'+minutes).slice(-2) + ":" + ('0'+seconds).slice(-2) + "] " + users[0].nick + ": " + filter(message);
 		
 		fn.log(log, logfile);
 	}
@@ -152,7 +152,7 @@ messageHandler.prototype.self = function(users, message, chaterpie, logfile)
 		let minutes = date.getMinutes();
 		let seconds = date.getSeconds();
 
-		let log = "m >> "+('0'+month).slice(-2) + "/" + ('0'+day).slice(-2) + "/" + ('0'+year).slice(-2) + " " + ('0'+hours).slice(-2) + ":" + ('0'+minutes).slice(-2) + ":" + ('0'+seconds).slice(-2)+" .. "+users[0].nick +": "+filter(message)+"";
+		var log = "[" + ('0' + month).slice(-2) + "/" + ('0'+day).slice(-2) + "/" + ('0'+year).slice(-2) + " " + ('0'+hours).slice(-2) + ":" + ('0'+minutes).slice(-2) + ":" + ('0'+seconds).slice(-2) + "] " + users[0].nick + ": " + filter(message);
 		
 		fn.log(log, logfile);
 	}

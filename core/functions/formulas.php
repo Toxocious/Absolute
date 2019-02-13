@@ -2,18 +2,19 @@
 	/**
 	 * Fetch the level of a specific object given the experience value.
 	 */
-	function FetchLevel($Experience, $Object)
+	function FetchLevel($Experience, $Type)
 	{
-		// If the experience is somehow less than zero, force it to be zero.
 		if ( $Experience < 0 )
 		{
 			$Experience = 0;
 		}
 
-		switch ($Object)
+		switch ($Type)
 		{
 			case 'Pokemon':
 				return floor( pow( $Experience + 1, 1 / 3 ) );
+			case 'Clan':
+				return floor( pow($Experience / 3, 1 / 2.2 ) + 1 );
 			default:
 				return false;
 		}
@@ -24,7 +25,6 @@
 	 */
 	function FetchExperience($Level, $Object)
 	{
-		// If the level is somehow less than one, force it to be one.
 		if ( $Level < 1 )
 		{
 			$Level = 1;

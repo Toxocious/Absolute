@@ -16,72 +16,126 @@
 	}
 
 	/**
-	 * Manage the clan avatar / signature.
+	 * Attempting to manage some aspect of the clan.
 	 */
-	if ( isset($_GET['manage_upgrades']) )
+	if ( isset($_GET['manage']) )
 	{
-		echo "
-			<div class='content'>
-				<div class='head'>Manage Upgrades</div>
-				<div class='box'>
-					Manage the clan's upgrades.
-				</div>
-			</div>
-		";
-	}
-	
-	/**
-	 * Manage the clan avatar / signature.
-	 */
-	if ( isset($_GET['manage_details']) )
-	{
-		echo "
-			<div class='content'>
-				<div class='head'>Manage Details</div>
-				<div class='box'>
-					Add, remove, or change the clan's avatar or signature.
-				</div>
-			</div>
-		";
-	}
+		$Param = Purify($_GET['manage']);
 
-	/**
-	 * Manage the clan's members.
-	 */
-	if ( isset($_GET['manage_members']) )
-	{
-		try
+		/**
+		 * Manage the clan's upgrades.
+		 */
+		if ( $Param == "upgrades" )
 		{
-			$Clan_Query = $PDO->prepare("SELECT * FROM `clans` WHERE `ID` = ?");
-			$Clan_Query->execute([ $User_Data['Clan'] ]);
-			$Clan_Query->setFetchMode(PDO::FETCH_ASSOC);
-			$Clan = $Clan_Query->fetch();
-
-			$Member_Query = $PDO->prepare("SELECT `id`, `Username`, `Clan_Exp`, `Clan_Rank`, `Clan_Title`, `Last_Active`, `Status` FROM `users` WHERE `Clan` = ? ORDER BY `Clan_Exp` DESC");
-			$Member_Query->execute([ $Clan['ID'] ]);
-			$Member_Query->setFetchMode(PDO::FETCH_ASSOC);
-			$Members = $Member_Query->fetchAll();
-		}
-		catch ( PDOException $e )
-		{
-			HandleError( $e->getMessage() );
+			echo "
+				<div class='content'>
+					<div class='head'>Manage Upgrades</div>
+					<div class='box'>
+						Manage the clan's upgrades.
+					</div>
+				</div>
+			";
 		}
 
-		echo "
-			<div class='content'>
-				<div class='head'>Manage Members</div>
-				<div class='box'>
-		";
-
-		foreach( $Members as $Key => $Value )
+		/**
+		 * Manage the clan avatar / signature.
+		 */
+		if ( $Param == "details" )
 		{
-			echo "<div style='float: left; width: calc(100% / 3);'>{$Value['Username']}</div>";
+			echo "
+				<div class='content'>
+					<div class='head'>Manage Details</div>
+					<div class='box'>
+						Add, remove, or change the clan's avatar or signature.
+					</div>
+				</div>
+			";
 		}
 
-		echo "
-				</div>
-			</div>
-		";
+		/**
+		 * Manage the clan's members.
+		 */
+		if ( $Param == "members" )
+		{
+			if ( isset($_GET['id']) )
+			{
+				$ID = $Purify->Cleanse($_GET['id']);
+				$User = $UserClass->FetchUserData($ID);
+
+				echo "
+					<div class='content'>
+						<div class='head'>Managing {$User['Username']}</div>
+						<div class='box'>
+							<div class='row'>
+								<div style='float: left; padding-top: 25px; width: calc(100% / 3);'>
+									Would you like to kick {$User['Username']} from the clan?<br />
+									<input type='submit' name='kick' value='Kick {$User['Username']}!' style='width: 90%;' />
+								</div>
+								
+								<div style='float: left; padding-top: 5px; width: calc(100% / 3);'>
+									Would you like to change the Clan Rank of {$User['Username']}?<br />
+									<select name='ranks' style='width: 80%;'>
+										<option value='Member'>Member</option>
+										<option value='Moderator'>Moderator</option>
+										<option value='Admin'>Admin</option>
+									</select>
+									<button onclick='updateTitle();' style='border-top-left-radius: 0px; border-top-right-radius: 0px; border-top: none; width: 80%;'>Update Rank</button>
+								</div>
+
+								<div style='float: left; width: calc(100% / 3);'>
+									Would you like to update {$User['Username']}'s Clan Title?<br />
+									<input type='text' name='title' placeholder='Title' style='border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; margin: 0; text-align: center; width: 80%;' />
+									<button onclick='updateTitle();' style='border-top-left-radius: 0px; border-top-right-radius: 0px; border-top: none; width: 80%;'>Update Nickname</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				";
+			}
+			else
+			{
+				try
+				{
+					$Clan_Query = $PDO->prepare("SELECT * FROM `clans` WHERE `ID` = ?");
+					$Clan_Query->execute([ $User_Data['Clan'] ]);
+					$Clan_Query->setFetchMode(PDO::FETCH_ASSOC);
+					$Clan = $Clan_Query->fetch();
+
+					$Member_Query = $PDO->prepare("SELECT `id`, `Username`, `Clan_Exp`, `Clan_Rank`, `Clan_Title`, `Last_Active`, `Status` FROM `users` WHERE `Clan` = ? ORDER BY `Clan_Exp` DESC");
+					$Member_Query->execute([ $Clan['ID'] ]);
+					$Member_Query->setFetchMode(PDO::FETCH_ASSOC);
+					$Members = $Member_Query->fetchAll();
+				}
+				catch ( PDOException $e )
+				{
+					HandleError( $e->getMessage() );
+				}
+
+				echo "
+					<div class='content'>
+						<div class='head'>Manage Members</div>
+						<div class='box'>
+							<div class='row'>
+				";
+
+				foreach( $Members as $Key => $Value )
+				{
+					echo "
+						<div style='float: left; width: calc(100% / 3);'>
+							<a href='" . Domain(1) . "/clan.php?manage=members&id={$Value['id']}'>
+								{$Value['Username']}
+							</a>
+						</div>
+					";
+				}
+
+				echo "
+							</div>
+						</div>
+					</div>
+				";
+			}
+		}
 	}
 
 	/**
@@ -215,13 +269,13 @@
 						<div class='panel-heading'>Staff Options</div>
 						<div class='panel-body'>
 							<div style='border-right: 1px solid {$Border_Color}; float: left; padding: 3px; width: calc(100% / 3);'>
-								<a style='display: block;' href='clan.php?manage_members'>Manage Members</a>
+								<a style='display: block;' href='clan.php?manage=members'>Manage Members</a>
 							</div>
 							<div style='border-right: 1px solid {$Border_Color}; float: left; padding: 3px; width: calc(100% / 3);'>
-								<a style='display: block;' href='clan.php?manage_upgrades'>Manage Upgrades</a>
+								<a style='display: block;' href='clan.php?manage=upgrades'>Manage Upgrades</a>
 							</div>
 							<div style='float: left; padding: 3px; width: calc(100% / 3);'>
-								<a style='display: block;' href='clan.php?manage_details'>Manage Avatar/Signature</a>
+								<a style='display: block;' href='clan.php?manage=details'>Manage Avatar/Signature</a>
 							</div>
 						</div>
 					</div>
@@ -247,9 +301,11 @@
 
 					<div class='info' style='margin-top: 2px;'>
 						<div style='padding-top: 0px;'>Level</div>
-						<div>0</div>
+						<div><?= number_format(FetchLevel($Clan['Experience'], 'Clan')); ?></div>
 						<div style='padding-top: 0px;'>Experience</div>
 						<div><?= number_format($Clan['Experience']); ?></div>
+						<div style='padding-top: 0px;'>Money</div>
+						<div><?= number_format($Clan['Money']); ?></div>
 					</div>
 				</div>
 			</div>
@@ -294,7 +350,9 @@
 										<img src='" . Domain(1) . "/images/Assets/{$Status}.png' />
 									</td>
 									<td>
-										<a href='" . Domain(1) . "/profile.php?id={$Value['id']}'><span class='{$Value['Clan_Rank']}' style='font-size: 14px;'>{$Value['Username']}</span></a>
+										<a href='" . Domain(1) . "/profile.php?id={$Value['id']}'>
+											<span class='{$Value['Clan_Rank']}' style='font-size: 14px;'>{$Value['Username']}</span>
+										</a>
 									</td>
 									<td>
 										" . number_format($Value['Clan_Exp']) . "
@@ -322,6 +380,8 @@
 </div>
 
 <script type='text/javascript'>
+	$("a.popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
+	
 	function toggleDetails(id)
 	{
 		if ( $('tr#' + id).css('display') == 'none' )

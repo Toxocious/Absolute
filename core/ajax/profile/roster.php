@@ -5,10 +5,10 @@
   {
     try
     {
-      $Fetch_Profile_Pokemon = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-      $Fetch_Profile_Pokemon->execute([$_GET['id']]);
-      $Fetch_Profile_Pokemon->setFetchMode(PDO::FETCH_ASSOC);
-      $Fetch_Roster = $Fetch_Profile_Pokemon->fetchAll();
+      $Fetch_Pokemon = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
+      $Fetch_Pokemon->execute([$_GET['id']]);
+      $Fetch_Pokemon->setFetchMode(PDO::FETCH_ASSOC);
+      $Fetch_Roster = $Fetch_Pokemon->fetchAll();
     }
     catch ( PDOException $e )
     {
@@ -25,62 +25,54 @@
       if ( isset($Fetch_Roster[$i]['ID']) )
       {
         $Roster_Slot[$i] = $PokeClass->FetchPokemonData($Fetch_Roster[$i]['ID']);
+
+        $Popup = "popup cboxElement' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'";
       }
       else
       {
-        $Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
+        $Roster_Slot[$i]['ID'] = null;
+        $Roster_Slot[$i]['Sprite'] = Domain(1) . 'images/pokemon/0.png';
         $Roster_Slot[$i]['Display_Name'] = 'Empty';
         $Roster_Slot[$i]['Level'] = '0';
         $Roster_Slot[$i]['Experience'] = '0';
         $Roster_Slot[$i]['Item'] = null;
         $Roster_Slot[$i]['Gender_Icon'] = null;
+
+        $Popup = "";
       }
 
-      //echo "
-      //  <div class='roster_slot'>
-      //    <div style='width: 100%;'>
-      //      <b>{$Roster_Slot[$i]['Display_Name']}</b>
-      //    </div>
-      //    <div style='float: left; width: 50%;'>
-      //      <img src='{$Roster_Slot[$i]['Sprite']}' />
-      //    </div>
-      //    <div style='float: left; height: 110px; width: 50%;'>
-      //";
+      $Gender = '';
+      $Item = '';
 
-      //if ( $Roster_Slot[$i]['Gender_Icon'] != null )
-      //{
-      //  echo "<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; width: 20px;' />";
-      //}
+      if ( $Roster_Slot[$i]['Item'] != null )
+      {
+        $Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin-top: 48px;' />";
+      }
 
-      //if ( $Roster_Slot[$i]['Item'] != null || $Roster_Slot[$i]['Item'] != 0 )
-      //{
-      //  echo "<img src='{$Roster_Slot[$i]['Item_Icon']}' />";
-      //}
-
-      //echo "
-      //      <div class='info'>
-      //        <div>Level</div>
-      //        <div>{$Roster_Slot[$i]['Level']}</div>
-      //      </div>
-      //      <div class='info'>
-      //        <div>Experience</div>
-      //        <div>{$Roster_Slot[$i]['Experience']}</div>
-      //      </div>
-      //    </div>
-      //  </div>
-      //";
+      if ( $Roster_Slot[$i]['Gender_Icon'] != null )
+      {
+        $Gender = "<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; width: 20px;' /><br />";
+      }
 
       echo "
-        <div class='roster_slot'>
-          <img src='{$Roster_Slot[$i]['Sprite']}' /><br />
-          <b>{$Roster_Slot[$i]['Display_Name']}</b>
-          <div class='info'>
-            <div>Level</div>
-            <div>{$Roster_Slot[$i]['Level']}</div>
+        <div class='roster_slot full' style='padding: 0px;'>
+          <div style='float: left; padding-top: 3px; text-align: center; width: 30px;'>
+            $Gender
+            $Item
           </div>
-          <div class='info'>
-            <div>Experience</div>
-            <div>{$Roster_Slot[$i]['Experience']}</div>
+
+          <div style='float: left; margin-left: -30px; padding: 3px;'>
+            <img class='spricon {$Popup}' src='{$Roster_Slot[$i]['Sprite']}' />
+          </div>
+
+          <div class='info_cont' style='float: right; width: 189px;'>
+            <div style='font-weight: bold; padding: 2px;'>
+              {$Roster_Slot[$i]['Display_Name']}
+            </div>
+            <div class='info'>Level</div>
+            <div>{$Roster_Slot[$i]['Level']}</div>
+            <div class='info'>Experience</div>
+            <div>" . number_format($Roster_Slot[$i]['Experience']) . "</div>
           </div>
         </div>
       ";

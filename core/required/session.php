@@ -60,11 +60,12 @@
 	$UserClass = new User();
 	require_once $Dir_Root . '/core/classes/item.php';
 	$Item_Class = new Item();
+	require_once $Dir_Root . '/core/classes/purify.php';
+	$Purify = new Purify();
 
 	// Require some files.
 	require_once $Dir_Root . '/core/functions/formulas.php';
 	require_once $Dir_Root . '/core/functions/main_functions.php';
-	require_once $Dir_Root . '/core/functions/global_functions.php';
 
 	// Proxies sometimes send the X-Forwarded-For header to indicate the actual
 	// IP address of the client. This cannot really be trusted, because the header

@@ -133,52 +133,26 @@
 
     <div class='row' id='profileAJAX' style='margin-top: 5px;'>
       <div class='panel'>
-        <div class='panel-heading'>Roster</div>
-        <div class='panel-body'>
-          <?php
-            for ( $i = 0; $i <= 5; $i++ )
-            {
-              if ( isset($Fetch_Roster[$i]['ID']) )
-              {
-                $Roster_Slot[$i] = $PokeClass->FetchPokemonData($Fetch_Roster[$i]['ID']);
-              }
-              else
-              {
-                $Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
-                $Roster_Slot[$i]['Display_Name'] = 'Empty';
-                $Roster_Slot[$i]['Level'] = '0';
-                $Roster_Slot[$i]['Experience'] = '0';
-              }
-
-              echo "
-                <div class='roster_slot'>
-                  <img src='{$Roster_Slot[$i]['Sprite']}' ?><br />
-                  <b>{$Roster_Slot[$i]['Display_Name']}</b>
-                  <div class='info'>
-                    <div>Level</div>
-                    <div>{$Roster_Slot[$i]['Level']}</div>
-                  </div>
-                  <div class='info'>
-                    <div>Experience</div>
-                    <div>{$Roster_Slot[$i]['Experience']}</div>
-                  </div>
-                </div>
-              ";
-            }
-          ?>
-        </div>
+        <div class='panel-heading'>Loading</div>
+        <div class='panel-body'>Loading</div>
       </div>
     </div>
   </div>
 </div>
 
 <script type='text/javascript'>
+  $(function()
+  {
+    profileTab('Roster');
+  });
+
   function profileTab(tab)
   {
-    $('#profileAJAX').html("<div class='panel'><div class='panel-heading'>Loading</div><div class='panel-body' style='padding: 5px;'>Loading..</div></div>");
+    $('#profileAJAX').html("<div class='panel'><div class='panel-heading'>Loading</div><div class='panel-body' style='padding: 5px;'>Loading</div></div>");
     $.get('core/ajax/profile/' + tab + '.php', { id: '<?= $_GET['id']; ?>' }, function(data)
     {
       $('#profileAJAX').html(data);
+      $("img.popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
     });
   }
 
