@@ -192,7 +192,7 @@
 					<div class='panel-heading'>Box</div>
 					<div class='panel-body' id='Pokebox'>
 						<div class='page_nav'>";
-						Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"');
+						Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
 			echo "
 						</div>
 			";

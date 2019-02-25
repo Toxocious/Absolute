@@ -169,7 +169,7 @@
   <div class='panel-body' id='Pokebox'>
     <div class='page_nav'>
       <?php
-        Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"');
+        Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
       ?>
     </div>
     <?php

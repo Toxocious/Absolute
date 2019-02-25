@@ -33,10 +33,37 @@
 				HandleError( $e->getMessage() );
 			}
 
+			if ( !isset($User) || !$User )
+			{
+				return "Error";
+			}
+
+			if ( $User['RPG_Ban'] == 'yes' )
+			{
+				$Banned_RPG = true;
+			}
+			else
+			{
+				$Banned_RPG = false;
+			}
+
+			if ( $User['Chat_Ban'] == 'yes' )
+			{
+				$Banned_Chat = true;
+			}
+			else
+			{
+				$Banned_Chat = false;
+			}
+
 			return [
 				'ID' => $User['id'],
 				'Username' => $User['Username'],
 				'Avatar' => Domain(1) . $User['Avatar'],
+				'Banned_RPG' => $Banned_RPG,
+				'Banned_Chat' => $Banned_Chat,
+				'Money' => $User['Money'],
+				'Abso_Coins' => $User['Abso_Coins'],
 			];
 		}
 		

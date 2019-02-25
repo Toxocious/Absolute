@@ -110,7 +110,7 @@
         <div class='panel-heading'>Interactions</div>
         <div class='panel-body interactions'>
           <div>
-            <div style='float: left; padding: 3px; width: 50%;'><a href='#' style='display: block;'>Trade With <?= $Profile_Data['Username']; ?></a></div>
+            <div style='float: left; padding: 3px; width: 50%;'><a href='<?= Domain(1); ?>/trades.php?Action=Create&ID=<?= $Profile_Data['id'] ?>' style='display: block;'>Trade With <?= $Profile_Data['Username']; ?></a></div>
             <div style='float: left; padding: 3px; width: 50%;'><a href='#' style='display: block;'>Message <?= $Profile_Data['Username']; ?></a></div>
             <div style='float: left; padding: 3px; width: 50%;'><a href='#' style='display: block;'>Befriend <?= $Profile_Data['Username']; ?></a></div>
             <div style='float: left; padding: 3px; width: 50%;'><a href='#' style='display: block;'>Report <?= $Profile_Data['Username']; ?></a></div>

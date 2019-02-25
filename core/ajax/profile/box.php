@@ -116,7 +116,7 @@
     <div class='panel-body'>
       <div class='page_nav'>
         <?php
-          Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_ID, $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"');
+          Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_ID, $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 36);
         ?>
       </div>
       <table class='box_cont' style='width: 100%;'>

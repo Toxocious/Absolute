@@ -1,5 +1,14 @@
 <?php
 	/**
+	 * FORMULAS FOR EACH EXP GROUP ( ^ meaning to the power of, ie level ^ 3 = level cubed, level ^ 2 = level squared )
+	 * =============================
+	 * Fast:       (level)^3 * 0.8
+	 * Medium:     (level)^3 
+	 * Parabolic:  (level)^3 * 1.2 - (level)^2 * 15 - (level) * 100 - 140
+	 * Slow:       (level)^3 * 1.25
+	 */
+
+	/**
 	 * Fetch the level of a specific object given the experience value.
 	 */
 	function FetchLevel($Experience, $Type)

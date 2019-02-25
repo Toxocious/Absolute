@@ -177,7 +177,7 @@
 	/**
 	 * Pagination function.
 	 */
-	function Pagi($Query, $User, $Parameters, $Page, $Link, $Limit = 35)
+	function Pagi($Query, $User, $Parameters, $Page, $Link, $Limit)
   {
     global $PDO;
 
@@ -190,7 +190,7 @@
     catch ( PDOException $e )
     {
       HandleError( $e->getMessage() );
-    }
+		}
 
 		$Pages = ceil($Total / $Limit);
 
@@ -209,7 +209,7 @@
 
     if ( $Page != 1 )
     {
-      $Link_Previous .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(1);'> << </a></div>";
+      $Link_Previous .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(1, " . $User . ");'> << </a></div>";
     }
     else
     {
@@ -218,7 +218,7 @@
 
     if ( $Page > 1 )
     {
-      $Link_Previous .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page - 1 ) . ");'> < </a></div>";
+      $Link_Previous .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page - 1 ) . ", " . $User . ");'> < </a></div>";
     }
     else
     {
@@ -227,7 +227,7 @@
 
     if ( $Page < $Pages )
     {
-      $Link_Next .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page + 1 ) . ");'> > </a></div>";
+      $Link_Next .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page + 1 ) . ", " . $User . ");'> > </a></div>";
     }
     else
     {
@@ -236,7 +236,7 @@
 
     if ( $Page != $Pages )
     {
-      $Link_Next .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . $Pages . ");'> >> </a></div>";
+      $Link_Next .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . $Pages . ", " . $User . ");'> >> </a></div>";
     }
     else
     {
@@ -266,7 +266,7 @@
         }
         else
         {
-          $Text .= "<div style='width: {$Width}'><a style='display: block;' href='javascript:void(0);' onclick=\"updateBox('$x');\">$x</a></div>";
+          $Text .= "<div style='width: {$Width}'><a style='display: block;' href='javascript:void(0);' onclick=\"updateBox($x, $User);\">$x</a></div>";
         }
 			}
     }

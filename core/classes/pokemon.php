@@ -51,7 +51,7 @@
 				HandleError( $e->getMessage() );
 			}
 
-			if ( !isset($Pokemon) )
+			if ( !isset($Pokemon) || !$Pokemon )
 			{
 				return "Error";
 			}

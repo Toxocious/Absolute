@@ -49,7 +49,7 @@
 
 			try
 			{
-				if ( $Item_ID === null )
+				if ( $Item_ID == null )
 				{
 					$Fetch_Item = $PDO->prepare("SELECT * FROM `items` WHERE `Owner_Current` = ? LIMIT $Limit");
 					$Fetch_Item->execute([$Owner_ID]);
@@ -69,6 +69,7 @@
 			}
 
 			return [
+				"Row" => $Item['id'],
 				"ID" => $Item['Item_ID'],
 				"Name" => $Item['Item_Name'],
 				"Category" => $Item['Item_Type'],

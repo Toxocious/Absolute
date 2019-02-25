@@ -717,7 +717,7 @@ table.standard tr td
   text-align: center;
 }
 
-.content>*>.row {
+.content * .row {
   margin-left: 0px;
   margin-right: 0px;
 }

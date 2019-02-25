@@ -19,7 +19,18 @@
 		 * Currencies
 		 */
 		public $Currency = [
-			'Money' => [ 'Value' => 'Money', 'Name' => 'Money', 'Tradeable' => true ],
+			'Money'				=> [ 
+				'Value' => 'Money',
+				'Name' => 'Money',
+				'Icon' => 'images/Assets/money-placeholder.png',
+				'Tradeable' => true
+			],
+			'Abso_Coins'	=> [ 
+				'Value' => 'Abso_Coins',
+				'Name' => 'Absolute Coins',
+				'Icon' => 'images/Assets/money-placeholder.png',
+				'Tradeable' => true
+			],
 		];
 
 		/**

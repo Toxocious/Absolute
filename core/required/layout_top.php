@@ -256,7 +256,7 @@
 				</div>
 				<div class='subhead'>
 					<?php
-						if ( $User_Data['ChatBanned'] != 1 )
+						if ( $User_Data['Chat_Ban'] == 'no' )
 						{
 							echo 	"<form name='chat_form'>";
 							echo 		"<input type='text' name='chatMessage' id='chatMessage' autocomplete='off' />";
@@ -285,7 +285,7 @@
 					<li class='dropdown'>
 						<a href='javascript:void(0);'>Economy</a>
 						<ul class='dropdown-content'>
-							<li><a href='<?= Domain(1); ?>/trade_central.php'>Trade Central</a></li>
+							<li><a href='<?= Domain(1); ?>/trades.php'>Trade Center</a></li>
 							<li><a href='<?= Domain(1); ?>/trade_interest.php'>Trade Interest</a></li>
 							<li><a href='<?= Domain(1); ?>/shop.php'>Shops</a></li>
 						</ul>
