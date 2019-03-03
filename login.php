@@ -38,7 +38,7 @@
 		try
 		{
 			$Query_User = $PDO->prepare("SELECT * FROM `users` WHERE `Username` = ? or `id` = ? LIMIT 1");
-			$Query_User->execute([$Username, $Username]);
+			$Query_User->execute([ $Username, $Username ]);
 			$Query_User->setFetchMode(PDO::FETCH_ASSOC);
 			$User_Info = $Query_User->fetch();
 		}

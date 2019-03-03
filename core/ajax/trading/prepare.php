@@ -29,12 +29,14 @@
 		else
 		{
 			$_SESSION['Trade'] = [
-				$User_Data['id'] => [
+				'Sender' => [
+					'User' => $User_Data['id'],
 					'Pokemon' => [],
 					'Currency' => [],
 					'Items' => []
 				],
-				$Recipient['ID'] => [
+				'Receiver' => [
+					'User' => $Recipient['ID'],
 					'Pokemon' => [],
 					'Currency' => [],
 					'Items' => []
@@ -43,6 +45,7 @@
 ?>
 
 				<div class='description' style='margin-bottom: 5px;'>Choose the pokemon, items, and/or currency to be added to the trade.</div>
+				<button onclick='TradeCreate();' style='margin-bottom: 5px; width: 50%;'>Create Trade</button>
 				
 				<div class='row'>
 					<div style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>

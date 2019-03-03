@@ -1,6 +1,5 @@
 <?php
 	require '../../required/session.php';
-	require '../../functions/trading.php';
 
 	if ( isset($_POST['Action']) && isset($_POST['Type']) && isset($_POST['Data']) && isset($_POST['ID']) )
 	{
@@ -10,6 +9,18 @@
 		$User_ID = $Purify->Cleanse($_POST['ID']);
 
 		$User = $UserClass->FetchUserData($User_ID);
+
+		/**
+		 * Determine if something is getting added/removed from a certain side of the trade.
+		 */
+		if ( $User['ID'] == $_SESSION['Trade']['Sender']['User'] )
+		{
+			$Side = "Sender";
+		}
+		else
+		{
+			$Side = "Receiver";
+		}
 
 		/**
 		 * Add things to the trade.
@@ -25,9 +36,9 @@
 			{
 				$Pokemon = $PokeClass->FetchPokemonData($Data);
 
-				if ( isset($_SESSION['Trade'][$User['ID']]['Pokemon']) )
+				if ( isset($_SESSION['Trade'][$Side]['Pokemon']) )
 				{
-					foreach ( $_SESSION['Trade'][$User['ID']]['Pokemon'] as $Key => $Value )
+					foreach ( $_SESSION['Trade'][$Side]['Pokemon'] as $Key => $Value )
 					{
 						if ( $Value['ID'] == $Pokemon['ID'] )
 						{
@@ -68,7 +79,7 @@
 						</div>
 					";
 
-					$_SESSION['Trade'][$User['ID']]['Pokemon'][] = [
+					$_SESSION['Trade'][$Side]['Pokemon'][] = [
 						'ID' => $Pokemon['ID'],
 					];
 				}
@@ -85,9 +96,9 @@
 				 */
 				$Item = $Item_Class->FetchOwnedItem($User['ID'], $Data);
 
-				if ( isset( $_SESSION['Trade'][$User['ID']]['Items']) )
+				if ( isset( $_SESSION['Trade'][$Side]['Items']) )
 				{
-					foreach ( $_SESSION['Trade'][$User['ID']]['Items'] as $Key => $Value )
+					foreach ( $_SESSION['Trade'][$Side]['Items'] as $Key => $Value )
 					{
 						if ( $Value['ID'] == $Item['ID'] )
 						{
@@ -136,7 +147,7 @@
 						</div>
 					";
 
-					$_SESSION['Trade'][$User['ID']]['Items'][] = [
+					$_SESSION['Trade'][$Side]['Items'][] = [
 						'Row' => $Item['Row'],
 						'ID' => $Item['ID'],
 						'Quantity' => 1,
@@ -155,9 +166,9 @@
 					"Amount" => $Data['Amount'],
 				];
 
-				if ( isset( $_SESSION['Trade'][$User['ID']]['Currency']) )
+				if ( isset( $_SESSION['Trade'][$Side]['Currency']) )
 				{
-					foreach ( $_SESSION['Trade'][$User['ID']]['Currency'] as $Key => $Value )
+					foreach ( $_SESSION['Trade'][$Side]['Currency'] as $Key => $Value )
 					{
 						if ( $Value['Currency'] == $Currency_Data['Name'] )
 						{
@@ -210,7 +221,7 @@
 						</div>
 					";
 
-					$_SESSION['Trade'][$User['ID']]['Currency'][] = [
+					$_SESSION['Trade'][$Side]['Currency'][] = [
 						'Currency' => $Currency_Data['Name'],
 						'Quantity' => $Currency_Data['Amount'],
 					];
@@ -248,5 +259,48 @@
 			}
 		}
 
-		DisplayTradeContent($User);
+		/**
+		 * Display the current content of the trade.
+		 */
+		if ( isset( $_SESSION['Trade'][$Side]['Currency']) )
+		{
+			foreach ( $_SESSION['Trade'][$Side]['Currency'] as $Key => $Currencies )
+			{
+				echo "
+					{$Currencies['Currency']} - " . number_format($Currencies['Quantity']) . "<br />
+				";
+			}
+		}
+
+		if ( isset( $_SESSION['Trade'][$Side]['Items']) )
+		{
+			foreach ( $_SESSION['Trade'][$Side]['Items'] as $Key => $Items )
+			{
+				$Item_Data = $Item_Class->FetchItemData($Items['ID']);
+
+				echo "
+					<div>
+						<img src='images/items/{$Item_Data['Name']}.png' />
+						{$Item_Data['Name']} (x" . number_format($Items['Quantity']) . ")
+					</div>
+				";
+			}
+		}
+
+		if ( isset( $_SESSION['Trade'][$Side]['Pokemon']) )
+		{
+			foreach ( $_SESSION['Trade'][$Side]['Pokemon'] as $Key => $Pokemon )
+			{
+				$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon['ID']);
+
+				echo "
+					<div>
+						<img src='{$Pokemon_Data['Icon']}' />
+						<img src='{$Pokemon_Data['Gender_Icon']}' style='height: 20px; width: 20px;' />
+						{$Pokemon_Data['Display_Name']} (Level: " . number_format($Pokemon_Data['Level']) . ")
+						<a href='#'>x</a>
+					</div>
+				";
+			}
+		}
 	}

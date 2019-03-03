@@ -120,7 +120,7 @@
 
 			try
 			{
-				$Fetch_Username = $PDO->prepare("SELECT `Username` FROM `users` WHERE `id` = ? LIMIT 1");
+				$Fetch_Username = $PDO->prepare("SELECT `Username`, `Rank` FROM `users` WHERE `id` = ? LIMIT 1");
 				$Fetch_Username->execute([$UserID]);
 				$Fetch_Username->setFetchMode(PDO::FETCH_ASSOC);
 				$Username = $Fetch_Username->fetch();
@@ -130,6 +130,32 @@
 				HandleError( $e->getMessage() );
 			}
 
-			return $Username['Username'];
+			switch ( $Username['Rank'] )
+			{
+				case 'Administrator':
+					return "<span class='admin' style='font-size: 14px'>{$Username['Username']}</span>";
+					break;
+				case 'Bot':
+					return "<span class='bot' style='font-size: 14px'>{$Username['Username']}</span>";
+					break;
+				case 'Developer':
+					return "<span class='dev' style='font-size: 14px'>{$Username['Username']}</span>";
+					break;
+				case 'Super Moderator':
+					return "<span class='super_mod' style='font-size: 14px'>{$Username['Username']}</span>";
+					break;
+				case 'Moderator':
+					return "<span class='mod' style='font-size: 14px'>{$Username['Username']}</span>";
+					break;
+				case 'Chat Moderator':
+					return "<span class='chat_mod' style='font-size: 14px'>{$Username['Username']}</span>";
+					break;
+				case 'Member':
+					return "<span class='member' style='font-size: 14px'>{$Username['Username']}</span>";
+					break;
+				default:
+					return "<span class='member' style='font-size: 14px'>{$Username['Username']}</span>";
+					break;
+			}
 		}
 	}
