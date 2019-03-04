@@ -1,3 +1,6 @@
+/**
+ * Require the appropriate modules and packages.
+ */
 var https = require("https");
 var mysql = require('mysql');
 var numeral = require('numeral');
@@ -8,52 +11,28 @@ var messageHandler = new msghndler.messageHandler();
 var fn = require('./commands/functions.js');
 var runner = require("child_process"); // http://promincproductions.com/blog/run-php-script-node-js/
 
+/**
+ * JS to PHP Command variables.
+ */
 var COMMAND_PHP_PATH = "command.php";
-var PHP_ARG_SEPERATOR = '~szpAAce~';
+var PHP_ARG_SEPERATOR = '~Command';
+
+/**
+ * Variable to handle full debugging.
+ */
 var FULL_DEBUG = true;
 
-// Get the command line argument for which config is activated at this time.
-var server = 'absolute';
-var script_location = '';
-
-process.argv.forEach(function (val, index, array)
-{
-    if (index == 2)
-    {
-        server = val;
-    }
-    if (index == 3)
-    {
-        script_location = val;
-    }
-});
-
-if ( server != 'absolute' )
-{
-  console.log('Set the server: absolute');
-  process.exit();
-}
-
+/**
+ * Array of accepted chat commands.
+ */
 var Commands = [
-    'activity',
-    'battle',
-    'hug',
-    'exp',
-    'level',
-    'nature',
-    'ohko',
-    'pickaxe',
-    'pokemon',
-    'rarity',
-    'scyther',
-    'showdown',
-    'tl',
-    'tset',
-    'whatdo',
-    'whois',
-    'wtc'
+    
 ];
 
+/**
+ * Get the server and the appropriate server configuration data.
+ */
+var server = 'absolute';
 var conn;
 var config = {
   absolute: {
@@ -65,18 +44,14 @@ var config = {
     game           : 'absolute',
     pass           : '$bQ721qb9oS3WIh#SQgEGzA7',
     messages_port  : 9001,
-    chaterpie_port : 3000
+    absolute_port : 3000
   },
 };
-
 var config = config[server];
 
-fn.log(
-  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + os.EOL +
-  "~                    Absol is ready for disaster.                   ~" + os.EOL +
-  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", config.logfile
-);
-
+/**
+ * SSL Key and Certificate.
+ */
 var options = {
   //key: fs.readFileSync('/etc/letsencrypt/live/tpkrpg.net/privkey.pem'),
   //cert: fs.readFileSync('/etc/letsencrypt/live/tpkrpg.net/cert.pem'),
@@ -85,14 +60,24 @@ var options = {
   key: fs.readFileSync('C:/xampp/apache/conf/ssl.key/server.key')
 };
 
+/**
+ * Create and listen for the appropriate servers.
+ */
 var messages_server = https.createServer(options)
-var chaterpie_server = https.createServer(options)
-
+var absolute_server = https.createServer(options)
 var Absolute_Messages = require('socket.io').listen(messages_server);
-var Absolute = require('socket.io').listen(chaterpie_server);
-
+var Absolute = require('socket.io').listen(absolute_server);
 messages_server.listen(config.messages_port);
-chaterpie_server.listen(config.chaterpie_port);
+absolute_server.listen(config.absolute_port);
+
+/**
+ * Pretty little dialog to output to the terminal when the chat bot has been started.
+ */
+fn.log(
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + os.EOL +
+  "~                    Absol is ready for disaster.                   ~" + os.EOL +
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", config.logfile
+);
 
 Absolute.on('connection', function (socket)
 {
@@ -122,8 +107,8 @@ Absolute.on('connection', function (socket)
     auth_user(socket, client.user, client.postcode);
   });
 
-  // Request messages to display in chaterpie
-  socket.on('chaterpie-request-msg', function(data)
+  // Request messages to display in absolute
+  socket.on('absolute-request-msg', function(data)
   {
     console.log("Requesting message history...");
     if ( chat_check(socket) )
@@ -320,16 +305,6 @@ Absolute.on('connection', function (socket)
       }
 
       var cmd = parseCommand(user.nick, data.text, 'Absolute', socket);
-
-      // update online list for chatting users
-      // 28 is page_id of Absolute
-      //conn.query({
-      //  sql: "UPDATE `users` SET `online_time`=?, `on_page`=? WHERE `id`=? LIMIT 1",
-      //  values: [ Math.floor(Date.now()/1000), 28, user.id ]
-      //}, function (error, results) {
-      //  // query result doesn't matter, can happen at anytime
-      //});
-
     });
   });
 
@@ -352,7 +327,7 @@ Absolute.on('connection', function (socket)
   });
 
   // Returns information about a user to construct a User Info page
-  socket.on('chaterpie-user-info', function(id)
+  socket.on('absolute-user-info', function(id)
   {
     if ( chat_check(socket) )
     {
@@ -373,7 +348,7 @@ Absolute.on('connection', function (socket)
       if ( results.length == 1 )
       {
         u = results[0];
-        socket.emit("chaterpie-user-info", {
+        socket.emit("absolute-user-info", {
           user: {
             userID: u['id'],
             username: u['username'],
@@ -383,8 +358,8 @@ Absolute.on('connection', function (socket)
     });
   });
 
-  socket.on('chaterpie-kick-user', function (userid, reason) { return kickUser(socket, userid, reason); });
-  socket.on('chaterpie-ban-user', function (userid, reason, time) { return banUser(socket, userid, reason, time); });
+  socket.on('absolute-kick-user', function (userid, reason) { return kickUser(socket, userid, reason); });
+  socket.on('absolute-ban-user', function (userid, reason, time) { return banUser(socket, userid, reason, time); });
 });
 
 function updateClient(clientID, thing, val)
@@ -398,16 +373,16 @@ Absolute_Messages.on('connection', function (socket)
 {
   socket.on('msg', function(msg)
   {
-    scyther({}, msg);
+    absol({}, msg);
   });
 });
 
 // Time the server initiated
 var startTime = Math.floor(Date.now() / 1000);
 
-// Command called when a Scyther command response is made.
-// Logs, and sends a chat from Scyther
-function scyther(cmd, message)
+// Command called when a absol command response is made.
+// Logs, and sends a chat from absol
+function absol(cmd, message)
 {
   if ( cmd.private_message != true )
   {
@@ -499,7 +474,7 @@ function kickUser(socket, userid, reason)
       reason: reason
     }, config.logfile));
 
-    scyther({private_message:true}, KickedUser['username'] + " has been kicked by " + user['username'] + ". " + reason + "");
+    absol({private_message:true}, KickedUser['username'] + " has been kicked by " + user['username'] + ". " + reason + "");
   }
 }
 
@@ -583,7 +558,7 @@ function banUser(socket, userid, reason, time)
 
         });
 
-        scyther({private_message:true}, BannedUser['username'] + " has been banned by " + user['username'] + " for " + timeText + ". " + reason);
+        absol({private_message:true}, BannedUser['username'] + " has been banned by " + user['username'] + " for " + timeText + ". " + reason);
       }
     }
   }
@@ -667,18 +642,18 @@ function parseCommand(nick, msg, location, socket)
         return;
       }
 
-      //Send the Scyther messages as appropriate
+      //Send the absol messages as appropriate
       for ( var property in response.messages )
       {
         if ( response.messages.hasOwnProperty(property) )
         {
           cmd.image = response.messages[property]['image'];
           cmd.nick = '';
-          scyther(cmd, "" + response.messages[property]['message']);
+          absol(cmd, "" + response.messages[property]['message']);
         }
       }
 
-      //Send the Scyther messages as appropriate
+      //Send the absol messages as appropriate
       for ( var property in response.log )
       {
         if ( response.log.hasOwnProperty(property) )
@@ -695,7 +670,7 @@ var RetrieveGameMessage = setInterval(function()
 {
   results = [];
   conn.query({
-    sql: "SELECT * FROM `chat` WHERE `type` = 'scyther_message'",
+    sql: "SELECT * FROM `chat` WHERE `type` = 'absol_message'",
     values: []
   },
   function (error, results, fields)
@@ -762,13 +737,13 @@ var RetrieveGameMessage = setInterval(function()
         }
         else
         {
-          scyther(data, results[i]['message']);
+          absol(data, results[i]['message']);
         }
 
         AlreadySaid[AlreadySaid.length] = results[i]['id'];
       }
       conn.query({
-        sql: "DELETE FROM `chat` WHERE `type` = 'scyther_message' AND `id` = ?",
+        sql: "DELETE FROM `chat` WHERE `type` = 'absol_message' AND `id` = ?",
         values: [results[i]['id']]
       },
       function (errorf, results, fields)
@@ -816,14 +791,14 @@ handleDisconnect();
 
 process.stdin.resume();//so the program will not close instantly
 
-var scytherHasCrashedAndSaidItsThing = false;
+var absolHasCrashedAndSaidItsThing = false;
 function exitHandler(options, err)
 {
-  if ( !scytherHasCrashedAndSaidItsThing )
+  if ( !absolHasCrashedAndSaidItsThing )
   {
-    scytherHasCrashedAndSaidItsThing = true;
+    absolHasCrashedAndSaidItsThing = true;
 
-    scyther({private_message: false}, "Absol & Absolute Chat have been terminated. Please refresh the page.");
+    absol({private_message: false}, "Absol & Absolute Chat have been terminated. Please refresh the page.");
 
     var Seconds = Math.floor(Date.now() / 1000) - startTime;
 
@@ -1072,25 +1047,13 @@ function check_ban_user(socket, user)
 
 setTimeout(function()
 {
-    if (script_location == 'install')
-    {
-        scyther({private_message:false}, "Absolute has been updated. Absolute Chat has been activated. Hello!");
-    }
-    else if (script_location == 'debug')
-    {
-        scyther({private_message:false}, "Absolute is in debug mode. Expect crashes. Say, nothing.");
-    }
-    else
-    {
-        //scyther({private_message:false}, "Absolute Chat has been activated. Say, hey.");
-        let icon = fn.getPokeIcon(359, 0, "shiny");
-        messageHandler.clear();
-        Absolute.sockets.emit("irc-message",
-          messageHandler.add(
-            { nick: 'Absol', userID: 3, rank: 'bot', image: icon, clear: true },
-            "Long have we waited. Absolute activated.", undefined, config.logfile
-          )
-        );
-        return false;
-    }
+  let icon = fn.getPokeIcon(359, 0, "shiny");
+  messageHandler.clear();
+  Absolute.sockets.emit("irc-message",
+    messageHandler.add(
+      { nick: 'Absol', userID: 3, rank: 'bot', image: icon, clear: true },
+      "Long have we waited. Absolute activated.", undefined, config.logfile
+    )
+  );
+  return false;
 }, 0);

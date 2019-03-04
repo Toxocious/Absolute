@@ -47,13 +47,14 @@
 					if (e.keyCode == 13)
 					{
 						let text = $('#chatMessage').val().trim();
-						if (text != '' && Absolute.isConnected())
+						if ( text != '' && Absolute.isConnected() )
 						{
 							socket.emit("input",
 							{
+								username: "<?= $User_Data['Username']; ?>",
 								text: text,
-								username: "<?= $User_Data['Username']; ?>" //Need to authenticate like before
 							});
+
 							$('#chatMessage').val('').trigger('input');
 						}
 

@@ -694,3 +694,11 @@ Absolute Chat lasted for 66 seconds.
 ~                    Absol is ready for disaster.                   ~
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 [03/03/19 21:25:16] Absol: Long have we waited. Absolute activated.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 26 minutes.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~                    Absol is ready for disaster.                   ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[03/03/19 21:51:50] Absol: Long have we waited. Absolute activated.
