@@ -54,8 +54,8 @@
 					{
 						echo "
 							<div style='margin-bottom: 5px;'>
-								<button onclick=\"TradeManage('Accept');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Accept Trade</button>
-								<button onclick=\"TradeManage('Delete');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Decline Trade</button>
+								<button onclick=\"TradeManage({$Trade['ID']}, 'Accept');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Accept Trade</button>
+								<button onclick=\"TradeManage({$Trade['ID']}, 'Delete');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Decline Trade</button>
 							</div>
 						";
 					}
@@ -63,7 +63,7 @@
 					{
 						echo "
 							<div style='margin-bottom: 5px;'>
-								<button onclick=\"TradeManage('Delete');\" style='padding: 5px; width: calc(100%);'>Delete Trade</button>
+								<button onclick=\"TradeManage({$Trade['ID']}, 'Delete');\" style='padding: 5px; width: calc(100%);'>Delete Trade</button>
 							</div>
 						";
 					}

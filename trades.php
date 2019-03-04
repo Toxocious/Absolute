@@ -65,13 +65,15 @@
 								foreach( $Pending_Trades as $Key => $Value )
 								{
 									$Sender = $UserClass->FetchUserData($Value['Sender']);
+									$Sender_Username = $UserClass->DisplayUserName($Sender['ID']);
 									$Recipient = $UserClass->FetchUserData($Value['Receiver']);
+									$Recipient_Username = $UserClass->DisplayUserName($Recipient['ID']);
 	
 									echo "
 										<tr>
 											<td><a href='javascript:void(0);' onclick='TradeView({$Value['ID']});'>#" . number_format($Value['ID']) . "</a></td>
-											<td><a href='" . Domain(1) . "/profile.php?id={$Sender['ID']}'>{$Sender['Username']}</a></td>
-											<td><a href='" . Domain(1) . "/profile.php?id={$Recipient['ID']}'>{$Recipient['Username']}</a></td>
+											<td><a href='" . Domain(1) . "/profile.php?id={$Sender['ID']}'>{$Sender_Username}</a></td>
+											<td><a href='" . Domain(1) . "/profile.php?id={$Recipient['ID']}'>{$Recipient_Username}</a></td>
 											<td style='color: #888;'>{$Value['Status']}</td>
 										</tr>
 									";
@@ -137,6 +139,23 @@
 			type: 'POST',
 			url: '<?= Domain(1); ?>/core/ajax/trading/view.php',
 			data: { Trade_ID: Trade_ID },
+			success: function(data)
+			{
+				$('#TradeAJAX').html(data);
+			},
+			error: function(data)
+			{
+				$('#TradeAJAX').html(data);
+			}
+		});
+	}
+
+	function TradeManage(Trade_ID, Action)
+	{
+		$.ajax({
+			type: 'POST',
+			url: '<?= Domain(1); ?>/core/ajax/trading/manage.php',
+			data: { Trade_ID: Trade_ID, Action: Action },
 			success: function(data)
 			{
 				$('#TradeAJAX').html(data);
