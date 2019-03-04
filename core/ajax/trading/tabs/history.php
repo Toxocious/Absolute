@@ -12,7 +12,7 @@
 		<?php
 			try
 			{
-				$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Receiver`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Receiver` = ?) AND `Status` != ?");
+				$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Receiver`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Receiver` = ?) AND `Status` != ? ORDER BY `ID` DESC LIMIT 10");
 				$Pending_Query->execute([ $User_Data['id'], $User_Data['id'], 'Pending' ]);
 				$Pending_Query->setFetchMode(PDO::FETCH_ASSOC);
 				$Pending_Trades = $Pending_Query->fetchAll();
@@ -52,6 +52,9 @@
 							break;
 						case 'Declined':
 							$Color = "#ff0000";
+							break;
+						case 'Deleted':
+							$Color = "#999";
 							break;
 					}
 

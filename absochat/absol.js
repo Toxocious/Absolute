@@ -57,7 +57,7 @@ var Commands = [
 var conn;
 var config = {
   absolute: {
-    logfile        : 'log.txt',
+    logfile        : 'logs/chat_log.txt',
     host           : 'localhost',
     user           : 'root',
     password       : '$bQ721qb9oS3WIh#SQgEGzA7',
@@ -71,10 +71,11 @@ var config = {
 
 var config = config[server];
 
-fn.log(os.EOL + "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", config.logfile);
-fn.log(         "~               Absol has begun; prepare for trouble.               ~", config.logfile);
-fn.log(         "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + os.EOL, config.logfile);
-fn.log("Server: "+server+" :: Port: " + config.chaterpie_port + "", config.logfile)
+fn.log(
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" + os.EOL +
+  "~                    Absol is ready for disaster.                   ~" + os.EOL +
+  "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~", config.logfile
+);
 
 var options = {
   //key: fs.readFileSync('/etc/letsencrypt/live/tpkrpg.net/privkey.pem'),

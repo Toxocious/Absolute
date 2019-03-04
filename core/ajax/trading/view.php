@@ -34,6 +34,9 @@
 				case 'Declined':
 					$Color = "#ff0000";
 					break;
+				case 'Deleted':
+					$Color = "#999";
+					break;
 			}
 
 ?>
@@ -63,7 +66,7 @@
 					{
 						echo "
 							<div style='margin-bottom: 5px;'>
-								<button onclick=\"TradeManage({$Trade['ID']}, 'Declined');\" style='padding: 5px; width: calc(100%);'>Delete Trade</button>
+								<button onclick=\"TradeManage({$Trade['ID']}, 'Deleted');\" style='padding: 5px; width: calc(100%);'>Delete Trade</button>
 							</div>
 						";
 					}
@@ -97,6 +100,17 @@
 								}
 								else
 								{
+									//echo "
+									//	<div class='page_nav'>
+									//		<div class='pagi' style='width: 100%;'>
+									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Sender_Content['Sender']}, \"Pokemon\");'>Pokemon</a></div>
+									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Sender_Content['Sender']}, \"Items\");'>Items</a></div>
+									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Sender_Content['Sender']}, \"Currency\");'>Currencies</a></div>
+									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Sender_Content['Sender']}, \"All\");'>Show All</a></div>
+									//		</div>
+									//	</div>
+									//";
+
 									if ( !empty($Sender_Content['Sender_Pokemon']) )
 									{
 										$Sender_Pokemon = explode(',', $Sender_Content['Sender_Pokemon']);
@@ -183,6 +197,17 @@
 								}
 								else
 								{
+									//echo "
+									//	<div class='page_nav'>
+									//		<div class='pagi' style='width: 100%;'>
+									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Receiver_Content['Receiver']}, \"Pokemon\");'>Pokemon</a></div>
+									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Receiver_Content['Receiver']}, \"Items\");'>Items</a></div>
+									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Receiver_Content['Receiver']}, \"Currency\");'>Currencies</a></div>
+									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Receiver_Content['Receiver']}, \"All\");'>Show All</a></div>
+									//		</div>
+									//	</div>
+									//";
+
 									if ( !empty($Receiver_Content['Receiver_Pokemon']) )
 									{
 										$Receiver_Pokemon = explode(',', $Receiver_Content['Receiver_Pokemon']);

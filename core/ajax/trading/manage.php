@@ -162,7 +162,7 @@
 		/**
 		 * Process the logic required to delete the trade.
 		 */
-		else if ( $Action == 'Declined' )
+		else if ( $Action == 'Declined' || $Action == 'Deleted' )
 		{
 			/**
 			 * Process the sender's half of the trade.
