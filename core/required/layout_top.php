@@ -124,22 +124,9 @@
 					<li class='dropdown' style='height: 30px; width: 198px;'>
 						<a href='<?= Domain(1); ?>/profile.php?id=<?= $User_Data['id']; ?>'>
 							<?php
-								if ( $User_Data['Rank'] === 'Administrator' )
-								{
-									echo	"<span class='admin' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span>";
-								}
-								else if ( $User_Data['Rank'] === 'Moderator' )
-								{
-									echo	"<span class='gmod' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span>";
-								}
-								else if ( $User_Data['Rank'] === 'Chat Moderator' )
-								{
-									echo	"<span class='cmod' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span>";
-								}
-								else 
-								{
-									echo  "<span class='member' style='font-size: 14px;'>" . $User_Data['Username'] . " - #" . $User_Data['id'] . "</span>";
-								}
+								$Display_Username = $UserClass->DisplayUserName($User_Data['id'], false, true);
+
+								echo $Display_Username;
 							?>
 						</a>
 						<ul class='dropdown-content'>
@@ -371,6 +358,15 @@
 			";
 
 			exit();
+		}
+
+		if ( count($Roster) == 0 )
+		{
+			echo "
+				<div class='maintenance'>
+					While you have an empty roster, certain parts of Absolute will be unavailable to you.
+				</div>
+			";
 		}
 	}
 	else

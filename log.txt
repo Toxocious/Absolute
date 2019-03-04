@@ -47,3 +47,5 @@ Server: absolute :: Port: 3000
 [03/03/19 15:45:47] Absol: Long have we waited. Absolute activated.
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+[03/03/19 16:54:44] Absol: o-o
+[03/03/19 17:25:56] Toxocious: ***** pls

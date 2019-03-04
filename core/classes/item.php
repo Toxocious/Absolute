@@ -77,4 +77,57 @@
 				"Quantity" => $Item['Quantity'],
 			];
 		}
+
+		/**
+		 * Add an item to the `items` database table.
+		 * If the user already has the item, update the quantity.
+		 * Else, create a new row.
+		 */
+		public function SpawnItem($User_ID, $Item_ID, $Quantity, $Subtract = false)
+		{
+			global $PDO;
+
+			if ( !isset($User_ID) || !isset($Item_ID) || !isset($Quantity) )
+			{
+				die("Please specify the receiver's User ID, the Item ID, and Quantity of the item.");
+			}
+			else if ( $User_ID < 1 || $Item_ID < 1 || $Quantity < 1 )
+			{
+				die("Please specify a User ID, Item ID, and Quantity that are greater than 0.");
+			}
+			else
+			{
+				try
+				{
+					$Query_Row = $PDO->prepare("SELECT * FROM `items` WHERE `Item_ID` = ? AND `Owner_Current` = ?");
+					$Query_Row->execute([ $Item_ID, $User_ID ]);
+					$Query_Row->setFetchMode(PDO::FETCH_ASSOC);
+					$Row = $Query_Row->fetchAll();
+
+					$Item_Data = $this->FetchItemData($Item_ID);
+
+					if ( count($Row) == 0 )
+					{
+						$Create_Row = $PDO->prepare("INSERT INTO `items` (`Item_ID`, `Item_Name`, `Item_Type`, `Owner_Current`, `Quantity`) VALUES (?, ?, ?, ?, ?)");
+						$Create_Row->execute([ $Item_ID, $Item_Data['Name'], $Item_Data['Category'], $User_ID, $Quantity ]);
+					}
+					else
+					{
+						if ( $Subtract )
+						{
+							$Update_Row = $PDO->prepare("UPDATE `items` SET `Quantity` = `Quantity` - ? WHERE `Item_ID` = ? AND `Owner_Current` = ?");
+						}
+						else
+						{
+							$Update_Row = $PDO->prepare("UPDATE `items` SET `Quantity` = `Quantity` + ? WHERE `Item_ID` = ? AND `Owner_Current` = ?");
+						}
+						$Update_Row->execute([ $Quantity, $Item_ID, $User_ID ]);
+					}
+				}
+				catch( PDOException $e )
+				{
+					HandleError( $e->getMessage() );
+				}
+			}
+		}
 	}

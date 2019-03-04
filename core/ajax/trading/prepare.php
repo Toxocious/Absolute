@@ -93,7 +93,7 @@
 											Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(' . $Page . ', ' . $User_Data['id'] . '); return false;"', 50);
 											echo "</div>";
 
-											echo "<div style='padding: 5px;'>";
+											echo "<div style='height: 160px; padding: 5px;'>";
 											foreach( $Sender_Box as $Index => $Pokemon )
 											{
 												$Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);

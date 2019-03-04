@@ -128,12 +128,12 @@
 					$Roster_Slot[$i]['Experience'] = '0';
 			
 					echo "
-						<div class='roster_slot full' style='height: 131px; padding: 0px;'>
+						<div class='roster_slot full' style='height: 132px; padding: 0px;'>
 							<div style='float: left; padding: 18px 3px 3px;'>
 								<img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' />
 							</div>
 
-							<div class='info_cont' style='float: right; height: 131px; padding-top: 15px; width: 189px;'>
+							<div class='info_cont' style='float: right; height: 132px; padding-top: 15px; width: 189px;'>
 								<div style='font-weight: bold; padding: 2px;'>
 									{$Roster_Slot[$i]['Display_Name']}
 								</div>
@@ -352,12 +352,12 @@
 						$Roster_Slot[$i]['Experience'] = '0';
 				
 						echo "
-							<div class='roster_slot full' style='height: 131px; padding: 0px;'>
+							<div class='roster_slot full' style='height: 132px; padding: 0px;'>
 								<div style='float: left; padding: 18px 3px 3px;'>
 									<img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' />
 								</div>
 
-								<div class='info_cont' style='float: right; height: 131px; padding-top: 15px; width: 189px;'>
+								<div class='info_cont' style='float: right; height: 132px; padding-top: 15px; width: 189px;'>
 									<div style='font-weight: bold; padding: 2px;'>
 										{$Roster_Slot[$i]['Display_Name']}
 									</div>

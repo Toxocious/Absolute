@@ -54,8 +54,8 @@
 					{
 						echo "
 							<div style='margin-bottom: 5px;'>
-								<button onclick=\"TradeManage({$Trade['ID']}, 'Accept');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Accept Trade</button>
-								<button onclick=\"TradeManage({$Trade['ID']}, 'Delete');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Decline Trade</button>
+								<button onclick=\"TradeManage({$Trade['ID']}, 'Accepted');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Accept Trade</button>
+								<button onclick=\"TradeManage({$Trade['ID']}, 'Declined');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Decline Trade</button>
 							</div>
 						";
 					}
@@ -63,7 +63,7 @@
 					{
 						echo "
 							<div style='margin-bottom: 5px;'>
-								<button onclick=\"TradeManage({$Trade['ID']}, 'Delete');\" style='padding: 5px; width: calc(100%);'>Delete Trade</button>
+								<button onclick=\"TradeManage({$Trade['ID']}, 'Declined');\" style='padding: 5px; width: calc(100%);'>Delete Trade</button>
 							</div>
 						";
 					}
@@ -164,7 +164,7 @@
 							<?php
 								try
 								{
-									$Receiver_Query = $PDO->prepare("SELECT `Receiver_Pokemon`, `Receiver_Currency`, `Receiver_Items` FROM `trades` WHERE `ID` = ?");
+									$Receiver_Query = $PDO->prepare("SELECT `Receiver`, `Receiver_Pokemon`, `Receiver_Currency`, `Receiver_Items` FROM `trades` WHERE `ID` = ?");
 									$Receiver_Query->execute([ $Trade_ID ]);
 									$Receiver_Query->setFetchMode(PDO::FETCH_ASSOC);
 									$Receiver_Content = $Receiver_Query->fetch();

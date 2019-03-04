@@ -9,40 +9,164 @@
 		$Trade_ID = $Purify->Cleanse($_POST['Trade_ID']);
 		$Action = $Purify->Cleanse($_POST['Action']);
 
+		try
+		{
+			$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Receiver` = ?) AND `Status` = ?");
+			$Trade_Query->execute([ $Trade_ID, $User_Data['id'], $User_Data['id'], 'Pending' ]);
+			$Trade_Query->setFetchMode(PDO::FETCH_ASSOC);
+			$Trade_Content = $Trade_Query->fetchAll();
+
+			$Update_Status = $PDO->prepare("UPDATE `trades` SET `Status` = ? WHERE `ID` = ? LIMIT 1");
+			$Update_Status->execute([ $Action, $Trade_ID ]);
+		}
+		catch( PDOException $e )
+		{
+			HandleError( $e->getMessage() );
+		}
+
 		echo "
 			<div class='success' style='margin-bottom: 5px;'>
-				You have successfully {$Action}d Trade #$Trade_ID.
+				You have successfully {$Action} Trade #$Trade_ID.
 			</div>
 		";
 
 		/**
 		 * Process the logic required to accept the trade.
 		 */
-		if ( $Action == 'Accept' )
+		if ( $Action == 'Accepted' )
 		{
+			$Sender = $UserClass->FetchUserData($Trade_Content[0]['Sender']);
+			$Recipient = $UserClass->FetchUserData($Trade_Content[0]['Receiver']);
 
+			/**
+			 * Process the sender's half of the trade.
+			 */
+			if ( !empty($Trade_Content[0]['Sender_Pokemon']) )
+			{
+				$Sender_Pokemon = explode(',', $Trade_Content[0]['Sender_Pokemon']);
+				foreach( $Sender_Pokemon as $Key => $Pokemon_1 )
+				{
+					$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon_1);
+
+					try
+					{
+						$Update_Location = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Box', `Owner_Current` = ?  WHERE `ID` = ? LIMIT 1");
+						$Update_Location->execute([ $Recipient['ID'], $Pokemon_Data['ID'] ]);
+					}
+					catch( PDOException $e )
+					{
+						HandleError( $e->getMessage() );
+					}
+				}
+			}
+
+			if ( !empty($Trade_Content[0]['Sender_Items']) )
+			{
+				$Sender_Items = explode(',', $Trade_Content[0]['Sender_Items']);
+				foreach ( $Sender_Items as $Key => $Item )
+				{
+					// row-id-quantity-owner
+					$Item_Params = explode('-', $Item);
+					$Item_Data = $Item_Class->FetchOwnedItem($Trade_Content[0]['Sender'], $Item_Params[1]);
+
+					// $User_ID, $Item_ID, $Quantity, $Subtract = false
+					$Update_Sender_Items = $Item_Class->SpawnItem( $Sender['ID'], $Item_Data['ID'], $Item_Params[2], true );
+					$Update_Receiver_Items = $Item_Class->SpawnItem( $Recipient['ID'], $Item_Data['ID'], $Item_Params[2] );
+				}
+			}
+
+			if ( !empty($Trade_Content[0]['Sender_Currency']) )
+			{
+				$Sender_Currency = explode(',', $Trade_Content[0]['Sender_Currency']);
+				foreach ( $Sender_Currency as $Key => $Currency )
+				{
+					$Currency_Info = explode('-', $Currency);
+					$Currency_Data = $Constants->Currency[$Currency_Info[0]];
+
+					try
+					{
+						$Update_Sender_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` - ? WHERE `id` = ? LIMIT 1");
+						$Update_Sender_Currency->execute([ $Currency_Info[1], $Sender['ID'] ]);
+
+						$Update_Receiver_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` + ? WHERE `id` = ? LIMIT 1");
+						$Update_Receiver_Currency->execute([ $Currency_Info[1], $Recipient['ID'] ]);
+					}
+					catch( PDOException $e )
+					{
+						HandleError( $e->getMessage() );
+					}
+				}
+			}
+
+			/**
+			 * Process the receiver's half of the trade.
+			 */
+			if ( !empty($Trade_Content[0]['Receiver_Pokemon']) )
+			{
+				$Receiver_Pokemon = explode(',', $Trade_Content[0]['Receiver_Pokemon']);
+				foreach( $Receiver_Pokemon as $Key => $Pokemon_2 )
+				{
+					$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon_2);
+
+					try
+					{
+						$Update_Location = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Box', `Owner_Current` = ? WHERE `ID` = ? LIMIT 1");
+						$Update_Location->execute([ $Sender['ID'], $Pokemon_Data['ID'] ]);
+					}
+					catch( PDOException $e )
+					{
+						HandleError( $e->getMessage() );
+					}
+				}
+			}
+
+			if ( !empty($Trade_Content[0]['Receiver_Items']) )
+			{
+				$Receiver_Items = explode(',', $Trade_Content[0]['Receiver_Items']);
+				foreach ( $Receiver_Items as $Key => $Item )
+				{
+					// row-id-quantity-owner
+					$Item_Params = explode('-', $Item);
+					$Item_Data = $Item_Class->FetchOwnedItem($Trade_Content[0]['Receiver'], $Item_Params[1]);
+
+					// $User_ID, $Item_ID, $Quantity, $Subtract = false
+					$Update_Receiver_Items = $Item_Class->SpawnItem( $Recipient['ID'], $Item_Data['ID'], $Item_Params[2], true );
+					$Update_Sender_Items = $Item_Class->SpawnItem( $Sender['ID'], $Item_Data['ID'], $Item_Params[2] );
+				}
+			}
+
+			if ( !empty($Trade_Content[0]['Receiver_Currency']) )
+			{
+				$Receiver_Currency = explode(',', $Trade_Content[0]['Receiver_Currency']);
+				foreach ( $Receiver_Currency as $Key => $Currency )
+				{
+					$Currency_Info = explode('-', $Currency);
+					$Currency_Data = $Constants->Currency[$Currency_Info[0]];
+					
+					try
+					{
+						$Update_Receiver_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` - ? WHERE `id` = ? LIMIT 1");
+						$Update_Receiver_Currency->execute([ $Currency_Info[1], $Recipient['ID'] ]);
+						
+						$Update_Sender_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` + ? WHERE `id` = ? LIMIT 1");
+						$Update_Sender_Currency->execute([ $Currency_Info[1], $Sender['ID'] ]);
+					}
+					catch( PDOException $e )
+					{
+						HandleError( $e->getMessage() );
+					}
+				}
+			}
 		}
 
 		/**
 		 * Process the logic required to delete the trade.
 		 */
-		else if ( $Action == 'Delete' )
+		else if ( $Action == 'Declined' )
 		{
-			try
-			{
-				$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Receiver` = ?) AND `Status` = ?");
-				$Trade_Query->execute([ $Trade_ID, $User_Data['id'], $User_Data['id'], 'Pending' ]);
-				$Trade_Query->setFetchMode(PDO::FETCH_ASSOC);
-				$Trade_Content = $Trade_Query->fetchAll();
-
-				$Update_Status = $PDO->prepare("UPDATE `trades` SET `Status` = 'Declined' WHERE `ID` = ? LIMIT 1");
-				$Update_Status->execute([ $Trade_ID ]);
-			}
-			catch( PDOException $e )
-			{
-				HandleError( $e->getMessage() );
-			}
-
+			/**
+			 * Process the sender's half of the trade.
+			 */
 			if ( !empty($Trade_Content[0]['Sender_Pokemon']) )
 			{
 				$Sender_Pokemon = explode(',', $Trade_Content[0]['Sender_Pokemon']);
@@ -62,6 +186,9 @@
 				}
 			}
 
+			/**
+			 * Process the receiver's half of the trade.
+			 */
 			if ( !empty($Trade_Content[0]['Receiver_Pokemon']) )
 			{
 				$Receiver_Pokemon = explode(',', $Trade_Content[0]['Receiver_Pokemon']);
