@@ -18,7 +18,7 @@
 
 <div class='content'>
 	<div class='head'>Online Users</div>
-	<div class='box online_list'>
+	<div class='box'>
 		<div class='description' style='margin: 0px auto 5px'>
 			All users that have been online in the past fifteen minutes are displayed below.
 		</div>

@@ -102,7 +102,7 @@
 	if ( isset($_SESSION['abso_user']) )
 	{
 		$Fetch_User = $PDO->prepare("SELECT * FROM `users` WHERE `id` = ? LIMIT 1");
-		$Fetch_User->execute([$_SESSION['abso_user']]);
+		$Fetch_User->execute([ $_SESSION['abso_user'] ]);
 		$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 		$User_Data = $Fetch_User->fetch();
 

@@ -59,6 +59,7 @@
 			return [
 				'ID' => $User['id'],
 				'Username' => $User['Username'],
+				'Roster' => $User['Roster'],
 				'Avatar' => Domain(1) . $User['Avatar'],
 				'Banned_RPG' => $Banned_RPG,
 				'Banned_Chat' => $Banned_Chat,

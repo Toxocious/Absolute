@@ -137,6 +137,10 @@
 						(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 					");
 					$Starter_Create->execute([ $Starter_Data['Pokedex_ID'], $Starter_Data['Alt_ID'], $Starter_Data['Name'], 'Roster', 1, $User_ID, $User_ID, $Poke_Gender, $IVs, $Nature, time(), 'Starter Pokemon' ]);
+					$Starter_ID = $PDO->lastInsertId();
+
+					$User_Roster_Update = $PDO->prepare("UPDATE `users` SET `Roster` = ? WHERE `Username` = ? LIMIT 1");
+					$User_Roster_Update->execute([ $Starter_ID, $Username ]);
 				}
 				catch ( PDOException $e )
 				{

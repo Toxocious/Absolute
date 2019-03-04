@@ -1182,29 +1182,39 @@ img.spricon:hover {
 
 /* 'battle.php' */
 
-#battleWindow .rosters .battle_slot {
+#BattleWindow .roster .battle_slot {
   background: #2c3a55;
   border: 1px solid #4A618F;
   border-bottom: none;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   float: left;
-  margin-left: 4.3px;
+  margin-left: 4.8px;
   margin-right: 6px;
   width: calc(100% / 7);
 }
 
-#battleWindow .rosters .battle_slot:hover {
-  background: #2c3a55;
+#BattleWindow .roster .battle_slot:hover {
+  background: #3b4d72;
   cursor: pointer;
 }
 
-#battleWindow .rosters .battle_slot:nth-last-child(1) {
+#BattleWindow .roster .battle_slot:nth-last-child(1) {
   margin-right: 0px;
 }
 
-#battleWindow .active_pokemon .hp_bar,
-#battleWindow .active_pokemon .exp_bar {
+#BattleWindow .roster .battle_slot img.fainted {
+  filter: grayscale(100%);
+}
+
+#BattleWindow .active_pokemon {
+  border: 2px solid #4A618F;
+  border-radius: 4px;
+  margin-top: 31px;
+}
+
+#BattleWindow .active_pokemon .hp_bar,
+#BattleWindow .active_pokemon .exp_bar {
   background: #4A618F;
   border-radius: 4px;
   height: 9px;
@@ -1212,7 +1222,7 @@ img.spricon:hover {
   width: 130px;
 }
 
-#battleWindow .active_pokemon .hp_bar span {
+#BattleWindow .active_pokemon .hp_bar span {
   background: #c90e0e;
   height: 3px;
   margin-left: -60px;
@@ -1221,7 +1231,7 @@ img.spricon:hover {
   position: absolute;
 }
 
-#battleWindow .active_pokemon .exp_bar span {
+#BattleWindow .active_pokemon .exp_bar span {
   background: #4A618F;
   height: 3px;
   margin-left: -60px;
@@ -1230,7 +1240,7 @@ img.spricon:hover {
   position: absolute;
 }
 
-#battleWindow .options {
+#BattleWindow .options {
   margin-left: 424px;
   margin-top: 50px;
   padding: 5px;
@@ -1239,26 +1249,26 @@ img.spricon:hover {
   z-index: 1;
 }
 
-#battleWindow .options:hover {
+#BattleWindow .options:hover {
   cursor: pointer;
 }
 
-#battleWindow .options span img {
+#BattleWindow .options span img {
   height: 26px;
   margin-left: -3px;
   width: 26px;
 }
 
-#battleWindow .moves {
+#BattleWindow .moves {
   margin-top: 5px;
 }
 
-#battleWindow .moves .panel-body {
+#BattleWindow .moves .panel-body {
   border-radius: 4px;
   padding: 3px;
 }
 
-#battleWindow .moves .panel-body button {
+#BattleWindow .moves .panel-body button {
   background: #3b4d72;
   border: 1px solid #2c3a55;
   border-radius: 4px;
@@ -1266,21 +1276,21 @@ img.spricon:hover {
   width: 20%;
 }
 
-#battleWindow .moves .panel-body button:hover {
+#BattleWindow .moves .panel-body button:hover {
   background: #4A618F;
 }
 
-#battleWindow .battleDialog {
+#BattleWindow .battleDialog {
   margin-top: 5px;
 }
 
-#battleWindow #battleDialog {
+#BattleWindow #battleDialog {
   border-radius: 4px;
   font-size: 12px;
   padding: 5px;
 }
 
-#battleWindow #battleDialog button {
+#BattleWindow #battleDialog button {
   background: #3b4d72;
   border: 1px solid #2c3a55;
   border-radius: 4px;
@@ -1289,7 +1299,7 @@ img.spricon:hover {
   width: 20%;
 }
 
-#battleWindow #battleDialog button:hover {
+#BattleWindow #battleDialog button:hover {
   background: #4A618F;
 }
 

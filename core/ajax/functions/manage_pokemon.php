@@ -27,6 +27,27 @@
 			$Pokemon_Data = $PokeClass->FetchPokemonData($Poke_ID);
 			$Pokemon_Move = $PokeClass->MovePokemon($Pokemon_Data['ID'], $Slot);
 
+			try
+			{
+				$Roster_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6 ORDER BY `Slot` ASC LIMIT 6");
+        $Roster_Query->execute([ $User_Data['id'] ]);
+        $Roster_Query->setFetchMode(PDO::FETCH_ASSOC);
+				$Roster_Pokemon = $Roster_Query->fetchAll();
+				
+				$Roster = '';
+				foreach ( $Roster_Pokemon as $Key => $Value )
+				{
+					$Roster .= "{$Value['ID']}";
+				}
+
+				$User_Roster_Update = $PDO->prepare("UPDATE `users` SET `Roster` = ? WHERE `id` = ? LIMIT 1");
+				$User_Roster_Update->execute([ $Roster, $User_Data['id'] ]);
+			}
+			catch( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
+
 			if ( $Pokemon_Move == true )
 			{
 				if ( $Slot == 7 )
