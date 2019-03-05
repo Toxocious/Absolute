@@ -75,9 +75,18 @@
 		/**
 		 * Determine how much damage should be done.
 		 */
-		public function DamageFormula($Level, $Stats, $Effectiveness, $STAB, $Crit, $Misc)
+		public function DamageFormula($Move_ID, $Level, $Stats, $Effectiveness, $STAB, $Crit, $Misc)
 		{
+			// stats = attack value of attacker, defense value of defender, speed of attacker, speed of defender
+			//global $PDO;
+			global $PokeClass;
 
+			$Move = $PokeClass->FetchMoveData($Move_ID);
+
+			$Modifiers = 1 * 1 * 1 * $Crit * mt_rand(0.85, 1.00) * $STAB * $Effectiveness * 1 * $Misc;
+			$Damage = floor( ( 2 * $Level / 5 + 2 ) * $Move['Power'] * $Stats[0] / $Stats[1] / 50 + 2 ) * $Modifiers;
+
+			return $Damage;
 		}
 
 		/**
@@ -94,6 +103,7 @@
 		public function CreateBattle($Type, $ID)
 		{
 			global $PDO;
+			global $PokeClass;
 			global $User_Data;
 			global $UserClass;
 
@@ -112,10 +122,17 @@
 			 */
 			try
 			{
-				$Fetch_Lead = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 1 AND `Location` = 'Roster' LIMIT 1");
-				$Fetch_Lead->execute([ $User_Data['id'] ]);
-				$Fetch_Lead->setFetchMode(PDO::FETCH_ASSOC);
-				$Roster_Lead = $Fetch_Lead->fetch();
+				$Fetch_Attacker_Lead = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 1 AND `Location` = 'Roster' LIMIT 1");
+				$Fetch_Attacker_Lead->execute([ $User_Data['id'] ]);
+				$Fetch_Attacker_Lead->setFetchMode(PDO::FETCH_ASSOC);
+				$Attacker_Lead = $Fetch_Attacker_Lead->fetch();
+				$Attacker_Data = $PokeClass->FetchPokemonData($Attacker_Lead['ID']);
+				
+				$Fetch_Defender_Lead = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 1 AND `Location` = 'Roster' LIMIT 1");
+				$Fetch_Defender_Lead->execute([ $ID ]);
+				$Fetch_Defender_Lead->setFetchMode(PDO::FETCH_ASSOC);
+				$Defender_Lead = $Fetch_Defender_Lead->fetch();
+				$Defender_Data = $PokeClass->FetchPokemonData($Defender_Lead['ID']);
 			}
 			catch ( PDOException $e )
 			{
@@ -133,7 +150,6 @@
 				"Clan" 					=> $Clan,
 				"Text" 					=> "Please select a move in order to begin the battle.",
 				"Roster" 				=> $User_Data['Roster'],
-				"Active"				=> $Roster_Lead['ID'],
 				"PostCode_M1"		=> randomSalt(12),
 				"PostCode_M2"		=> randomSalt(12),
 				"PostCode_M3"		=> randomSalt(12),
@@ -142,13 +158,13 @@
 				"PostCode_R1"		=> randomSalt(12),
 				"Attacker"			=>
 				[
-					"Active"			=> [ 'ID' => 1, 'HP_Cur' => 1000, 'HP_Max' => 1000 ],
+					"Active"			=> [ 'ID' => $Attacker_Lead['ID'], 'HP_Cur' => $Attacker_Data['Stats'][0], 'HP_Max' => $Attacker_Data['Stats'][0] ],
 					"Roster"			=> [],
 					"Fainted"			=> [],
 				],
 				"Defender"			=>
 				[
-					"Active"			=> [ 'ID' => 1, 'HP_Cur' => 1000, 'HP_Max' => 1000 ],
+					"Active"			=> [ 'ID' => $Defender_Lead['ID'], 'HP_Cur' => $Defender_Data['Stats'][0], 'HP_Max' => $Defender_Data['Stats'][0] ],
 					"Roster"			=> [],
 					"Fainted"			=> [],
 				]
@@ -156,11 +172,77 @@
 		}
 
 		/**
+		 * Check a myriad of data to accurately figure out if the client is macroing or using an autoclicker.
+		 */
+		public function MacroCheck($Coords_Valid, $Coords_Sent, $PostCode, $Move, $Clicks)
+		{
+			/**
+			 * Check to see if the user clicked within the accepted coordinate range.
+			 */
+			$Check_Coords = $this->CheckCoords( $Coords_Sent['x'], $Coords_Valid['X']['Min'], $Coords_Valid['X']['Max'], $Coords_Sent['y'], $Coords_Valid['Y']['Min'], $Coords_Valid['Y']['Max'] );
+			if ( $Check_Coords )
+			{
+				//$Validated_Coords = "Coords are within the accepted range.<br />";
+				$Validated_Coords = true;
+			}
+			else
+			{
+				//$Validated_Coords = "Coords are outside the accepted range.<br />";
+				$Validated_Coords = false;
+			}
+
+			/**
+			 * Check to see if the submitted post code matches the session post code.
+			 */
+			if ( $PostCode == $_SESSION['Battle']['PostCode_M' . $Move] )
+			{
+				//$Validated_PostCode = "The submitted postcode matches the session postcode.<br />";
+				$Validated_PostCode = true;
+			}
+			else
+			{
+				//$Validated_PostCode = "The submitted postcode doesn't match the session postcode.<br />";
+				$Validated_PostCode = false;
+			}
+
+			/**
+			 * A high amount of clicks usually indicates that someone is using a basic autoclicker.
+			 */
+			if ( $Clicks > 7 )
+			{
+				//$Validated_Clicks = "A high amount of clicks in between input submits has been detected.";
+				$Validated_Clicks = true;
+			}
+			else
+			{
+				$Validated_Clicks = false;
+			}
+
+			/**
+			 * If all were passed, the user is likely in the clear.
+			 * ------
+			 * Handle some logging stuff here.
+			 */
+			if ( $Validated_Coords && $Validated_PostCode && !$Validated_Clicks )
+			{
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		/**
 		 * Check to see if the clicked coordinates are within the accepted range.
 		 */
 		public function CheckCoords($x, $x_min, $x_max, $y, $y_min, $y_max)
 		{
-			if ( $x >= $x_min && $x <= $x_max && $y >= $y_min && $y <= $y_max )
+			if
+			( 
+				$x >= $x_min && $x <= $x_max &&
+				$y >= $y_min && $y <= $y_max
+			)
 			{
 				return true;
 			}
@@ -178,7 +260,7 @@
 			global $PDO;
 			global $PokeClass;
 
-			$Pokemon = $PokeClass->FetchPokemonData($_SESSION['Battle']['Active']);
+			$Pokemon = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
 
 			for ( $i = 1; $i <= 4; $i++ )
 			{

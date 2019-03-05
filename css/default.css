@@ -1191,7 +1191,14 @@ img.spricon:hover {
   float: left;
   margin-left: 4.8px;
   margin-right: 6px;
-  width: calc(100% / 7);
+  width: calc(100% / 4);
+}
+#BattleWindow .roster.bottom .battle_slot {
+  border-bottom: 1px solid #4A618F;
+  border-top: none;
+  border-radius: 0px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
 }
 
 #BattleWindow .roster .battle_slot:hover {
@@ -1199,6 +1206,9 @@ img.spricon:hover {
   cursor: pointer;
 }
 
+#BattleWindow .roster .battle_slot:nth-child(1) {
+  margin-left: 25px;
+}
 #BattleWindow .roster .battle_slot:nth-last-child(1) {
   margin-right: 0px;
 }
