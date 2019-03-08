@@ -159,7 +159,10 @@
 				"GenderShort" => $GenderShort,
 				"Gender_Icon" => Domain(1) . "/images/Assets/" . $Gender . ".svg",
 				"Level" => number_format($Level),
+				"Level_Raw" => $Level,
 				"Experience" => $Experience,
+				"Type_Primary" => $Pokedex['type_1'],
+				"Type_Secondary" => $Pokedex['type_2'],
 				"Nature" => $Pokemon['Nature'],
 				"BaseStats" => $BaseStats,
       	"Stats" => $Stats,
@@ -242,6 +245,8 @@
 				"Pokedex_ID" => $Pokedex['Pokedex_ID'],
 				"Alt_ID" => $Pokedex['Alt_ID'],
 				"Name" => $Name,
+				"Type_Primary" => $Pokedex['type_1'],
+				"Type_Secondary" => $Pokedex['type_2'],
 				"Base_Stats" => $BaseStats,
 				"Sprite" => Domain(1) . $Sprite,
 				"Icon" => Domain(1) . $Icon,
@@ -315,8 +320,8 @@
 						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
       			$Roster_Move->execute([$Slot, $Poke_Data['ID']]);
 						
-        		$Roster_Remove = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
-        		$Roster_Remove->execute([$Poke_Data['Slot'], $Roster[$Slot - 1]['ID']]);
+        		$Roster_Remove = $PDO->prepare("UPDATE `pokemon` SET `Location` = ?, `Slot` = ? WHERE `ID` = ? LIMIT 1");
+        		$Roster_Remove->execute([$Poke_Data['Location'], $Poke_Data['Slot'], $Roster[$Slot - 1]['ID']]);
 					}
 					catch ( PDOException $e )
 					{

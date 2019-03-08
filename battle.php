@@ -2,43 +2,41 @@
 	require 'core/required/layout_top.php';
 	require 'core/classes/battle.php';
 
-//	var_dump($_SESSION['Battle']);
-
 	$Battle_Version = 1;
-
-	if ( !isset($_SESSION['Battle']) )
-	{
-		unset($_SESSION['Battle']);
-		
-		echo "
-			<div class='error'>
-				A battle has not yet been created.
-			</div>
-		";
-	}
-	else
-	{
-		$Battle = new Battle();
-
-		$Roster_Check = $Battle->VerifyRoster( $User_Data['Roster'] );
-
-		if ( $Roster_Check )
-		{
-			unset($_SESSION['Battle']);
-
-			echo "
-				<div class='error'>
-					Your roster has changed. Please restart the battle.
-				</div>
-			";
-		}
-	}
 ?>
 
 <div class='content'>
 	<div class='head'>Battle</div>
 	<div class='box' id='BattleWindow'>
+		<?php
+			if ( !isset($_SESSION['Battle']) )
+			{
+				unset($_SESSION['Battle']);
+				
+				echo "
+					<div class='error'>
+						A battle has not yet been created.
+					</div>
+				";
+			}
+			else
+			{
+				$Battle = new Battle();
 		
+				$Roster_Check = $Battle->VerifyRoster( $User_Data['Roster'] );
+		
+				if ( $Roster_Check )
+				{
+					unset($_SESSION['Battle']);
+		
+					echo "
+						<div class='error'>
+							Your roster has changed. Please restart the battle.
+						</div>
+					";
+				}
+			}
+		?>
 	</div>
 </div>
 

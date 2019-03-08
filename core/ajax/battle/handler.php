@@ -30,130 +30,105 @@
 	}
 
 	/**
-	 * Fetch the rosters of both users.
+	 * Fetch both user's active Pokemon's stats.
 	 */
-	try
-	{
-		$Attackers_Roster_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 6 AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-		$Attackers_Roster_Query->execute([ $User_Data['id'] ]);
-		$Attackers_Roster_Query->setFetchMode(PDO::FETCH_ASSOC);
-		$Attackers_Roster = $Attackers_Roster_Query->fetchAll();
-
-		$Defenders_Roster_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 6 AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-		$Defenders_Roster_Query->execute([ $_SESSION['Battle']['Battle_Foe'] ]);
-		$Defenders_Roster_Query->setFetchMode(PDO::FETCH_ASSOC);
-		$Defenders_Roster = $Defenders_Roster_Query->fetchAll();
-	}
-	catch( PDOException $e )
-	{
-		HandleError( $e->getMessage() );
-	}
+	$Attacker_Active = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
+	$Defender_Active = $PokeClass->FetchPokemonData($_SESSION['Battle']['Defender']['Active']['ID']);
 
 	/**
 	 * Handle processing turns.
 	 */
-	if ( isset($_POST['Element']) && isset($_POST['x']) && isset($_POST['y']) && isset($_POST['Clicks']) )
+	if ( isset($_POST['Element']) && isset($_POST['x']) && isset($_POST['y']) && isset($_POST['Clicks']) && isset($_POST['Input']) )
 	{
+		$Input = $Purify->Cleanse($_POST['Input']);
+		$Clicks = $Purify->Cleanse($_POST['Clicks']);
+
+		$Element = [
+			'PostCode'	=> $Purify->Cleanse($_POST['Element']['PostCode']),
+			'Pos_Top'		=> $Purify->Cleanse(round($_POST['Element']['Position']['top'])),
+			'Pos_Left'	=> $Purify->Cleanse(round($_POST['Element']['Position']['left'])),
+			'Height'		=> $Purify->Cleanse($_POST['Element']['Height']),
+			'Width'			=> $Purify->Cleanse($_POST['Element']['Width']),
+		];
+
+		$Coords = [
+			'x' => $Purify->Cleanse($_POST['x']),
+			'y' => $Purify->Cleanse($_POST['y']),
+		];
+
+		$Valid_Coords =
+		[
+			'X' =>
+			[
+				'Min'	=> $Element['Pos_Left'],
+				'Max'	=> $Element['Pos_Left'] + $Element['Width'],
+			],
+			'Y' =>
+			[
+				'Min'	=> $Element['Pos_Top'],
+				'Max'	=> $Element['Pos_Top'] + $Element['Height'],
+			],
+		];
+
+		
 		/**
 		 * Attacking the foe.
 		 */
-		if ( isset($_POST['Move']) )
+		if ( strpos($Input, 'Move') !== false )
 		{
-			$Active_Pokemon = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
-
 			$Move_ID = $Purify->Cleanse($_POST['ID']);
 			$Move_Data = $PokeClass->FetchMoveData($Move_ID);
 
-			$Move = $Purify->Cleanse($_POST['Move']);
-			$Clicks = $Purify->Cleanse($_POST['Clicks']);
-			$Element = [
-				'PostCode'	=> $Purify->Cleanse($_POST['Element']['PostCode']),
-				'Pos_Top'		=> $Purify->Cleanse(round($_POST['Element']['Position']['top'])),
-				'Pos_Left'	=> $Purify->Cleanse(round($_POST['Element']['Position']['left'])),
-				'Height'		=> $Purify->Cleanse($_POST['Element']['Height']),
-				'Width'			=> $Purify->Cleanse($_POST['Element']['Width']),
-			];
-			$Coords = [
-				'x' => $Purify->Cleanse($_POST['x']),
-				'y' => $Purify->Cleanse($_POST['y']),
-			];
-
-			/**
-			 * Calculate the accepted coordinate range of the clicked element.
-			 */
-			$Valid_Coords =
-			[
-				'X' =>
-				[
-					'Min'	=> $Element['Pos_Left'],
-					'Max'	=> $Element['Pos_Left'] + $Element['Width'],
-				],
-				'Y' =>
-				[
-					'Min'	=> $Element['Pos_Top'],
-					'Max'	=> $Element['Pos_Top'] + $Element['Height'],
-				],
-			];
-
-			/**
-			 * Send the appropriate data to the MacroCheck Battle function.
-			 */
-			$Battle->MacroCheck($Valid_Coords, $Coords, $Element['PostCode'], $Move, $Clicks);
-
-			/**
-			 * Update the session's battle text.
-			 */
-			$_SESSION['Battle']['Text'] = "You attacked the foe with {$Move_Data['Name']}!";
-			
-			/**
-			 * DEBUGGING BATTLE DATA.
-			 * START
-			 */
-			if ( $FULL_DEBUG )
-			{
-				$_SESSION['Battle']['Text'] .= "
-					<hr />
-					<b>Postcode Data (Received/Expected):</b><br />
-					{$Element['PostCode']} / {$_SESSION['Battle']['PostCode_M' . $Move]}<br /><br />
-
-					<b>Valid Coord Area:</b><br />
-					x => {$Valid_Coords['X']['Min']} to {$Valid_Coords['X']['Max']}<br />
-					y => {$Valid_Coords['Y']['Min']} to {$Valid_Coords['Y']['Max']}
-					<br /><br />
-
-					<b>Clicked Coordinates (x,y):</b><br />
-					{$Coords['x']} , {$Coords['y']}
-					<br /><br />
-
-					<b>Total Clicks:</b><br />
-					{$Clicks}
-				";
-			}
-			/**
-			 * END 
-			 * DEBUGGING BATTLE DATA.
-			 */
+			$Battle->MacroCheck($Valid_Coords, $Coords, $Element['PostCode'], $Input, $Clicks);
+			$Battle->DamagePhase( $Attacker_Active['ID'], $Defender_Active['ID'], $Move_Data['ID'] );
 		}
 
 		/**
 		 * Continuing the battle.
 		 */
-		if ( isset($_POST['Continue']) )
+		if ( $Input == 'Continue' )
 		{
-
+			$_SESSION['Battle']['Text'] = "hey! continuing the battle~";
 		}
 
 		/**
 		 * Restarting the battle.
 		 */
-		if ( isset($_POST['Restart']) )
+		if ( $Input == 'Restart' )
 		{
-
+			$Battle->CreateBattle('Trainer', $_SESSION['Battle']['Battle_Foe']);
+			//$_SESSION['Battle']['Text'] = "say! restarting the battle~";
 		}
-	}
 
-	$Attacker_Active = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
-	$Defender_Active = $PokeClass->FetchPokemonData($_SESSION['Battle']['Defender']['Active']['ID']);
+		/**
+		 * DEBUGGING BATTLE DATA.
+		 * START
+		 */
+		if ( $FULL_DEBUG )
+		{
+			$_SESSION['Battle']['Text'] .= "
+				<hr />
+				<b>Postcode Data (Received/Expected):</b><br />
+				{$Element['PostCode']} / {$_SESSION['Battle']['PostCode_' . $Input]}<br /><br />
+
+				<b>Valid Coord Area:</b><br />
+				x => {$Valid_Coords['X']['Min']} to {$Valid_Coords['X']['Max']}<br />
+				y => {$Valid_Coords['Y']['Min']} to {$Valid_Coords['Y']['Max']}
+				<br /><br />
+
+				<b>Clicked Coordinates (x,y):</b><br />
+				{$Coords['x']} , {$Coords['y']}
+				<br /><br />
+
+				<b>Total Clicks:</b><br />
+				{$Clicks}
+			";
+		}
+		/**
+		 * END 
+		 * DEBUGGING BATTLE DATA.
+		 */
+	}
 ?>
 
 <div class='row'>
@@ -162,9 +137,9 @@
 			<?php
 				for ( $i = 0; $i <= 2; $i++ )
 				{
-					if ( isset($Attackers_Roster[$i]['ID']) )
+					if ( isset( $_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID'] ) )
 					{
-						$Attacker_Poke[$i] = $PokeClass->FetchPokemonData($Attackers_Roster[$i]['ID']);
+						$Attacker_Poke[$i] = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID']);
 
 						echo "
 							<div class='battle_slot'>
@@ -186,12 +161,20 @@
 
 		<div class='active_pokemon'>
 			<img src='<?= $Attacker_Active['Sprite']; ?>' />
-			<div style='float: right; margin: 5px;'>
+			<div style='float: right; margin: 5px; width: 50%;'>
 				<b><?= $Attacker_Active['Display_Name']; ?></b><br /><br />
 				<b>HP</b><br />
-				(<?= number_format($_SESSION['Battle']['Attacker']['Active']['HP_Cur']) . " / " . number_format($_SESSION['Battle']['Attacker']['Active']['HP_Max']); ?>)
+				<div style='font-size: 12px;'>
+					(
+						<?php
+							echo ($_SESSION['Battle']['Attacker']['Active']['HP_Cur'] <= 0 ? 0 : number_format($_SESSION['Battle']['Attacker']['Active']['HP_Cur'])) . 
+							" / " .
+							number_format($_SESSION['Battle']['Attacker']['Active']['HP_Max']);
+						?>
+					)
+				</div>
 				<div class='hp_bar'>
-					<span style='border-radius: 4px; padding: 2px;'></span>
+					<span style='border-radius: 4px; height: 4px; width: <?= (($_SESSION['Battle']['Attacker']['Active']['HP_Cur'] * 120) / $_SESSION['Battle']['Attacker']['Active']['HP_Max']); ?>px'></span>
 				</div>
 			</div>
 		</div>
@@ -200,9 +183,9 @@
 			<?php
 				for ( $i = 3; $i <= 5; $i++ )
 				{
-					if ( isset($Attackers_Roster[$i]['ID']) )
+					if ( isset( $_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID'] ) )
 					{
-						$Attacker_Poke[$i] = $PokeClass->FetchPokemonData($Attackers_Roster[$i]['ID']);
+						$Attacker_Poke[$i] = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID']);
 
 						echo "
 							<div class='battle_slot'>
@@ -228,9 +211,9 @@
 			<?php
 				for ( $i = 0; $i <= 2; $i++ )
 				{
-					if ( isset($Defenders_Roster[$i]['ID']) )
+					if ( isset( $_SESSION['Battle']['Defender']['Roster'][0][$i]['ID'] ) )
 					{
-						$Defender_Poke[$i] = $PokeClass->FetchPokemonData($Defenders_Roster[$i]['ID']);
+						$Defender_Poke[$i] = $PokeClass->FetchPokemonData($_SESSION['Battle']['Defender']['Roster'][0][$i]['ID']);
 
 						echo "
 							<div class='battle_slot'>
@@ -252,12 +235,20 @@
 
 		<div class='active_pokemon'>
 			<img src='<?= $Defender_Active['Sprite']; ?>' />
-			<div style='float: left; margin: 5px;'>
+			<div style='float: left; margin: 5px; width: 50%;'>
 				<b><?= $Defender_Active['Display_Name']; ?></b><br /><br />
-				<b>HP</b><br />
-				(<?= number_format($_SESSION['Battle']['Defender']['Active']['HP_Cur']) . " / " . number_format($_SESSION['Battle']['Defender']['Active']['HP_Max']); ?>)
+				<b>HP</b>
+				<div style='font-size: 12px;'>
+					(
+						<?php
+							echo ($_SESSION['Battle']['Defender']['Active']['HP_Cur'] <= 0 ? 0 : number_format($_SESSION['Battle']['Defender']['Active']['HP_Cur'])) . 
+							" / " .
+							number_format($_SESSION['Battle']['Defender']['Active']['HP_Max']);
+						?>
+					)
+				</div>
 				<div class='hp_bar'>
-					<span style='border-radius: 4px; padding: 2px;'></span>
+					<span style='border-radius: 4px; height: 4px; width: <?= (($_SESSION['Battle']['Defender']['Active']['HP_Cur'] * 120) / $_SESSION['Battle']['Defender']['Active']['HP_Max']); ?>px'></span>
 				</div>
 			</div>
 		</div>
@@ -266,13 +257,21 @@
 			<?php
 				for ( $i = 3; $i <= 5; $i++ )
 				{
-					if ( isset($Defenders_Roster[$i]['ID']) )
+					if ( isset( $_SESSION['Battle']['Defender']['Roster'][0][$i]['ID'] ) )
 					{
-						$Defender_Poke[$i] = $PokeClass->FetchPokemonData($Defenders_Roster[$i]['ID']);
+						$Defender_Poke[$i] = $PokeClass->FetchPokemonData($_SESSION['Battle']['Defender']['Roster'][0][$i]['ID']);
 
 						echo "
 							<div class='battle_slot'>
 								<img src='{$Defender_Poke[$i]['Icon']}' />
+							</div>
+						";
+					}
+					else
+					{
+						echo "
+							<div class='battle_slot'>
+								<img src='images/Pokemon/0.png' style='height: 30px; width: 30px;' />
 							</div>
 						";
 					}
@@ -285,15 +284,18 @@
 <div class='panel' style='margin: 5px auto; padding: 5px; width: 80%;'>
 	<div class='panel-body' id='Moves'>
 		<?php
-			$Battle->RenderMoves();
+			$Battle->RenderInputs('Moves');
 		?>
 	</div>
 </div>
 
 <div class='panel' style='margin: 0 auto; width: 80%;'>
-	<!--<div class='panel-heading'>Battle Dialogue</div>-->
-	<div class='panel-body' style='padding: 5px;' id='BattleDialogue'>
-		<?= $_SESSION['Battle']['Text']; ?>
+	<div class='panel-body' style='font-size: 12px; padding: 5px;' id='BattleDialogue'>
+		<?php
+			$Battle->RenderInputs('Restart');
+
+			echo $_SESSION['Battle']['Text'];
+		?>
 	</div>
 </div>
 
@@ -304,7 +306,7 @@
 		Clicks++;
 	});
 
-	Attack = function(Move, ID, event)
+	Input = function(Input, ID, event)
 	{
 		$('#BattleDialogue').html("<div style='padding: 10px;'><div class='spinner' style='left: 48.5%; position: relative;'></div></div>");
 
@@ -318,7 +320,7 @@
 		$.ajax({
 			type: 'POST',
 			url: 'core/ajax/battle/handler.php',
-			data: { Element: Element, Move: Move, ID: ID, x: event.pageX, y: event.pageY, Clicks: Clicks },
+			data: { Element: Element, Input: Input, ID: ID, x: event.pageX, y: event.pageY, Clicks: Clicks },
 			success: function(data)
 			{
 				$('#BattleWindow').html(data);

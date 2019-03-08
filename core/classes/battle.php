@@ -48,45 +48,245 @@
 
 		/**
 		 * Determine how much experience that you've earned from the battle.
-		 * @params: 
-		 * -> type ('trainer' or 'pokemon')
 		 */
-		public function DetermineExp($Type, $Pokemon)
+		public function DetermineExp($Pokemon)
 		{
 
 		}
 
 		/**
 		 * Determine how much of a given currency that you've earned from the battle.
+		 * -- determine quantity of absolute coins earned based on trainer level?
+		 * 			floor(total roster level / trainer_level) + trainer level;
+		 * -- should probably determine the amount of currency that you get depending on this formula?
+		 *      $rand = mt_rand(165, 200) / 200;
+		 * 			floor(total roster levels / total roster count * $rand) + 1;
 		 */
-		public function DetermineCurrency()
+		public function DetermineRewards()
 		{
+			global $PDO;
+			global $PokeClass;
+			global $User_Data;
 
+			$Abso_Earned = 0;
+			$Abso_Chance = mt_rand(1, 10);
+			$Money_Earned = mt_rand(69, 420);
+
+			$Poke_Data = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
+			
+			$Additional_Text = "";
+			$Earned_Text = 'For winning this battle, you have earned:<br />';
+
+			
+			if ( $Poke_Data['Item'] == "Amulet Coin" )
+			{
+				$Money_Earned *= 2;
+				$Additional_Text = " (x2)";
+			}
+
+			if ( $Abso_Chance === 4 )
+			{
+				$Abso_Earned = mt_rand(4, 12);
+				$Earned_Text .= "+{$Abso_Earned} Absolute Coins<br />";
+			}
+
+			$Earned_Text .= "+ $" . number_format($Money_Earned) . $Additional_Text;
+
+			try
+			{
+				$Update_Currencies = $PDO->prepare("UPDATE `users` SET `Money` = `Money` + ?, `Abso_Coins` = `Abso_Coins` + ? WHERE `id` = ?");
+				$Update_Currencies->execute([ $Money_Earned, $Abso_Earned, $User_Data['id'] ]);
+			}
+			catch( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
+
+			return $Earned_Text;
+		}
+
+		/**
+		 * Determine whether or not your attack was a critical hit.
+		 * -- 1 in 7 chance to crit.
+		 * -- Crit damage = x1 or x1.5
+		 */
+		public function CritCheck()
+		{
+			$Crit = 1;
+
+			if ( mt_rand(1, 7) === 4 )
+			{
+				$Crit = 1.5;
+			}
+
+			return $Crit;
 		}
 
 		/**
 		 * Actually apply and deal the proper amount of damage.
 		 */
-		public function DamageDeal()
+		public function DamagePhase($Poke_ID, $Foe_ID, $Move_ID)
 		{
+			global $PDO;
+			global $PokeClass;
 
+			$Move 			= $PokeClass->FetchMoveData($Move_ID);
+			$Poke 			= $PokeClass->FetchPokemonData($Poke_ID);
+			$Foe				= $PokeClass->FetchPokemonData($Foe_ID);
+			$Poke_Dex		= $PokeClass->FetchPokedexData($Poke['Pokedex_ID'], $Poke['Alt_ID']);
+			$Foe_Dex		= $PokeClass->FetchPokedexData($Foe['Pokedex_ID'], $Foe['Alt_ID']);
+			$Rand 			= mt_rand(1, 4);
+			$Rand_Move	= $Foe['Move_' . $Rand];
+			$Foe_Move 	= $PokeClass->FetchMoveData($Rand_Move);
+
+			$Crit								= $this->CritCheck();
+			$STAB								= $this->DetermineSTAB($Poke_Dex['Type_Primary'], $Poke_Dex['Type_Secondary'], $Move['Type']);
+			$Att_Effectiveness 	= $this->DetermineEffectiveness($Move['Type'], $Foe_Dex['Type_Primary'], $Foe_Dex['Type_Secondary']);
+			$Def_Effectiveness 	= $this->DetermineEffectiveness($Move['Type'], $Poke_Dex['Type_Primary'], $Poke_Dex['Type_Secondary']);
+
+			$Att_Stats = [ $Poke['Stats'][1], $Foe['Stats'][2] ];
+			$Def_Stats = [ $Foe['Stats'][1], $Poke['Stats'][2] ];
+
+			$Attacker_Damage = $this->DamageCalc( $Move['Power'], 		$Poke['Level'], $Att_Stats, $Att_Effectiveness, $STAB, $Crit );
+			$Defender_Damage = $this->DamageCalc( $Foe_Move['Power'], $Foe['Level'], 	$Def_Stats, $Def_Effectiveness, $STAB, $Crit );
+
+			/**
+			 * Speed check.
+			 */
+			if ( $Poke['Stats'][5] >= $Foe['Stats'][5] )
+			{
+				/**
+				 * Do damage now.
+				 */
+				$_SESSION['Battle']['Defender']['Active']['HP_Cur'] -= $Attacker_Damage;
+
+				/**
+				 * If foe has fainted.
+				 */
+				if ( $_SESSION['Battle']['Defender']['Active']['HP_Cur'] <= 0 )
+				{
+					$Rewards 		= $this->DetermineRewards();
+					//$Experience = $this->DetermineExperience();
+
+					$_SESSION['Battle']['Text'] = "
+						{$Poke['Display_Name']} used {$Move['Name']} and has dealt " . number_format($Attacker_Damage) . " damage to {$Foe['Display_Name']}.<br /><br />
+						
+						The foe has fainted!<br /><br />
+
+						" . $Rewards . "
+					";
+				}
+				/**
+				 * Neither Pokemon fainted.
+				 */
+				else if ( $_SESSION['Battle']['Attacker']['Active']['HP_Cur'] > 0 && $_SESSION['Battle']['Defender']['Active']['HP_Cur'] > 0 )
+				{
+					$_SESSION['Battle']['Attacker']['Active']['HP_Cur'] -= $Defender_Damage;
+
+					$_SESSION['Battle']['Text'] = "
+						You did 'x' amount of damage to the foe!<br /><br />
+						The foe did 'y' amount of damage to you!<br /><br />
+					";
+				}
+				/**
+				 * Both Pokemon fainted.
+				 */
+				else if ( $_SESSION['Battle']['Attacker']['Active']['HP_Cur'] <= 0 && $_SESSION['Battle']['Defender']['Active']['HP_Cur'] <= 0 )
+				{
+					$_SESSION['Battle']['Text'] = "
+						The foe has fainted!<br /><br />
+						You have fainted!<br /><br />
+					";
+				}
+				/**
+				 * You fainted.
+				 */
+				else
+				{
+					$_SESSION['Battle']['Text'] = "
+						You have fainted!<br />
+					";
+				}
+			}
+			else
+			{
+				/**
+				 * Do damage now.
+				 */
+				$_SESSION['Battle']['Attacker']['Active']['HP_Cur'] -= $Attacker_Damage;
+
+				/**
+				 * If foe has fainted.
+				 */
+				if ( $_SESSION['Battle']['Attacker']['Active']['HP_Cur'] <= 0 )
+				{
+					$_SESSION['Battle']['Text'] = "
+						You have fainted!<br /><br />
+					";
+				}
+				/**
+				 * Neither Pokemon fainted.
+				 */
+				else if ( $_SESSION['Battle']['Defender']['Active']['HP_Cur'] > 0 && $_SESSION['Battle']['Attacker']['Active']['HP_Cur'] > 0 )
+				{
+					$_SESSION['Battle']['Defender']['Active']['HP_Cur'] -= $Attacker_Damage;
+
+					$_SESSION['Battle']['Text'] = "
+						The foe did 'y' amount of damage to you!<br /><br />
+						You did 'x' amount of damage to the foe!<br /><br />
+					";
+				}
+				/**
+				 * Both Pokemon fainted.
+				 */
+				else if ( $_SESSION['Battle']['Defender']['Active']['HP_Cur'] <= 0 && $_SESSION['Battle']['Attacker']['Active']['HP_Cur'] <= 0 )
+				{
+					$_SESSION['Battle']['Text'] = "
+						You have fainted!<br /><br />
+						The foe has fainted!<br /><br />
+					";
+				}
+				/**
+				 * You fainted.
+				 */
+				else
+				{
+					$_SESSION['Battle']['Text'] = "
+						You have fainted!<br />
+					";
+				}
+			}
+			
+			//echo "
+			//	<b>Move Power</b>:						{$Move['Power']}<br />
+			//	<b>Move Type</b>:							{$Move['Type']}<br />
+			//	<b>Poke Types</b>:						{$Poke_Dex['Type_Primary']}, {$Poke_Dex['Type_Secondary']}<br />
+			//	<b>Poke Level</b>:						{$Poke['Level_Raw']}<br />
+			//	<b>Stats (Attacker Att)</b>:	{$Stats[0]}<br />
+			//	<b>Stats (Defender Def)</b>:	{$Stats[1]}<br />
+			//	<b>Eff</b>:										{$Effectiveness}<br />
+			//	<b>STAB</b>:									{$STAB}<br />
+			//	<b>Crit</b>:									{$Crit}<br />
+			//";
 		}
 
 		/**
 		 * Determine how much damage should be done.
 		 */
-		public function DamageFormula($Move_ID, $Level, $Stats, $Effectiveness, $STAB, $Crit, $Misc)
+		public function DamageCalc($Move_Power, $Level, $Stats, $Effectiveness, $STAB, $Crit, $Misc = 1)
 		{
-			// stats = attack value of attacker, defense value of defender, speed of attacker, speed of defender
-			//global $PDO;
-			global $PokeClass;
+			$Attack = $Stats[0];
+			$Defense = $Stats[1];
+			$Rand = mt_rand(165, 215) / 200;
 
-			$Move = $PokeClass->FetchMoveData($Move_ID);
-
-			$Modifiers = 1 * 1 * 1 * $Crit * mt_rand(0.85, 1.00) * $STAB * $Effectiveness * 1 * $Misc;
-			$Damage = floor( ( 2 * $Level / 5 + 2 ) * $Move['Power'] * $Stats[0] / $Stats[1] / 50 + 2 ) * $Modifiers;
-
-			return $Damage;
+			if ( $Move_Power == 0 )
+			{
+				return 0;
+			}
+			else
+			{
+				return @ceil((((((($Level * 2 / 5) + 2) * $Attack * $Move_Power / 50) / $Defense) + 2) * $Crit * .95) * $Effectiveness * $STAB ) + $Attack * $Rand;
+			}
 		}
 
 		/**
@@ -122,53 +322,58 @@
 			 */
 			try
 			{
-				$Fetch_Attacker_Lead = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 1 AND `Location` = 'Roster' LIMIT 1");
-				$Fetch_Attacker_Lead->execute([ $User_Data['id'] ]);
-				$Fetch_Attacker_Lead->setFetchMode(PDO::FETCH_ASSOC);
-				$Attacker_Lead = $Fetch_Attacker_Lead->fetch();
-				$Attacker_Data = $PokeClass->FetchPokemonData($Attacker_Lead['ID']);
+				$Fetch_Attacker_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 6 AND `Location` = 'Roster' LIMIT 6");
+				$Fetch_Attacker_Roster->execute([ $User_Data['id'] ]);
+				$Fetch_Attacker_Roster->setFetchMode(PDO::FETCH_ASSOC);
+				$Attacker_Roster = $Fetch_Attacker_Roster->fetchAll();
+				$Attacker_Data = $PokeClass->FetchPokemonData($Attacker_Roster[0]['ID']);
 				
-				$Fetch_Defender_Lead = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 1 AND `Location` = 'Roster' LIMIT 1");
-				$Fetch_Defender_Lead->execute([ $ID ]);
-				$Fetch_Defender_Lead->setFetchMode(PDO::FETCH_ASSOC);
-				$Defender_Lead = $Fetch_Defender_Lead->fetch();
-				$Defender_Data = $PokeClass->FetchPokemonData($Defender_Lead['ID']);
+				$Fetch_Defender_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` <= 6 AND `Location` = 'Roster' LIMIT 6");
+				$Fetch_Defender_Roster->execute([ $ID ]);
+				$Fetch_Defender_Roster->setFetchMode(PDO::FETCH_ASSOC);
+				$Defender_Roster = $Fetch_Defender_Roster->fetchAll();
+				$Defender_Data = $PokeClass->FetchPokemonData($Defender_Roster[0]['ID']);
 			}
 			catch ( PDOException $e )
 			{
 				HandleError( $e->getMessage() );
 			}
 
-			var_dump($User_Data);
+			$Clan = null;
 
 			$_SESSION['Battle'] = [
-				"Logs" 					=> null,
-				"Battle_ID" 		=> randomSalt(12),
-				"Battle_Type" 	=> $Type,
-				"Battle_Foe" 		=> $ID,
-				"Time_Started" 	=> microtime(true),
-				"Clan" 					=> $Clan,
-				"Text" 					=> "Please select a move in order to begin the battle.",
-				"Roster" 				=> $User_Data['Roster'],
-				"PostCode_M1"		=> randomSalt(12),
-				"PostCode_M2"		=> randomSalt(12),
-				"PostCode_M3"		=> randomSalt(12),
-				"PostCode_M4"		=> randomSalt(12),
-				"PostCode_C1"		=> randomSalt(12),
-				"PostCode_R1"		=> randomSalt(12),
-				"Attacker"			=>
+				"Logs" 							=> null,
+				"Battle_ID" 				=> randomSalt(12),
+				"Battle_Type" 			=> $Type,
+				"Battle_Foe" 				=> $ID,
+				"Time_Started" 			=> microtime(true),
+				"Clan" 							=> $Clan,
+				"Text" 							=> "Please select a move in order to begin the battle.",
+				"Roster" 						=> $User_Data['Roster'],
+				"PostCode_Move_1"		=> randomSalt(12),
+				"PostCode_Move_2"		=> randomSalt(12),
+				"PostCode_Move_3"		=> randomSalt(12),
+				"PostCode_Move_4"		=> randomSalt(12),
+				"PostCode_C1"				=> randomSalt(12),
+				"PostCode_R1"				=> randomSalt(12),
+				"Attacker"					=>
 				[
-					"Active"			=> [ 'ID' => $Attacker_Lead['ID'], 'HP_Cur' => $Attacker_Data['Stats'][0], 'HP_Max' => $Attacker_Data['Stats'][0] ],
-					"Roster"			=> [],
-					"Fainted"			=> [],
+					"Active"					=> [ 'ID' => $Attacker_Data['ID'], 'HP_Cur' => $Attacker_Data['Stats'][0], 'HP_Max' => $Attacker_Data['Stats'][0] ],
+					"Roster"					=> [ $Attacker_Roster ],
+					"Fainted"					=> [],
 				],
-				"Defender"			=>
+				"Defender"					=>
 				[
-					"Active"			=> [ 'ID' => $Defender_Lead['ID'], 'HP_Cur' => $Defender_Data['Stats'][0], 'HP_Max' => $Defender_Data['Stats'][0] ],
-					"Roster"			=> [],
-					"Fainted"			=> [],
+					"Active"					=> [ 'ID' => $Defender_Data['ID'], 'HP_Cur' => $Defender_Data['Stats'][0], 'HP_Max' => $Defender_Data['Stats'][0] ],
+					"Roster"					=> [ $Defender_Roster ],
+					"Fainted"					=> [],
 				]
 			];
+
+			//echo "<pre>";var_dump($_SESSION['Battle']['Attacker']['Roster']);echo "</pre>";
+			//echo "<pre>";var_dump($_SESSION['Battle']['Defender']['Roster']);echo "</pre>";
+
+			//exit;
 		}
 
 		/**
@@ -194,7 +399,7 @@
 			/**
 			 * Check to see if the submitted post code matches the session post code.
 			 */
-			if ( $PostCode == $_SESSION['Battle']['PostCode_M' . $Move] )
+			if ( $PostCode == $_SESSION['Battle']['PostCode_' . $Move] )
 			{
 				//$Validated_PostCode = "The submitted postcode matches the session postcode.<br />";
 				$Validated_PostCode = true;
@@ -253,45 +458,131 @@
 		}
 
 		/**
-		 * Render attack inputs of the active Pokemon.
+		 * Render all inputs.
 		 */
-		public function RenderMoves()
+		public function RenderInputs($Type)
 		{
 			global $PDO;
 			global $PokeClass;
 
-			$Pokemon = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
+			$Input_Salt = randomSalt(12);
 
-			for ( $i = 1; $i <= 4; $i++ )
+			/**
+			 * Render moves.
+			 */
+			if ( $Type == 'Moves' )
 			{
-				$Spawn_Salt = randomSalt(12);
-				$_SESSION['Battle']['PostCode_M' . $i] = $Spawn_Salt;
-				
-				$Move_Data = $PokeClass->FetchMoveData($Pokemon['Move_' . $i]);
-				echo "
-					<button style='padding: 5px; width: 20%;' id='Move_{$i}' onclick='Attack($i, {$Move_Data['ID']}, event)' PostCode='{$_SESSION['Battle']['PostCode_M' . $i]}'>
-						{$Move_Data['Name']}
-					</button>
-				";
+				$Pokemon = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
 
+				for ( $i = 1; $i <= 4; $i++ )
+				{
+					$_SESSION['Battle']['PostCode_Move_' . $i] = $Input_Salt;
+					
+					$Move_Data = $PokeClass->FetchMoveData($Pokemon['Move_' . $i]);
+
+					/**
+					 * Grey out moves if either Pokemon has fainted.
+					 */
+					if ( $_SESSION['Battle']['Attacker']['Active']['HP_Cur'] <= 0 || $_SESSION['Battle']['Defender']['Active']['HP_Cur'] <= 0 )
+					{
+						$Onclick = '';
+						$Style = ' filter: grayscale(100%);';
+					}
+					else
+					{
+						$Onclick = "onclick='Input(\"Move_{$i}\", {$Move_Data['ID']}, event)'";
+						$Style = '';
+					}
+
+					echo "
+						<button style='padding: 5px; width: 20%;{$Style}' id='Move_{$i}' {$Onclick} PostCode='{$_SESSION['Battle']['PostCode_Move_' . $i]}'>
+							{$Move_Data['Name']}
+						</button>
+					";
+				}
+			}
+			else
+			{
+				// if either pokemon has fainted
+				if ( $_SESSION['Battle']['Attacker']['Active']['HP_Cur'] <= 0 || $_SESSION['Battle']['Defender']['Active']['HP_Cur'] <= 0 )
+				{
+					// if neither player has any pokemon left alive
+					// restart the battle
+					if ( count($_SESSION['Battle']['Attacker']['Roster']) === 0 || count($_SESSION['Battle']['Defender']['Roster']) === 0 )
+					{
+						$_SESSION['Battle']['PostCode_R1'] = $Input_Salt;
+						
+						echo "
+							<button style='font-size: 14px; padding: 5px; width: 20%;' id='Restart' onclick='Input(\"Restart\", 1, event)' PostCode='{$_SESSION['Battle']['PostCode_C1']}'>
+								Restart Battle
+							</button>
+							<br /><br />
+
+							The battle ended in a tie.<br /><br />
+						";
+					}
+					// you have no pokemon left, but the opponent does
+					else if ( count($_SESSION['Battle']['Attacker']['Roster']) === 0 && count($_SESSION['Battle']['Defender']['Roster']) > 0 )
+					{
+						$_SESSION['Battle']['PostCode_R1'] = $Input_Salt;
+						
+						echo "
+							<button style='font-size: 14px; padding: 5px; width: 20%;' id='Restart' onclick='Input(\"Restart\", 1, event)' PostCode='{$_SESSION['Battle']['PostCode_C1']}'>
+								Restart Battle
+							</button>
+							<br /><br />
+
+							You have lost the battle.
+						";
+					}
+					// you have pokemon left, but the opponent doesn't
+					else if ( count($_SESSION['Battle']['Attacker']['Roster']) > 0 && count($_SESSION['Battle']['Defender']['Roster']) > 0 )
+					{
+						$_SESSION['Battle']['PostCode_R1'] = $Input_Salt;
+
+						echo "
+							<button style='font-size: 14px; padding: 5px; width: 20%;' id='Restart' onclick='Input(\"Restart\", 1, event)' PostCode='{$_SESSION['Battle']['PostCode_C1']}'>
+								Restart Battle
+							</button>
+							<br />
+
+							You have won the battle.
+							<br /><br />
+						";
+					}
+					// both players have pokemon left alive
+					else
+					{
+						$_SESSION['Battle']['PostCode_C1'] = $Input_Salt;
+				
+						echo "
+							<button style='padding: 5px; width: 20%;' id='Continue' onclick='Input(\"Continue\", 1, event)' PostCode='{$_SESSION['Battle']['PostCode_C1']}'>
+								Continue Battle
+							</button>
+							<br /><br />
+						";
+					}
+				}
 			}
 		}
 
 		/**
-		 * Update input postcodes.
+		 * Determine if a Pokemon benefits from STAB or not.
 		 */
-		public function UpdatePostCodes()
+		public function DetermineSTAB($Poke_Type_1, $Poke_Type_2, $Move_Type)
 		{
+			$STAB = 1;
 
-			$_SESSION['Battle']['PostCode_C1'] = randomSalt(12);
-			$_SESSION['Battle']['PostCode_R1'] = randomSalt(12);
+			if ( $Move_Type == $Poke_Type_1 || $Move_Type == $Poke_Type_2 )
+			{
+				$STAB = 1.5;
+			}
 
-			echo $_SESSION['Battle']['PostCode_C1'] . "<br />";
-			echo $_SESSION['Battle']['PostCode_R1'];
+			return $STAB;
 		}
 
 		/**
-		 * Determine if a Pokemon has dealt a supereffective attack or not.
+		 * Determine the effectiveness of a move that's been used.
 		 */
 		public function DetermineEffectiveness($Move_Type, $Poke_Type)
 		{
@@ -427,22 +718,22 @@
 			{
 				if ( $Line_Break )
 				{
-					$_SESSION['Battle']['Text'] = $Text . "<br /><br />" . $_SESSION['Battle']['Text'];
+					$Battle_Dialog = $Text . "<br /><br />" . $_SESSION['Battle']['Text'];
 				}
 				else
 				{
-					$_SESSION['Battle']['Text'] = $Text . "<br />" . $_SESSION['Battle']['Text'];
+					$Battle_Dialog = $Text . "<br />" . $_SESSION['Battle']['Text'];
 				}
 			}
 			else
 			{
 				if ( $Line_Break )
 				{
-					$_SESSION['Battle']['Text'] .= $Text . "<br />";
+					$Battle_Dialog .= $Text . "<br />";
 				}
 				else
 				{
-					$_SESSION['Battle']['Text'] .= $Text;
+					$Battle_Dialog .= $Text;
 				}
 			}
 		}
