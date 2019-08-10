@@ -35,8 +35,8 @@
 		 */
 		if ( $Action == 'Accepted' )
 		{
-			$Sender = $UserClass->FetchUserData($Trade_Content[0]['Sender']);
-			$Recipient = $UserClass->FetchUserData($Trade_Content[0]['Receiver']);
+			$Sender = $User_Class->FetchUserData($Trade_Content[0]['Sender']);
+			$Recipient = $User_Class->FetchUserData($Trade_Content[0]['Receiver']);
 
 			/**
 			 * Process the sender's half of the trade.
@@ -46,7 +46,7 @@
 				$Sender_Pokemon = explode(',', $Trade_Content[0]['Sender_Pokemon']);
 				foreach( $Sender_Pokemon as $Key => $Pokemon_1 )
 				{
-					$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon_1);
+					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_1);
 
 					try
 					{
@@ -106,7 +106,7 @@
 				$Receiver_Pokemon = explode(',', $Trade_Content[0]['Receiver_Pokemon']);
 				foreach( $Receiver_Pokemon as $Key => $Pokemon_2 )
 				{
-					$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon_2);
+					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_2);
 
 					try
 					{
@@ -172,7 +172,7 @@
 				$Sender_Pokemon = explode(',', $Trade_Content[0]['Sender_Pokemon']);
 				foreach( $Sender_Pokemon as $Key => $Pokemon_1 )
 				{
-					$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon_1);
+					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_1);
 
 					try
 					{
@@ -194,7 +194,7 @@
 				$Receiver_Pokemon = explode(',', $Trade_Content[0]['Receiver_Pokemon']);
 				foreach( $Receiver_Pokemon as $Key => $Pokemon_2 )
 				{
-					$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon_2);
+					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_2);
 
 					try
 					{
@@ -254,10 +254,10 @@
 				";
 				foreach( $Pending_Trades as $Key => $Value )
 				{
-					$Sender = $UserClass->FetchUserData($Value['Sender']);
-					$Sender_Username = $UserClass->DisplayUserName($Sender['ID']);
-					$Recipient = $UserClass->FetchUserData($Value['Receiver']);
-					$Recipient_Username = $UserClass->DisplayUserName($Recipient['ID']);
+					$Sender = $User_Class->FetchUserData($Value['Sender']);
+					$Sender_Username = $User_Class->DisplayUserName($Sender['ID']);
+					$Recipient = $User_Class->FetchUserData($Value['Receiver']);
+					$Recipient_Username = $User_Class->DisplayUserName($Recipient['ID']);
 					
 
 					echo "

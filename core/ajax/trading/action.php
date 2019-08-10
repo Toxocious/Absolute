@@ -8,7 +8,7 @@
 		$Data = $Purify->Cleanse($_POST['Data']);
 		$User_ID = $Purify->Cleanse($_POST['ID']);
 
-		$User = $UserClass->FetchUserData($User_ID);
+		$User = $User_Class->FetchUserData($User_ID);
 
 		/**
 		 * Determine if something is getting added/removed from a certain side of the trade.
@@ -34,7 +34,7 @@
 			 */
 			if ( $Type == 'Pokemon' )
 			{
-				$Pokemon = $PokeClass->FetchPokemonData($Data);
+				$Pokemon = $Poke_Class->FetchPokemonData($Data);
 
 				if ( isset($_SESSION['Trade'][$Side]['Pokemon']) )
 				{
@@ -291,7 +291,7 @@
 		{
 			foreach ( $_SESSION['Trade'][$Side]['Pokemon'] as $Key => $Pokemon )
 			{
-				$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon['ID']);
+				$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon['ID']);
 
 				echo "
 					<div>

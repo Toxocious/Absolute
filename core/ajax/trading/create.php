@@ -17,8 +17,8 @@
 		}
 		else
 		{
-			$Receiver_Data = $UserClass->FetchUserData( $_SESSION['Trade']['Receiver']['User'] );
-			$Receiver_Username = $UserClass->DisplayUserName($Receiver_Data['ID']);
+			$Receiver_Data = $User_Class->FetchUserData( $_SESSION['Trade']['Receiver']['User'] );
+			$Receiver_Username = $User_Class->DisplayUserName($Receiver_Data['ID']);
 			echo "
 				<div class='success' style='margin-bottom: 5px;'>
 					You have successfully sent a trade to <b>{$Receiver_Username}</b>.
@@ -168,10 +168,10 @@
 				";
 				foreach( $Pending_Trades as $Key => $Value )
 				{
-					$Sender = $UserClass->FetchUserData($Value['Sender']);
-					$Sender_Username = $UserClass->DisplayUserName($Sender['ID']);
-					$Recipient = $UserClass->FetchUserData($Value['Receiver']);
-					$Recipient_Username = $UserClass->DisplayUserName($Recipient['ID']);
+					$Sender = $User_Class->FetchUserData($Value['Sender']);
+					$Sender_Username = $User_Class->DisplayUserName($Sender['ID']);
+					$Recipient = $User_Class->FetchUserData($Value['Receiver']);
+					$Recipient_Username = $User_Class->DisplayUserName($Recipient['ID']);
 					
 
 					echo "

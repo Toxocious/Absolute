@@ -23,8 +23,8 @@
 		}
 		else
 		{
-			$Sender = $UserClass->FetchUserData($Trade['Sender']);
-			$Recipient = $UserClass->FetchUserData($Trade['Receiver']);
+			$Sender = $User_Class->FetchUserData($Trade['Sender']);
+			$Recipient = $User_Class->FetchUserData($Trade['Receiver']);
 
 			switch ( $Trade['Status'] )
 			{
@@ -116,7 +116,7 @@
 										$Sender_Pokemon = explode(',', $Sender_Content['Sender_Pokemon']);
 										foreach ( $Sender_Pokemon as $Key => $Pokemon )
 										{
-											$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon);
+											$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon);
 
 											echo "
 												<div>
@@ -213,7 +213,7 @@
 										$Receiver_Pokemon = explode(',', $Receiver_Content['Receiver_Pokemon']);
 										foreach ( $Receiver_Pokemon as $Key => $Pokemon )
 										{
-											$Pokemon_Data = $PokeClass->FetchPokemonData($Pokemon);
+											$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon);
 
 											echo "
 												<div>

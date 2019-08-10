@@ -12,7 +12,7 @@
 		}
 
 		$Recipient_ID = $Purify->Cleanse($_POST['ID']);
-		$Recipient = $UserClass->FetchUserData($Recipient_ID);
+		$Recipient = $User_Class->FetchUserData($Recipient_ID);
 
 		if ( $Recipient_ID == 0 || $Recipient == "Error" )
 		{
@@ -96,7 +96,7 @@
 											echo "<div style='height: 160px; padding: 5px;'>";
 											foreach( $Sender_Box as $Index => $Pokemon )
 											{
-												$Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
+												$Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
 												echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='Action({$User_Data['id']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})' />";
 											}
 											echo "</div>";
@@ -162,7 +162,7 @@
 											echo "<div style='height: 160px; padding: 5px;'>";
 											foreach( $Recipient_Box as $Index => $Pokemon )
 											{
-												$Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
+												$Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
 												echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='Action({$Recipient['ID']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})' />";
 											}
 											echo "</div>";

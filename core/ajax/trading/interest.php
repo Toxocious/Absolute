@@ -26,7 +26,7 @@
 		}
 
 		$Poke_ID = substr($Poke_ID, 3, -1);
-		$Poke_Data = $PokeClass->FetchPokemonData($Poke_ID);
+		$Poke_Data = $Poke_Class->FetchPokemonData($Poke_ID);
 
 		if ( $Poke_Data != 'Error' )
 		{
@@ -85,7 +85,7 @@
 		$Pokemon_Count = 0;
 		foreach( $Poke_List as $Key => $Value )
 		{
-			$Poke_Data = $PokeClass->FetchPokemonData($Value['ID']);
+			$Poke_Data = $Poke_Class->FetchPokemonData($Value['ID']);
 
       if ( $Pokemon_Count % 2 == 0 )
       {
@@ -117,7 +117,7 @@
 			}
 
 			echo "
-				<td class='box_slot popup cboxElement' href='" . Domain(1) . "/core/ajax/pokemon.php?id=" . $Poke_Data['ID'] . "' style='padding: 0px;'>
+				<td class='box_slot' style='padding: 0px;'>
 					<img src='images/Assets/" . $Poke_Data['Gender'] . ".svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
 					<span style='float: left;'>
 						<img src='" . $Poke_Data['Icon'] . "' />

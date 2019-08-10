@@ -10,7 +10,7 @@
 		$Evo_To = Purify($_POST['evo_to']);
 		$Evo_Alt = Purify($_POST['evo_alt']);
 
-		$Pokemon = $PokeClass->FetchPokemonData($My_Poke);
+		$Pokemon = $Poke_Class->FetchPokemonData($My_Poke);
 
 		try
 		{
@@ -26,7 +26,7 @@
 
 		//var_dump($Evolution);
 
-		$Evo_Data = $PokeClass->FetchPokedexData($Evo_To, $Evo_Alt);
+		$Evo_Data = $Poke_Class->FetchPokedexData($Evo_To, $Evo_Alt);
 
 		/**
 		 * Double check to ensure that the Pokemon is able to evolve.
@@ -104,7 +104,7 @@
 	if ( isset($_POST['id']) )
 	{
 		$Poke_ID = Purify($_POST['id']);
-		$Pokemon = $PokeClass->FetchPokemonData($Poke_ID);
+		$Pokemon = $Poke_Class->FetchPokemonData($Poke_ID);
 
 		try
 		{
@@ -124,7 +124,7 @@
 
 			$EvoStatus = true;
 
-			$Evolution_Data = $PokeClass->FetchPokedexData($Evolution['to_poke_id'], $Evolution['to_alt_id']);
+			$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution['to_poke_id'], $Evolution['to_alt_id']);
 
 			if ( $Evolution_Data['Alt_ID'] != '0' )
 			{

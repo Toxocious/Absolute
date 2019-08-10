@@ -124,7 +124,7 @@
           $Pokemon_Count = 0;
           foreach ( $Box_Pokemon as $Index => $Pokemon )
           {
-            $Poke_Data = $PokeClass->FetchPokemonData($Pokemon['ID']);
+            $Poke_Data = $Poke_Class->FetchPokemonData($Pokemon['ID']);
 
             if ( $Pokemon_Count % 3 == 0 )
             {

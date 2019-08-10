@@ -9,7 +9,7 @@
     $Poke_ID = Purify($_POST['PokeID']);
     $Nickname = Purify($_POST['Nickname']);
 
-    $Pokemon = $PokeClass->FetchPokemonData($Poke_ID);
+    $Pokemon = $Poke_Class->FetchPokemonData($Poke_ID);
 
     if ( $Nickname != '' && $Nickname != null )
     {
@@ -62,7 +62,7 @@
   {
     if ( isset($Roster[$i]['ID']) )
     {
-      $Roster_Slot[$i] = $PokeClass->FetchPokemonData(Purify($Roster[$i]['ID']));
+      $Roster_Slot[$i] = $Poke_Class->FetchPokemonData(Purify($Roster[$i]['ID']));
 
       $Nickname = $Roster_Slot[$i]['Nickname'] ? "(<i>" . $Roster_Slot[$i]['Nickname'] . "</i>)" : "";
 

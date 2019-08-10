@@ -67,7 +67,7 @@
       {
         if ( isset($Fetch_Roster[$i]['ID']) )
         {
-          $Roster_Slot[$i] = $PokeClass->FetchPokemonData($Fetch_Roster[$i]['ID']);
+          $Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Fetch_Roster[$i]['ID']);
 
           if ( $Roster_Slot[$i]['Item'] != null )
           {
@@ -188,7 +188,7 @@
       echo "<div style='height: 156px; padding: 3px;'>";
       foreach ( $Box_Pokemon as $Index => $Pokemon )
       {
-        $Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
+        $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
         echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
       }
       echo "</div>";

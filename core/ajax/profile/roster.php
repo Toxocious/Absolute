@@ -24,7 +24,7 @@
     {
       if ( isset($Fetch_Roster[$i]['ID']) )
       {
-        $Roster_Slot[$i] = $PokeClass->FetchPokemonData($Fetch_Roster[$i]['ID']);
+        $Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Fetch_Roster[$i]['ID']);
 
         $Popup = "popup cboxElement' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'";
       }

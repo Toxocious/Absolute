@@ -2,6 +2,9 @@
 	$Battle_Version = '1';
 	$FULL_DEBUG = false;
 
+	ini_set('display_errors', 0);
+	ini_set('display_startup_errors', 0);
+
 	require_once '../../required/session.php';
 	require_once '../../classes/battle.php';
 
@@ -30,16 +33,13 @@
 	}
 
 	/**
-	 * Fetch both user's active Pokemon's stats.
-	 */
-	$Attacker_Active = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
-	$Defender_Active = $PokeClass->FetchPokemonData($_SESSION['Battle']['Defender']['Active']['ID']);
-
-	/**
 	 * Handle processing turns.
 	 */
 	if ( isset($_POST['Element']) && isset($_POST['x']) && isset($_POST['y']) && isset($_POST['Clicks']) && isset($_POST['Input']) )
 	{
+		$Attacker_Active = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
+		$Defender_Active = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Defender']['Active']['ID']);
+
 		$Input = $Purify->Cleanse($_POST['Input']);
 		$Clicks = $Purify->Cleanse($_POST['Clicks']);
 
@@ -77,7 +77,7 @@
 		if ( strpos($Input, 'Move') !== false )
 		{
 			$Move_ID = $Purify->Cleanse($_POST['ID']);
-			$Move_Data = $PokeClass->FetchMoveData($Move_ID);
+			$Move_Data = $Poke_Class->FetchMoveData($Move_ID);
 
 			$Battle->MacroCheck($Valid_Coords, $Coords, $Element['PostCode'], $Input, $Clicks);
 			$Battle->DamagePhase( $Attacker_Active['ID'], $Defender_Active['ID'], $Move_Data['ID'] );
@@ -88,7 +88,10 @@
 		 */
 		if ( $Input == 'Continue' )
 		{
-			$_SESSION['Battle']['Text'] = "hey! continuing the battle~";
+			$_SESSION['Battle']['Text'] = "
+				The next Pokemon have been sent out!<br />
+				Please select a move to continue the battle.
+			";
 		}
 
 		/**
@@ -97,6 +100,11 @@
 		if ( $Input == 'Restart' )
 		{
 			$Battle->CreateBattle('Trainer', $_SESSION['Battle']['Battle_Foe']);
+			if ( isset($_SESSION['Battle']) )
+			{
+				$Attacker_Active = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
+				$Defender_Active = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Defender']['Active']['ID']);
+			}
 			//$_SESSION['Battle']['Text'] = "say! restarting the battle~";
 		}
 
@@ -129,6 +137,11 @@
 		 * DEBUGGING BATTLE DATA.
 		 */
 	}
+	else
+	{
+		$Attacker_Active = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Attacker']['Active']['ID']);
+		$Defender_Active = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Defender']['Active']['ID']);
+	}
 ?>
 
 <div class='row'>
@@ -139,7 +152,7 @@
 				{
 					if ( isset( $_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID'] ) )
 					{
-						$Attacker_Poke[$i] = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID']);
+						$Attacker_Poke[$i] = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID']);
 
 						echo "
 							<div class='battle_slot'>
@@ -185,7 +198,7 @@
 				{
 					if ( isset( $_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID'] ) )
 					{
-						$Attacker_Poke[$i] = $PokeClass->FetchPokemonData($_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID']);
+						$Attacker_Poke[$i] = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Attacker']['Roster'][0][$i]['ID']);
 
 						echo "
 							<div class='battle_slot'>
@@ -213,7 +226,7 @@
 				{
 					if ( isset( $_SESSION['Battle']['Defender']['Roster'][0][$i]['ID'] ) )
 					{
-						$Defender_Poke[$i] = $PokeClass->FetchPokemonData($_SESSION['Battle']['Defender']['Roster'][0][$i]['ID']);
+						$Defender_Poke[$i] = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Defender']['Roster'][0][$i]['ID']);
 
 						echo "
 							<div class='battle_slot'>
@@ -259,7 +272,7 @@
 				{
 					if ( isset( $_SESSION['Battle']['Defender']['Roster'][0][$i]['ID'] ) )
 					{
-						$Defender_Poke[$i] = $PokeClass->FetchPokemonData($_SESSION['Battle']['Defender']['Roster'][0][$i]['ID']);
+						$Defender_Poke[$i] = $Poke_Class->FetchPokemonData($_SESSION['Battle']['Defender']['Roster'][0][$i]['ID']);
 
 						echo "
 							<div class='battle_slot'>

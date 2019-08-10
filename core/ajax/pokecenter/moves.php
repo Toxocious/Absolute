@@ -4,7 +4,7 @@
   if ( isset($_POST['poke_id']) )
   {
     $Pokemon_ID = Purify($_POST['poke_id']);
-    $Pokemon = $PokeClass->FetchPokemonData($Pokemon_ID);
+    $Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
 
     $Moves = Purify($_POST['move_1']) . ',' . Purify($_POST['move_2']) . ',' . Purify($_POST['move_3']) . ',' . Purify($_POST['move_4']);
     $Moves_Array = [
@@ -64,11 +64,11 @@
   {
     if ( isset($Roster[$i]['ID']) )
     {
-      $Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
-      $Move_1 = $PokeClass->FetchMoveData($Roster_Slot[$i]['Move_1']);
-      $Move_2 = $PokeClass->FetchMoveData($Roster_Slot[$i]['Move_2']);
-      $Move_3 = $PokeClass->FetchMoveData($Roster_Slot[$i]['Move_3']);
-      $Move_4 = $PokeClass->FetchMoveData($Roster_Slot[$i]['Move_4']);
+      $Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
+      $Move_1 = $Poke_Class->FetchMoveData($Roster_Slot[$i]['Move_1']);
+      $Move_2 = $Poke_Class->FetchMoveData($Roster_Slot[$i]['Move_2']);
+      $Move_3 = $Poke_Class->FetchMoveData($Roster_Slot[$i]['Move_3']);
+      $Move_4 = $Poke_Class->FetchMoveData($Roster_Slot[$i]['Move_4']);
     }
     else
     {

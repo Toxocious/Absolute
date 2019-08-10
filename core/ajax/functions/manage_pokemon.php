@@ -24,8 +24,8 @@
 		{
 			$Slot = Purify($_POST['Slot']);
 			$Poke_ID = Purify($_POST['PokeID']);
-			$Pokemon_Data = $PokeClass->FetchPokemonData($Poke_ID);
-			$Pokemon_Move = $PokeClass->MovePokemon($Pokemon_Data['ID'], $Slot);
+			$Pokemon_Data = $Poke_Class->FetchPokemonData($Poke_ID);
+			$Pokemon_Move = $Poke_Class->MovePokemon($Pokemon_Data['ID'], $Slot);
 
 			try
 			{
@@ -74,7 +74,7 @@
 			{
 				if ( isset($Roster[$i]['ID']) )
 				{
-					$Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
+					$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
 			
 					if ( $Roster_Slot[$i]['Item'] != null )
 					{
@@ -233,7 +233,7 @@
 			echo "<div style='height: 156px; padding: 3px;'>";
       foreach ( $Box_Pokemon as $Index => $Pokemon )
       {
-        $Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
+        $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
         echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
       }
       echo "</div>";
@@ -264,7 +264,7 @@
 		{
 			if ( isset($_POST['PokeID']) )
 			{
-				$Pokemon = $PokeClass->FetchPokemonData($_POST['PokeID']);
+				$Pokemon = $Poke_Class->FetchPokemonData($_POST['PokeID']);
 
 				echo "
 					<div class='panel-heading'><div>{$Pokemon['Display_Name']}</div><div style='float: right; margin-top: -21px;'>(#".number_format($Pokemon['ID']).")</div></div>
@@ -298,7 +298,7 @@
 				{
 					if ( isset($Roster[$i]['ID']) )
 					{
-						$Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
+						$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
 				
 						if ( $Roster_Slot[$i]['Item'] != null )
 						{
@@ -398,7 +398,7 @@
 					{
 						if ( isset($Roster[$i]['ID']) )
 						{
-							$RosterPoke[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
+							$RosterPoke[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
 						}
 						else
 						{

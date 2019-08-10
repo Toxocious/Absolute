@@ -4,13 +4,13 @@
 	function Unequip($Poke_ID, $User_ID, $Method = null)
 	{
 		global $PDO;
-		global $PokeClass;
+		global $Poke_Class;
 		global $Item_Class;
 		
 		$Owner_ID = Purify($User_ID);
 		$Pokemon_ID = Purify($Poke_ID);
 
-		$Pokemon = $PokeClass->FetchPokemonData($Pokemon_ID);
+		$Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
 		$Item_Data = $Item_Class->FetchOwnedItem($Owner_ID, $Pokemon['Item_ID']);
 
 		if ( $Pokemon == "Error" )
@@ -62,7 +62,7 @@
 		$Pokemon_ID = Purify($_POST['pokeid']);
 
 		$Item_Data = $Item_Class->FetchOwnedItem($User_Data['id'], $Item_ID);
-		$Poke_Data = $PokeClass->FetchPokemonData($Pokemon_ID);
+		$Poke_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
 
 		if ( $Item_Data['Quantity'] >= 1 )
 		{
@@ -164,7 +164,7 @@
 		{
 			if ( isset($Roster[$i]['ID'])  )
 			{
-				$Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
+				$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
 
 				if ( $Roster_Slot[$i]['Item'] == null )
 				{
@@ -315,7 +315,7 @@
 				foreach ($Equipped_Pokes as $Key => $Value)
 				{
 					$Item_Data = $Item_Class->FetchItemData($Value['Item']);
-					$Poke_Data = $PokeClass->FetchPokemonData($Value['ID']);
+					$Poke_Data = $Poke_Class->FetchPokemonData($Value['ID']);
 
 					echo "
 						<div class='panel held_item' style='width: 100%;'>

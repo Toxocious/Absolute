@@ -6,7 +6,7 @@
 		if ( isset($_POST['id']) )
 		{
 			$User_ID = $Purify->Cleanse($_POST['id']);
-			$User = $UserClass->FetchUserData($User_ID);
+			$User = $User_Class->FetchUserData($User_ID);
 
 			foreach ( $Constants->Currency as $Key => $Value )
 			{

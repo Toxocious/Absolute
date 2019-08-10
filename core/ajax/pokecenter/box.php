@@ -77,7 +77,7 @@
 		<?php
 			foreach ( $Box_Pokemon as $Index => $Pokemon )
 			{
-				$Pokemon = $PokeClass->FetchPokemonData($Pokemon['ID']);
+				$Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
 				echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
 			}
 

@@ -3,7 +3,7 @@
 
 	if ( isset($User_Data['id']) && isset($_POST['PokeID']) )
 	{
-		$Pokemon = $PokeClass->FetchPokemonData(Purify($_POST['PokeID']));
+		$Pokemon = $Poke_Class->FetchPokemonData(Purify($_POST['PokeID']));
 		$Pokemon_Level = FetchLevel($Pokemon['Experience'], 'Pokemon');
 		
 		if ( $Pokemon['Item_ID'] != null )
@@ -20,7 +20,7 @@
 		{
 			if ( isset($Roster[$i]['ID'])  )
 			{
-				$Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
+				$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
 
 				$Slots .= "<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, " . ($i + 1) . ");\" />";		
 			}

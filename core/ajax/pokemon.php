@@ -10,7 +10,7 @@
 		$Poke_ID = 0;
 	}
 
-	$Pokemon = $PokeClass->FetchPokemonData($Poke_ID);
+	$Pokemon = $Poke_Class->FetchPokemonData($Poke_ID);
 
 	if ( $Pokemon == 'Error' )
 	{
@@ -23,10 +23,10 @@
 		$Pokemon['Item'] = "None";
 	}
 
-	$Move_1 = $PokeClass->FetchMoveData($Pokemon['Move_1']);
-  $Move_2 = $PokeClass->FetchMoveData($Pokemon['Move_2']);
-  $Move_3 = $PokeClass->FetchMoveData($Pokemon['Move_3']);
-  $Move_4 = $PokeClass->FetchMoveData($Pokemon['Move_4']);
+	$Move_1 = $Poke_Class->FetchMoveData($Pokemon['Move_1']);
+  $Move_2 = $Poke_Class->FetchMoveData($Pokemon['Move_2']);
+  $Move_3 = $Poke_Class->FetchMoveData($Pokemon['Move_3']);
+  $Move_4 = $Poke_Class->FetchMoveData($Pokemon['Move_4']);
 ?>
 
 <!DOCTYPE html>

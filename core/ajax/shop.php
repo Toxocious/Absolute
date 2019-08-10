@@ -91,18 +91,18 @@
 			 */
 			if ( mt_rand(1, 420) === 1 )
 			{
-				$Pokemon['Gender'] = '?';
+				$Pokemon['Gender'] = '(?)';
 				echo "<script type='text/javascript'>setTimeout(function() { alert('You purchased an ungendered Pokemon.'); }, 69);</script>";
 			}
 			else
 			{
-				$Pokemon['Gender'] = $PokeClass->GenerateGender($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']);
+				$Pokemon['Gender'] = $Poke_Class->GenerateGender($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']);
 			}
 
 			/**
 			 * Create the Pokemon, and show it, it's gender, it's stats, and it's IV's to the user.
 			 */
-			$Pokemon_Created = $PokeClass->CreatePokemon( $Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], 5, $Pokemon['Type'], $Pokemon['Gender'], $Pokemon['Obtained_Text'], null, null, $User_Data['id'] );
+			$Pokemon_Created = $Poke_Class->CreatePokemon( $Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], 5, $Pokemon['Type'], $Pokemon['Gender'], $Pokemon['Obtained_Text'], null, null, $User_Data['id'] );
 			$Total_Stat = array_sum($Pokemon_Created['Stats']);
 			$Total_IV = array_sum($Pokemon_Created['IVs']);
 
