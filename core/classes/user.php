@@ -65,6 +65,10 @@
 				'Banned_Chat' => $Banned_Chat,
 				'Money' => $User['Money'],
 				'Abso_Coins' => $User['Abso_Coins'],
+				'Status' => $User['Status'],
+				'Staff_Message' => $User['Staff_Message'],
+				'Power' => $User['Power'],
+				'Rank' => $User['Rank'],
 			];
 		}
 		
@@ -106,6 +110,9 @@
 					break;
 				case 'Chat Moderator':
 					return "<div class='chat_mod' style='font-size: {$Font_Size}px'>Chat Moderator</div>";
+					break;
+				case 'Member':
+					return "<div class='member' style='font-size: {$Font_Size}px'>Member</div>";
 					break;
 			}
 		}

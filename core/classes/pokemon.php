@@ -68,6 +68,7 @@
 					$Gender = 'Genderless'; $GenderShort = 'G';
 					break;
 				case '?':
+				case '(?)':
 					$Gender = '(?)'; $GenderShort = '(?)';
 					break;
 				default: 
@@ -98,12 +99,12 @@
 			$Experience = $Pokemon['Experience'];
 
 			$BaseStats = [
-				round($Pokedex['hp'] + $StatBonus),
-				round($Pokedex['attack'] + $StatBonus),
-				round($Pokedex['defense'] + $StatBonus),
-				round($Pokedex['spatk'] + $StatBonus),
-				round($Pokedex['spdef'] + $StatBonus),
-				round($Pokedex['speed'] + $StatBonus),
+				round($Pokedex['HP'] + $StatBonus),
+				round($Pokedex['Attack'] + $StatBonus),
+				round($Pokedex['Defense'] + $StatBonus),
+				round($Pokedex['SpAttack'] + $StatBonus),
+				round($Pokedex['SpDefense'] + $StatBonus),
+				round($Pokedex['Speed'] + $StatBonus),
 			];
 
 			$Stats = [
@@ -161,8 +162,8 @@
 				"Level" => number_format($Level),
 				"Level_Raw" => $Level,
 				"Experience" => $Experience,
-				"Type_Primary" => $Pokedex['type_1'],
-				"Type_Secondary" => $Pokedex['type_2'],
+				"Type_Primary" => $Pokedex['Type_Primary'],
+				"Type_Secondary" => $Pokedex['Type_Secondary'],
 				"Nature" => $Pokemon['Nature'],
 				"BaseStats" => $BaseStats,
       	"Stats" => $Stats,
@@ -190,14 +191,22 @@
 		/**
 		 * Fetch any Pokemon's Pokedex data, given their Pokedex ID.
 		 */
-		public function FetchPokedexData($Pokedex_ID, $Alt_ID = 0, $Type = "Normal")
+		public function FetchPokedexData($Pokedex_ID = null, $Alt_ID = 0, $Type = "Normal", $DB_ID = null)
 		{
 			global $PDO;
 
 			try
 			{
-				$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
-				$FetchPokedex->execute([$Pokedex_ID, $Alt_ID]);
+				if ( !$Pokedex_ID && $Alt_ID == 0 && $DB_ID )
+				{
+					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `id` = ? LIMIT 1");
+					$FetchPokedex->execute([ $DB_ID ]);
+				}
+				else
+				{
+					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+					$FetchPokedex->execute([ $Pokedex_ID, $Alt_ID ]);
+				}
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokedex = $FetchPokedex->fetch();
 
@@ -208,16 +217,16 @@
 			}
 			catch ( PDOException $e )
 			{
-				echo $e->getMessage();
+				HandleError( $e->getMessage() );
 			}
 
 			$BaseStats = [
-				round($Pokedex['hp']),
-				round($Pokedex['attack']),
-				round($Pokedex['defense']),
-				round($Pokedex['spatk']),
-				round($Pokedex['spdef']),
-				round($Pokedex['speed']),
+				round($Pokedex['HP']),
+				round($Pokedex['Attack']),
+				round($Pokedex['Defense']),
+				round($Pokedex['SpAttack']),
+				round($Pokedex['SpDefense']),
+				round($Pokedex['Speed']),
 			];
 
 			if ( $Pokedex['Alt_ID'] != 0 )
@@ -231,13 +240,21 @@
 				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
 			}
 
-			if ( $Pokedex['alter_poke_name'] !== null )
+			$Type_Display = '';
+			if ( $Type != 'Normal' )
 			{
-				$Name = $Pokedex['poke_name'] . " " . $Pokedex['alter_poke_name'];
+				$Type_Display = $Type;
+			}
+
+			if ( $Pokedex['Name_Alter'] !== null )
+			{
+				$Name = $Pokedex['Name'] . " " . $Pokedex['Name_Alter'];
+				$Display_Name = $Type_Display . $Pokedex['Name'] . " " . $Pokedex['Name_Alter'];
 			}
 			else
 			{
-				$Name = $Pokedex['poke_name'];
+				$Name = $Pokedex['Name'];
+				$Display_Name = $Type_Display . $Pokedex['Name'];
 			}
 
 			return [
@@ -245,11 +262,14 @@
 				"Pokedex_ID" => $Pokedex['Pokedex_ID'],
 				"Alt_ID" => $Pokedex['Alt_ID'],
 				"Name" => $Name,
-				"Type_Primary" => $Pokedex['type_1'],
-				"Type_Secondary" => $Pokedex['type_2'],
+				"Display_Name" => $Display_Name,
+				"Type_Primary" => $Pokedex['Type_Primary'],
+				"Type_Secondary" => $Pokedex['Type_Secondary'],
 				"Base_Stats" => $BaseStats,
 				"Sprite" => Domain(1) . $Sprite,
 				"Icon" => Domain(1) . $Icon,
+				"Name" => $Pokedex['Name'],
+				"Name_Alter" => $Pokedex['Name_Alter'],
 			];
 		}
 
@@ -357,7 +377,7 @@
 		/**
 		 * Spawn a Pokemon into the game.
 		 */
-		public function CreatePokemon($Pokedex_ID, $Alt_ID, $Level = 5, $Type = "Normal", $Gender = 'M', $Obtained_At = "Unknown", $Location, $Slot, $Owner, $Nature = null, $IVs = null, $EVs = null)
+		public function CreatePokemon($Pokedex_ID, $Alt_ID, $Level = 5, $Type = "Normal", $Gender = null, $Obtained_At = "Unknown", $Location, $Slot, $Owner, $Nature = null, $IVs = null, $EVs = null)
 		{
 			global $PDO;
 
@@ -366,7 +386,7 @@
 			/**
 			 * Check the variable inputs.
 			 */
-			if ( !is_numeric($Level) || !in_array($Gender, ['M', 'F', 'G', '?']) )
+			if ( !is_numeric($Level) )
 			{
 				die(
 					"Some expected inputs for the CreatePokemon() function weren't valid.<br />" .
@@ -416,12 +436,17 @@
 				$Name = $Pokemon['Name'];
 			}
 
-			switch($Gender)
+			//switch($Gender)
+			//{
+			//	case 'M': $Gender = 'Male'; break;
+			//	case 'F': $Gender = 'Female'; break;
+			//	case 'G': $Gender = 'Genderless'; break;
+			//	case '?': $Gender = '(?)'; break;
+			//}
+
+			if ( $Gender == null )
 			{
-				case 'M': $Gender = 'Male'; break;
-				case 'F': $Gender = 'Female'; break;
-				case 'G': $Gender = 'Genderless'; break;
-				case '?': $Gender = '(?)'; break;
+				$Gender = $this->GenerateGender($Pokemon['ID']);
 			}
 
 			try
@@ -435,46 +460,49 @@
 				HandleError( $e->getMessage() );
 			}
 
-			$Slots_Used = [0, 0, 0, 0, 0, 0, 0];
-			while ( $Party = $Query_Party->fetch() )
+			if ( $Location != "Box" )
 			{
-				$Slots_Used[$Party['Slot']] = 1;
-			}
-
-			if ( $Slots_Used[1] == 0 )
-			{
-				$Location = "Roster";
-				$Slot = 1;
-			}
-			else if ( $Slots_Used[2] == 0 )
-			{
-				$Location = "Roster";
-				$Slot = 2;
-			}
-			else if ( $Slots_Used[3] == 0 )
-			{
-				$Location = "Roster";
-				$Slot = 3;
-			}
-			else if ( $Slots_Used[4] == 0 )
-			{
-				$Location = "Roster";
-				$Slot = 4;
-			}
-			else if ( $Slots_Used[5] == 0 )
-			{
-				$Location = "Roster";
-				$Slot = 5;
-			}
-			else if ( $Slots_Used[6] == 0 )
-			{
-				$Location = "Roster";
-				$Slot = 6;
-			}
-			else
-			{
-				$Location = "Box";
-				$Slot = 7;
+				$Slots_Used = [0, 0, 0, 0, 0, 0, 0];
+				while ( $Party = $Query_Party->fetch() )
+				{
+					$Slots_Used[$Party['Slot']] = 1;
+				}
+	
+				if ( $Slots_Used[1] == 0 )
+				{
+					$Location = "Roster";
+					$Slot = 1;
+				}
+				else if ( $Slots_Used[2] == 0 )
+				{
+					$Location = "Roster";
+					$Slot = 2;
+				}
+				else if ( $Slots_Used[3] == 0 )
+				{
+					$Location = "Roster";
+					$Slot = 3;
+				}
+				else if ( $Slots_Used[4] == 0 )
+				{
+					$Location = "Roster";
+					$Slot = 4;
+				}
+				else if ( $Slots_Used[5] == 0 )
+				{
+					$Location = "Roster";
+					$Slot = 5;
+				}
+				else if ( $Slots_Used[6] == 0 )
+				{
+					$Location = "Roster";
+					$Slot = 6;
+				}
+				else
+				{
+					$Location = "Box";
+					$Slot = 7;
+				}
 			}
 
 			$Experience = FetchExperience($Level, 'Pokemon');
@@ -517,11 +545,7 @@
 				VALUES
 				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			");
-			$Pokemon_Create->execute(
-				[
-					$Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender, $IVs, $EVs, $Nature, time(), $Obtained_At
-				]
-			);
+			$Pokemon_Create->execute([ $Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender, $IVs, $EVs, $Nature, time(), $Obtained_At ]);
 			$Poke_DB_ID = $PDO->lastInsertId();
 
 			return [
@@ -543,14 +567,22 @@
 		/**
 		 * Fetch a random gender given a Pokemon's gender ratio.
 		 */
-		public function GenerateGender($Pokedex_ID, $Alt_ID)
+		public function GenerateGender($DB_ID, $Pokedex_ID = null, $Alt_ID = null)
 		{
 			global $PDO;
 
 			try
 			{
-				$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
-				$FetchPokedex->execute([ $Pokedex_ID, $Alt_ID ]);
+				if ( $Pokedex_ID == null && $Alt_ID == null )
+				{
+					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `id` = ? LIMIT 1");
+					$FetchPokedex->execute([ $DB_ID ]);
+				}
+				else
+				{
+					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+					$FetchPokedex->execute([ $Pokedex_ID, $Alt_ID ]);
+				}
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokemon = $FetchPokedex->fetch();
 			}
@@ -559,37 +591,91 @@
 				HandleError( $e->getMessage() );
 			}
 
-			if ( $Pokemon['genderless'] == 100 )
+			if ( $Pokemon['Genderless'] == 100 )
 			{
-				$Gender = "G";
+				$Gender = "Genderless";
 			}
 			else
 			{
-				if ( $Pokemon['male'] == 100 )
+				if ( $Pokemon['Male'] == 100 )
 				{
-					$Gender = "M";
-				}
-				else if ( $Pokemon['female'] == 100 )
-				{
-					$Gender = "F";
-				}
-				else
-				{
-					$Chance_M = mt_rand(1, $Pokemon['male']);
-					$Chance_F = mt_rand(1, $Pokemon['female']);
-
-					if ( $Chance_M > $Chance_F )
+					if ( mt_rand(1, 420) == 4 )
 					{
-						$Gender = "M";
+						$Gender = "(?)";
 					}
 					else
 					{
-						$Gender = "F";
+						$Gender = "Male";
+					}
+				}
+				else if ( $Pokemon['Female'] == 100 )
+				{
+					if ( mt_rand(1, 420) == 4 )
+					{
+						$Gender = "(?)";
+					}
+					else
+					{
+						$Gender = "Female";
+					}
+				}
+				else
+				{
+					$Chance_M = mt_rand(1, $Pokemon['Male']);
+					$Chance_F = mt_rand(1, $Pokemon['Female']);
+
+					if ( mt_rand(1, 420) == 4 )
+					{
+						$Gender = "(?)";
+					}
+					else if ( $Chance_M > $Chance_F )
+					{
+						$Gender = "Male";
+					}
+					else
+					{
+						$Gender = "Female";
 					}
 				}
 			}
 
 			return $Gender;
+		}
+
+		/**
+		 * Function to render a dropdown menu that consists of Pokemon in the `pokedex` database table.
+		 */
+		public function RenderDropdown()
+		{
+			global $PDO;
+
+			try
+			{
+				$Fetch_Pokedex = $PDO->prepare("SELECT * FROM `pokedex` ORDER BY `Pokedex_ID` ASC, `Alt_ID` ASC");
+				$Fetch_Pokedex->execute();
+				$Fetch_Pokedex->setFetchMode(PDO::FETCH_ASSOC);
+			}
+			catch ( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
+
+			$List = "<option>-------</option>";
+			while ( $Pokemon = $Fetch_Pokedex->fetch() )
+			{
+				if ( strlen( $Pokemon['Name_Alter'] ) != 1 )
+				{
+          $Pokemon['Name'] .= " " . $Pokemon['Name_Alter'];
+        }
+
+				$List .= "
+					<option value='{$Pokemon['id']}'>
+						{$Pokemon['Name']} - #" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "
+					</option>
+				";
+			}
+
+			return $List;
 		}
 
 		/**
@@ -648,6 +734,7 @@
 				"Name" => $Item['Item_Name'],
 				"Category" => $Item['Item_Type'],
 				"Description" => $Item['Item_Description'],
+				"Icon" => Domain(1) . "/images/Items/" . $Item['Item_ID'] . ".png",
 			];
 		}
 
