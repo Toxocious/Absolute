@@ -15,7 +15,7 @@
 					{
 						if ( isset($Roster[$i]['ID']) )
 						{
-							$Roster_Slot[$i] = $PokeClass->FetchPokemonData($Roster[$i]['ID']);
+							$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
 				
 							echo "
 								<div class='roster_slot mini' style='padding: 5px;' onclick='displayEvos({$Roster_Slot[$i]['ID']});'>

@@ -62,7 +62,7 @@
 
 				foreach( $Obtainables as $Key => $Value )
 				{
-					$Pokemon = $PokeClass->FetchPokedexData($Value['Pokedex_ID'], $Value['Alt_ID'], $Value['Type']);
+					$Pokemon = $Poke_Class->FetchPokedexData($Value['Pokedex_ID'], $Value['Alt_ID'], $Value['Type']);
 
 					if ( $Value['Type'] !== "Normal" )
 					{

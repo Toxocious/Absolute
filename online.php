@@ -35,7 +35,7 @@
 					<?php
 						foreach( $Online_Users as $Key => $Value )
 						{
-							$Render_Username = $UserClass->DisplayUsername($Value['id']);
+							$Render_Username = $User_Class->DisplayUsername($Value['id']);
 
 							echo "
 								<tr>

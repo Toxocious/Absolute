@@ -60,7 +60,7 @@
 			if ( isset($_GET['id']) )
 			{
 				$ID = $Purify->Cleanse($_GET['id']);
-				$User = $UserClass->FetchUserData($ID);
+				$User = $User_Class->FetchUserData($ID);
 
 				echo "
 					<div class='content'>

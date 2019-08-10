@@ -64,10 +64,10 @@
 								";
 								foreach( $Pending_Trades as $Key => $Value )
 								{
-									$Sender = $UserClass->FetchUserData($Value['Sender']);
-									$Sender_Username = $UserClass->DisplayUserName($Sender['ID']);
-									$Recipient = $UserClass->FetchUserData($Value['Receiver']);
-									$Recipient_Username = $UserClass->DisplayUserName($Recipient['ID']);
+									$Sender = $User_Class->FetchUserData($Value['Sender']);
+									$Sender_Username = $User_Class->DisplayUserName($Sender['ID']);
+									$Recipient = $User_Class->FetchUserData($Value['Receiver']);
+									$Recipient_Username = $User_Class->DisplayUserName($Recipient['ID']);
 	
 									echo "
 										<tr>
