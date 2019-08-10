@@ -20,6 +20,7 @@
   // Set the timezone that Absolute is based on.
 	date_default_timezone_set('America/Los_Angeles');
 	$Date = date("M dS, Y g:i:s A");
+	$Absolute_Time = date('m/d/y&\nb\sp;&\nb\sp;h:i A');
 	$Time = time();
 
 	// Deal with the $_SERVER const.
@@ -48,20 +49,22 @@
 	{
 		$Dir_Root = realpath($_SERVER["DOCUMENT_ROOT"]);
 	}
-
-	// Require Constants.
+	
+	// Require all necessary classes.
 	require_once $Dir_Root . '/core/classes/constants.php';
 	$Constants = new Constants();
-
-	// Require Pokemon, User, and Item classes.
 	require_once $Dir_Root . '/core/classes/pokemon.php';
-	$PokeClass = new Pokemon();
+	$Poke_Class = new Pokemon();
 	require_once $Dir_Root . '/core/classes/user.php';
-	$UserClass = new User();
+	$User_Class = new User();
 	require_once $Dir_Root . '/core/classes/item.php';
 	$Item_Class = new Item();
 	require_once $Dir_Root . '/core/classes/purify.php';
 	$Purify = new Purify();
+	require_once $Dir_Root . '/core/classes/navigation.php';
+	$Navigation = new Navigation();
+	require_once $Dir_Root . '/core/classes/notification.php';
+	$Notification = new Notification();
 
 	// Require some files.
 	require_once $Dir_Root . '/core/functions/formulas.php';
@@ -89,15 +92,15 @@
 	$Fetch_Page->execute([$Parse_URL['path']]);
 	$Fetch_Page->setFetchMode(PDO::FETCH_ASSOC);
 	$Current_Page = $Fetch_Page->fetch();
+	
+	if ( !$Current_Page )
+	{
+		$Current_Page['Name'] = 'Index';
+		$Current_Page['Maintenance'] = 'no';
+	}
   
   /**
 	 * If the user is currently in a session, run the following code at the start of every page load.
-	 * ===================================>
-	 * Fetch their database information.
-	 * Update their overall playtime.
-	 * Fetch their roster.
-	 * Fetch page data.
-	 * ===================================>
 	 */
 	if ( isset($_SESSION['abso_user']) )
 	{
@@ -117,14 +120,17 @@
 
 		try
 		{
+			if ( $Current_Page )
+			{
+				$Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Page`, `Data`, `User_ID`) VALUES ('pageview', ?, ?, ?)");
+				$Update_Activity->execute([ $Current_Page['Name'], $Parse_URL['path'], $User_Data['id'] ]);
+			}
+
 			$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
 			$Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['id'] ]);
 
-			$Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Data`, `User_ID`) VALUES ('pageview', '{$Parse_URL['path']}', {$User_Data['id']})");
-			$Update_Activity->execute();
-
 			$Fetch_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-			$Fetch_Roster->execute([$User_Data['id']]);
+			$Fetch_Roster->execute([ $User_Data['id'] ]);
 			$Fetch_Roster->setFetchMode(PDO::FETCH_ASSOC);
 			$Roster = $Fetch_Roster->fetchAll();
 			
