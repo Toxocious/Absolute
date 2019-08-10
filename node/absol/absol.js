@@ -36,13 +36,13 @@ var server = 'absolute';
 var conn;
 var config = {
   absolute: {
-    logfile        : 'logs/chat_log.txt',
+    logfile        : 'log.txt',
     host           : 'localhost',
     user           : 'root',
-    password       : '$bQ721qb9oS3WIh#SQgEGzA7',
+    password       : '',
     database       : 'absolute',
     game           : 'absolute',
-    pass           : '$bQ721qb9oS3WIh#SQgEGzA7',
+    pass           : '',
     messages_port  : 9001,
     absolute_port : 3000
   },
@@ -80,7 +80,7 @@ fn.log(
 );
 
 Absolute.on('connection', function (socket)
-{
+{	
   // On main client connection
   socket.on('connection', function(client)
   {

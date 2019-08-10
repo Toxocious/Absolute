@@ -23,8 +23,6 @@ method.init = function () {
 		});
 		
 		this.socket.broadcast.emit("irc-message", global.MessageLog[global.MessageLog.length-1]);
-		
-		global.bot.say("#TPK", data.username+': '+data.text);
 	});
 };
 

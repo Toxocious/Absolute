@@ -797,3 +797,15 @@ Server: absolute :: Port: 3000
 
 [02/08/19 02:20:35] Absol: Long have we waited. Absolute activated.
 [02/08/19 02:20:47] Toxocious: zzzzzzzzzzzzz
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~                    Absol is ready for disaster.                   ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[07/06/19 16:55:55] Absol: Long have we waited. Absolute activated.
+
+**** Absol has crashed. ****
+
+Absolute Chat lasted for 2 seconds.
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~                    Absol is ready for disaster.                   ~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+[07/06/19 16:56:12] Absol: Long have we waited. Absolute activated.
