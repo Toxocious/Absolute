@@ -52,12 +52,12 @@
         <div class='panel-heading'>Staff Options</div>
         <div class='panel-body staff_options'>
           <div style='border-right: 1px solid <?= $Border_Color; ?>; float: left; padding: 3px; width: calc(100% / 3);'>
-            <a style='display: block;' href='staff/ban.php?<?= $Profile_Data['id']; ?>'>
+            <a style='display: block;' href='staff/ban.php?id=<?= $Profile_Data['id']; ?>'>
               Ban <?= $Profile_Data['Username']; ?>            
             </a>
           </div>
           <div style='border-right: 1px solid <?= $Border_Color; ?>; float: left; padding: 3px; width: calc(100% / 3);'>
-            <a style='display: block;' href='staff/manage_user.php?<?= $Profile_Data['id']; ?>'>
+            <a style='display: block;' href='staff/manage_user.php?id=<?= $Profile_Data['id']; ?>'>
               Edit <?= $Profile_Data['Username']; ?>            
             </a>
           </div>
