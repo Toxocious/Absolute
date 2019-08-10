@@ -92,12 +92,6 @@
 	$Fetch_Page->execute([$Parse_URL['path']]);
 	$Fetch_Page->setFetchMode(PDO::FETCH_ASSOC);
 	$Current_Page = $Fetch_Page->fetch();
-	
-	if ( !$Current_Page )
-	{
-		$Current_Page['Name'] = 'Index';
-		$Current_Page['Maintenance'] = 'no';
-	}
   
   /**
 	 * If the user is currently in a session, run the following code at the start of every page load.
@@ -139,5 +133,20 @@
 		catch ( PDOException $e )
 		{
 			HandleError( $e->getMessage() );
+		}
+	}
+
+	if ( !$Current_Page )
+	{
+		$Current_Page['Name'] = 'Index';
+		$Current_Page['Maintenance'] = 'no';
+
+		if ( !isset($_SESSION['abso_user']) )
+		{
+			$Current_Page['Logged_In'] = 'no';
+		}
+		else
+		{
+			$Current_Page['Logged_In'] = 'yes';
 		}
 	}
