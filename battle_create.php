@@ -1,11 +1,11 @@
 <?php
 	require 'core/required/session.php';
-	require 'core/classes/battle.php';
+	require 'battles/battle.php';
 
 	if ( isset($_SESSION['abso_user']) )
 	{
-		unset($_SESSION['Battle']);
-
+		// Check to see if the user is banned.
+		// Banned users may not battle.
 		try
 		{
 			$Query_User = $PDO->prepare("SELECT * FROM `users` WHERE `RPG_Ban` = 'no' AND `id` = ? LIMIT 1");
@@ -18,26 +18,48 @@
 			HandleError( $e->getMessage() );
 		}
 
+		// The user is banned; redirect them to the login page.
 		if ( !isset($User['id']) )
 		{
-			Header('Location: /login.php');
+			header('Location: /login.php');
+			exit;
 		}
+		// The user has nothing in their roster; redirect them to the Pokemon Center.
 		else if ( $User['Roster'] == 0 )
 		{
-			Header('Location: /pokemon_center.php');
+			header('Location: /pokemon_center.php');
+			exit;
 		}
+		// The battle and foe has been set.
 		else if ( !isset($_GET['Battle']) && !isset($_GET['Foe']) )
 		{
-			Header('Location: /battle_search.php');
+			header('Location: /battle_search.php');
+			exit;
 		}
+		// Everything is good; start the battle.
 		else
 		{
-			$Battle = new Battle();
-			$Battle->CreateBattle( $_GET['Battle'], $_GET['Foe'] );
-			Header('Location: /battle.php');
+			$Battle_Mode = $_GET['Battle'];
+
+			$Battle = new $Battle_Mode();
+			$Create = $Battle->Create_Battle( $_GET['Foe'] );
+
+			//echo "<pre>";var_dump($_SESSION['Battle']);echo "</pre>";
+
+			if ( $Create )
+			{
+				header('Location: /battle.php');
+				exit;
+			}
+			else
+			{
+				header("Location: /battle_search.php");
+    		exit;
+			}
 		}
 	}
 	else
 	{
-		Header('Location: /index.php');
+		header('Location: /index.php');
+		exit;
 	}
