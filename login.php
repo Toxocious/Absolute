@@ -31,8 +31,8 @@
 
 	if ( isset($_POST['username']) && isset($_POST['password']) )
 	{
-		$Username = Text($_POST['username'])->in();
-		$Password = Text($_POST['password'])->in();
+		$Username = $Purify->Cleanse($_POST['username']);
+		$Password = $Purify->Cleanse($_POST['password']);
 		$IP = $_SERVER["REMOTE_ADDR"];
 
 		try
@@ -64,7 +64,7 @@
 			if ( !isset($Oops) )
 			{
 				$_SESSION['abso_user'] = $User_Info['id'];
-      	header("Location: index.php");
+      	header("Location: news.php");
 			}
 		}
 	}
