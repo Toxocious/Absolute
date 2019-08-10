@@ -30,34 +30,34 @@
 						<th style='width: 50%;'>Staff Message</th>
 					</tr>
 				</thead>
-				<?php
-					foreach( $Staff as $Key => $Value )
-					{
-						$Rank = $UserClass->DisplayUserRank($Value['id'], 14);
-
-						if ( $Value['Staff_Message'] == null )
+				<tbody>
+					<?php
+						foreach( $Staff as $Key => $Value )
 						{
-							$Value['Staff_Message'] = "<i>This user has yet to set a staff message.</i>";
-						}
+							$Rank = $User_Class->DisplayUserRank($Value['id'], 14);
 
-						echo "
-								<tbody>
-									<tr>
-										<td>
-											<img src='{$Value['Avatar']}' />
-										</td>
-										<td>
-											<a href='" . Domain(1) . "/profile.php?id={$Value['id']}'><b>{$Value['Username']}</b></a><br />
-											<b>{$Rank}</b>
-										</td>
-										<td>
-											{$Value['Staff_Message']}
-										</td>
-									</tr>
-								</tbody>
-						";
-					}
-				?>
+							if ( $Value['Staff_Message'] == null )
+							{
+								$Value['Staff_Message'] = "<i>This user has yet to set a staff message.</i>";
+							}
+
+							echo "
+								<tr>
+									<td>
+										<img src='{$Value['Avatar']}' />
+									</td>
+									<td>
+										<a href='" . Domain(1) . "/profile.php?id={$Value['id']}'><b>{$Value['Username']}</b></a><br />
+										<b>{$Rank}</b>
+									</td>
+									<td>
+										{$Value['Staff_Message']}
+									</td>
+								</tr>
+							";
+						}
+					?>
+				</tbody>
 			</table>
 		</div>
 	</div>

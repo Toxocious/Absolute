@@ -1,19 +1,10 @@
 <?php
 	require_once 'core/required/session.php';
-	echo "<style>* { background: #222; color: #fff; margin: 0px; padding: 0px; }</style>";
-	/*
-	function setImgDownload($imagePath) {
-		$image = imagecreatefrompng($imagePath);
-		header('Content-Type: image/png');
-		imagepng($image);
-	}
-
-	echo "<img src='".setImgDownload('images/Pokemon/Normal/001.png')."' />";
-	*/
+	echo "<style>* { background: #222; color: #fff; margin: 0px; padding: 0px; }</style>";	
 
 	for ( $i = 0; $i < 100; $i++ )
 	{
-		$Fetch_Gender = $PokeClass->GenerateGender(359, 0);
+		$Fetch_Gender = $Poke_Class->GenerateGender(359, 0);
 		echo $Fetch_Gender . "<br />";
 	}
 
@@ -28,22 +19,17 @@
 
 	echo "<hr />";
 
-	$UserClass->DisplayUserRank(1);
-  $UserClass->DisplayUserRank(2);
-  $UserClass->DisplayUserRank(3);
+	$User_Class->DisplayUserRank(1);
+  $User_Class->DisplayUserRank(2);
+  $User_Class->DisplayUserRank(3);
 
 	echo "<hr />";
 
-	echo $UserClass->DisplayUserName(1) . "<br />";
-  echo $UserClass->DisplayUserName(2) . "<br />";
-  echo $UserClass->DisplayUserName(3) . "<br />";
+	echo $User_Class->DisplayUserName(1) . "<br />";
+  echo $User_Class->DisplayUserName(2) . "<br />";
+  echo $User_Class->DisplayUserName(3) . "<br />";
 
 	echo "<hr />";
-
-	$Censor_List = array(
-		'piss' => '***',
-		'nigger' => '***'
-	);
 
 	function censor($string)
 	{
@@ -67,8 +53,8 @@
 
 	echo "<br /><hr /><br />";
 
-	$Pokemon = $PokeClass->FetchPokemonData(4);
-	$User = $UserClass->FetchUserData(1);
+	$Pokemon = $Poke_Class->FetchPokemonData(4);
+	$User = $User_Class->FetchUserData(1);
 
 	echo "
 		<div style='float: left; height: 100%; padding: 5px;  width: 25%'>

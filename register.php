@@ -18,12 +18,12 @@
 	{
 		if ( isset($_POST["register"]) )
 		{
-			$Username = ( isset($_POST["username"]) ) ? Text($_POST['username'])->in() : '';
-			$Password = ( isset($_POST["password"]) ) ? Text($_POST["password"])->in() : '';
-			$Password_Confirm = ( isset($_POST["password_confirm"]) ) ? Text($_POST["password_confirm"])->in() : '';
-			$Gender = ( isset($_POST['gender']) ) ? Text($_POST["gender"])->in() : 'u';
-			$Starter = ( isset($_POST['starter']) ) ? Text($_POST["starter"])->in() : '';
-			$Avatar = ( isset($_POST['avatar']) ) ? Text($_POST["avatar"])->in() : '1';
+			$Username = ( isset($_POST["username"]) ) ? $Purify->Cleanse($_POST['username']) : '';
+			$Password = ( isset($_POST["password"]) ) ? $Purify->Cleanse($_POST["password"]) : '';
+			$Password_Confirm = ( isset($_POST["password_confirm"]) ) ? $Purify->Cleanse($_POST["password_confirm"]) : '';
+			$Gender = ( isset($_POST['gender']) ) ? $Purify->Cleanse($_POST["gender"]) : 'u';
+			$Starter = ( isset($_POST['starter']) ) ? $Purify->Cleanse($_POST["starter"]) : '';
+			$Avatar = ( isset($_POST['avatar']) ) ? $Purify->Cleanse($_POST["avatar"]) : '1';
 
 			try {
 				$Check_Username = $PDO->prepare("SELECT COUNT(*) FROM `users` WHERE LOWER(`Username`) = LOWER(?) LIMIT 1");
@@ -33,9 +33,6 @@
 				echo $e->getMessage();
 			}
 			
-			$Validate_Username = Purify($Username)->Validate('username');
-			$Validate_Password = Purify($Password)->Validate('password');
-			
 			// Field Check
 			if ( $Username == '' || $Password == '' || $Password_Confirm == '' || $Gender == '' )
 			{
@@ -44,14 +41,6 @@
 			else if ( $Username_Available == '1' )
 			{
 				$Oops = "<div>The username that you have chosen is already taken.</div>";
-			}
-			else if ($Validate_Username !== true)
-			{
-				$Oops = $Validate_Username;
-			}
-			else if ($Validate_Password !== true)
-			{
-				$Oops = $Validate_Password;
 			}
 			else if ( $Password != $Password_Confirm )
 			{
@@ -73,8 +62,8 @@
 			if ( !isset($Oops) )
 			{
 				$Base_Salt = GAME_DEFAULT_SALT;
-				$Base_Key = RandomSalt(80);
-				$Hashed_Password = hash_hmac('sha512', $Password . $Base_Key, $Base_Key);
+				$Base_Key = RandSalt(80);
+				$Hashed_Password = hash_hmac('sha512', $Password . $Base_Key, $Base_Salt);
 				$Signed_Up_On = time();
 				$Auth_Code = mt_rand(100000, 99999999);
 
@@ -116,7 +105,7 @@
 
 					$Poke_Gender = (mt_rand(1, 7) == 1) ? 'Female' : 'Male';
 					$IVs = mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31);
-					$Starter_Data = $PokeClass->FetchPokedexData($Starter);
+					$Starter_Data = $Poke_Class->FetchPokedexData($Starter);
 
 					$Starter_Create = $PDO->prepare("
 						INSERT INTO `pokemon` (

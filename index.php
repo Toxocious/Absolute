@@ -52,16 +52,12 @@
 		</div>
 
 		<div style='text-align: left; width: 100%;'>
-			<img src='https://vignette.wikia.nocookie.net/nintendo/images/b/b2/Professor_Sycamore_%28Pok%C3%A9mon_X_and_Y%29.png/revision/latest?cb=20131102213329&path-prefix=en' style='height: 345px; transform: scaleX(-1); width: 230px;' />
+			<img src='images/Assets/Prof_Syc.png' style='height: 345px; transform: scaleX(-1); width: 230px;' />
 
 			<div style='float: right; text-align: center; width: calc(100% - 230px);'>
-				Welcome to Absolute text blurb goes here.<br />
+				Hello, and welcome to the world of Absolute!<br />
 				<br />
-				What is Lorem Ipsum?<br />
-				Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-				<br /><br />
-				Why do we use it?<br />
-				It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+				Absolute is fan-made Pokemon RPG, with numerous amounts of features, and various pieces of content.
 			</div>
 		</div>
 	</div>
