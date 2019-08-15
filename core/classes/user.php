@@ -69,7 +69,17 @@
 				'Staff_Message' => $User['Staff_Message'],
 				'Power' => $User['Power'],
 				'Rank' => $User['Rank'],
+				'Mastery_Points_Total' => $User['Mastery_Points_Total'],
+				'Mastery_Points_Used' => $User['Mastery_Points_Used'],
 			];
+		}
+
+		/**
+		 * Fetch the user's masteries.
+		 */
+		public function FetchMasteries($User_ID)
+		{
+			
 		}
 		
 		/**
