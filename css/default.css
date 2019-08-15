@@ -40,7 +40,7 @@ input[type='submit']
   background: -webkit-linear-gradient(top, #6e80a5 0%, #4A618F 100%, #4A618F 100%);
   background: linear-gradient(to bottom, #6e80a5 0%, #4A618F 100%, #4A618F 100%);
   border: 2px solid #000;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 button:hover,
@@ -57,7 +57,7 @@ input[type='text'],
 input[type='password'] {
   background: #3b4d72;
   border: 2px solid #000;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-bottom: 5px;
   padding: 3px;
 }
@@ -65,7 +65,7 @@ input[type='password'] {
 select {
   background: #3b4d72;
   border: 2px solid #000;
-  border-radius: 4px;
+  border-radius: 6px;
 }
 
 option {
@@ -77,7 +77,7 @@ option {
 textarea {
   background: #3b4d72;
   border: 2px solid #000;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-bottom: 5px;
   outline: none;
   padding: 3px;
@@ -105,7 +105,7 @@ table.standard
 {
 	background: #4A618F;
 	border-color: #4A618F;
-	border-radius: 4px;
+	border-radius: 6px;
 	margin-left: 5px;
 	width: 304px;
 	display: table;
@@ -393,7 +393,7 @@ nav > div.button
 {
   background: #253047;
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   float: left;
   text-align: center;
   width: 190px;
@@ -415,7 +415,7 @@ nav > div.navigation
 {
   background: #253047;
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   float: left;
   text-align: center;
   width: calc(100% - 195px);
@@ -505,7 +505,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 .sidebar>.button {
   background: #253047;
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-bottom: 6px;
   text-align: center;
 }
@@ -521,8 +521,9 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 }
 
 .sidebar>.chat {
+  background: #4A618F;
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   float: left;
   /*margin-top: 5px;*/
   width: 190px;
@@ -541,6 +542,8 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 
 .sidebar>.chat>.box {
   background: #253047;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
   border-bottom: 1px solid #4A618F;
   height: 353px;
   overflow-y: auto;
@@ -550,7 +553,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 
 .sidebar>.chat>.box>div[class^='message'] {
   border: 1px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   font-size: 12px;
   padding: 2px;
 }
@@ -662,7 +665,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 
 /* General 'Panel' Styling */
 .panel {
-  background: #2c3a55;
+  background: #4a618f;
   border: 1px solid #4A618F;
   margin-bottom: 0px;
 }
@@ -679,8 +682,8 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 }
 
 .panel>.panel-body {
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  background: #2c3a55;
+  border-radius: 4px;
   padding: 0px;
 }
 
@@ -709,8 +712,9 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 /* Content */
 
 .content {
+  background: #4A618F;
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   float: left;
   max-height: calc(100% - 185px);
   margin: 5px 5px 0px 0px;
@@ -730,8 +734,8 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
   text-align: center;
 }
 
-.content>.box {
-  background: rgba(74, 97, 143, 0.2);
+.content > .box {
+  background: #253047;
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   padding: 3px;
@@ -840,7 +844,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 .content div.description {
   background: #2c3a55;
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-left: auto;
   margin-right: auto;
   padding: 5px;
@@ -850,7 +854,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 .content div.success {
   background: #2c3a55;
   border: 2px solid #25e845;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-left: auto;
   margin-right: auto;
   padding: 5px;
@@ -860,7 +864,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 .content div.notice {
   background: #2c3a55;
   border: 2px solid #fcbc19;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-left: auto;
   margin-right: auto;
   padding: 5px;
@@ -870,7 +874,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 .content div.error {
   background: #2c3a55;
   border: 2px solid #c90e0e;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-left: auto;
   margin-right: auto;
   padding: 5px;
@@ -880,7 +884,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 div.maintenance {
   background: #2c3a55;
   border: 2px solid #fcbc19;
-  border-radius: 4px;
+  border-radius: 6px;
   float: right;
   margin: 5px 5px 0px 0px;
   padding: 5px;
@@ -891,7 +895,7 @@ div.maintenance {
 div.notification {
   background: #2c3a55;
   border: 2px solid #fcbc19;
-  border-radius: 4px;
+  border-radius: 6px;
   float: right;
   margin: 5px 5px 0px 0px;
   padding: 5px;
@@ -911,7 +915,7 @@ img.spricon:hover {
 
 img.iconSelect {
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   margin-bottom: 3px;
   padding: 3px;
 }
@@ -1245,7 +1249,7 @@ img.iconSelect:hover {
 {
   background: #2c3a55;
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   height: 100px;
   margin-top: 32px;
 }
@@ -1255,7 +1259,7 @@ img.iconSelect:hover {
 {
   background: #161d2a;
   border: 2px solid #000;
-  border-radius: 4px;
+  border-radius: 6px;
   height: 10px;
   margin: 0 auto;
   width: 130px;
@@ -1264,7 +1268,7 @@ img.iconSelect:hover {
 #BattleWindow .active_poke .hp_bar span
 {
   background: #c90e0e;
-  border-radius: 4px;
+  border-radius: 6px;
   height: 4px;
   margin-left: -62px;
   margin-top: 1px;
@@ -1275,7 +1279,7 @@ img.iconSelect:hover {
 #BattleWindow .active_poke .exp_bar span
 {
   background: #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   height: 4px;
   margin-left: -62px;
   margin-top: 1px;
@@ -1302,7 +1306,7 @@ img.iconSelect:hover {
 {
   background: #2c3a55;
   border: 2px solid #4A618F;
-  border-radius: 4px;
+  border-radius: 6px;
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
   margin-top: 5px;
@@ -1320,7 +1324,7 @@ img.iconSelect:hover {
   background: #2c3a55;
   border: 2px solid #4A618F;
   border-top: none;
-  border-radius: 4px;
+  border-radius: 6px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   padding: 5px;
