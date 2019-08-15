@@ -132,11 +132,11 @@ table.standard thead tr th
 }
 table.standard thead tr th:nth-child(1)
 {
-	border-top-left-radius: 4px;
+	border-top-left-radius: 6px;
 }
 table.standard thead tr th:nth-child(4)
 {
-	border-top-right-radius: 4px;
+	border-top-right-radius: 6px;
 }
 			
 table.standard tr td
@@ -144,6 +144,26 @@ table.standard tr td
 	background: #253147;
 	padding: 2px;
 	text-align: center;
+}
+
+table.standard tr:first-child td:first-child
+{
+  border-top-left-radius: 6px;
+}
+
+table.standard tr:first-child td:last-child
+{
+  border-top-right-radius: 6px;
+}
+
+table.standard tr:last-child td:first-child
+{
+  border-bottom-left-radius: 6px;
+}
+
+table.standard tr:last-child td:last-child
+{
+  border-bottom-right-radius: 6px;
 }
 
 ::-webkit-input-placeholder {
@@ -281,7 +301,7 @@ table.standard tr td
   border-bottom: 2px solid #4A618F;
   border-left: 2px solid #4A618F;
   border-top: 1px solid #4A618F;
-  border-bottom-left-radius: 4px;
+  border-bottom-left-radius: 6px;
   display: none;
   margin-left: -2px;
   position: absolute;
@@ -347,8 +367,8 @@ table.standard tr td
 
 .userbar>.roster>.roster_slot>.roster_tooltip {
   display: none;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
   position: absolute;
   width: 150px;
   border: 2px solid #4A618F;
@@ -542,8 +562,8 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 
 .sidebar>.chat>.box {
   background: #253047;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   border-bottom: 1px solid #4A618F;
   height: 353px;
   overflow-y: auto;
@@ -645,8 +665,8 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
   background: #2c3a55;
   border: 1px solid #4A618F;
   border-top: none;
-  border-bottom-left-radius: 4px;
-  border-bottom-right-radius: 4px;
+  border-bottom-left-radius: 6px;
+  border-bottom-right-radius: 6px;
   border-top-left-radius: 0px;
   border-top-right-radius: 0px;
   color: #5e7bb4;
@@ -736,8 +756,8 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
 
 .content > .box {
   background: #253047;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   padding: 3px;
   text-align: center;
 }
@@ -1233,8 +1253,8 @@ img.iconSelect:hover {
   background: #2c3a55;
   border: 2px solid #4A618F;
   border-bottom: none;
-  border-top-left-radius: 4px;
-  border-top-right-radius: 4px;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
   float: left;
   margin-left: 6.3px;
   width: 42px;
