@@ -1246,112 +1246,41 @@ img.iconSelect:hover {
 
 /* 'rankings.php' */
 
+#BattleWindow { padding-top: 50px; }
 
-/* 'battle_new.php */
-#BattleWindow .roster_slots div
-{
-  background: #2c3a55;
-  border: 2px solid #4A618F;
-  border-bottom: none;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
-  float: left;
-  margin-left: 6.3px;
-  width: 42px;
-}
-#BattleWindow .roster_slots div:hover
-{
-  background: #3b4d72;
-  cursor: pointer;
-}
+#BattleWindow .roster .slot { background: linear-gradient(180deg, #8090b0 0, #334364); border-radius: 50%; height: 40px; padding: 2px; position: absolute; width: 40px; }
+#BattleWindow .roster .slot.active { background: #ff0000; }
+#BattleWindow .roster .slot.fainted div { background: #330000; }
+#BattleWindow .roster .slot div { background: #4A618F; border-radius: 50%; height: 36px; padding: 3px 0px 0px 0px; width: 36px; }
+#BattleWindow .roster .slot div:hover { background: #3b4d72; cursor: pointer; }
+#BattleWindow .roster .slot img { border-radius: 50%; margin-left: -2px; }
+#BattleWindow .roster .slot:nth-child(1) { margin-left: 40px; margin-top: 40px; }
+#BattleWindow .roster .slot:nth-child(2) { margin-left: 55px; margin-top: -10px; }
+#BattleWindow .roster .slot:nth-child(3) { margin-left: 100px; margin-top: -40px; }
+#BattleWindow .roster .slot:nth-child(4) { margin-left: 155px; margin-top: -40px; }
+#BattleWindow .roster .slot:nth-child(5) { margin-left: 200px; margin-top: -10px; }
+#BattleWindow .roster .slot:nth-child(6) { margin-left: 215px; margin-top: 40px; }
 
-#BattleWindow .active_poke
-{
-  background: #2c3a55;
-  border: 2px solid #4A618F;
-  border-radius: 6px;
-  height: 100px;
-  margin-top: 32px;
-}
+#BattleWindow .active { background: linear-gradient(180deg, #8090b0 0, #334364); border-radius: 50%; height: 122px; margin: 0 auto; padding: 2px; width: 122px; }
+#BattleWindow .active .sprite { background: #3b4d72; border-radius: 50%; height: 118px; width: 118px; }
+#BattleWindow .active .sprite img { border-radius: 50%; height: 118px; width: 118px; }
+#BattleWindow .active .name { background: linear-gradient(180deg, #8090b0 0, #334364); border-radius: 6px; margin-left: -10px; margin-top: -25px; padding: 2px; position: absolute; width: 140px; }
+#BattleWindow .active .name > div { background: #3b4d72; border-radius: 6px; padding: 3px 5px; text-align: center; width: 136px; }
+#BattleWindow .active .hp_bar, #BattleWindow .active .exp_bar { background: #161d2a; border: 2px solid #000; border-radius: 6px; height: 10px; margin: 0 auto; margin-left: -2px; margin-top: 2px; width: 130px; }
+#BattleWindow .active .hp_bar span { background: #c90e0e; border-radius: 6px; height: 4px; margin-left: -62px; margin-top: 1px; max-width: 124px; position: absolute; }
+#BattleWindow .active .exp_bar span { background: #4A618F; border-radius: 6px; height: 4px; margin-left: -62px; margin-top: 1px; max-width: 124px; position: absolute; }
 
-#BattleWindow .active_poke .hp_bar,
-#BattleWindow .active_poke .exp_bar
-{
-  background: #161d2a;
-  border: 2px solid #000;
-  border-radius: 6px;
-  height: 10px;
-  margin: 0 auto;
-  width: 130px;
-}
+#BattleWindow .battle_options { float: left; margin-top: 40px; width: 10%; }
+#BattleWindow .battle_options div { background: #2c3a55; border: 2px solid #4A618F; border-radius: 50%; height: 66px; margin-bottom: 5px; }
+#BattleWindow .battle_options div:hover { background: #3b4d72; cursor: pointer; }
 
-#BattleWindow .active_poke .hp_bar span
-{
-  background: #c90e0e;
-  border-radius: 6px;
-  height: 4px;
-  margin-left: -62px;
-  margin-top: 1px;
-  max-width: 124px;
-  position: absolute;
-}
+#BattleWindow .battle_moves { background: #2c3a55; border: 2px solid #4A618F; border-radius: 6px; border-bottom-left-radius: 0px; border-bottom-right-radius: 0px; margin-top: 70px; padding: 5px; }
+#BattleWindow .battle_moves input { padding: 5px; width: 150px; }
 
-#BattleWindow .active_poke .exp_bar span
-{
-  background: #4A618F;
-  border-radius: 6px;
-  height: 4px;
-  margin-left: -62px;
-  margin-top: 1px;
-  max-width: 124px;
-  position: absolute;
-}
+#BattleWindow #BattleStatus { background: #2c3a55; border: 2px solid #4A618F; border-top: none; border-radius: 6px; border-top-left-radius: 0px; border-top-right-radius: 0px; padding: 5px; }
 
-#BattleWindow .battle_options
-{
-  float: left;
-  margin-top: 55px;
-  width: 10%;
-}
-
-#BattleWindow .battle_options div
-{
-  background: #2c3a55;
-  border-bottom: 2px solid #4A618F;
-  border-top: 2px solid #4A618F;
-  margin-bottom: 5px;
-}
-
-#BattleWindow .battle_moves
-{
-  background: #2c3a55;
-  border: 2px solid #4A618F;
-  border-radius: 6px;
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-  margin-top: 5px;
-  padding: 5px;
-}
-
-#BattleWindow .battle_moves input
-{
-  padding: 5px;
-  width: 150px;
-}
-
-#BattleWindow #BattleStatus
-{
-  background: #2c3a55;
-  border: 2px solid #4A618F;
-  border-top: none;
-  border-radius: 6px;
-  border-top-left-radius: 0px;
-  border-top-right-radius: 0px;
-  padding: 5px;
-}
 
 /* Pokemon Lab */
-
 .content .box.laboratory .panel .panel-heading #refresh {
   float: right;
 }

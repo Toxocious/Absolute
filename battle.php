@@ -23,92 +23,98 @@
 		<?= ( isset($Error) ? $Error : '' ); ?>
 
 		<div style='margin: 0 auto; width: 75%;'>
-			<div style='height: 132px;'>
+			<div>
 				<!-- Your Pokemon -->
 				<div style='float: left; width: 45%;'>
-					<div class='roster_slots'>
-						<div id='A_1' style='display: none;'></div>
-						<div id='A_2' style='display: none;'></div>
-						<div id='A_3' style='display: none;'></div>
-						<div id='A_4' style='display: none;'></div>
-						<div id='A_5' style='display: none;'></div>
-						<div id='A_6' style='display: none;'></div>
+					<!-- roster -->
+					<div class='roster'>
+						<div class="slot" id='A_1' style='display: none;'></div>
+						<div class="slot" id='A_2' style='display: none;'></div>
+						<div class="slot" id='A_3' style='display: none;'></div>
+						<div class="slot" id='A_4' style='display: none;'></div>
+						<div class="slot" id='A_5' style='display: none;'></div>
+						<div class="slot" id='A_6' style='display: none;'></div>
 					</div>
+					<!-- roster -->
 
-					<div class='active_poke'>
-						<div style='float: left; width: 50%;'>
-							<img id='A_A' style='transform: scaleX(-1);' />
+					<!-- active -->
+					<div class='active'>
+						<div class='sprite'>
+							<img id='A_A' />
 						</div>
-						<div style='float: left; font-size: 12px; padding-top: 10px; width: 50%;'>
+						<div class='name'>
 							<div>
-								<b id='A_A_Name'></b>
-							</div>
-							<div style='width: 95%;'>
-								<b>HP:</b> ( <span id='A_A_HP_Cur'></span> / <span id='A_A_HP_Max'></span> )
-							</div>
-							<div class='hp_bar'>
-								<span id='A_A_HP'></span>
-							</div>
-
-							<div style='width: 95%;'>
-								<b>Level:</b> <span id='A_A_Level'></span>
-							</div>
-							<div class='exp_bar'>
-								<span id='A_A_EXP'></span>
+								<div id='A_A_Name'></div>
+								<div style='font-size: 12px; text-align: left;'>
+									HP: (<span id='A_A_HP_Cur'></span>/<span id='A_A_HP_Max'></span>)
+								</div>
+								<div class='hp_bar'>
+									<span id='A_A_HP'></span>
+								</div>
+								<div style='font-size: 12px; text-align: left;'>
+									Level: <span id='A_A_Level'></span>
+								</div>
+								<div class='exp_bar'>
+									<span id='A_A_EXP'></span>
+								</div>
 							</div>
 						</div>
 					</div>
+					<!-- active -->
 				</div>
 				<!-- Your Pokemon -->
 
 				<!-- Battle Options/Bag -->
 				<div class='battle_options'>
-					<div>
-						<img src='' />
-					</div>
-					<div>
-						<img src='' />
+					<div style='padding-top: 6px;'>
+						<img src='<?= Domain(1); ?>/images/Assets/options.png' style='height: 50px; width: 50px;' />
 					</div>
 				</div>
 				<!-- Battle Options/Bag -->
 
 				<!-- Enemy Pokemon -->
 				<div style='float: left; width: 45%;'>
-					<div class='roster_slots'>
-						<div id='D_1' style='display: none;'></div>
-						<div id='D_2' style='display: none;'></div>
-						<div id='D_3' style='display: none;'></div>
-						<div id='D_4' style='display: none;'></div>
-						<div id='D_5' style='display: none;'></div>
-						<div id='D_6' style='display: none;'></div>
+					<!-- roster -->
+					<div class='roster'>
+						<div class="slot" id='D_1' style='display: none;'></div>
+						<div class="slot" id='D_2' style='display: none;'></div>
+						<div class="slot" id='D_3' style='display: none;'></div>
+						<div class="slot" id='D_4' style='display: none;'></div>
+						<div class="slot" id='D_5' style='display: none;'></div>
+						<div class="slot" id='D_6' style='display: none;'></div>
 					</div>
+					<!-- roster -->
 
-					<div class='active_poke'>
-						<div style='float: left; font-size: 12px; padding-top: 10px; width: 50%;'>
-							<div>
-								<b id='D_A_Name'></b>
-							</div>
-							<div style='width: 95%;'>
-								<b>HP:</b> ( <span id='D_A_HP_Cur'></span> / <span id='D_A_HP_Max'></span> )
-							</div>
-							<div class='hp_bar'>
-								<span id='D_A_HP'></span>
-							</div>
-
-							<div style='width: 95%;'>
-								<b>Level:</b> <span id='D_A_Level'></span>
-							</div>
-							<div class='exp_bar'>
-								<span id='D_A_EXP'></span>
-							</div>
-						</div>
-						<div style='float: left; width: 50%;'>
+					<!-- active -->
+					<div class='active'>
+						<div class='sprite'>
 							<img id='D_A' />
+						</div>
+						<div class='name'>
+							<div>
+								<div id='D_A_Name'></div>
+								<div style='font-size: 12px; text-align: left;'>
+									HP: (<span id='D_A_HP_Cur'></span>/<span id='D_A_HP_Max'></span>)
+								</div>
+								<div class='hp_bar'>
+									<span id='D_A_HP'></span>
+								</div>
+								<div style='font-size: 12px; text-align: left;'>
+									Level: <span id='D_A_Level'></span>
+								</div>
+								<div class='exp_bar'>
+									<span id='D_A_EXP'></span>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 				<!-- Enemy Pokemon -->
 			</div>
+
+			<br /><br />
+			<br /><br />
+			<br /><br />
 
 			<!-- Moves -->
 			<div class='battle_moves'>
@@ -181,7 +187,7 @@
 			if ( Pokemon != undefined )
 			{
 				$('#' + Prefix + 'A').attr( 'src', Pokemon['Sprite'] );
-				$('#' + Prefix + 'A_Name').html( Pokemon['Name'] );
+				$('#' + Prefix + 'A_Name').html( `<b>${Pokemon['Name']}</b>` );
 				$('#' + Prefix + 'A_Level').html( Pokemon['Level'] );
 				$('#' + Prefix + 'A_HP_Cur').html( Pokemon['HP']['Current'] );
 				$('#' + Prefix + 'A_HP_Max').html( Pokemon['HP']['Max'] );
@@ -204,7 +210,7 @@
 
 				if ( Roster_Pokemon != undefined )
 				{
-					$('#' + Prefix + ( o + 1 )).html( `<img src='${Roster_Pokemon['Icon']}' />` ).css({ 'display':'block', 'float':'left' });
+					$('#' + Prefix + ( o + 1 )).html( `<div><img src='${Roster_Pokemon['Icon']}' /></div>` ).css({ 'display':'block' });
 				}
 			}
 		}
