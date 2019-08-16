@@ -2,6 +2,8 @@
 	require_once '../core/required/session.php';
 	require_once 'battle.php';
 
+	$FULL_DEBUG = true;
+
 	if ( !isset($_SESSION['Battle']) )
 	{
 		return "<div class='error'>Error #1: There is currently no battle in session.</div>";
@@ -25,6 +27,49 @@
 		$Clicks = $Purify->Cleanse($_POST['Clicks']);
 		$x = $Purify->Cleanse($_POST['x']);
 		$y = $Purify->Cleanse($_POST['y']);
+
+		$Element = [
+			'PostCode'	=> $Purify->Cleanse($_POST['Element']['PostCode']),
+			'Pos_Top'		=> $Purify->Cleanse(round($_POST['Element']['Position']['top'])),
+			'Pos_Left'	=> $Purify->Cleanse(round($_POST['Element']['Position']['left'])),
+			'Height'		=> $Purify->Cleanse($_POST['Element']['Height']),
+			'Width'			=> $Purify->Cleanse($_POST['Element']['Width']),
+		];
+
+		$Coords = [
+			'x' => $Purify->Cleanse($_POST['x']),
+			'y' => $Purify->Cleanse($_POST['y']),
+		];
+
+		/**
+		 * Calculate the accepted coordinate range of the clicked element.
+		 */
+		$Valid_Coords =
+		[
+			'x' =>
+			[
+				'Min'	=> $Element['Pos_Left'],
+				'Max'	=> $Element['Pos_Left'] + $Element['Width'],
+			],
+			'y' =>
+			[
+				'Min'	=> $Element['Pos_Top'],
+				'Max'	=> $Element['Pos_Top'] + $Element['Height'],
+			],
+		];
+
+		/**
+		 * Check to see if the user clicked within the accepted coordinate range.
+		 */
+		$Check_Coords = $Battle->CheckCoords( $Coords['x'], $Valid_Coords['x']['Min'], $Valid_Coords['x']['Max'], $Coords['y'], $Valid_Coords['y']['Min'], $Valid_Coords['y']['Max'] );
+		if ( $Check_Coords )
+		{
+			$Message = "Coords are within the accepted range.<br />";
+		}
+		else
+		{
+			$Message = "Coords are outside the accepted range.<br />";
+		}
 
 		/**
 		 * Switching out to a different Pokemon.
@@ -74,8 +119,15 @@
 			$Continue_SESS = $_SESSION['Battle']['Status']['Continue']['Code'];
 
 			$_SESSION['Battle']['Status']['Logs']['Action'] = 'Continue';
-			$_SESSION['Battle']['Status']['Logs']['Postcode'] = [ "POST" => $Continue_POST, "SESS" => $Continue_SESS ];
-			$_SESSION['Battle']['Status']['Logs']['Coords'] = [ "Clicks" => $Clicks, "x" => $x, "y" => $y ];
+			$_SESSION['Battle']['Status']['Logs']['Postcode'] = [
+				"POST" => $Continue_POST,
+				"SESS" => $Continue_SESS,
+			];
+			$_SESSION['Battle']['Status']['Logs']['Coords'] = [
+				"Clicks" => $Clicks,
+				"x" => $x,
+				"y" => $y,
+			];
 
 			$Battle->Logify();
 
@@ -91,7 +143,30 @@
 			$Move_Data = $Purify->Cleanse($_POST['Move']);
 
 			$Dialogue = "Attacking the foe!<br /><br />";
-			$Dialogue .= $Move_Data;
+			$Dialogue .= $Move_Data . "<br /><br />";
+
+			if ( $FULL_DEBUG )
+			{
+				$Dialogue .= "
+					<br /><br />
+
+					Valid Coord Area:<br />
+					x => {$Valid_Coords['x']['Min']} to {$Valid_Coords['x']['Max']}<br />
+					y => {$Valid_Coords['y']['Min']} to {$Valid_Coords['y']['Max']}
+					<br /><br />
+
+					Clicked Coordinates (x,y):<br />
+					{$Coords['x']} , {$Coords['y']}
+					<br /><br />
+
+					Total Clicks:<br />
+					{$Clicks}
+					<br /><br />
+
+					Message:<br />
+					{$Message}
+				";
+			}
 		}
 	}
 

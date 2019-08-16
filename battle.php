@@ -156,6 +156,11 @@
 	Battle = {};
 	Battle.Clicks = 0;
 
+	$(document).on('click', function()
+	{
+		Battle.Clicks++;
+	});
+
 	Battle.Loading = function()
 	{
 		$('#BattleStatus').html("<div style='padding: 10px;'><div class='spinner' style='left: 48.5%; position: relative;'></div></div>");
@@ -250,12 +255,19 @@
 	 */
 	Battle.Move = function(move, e)
 	{
-		console.log('battle.move');
+		let Element = {
+			'PostCode': $(e.target).attr('postcode'),
+			'Position': $(e.target).position(),
+			'Width'		: parseInt( $(e.target).css('width') ),
+			'Height'	: parseInt( $(e.target).css('height' ) ),
+		};
+
 		$.ajax({
 			type: 'POST',
 			url: 'battles/handler.php',
 			data: {
 				Battle_ID: '<?= $_SESSION['Battle']['Status']['Battle_ID'] ?>',
+				Element: Element,
 				Clicks: Battle.Clicks,
 				Move: move,
 				x: e.pageX,
@@ -264,10 +276,12 @@
 			success: function(JSON)
 			{
 				Battle.Render(JSON);
+				Battle.Clicks = 0;
 			},
 			error: function(JSON)
 			{
 				Battle.Render(JSON);
+				Battle.Clicks = 0;
 			}
 		});
 	}
