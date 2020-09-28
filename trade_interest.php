@@ -2,14 +2,14 @@
 	require 'core/required/layout_top.php';
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Trade Interest</div>
-	<div class='box'>
+	<div class='body'>
 		<div id='AJAX'></div>
 
 		<div class='panel' style='margin-bottom: 5px;'>
-			<div class='panel-heading'>Filter</div>
-			<div class='panel-body navi'>
+			<div class='head'>Filter</div>
+			<div class='body navi'>
 				<div>
 					<div><a href='javascript:void(0);' onclick='Filter("Normal")' style='display: block; float: left; padding: 2px; width: calc(100% / 2);'>Normal</a></div>
 					<div><a href='javascript:void(0);' onclick='Filter("Shiny")' style='display: block; float: left; padding: 2px; width: calc(100% / 2);'>Shiny</a></div>

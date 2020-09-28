@@ -763,7 +763,7 @@ nav > div.navigation > ul>.dropdown:hover>.dropdown-content {
   border-right: 1px solid #4A618F;
 }
 
-.content .filter div div:hover {
+.content .filter div:hover {
   background: #253047;
   font-weight: bold;
 }
@@ -1045,14 +1045,14 @@ img.iconSelect:hover {
 }
 
 #evoData > div > div.requirements > div > div:first-child,
-.content .panel .panel-body .evolution .requirements div div:first-child {
+.content .panel .panel-body .evolution .requirements div:first-child {
   background: #3b4d72;
   border-bottom: 1px solid #4A618F;
   font-weight: bold;
 }
 
 #evoData > div > div.requirements > div > div:nth-child(2),
-.content .panel .panel-body .evolution .requirements div div:nth-child(2) {
+.content .panel .panel-body .evolution .requirements div:nth-child(2) {
   border: none;
   height: 54px;
   padding-top: 5px;
@@ -1060,7 +1060,7 @@ img.iconSelect:hover {
 }
 
 #evoData > div > div.requirements > div > div:last-child,
-.content .panel .panel-body .evolution .requirements div div:last-child {
+.content .panel .panel-body .evolution .requirements div:last-child {
   background: #3b4d72;
   border: none;
   border-top: 1px solid #4A618F;
@@ -1082,17 +1082,17 @@ img.iconSelect:hover {
 
 /* 'profile.php' */
 
-.content .box .interactions div div:hover,
-.content .box .navi div div:hover {
+.content .box .interactions div:hover,
+.content .box .navi div:hover {
   background: #2c3a55;
 }
 
-.content .box.profile .interactions div div:nth-child(odd),
-.content .box .navi div div:not(:nth-last-child(1)) {
+.content .box.profile .interactions div:nth-child(odd),
+.content .box .navi div:not(:nth-last-child(1)) {
   border-right: 1px solid #4A618F;
 }
 
-.content .box.profile .interactions div div:nth-child(-n+2) {
+.content .box.profile .interactions div:nth-child(-n+2) {
   border-bottom: 1px solid #4A618F;
 }
 

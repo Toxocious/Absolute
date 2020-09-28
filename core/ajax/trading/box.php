@@ -49,7 +49,7 @@
     $Filter_Dir = 'ASC';
   }
 
-  $Query .= " ORDER BY `Pokedex_ID` ASC";
+  $Query .= " ORDER BY `Pokedex_ID`, `ID` ASC";
 
   try
   {

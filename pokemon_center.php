@@ -14,25 +14,41 @@
 	}
 ?>
 
-<style>
-	.active { background: #253047 !important; color: #fff !important; }
-</style>
-
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Pokemon Center</div>
-	<div class='box pokecenter'>
+	<div class='body pokecenter'>
 		<div class='nav'>
-			<div onclick="showTab('roster');" class='active'>Roster</div>
-			<div onclick="showTab('moves');">Moves</div>
-			<div onclick="showTab('inventory');">Inventory</div>
-			<div onclick="showTab('nickname');">Nickname</div>
-			<!--<div onclick="showTab('release');">Release</div>-->
+			<div>
+				<a href='#' onclick="showTab('roster');">
+					Roster
+				</a>
+			</div>
+			<div>
+				<a href='#' onclick="showTab('moves');">
+					Moves
+				</a>
+			</div>
+			<div>
+				<a href='#' onclick="showTab('inventory');">
+					Inventory
+				</a>
+			</div>
+			<div>
+				<a href='#' onclick="showTab('nickname');">
+					Nickname
+				</a>
+			</div>
+			<div>
+				<a href='#' onclick="showTab('release');">
+					Release
+				</a>
+			</div>
 		</div>
     
-    <div class='row' id='pokemon_center'>
+    <div class='flex wrap' id='pokemon_center'>
 			<div class='panel'>
-				<div class='panel-heading'>Loading</div>
-				<div class='panel-body' style='padding: 5px;'>Loading</div>
+				<div class='head'>Loading</div>
+				<div class='body' style='padding: 5px;'>Loading</div>
 			</div>
     </div>
   </div>
@@ -54,7 +70,7 @@
 		{
 			let current = document.getElementsByClassName("active");
 			current[0].className = current[0].className.replace("active", "");
-			this.className += "active";
+			this.className += " active";
 		});
 	}
 	 

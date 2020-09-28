@@ -327,7 +327,7 @@
 ?>
 
 <div class='head'>Pokemon Manager</div>
-<div class='box'>
+<div class='body'>
 	<div class='description' style='margin-bottom: 5px;'>
 		Here, you may manage all obtainable Pokemon that are in game.<br />
 		Click on the name of an area in order to edit the Pokemon within that location.

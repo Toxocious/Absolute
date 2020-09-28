@@ -2,52 +2,56 @@
 	require 'core/required/layout_top.php';
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Evolution Center</div>
-	<div class='box'>
+	<div class='body padding-5px'>
 		<div id='status'></div>
 
-		<div class='panel' style='margin-bottom: 5px;'>
-			<div class='panel-heading'>Roster</div>
-			<div class='panel-body'>
-				<?php
-					for ( $i = 0; $i <= 5; $i++ )
-					{
-						if ( isset($Roster[$i]['ID']) )
+		<table class='border-gradient' style='margin-bottom: 5px;'>
+			<thead>
+				<th colspan='6'>Roster</th>
+			</thead>
+			
+			<tbody>
+				<tr id='evoRoster'>
+					<?php
+						for ( $i = 0; $i <= 5; $i++ )
 						{
-							$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
-				
-							echo "
-								<div class='roster_slot mini' style='padding: 5px;' onclick='displayEvos({$Roster_Slot[$i]['ID']});'>
-									<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' ?><br />
-									<b>{$Roster_Slot[$i]['Display_Name']}</b><br />
-								</div>
-							";
+							if ( isset($Roster[$i]['ID']) )
+							{
+								$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
+					
+								echo "
+									<td style='width: calc(100% / 6);' onclick='displayEvos({$Roster_Slot[$i]['ID']});'>
+										<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' ?><br />
+										<b>{$Roster_Slot[$i]['Display_Name']}</b><br />
+									</td>
+								";
+							}
+							else
+							{
+								$Roster_Slot[$i]['Icon'] = Domain(3) . 'images/pokemon/0_mini.png';
+								$Roster_Slot[$i]['Display_Name'] = 'Empty';
+					
+								echo "
+									<td style='width: calc(100% / 6);'>
+										<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' ?><br />
+										<b>{$Roster_Slot[$i]['Display_Name']}</b>
+									</td>
+								";
+							}
 						}
-						else
-						{
-							$Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
-							$Roster_Slot[$i]['Icon'] = Domain(3) . 'images/pokemon/0_mini.png';
-							$Roster_Slot[$i]['Display_Name'] = 'Empty';
-							$Roster_Slot[$i]['Level'] = '0';
-							$Roster_Slot[$i]['Experience'] = '0';
-				
-							echo "
-								<div class='roster_slot mini' style='padding: 5px;'>
-									<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' ?><br />
-									<b>{$Roster_Slot[$i]['Display_Name']}</b>
-								</div>
-							";
-						}
-					}
-				?>
-			</div>
-		</div>
+					?>
+				</tr>
+			</tbody>
+		</table>
 
-		<div class='panel'>
-			<div class='panel-heading'>Evolutions</div>
-			<div class='panel-body' id='evoData'>
-					<div style='padding: 5px;'>Please select the Pokemon that you wish to evolve.</div>
+		<div id='evoData'>
+			<div class='panel' style='margin: 0 auto; width: 80%;'>
+				<div class='head'>Evolutions</div>
+				<div class='body'>
+						<div style='padding: 5px;'>Please select the Pokemon that you wish to evolve.</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -80,10 +84,44 @@
 			success: function(data)
 			{
 				$('#status').html(data);
+				$('#evoData').html(`
+					<div class='panel' style='margin: 0 auto; width: 80%;'>
+						<div class='head'>Evolutions</div>
+						<div class='body'>
+								<div style='padding: 5px;'>Please select the Pokemon that you wish to evolve.</div>
+						</div>
+					</div>
+				`);
+				DisplayRoster();
 			},
 			error: function(data)
 			{
 				$('#status').html(data);
+				$('#evoData').html(`
+					<div class='panel' style='margin: 0 auto; width: 80%;'>
+						<div class='head'>Evolutions</div>
+						<div class='body'>
+								<div style='padding: 5px;'>Please select the Pokemon that you wish to evolve.</div>
+						</div>
+					</div>
+				`);
+				DisplayRoster();
+			}
+		});
+	}
+
+	function DisplayRoster()
+	{
+		$.ajax({
+			type: 'get',
+			url: 'core/ajax/evocenter/roster.php',
+			success: function(data)
+			{
+				$('#evoRoster').html(data);
+			},
+			error: function(data)
+			{
+				$('#evoRoster').html(data);
 			}
 		});
 	}

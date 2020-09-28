@@ -57,9 +57,9 @@
 	</head>
 	
 	<body>
-		<div class='content' style='float: left; margin: 5px 0px 5px 5px; width: 200px;'>
+		<div class='panel content' style='float: left; margin: 5px 0px 5px 5px; width: 200px;'>
 			<div class='head'><?= $Pokemon['Display_Name']; ?></div>
-			<div class='box' style='padding: 16px;'>
+			<div class='body' style='padding: 16px;'>
 				<img src='<?= $Pokemon['Sprite']; ?>' />
 			</div>
 		</div>
@@ -69,8 +69,8 @@
 				<tr>
 					<th style='width: 25%;'>Stat</th>
 					<th style='width: 25%;'>Base</th>
-					<th style='width: 25%;'>IV's</th>
-					<th style='width: 25%;'>EV's</th>
+					<th style='width: 25%;'>IVs</th>
+					<th style='width: 25%;'>EVs</th>
 				</tr>
 			</thead>
 			<tbody>

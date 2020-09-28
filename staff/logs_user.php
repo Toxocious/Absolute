@@ -48,10 +48,10 @@
 ?>
 
 <div class='head'>User Logs</div>
-<div class='box'>
+<div class='body'>
 	<div class='panel'>
-		<div class='panel-heading'>Filter</div>
-		<div class='panel-body'>
+		<div class='head'>Filter</div>
+		<div class='body'>
 			<input type='text' id='user_val' placeholder='Username or ID' />
 			<button onclick='FetchLogs();'>Fetch Logs</button>
 		</div>

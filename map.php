@@ -2,9 +2,9 @@
 	require 'core/required/layout_top.php';
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Maps</div>
-	<div class='box'>
+	<div class='body'>
 		<div class='description'>
 			You may use WASD to move.
 			Hold C to run.
@@ -15,8 +15,8 @@
 			<div id='screen'></div>
 
 			<div class='panel' style='border-width: 2px; float: left; height: 240px; width: 240px;'>
-				<div class='panel-heading'>Map Events</div>
-				<div class='panel-body' id='map_text' style='padding: 5px;'>
+				<div class='head'>Map Events</div>
+				<div class='body' id='map_text' style='padding: 5px;'>
 					What'll you find today?
 				</div>
 			</div>

@@ -1,5 +1,6 @@
 <?php
 	require 'core/required/layout_top.php';
+	require 'core/functions/shop.php';
 
 	if ( isset($_GET['shop']) )
 	{
@@ -23,30 +24,22 @@
 	}
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Shops</div>
-	<div class='box'>
+	<div class='body'>
 		<div class='nav'>
-			<div><a href='<?= Domain(1); ?>/shop.php?Shop=pokemon' style='display: block;'>Pokemon</a></div>
+			<div>
+				<a href='<?= Domain(1); ?>/shop.php?Shop=pokemon' style='display: block;'>Pokemon</a>
+			</div>
 		</div>
 
-		<?php
-			if ( isset($Error) && $Error != '' )
-			{
-				echo "<div class='error' style='margin-bottom: 5px;'>$Error</div>";
-			}
+		<div id='result' style='display: none; height: 116px; margin-bottom: 5px; width: 80%;'></div>
 
-			if ( isset($Success) && $Success != '' )
-			{
-				echo "<div class='success' style='height: 116px; margin-bottom: 5px;'>$Success</div>";
-			}
-		?>
+		<div class='description' style='margin-bottom: 5px;'>
+			<?= $Description; ?>
+		</div>
 
-		<div class='notice' style='display: none; height: 116px; margin-bottom: 5px;'></div>
-
-		<div class='description' style='margin-bottom: 5px;'><?= $Description; ?></div>
-
-		<div class='row'>
+		<div class='row' style='display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;'>
 			<?php
 				try
 				{
@@ -62,6 +55,12 @@
 
 				foreach( $Obtainables as $Key => $Value )
 				{
+					// No price has been set; don't list it.
+					if ( !$Value['Prices'] )
+					{
+						continue;
+					}
+
 					$Pokemon = $Poke_Class->FetchPokedexData($Value['Pokedex_ID'], $Value['Alt_ID'], $Value['Type']);
 
 					if ( $Value['Type'] !== "Normal" )
@@ -70,15 +69,25 @@
 					}
 
 					/**
-					 * Determine the price(s) of a Pokemon.
+					 * Fetch the required prices of the object.
+					 */
+					$Price_Array = FetchPriceList($Value['Prices']);
+
+					/**
+					 * Determine if the user is eligible to purchase the object.
 					 */
 					$Can_Afford = true;
-					$Price_Array = GeneratePrice($Value['Price']);
-					foreach( $Price_Array as $Key => $Currency )
+					$Price_String = '';
+					foreach ( $Price_Array[0] as $Currency => $Amount )
 					{
-						if ( $User_Data[$Currency['Value']] < $Currency['Amount'] )
+						// Append to the price string for output later.
+						$Price_String .= "<img src='" . Domain(1) . "/images/Assets/{$Currency}.png' /> " . number_format($Amount) . "<br />";
+
+						// Now check to see if the user can afford it.
+						if ( $User_Data[$Currency] < $Amount )
 						{
 							$Can_Afford = false;
+							break;
 						}
 						else
 						{
@@ -87,43 +96,39 @@
 					}
 
 					/**
-					 * Generate the purchase link.
+					 * Generate the button to purchase the Pokemon.
 					 */
-					if ( $Can_Afford === true )
+					if ( $Can_Afford )
 					{
-						$Purchase_Link = "
-							<div class='button' onclick='Purchase({$Value['ID']});'>
+						$Purchase_Button = "
+							<button onclick='Purchase({$Value['ID']});'>
 								Purchase
-							</div>
+							</button>
 						";
 					}
 					else
 					{
-						$Purchase_Link = "
-							<div class='button'>
-								You can't afford this.
-							</div>
+						$Purchase_Button = "
+							<button class='disabled'>
+								Can't Purchase
+							</button>
 						";
 					}
 
 					echo "
-						<div class='panel' style='float: left; margin-bottom: 3px; margin-right: 3px; width: calc(100% / 4 - 3px);'>
-							<div class='panel-heading'>{$Pokemon['Name']}</div>
-							<div class='panel-body shop_panel'>
-								{$Purchase_Link}
-								<img src='{$Pokemon['Sprite']}' />
-								<hr />
-					";
-
-					if ( count($Price_Array) !== 0 )
-					{
-						foreach ( $Price_Array as $Key => $Price_Info )
-						{
-							echo "<b>" . $Price_Info['Name'] . ":</b> " . number_format($Price_Info['Amount']) . "<br />";
-						}
-					}
-
-					echo "
+						<div class='panel' style='flex-basis: calc(100% / 4 - 12px); margin: 3px;'>
+							<div class='head'>{$Pokemon['Name']}</div>
+							<div class='body' style='display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 5px;'>
+								<div style='flex-basis: 100%; text-align: center;'>
+									{$Purchase_Button}
+								</div>
+								<br />
+								<div style='flex-basis: 50%;'>
+									<img src='{$Pokemon['Sprite']}' />
+								</div>
+								<div style='flex-basis: 50%;'>
+									{$Price_String}
+								</div>
 							</div>
 						</div>
 					";
@@ -142,13 +147,15 @@
 			data: { id: id, shop: '<?= substr($Shop, 0, -5); ?>' },
 			success: function(data)
 			{
-				$('.box .notice').html(data);
-				$('.box .notice').css('display', 'block');
+				$('#result').html(data);
+				$('#result').addClass('success');
+				$('#result').css('display', 'block');
 			},
 			error: function(data)
 			{
-				$('.box .notice').html(data);
-				$('.box .notice').css('display', 'block');
+				$('#result').html(data);
+				$('#result').addClass('error');
+				$('#result').css('display', 'block');
 			}
 		});
 	}

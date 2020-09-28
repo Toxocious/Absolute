@@ -7,8 +7,8 @@
 </div>
 
 <div class='panel'>
-	<div class='panel-heading'>Trade History</div>
-	<div class='panel-body' style='padding: 5px;'>
+	<div class='head'>Trade History</div>
+	<div class='body' style='padding: 5px;'>
 		<?php
 			try
 			{

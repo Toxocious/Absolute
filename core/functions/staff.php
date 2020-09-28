@@ -3,7 +3,7 @@
 	{
 		echo "
 			<div class='head'>Staff Panel</div>
-			<div class='box' style='padding: 5px;'>
+			<div class='body' style='padding: 5px;'>
 				You aren't authorized to be here.
 			</div>
 		";

@@ -16,14 +16,14 @@
 ?>
 
 <div class='head'>Reported Users</div>
-<div class='box'>
+<div class='body'>
 	<?php
 		if ( count($Reports) == 0 )
 		{
 			echo "
 				<div class='panel'>
-					<div class='panel-heading'>User Reports</div>
-					<div class='panel-body' style='padding: 5px;'>
+					<div class='head'>User Reports</div>
+					<div class='body' style='padding: 5px;'>
 						There are currently no reports.
 					</div>
 				</div>
@@ -38,11 +38,11 @@
 
 				echo "
 					<div class='panel' style='margin-bottom: 5px;'>
-						<div class='panel-heading'>
+						<div class='head'>
 							Report On {$Reported_User['Username']}
 							<div style='float: right;'>(Report #" . number_format($Value['id']) . ")</div>
 						</div>
-						<div class='panel-body navi'>
+						<div class='body navi'>
 
 							<div>
 								<div style='float: left; padding: 5px; width: 100%;'>

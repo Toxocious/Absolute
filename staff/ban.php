@@ -74,11 +74,11 @@
 ?>
 
 <div class='head'>Ban A User</div>
-<div class='box'>
+<div class='body'>
 	
 	<div class='panel' style='margin: 0 auto; width: 60%;'>
-		<div class='panel-heading'>Search For A User</div>
-		<div class='panel-body' style='padding: 5px;'>	
+		<div class='head'>Search For A User</div>
+		<div class='body' style='padding: 5px;'>	
 			<input type='text' placeholder='Username or ID' style='text-align: center; width: 50%;' id='f_user'/><br />
 			<button style='width: 50%;' onclick='FetchUser();'>Fetch User</button>
 			

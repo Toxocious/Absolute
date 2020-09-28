@@ -7,9 +7,9 @@
 	}
 ?>
 
-<div class='content' <?= $Content_Style; ?>>
+<div class='panel content' <?= $Content_Style; ?>>
 	<div class='head'>Discord</div>
-	<div class='box pokecenter'>
+	<div class='body pokecenter'>
 		<div class='nav'>
 			<div><a href='index.php' style='display: block;'>Home</a></div>
 			<div><a href='login.php' style='display: block;'>Login</a></div>

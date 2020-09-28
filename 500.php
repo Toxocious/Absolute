@@ -11,9 +11,9 @@
 	}
 ?>
 
-<div class='content'<?= $width; ?>>
+<div class='panel content'<?= $width; ?>>
 	<div class='head'>500 INTERNAL SERVER ERROR</div>
-	<div class='box'>
+	<div class='body'>
 		Absolute has suffered from internal server errors, and due to this, has crashed.<br /><br />
 		
 		<a href="javascript:history.go(-1);">Go Back A Page?</a>

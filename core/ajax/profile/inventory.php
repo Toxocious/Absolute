@@ -6,8 +6,8 @@
   {
 		echo "
 			<div class='panel'>
-				<div class='panel-heading'>Inventory</div>
-				<div class='panel-body'>
+				<div class='head'>Inventory</div>
+				<div class='body'>
 					Inventory
 				</div>
 			</div>

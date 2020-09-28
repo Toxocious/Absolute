@@ -14,9 +14,9 @@
 	}
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Clan Listings</div>
-	<div class='box'>
+	<div class='body'>
 		<div class='description' style='margin-bottom: 5px;'>
 			Every clan that has been created can be found below.<br />
 			Can you make it to the top?

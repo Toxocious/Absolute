@@ -16,15 +16,15 @@
 ?>
 
 <div class='head'>Staff Manager</div>
-<div class='box'>
+<div class='body'>
 	<div class='description' style='margin-bottom: 5px;'>
 		Click on a current staff member in order to edit their current position or power level.
 	</div>
 
 	<div class='row'>
 		<div class='panel' style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>
-			<div class='panel-heading'>Staff List</div>
-			<div class='panel-body' style='padding: 5px;'>
+			<div class='head'>Staff List</div>
+			<div class='body' style='padding: 5px;'>
 				<button onclick='' style='margin-bottom: 5px; width: 95%;'>Add Staff Member</button>
 
 				<table class='standard' style='margin: 0 auto; width: 95%;'>
@@ -66,8 +66,8 @@
 		</div>
 
 		<div class='panel' style='float: left; width: calc(100% / 2 - 2.5px);'>
-			<div class='panel-heading'>Selected Staff Member</div>
-			<div class='panel-body' id='AJAX' style='padding: 5px;'>
+			<div class='head'>Selected Staff Member</div>
+			<div class='body' id='AJAX' style='padding: 5px;'>
 				Please select a staff member.
 			</div>
 		</div>

@@ -1,10 +1,10 @@
 <?php
   require 'core/required/layout_top.php';
 
-  $Profile_Search = $Purify->Cleanse($_GET['id']);
+  $Profile_Search = (int) $Purify->Cleanse($_GET['id']);
   try
   {
-    $Fetch_Profile_User = $PDO->prepare("SELECT `id`, `Username`, `Avatar`, `Rank`, `Money`, `Last_Active`, `Date_Registered`, `Playtime` FROM `users` WHERE `id` = ? OR `Username` = ? LIMIT 1");
+    $Fetch_Profile_User = $PDO->prepare("SELECT `id`, `Username`, `Avatar`, `Rank`, `Last_Active`, `Date_Registered`, `Playtime` FROM `users` WHERE `id` = ? OR `Username` = ? LIMIT 1");
     $Fetch_Profile_User->execute([ $Profile_Search, $Profile_Search ]);
     $Profile_Data = $Fetch_Profile_User->fetch();
 
@@ -17,16 +17,16 @@
   {
     echo $e->getMessage();
   }
-	
+
   if ( isset($Profile_Data['id']) )
   {
     $Current_Time = time();
     $Calc_Difference = $Current_Time - $Profile_Data['Last_Active'];
 ?>
 
-<div class='content'>
+<div class='panel content'>
   <div class='head'><?= $Profile_Data['Username']; ?>'s Profile</div>
-  <div class='box profile'>
+  <div class='body profile'>
     <?php
       if ( $User_Data['Power'] > 5 )
       {
@@ -49,8 +49,8 @@
     ?>
     <div class='row' style='margin-bottom: 5px;'>
       <div class='panel'>
-        <div class='panel-heading'>Staff Options</div>
-        <div class='panel-body staff_options'>
+        <div class='head'>Staff Options</div>
+        <div class='body staff_options'>
           <div style='border-right: 1px solid <?= $Border_Color; ?>; float: left; padding: 3px; width: calc(100% / 3);'>
             <a style='display: block;' href='staff/ban.php?id=<?= $Profile_Data['id']; ?>'>
               Ban <?= $Profile_Data['Username']; ?>            
@@ -75,10 +75,10 @@
 
     <div class='row'>
       <div class='panel' style='float: left; margin-right: 0.5%; width: 49.75%;'>
-        <div class='panel-heading'>
+        <div class='head'>
           <?= $Profile_Data['Username']; ?> - #<?= number_format($Profile_Data['id']); ?>
         </div>
-        <div class='panel-body' style='padding: 5.5px;'>
+        <div class='body' style='padding: 5.5px;'>
           <div style='float: left; width: 35%;'>
             <img src='<?= $Profile_Data['Avatar']; ?>' />
           </div>
@@ -120,8 +120,8 @@
       </div>
 
       <div class='panel' style='float: left; margin-bottom: 6px; width: 49.75%;'>
-        <div class='panel-heading'>Interactions</div>
-        <div class='panel-body interactions'>
+        <div class='head'>Interactions</div>
+        <div class='body interactions'>
           <div>
             <div style='float: left; padding: 3px; width: 50%;'>
               <a href='<?= Domain(1); ?>/trades.php?Action=Create&ID=<?= $Profile_Data['id'] ?>' style='display: block;'>
@@ -148,8 +148,8 @@
       </div>
 
       <div class='panel' style='float: left; width: 49.75%;'>
-        <div class='panel-heading'>Navigation</div>
-        <div class='panel-body navi'>
+        <div class='head'>Navigation</div>
+        <div class='body navi'>
           <div>
             <div style='float: left; padding: 2px; width: calc(100% / 3);'>
               <a href='javascript:void(0);' onclick='profileTab("Roster");' style='display: block;'>
@@ -178,8 +178,8 @@
 
     <div class='row' id='profileAJAX' style='margin-top: 5px;'>
       <div class='panel'>
-        <div class='panel-heading'>Loading</div>
-        <div class='panel-body'>Loading</div>
+        <div class='head'>Loading</div>
+        <div class='body'>Loading</div>
       </div>
     </div>
   </div>
@@ -193,7 +193,7 @@
 
   function profileTab(tab)
   {
-    $('#profileAJAX').html("<div class='panel'><div class='panel-heading'>Loading</div><div class='panel-body' style='padding: 5px;'>Loading</div></div>");
+    $('#profileAJAX').html("<div class='panel'><div class='head'>Loading</div><div class='body' style='padding: 5px;'>Loading</div></div>");
     $.get('core/ajax/profile/' + tab + '.php', { id: '<?= $_GET['id']; ?>' }, function(data)
     {
       $('#profileAJAX').html(data);
@@ -237,9 +237,9 @@
   else
   {
     echo "
-      <div class='content'>
+      <div class='panel content'>
         <div class='head'>Nonexistent Profile</div>
-        <div class='box'>
+        <div class='body'>
           <div class='error'>This user does not exist.</div>
         </div>
       </div>

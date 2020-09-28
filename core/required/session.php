@@ -17,6 +17,8 @@
 		}
 	}
 
+	timer();
+
   // Set the timezone that Absolute is based on.
 	date_default_timezone_set('America/Los_Angeles');
 	$Date = date("M dS, Y g:i:s A");
@@ -98,7 +100,7 @@
 	 */
 	if ( isset($_SESSION['abso_user']) )
 	{
-		$Fetch_User = $PDO->prepare("SELECT * FROM `users` WHERE `id` = ? LIMIT 1");
+		$Fetch_User = $PDO->prepare("SELECT * FROM `users` INNER JOIN `user_currency` ON `users`.`id`=`user_currency`.`User_ID` WHERE `id` = ? LIMIT 1");
 		$Fetch_User->execute([ $_SESSION['abso_user'] ]);
 		$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 		$User_Data = $Fetch_User->fetch();

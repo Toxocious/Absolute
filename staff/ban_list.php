@@ -31,8 +31,8 @@
 		{
 			echo "
 				<div class='panel' style='margin-top: 5px;'>
-					<div class='panel-heading'>{$Type} Bans</div>
-					<div class='panel-body' style='padding: 5px;'>
+					<div class='head'>{$Type} Bans</div>
+					<div class='body' style='padding: 5px;'>
 						There are currently no {$Type} bans.
 					</div>
 				</div>
@@ -46,8 +46,8 @@
 
 				echo "
 					<div class='panel' style='margin-top: 5px;'>
-						<div class='panel-heading'>Ban #" . number_format($Value['ID']) . "</div>
-						<div class='panel-body navi'>
+						<div class='head'>Ban #" . number_format($Value['ID']) . "</div>
+						<div class='body navi'>
 
 							<div>
 								<div style='float: left; padding: 5px; width: 50%;'>
@@ -88,11 +88,11 @@
 ?>
 
 <div class='head'>Ban List</div>
-<div class='box'>
+<div class='body'>
 
 	<div class='panel'>
-		<div class='panel-heading'>Ban Types</div>
-		<div class='panel-body navi'>
+		<div class='head'>Ban Types</div>
+		<div class='body navi'>
 			<div>
 				<div style='float: left; padding: 2px; width: calc(100% / 2);'>
 					<a href='javascript:void(0);' onclick='ShowBans("RPG");' style='display: block;'>

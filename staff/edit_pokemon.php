@@ -4,22 +4,22 @@
 ?>
 
 <div class='head'>Edit Pokemon</div>
-<div class='box'>
+<div class='body'>
 	<div class='description' style='margin-bottom: 5px;'>
 		Enter the Pokemon's database ID, and you'll be able to edit it's properties.
 	</div>
 
 	<div class='panel' style='margin: 0 auto; width: 60%;'>
-		<div class='panel-heading'>Find A Pokemon</div>
-		<div class='panel-body' style='padding: 5px;'>
+		<div class='head'>Find A Pokemon</div>
+		<div class='body' style='padding: 5px;'>
 			<input type='text' placeholder='Pokemon ID' id='Poke_ID' style='text-align: center;' /><br />
 			<button onclick='FindPokemon();' style='width: 180px;'>Search Pokemon</button>
 		</div>
 	</div>
 
 	<div class='panel' style='margin: 5px auto 0px; width: 60%;'>
-		<div class='panel-heading'>Selected Pokemon</div>
-		<div class='panel-body' id='AJAX' style='padding: 5px;'>
+		<div class='head'>Selected Pokemon</div>
+		<div class='body' id='AJAX' style='padding: 5px;'>
 			Please search for a Pokemon.
 		</div>
 	</div>

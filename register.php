@@ -4,9 +4,9 @@
 	if ( isset($_SESSION['abso_user']) )
 	{
 		echo "
-			<div class='content'>
+			<div class='panel content'>
 				<div class='head'>Register</div>
-				<div class='box'>
+				<div class='body'>
 					You may not access this page while you're logged in.
 				</div>
 			</div>
@@ -36,30 +36,30 @@
 			// Field Check
 			if ( $Username == '' || $Password == '' || $Password_Confirm == '' || $Gender == '' )
 			{
-				$Oops = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>You must fill in all fields.</div>";
+				$Error = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>You must fill in all fields.</div>";
 			}
 			else if ( $Username_Available == '1' )
 			{
-				$Oops = "<div>The username that you have chosen is already taken.</div>";
+				$Error = "<div>The username that you have chosen is already taken.</div>";
 			}
 			else if ( $Password != $Password_Confirm )
 			{
-				$Oops = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>The passwords that you have entered do not match.</div>";
+				$Error = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>The passwords that you have entered do not match.</div>";
 			}
 			else if ( $Avatar > 352 || $Avatar < 1 )
 			{
-				$Oops = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid avatar.</div>";
+				$Error = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid avatar.</div>";
 			}
 			else if ( !in_array($Gender, ['m', 'f', 'u']) )
 			{
-				$Oops = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid gender.</div>";
+				$Error = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid gender.</div>";
 			}
 			else if ( !in_array($Starter, ['1', '4', '7', '152', '155', '158', '252', '255', '258', '387', '390', '393', '495', '498', '501', '650', '653', '656', '722', '725', '728']) )
 			{
-				$Oops = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid starter Pokemon.</div>";
+				$Error = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid starter Pokemon.</div>";
 			}
 
-			if ( !isset($Oops) )
+			if ( !isset($Error) )
 			{
 				$Base_Salt = GAME_DEFAULT_SALT;
 				$Base_Key = RandSalt(80);
@@ -96,6 +96,9 @@
 					");
 					$User_Create->execute([ $Username, $Hashed_Password, $Base_Key, $Gender, time(), "images/Avatars/".$Avatar.".png", $Auth_Code ]);
 					$User_ID = $PDO->lastInsertId();
+
+					$User_Currency_Create = $PDO->prepare("INSERT INTO `user_currency` ( `User_ID` ) VALUES ( ? )");
+					$User_Currency_Create->execute([ $User_ID ]);
 
 					$Nature_List = [
 						'Lonely',	'Adamant', 'Naughty', 'Brave', 'Bold', 'Impish', 'Lax', 'Relaxed', 'Modest', 'Mild', 'Rash', 'Quiet', 'Calm', 'Gentle', 'Careful', 'Sassy', 'Timid', 'Hasty', 'Jolly', 'Naive', 'Bashful', 'Docile', 'Hardy', 'Quirky', 'Serious',	
@@ -136,7 +139,7 @@
 					HandleError( $e->getMessage() );
 				}
 
-				$Oops = "
+				$Error = "
 					<div class='success' style='margin-bottom: -15px; width: 70%;'>
 						You've successfully registered an account on The Pokemon Absolute!<br />
 						<a href='login.php'><b>Click Here To Login</b></a>
@@ -146,9 +149,9 @@
 		}
 ?>
 
-<div class='content' style='margin: 5px; max-height: calc(100% - 135px); width: calc(100% - 10px)'>
+<div class='panel content' style='margin: 5px; max-height: calc(100% - 135px); width: calc(100% - 10px)'>
 	<div class='head'>Register</div>
-	<div class='box pokecenter'>
+	<div class='body pokecenter'>
 		<div class='nav'>
 			<div><a href='index.php' style='display: block;'>Home</a></div>
 			<div><a href='login.php' style='display: block;'>Login</a></div>
@@ -157,9 +160,9 @@
 		</div>
 
 		<?php
-			if ( isset($Oops) )
+			if ( isset($Error) )
 			{
-				echo $Oops . "<br />";
+				echo $Error . "<br />";
 			}
 		?>
 		
@@ -167,8 +170,8 @@
 
 		<form action="/register.php" method="post">
 			<div class='panel' style='margin-bottom: 5px;'>
-				<div class='panel-heading'>User Details</div>
-				<div class='panel-body' style='padding: 3px;'>
+				<div class='head'>User Details</div>
+				<div class='body' style='padding: 3px;'>
 					<div style='float: left; width: calc(100% / 3);'>
 						<b>Username</b><br />
 						<input type='text' name='username' placeholder='Username' />
@@ -198,8 +201,8 @@
 
 			<div class='row'>
 				<div class='panel' style='float: left; margin-left: 15px; width: calc(100% / 2 - 20px);'>
-					<div class='panel-heading'>Select A Starter</div>
-					<div class='panel-body'>
+					<div class='head'>Select A Starter</div>
+					<div class='body'>
 						<div class='row'>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
 								<img src='images/Pokemon/Normal/001.png' />
@@ -370,8 +373,8 @@
 				</div>
 
 				<div class='panel' style='float: left; margin-left: 5px; width: calc(100% / 2 - 15px);'>
-					<div class='panel-heading'>Select An Avatar</div>
-					<div class='panel-body' style='max-height: 552px; overflow: auto;'>
+					<div class='head'>Select An Avatar</div>
+					<div class='body' style='max-height: 552px; overflow: auto;'>
 						<div class='row'>
 							<?php
 								for ( $i = 1; $i <= 352; $i++ ) {

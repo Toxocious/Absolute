@@ -4,8 +4,8 @@
 
 <div class='description' style='margin-bottom: 5px;'>Enter a user's ID to begin a trade with them.</div>
 <div class='panel' style='margin-top: 5px;'>
-	<div class='panel-heading'>Create A Trade</div>
-	<div class='panel-body' style='padding: 5px;'>
+	<div class='head'>Create A Trade</div>
+	<div class='body' style='padding: 5px;'>
 		<input type='text' placeholder='User ID' id='recipientID' style='text-align: center; width: 200px;'/><br />
 		<button onclick='TradePrepare();' style='width: 200px;'>Begin A Trade</button>
 	</div>
@@ -13,8 +13,8 @@
 
 <div class='description' style='margin: 5px 0px;'>All ingoing and outgoing trades that involve you are listed below.</div>
 <div class='panel' style='margin-top: 5px;'>
-	<div class='panel-heading'>Pending Trades</div>
-	<div class='panel-body' style='padding: 5px;'>
+	<div class='head'>Pending Trades</div>
+	<div class='body' style='padding: 5px;'>
 		<?php
 			try
 			{

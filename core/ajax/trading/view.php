@@ -76,8 +76,8 @@
 			<div class='row'>
 				<div style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>
 					<div class='panel' style='margin-bottom: 5px;'>
-						<div class='panel-heading'><?= $Sender['Username']; ?>'s Belongings</div>
-						<div class='panel-body'>
+						<div class='head'><?= $Sender['Username']; ?>'s Belongings</div>
+						<div class='body'>
 							<?php
 								try
 								{
@@ -173,8 +173,8 @@
 
 				<div style='float: left; width: calc(100% / 2 - 2.5px);'>
 					<div class='panel' style='margin-bottom: 5px;'>
-						<div class='panel-heading'><?= $Recipient['Username']; ?>'s Belongings</div>
-						<div class='panel-body'>
+						<div class='head'><?= $Recipient['Username']; ?>'s Belongings</div>
+						<div class='body'>
 							<?php
 								try
 								{

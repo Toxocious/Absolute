@@ -65,30 +65,29 @@
   
   if ( isset($User_ID) )
   {
-?>
+    if ( count($Box_Pokemon) == 0 )
+    {
+      echo "No Pokemon have been found given your search parameters.";
+    }
+    else
+    {
+      $Pagination = Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_ID, $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
 
-	<div class='page_nav'>
-		<?php
-			Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_ID, $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
-		?>
-	</div>
+      echo "
+        {$Pagination}
+        <div style='height: 172px; padding: 0px 0px 5px;'>
+      ";
 
-	<div style='height: 156px; padding: 3px;'>
-		<?php
-			foreach ( $Box_Pokemon as $Index => $Pokemon )
-			{
-				$Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
-				echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
-			}
+      foreach ( $Box_Pokemon as $Index => $Pokemon )
+      {
+        $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+        echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
+      }
 
-			if ( count($Box_Pokemon) == 0 )
-			{
-				echo "No Pokemon have been found given your search parameters.";
-			}
-		?>
-	</div>
-
-<?php
+      echo "
+        </div>
+      ";
+    }
   }
 
 	exit();

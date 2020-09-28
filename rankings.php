@@ -20,14 +20,14 @@
 	}
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Global Rankings</div>
-	<div class='box'>
+	<div class='body'>
 
 		<!--
 		<div class='panel' style='margin-bottom: 5px;'>
-			<div class='panel-heading'>Categories</div>
-			<div class='panel-body'>
+			<div class='head'>Categories</div>
+			<div class='body'>
 				<div>Pokemon</div>
 				<div>Trainer</div>
 			</div>
@@ -37,8 +37,8 @@
 		<div id='RankingAJAX'>
 			
 			<div class='panel' style='margin: 0px auto 5px; width: 50%;'>
-				<div class='panel-heading'>Top Pokemon</div>
-				<div class='panel-body'>
+				<div class='head'>Top Pokemon</div>
+				<div class='body'>
 					<div style='float: left; width: 50%;'>
 						<img src='<?= $Top['Sprite']; ?>' /><br />
 						<b><?= $Top['Display_Name']; ?></b>

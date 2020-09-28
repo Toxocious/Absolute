@@ -1,0 +1,34 @@
+:root {
+  --banner-bg-size: 1100px 140px;
+  --banner-image: url("../../images/Assets/banner.png");
+  --banner-height: 125px;
+  --banner-padding: 5px 3px 0px 0px;
+  --border-radius: 6px;
+  --border-radius-tl: 6px 0px 0px 0px;
+  --border-radius-tr: 0px 6px 0px 0px;
+  --border-radius-br: 0px 0px 6px 0px;
+  --border-radius-bl: 0px 0px 0px 6px;
+  --border-radius-tl-tr: 6px 6px 0px 0px;
+  --border-radius-tl-bl: 6px 0px 0px 6px;
+  --border-radius-tr-br: 0px 6px 6px 0px;
+  --border-radius-bl-br: 0px 0px 6px 6px;
+  --border-radius-tr-br-bl: 0px 6px 6px;
+  --border-radius-50p: 50%;
+  --border-gradient-padding: 2px;
+  --border-style: 2px solid;
+  --display-flex: flex;
+  --display-block: block;
+  --display-inline-block: inline-block;
+  --margin-center: 0 auto;
+  --minus-22px: -22px;
+  --padding-0px: 0px;
+  --padding-3px: 3px;
+  --padding-4px: 4px;
+  --padding-5px: 5px;
+  --set-80p: 80%;
+  --set-150px: 150px;
+  --set-100px: 100px;
+  --set-40px: 40px;
+}
+
+/*# sourceMappingURL=root.css.map */

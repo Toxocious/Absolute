@@ -5,9 +5,9 @@
 	{
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Index</div>
-	<div class='box'>
+	<div class='body'>
 		Welcome back to Absolute, <?= $User_Data['Username']; ?>.
 		<br /><br />
 		<i>misc user statistics here and stuff</i>
@@ -36,9 +36,9 @@
 		}
 ?>
 
-<div class='content' style='margin: 5px; width: calc(100% - 10px);'>
+<div class='panel content' style='margin: 5px; width: calc(100% - 10px);'>
 	<div class='head'>Index</div>
-	<div class='box'>
+	<div class='body'>
 		<div class='nav'>
 			<div><a href='index.php' style='display: block;'>Home</a></div>
 			<div><a href='login.php' style='display: block;'>Login</a></div>

@@ -1,0 +1,45 @@
+:root {
+  --color-primary: #4a618f;
+  --color-secondary: #3b4d72;
+  --color-tertiary: #2c3a55;
+  --color-quadternary: #253147;
+  --color-quinary: #1d2639;
+  --color-sexary: #161d2a;
+  --color-septary: #0e131c;
+  --color-gradient-one: #8090b0;
+  --color-gradient-two: #334364;
+  --color-black: #000;
+  --color-white: #fff;
+  --color-light-grey: #777;
+  --color-mid-grey: #555;
+  --color-dark-grey: #333;
+  --color-chat-pmsg: #330000;
+
+  --border-color-success: #25e845;
+  --border-color-error: #c90e0e;
+  --border-color-warning: #fcbc19;
+  --border-color-description: #4A618F;
+  --bg-success: #2c3a55;
+  --bg-error: #2c3a55;
+  --bg-warning: #2c3a55;
+  --bg-description: #2c3a55;
+  --color-success: #fff;
+  --color-error: #fff;
+  --color-warning: #fff;
+  --color-description: #fff;
+
+  --border-color: #4a618f;
+  --border-color-secondary: #000;
+  --border-gradient: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
+
+  --box-shadow: 0px 1px 5px #000;
+  --box-shadow-nav: rgba(2, 8, 20, 1) 1px 1px 1em 0px;
+
+  --rank-member: #fff;
+  --rank-chat-mod: #5519fc;
+  --rank-moderator: #fcbc19;
+  --rank-super-mod: #25e1e8;
+  --rank-developer: #bf00ff;
+  --rank-bot: #25e845;
+  --rank-administrator: #c90e0e;
+}

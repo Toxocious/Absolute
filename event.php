@@ -2,9 +2,9 @@
 	require 'core/required/layout_top.php';
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Event</div>
-	<div class='box'>
+	<div class='body'>
 		<div class='description' style='margin-bottom: 5px;'>
 			Welcome to the main page for any and all events that are held on Absolute!
 		</div>

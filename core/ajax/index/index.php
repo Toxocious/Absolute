@@ -11,13 +11,13 @@
 				$Poster_Data = mysqli_fetch_assoc(mysqli_query($con, "SELECT * FROM members WHERE id = '" . $Query['Poster_ID'] . "'"));
 				
 				echo	"<div class='panel panel-default' style='margin: 5px'>";
-				echo		"<div class='panel-heading'>";		
+				echo		"<div class='head'>";		
 				echo			"<div>";
 				echo				$Query['News_Title'];
 				echo			"</div>";
 				echo		"</div>";
 						
-				echo		"<div class='panel-body' style='padding: 0px'>";
+				echo		"<div class='body' style='padding: 0px'>";
 				echo			"<div class='col-xs-3'>";
 				echo				"<div style='height: 96px; margin: 0 auto; padding: 5px; width: 96px;'>";
 				echo					"<span class='alignment'></span>";
@@ -47,8 +47,8 @@
 		
 		# Display the login form.
 		elseif ( $_POST['id'] === '2' ) {
-			echo	"<div class='panel-heading' style='border-top-left-radius: 0px'>Error</div>";
-			echo	"<div class='panel-body'>";
+			echo	"<div class='head' style='border-top-left-radius: 0px'>Error</div>";
+			echo	"<div class='body'>";
 			echo		"An error has occurred.</div>";
 			echo	"</div>";
 		}
@@ -57,16 +57,16 @@
 		elseif ( $_POST['id'] === '3' ) {
 ?>
 
-<div class='panel-heading' style='border-top-left-radius: 0px'>Register</div>
-<div class='panel-body'>
+<div class='head' style='border-top-left-radius: 0px'>Register</div>
+<div class='body'>
 	<div id='result'></div>
 	
 	<form id='registration_form' action="index.php" method="post">
 		<div class='row'>
 			<div class='col-xs-6'>
 				<div class='panel panel-default' style='margin-bottom: 5px;'>
-					<div class='panel-heading'>Username</div>
-					<div class='panel-body' style='padding: 5px'>
+					<div class='head'>Username</div>
+					<div class='body' style='padding: 5px'>
 						<input type='text' name='Username' placeholder='Username' style='margin-bottom: 0px; text-align: center;' />
 					</div>
 				</div>
@@ -74,8 +74,8 @@
 
 			<div class='col-xs-6'>
 				<div class='panel panel-default' style='margin-bottom: 5px;'>
-					<div class='panel-heading'>Gender</div>
-					<div class='panel-body' style='padding: 6px'>
+					<div class='head'>Gender</div>
+					<div class='body' style='padding: 6px'>
 						<select name='Gender' style='width: 180px'>
 							<option>Select A Gender</option>
 							<option value='1'>Female</option>
@@ -90,8 +90,8 @@
 		<div class='row'>
 			<div class='col-xs-6'>
 				<div class='panel panel-default' style='margin-bottom: 5px;'>
-					<div class='panel-heading'>Password</div>
-					<div class='panel-body' style='padding: 5px'>
+					<div class='head'>Password</div>
+					<div class='body' style='padding: 5px'>
 						<input type='password' name='Password' placeholder='Password' style='margin-bottom: 0px; text-align: center;' />
 					</div>
 				</div>
@@ -99,8 +99,8 @@
 
 			<div class='col-xs-6'>
 				<div class='panel panel-default' style='margin-bottom: 5px;'>
-					<div class='panel-heading'>Confirm Password</div>
-					<div class='panel-body' style='padding: 5px'>
+					<div class='head'>Confirm Password</div>
+					<div class='body' style='padding: 5px'>
 						<input type='password' name='Password_Confirm' placeholder='Confirm Password' style='margin-bottom: 0px; text-align: center;' />
 					</div>
 				</div>
@@ -110,8 +110,8 @@
 		<div class='row'>
 			<div class='col-xs-6'>
 				<div class='panel panel-default'>
-					<div class='panel-heading'>Choose An Avatar</div>
-					<div class='panel-body'>
+					<div class='head'>Choose An Avatar</div>
+					<div class='body'>
 						<div style='margin-bottom: 17.5px; margin-top: 17.5px;'>
 							<img src='images/Avatars/Sprites/1.png' id='selectedAvatar' />
 						</div>
@@ -130,8 +130,8 @@
 
 			<div class='col-xs-6'>
 				<div class='panel panel-default'>
-					<div class='panel-heading'>Choose A Starter</div>
-					<div class='panel-body'>
+					<div class='head'>Choose A Starter</div>
+					<div class='body'>
 						<div style='margin-bottom: 10px; margin-top: 10px;'>
 							<img src='images/Pokemon/Normal/1.png' id='selectedStarter' />
 						</div>
@@ -201,8 +201,8 @@
 		
 		# Display an error since the user is tampering with the javascript function.
 		else {
-			echo	"<div class='panel-heading'>Error</div>";
-			echo	"<div class='panel-body'>";
+			echo	"<div class='head'>Error</div>";
+			echo	"<div class='body'>";
 			echo		"An error has occurred.</div>";
 			echo	"</div>";
 		}

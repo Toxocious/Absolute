@@ -28,9 +28,9 @@
 		if ( $Param == "upgrades" )
 		{
 			echo "
-				<div class='content'>
+				<div class='panel content'>
 					<div class='head'>Manage Upgrades</div>
-					<div class='box'>
+					<div class='body'>
 						Manage the clan's upgrades.
 					</div>
 				</div>
@@ -43,9 +43,9 @@
 		if ( $Param == "details" )
 		{
 			echo "
-				<div class='content'>
+				<div class='panel content'>
 					<div class='head'>Manage Details</div>
-					<div class='box'>
+					<div class='body'>
 						Add, remove, or change the clan's avatar or signature.
 					</div>
 				</div>
@@ -63,9 +63,9 @@
 				$User = $User_Class->FetchUserData($ID);
 
 				echo "
-					<div class='content'>
+					<div class='panel content'>
 						<div class='head'>Managing {$User['Username']}</div>
-						<div class='box'>
+						<div class='body'>
 							<div class='row'>
 								<div style='float: left; padding-top: 25px; width: calc(100% / 3);'>
 									Would you like to kick {$User['Username']} from the clan?<br />
@@ -112,9 +112,9 @@
 				}
 
 				echo "
-					<div class='content'>
+					<div class='panel content'>
 						<div class='head'>Manage Members</div>
-						<div class='box'>
+						<div class='body'>
 							<div class='row'>
 				";
 
@@ -194,9 +194,9 @@
 		$Cost = number_format($Constants->Clan['Creation_Cost']);
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Create A Clan</div>
-	<div class='box'>
+	<div class='body'>
 		<?php
 			if ( isset($Error) && $Error != '' )
 			{
@@ -249,9 +249,9 @@
 		}
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Clan Headquarters</div>
-	<div class='box'>
+	<div class='body'>
 		<?php
 			if ( $Clan['Signature'] != null )
 			{
@@ -266,8 +266,8 @@
 			{
 				echo "
 					<div class='panel' style='border-width: 2px; margin-top: 5px;'>
-						<div class='panel-heading'>Staff Options</div>
-						<div class='panel-body'>
+						<div class='head'>Staff Options</div>
+						<div class='body'>
 							<div style='border-right: 1px solid {$Border_Color}; float: left; padding: 3px; width: calc(100% / 3);'>
 								<a style='display: block;' href='clan.php?manage=members'>Manage Members</a>
 							</div>
@@ -285,8 +285,8 @@
 
 		<div class='row'>
 			<div class='panel' style='border-width: 2px; float: left; margin-right: 5px; margin-top: 5px; width: 300px;'>
-				<div class='panel-heading'><?= $Clan['Name']; ?></div>
-				<div class='panel-body'>
+				<div class='head'><?= $Clan['Name']; ?></div>
+				<div class='body'>
 					<?php
 						if ( $Clan['Avatar'] != null )
 						{

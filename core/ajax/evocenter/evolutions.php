@@ -24,9 +24,7 @@
 			HandleError( $e->getMessage() );
 		}
 
-		//var_dump($Evolution);
-
-		$Evo_Data = $Poke_Class->FetchPokedexData($Evo_To, $Evo_Alt);
+		$Evo_Data = $Poke_Class->FetchPokedexData($Evo_To, $Evo_Alt, $Pokemon['Type']);
 
 		/**
 		 * Double check to ensure that the Pokemon is able to evolve.
@@ -82,7 +80,7 @@
 		{
 			echo "
 				<div class='success' style='margin-bottom: 5px;'>
-					You have successfully evolved your 'x' into 'y'!
+					You have successfully evolved your {$Pokemon['Display_Name']} into {$Evo_Data['Display_Name']}!
 				</div>
 			";
 
@@ -99,51 +97,106 @@
 	}
 
 	/**
-	 * Handle displaying evolutionary requirements and details of a Pokemon.
+	 * Display the available evoltuions of the selected Pokemon.
 	 */
 	if ( isset($_POST['id']) )
 	{
 		$Poke_ID = Purify($_POST['id']);
 		$Pokemon = $Poke_Class->FetchPokemonData($Poke_ID);
+		$Time_Of_Day = (date('G') > 7 && date('G') < 19) ? 'Day' : 'Night';
 
 		try
 		{
 			$Fetch_Evolutions = $PDO->prepare("SELECT * FROM `evolution_data` WHERE `poke_id` = ? AND `alt_id` = ?");
 			$Fetch_Evolutions->execute([ $Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'] ]);
 			$Fetch_Evolutions->setFetchMode(PDO::FETCH_ASSOC);
+			$Num_Of_Evos = $Fetch_Evolutions->rowCount();
 		}
 		catch ( PDOException $e )
 		{
 			HandleError( $e->getMessage() );
 		}
 
-		$EvoStatus = false;
+		echo "
+			<table class='border-gradient' style='margin-bottom: 5px; width: 536px;'>
+				<thead>
+					<th colspan='7'>Selected Pok&eacute;mon</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td style='width: 150px;'>
+							<img src='{$Pokemon['Icon']}' />
+						</td>
+						<td>
+							<b>Level</b>
+						</td>
+						<td>
+							<b>Gender</b>
+						</td>
+						<td>
+							<b>Held Item</b>
+						</td>
+						<td>
+							<b>Use Item</b>
+						</td>
+						<td>
+							<b>Time of Day</b>
+						</td>
+						<td>
+							<b>Happiness</b>
+						</td>
+					</tr>
+					<tr>
+						<td>
+							<b>{$Pokemon['Display_Name']}</b>
+						</td>
+						<td>
+							{$Pokemon['Level']}
+						</td>
+						<td>
+							{$Pokemon['Gender']}
+						</td>
+						<td>
+							" . ($Pokemon['Item'] ? $Pokemon['Item'] : 'No Item') . "
+						</td>
+						<td>
+							N/A
+						</td>
+						<td>
+							{$Time_Of_Day}
+						</td>
+						<td>
+							{$Pokemon['Happiness']}
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+			<table class='border-gradient' style='width: 536px;'>
+				<thead>
+					<th colspan='7'>Evolutions</th>
+				</thead>
+				<tbody>
+		";
+
+		/**
+		 * The Pokemon has no available evolutions.
+		 */
+		if ( $Num_Of_Evos === 0 )
+		{
+			echo "
+				<tr>
+					<td colspan='7' style='padding: 5px;'>
+						This Pokemon may not evolve further.
+					</td>
+				</tr>
+			";
+		}
+
 		while ( $Evolution = $Fetch_Evolutions->fetch() )
 		{
-			//var_dump($Evolution);
-
-			$EvoStatus = true;
-
-			$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution['to_poke_id'], $Evolution['to_alt_id']);
-
-			if ( $Evolution_Data['Alt_ID'] != '0' )
-			{
-				$Image_ID = str_pad($Evolution_Data['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Evolution_Data['Alt_ID'];
-			}
-			else
-			{
-				$Image_ID = str_pad($Evolution_Data['Pokedex_ID'], 3, "0", STR_PAD_LEFT);
-			}
-
-			if ( $Pokemon['Type'] != "Normal" )
-			{
-				$Evo_Name = $Pokemon['Type'] . $Evolution_Data['Name'];
-			}
-			else
-			{
-				$Evo_Name = $Evolution_Data['Name'];
-			}
-
+			$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution['to_poke_id'], $Evolution['to_alt_id'], $Pokemon['Type']);
+			
 			/**
 			 * Check to see if you meet all of the evolution requirements.
 			 */
@@ -151,247 +204,113 @@
 			if ( $Evolution['level'] != null && $Evolution['level'] != 0 && ( $Pokemon['Level'] < $Evolution['level']) )
 			{
 				$Error = true;
-				$Checkmark_Level = "<img src='" . Domain(1) . "images/Assets/offline.png' />";
-			}
-			else
-			{
-				$Checkmark_Level = "<img src='" . Domain(1) . "images/Assets/online.png' />";
 			}
 
 			if ( $Evolution['min_happy'] != null && $Evolution['min_happy'] > $Pokemon['Happiness'] )
 			{
 				$Error = true;
-				$Checkmark_Happiness = "<img src='" . Domain(1) . "images/Assets/offline.png' />";
-			}
-			else
-			{
-				$Checkmark_Happiness = "<img src='" . Domain(1) . "images/Assets/online.png' />";
 			}
 
 			if ( $Evolution['item'] != null && $Evolution['item'] != $Pokemon['Item'] )
 			{
 				$Error = true;
-				$Checkmark_Item = "<img src='" . Domain(1) . "images/Assets/offline.png' />";
-			}
-			else
-			{
-				$Checkmark_Item = "<img src='" . Domain(1) . "images/Assets/online.png' />";
 			}
 
 			if ( $Evolution['held_item'] != null && $Evolution['held_item'] != $Pokemon['Item'] )
 			{
 				$Error = true;
-				$Checkmark_Held_Item = "<img src='" . Domain(1) . "images/Assets/offline.png' />";
-			}
-			else
-			{
-				$Checkmark_Held_Item = "<img src='" . Domain(1) . "images/Assets/online.png' />";
 			}
 
 			if ( $Evolution['gender'] != null && ucfirst($Evolution['gender']) != $Pokemon['Gender'] )
 			{
 				$Error = true;
-				$Checkmark_Gender = "<img src='" . Domain(1) . "images/Assets/offline.png' />";
-			}
-			else
-			{
-				$Checkmark_Gender = "<img src='" . Domain(1) . "images/Assets/online.png' />";
 			}
 
 			if ( $Evolution['time'] != null )
 			{
-				$Time = (date('G') > 7 && date('G') < 19) ? 'day' : 'night';
 				if ( $Evolution['time'] != $Time )
 				{
 					$Error = true;
-					$Checkmark_Time = "<img src='" . Domain(1) . "images/Assets/offline.png' />";
-				}
-				else
-				{
-					$Checkmark_Time = "<img src='" . Domain(1) . "images/Assets/online.png' />";
 				}
 			}
-			else
-			{
-				$Checkmark_Time = "<img src='" . Domain(1) . "images/Assets/online.png' />";
-			}
-
 	
-			if ( $Error == true )
+			if ( $Error )
 			{
-				$Button = "
-					<div class='button' style='padding-top: 30px;'>
-						You don't meet the requirements to evolve this Pokemon.
+				$Evolve_Button = "
+					<button class='disabled'>
+						Requirements Not Met
 					</div>
 				";
 			}
 			else
 			{
-				$Button = "
-					<div class='button' style='padding-top: 50px;' onclick='evolve({$Pokemon['ID']}, {$Evolution_Data['Pokedex_ID']}, {$Evolution_Data['Alt_ID']});'>
-						Evolve!
+				$Evolve_Button = "
+					<button onclick='evolve({$Pokemon['ID']}, {$Evolution_Data['Pokedex_ID']}, {$Evolution_Data['Alt_ID']});'>
+						Evolve into {$Evolution_Data['Display_Name']}!
 					</div>
 				";
 			}
 
 			echo "
-				<div class='evolution'>
-					<div class='image'>
-						<img src='" . Domain(1) . "/images/Pokemon/Sprites/{$Pokemon['Type']}/{$Image_ID}.png' />
-						<div>
-							<b>{$Evo_Name}</b>
-						</div>
-					</div>
-					<div class='requirements'>
-						<div><b>Requirements</b></div>
+				<tr>
+					<td style='width: 150px;'>
+						<img src='{$Evolution_Data['Icon']}' />
+					</td>
+					<td>
+						<b>Level</b>
+					</td>
+					<td>
+						<b>Gender</b>
+					</td>
+					<td>
+						<b>Held Item</b>
+					</td>
+					<td>
+						<b>Use Item</b>
+					</td>
+					<td>
+						<b>Time of Day</b>
+					</td>
+					<td>
+						<b>Happiness</b>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<b>{$Evolution_Data['Display_Name']}</b>
+					</td>
+					<td>
+						" . ($Evolution['level'] > 0 ? $Evolution['level'] : 'N/A') . "
+					</td>
+					<td>
+						" . ($Evolution['gender'] ? ucfirst($Evolution['gender']) : 'N/A') . "
+					</td>
+					<td>
+						" . ($Evolution['held_item'] ? $Evolution['held_item'] : 'N/A') . "
+					</td>
+					<td>
+						" . ($Evolution['item'] ? $Evolution['item'] : 'N/A') . "
+					</td>
+					<td>
+						" . ($Evolution['time'] ? $Evolution['time'] : 'N/A') . "
+					</td>
+					<td>
+						" . ($Evolution['min_happy'] ? $Evolution['min_happy'] : 'N/A') . "
+					</td>
+				</tr>
 			";
-
-			if ( $Evolution['level'] != null && $Evolution['level'] != 0 )
-			{
-				echo "
-					<div>
-						<div>
-							Level
-						</div>
-
-						<div>
-						<img src='" . Domain(1) . "images/Assets/level.png' style='height: 30px; width: 30px;' /><br />
-							{$Evolution['level']}
-						</div>
-
-						<div>
-							$Checkmark_Level
-						</div>
-					</div>
-				";
-			}
-
-			if ( $Evolution['gender'] != null )
-			{
-				echo "
-					<div>
-						<div>
-							Gender
-						</div>
-
-						<div>
-							<img src='" . Domain(1) . "images/Assets/{$Evolution['gender']}.svg' style='height: 30px; width: 30px;' /><br />
-							" . ucfirst($Evolution['gender']) . "
-						</div>
-
-						<div>
-							$Checkmark_Gender
-						</div>
-					</div>
-				";
-			}
-
-			if ( $Evolution['item'] != null )
-			{
-				echo "
-					<div>
-						<div>
-							Item
-						</div>
-
-						<div>
-							<img src='" . Domain(1) . "images/Items/{$Evolution['item']}.png' /><br />
-							{$Evolution['item']}
-						</div>
-
-						<div>
-							$Checkmark_Item
-						</div>
-					</div>
-				";
-			}
-
-			if ( $Evolution['held_item'] != null )
-			{
-				echo "
-					<div>
-						<div>
-							Held Item
-						</div>
-
-						<div>
-							<img src='" . Domain(1) . "images/Items/{$Evolution['held_item']}.png' /><br />
-							{$Evolution['held_item']}
-						</div>
-
-						<div>
-							$Checkmark_Held_Item
-						</div>
-					</div>
-				";
-			}
-
-			if ( $Evolution['time'] != null )
-			{
-				if ( $Evolution['time'] == 'day' )
-				{
-					$Time = 'sun';
-				}
-				else
-				{
-					$Time = 'moon';
-				}
-
-				echo "
-					<div>
-						<div>
-							Time
-						</div>
-
-						<div>
-							<img src='" . Domain(1) . "images/Assets/{$Time}.png' style='height: 30px; width: 30px;' /><br />
-							{$Evolution['time']}
-						</div>
-
-						<div>
-							$Checkmark_Time
-						</div>
-					</div>
-				";
-			}
-
-			if ( $Evolution['min_happy'] != null )
-			{
-				echo "
-					<div style='border-right: none;'>
-						<div style='width: 100px;'>
-							Happiness
-						</div>
-
-						<div>
-						<img src='" . Domain(1) . "images/Assets/heart.png' style='height: 30px; width: 30px;' /><br />
-							{$Evolution['min_happy']}
-						</div>
-
-						<div style='width: 100px;'>
-							$Checkmark_Happiness
-						</div>
-					</div>
-				";
-			}
 
 			echo "
-					</div>
-					<div class='button'>
-						$Button
-					</div>
-				</div>
+				<tr>
+					<td colspan='7'>
+						{$Evolve_Button}
+					</td>
+				</tr>
 			";
 		}
 
-		if ( !$EvoStatus )
-		{
-			echo "<div class='error' style='margin: 5px auto; width: 90%;'><b>{$Pokemon['Display_Name']}</b> can not evolve.</div>";
-		}
-
-		exit();
-	}
-	else
-	{
-		return "An error has occurred.";
+		echo "
+				<tbody>
+			</table>
+		";
 	}

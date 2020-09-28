@@ -17,14 +17,14 @@
 		 * =========
 		 * Username, ID, Rank, Power, Playtime, Registration Date, Last Active, Signature, Chat/RPG Ban Details, Currencies
 		 */
-		public function FetchUserData($UserID)
+		public function FetchUserData($User_ID)
 		{
 			global $PDO;
 
 			try
 			{
-				$Fetch_User = $PDO->prepare("SELECT * FROM `users` WHERE `id` = ? LIMIT 1");
-				$Fetch_User->execute([$UserID]);
+				$Fetch_User = $PDO->prepare("SELECT * FROM `users` INNER JOIN `user_currency` ON `users`.`id`=`user_currency`.`User_ID` WHERE `id` = ?");
+				$Fetch_User->execute([ $User_ID ]);
 				$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 				$User = $Fetch_User->fetch();
 			}
@@ -75,6 +75,33 @@
 		}
 
 		/**
+		 * Update the user's currency.
+		 * @param $User_ID - The id of the user that we're updating.
+		 * @param $Currency - The DB field name of the currency that we're updating.
+		 * @param $Amount - The amount that we're manipulating the field by.
+		 * @param $Operand - What action to take on the db field, ie addition, subtraction, etc.
+		 */
+		public function RemoveCurrency(int $User_ID, string $Currency, int $Amount)
+		{
+			global $PDO;
+
+			if ( !$User_ID || !$Currency )
+			{
+				return false;
+			}
+
+			try
+			{
+				$Select_Query = $PDO->prepare("UPDATE `user_currency` SET `{$Currency}` = `{$Currency}` - ? WHERE `User_ID` = ? LIMIT 1");
+				$Select_Query->execute([ $Amount, $User_ID ]);
+			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+		}
+
+		/**
 		 * Fetch the user's masteries.
 		 */
 		public function FetchMasteries($User_ID)
@@ -104,19 +131,19 @@
 			switch($Rank['Rank'])
 			{
 				case 'Administrator':
-					return "<div class='admin' style='font-size: {$Font_Size}px'>Administrator</div>";
+					return "<div class='administrator' style='font-size: {$Font_Size}px'>Administrator</div>";
 					break;
 				case 'Bot':
 					return "<div class='bot' style='font-size: {$Font_Size}px'>Bot</div>";
 					break;
 				case 'Developer':
-					return "<div class='dev' style='font-size: {$Font_Size}px'>Developer</div>";
+					return "<div class='developer' style='font-size: {$Font_Size}px'>Developer</div>";
 					break;
 				case 'Super Moderator':
 					return "<div class='super_mod' style='font-size: {$Font_Size}px'>Super Moderator</div>";
 					break;
 				case 'Moderator':
-					return "<div class='mod' style='font-size: {$Font_Size}px'>Moderator</div>";
+					return "<div class='moderator' style='font-size: {$Font_Size}px'>Moderator</div>";
 					break;
 				case 'Chat Moderator':
 					return "<div class='chat_mod' style='font-size: {$Font_Size}px'>Chat Moderator</div>";
@@ -127,16 +154,16 @@
 			}
 		}
 
-		public function DisplayUserName($UserID, $Clan_Tag = false, $Display_ID = false)
+		public function DisplayUserName($UserID, $Clan_Tag = false, $Display_ID = false, $Link = false)
 		{
 			global $PDO;
 
 			try
 			{
-				$Fetch_Username = $PDO->prepare("SELECT `id`, `Username`, `Rank` FROM `users` WHERE `id` = ? LIMIT 1");
-				$Fetch_Username->execute([ $UserID ]);
-				$Fetch_Username->setFetchMode(PDO::FETCH_ASSOC);
-				$Username = $Fetch_Username->fetch();
+				$Fetch_User = $PDO->prepare("SELECT `id`, `Username`, `Rank` FROM `users` WHERE `id` = ? LIMIT 1");
+				$Fetch_User->execute([ $UserID ]);
+				$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
+				$User = $Fetch_User->fetch();
 			}
 			catch ( PDOException $e )
 			{
@@ -145,38 +172,52 @@
 
 			if ( $Display_ID )
 			{
-				$Append_ID = " - #" . number_format($Username['id']);
+				$Append_ID = " - #" . number_format($User['id']);
 			}
 			else
 			{
 				$Append_ID = '';
 			}
 
-			switch ( $Username['Rank'] )
+			/**
+			 * Hyperlink it.
+			 */
+			if ( $Link )
+			{
+				$Apply_Link_1 = "<a href='/profile.php?id={$User['id']}'>";
+				$Apply_Link_2 = "</a>";
+			}
+			else
+			{
+				$Apply_Link_1 = "";
+				$Apply_Link_2 = "";
+			}
+
+			switch ( $User['Rank'] )
 			{
 				case 'Administrator':
-					return "<span class='admin' style='font-size: 14px'>{$Username['Username']}{$Append_ID}</span>";
+					return "{$Apply_Link_1}<span class='administrator' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Bot':
-					return "<span class='bot' style='font-size: 14px'>{$Username['Username']}{$Append_ID}</span>";
+					return "{$Apply_Link_1}<span class='bot' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Developer':
-					return "<span class='dev' style='font-size: 14px'>{$Username['Username']}{$Append_ID}</span>";
+					return "{$Apply_Link_1}<span class='developer' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Super Moderator':
-					return "<span class='super_mod' style='font-size: 14px'>{$Username['Username']}{$Append_ID}</span>";
+					return "{$Apply_Link_1}<span class='super_mod' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Moderator':
-					return "<span class='mod' style='font-size: 14px'>{$Username['Username']}{$Append_ID}</span>";
+					return "{$Apply_Link_1}<span class='moderator' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Chat Moderator':
-					return "<span class='chat_mod' style='font-size: 14px'>{$Username['Username']}{$Append_ID}</span>";
+					return "{$Apply_Link_1}<span class='chat_mod' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Member':
-					return "<span class='member' style='font-size: 14px'>{$Username['Username']}{$Append_ID}</span>";
+					return "{$Apply_Link_1}<span class='member' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				default:
-					return "<span class='member' style='font-size: 14px'>{$Username['Username']}{$Append_ID}</span>";
+					return "{$Apply_Link_1}<span class='member' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 			}
 		}

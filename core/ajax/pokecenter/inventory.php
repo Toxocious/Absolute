@@ -252,8 +252,8 @@
 
 	echo "
 		<div class='panel' style='margin-bottom: 5px;'>
-			<div class='panel-heading'>Inventory</div>
-			<div class='panel-body inventory'>
+			<div class='head'>Inventory</div>
+			<div class='body inventory'>
 				<div>
 	";
 
@@ -286,7 +286,7 @@
 				echo      "<img src='images/Items/" . $Item_Data['Name'] . ".png' />";
 				echo    "</div>";
 				echo    "<b>{$Item_Data['Name']}</b><br />";
-				echo    "x" . number_format($Item['Quantity']);
+				echo    "Owned: " . number_format($Item['Quantity']);
 				echo  "</div>";
 			}
 		}
@@ -298,13 +298,10 @@
 		</div>
 
 		<div class='panel' style='float: left; margin-right: 0.5%; width: 49.75%;'>
-			<div class='panel-heading'>
+			<div class='head'>
 				Attached Items
-				<div style='float: right; padding-right: 5px;'>
-					<a href='javascript:void(0);' onclick=\"itemHandler('detachall');\">Detach All</a>
-				</div>
 			</div>
-			<div class='panel-body' style='padding: 5px 5px 0px 5px;'>";
+			<div class='body' style='padding: 5px 5px 0px 5px;'>";
 
 			if ( count($Equipped_Pokes) == 0 )
 			{
@@ -312,6 +309,12 @@
 			}
 			else
 			{
+				echo "
+					<div style='padding: 0px 5px 5px;'>
+						<button onclick=\"itemHandler('detachall');\" style='width: 50%;'>Detach All</button>
+					</div>
+				";
+
 				foreach ($Equipped_Pokes as $Key => $Value)
 				{
 					$Item_Data = $Item_Class->FetchItemData($Value['Item']);
@@ -319,8 +322,8 @@
 
 					echo "
 						<div class='panel held_item' style='width: 100%;'>
-							<div class='panel-heading'>{$Poke_Data['Display_Name']}</div>
-							<div class='panel-body'>
+							<div class='head'>{$Poke_Data['Display_Name']}</div>
+							<div class='body'>
 								<div style='float: left;'>
 									<img src='{$Poke_Data['Icon']}' />
 									<img src='images/Items/{$Item_Data['Name']}.png' />
@@ -342,8 +345,8 @@
 		</div>
 
 		<div class='panel' style='float: left; width: 49.75%;'>
-			<div class='panel-heading'>Selected Item Data</div>
-			<div class='panel-body' id='itemData'>
+			<div class='head'>Selected Item Data</div>
+			<div class='body' id='itemData'>
 				<div style='padding: 5px;'>Please select an item to use it.</div>
 			</div>
 		</div>

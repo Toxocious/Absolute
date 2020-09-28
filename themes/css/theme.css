@@ -1,0 +1,242 @@
+html {
+  background: var(--color-septary);
+}
+
+body {
+  background: var(--color-sexary);
+  border-color: var(--border-color);
+  color: var(--color-white);
+}
+
+a:link,
+a:visited {
+  color: var(--color-primary);
+}
+
+a:hover {
+  color: var(--color-white);
+}
+
+button {
+  background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
+  border-color: var(--border-color-secondary);
+  color: var(--color-white);
+}
+button.disabled {
+  background: linear-gradient(180deg, var(--color-light-grey) 0, var(--color-dark-grey));
+}
+button:not(.disabled):hover {
+  background: linear-gradient(180deg, var(--color-primary) 0, var(--color-quinary));
+}
+
+/**
+ * Styling for warning, description, success, etc divs.
+ */
+div.description {
+  background: var(--bg-description);
+  border-color: var(--border-color-description);
+  color: var(--color-description);
+}
+div.error {
+  background: var(--bg-error);
+  border-color: var(--border-color-error);
+  color: var(--color-error);
+}
+div.success {
+  background: var(--bg-success);
+  border-color: var(--border-color-success);
+  color: var(--color-success);
+}
+div.warning {
+  background: var(--bg-warning);
+  border-color: var(--border-color-warning);
+  color: var(--color-warning);
+}
+
+/**
+ * Apply drop shadow to an element.
+ */
+.drop-shadow {
+  box-shadow: var(--box-shadow);
+}
+
+/**
+ * Elements that have a gradient border.
+ * All border-gradient elements utilize a drop shadow.
+ */
+.border-gradient {
+  background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
+  box-shadow: var(--box-shadow);
+}
+.border-gradient.hover > div:hover {
+  background: var(--color-secondary);
+}
+.border-gradient div {
+  background: var(--color-quadternary);
+}
+
+/**
+ * Banner
+ */
+header {
+  border-color: var(--border-color);
+}
+
+/**
+ * Navigation Bar
+ */
+nav > .button {
+  background: var(--color-quadternary);
+  border-color: var(--color-primary);
+}
+nav > .button:hover {
+  background: var(--color-tertiary);
+}
+nav > .nav-container {
+  background: var(--color-quadternary);
+  border-color: var(--color-primary);
+}
+nav > .nav-container > .nav-item > a:hover {
+  background: var(--color-tertiary);
+}
+nav > .nav-container > .nav-item > .dropdown {
+  border-color: var(--color-primary);
+  box-shadow: var(--box-shadow-nav);
+}
+nav > .nav-container > .nav-item.has-dropdown:focus-within > .dropdown > .dropdown-item > a {
+  background: var(--color-quadternary);
+}
+nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a:hover {
+  background: var(--color-tertiary);
+}
+
+/**
+ * Panel
+ */
+.panel {
+  background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
+  box-shadow: var(--box-shadow-nav);
+}
+.panel > div:not(:last-child) {
+  border-color: var(--color-secondary);
+}
+.panel > div:not(.head):not(:last-child) {
+  border-color: var(--color-secondary);
+}
+.panel > .head {
+  background: none;
+}
+.panel > .body {
+  background: var(--color-quadternary);
+  border-color: var(--color-secondary);
+}
+.panel > .body > .description {
+  background: var(--color-tertiary);
+  border-color: var(--color-primary);
+}
+.panel > .body > .nav > div {
+  border-color: var(--color-primary);
+  background: var(--color-tertiary);
+}
+.panel > .body > .nav > div:hover {
+  background: var(--color-quinary);
+}
+.panel > .body > .pagi {
+  border-color: var(--color-primary);
+}
+.panel > .body > .pagi > div {
+  border-color: var(--color-primary);
+}
+.panel > .body > .pagi > div:not(:last-child) {
+  border-color: var(--color-primary);
+}
+.panel > .foot {
+  background: var(--color-quadternary);
+  border-color: var(--color-secondary);
+}
+.panel > .foot > form > input {
+  background: var(--color-quadternary);
+  color: var(--color-white);
+}
+
+/**
+ * Sidebar
+ */
+.sidebar > .panel > .head {
+  background: none;
+}
+.sidebar > .panel.chat .message > .avatar {
+  background: linear-gradient(180deg, var(--color-tertiary) 0, var(--color-gradient-one));
+}
+.sidebar > .panel.chat .message > .avatar > a {
+  background: var(--color-quinary);
+}
+.sidebar > .panel.chat .message > .text {
+  background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-tertiary));
+  box-shadow: var(--box-shadow);
+}
+.sidebar > .panel.chat .message > .text > div {
+  background: var(--color-quinary);
+}
+.sidebar > .panel.chat .message.private > .text > div {
+  background: var(--color-chat-pmsg);
+  box-shadow: var(--box-shadow);
+}
+
+/**
+ * Table
+ */
+table > tbody {
+  background: var(--color-quadternary);
+}
+
+/**
+ * Footer
+ */
+footer {
+  background: var(--color-quadternary);
+  border-color: var(--color-primary);
+}
+
+.member {
+  border-color: var(--rank-member);
+  color: var(--rank-member);
+}
+
+.chat_mod {
+  border-color: var(--rank-chat_mod);
+  color: var(--rank-chat_mod);
+}
+
+.moderator {
+  border-color: var(--rank-moderator);
+  color: var(--rank-moderator);
+}
+
+.super_mod {
+  border-color: var(--rank-super_mod);
+  color: var(--rank-super_mod);
+}
+
+.developer {
+  border-color: var(--rank-developer);
+  color: var(--rank-developer);
+}
+
+.bot {
+  border-color: var(--rank-bot);
+  color: var(--rank-bot);
+}
+
+.administrator {
+  border-color: var(--rank-administrator);
+  color: var(--rank-administrator);
+  text-shadow: 0 0 15px var(--rank-administrator);
+  animation-name: rainbow;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}
+
+/*# sourceMappingURL=theme.css.map */

@@ -231,25 +231,6 @@
 		}
 
 		/**
-		 * Check to see if the clicked coordinates are within the accepted range.
-		 */
-		public function CheckCoords($x, $x_min, $x_max, $y, $y_min, $y_max)
-		{
-			if
-			( 
-				$x >= $x_min && $x <= $x_max &&
-				$y >= $y_min && $y <= $y_max
-			)
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
-		}
-
-		/**
 		 * Create battle buttons.
 		 */
 		public function Create_Button($Button)

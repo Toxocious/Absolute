@@ -11,9 +11,9 @@
 	}
 ?>
 
-<div class='content'<?= $width; ?>>
+<div class='panel content'<?= $width; ?>>
 	<div class='head'>404 NOT FOUND</div>
-	<div class='box'>
+	<div class='body'>
 		The page that you are looking for could not be found.<br /><br />
 		
 		<a href="javascript:history.go(-1);">Go Back A Page?</a>

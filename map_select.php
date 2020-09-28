@@ -53,17 +53,17 @@
 	}
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Explore A Map</div>
-	<div class='box'>
+	<div class='body'>
 		<div class='row'>
 			<?php
 				foreach ( $Maps as $Key => $Value )
 				{
 					echo "
 						<div class='panel' style='float: left; width: 49.4%;'>
-							<div class='panel-heading'>{$Value['display_name']}</div>
-							<div class='panel-body' style='padding: 2px;'>
+							<div class='head'>{$Value['display_name']}</div>
+							<div class='body' style='padding: 2px;'>
 								<div style='border: 2px solid #000; border-radius: 4px; float: left; height: 204px; margin-bottom: 5px; width: 204px;'>
 									<img src='images/Maps/{$Value['name']}.png' style='height: 200px; width: 200px;' />
 								</div>

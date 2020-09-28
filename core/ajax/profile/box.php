@@ -70,9 +70,9 @@
 
   <!--
   <div class='panel' style='margin-bottom: 5px;'>
-    <div class='panel-heading'>Filter</div>
-    <div class='panel-body toggle' style='cursor: pointer; padding: 3px;' onclick='toggleFilter();'>Toggle Filter Options</div>
-    <div class='panel-body filter' style='display: none;'>
+    <div class='head'>Filter</div>
+    <div class='body toggle' style='cursor: pointer; padding: 3px;' onclick='toggleFilter();'>Toggle Filter Options</div>
+    <div class='body filter' style='display: none;'>
       <div class='p_search'>
         <input type='text' name='pokemon_search' placeholder='Search For a Pokemon' />
         <select name='pokemon_select'>
@@ -107,19 +107,19 @@
   -->
   
   <div class='panel'>
-    <div class='panel-heading'>
+    <div class='head'>
       Box
       <div style='float: right;'>
         <a href='#'>Filter</a>
       </div>
     </div>
-    <div class='panel-body'>
+    <div class='body'>
       <div class='page_nav'>
         <?php
           Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_ID, $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 36);
         ?>
       </div>
-      <table class='box_cont' style='width: 100%;'>
+      <table div class='body_cont' style='width: 100%;'>
         <?php                  
           $Pokemon_Count = 0;
           foreach ( $Box_Pokemon as $Index => $Pokemon )
@@ -132,7 +132,7 @@
             }
         ?>
 
-            <td class='box_slot popup cboxElement' href='<?= Domain(1); ?>/core/ajax/pokemon.php?id=<?= $Poke_Data['ID']; ?>'>
+            <td div class='body_slot popup cboxElement' href='<?= Domain(1); ?>/core/ajax/pokemon.php?id=<?= $Poke_Data['ID']; ?>'>
               <img src='images/Assets/<?= $Poke_Data['Gender']; ?>.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
               <!--<img src='images/Assets/Female.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />-->
               <span style='float: left;'>
@@ -157,13 +157,13 @@
 
           if ( $Pokemon_Count % 3 == 1 )
           {
-            echo "<td class='box_slot'></td>";
-            echo "<td class='box_slot'></td>";
+            echo "<td div class='body_slot'></td>";
+            echo "<td div class='body_slot'></td>";
           }
 
           if ( $Pokemon_Count % 3 == 2 )
           {
-            echo "<td class='box_slot'></td>";
+            echo "<td div class='body_slot'></td>";
           }
         ?>
       </table>

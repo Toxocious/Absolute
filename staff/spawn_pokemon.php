@@ -4,7 +4,7 @@
 ?>
 
 <div class='head'>Pokemon Spawner</div>
-<div class='box'>
+<div class='body'>
 
 	<div class='description' style='margin-bottom: 5px;'>
 		Here, you may spawn any Pokemon, and give it to any user.
@@ -14,8 +14,8 @@
 
 	<div class='row'>
 		<div class='panel' style='float: left; width: 512px;'>
-			<div class='panel-heading'>Pokemon Selector</div>
-			<div class='panel-body' style='height: 563px; overflow: auto; padding-top: 3px;'>
+			<div class='head'>Pokemon Selector</div>
+			<div class='body' style='height: 563px; overflow: auto; padding-top: 3px;'>
 				<?php
 					try
 					{

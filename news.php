@@ -17,46 +17,39 @@
 
 	if ( !isset($_SESSION['abso_user']) )
 	{
-		$width = " style='margin: 5px; width: calc(100% - 10px);'";
+		$style = " style='margin: 5px; style: calc(100% - 10px);'";
 	}
 	else
 	{
-		$width = '';
+		$style = " style='margin: 45px 5px 5px;'";
 	}
 ?>
 
-<div class='content'<?= $width; ?>>
-	<div class='head'>News</div>
-	<div class='box news'>
-		
-		<table class='standard' style='width: calc(100% - 10px);'>
-			<thead>
-				<tr>
-					<th colspan='2'>
-						<?= $News_Post['News_Title']; ?>
-					</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td style='padding: 5px 30px;'>
-						<img src='<?= $News_Poster['Avatar']; ?>' /><br />
-						<?php
-							echo $User_Class->DisplayUserName($News_Post['Poster_ID']);
-							echo "<br />";
-							echo $News_Post['News_Date'];
-						?>
-					</td>
+<table class='border-gradient'<?= $style; ?>>
+	<thead>
+		<tr>
+			<th colspan='2'>
+				<?= $News_Post['News_Title']; ?>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style='padding: 5px 30px;'>
+				<img src='<?= $News_Poster['Avatar']; ?>' /><br />
+				<?php
+					echo $User_Class->DisplayUserName($News_Post['Poster_ID']);
+					echo "<br />";
+					echo $News_Post['News_Date'];
+				?>
+			</td>
 
-					<td>
-						<?= nl2br($News_Post['News_Text']); ?>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-
-	</div>
-</div>
+			<td>
+				<?= nl2br($News_Post['News_Text']); ?>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
 <?php
 	require 'core/required/layout_bottom.php';

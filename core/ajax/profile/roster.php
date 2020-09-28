@@ -17,8 +17,8 @@
 
     echo "
       <div class='panel'>
-        <div class='panel-heading'>Roster</div>
-        <div class='panel-body'>";
+        <div class='head'>Roster</div>
+        <div class='body'>";
 
     for ( $i = 0; $i <= 5; $i++ )
     {

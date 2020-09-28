@@ -51,8 +51,8 @@
 
 		echo "
 			<div class='panel' style='margin-top: 5px;'>
-				<div class='panel-heading'>Gen {$Gen} Pokemon Sprites</div>
-				<div class='panel-body' style='text-align: left;'>
+				<div class='head'>Gen {$Gen} Pokemon Sprites</div>
+				<div class='body' style='text-align: left;'>
 					<table style='margin: 0 auto; width: 90%;'>
 						<tr>
 							<td style='font-weight: bold; text-align: center; width: 25%;'>Name And Icons</td>
@@ -104,11 +104,11 @@
 ?>
 
 <div class='head'>Sprites</div>
-<div class='box'>
+<div class='body'>
 
 	<div class='panel'>
-		<div class='panel-heading'>Sprites By Generation</div>
-		<div class='panel-body navi'>
+		<div class='head'>Sprites By Generation</div>
+		<div class='body navi'>
 			<div>
 				<div style='float: left; padding: 2px; width: calc(100% / 7);'>
 					<a href='javascript:void(0);' onclick='ShowSprites("1");' style='display: block;'>

@@ -17,9 +17,9 @@
 	}
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Battle</div>
-	<div class='box' id='BattleWindow'>
+	<div class='body' id='BattleWindow'>
 		<?= ( isset($Error) ? $Error : '' ); ?>
 
 		<div style='margin: 0 auto; width: 75%;'>

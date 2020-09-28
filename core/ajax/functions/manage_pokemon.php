@@ -29,10 +29,10 @@
 
 			try
 			{
-				$Roster_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6 ORDER BY `Slot` ASC LIMIT 6");
-        $Roster_Query->execute([ $User_Data['id'] ]);
-        $Roster_Query->setFetchMode(PDO::FETCH_ASSOC);
-				$Roster_Pokemon = $Roster_Query->fetchAll();
+				$Fetch_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
+				$Fetch_Roster->execute([$User_Data['id']]);
+				$Fetch_Roster->setFetchMode(PDO::FETCH_ASSOC);
+				$Roster_Pokemon = $Fetch_Roster->fetchAll();
 				
 				$Roster = '';
 				foreach ( $Roster_Pokemon as $Key => $Value )
@@ -65,108 +65,110 @@
 			}
 
 			echo "
-				<div class='panel' style='margin-bottom: 5px; margin-top: 5px; width: 100%;'>
-					<div class='panel-heading'>Roster</div>
-					<div class='panel-body' id='pokecenter_roster'>
+				<table class='border-gradient' style='flex-basis: 100%;'>
+					<thead>
+						<th colspan='21'>
+							Roster
+						</th>
+					</thead>
+
+					<tbody>
 			";
 
-			for ( $i = 0; $i <= 5; $i++ )
-			{
-				if ( isset($Roster[$i]['ID']) )
-				{
-					$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
-			
-					if ( $Roster_Slot[$i]['Item'] != null )
-					{
-						$Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin-top: 48px;' />";
-					}
-					else
-					{
-						$Item = "";
-					}
+			$Items = '';
+			$Slots = '';
+			$Sprites = '';
 
-					$Slots = '';
+			for ( $Slot = 0; $Slot < 6; $Slot++ )
+			{
+				if ( isset($Roster_Pokemon[$Slot]) )
+				{
+					$Pokemon = $Poke_Class->FetchPokemonData($Roster_Pokemon[$Slot]['ID']);
+
+					$Sprites .= "
+						<td colspan='3'>
+							<img src='{$Pokemon['Sprite']}' />
+						</td>
+						<td colspan='4'>
+							<b>{$Pokemon['Display_Name']}</b><br />
+							<b>Level</b><br />
+							{$Pokemon['Level']}<br />
+							<b>Experience</b><br />
+							{$Pokemon['Experience']}
+						</td>
+					";
+
+					$Items .= "<img src='{$Pokemon['Item_Icon']}' style='margin-top: 48px;' />";
+
 					for ( $x = 1; $x <= 7; ++$x )
 					{
 						if ( $x == 7 )
 						{
 							$Slots .= "
-								<div>
-									<a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='padding: 0px 13px; width: calc(100% / 7);'>X</a>
-								</div>
+								<td>
+									<a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, $x);\" style='padding: 0px 13px;'>X</a>
+								</td>
 							";
 						}
-						else if ( $x == $i + 1 || $x > count($Roster) )
+						else if ( $x == $Slot + 1 || $x > count($Roster_Pokemon) )
 						{
 							$Slots .= "
-								<div>
-									<span style='color: #000; padding: 0px 13px; width: calc(100% / 7);'>$x</span>
-								</div>
+								<td>
+									<span style='color: #000; padding: 0px 13px;'>$x</span>
+								</td>
 							";
 						}
 						else
 						{
 							$Slots .= "
-								<div>
-									<a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Roster_Slot[$i]['ID']}, $x);\" style='padding: 0px 13px; width: calc(100% / 7);'>$x</a>
-								</div>
+								<td>
+									<a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, $x);\" style='padding: 0px 13px;'>$x</a>
+								</td>
 							";
 						}
 					}
-								
-					echo "
-						<div class='roster_slot full'>
-							<div class='slots'>
-								$Slots
-							</div>
-
-							<div style='float: left; padding-top: 3px; text-align: center; width: 30px;'>
-								<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; width: 20px;' /><br />
-								$Item
-							</div>
-
-							<div style='float: left; margin-left: -30px; padding: 3px;'>
-								<img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
-							</div>
-
-							<div class='info_cont' style='float: right; width: 189px;'>
-								<div style='font-weight: bold; padding: 2px;'>
-									{$Roster_Slot[$i]['Display_Name']}
-								</div>
-								<div class='info'>Level</div>
-								<div>{$Roster_Slot[$i]['Level']}</div>
-								<div class='info'>Experience</div>
-								<div>" . number_format($Roster_Slot[$i]['Experience']) . "</div>
-							</div>
-						</div>
-					";
 				}
 				else
 				{
-					$Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
-					$Roster_Slot[$i]['Display_Name'] = 'Empty';
-					$Roster_Slot[$i]['Level'] = '0';
-					$Roster_Slot[$i]['Experience'] = '0';
-			
-					echo "
-						<div class='roster_slot full' style='height: 132px; padding: 0px;'>
-							<div style='float: left; padding: 18px 3px 3px;'>
-								<img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' />
-							</div>
-
-							<div class='info_cont' style='float: right; height: 132px; padding-top: 15px; width: 189px;'>
-								<div style='font-weight: bold; padding: 2px;'>
-									{$Roster_Slot[$i]['Display_Name']}
-								</div>
-								<div class='info'>Level</div>
-								<div>{$Roster_Slot[$i]['Level']}</div>
-								<div class='info'>Experience</div>
-								<div>" . number_format($Roster_Slot[$i]['Experience']) . "</div>
-							</div>
-						</div>
+					$Sprites .= "
+						<td colspan='7'>
+							<img src='" . Domain(1) . "images/pokemon/0.png' />
+						</td>
 					";
+
+					$Items .= "ITEM";
+
+					for ( $x = 1; $x <= 7; $x++ )
+					{
+						$Slots .= "
+							<td>
+								<span style='color: #000; padding: 0px 13px;'>$x</span>
+							</td>
+						";
+					}
+				}
+
+				if ( ($Slot + 1) % 3 === 0 )
+				{
+					echo "
+						<tr>
+							{$Slots}
+						</tr>
+						<tr>
+							{$Sprites}
+						</tr>
+					";
+
+					$Items = '';
+					$Slots = '';
+					$Sprites = '';
 				}
 			}
+
+			echo "
+					</tbody>
+				</table>
+			";
 
 			$Page = (isset($_POST['page'])) ? $_POST['page'] : 1;
 			$Filter_Type = (isset($_POST['filter_type'])) ? $_POST['filter_type'] : '0';
@@ -205,52 +207,58 @@
 
 			$Query .= " ORDER BY `Pokedex_ID`, `ID` ASC";
 			
-			echo "
-					</div>
-				</div>
-
-				<div class='panel' style='float: left; width: calc(100% / 3);'>
-					<div class='panel-heading'>Box</div>
-					<div class='panel-body' id='Pokebox'>
-						<div class='page_nav'>";
-						Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
-			echo "
-						</div>
-			";
-
 			try
-      {
-        $Box_Query = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` = 7 ORDER BY `Pokedex_ID` ASC LIMIT 35");
-        $Box_Query->execute([$User_Data['id']]);
-        $Box_Query->setFetchMode(PDO::FETCH_ASSOC);
-        $Box_Pokemon = $Box_Query->fetchAll();
-      }
-      catch (PDOException $e)
-      {
-        HandleError( $e->getMessage() );
+			{
+				$Box_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` = 7 ORDER BY `Pokedex_ID` ASC LIMIT 35");
+				$Box_Query->execute([ $User_Data['id'] ]);
+				$Box_Query->setFetchMode(PDO::FETCH_ASSOC);
+				$Box_Pokemon = $Box_Query->fetchAll();
 			}
-			
-			echo "<div style='height: 156px; padding: 3px;'>";
-      foreach ( $Box_Pokemon as $Index => $Pokemon )
-      {
-        $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
-        echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
-      }
-      echo "</div>";
+			catch (PDOException $e)
+			{
+				HandleError( $e->getMessage() );
+			}
+
+			echo "
+				<div class='panel' style='flex-basis: calc(100% / 3 - 10px); margin: 5px 3px 5px 10px;'>
+					<div class='head'>Box</div>
+					<div class='body' id='Pokebox'>
+			";
 
       if ( count($Box_Pokemon) == 0 )
       {
-        echo "<div style='padding: 3px;'>No Pokemon were found in your box.</div>";
+        echo "<div style='padding: 8px;'>No Pokemon were found in your box.</div>";
       }
+      else
+      {
+        $Pagination = Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
 
+        echo "
+          {$Pagination}
+          <div style='height: 172px; padding: 0px 0px 5px;'>
+        ";
+        
+        foreach ( $Box_Pokemon as $Index => $Pokemon )
+        {
+          $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+          echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
+        }
+
+        echo "
+          </div>
+        ";
+			}
+			
 			echo "
-					</div>
+				  </div>
 				</div>
 
-				<div class='panel' id='pokeData' style='float: right; width: calc(100% / 1.5 - 5px);'>
-					<div class='panel-heading'>Selected Pokemon</div>
-					<div class='panel-body' style='padding: 3px;'>
-						<div style='padding: 5px;'>Please select a Pokemon to view it's statistics.</div>
+				<div class='panel' style='flex-basis: calc(100% / 3 * 2 - 30px); margin: 5px 3px 5px 8px;'>
+					<div class='head'>Selected Pokemon</div>
+					<div class='body' style='height: 203px; padding: 3px;'>
+							<div class='flex' id='pokeData' style='align-items: center; justify-content: center; height: inherit;'>
+								<div style='flex-basis: 100%;'>Please select a Pokemon to view it's statistics.</div>
+						</div>
 					</div>
 				</div>
 			";
@@ -267,8 +275,8 @@
 				$Pokemon = $Poke_Class->FetchPokemonData($_POST['PokeID']);
 
 				echo "
-					<div class='panel-heading'><div>{$Pokemon['Display_Name']}</div><div style='float: right; margin-top: -21px;'>(#".number_format($Pokemon['ID']).")</div></div>
-					<div class='panel-body' style='padding: 5px;'>
+					<div class='head'><div>{$Pokemon['Display_Name']}</div><div style='float: right; margin-top: -21px;'>(#".number_format($Pokemon['ID']).")</div></div>
+					<div class='body' style='padding: 5px;'>
 						<div style='float: left;'>
 							<img class='cboxElement popup' src='{$Pokemon['Sprite']}' href='core/ajax/pokemon.php?id={$Pokemon['ID']}' />
 						</div>
@@ -453,8 +461,3 @@
 	{
 		echo "Invalid session.";
 	}
-
-	echo "
-			</div>
-		</div>
-	";

@@ -36,9 +36,9 @@
 		</div>
 
 		<div class='panel'>
-			<div class='panel-heading'>Page Index</div>
-			<div class='panel-body'>
-				<table class='box_cont' style='width: 100%;'>
+			<div class='head'>Page Index</div>
+			<div class='body'>
+				<table div class='body_cont' style='width: 100%;'>
 					<?php
 						try
 						{
@@ -68,7 +68,7 @@
 							}
 							
 							echo "
-								<td class='box_slot' style='width: calc(100% / 3);'>
+								<td div class='body_slot' style='width: calc(100% / 3);'>
 									<a href='javascript:void(0);' onclick='ToggleMaintenance({$Page['ID']});' style='font-size: 18px;'>
 										{$Page['Name']}
 									</a>
@@ -82,13 +82,13 @@
 
 						if ( $Page_Quantity % 3 == 1 )
 						{
-							echo "<td class='box_slot'></td>";
-							echo "<td class='box_slot'></td>";
+							echo "<td div class='body_slot'></td>";
+							echo "<td div class='body_slot'></td>";
 						}
 
 						if ( $Page_Quantity % 3 == 2 )
 						{
-							echo "<td class='box_slot'></td>";
+							echo "<td div class='body_slot'></td>";
 						}
 					?>
 				</table>
@@ -102,16 +102,16 @@
 ?>
 
 <div class='head'>Page Maintenance</div>
-<div class='box'>
+<div class='body'>
 	<div class='description' style='margin-bottom: 5px;'>
 		Here, you may put any given page in to or out of maintenance.
 	</div>
 
 	<div id='AJAX'>
 		<div class='panel'>
-			<div class='panel-heading'>Page Index</div>
-			<div class='panel-body'>
-				<table class='box_cont' style='width: 100%;'>
+			<div class='head'>Page Index</div>
+			<div class='body'>
+				<table div class='body_cont' style='width: 100%;'>
 					<?php
 						try
 						{
@@ -141,7 +141,7 @@
 							}
 							
 							echo "
-								<td class='box_slot' style='width: calc(100% / 3);'>
+								<td div class='body_slot' style='width: calc(100% / 3);'>
 									<a href='javascript:void(0);' onclick='ToggleMaintenance({$Page['ID']});' style='font-size: 18px;'>
 										{$Page['Name']}
 									</a>
@@ -155,13 +155,13 @@
 
 						if ( $Page_Quantity % 3 == 1 )
 						{
-							echo "<td class='box_slot'></td>";
-							echo "<td class='box_slot'></td>";
+							echo "<td div class='body_slot'></td>";
+							echo "<td div class='body_slot'></td>";
 						}
 
 						if ( $Page_Quantity % 3 == 2 )
 						{
-							echo "<td class='box_slot'></td>";
+							echo "<td div class='body_slot'></td>";
 						}
 					?>
 				</table>

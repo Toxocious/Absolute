@@ -1,6 +1,6 @@
 <?php
 	/**
-	 * A class that's use is to setup CONSTANT values that are used across the RPG.
+	 * A class that's use is to setup constant values that are used across the RPG.
 	 */
 	Class Constants
 	{

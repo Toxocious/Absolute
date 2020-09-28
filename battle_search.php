@@ -2,9 +2,9 @@
 	require 'core/required/layout_top.php';
 ?>
 
-<div class='content'>
+<div class='panel content'>
 	<div class='head'>Battle A Trainer</div>
-	<div class='box'>
+	<div class='body'>
 		<div class='description' style='margin-bottom: 5px;'>
 			Enter the account ID of the user that you would like to battle.
 		</div>

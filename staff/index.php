@@ -3,9 +3,9 @@
 	require '../core/functions/staff.php';
 ?>
 
-<div class='content' id='StaffAJAX'>
+<div class='panel content' id='StaffAJAX'>
 	<div class='head'>Staff Panel</div>
-	<div class='box'>
+	<div class='body'>
 		<div style='padding: 5px'>
 			Welcome to Absolute's Staff Panel.
 		</div>

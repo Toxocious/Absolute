@@ -98,9 +98,9 @@
     if ( $User_Power < $Required_Power )
     {
       echo "
-        <div class='content'>
+        <div class='panel content'>
           <div class='head'>Unauthorized Access</div>
-          <div class='box'>
+          <div class='body'>
             You do not have the appropriate power to access this page.
           </div>
         </div>
@@ -133,51 +133,6 @@
 		{
 			return false;
 		}
-	}
-
-	/**
-	 * Generate an array of prices given a string.
-	 */
-	function GeneratePrice($Prices)
-	{
-		global $Constants;
-
-		$Price_Array = [];
-		$Fetch_Price = explode(',', $Prices);
-
-		foreach ( $Fetch_Price as $Key => $String )
-		{
-			$Currency = explode(':', $String);
-			if ( isset($Constants->Currency[$Currency[0]]) )
-			{
-				$Price_Array[ $Currency[0] ] = [
-					'Value'		=> $Constants->Currency[$Currency[0]]['Value'],
-					'Name'		=> $Constants->Currency[$Currency[0]]['Name'],
-					'Amount'	=> $Currency[1],
-				];
-			}
-		}
-
-		return $Price_Array;
-	}
-
-	/**
-	 * Generate a string of prices, given an array.
-	 */
-	function GeneratePriceString($Price_Array)
-	{
-		global $Constants;
-
-		$Price_String = '';
-		foreach ( $Price_Array as $Type => $Amount )
-		{
-			if ( isset($Constants->Currency[$Type]) && $Amount > 0 )
-			{
-				$Price_String .= $Type . ':' . $Amount . ',';
-			}
-		}
-
-		return rtrim($Price_String, ',');
 	}
 
 	/**
@@ -230,38 +185,38 @@
 
     if ( $Page != 1 )
     {
-      $Link_Previous .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(1, " . $User . ");'> << </a></div>";
+      $Link_Previous .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='updateBox(1, " . $User . ");'> << </a></div>";
     }
     else
     {
-      $Link_Previous .= "<div style='width: 10%;'><span> << </span></div>";
+      $Link_Previous .= "<div style='flex-basis: 10%;'><span> << </span></div>";
     }
 
     if ( $Page > 1 )
     {
-      $Link_Previous .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page - 1 ) . ", " . $User . ");'> < </a></div>";
+      $Link_Previous .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page - 1 ) . ", " . $User . ");'> < </a></div>";
     }
     else
     {
-      $Link_Previous .= "<div style='width: 10%;'><span> < </span></div>";
+      $Link_Previous .= "<div style='flex-basis: 10%;'><span> < </span></div>";
     }
 
     if ( $Page < $Pages )
     {
-      $Link_Next .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page + 1 ) . ", " . $User . ");'> > </a></div>";
+      $Link_Next .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page + 1 ) . ", " . $User . ");'> > </a></div>";
     }
     else
     {
-      $Link_Next .= "<div style='width: 10%;'><span> > </span></div>";
+      $Link_Next .= "<div style='flex-basis: 10%;'><span> > </span></div>";
     }
 
     if ( $Page != $Pages )
     {
-      $Link_Next .= "<div style='width: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . $Pages . ", " . $User . ");'> >> </a></div>";
+      $Link_Next .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . $Pages . ", " . $User . ");'> >> </a></div>";
     }
     else
     {
-      $Link_Next .= "<div style='width: 10%;'><span> >> </span></div>";
+      $Link_Next .= "<div style='flex-basis: 10%;'><span> >> </span></div>";
 		}
 
     for ( $x = ( $Page - $Adjacent ); $x < ( ( $Page + $Adjacent ) + 1 ); $x++ )
@@ -283,11 +238,11 @@
 
         if ( $x == $Page )
         {
-          $Text .= "<div style='width: {$Width}'><b style='display: block;'>$x</b></div>";
+          $Text .= "<div style='flex-basis: {$Width}'><b style='display: block;'>$x</b></div>";
         }
         else
         {
-          $Text .= "<div style='width: {$Width}'><a style='display: block;' href='javascript:void(0);' onclick=\"updateBox($x, $User);\">$x</a></div>";
+          $Text .= "<div style='flex-basis: {$Width}'><a style='display: block;' href='javascript:void(0);' onclick=\"updateBox($x, $User);\">$x</a></div>";
         }
 			}
     }
@@ -296,7 +251,7 @@
      * Echo the pagination navigation bar.
      */
 		echo "
-      <div class='pagi'>
+      <div class='pagi flex'>
         {$Link_Previous} {$Text} {$Link_Next}
       </div>
     ";

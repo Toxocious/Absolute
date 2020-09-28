@@ -50,8 +50,8 @@
 				<div class='row'>
 					<div style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>
 						<div class='panel' style='margin-bottom: 5px;'>
-							<div class='panel-heading'><?= $User_Data['Username']; ?>'s Belongings</div>
-							<div class='panel-body navi'>
+							<div class='head'><?= $User_Data['Username']; ?>'s Belongings</div>
+							<div class='body navi'>
 								<div>
 									<div style='float: left; width: calc(100% / 3);'>
 										<a href='javascript:void(0);' style='display: block; padding: 3px;' onclick="Swap('box', <?= $User_Data['id']; ?>)">Pokemon</a>
@@ -107,8 +107,8 @@
 						</div>
 
 						<div class='panel'>
-							<div class='panel-heading'>Included In Trade</div>
-							<div class='panel-body' id='TradeIncluded<?= $User_Data['id']; ?>'>
+							<div class='head'>Included In Trade</div>
+							<div class='body' id='TradeIncluded<?= $User_Data['id']; ?>'>
 								<div style='padding: 12px;'>Nothing has been added to the trade yet.</div>
 							</div>
 						</div>
@@ -116,8 +116,8 @@
 
 					<div style='float: left; width: calc(100% / 2 - 2.5px);'>
 						<div class='panel' style='margin-bottom: 5px;'>
-							<div class='panel-heading'><?= $Recipient['Username']; ?>'s Belongings</div>
-							<div class='panel-body navi'>
+							<div class='head'><?= $Recipient['Username']; ?>'s Belongings</div>
+							<div class='body navi'>
 								<div>
 									<div style='float: left; width: calc(100% / 3);'>
 										<a href='javascript:void(0);' style='display: block; padding: 3px;' onclick="Swap('box', <?= $Recipient['ID']; ?>)">Pokemon</a>
@@ -173,8 +173,8 @@
 						</div>
 
 						<div class='panel'>
-							<div class='panel-heading'>Included In Trade</div>
-							<div class='panel-body' id='TradeIncluded<?= $Recipient['ID']; ?>'>
+							<div class='head'>Included In Trade</div>
+							<div class='body' id='TradeIncluded<?= $Recipient['ID']; ?>'>
 								<div style='padding: 12px;'>Nothing has been added to the trade yet.</div>
 							</div>
 						</div>

@@ -77,9 +77,9 @@
 
 		echo "
 			<div class='panel'>
-				<div class='panel-heading'>Boxed " . $Type . " Pokemon</div>
-				<div class='panel-body'>
-					<table class='box_cont' style='width: 100%;'>
+				<div class='head'>Boxed " . $Type . " Pokemon</div>
+				<div class='body'>
+					<table div class='body_cont' style='width: 100%;'>
 		";
 		
 		$Pokemon_Count = 0;
@@ -117,7 +117,7 @@
 			}
 
 			echo "
-				<td class='box_slot' style='padding: 0px;'>
+				<td div class='body_slot' style='padding: 0px;'>
 					<img src='images/Assets/" . $Poke_Data['Gender'] . ".svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
 					<span style='float: left;'>
 						<img src='" . $Poke_Data['Icon'] . "' />
@@ -156,12 +156,12 @@
 
 		if ( $Pokemon_Count % 2 == 1 )
 		{
-			echo "<td class='box_slot'></td>";
+			echo "<td div class='body_slot'></td>";
 		}
 
 		if ( $Pokemon_Count % 2 == 2 )
 		{
-			echo "<td class='box_slot'></td>";
+			echo "<td div class='body_slot'></td>";
 		}
 
 		echo "

@@ -1,0 +1,482 @@
+/**
+ * Foundation of Absolute's layouts.
+ * Not handling colors here; only structural paramters.
+ */
+
+*
+{
+  outline: none;
+}
+
+html
+{
+	height: 100%;
+}
+
+body
+{
+	border-left: 2px solid;
+  border-right: 2px solid;
+  height: 100%;
+  margin: 0 auto;
+  width: 1100px;
+}
+
+a,
+a:hover,
+a:active,
+a:visited
+{
+  text-decoration: none;
+  transition: color 150ms;
+}
+
+button,
+input[type='button'],
+input[type='submit']
+{
+	border: 2px solid;
+	border-radius: 6px;
+}
+
+input[type='text'],
+input[type='password']
+{
+	border: 2px solid;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  padding: 3px;
+}
+
+select
+{
+	border: 2px solid;
+  border-radius: 6px;
+}
+
+option
+{
+	border-bottom: 1px solid;
+  padding: 3px;
+}
+
+textarea
+{
+	border: 2px solid;
+  border-radius: 6px;
+  margin-bottom: 5px;
+  outline: none;
+  padding: 3px;
+  text-align: center;
+}
+
+hr
+{
+	border: 1px solid;
+  margin: 0px 0px 0px -1px;
+  width: 100%;
+}
+
+ul
+{
+  margin: 0;
+  padding: 0;
+}
+
+ul li
+{
+  float: left;
+  list-style-type: none;
+}
+
+/**
+ * HTML Table
+ */
+table
+{
+	border-radius: 6px;
+	margin-left: 5px;
+	width: 304px;
+	display: table;
+  border-collapse: separate;
+  border-spacing: 2px;
+}
+
+table.standard thead tr th
+{
+  padding: 3px;
+  text-align: center;
+}
+
+table.standard tr td
+{
+	padding: 2px;
+	text-align: center;
+}
+
+table.standard thead tr th:nth-child(1),
+table.standard tr:first-child td:first-child
+{
+  border-top-left-radius: 6px;
+}
+
+table.standard thead tr th:nth-child(4),
+table.standard tr:first-child td:last-child
+{
+  border-top-right-radius: 6px;
+}
+
+table.standard tr:last-child td:first-child
+{
+  border-bottom-left-radius: 6px;
+}
+
+table.standard tr:last-child td:last-child
+{
+  border-bottom-right-radius: 6px;
+}
+
+.gradient-icon,
+.gradient-icon > *
+{
+  border-radius: 50%;
+  padding: 2px;
+}
+
+/**
+ * Footer
+ */
+.footer
+{
+	position: fixed;
+	bottom: 0;
+	border-top: 2px solid;
+	width: 1096px;
+  padding: 5px;
+  
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer > div
+{
+  flex-basis: auto;
+}
+
+.footer > .copyright
+{
+  flex-grow: 3;
+}
+
+.footer > .social-links
+{
+  flex-grow: 1;
+  margin-bottom: -5px;
+}
+
+.footer > .social-links > a
+{
+  float: right;
+  transition: all 300ms;
+}
+
+/**
+ * Banner
+ */
+.banner
+{
+	background: url('https://i.imgur.com/dh0dQzc.png');
+	background-size: 1100px 140px;
+	border-bottom: 2px solid;
+	height: 132px;
+	padding: 4px 10px;
+}
+.banner .user .avatar
+{
+	border-radius: 50%;
+	height: 122px;
+	margin-left: 15px;
+	padding: 2px;
+	width: 122px;
+}
+.banner .user .avatar div
+{
+	border-radius: 50%;
+}
+.banner .user .avatar div img
+{ 
+	border-radius: 50%;
+	height: 118px;
+	width: 118px;
+}
+.banner .user .username
+{
+  border-radius: 6px;
+  display: flex;
+  justify-items: center;
+	margin-left: -4px;
+	margin-top: -28px;
+	padding: 2px;
+	position: absolute;
+	min-width: 160px;
+}
+.banner .user .username div
+{
+  flex-basis: auto;
+  max-height: 24px;
+	padding: 2px 5px;
+	text-align: center;
+}
+.banner .user .username div:first-child
+{
+  border-radius: 6px 0px 0px 6px;
+  flex-grow: 1;
+}
+.banner .user .username div:last-child
+{
+  border-radius: 0px 6px 6px 0px;
+}
+.banner .stats
+{
+  margin-left: 165px;
+  margin-top: -120px;
+}
+.banner .stats .stat
+{
+	border-radius: 6px;
+	padding: 2px;
+	width: 137px;
+}
+.banner .stats .stat div
+{
+	border-radius: 6px;
+	padding: 3px 5px;
+	text-align: center;
+}
+.banner .stats .stat:not(:last-child)
+{
+  margin-bottom: 15px;
+}
+.banner .stats .stat:not(:last-child) div:first-child
+{
+  padding: 0px;
+}
+.banner .stats .stat:not(:last-child) div:first-child
+{
+  float: left;
+}
+.banner .stats .stat div:first-child img
+{
+  height: 26px;
+  width: 26px;
+}
+.banner .roster
+{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 310px;
+  margin-top: -123px;
+  width: 138px;
+}
+.banner .roster .slot
+{
+  border-radius: 50%;
+  flex-basis: auto;
+  height: 40px;
+  margin: 3px;
+	padding: 2px;
+	width: 40px;
+}
+.banner .roster .slot div
+{
+	border-radius: 50%;
+	height: 36px;
+	padding: 3px 0px 0px 0px;
+	width: 36px;
+}
+.banner .roster .slot div:hover
+{
+	cursor: pointer;
+}
+.banner .roster .slot img
+{
+	border-radius: 50%;
+	margin-left: -2px;
+}
+
+/**
+ * Navigation Bar
+ */
+nav
+{
+	margin: 5px 5px 0px 5px;
+	text-align: center;
+}
+
+nav > div.button
+{
+  border: 2px solid;
+  border-radius: 6px;
+  float: left;
+  text-align: center;
+  transition: all 150ms;
+  width: 190px;
+}
+
+nav > div.button:hover
+{
+  cursor: pointer;
+}
+
+nav > div.button > a
+{
+  display: block;
+  padding: 5px;
+}
+
+nav > .nav-container
+{
+  border: 2px solid;
+  border-radius: 6px;
+  float: left;
+}
+
+nav > .nav-container > .nav-item
+{
+  text-align: center;
+  width: calc(100% / 6);
+}
+
+nav > .nav-container > .nav-item > a
+{
+  display: block;
+  padding: 5px;
+}
+
+nav > .nav-container > .nav-item > .dropdown
+{
+  border: 2px solid;
+  border-radius: 6px;
+  margin-top: 0.69rem;
+  opacity: 0;
+  pointer-events: none;
+  position: absolute;
+  width: 148px;
+  z-index: 2;
+}
+
+nav > .nav-container > .nav-item.has-dropdown:focus-within > .dropdown
+{
+  opacity: 1;
+  pointer-events: auto;
+}
+
+nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item
+{
+  width: 100%;
+}
+
+nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a
+{
+  display: block;
+  padding: 5px;
+}
+
+nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item:first-child,
+nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item:first-child > a
+{
+  border-radius: 6px 6px 0px 0px;
+}
+
+nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item:last-child,
+nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item:last-child > a
+{
+  border-radius: 0px 0px 6px 6px;
+}
+
+/**
+ * Sidebar
+ */
+.sidebar
+{
+  float: left;
+  margin: 5px;
+  width: 190px;
+}
+.sidebar > .button
+{
+  border: 2px solid;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  text-align: center;
+}
+.sidebar > .button:hover
+{
+  cursor: pointer;
+}
+.sidebar > .button > a
+{
+  display: block;
+  padding: 5px;
+}
+.sidebar > .chat
+{
+  border: 2px solid;
+  border-radius: 6px;
+  float: left;
+  width: 190px;
+}
+.sidebar > .chat > .head
+{
+  border-bottom: 1px solid;
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+  font-weight: bold;
+  padding: 3px;
+  text-align: center;
+}
+.sidebar > .chat > .box
+{
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  border-bottom: 1px solid;
+  height: 415px;
+  overflow-y: auto;
+  padding: 3px;
+  text-align: center;
+}
+.sidebar > .chat > .user_options
+{
+  height: 309px;
+  overflow-y: auto;
+}
+.sidebar > .chat > .user_options > .index
+{
+  border-bottom: 1px solid;
+  border-top: 1px solid;
+  padding: 3px;
+  text-align: center;
+}
+.sidebar > .chat > .user_options > .subhead
+{
+  border-top: 1px solid;
+  margin-top: 18px;
+}
+.sidebar > .chat > .subhead
+{
+  text-align: center;
+}
+.sidebar > .chat > .subhead > form > input
+{
+  border: none;
+  border-radius: 0px;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  height: 26px;
+  margin-bottom: 0px;
+  text-align: center;
+  width: 100%;
+}

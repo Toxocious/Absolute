@@ -16,15 +16,15 @@
 ?>
 
 <div class='head'>Edit Items</div>
-<div class='box'>
+<div class='body'>
 	<div class='description' style='margin-bottom: 5px;'>
 		Click on an item to edit it's database properties.
 	</div>
 
 	<div class='row'>
 		<div class='panel' style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>
-			<div class='panel-heading'>Item List</div>
-			<div class='panel-body' style='height: 563px; overflow: auto; padding-top: 3px;'>
+			<div class='head'>Item List</div>
+			<div class='body' style='height: 563px; overflow: auto; padding-top: 3px;'>
 				<?php
 					foreach ( $Itemdex as $Key => $Value )
 					{
@@ -37,8 +37,8 @@
 		</div>
 
 		<div class='panel' style='float: left; width: calc(100% / 2 - 2.5px);'>
-			<div class='panel-heading'>Selected Item</div>
-			<div class='panel-body' id='AJAX' style='padding: 5px;'>
+			<div class='head'>Selected Item</div>
+			<div class='body' id='AJAX' style='padding: 5px;'>
 					Please select an item from the Itemdex.
 			</div>
 		</div>

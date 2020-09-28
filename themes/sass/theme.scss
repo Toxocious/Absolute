@@ -1,0 +1,379 @@
+html
+{
+  background: var(--color-septary);
+}
+
+body
+{
+  background: var(--color-sexary);
+  border-color: var(--border-color);
+  color: var(--color-white);
+}
+
+a:link,
+a:visited
+{
+  color: var(--color-primary);
+}
+
+a:hover
+{
+  color: var(--color-white);
+}
+
+button
+{
+  background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
+  border-color: var(--border-color-secondary);
+  color: var(--color-white);
+  
+  &.disabled
+  {
+    background: linear-gradient(180deg, var(--color-light-grey) 0, var(--color-dark-grey));
+  }
+
+  &:not(.disabled):hover
+  {
+    background: linear-gradient(180deg, var(--color-primary) 0, var(--color-quinary));
+  }
+}
+
+/**
+ * Styling for warning, description, success, etc divs.
+ */
+div
+{
+  &.description
+  {
+    background: var(--bg-description);
+    border-color: var(--border-color-description);
+    color: var(--color-description);
+  }
+
+  &.error
+  {
+    background: var(--bg-error);
+    border-color: var(--border-color-error);
+    color: var(--color-error);
+  }
+
+  &.success
+  {
+    background: var(--bg-success);
+    border-color: var(--border-color-success);
+    color: var(--color-success);
+  }
+
+  &.warning
+  {
+    background: var(--bg-warning);
+    border-color: var(--border-color-warning);
+    color: var(--color-warning);
+  }
+}
+
+/**
+ * Apply drop shadow to an element.
+ */
+.drop-shadow
+{
+  box-shadow: var(--box-shadow);
+}
+
+/**
+ * Elements that have a gradient border.
+ * All border-gradient elements utilize a drop shadow.
+ */
+.border-gradient
+{
+  background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
+  box-shadow: var(--box-shadow);
+
+  &.hover
+  {
+    & > div:hover
+    {
+      background: var(--color-secondary);
+    }
+  }
+
+  div
+  {
+    background: var(--color-quadternary);
+  }
+}
+
+/**
+ * Banner
+ */
+ header
+{
+  border-color: var(--border-color);
+}
+
+/**
+ * Navigation Bar
+ */
+nav
+{
+  & > .button
+  {
+    background: var(--color-quadternary);
+    border-color: var(--color-primary);
+
+    &:hover
+    {
+      background: var(--color-tertiary);
+    }
+  }
+
+  & > .nav-container
+  {
+    background: var(--color-quadternary);
+    border-color: var(--color-primary);
+
+    & > .nav-item
+    {
+      & > a:hover
+      {
+        background: var(--color-tertiary);
+      }
+
+      & > .dropdown
+      {
+        border-color: var(--color-primary);
+        box-shadow: var(--box-shadow-nav);
+      }
+
+      &.has-dropdown
+      {
+        &:focus-within
+        {
+          & > .dropdown
+          {
+            & > .dropdown-item
+            {
+              & > a
+              {
+                background: var(--color-quadternary);
+              }
+            }
+          }
+        }
+
+        & > .dropdown
+        {
+          & > .dropdown-item
+          {
+            & > a
+            {
+              &:hover
+              {
+                background: var(--color-tertiary);
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Panel
+ */
+.panel
+{
+  background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
+  box-shadow: var(--box-shadow-nav);
+
+  & > div:not(:last-child)
+  {
+    border-color: var(--color-secondary);
+  }
+
+  & > div:not(.head):not(:last-child)
+  {
+    border-color: var(--color-secondary);
+  }
+
+  & > .head
+  {
+    background: none;
+  }
+
+  & > .body
+  {
+    background: var(--color-quadternary);
+    border-color: var(--color-secondary);
+
+    & > .description
+    {
+      background: var(--color-tertiary);
+      border-color: var(--color-primary);
+    }
+
+    & > .nav
+    {
+      & > div
+      {
+        border-color: var(--color-primary);
+        background: var(--color-tertiary);
+
+        &:hover
+        {
+          background: var(--color-quinary);
+        }
+      }
+    }
+
+    & > .pagi
+    {
+      border-color: var(--color-primary);
+
+      & > div
+      {
+        border-color: var(--color-primary);
+
+        &:not(:last-child)
+        {
+          border-color: var(--color-primary);
+        }
+      }
+    }
+  }
+
+  & > .foot
+  {
+    background: var(--color-quadternary);
+    border-color: var(--color-secondary);
+
+    & > form > input
+    {
+      background: var(--color-quadternary);
+      color: var(--color-white);
+    }
+  }
+}
+
+/**
+ * Sidebar
+ */
+ .sidebar
+{
+  & > .panel
+  {
+    & > .head
+    {
+      background: none;
+    }
+
+    &.chat
+    {
+      .message
+      {
+        & > .avatar
+        {
+          background: linear-gradient(180deg, var(--color-tertiary) 0, var(--color-gradient-one));
+
+          & > a
+          {
+            background: var(--color-quinary);
+          }
+        }
+
+        & > .text
+        {
+          background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-tertiary));
+          box-shadow: var(--box-shadow);
+
+          & > div
+          {
+            background: var(--color-quinary);
+          }
+        }
+
+        &.private
+        {
+          & > .text
+          {
+            & > div
+            {
+              background: var(--color-chat-pmsg);
+              box-shadow: var(--box-shadow);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+/**
+ * Table
+ */
+table
+{
+  & > tbody
+  {
+    background: var(--color-quadternary);
+  }
+}
+
+/**
+ * Footer
+ */
+footer
+{
+  background: var(--color-quadternary);
+  border-color: var(--color-primary);
+}
+
+.member
+{
+  border-color: var(--rank-member);
+  color: var(--rank-member);
+}
+
+.chat_mod
+{
+  border-color: var(--rank-chat_mod);
+  color: var(--rank-chat_mod);
+}
+
+.moderator
+{
+  border-color: var(--rank-moderator);
+  color: var(--rank-moderator);
+}
+
+.super_mod
+{
+  border-color: var(--rank-super_mod);
+  color: var(--rank-super_mod);
+}
+
+.developer
+{
+  border-color: var(--rank-developer);
+  color: var(--rank-developer);
+}
+
+.bot
+{
+  border-color: var(--rank-bot);
+  color: var(--rank-bot);
+}
+
+.administrator
+{
+  border-color: var(--rank-administrator);
+  color: var(--rank-administrator);
+  text-shadow: 0 0 15px var(--rank-administrator);
+
+  animation-name: rainbow;
+  animation-duration: 5s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-direction: alternate;
+}

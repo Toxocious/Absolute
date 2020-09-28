@@ -16,15 +16,15 @@
 ?>
 
 <div class='head'>Edit Moves</div>
-<div class='box'>
+<div class='body'>
 	<div class='description' style='margin-bottom: 5px;'>
 		Click on the move that you would like to edit.
 	</div>
 
 	<div class='row'>
 		<div class='panel' style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>
-			<div class='panel-heading'>Move List</div>
-			<div class='panel-body' style='height: 563px; overflow: auto; padding-top: 3px;'>
+			<div class='head'>Move List</div>
+			<div class='body' style='height: 563px; overflow: auto; padding-top: 3px;'>
 				<table>
 					<tr>
 						<td>
@@ -48,8 +48,8 @@
 		</div>
 
 		<div class='panel' style='float: left; width: calc(100% / 2 - 2.5px);'>
-			<div class='panel-heading'>Selected Move</div>
-			<div class='panel-body' id='AJAX' style='padding: 5px;'>
+			<div class='head'>Selected Move</div>
+			<div class='body' id='AJAX' style='padding: 5px;'>
 					Please select a move.
 			</div>
 		</div>

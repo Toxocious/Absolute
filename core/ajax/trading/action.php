@@ -297,7 +297,7 @@
 					<div>
 						<img src='{$Pokemon_Data['Icon']}' />
 						<img src='{$Pokemon_Data['Gender_Icon']}' style='height: 20px; width: 20px;' />
-						{$Pokemon_Data['Display_Name']} (Level: " . number_format($Pokemon_Data['Level']) . ")
+						{$Pokemon_Data['Display_Name']} (Level: " . $Pokemon_Data['Level'] . ")
 						<a href='#'>x</a>
 					</div>
 				";

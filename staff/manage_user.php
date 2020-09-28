@@ -13,8 +13,8 @@
 		echo "
 			<div class='row'>
 				<div class='panel' style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>
-					<div class='panel-heading'>{$User['Username']} (#" . number_format($User['ID']) . ")</div>
-					<div class='panel-body' style='padding: 5px;'>
+					<div class='head'>{$User['Username']} (#" . number_format($User['ID']) . ")</div>
+					<div class='body' style='padding: 5px;'>
 						<div style='float: left; width: 35%;'>
 							<img src='../{$User['Avatar']}' />
 						</div>
@@ -25,8 +25,8 @@
 				</div>
 
 				<div class='panel' style='float: left; width: calc(100% / 2 - 2.5px);'>
-					<div class='panel-heading'>Options</div>
-					<div class='panel-body' style='padding: 5px;'>
+					<div class='head'>Options</div>
+					<div class='body' style='padding: 5px;'>
 						<b>Status</b><br />
 						<textarea style='resize: none; width: 100%;' id='status' placeholder='{$User['Status']}'></textarea>
 						<br />
@@ -70,7 +70,7 @@
 ?>
 
 <div class='head'>Manage Users</div>
-<div class='box'>
+<div class='body'>
 	<div style='padding: 5px'>
 		Enter the ID of the User that you want to manage.<br /><br />
 

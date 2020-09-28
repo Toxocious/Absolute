@@ -74,10 +74,10 @@
 ?>
 
 <div class='head'>Trade Logs</div>
-<div class='box'>
+<div class='body'>
 	<div class='panel' style='margin: 0 auto; width: 70%;'>
-		<div class='panel-heading'>Filter</div>
-		<div class='panel-body' style='padding-top: 5px;'>
+		<div class='head'>Filter</div>
+		<div class='body' style='padding-top: 5px;'>
 			<input type='text' id='user_val' placeholder='Username or ID' style='width: 40%;' />
 			<button style='padding: 3px; width: 40%;' onclick='FetchLogs();'>Fetch Logs</button>
 		</div>

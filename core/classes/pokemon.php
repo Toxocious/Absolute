@@ -144,7 +144,7 @@
 			}
 
 			return [
-				"ID" => number_format($Pokemon['ID']),
+				"ID" => $Pokemon['ID'],
 				"Pokedex_ID" => $Pokemon['Pokedex_ID'],
 				"Alt_ID" => $Pokemon['Alt_ID'],
 				"Nickname" => $Pokemon['Nickname'],
@@ -161,7 +161,8 @@
 				"Gender_Icon" => Domain(1) . "/images/Assets/" . $Gender . ".svg",
 				"Level" => number_format($Level),
 				"Level_Raw" => $Level,
-				"Experience" => $Experience,
+				"Experience" => number_format($Experience),
+				"Experience_Raw" => $Experience,
 				"Type_Primary" => $Pokedex['Type_Primary'],
 				"Type_Secondary" => $Pokedex['Type_Secondary'],
 				"Nature" => $Pokemon['Nature'],
@@ -404,18 +405,6 @@
 				);
 			}
 
-			try
-			{
-				$Query_User = $PDO->prepare("SELECT * FROM `users` WHERE `id` = ? LIMIT 1");
-				$Query_User->execute([ $Owner ]);
-				$Query_User->setFetchMode(PDO::FETCH_ASSOC);
-				$User = $Query_User->fetch();
-			}
-			catch ( PDOException $e )
-			{
-				HandleError( $e->getMessage() );
-			}
-
 			if ( $Alt_ID != 0 )
 			{
 				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . "." . $Alt_ID . ".png";
@@ -436,14 +425,6 @@
 				$Name = $Pokemon['Name'];
 			}
 
-			//switch($Gender)
-			//{
-			//	case 'M': $Gender = 'Male'; break;
-			//	case 'F': $Gender = 'Female'; break;
-			//	case 'G': $Gender = 'Genderless'; break;
-			//	case '?': $Gender = '(?)'; break;
-			//}
-
 			if ( $Gender == null )
 			{
 				$Gender = $this->GenerateGender($Pokemon['ID']);
@@ -452,7 +433,7 @@
 			try
 			{
 				$Query_Party = $PDO->prepare("SELECT DISTINCT(`Slot`) FROM `pokemon` WHERE `Owner_Current` = ? AND (Slot = 1 OR Slot = 2 OR Slot = 3 OR Slot = 4 OR Slot = 5 OR Slot = 6) AND `Location` = 'Roster' LIMIT 6");
-				$Query_Party->execute([ $User['id'] ]);
+				$Query_Party->execute([ $Owner ]);
 				$Query_Party->setFetchMode(PDO::FETCH_ASSOC);
 			}
 			catch ( PDOException $e )
@@ -573,7 +554,7 @@
 
 			try
 			{
-				if ( $Pokedex_ID == null && $Alt_ID == null )
+				if ( ($Pokedex_ID == null || $Pokedex_ID == 0) && $Alt_ID == null )
 				{
 					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `id` = ? LIMIT 1");
 					$FetchPokedex->execute([ $DB_ID ]);
@@ -651,7 +632,7 @@
 
 			try
 			{
-				$Fetch_Pokedex = $PDO->prepare("SELECT * FROM `pokedex` ORDER BY `Pokedex_ID` ASC, `Alt_ID` ASC");
+				$Fetch_Pokedex = $PDO->prepare("SELECT `id`, `Name`, `Name_Alter`, `Pokedex_ID` FROM `pokedex` ORDER BY `Pokedex_ID` ASC, `Alt_ID` ASC");
 				$Fetch_Pokedex->execute();
 				$Fetch_Pokedex->setFetchMode(PDO::FETCH_ASSOC);
 			}

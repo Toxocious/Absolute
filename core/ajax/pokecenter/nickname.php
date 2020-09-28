@@ -54,8 +54,8 @@
    */
   echo "
 		<div class='panel'>
-			<div class='panel-heading'>Roster</div>
-			<div class='panel-body'>
+			<div class='head'>Roster</div>
+			<div class='body'>
   ";
   
 	for ( $i = 0; $i <= 5; $i++ )
@@ -90,7 +90,7 @@
       $Roster_Slot[$i]['Experience'] = '0';
 
       echo "
-        <div class='roster_slot full' style='height: 106px; padding-top: 10px;'>
+        <div class='roster_slot full' style='height: 107px; padding-top: 10px;'>
           <div style='float: left;'>
             <img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' />
           </div>

@@ -5,8 +5,8 @@
   {
 		echo "
       <div class='panel'>
-        <div class='panel-heading'>Statistics</div>
-        <div class='panel-body'>
+        <div class='head'>Statistics</div>
+        <div class='body'>
 
         <div style='float: left; padding: 5px; width: 50%;'>
           <b style='font-size: 18px;'>Trainer Level</b>

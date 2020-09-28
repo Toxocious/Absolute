@@ -14,13 +14,16 @@
 		}
 
 		/**
-		 * Render the navigation bar.
+		 * Render the nav bar.
 		 */
 		public function Render($Class)
 		{
 			global $PDO;
 			global $User_Data;
 
+			/**
+			 * Parse the current URL.
+			 */
 			$URL = parse_url((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 
 			/**
@@ -42,15 +45,18 @@
 			{
 				HandleError( $e->getMessage() );
 			}
-			
-			/**
-			 * Display the navigation bar and links.
-			 */
-			echo "<nav>";
+
+			// Set the default width of the navbar.
 			$Nav_Width = " style='width: 100%;'";
+
+			echo "
+				<nav>
+			";
+
+			// Display the Staff Panel button/Index button, given the user is a staff member.
 			if ( $User_Data['Power'] > 1 )
 			{
-				$Nav_Width = " style='width: calc(100% - 195px);'";
+				$Nav_Width = " style='width: calc(100% - 203px);'";
 
 				if ( strpos($URL['path'], '/staff/') === false )
 				{
@@ -69,15 +75,12 @@
 					</div>
 				";
 			}
-			
+
 			echo "
-				<div class='navigation'{$Nav_Width}>
-					<ul>
+					<ul class='nav-container'{$Nav_Width}>
 			";
 
-			/**
-			 * Loop through the nav headers.
-			 */
+			// Loop through navigation headers.
 			$Display_Links = '';
 			foreach ( $Headers as $Key => $Head )
 			{
@@ -103,12 +106,13 @@
 						if ( $Link['Menu'] === $Head['Menu'] && $Link['Power'] <= $User_Data['Power'] )
 						{
 							$Display_Links .= "
-								<li>
+								<li class='dropdown-item'>
 									<a href='javascript:void(0);' onclick='LoadContent(\"/staff/{$Link['Link']}\");'>{$Link['Name']}</a>
 								</li>
 							";
 						}
 					}
+
 					/**
 					 * Regular member links.
 					 */
@@ -117,7 +121,7 @@
 						if ( $Link['Menu'] === $Head['Menu'] && $Link['Power'] <= $User_Data['Power'] )
 						{
 							$Display_Links .= "
-								<li>
+								<li class='dropdown-item'>
 									<a href='{$Link['Link']}'>{$Link['Name']}</a>
 								</li>
 							";
@@ -125,10 +129,15 @@
 					}
 				}
 
+				/**
+				 * Render the menu item and it's dropdown contents.
+				 */
 				echo "
-					<li class='dropdown'>
-						<a href='javascript:void(0);'>{$Head['Name']}</a>
-						<ul class='dropdown-content'>
+					<li class='nav-item has-dropdown'>
+						<a href='javascript:void(0);'>
+							{$Head['Name']}
+						</a>
+						<ul class='dropdown'>
 							{$Display_Links}
 						</ul>
 					</li>
@@ -139,9 +148,7 @@
 
 			echo "
 					</ul>
-				</div>
+				</nav>
 			";
-			
-			echo "</nav>";
 		}
 	}

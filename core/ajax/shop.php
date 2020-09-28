@@ -1,5 +1,6 @@
 <?php
 	require '../required/session.php';
+	require '../functions/shop.php';
 	
 	/**
 	 * The user is attempting to purchase a Pokemon.
@@ -45,33 +46,31 @@
 		}
 		else
 		{
-			$Price_Array = GeneratePrice($Pokemon['Price']);
-			foreach( $Price_Array as $Key => $Currency )
+			/**
+			 * Fetch the required prices of the object, and see if the user can afford it.
+			 */
+			$Price_Array = FetchPriceList($Pokemon['Prices']);
+			foreach ( $Price_Array[0] as $Currency => $Amount )
 			{
-				if ( ($User_Data[$Currency['Value']] - $Currency['Amount']) < 0 )
+				// If the user doesn't have enough of any currency, throw an error and cancel the purchase.
+				if ( $User_Data[$Currency] < $Amount )
 				{
-					echo "You need an additional" . number_format($Currency['Amount'] - $User_Data[$Currency['Value']]) . " " . $Currency['Name'] . " to purchase this Pokemon.<br />";
+					echo "
+						<div style='padding-top: 40px;'>
+							You can not afford to purchase this Pokemon.
+						</div>
+					";
+
 					exit;
 				}
-
-				if ( !isset($Constants->Currency[$Currency['Value']]) )
-				{
-					echo "An error has occured with this Pokemon's price. Please report this to an Admin.<br />";
-					exit;
-				}	
 			}
 
-			foreach ( $Price_Array as $Key => $Currency )
+			/**
+			 * The user can afford the object; remove the required currencies and their amounts.
+			 */
+			foreach ( $Price_Array[0] as $Currency => $Amount )
 			{
-				try
-				{
-					$Update = $PDO->prepare("UPDATE `users` SET `" . $Currency['Name'] . "` = `" . $Currency['Name'] . "` - ? WHERE `id` = ? LIMIT 1");
-					$Update->execute([ $Currency['Amount'], $User_Data['id'] ]);
-				}
-				catch ( PDOException $e )
-				{
-					HandleError( $e->getMessage() );
-				}
+				$User_Class->RemoveCurrency($User_Data['id'], $Currency, $Amount);
 			}
 
 			/**
@@ -82,7 +81,7 @@
 				if ( mt_rand(1, $Shiny_Odds) === 1 )
 				{
 					$Pokemon['Type'] = 'Shiny';
-					echo "<script type='text/javascript'>setTimeout(function() { alert('You purchased a Shiny Pokemon.'); }, 69);</script>";
+					echo "<script type='text/javascript'>setTimeout(function() { alert('You purchased a Shiny Pokemon.'); }, 1);</script>";
 				}
 			}
 
@@ -92,7 +91,7 @@
 			if ( mt_rand(1, 420) === 1 )
 			{
 				$Pokemon['Gender'] = '(?)';
-				echo "<script type='text/javascript'>setTimeout(function() { alert('You purchased an ungendered Pokemon.'); }, 69);</script>";
+				echo "<script type='text/javascript'>setTimeout(function() { alert('You purchased an ungendered Pokemon.'); }, 1);</script>";
 			}
 			else
 			{
