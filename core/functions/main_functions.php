@@ -7,8 +7,8 @@
 	 * - Salt String
 	 */
 	define("GAME_DATABASE", "absolute");
-	define("GAME_DATABASE_USER", "root");
-	define("GAME_DATABASE_PASS", '');
+	define("GAME_DATABASE_USER", "absolute");
+	define("GAME_DATABASE_PASS", 'qwerty');
 	define("GAME_DEFAULT_SALT", "5rrx4YP64TIuxqclMLaV1elGheNxJJRggMxzQjv5gQeFl84NFgXvR3NxcHuOc31SSZBTzUFEt0mYQ4Oo");
 
 	/**
