@@ -1,0 +1,29 @@
+image: php:7.2
+
+stages:
+  - deploy
+
+before_script:
+  - apt-get update -qq
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  - apt-get -y install rsync
+  - eval $(ssh-agent -s)
+  - mkdir -p ~/home/absoluterpg/.ssh
+  - chmod 700 ~/home/absoluterpg/.ssh
+  - ssh-keyscan absoluterpg.com >> ~/home/absoluterpg/.ssh/authorized_keys
+  - chmod 644 ~/home/absoluterpg/.ssh/authorized_keys
+  - ssh-add <(echo "$STAGING_PRIVATE_KEY")
+
+stage_deploy:
+  only:
+    - development
+  stage: deploy
+  script:
+    # Sync specific file formats from the repository to the server.
+    #   .php:       most of what the game is coded in
+    #   .js:        node scripts and/or included js files
+    #   .json:      package.json & map.json files
+    #   .scss/.css: layout system
+    - rsync -azhP --filter=':- .gitignore' --include='*/' --include='*.'{php,js,css,scss,tmx,sh} --exclude='*' ./ absolute@45.79.0.55:/var/www/html/
+    # Run the install bash script on the server
+    # - ssh absolute@45.79.0.55 "cd /var/www/html/config && echo '$USER_PASSWORD'"
