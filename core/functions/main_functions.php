@@ -54,13 +54,14 @@
 	 * Handle error messages.
 	 * Log the error message to a file.
 	 */
-	function HandleError($Message = "")
+	function HandleError($Message)
 	{
 		$FetchDate = date("Y-m-d H:i:s");
-		if ( $Message != '' )
-		{
-			file_put_contents('misc/logs/php_logs.txt', "[" . $FetchDate . "] Error: " . $Message.PHP_EOL, FILE_APPEND | LOCK_EX);
-		}
+
+		if ( !$Message )
+			$Message = 'No error message was set.';
+		
+		file_put_contents('misc/logs/php_logs.txt', "[" . $FetchDate . "] Error: " . $Message.PHP_EOL, FILE_APPEND | LOCK_EX);
 	}
 
 	/**
