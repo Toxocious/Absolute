@@ -54,7 +54,7 @@
 			{
 				$Error = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid gender.</div>";
 			}
-			else if ( !in_array($Starter, ['1', '4', '7', '152', '155', '158', '252', '255', '258', '387', '390', '393', '495', '498', '501', '650', '653', '656', '722', '725', '728']) )
+			else if ( !in_array($Starter, ['1', '4', '7', '152', '155', '158', '252', '255', '258', '387', '390', '393', '495', '498', '501', '650', '653', '656', '722', '725', '728', '810', '813', '816']) )
 			{
 				$Error = "<div style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>Please choose a valid starter Pokemon.</div>";
 			}
@@ -149,7 +149,7 @@
 		}
 ?>
 
-<div class='panel content' style='margin: 5px; max-height: calc(100% - 135px); width: calc(100% - 10px)'>
+<div class="panel content" style="margin: 5px; width: calc(100% - 14px);">
 	<div class='head'>Register</div>
 	<div class='body pokecenter'>
 		<div class='nav'>
@@ -169,7 +169,7 @@
 		<div class='description' style='background: #334364; margin-bottom: 5px; width: 70%;'>Please fill out the form below in order to begin your journey as a Pokemon Trainer.</div>
 
 		<form action="/register.php" method="post">
-			<div class='panel' style='margin-bottom: 5px;'>
+			<div class='panel' style='margin: 5px auto; width: calc(100% - 14px);'>
 				<div class='head'>User Details</div>
 				<div class='body' style='padding: 3px;'>
 					<div style='float: left; width: calc(100% / 3);'>
@@ -193,186 +193,151 @@
 						<input type='password' name='password_confirm' />
 					</div>
 
-					<div style='padding-top: 40px;'>
-						<input type='submit' name='register' value='Register' style='width: 25%;' />
+					<div style='height: 101px;'>
+						<input type='submit' name='register' value='Register' style='width: 25%; position: relative; top: 46%;' />
 					</div>
 				</div>
 			</div>
 
-			<div class='row'>
-				<div class='panel' style='float: left; margin-left: 15px; width: calc(100% / 2 - 20px);'>
+			<div class='row' style="min-height: 800px; position: relative;">
+				<div class='panel' style='float: right; width: calc(100% / 2 - 20px); margin-right: 6px;'>
 					<div class='head'>Select A Starter</div>
 					<div class='body'>
-						<div class='row'>
+						<div class='row' style='height: 145px;'>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/001.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/004.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/007.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/152.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/155.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/158.png' />
-							</div>
-						</div>
-						<div class='row'>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/001.png' /><br />
 								Bulbasaur<br />
 								<input type='radio' name='starter' value='001' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/004.png' /><br />
 								Charmander<br />
 								<input type='radio' name='starter' value='004' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/007.png' /><br />
 								Squirtle<br />
 								<input type='radio' name='starter' value='007' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/152.png' /><br />
 								Chikorita<br />
 								<input type='radio' name='starter' value='152' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/155.png' /><br />
 								Cyndaquil<br />
 								<input type='radio' name='starter' value='155' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/158.png' /><br />
 								Totodile<br />
 								<input type='radio' name='starter' value='158' />
 							</div>
 						</div>
 
-						<div class='row'>
+						<div class='row' style='height: 145px;'>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/252.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/255.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/258.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/387.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/390.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/393.png' />
-							</div>
-						</div>
-						<div class='row'>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/252.png' /><br />
 								Treecko<br />
 								<input type='radio' name='starter' value='252' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/255.png' /><br />
 								Torchic<br />
 								<input type='radio' name='starter' value='255' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/258.png' /><br />
 								Mudkip<br />
 								<input type='radio' name='starter' value='258' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/387.png' /><br />
 								Turtwig<br />
 								<input type='radio' name='starter' value='387' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/390.png' /><br />
 								Chimchar<br />
 								<input type='radio' name='starter' value='390' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/393.png' /><br />
 								Piplup<br />
 								<input type='radio' name='starter' value='393' />
 							</div>
 						</div>
 
-						<div class='row'>
+						<div class='row' style='height: 145px;'>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/495.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/498.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/501.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/650.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/653.png' />
-							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
-								<img src='images/Pokemon/Normal/656.png' />
-							</div>
-						</div>
-						<div class='row'>
-							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/495.png' /><br />
 								Snivy<br />
 								<input type='radio' name='starter' value='495' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/498.png' /><br />
 								Tepig<br />
 								<input type='radio' name='starter' value='498' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/501.png' /><br />
 								Oshawott<br />
 								<input type='radio' name='starter' value='501' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/650.png' /><br />
 								Chespin<br />
 								<input type='radio' name='starter' value='650' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/653.png' /><br />
 								Fennekin<br />
 								<input type='radio' name='starter' value='653' />
 							</div>
 							<div style='float: left; padding: 0px; width: calc(100% / 6);'>
+								<img src='images/Pokemon/Normal/656.png' /><br />
 								Froakie<br />
 								<input type='radio' name='starter' value='656' />
 							</div>
 						</div>
 
-						<div class='row'>
-							<div style='float: left; padding: 0px; width: calc(100% / 3);'>
-								<img src='images/Pokemon/Normal/722.png' />
+						<div class="row" style='height: 145px;'>
+							<div style="float: left; padding: 0px; width: calc(100% / 6);">
+								<img src="images/Pokemon/Normal/722.png"><br />
+								Rowlet<br>
+								<input type="radio" name="starter" value="722">
 							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 3);'>
-								<img src='images/Pokemon/Normal/725.png' />
+							<div style="float: left; padding: 0px; width: calc(100% / 6);">
+								<img src="images/Pokemon/Normal/725.png"><br />
+								Litten<br>
+								<input type="radio" name="starter" value="725">
 							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 3);'>
-								<img src='images/Pokemon/Normal/728.png' />
+							<div style="float: left; padding: 0px; width: calc(100% / 6);">
+								<img src="images/Pokemon/Normal/728.png"><br />
+								Popplio<br>
+								<input type="radio" name="starter" value="728">
 							</div>
-						</div>
-						<div class='row'>
-							<div style='float: left; padding: 0px; width: calc(100% / 3);'>
-								Rowlet<br />
-								<input type='radio' name='starter' value='722' />
+							<div style="float: left; padding: 0px; width: calc(100% / 6);">
+								<img src="images/Pokemon/Normal/810.png"><br />
+								Grookey<br>
+								<input type="radio" name="starter" value="810">
 							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 3);'>
-								Litten<br />
-								<input type='radio' name='starter' value='725' />
+							<div style="float: left; padding: 0px; width: calc(100% / 6);">
+								<img src="images/Pokemon/Normal/813.png"><br />
+								Scorbunny<br>
+								<input type="radio" name="starter" value="813">
 							</div>
-							<div style='float: left; padding: 0px; width: calc(100% / 3);'>
-								Popplio<br />
-								<input type='radio' name='starter' value='728' />
+							<div style="float: left; padding: 0px; width: calc(100% / 6);">
+								<img src="images/Pokemon/Normal/816.png"><br />
+								Sobble<br>
+								<input type="radio" name="starter" value="816">
 							</div>
 						</div>
 					</div>
 				</div>
 
-				<div class='panel' style='float: left; margin-left: 5px; width: calc(100% / 2 - 15px);'>
+				<div class='panel' style='float: left; width: calc(100% / 2 - 15px); margin-left: 6px;'>
 					<div class='head'>Select An Avatar</div>
 					<div class='body' style='max-height: 552px; overflow: auto;'>
 						<div class='row'>

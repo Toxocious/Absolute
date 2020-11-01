@@ -3,7 +3,7 @@
 
 	if ( !isset($_SESSION['abso_user']) )
 	{
-		$Content_Style = "style='margin: 5px; width: calc(100% - 10px)'";
+		$Content_Style = "style='margin: 5px; width: calc(100% - 14px)'";
 	}
 ?>
 

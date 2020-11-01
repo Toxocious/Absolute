@@ -70,7 +70,7 @@
 	}
 ?>
 
-<div class='panel content' style='margin: 5px; width: calc(100% - 10px);'>
+<div class='panel content' style='margin: 5px; width: calc(100% - 14px);'>
 	<div class='head'>Login</div>
 	<div class='body pokecenter'>
 		<div class='nav'>
@@ -85,6 +85,7 @@
 		<div class='description' style='background: #334364; margin-bottom: 3px; width: 70%;'>
 			Fill in the form below if you wish to login to Absolute.
 		</div>
+		<br />
 
 		<div class='description' style='background: #334364; width: 50%;'>
 			<form method="POST">
@@ -93,10 +94,11 @@
 				<br />
 				<b>Password</b><br />
 				<input type='password' name='password' placeholder='Password' style='text-align: center;' />
-				<br />
+				<br /><br />
 				<input type='submit' name='action' value='Login to Absolute' style='margin-left: -3px; width: 180px;' />
 			</form>
 		</div>
+		<br />
 	</div>
 </div>
 

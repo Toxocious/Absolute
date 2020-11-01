@@ -36,7 +36,7 @@
 		}
 ?>
 
-<div class='panel content' style='margin: 5px; width: calc(100% - 10px);'>
+<div class='panel content' style='margin: 5px; width: calc(100% - 14px);'>
 	<div class='head'>Index</div>
 	<div class='body'>
 		<div class='nav'>
