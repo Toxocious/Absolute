@@ -1,5 +1,5 @@
 html {
-  background: var(--color-sexary);
+  background: var(--color-septary);
 }
 
 body {
@@ -32,6 +32,7 @@ button:not(.disabled):hover {
  */
 div.BODY-CONTAINER {
   border-color: var(--border-color);
+  background: var(--color-sexary);
 }
 div.description {
   background: var(--bg-description);

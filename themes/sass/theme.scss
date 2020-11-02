@@ -1,6 +1,6 @@
 html
 {
-  background: var(--color-sexary);
+  background: var(--color-septary);
 }
 
 body
@@ -44,6 +44,7 @@ div
   &.BODY-CONTAINER
   {
     border-color: var(--border-color);
+    background: var(--color-sexary);
   }
 
   &.description
