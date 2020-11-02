@@ -199,7 +199,7 @@
 				</div>
 			</div>
 
-			<div class='row' style="min-height: 800px; position: relative;">
+			<div class='row' style="min-height: 620px; position: relative;">
 				<div class='panel' style='float: right; width: calc(100% / 2 - 20px); margin-right: 6px;'>
 					<div class='head'>Select A Starter</div>
 					<div class='body'>
