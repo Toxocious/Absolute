@@ -10,6 +10,11 @@ body
   height: 100%;
 }
 
+body
+{
+  margin: 0;
+}
+
 html
 {
   margin: 0;
@@ -18,12 +23,8 @@ html
 
 body
 {
-  border-left: var(--border-style);
-  border-right: var(--border-style);
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
-  margin: 0 auto;
-  width: 1100px;
 }
 
 a
@@ -71,6 +72,15 @@ ul
 
 div
 {
+  &.BODY-CONTAINER
+  {
+    border-left: var(--border-style);
+    border-right: var(--border-style);
+    margin: 0 auto;
+    min-height: 100%;
+    width: 1100px;
+  }
+
   &.description,
   &.error,
   &.success,
@@ -262,6 +272,7 @@ header
   display: var(--display-flex);
   height: var(--banner-height);
   justify-content: flex-start;
+  position: relative;
 
   & > div
   {
@@ -751,15 +762,34 @@ table
 }
 
 /**
+ * Main
+ */
+main
+{
+  width: 100%;
+  min-height: 100%;
+  display: table;
+  z-index: 999;
+  position: relative;
+}
+
+/**
  * Footer
  */
 footer
 {
-  position: fixed;
-	bottom: 0;
-	border-top: 2px solid;
-	width: 1090px;
+  display: none;
+  visibility: hidden;
+
+  bottom: 0;
+  border: 2px solid;
+  border-bottom: 0px;
+  height: 46px;
+  margin-left: -2px;
   padding: 5px;
+  position: absolute;
+  width: 1090px;
+  z-index: 999;
   
   display: flex;
   flex-direction: row;

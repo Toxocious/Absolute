@@ -76,6 +76,8 @@
 	</head>
 
 	<body>
+		<div class='BODY-CONTAINER'>
+
 		<header>
 			<?php
 				if ( isset($_SESSION['abso_user']) )
@@ -234,3 +236,5 @@
 		}
 	}
 ?>
+
+<main>

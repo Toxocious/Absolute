@@ -1,12 +1,10 @@
 html
 {
-  background: var(--color-septary);
+  background: var(--color-sexary);
 }
 
 body
 {
-  background: var(--color-sexary);
-  border-color: var(--border-color);
   color: var(--color-white);
 }
 
@@ -43,6 +41,11 @@ button
  */
 div
 {
+  &.BODY-CONTAINER
+  {
+    border-color: var(--border-color);
+  }
+
   &.description
   {
     background: var(--bg-description);

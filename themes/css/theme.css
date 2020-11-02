@@ -1,10 +1,8 @@
 html {
-  background: var(--color-septary);
+  background: var(--color-sexary);
 }
 
 body {
-  background: var(--color-sexary);
-  border-color: var(--border-color);
   color: var(--color-white);
 }
 
@@ -32,6 +30,9 @@ button:not(.disabled):hover {
 /**
  * Styling for warning, description, success, etc divs.
  */
+div.BODY-CONTAINER {
+  border-color: var(--border-color);
+}
 div.description {
   background: var(--bg-description);
   border-color: var(--border-color-description);
