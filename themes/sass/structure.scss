@@ -582,7 +582,7 @@ nav
   &.content
   {
     float: left;
-    margin-top: 5px;
+    margin: 5px;
     width: calc(100% - 213px);
 
     & > .body
@@ -767,9 +767,12 @@ main
 {
   width: 100%;
   min-height: 100%;
-  display: flex;
   z-index: 999;
   position: relative;
+  
+  align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 /**
