@@ -9,13 +9,6 @@
 		<link href='<?= Domain(1); ?>/images/Icons/4 - Shiny Sunset/Mega/359-mega.png' rel='shortcut icon'>
 
 		<!--
-			** Original used CSS files.
-		<link href='<?= Domain(1); ?>/css/required.css' rel='stylesheet'>
-		<link href='<?= Domain(1); ?>/css/foundation.css' rel='stylesheet'>
-		<link href='<?= Domain(1); ?>/css/default.css' rel='stylesheet'>
-		-->
-
-		<!--
 			** Using a new structure of CSS files.
 			** These are to be generated via SASS .scss files.
 		-->
