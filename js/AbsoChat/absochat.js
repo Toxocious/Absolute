@@ -35,6 +35,8 @@ const Absolute = {
        */
       socket = io('localhost:' + Absolute.port,
       {
+        reconnectionDelay: 2000,
+        reconnectionAttempts: 30,
         reconnection: true,
         secure: true
       });
