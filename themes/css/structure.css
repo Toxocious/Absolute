@@ -289,9 +289,8 @@ nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a {
  * Sidebar
  */
 .sidebar {
-  float: left;
-  margin: 5px;
-  width: 194px;
+  margin: 5px 0px 5px 5px;
+  min-width: 194px;
 }
 .sidebar > .panel > .head {
   border: none;
@@ -438,7 +437,7 @@ nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a {
   height: 26px;
   margin-bottom: 0px;
   text-align: center;
-  width: 100%;
+  width: 186px;
 }
 
 /**
@@ -485,7 +484,7 @@ table > tbody > tr > td {
 main {
   width: 100%;
   min-height: 100%;
-  display: table;
+  display: flex;
   z-index: 999;
   position: relative;
 }
