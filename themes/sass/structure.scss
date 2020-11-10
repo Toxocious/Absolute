@@ -336,6 +336,7 @@ header
  */
 nav
 {
+  height: 35px;
   margin: 5px 5px 0px;
   text-align: center;
 
@@ -403,7 +404,7 @@ nav
         pointer-events: none;
         position: absolute;
         width: 148px;
-        z-index: 2;
+        z-index: 3;
       }
 
       &.has-dropdown
@@ -767,7 +768,7 @@ main
 {
   width: 100%;
   min-height: 100%;
-  z-index: 999;
+  z-index: 2;
   position: relative;
   
   align-items: flex-start;
@@ -791,7 +792,7 @@ footer
   padding: 5px;
   position: absolute;
   width: 1090px;
-  z-index: 999;
+  z-index: 2;
   
   display: flex;
   flex-direction: row;

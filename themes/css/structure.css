@@ -218,6 +218,7 @@ header > .roster > .slot > div {
  * Navigation Bar
  */
 nav {
+  height: 35px;
   margin: 5px 5px 0px;
   text-align: center;
 }
@@ -264,7 +265,7 @@ nav > .nav-container > .nav-item > .dropdown {
   pointer-events: none;
   position: absolute;
   width: 148px;
-  z-index: 2;
+  z-index: 3;
 }
 nav > .nav-container > .nav-item.has-dropdown:focus-within > .dropdown {
   opacity: 1;
@@ -484,7 +485,7 @@ table > tbody > tr > td {
 main {
   width: 100%;
   min-height: 100%;
-  z-index: 999;
+  z-index: 2;
   position: relative;
   align-items: flex-start;
   display: flex;
@@ -505,7 +506,7 @@ footer {
   padding: 5px;
   position: absolute;
   width: 1090px;
-  z-index: 999;
+  z-index: 2;
   display: flex;
   flex-direction: row;
   align-items: center;
