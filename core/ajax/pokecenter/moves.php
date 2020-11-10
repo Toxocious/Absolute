@@ -85,9 +85,9 @@
       for ( $m = 1; $m <= 4; $m++ )
       {
         $Move_Dropdown .= "
-          <select name='{$Pokemon['ID']}_move_{$m}' onchange='updateMoves({$Pokemon['ID']});' style='margin: 2px; width: 100%;'>
+          <select name='{$Pokemon['ID']}_move_{$m}' onchange='updateMoves({$Pokemon['ID']});'>
             <option value='{$Moves[$m]['ID']}'>" . $Moves[$m]['Name'] . "</option>
-            <option value>~~~~~~~~~~~~~~</option>
+            <option value>---</option>
         ";
         foreach ( $Move_List as $Key => $Value )
         {
