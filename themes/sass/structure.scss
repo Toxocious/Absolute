@@ -101,10 +101,11 @@ div
   &.flex
   {
     display: var(--display-flex);
-
+    
     &.wrap
     {
       flex-wrap: wrap;
+      padding-bottom: 5px;
     }
   }
 }
