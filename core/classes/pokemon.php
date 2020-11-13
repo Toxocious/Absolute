@@ -116,15 +116,38 @@
 				$this->CalcStats("Speed", $BaseStats[5], $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
 			];
 			
+			$Pokedex_ID = str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT);
+			$Pokemon_Forme = preg_replace('/(^\s*\()|(\)\s*$)/', '', $Pokemon['Forme']);
 			if ( $Pokemon['Alt_ID'] != 0 )
 			{
-				$Sprite = "/images/Pokemon/Sprites/" . $Pokemon['Type'] . "/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokemon['Alt_ID'] . ".png";
-				$Icon = "/images/Pokemon/Icons/". $Pokemon['Type'] . "/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokemon['Alt_ID'] . ".png";
+
+				$Sprite = "/images/Pokemon/Sprites/{$Pokemon['Type']}/{$Pokedex_ID}-{$Pokemon_Forme}.png";
+				$Icon = "/images/Pokemon/Icons/{$Pokemon['Type']}/{$Pokedex_ID}-{$Pokemon_Forme}.png";
+
+				if ( !file_exists($Sprite) )
+				{
+					$Sprite = "/images/Pokemon/Sprites/Normal/{$Pokedex_ID}-{$Pokemon_Forme}.png";
+				}
+
+				if ( !file_exists($Icon) )
+				{
+					$Icon = "/images/Pokemon/Icons/Normal/{$Pokedex_ID}-{$Pokemon_Forme}.png";
+				}
 			}
 			else
 			{
-				$Sprite = "/images/Pokemon/Sprites/" . $Pokemon['Type'] . "/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
-				$Icon = "/images/Pokemon/Icons/". $Pokemon['Type'] . "/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
+				$Sprite = "/images/Pokemon/Sprites/{$Pokemon['Type']}/{$Pokedex_ID}.png";
+				$Icon = "/images/Pokemon/Icons/{$Pokemon['Type']}/{$Pokedex_ID}.png";
+
+				if ( !file_exists($Sprite) )
+				{
+					$Sprite = "/images/Pokemon/Sprites/Normal/{$Pokedex_ID}.png";
+				}
+
+				if ( !file_exists($Icon) )
+				{
+					$Icon = "/images/Pokemon/Icons/Normal/{$Pokedex_ID}.png";
+				}
 			}
 
 			if ( $Pokemon['Nickname'] == null )
@@ -263,6 +286,7 @@
 				"Pokedex_ID" => $Pokedex['Pokedex_ID'],
 				"Alt_ID" => $Pokedex['Alt_ID'],
 				"Name" => $Name,
+				"Forme" => $Pokedex['Forme'],
 				"Display_Name" => $Display_Name,
 				"Type_Primary" => $Pokedex['Type_Primary'],
 				"Type_Secondary" => $Pokedex['Type_Secondary'],
@@ -510,6 +534,7 @@
 					`Pokedex_ID`,
 					`Alt_ID`,
 					`Name`,
+					`Forme`,
 					`Type`,
 					`Experience`,
 					`Location`,
@@ -524,13 +549,14 @@
 					`Creation_Location`
 				) 
 				VALUES
-				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			");
-			$Pokemon_Create->execute([ $Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender, $IVs, $EVs, $Nature, time(), $Obtained_At ]);
+			$Pokemon_Create->execute([ $Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'], $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender, $IVs, $EVs, $Nature, time(), $Obtained_At ]);
 			$Poke_DB_ID = $PDO->lastInsertId();
 
 			return [
 				"Name" => $Name,
+				"Forme" => $Pokemon['Forme'],
 				"Exp" => $Experience,
 				"Gender" => $Gender,
 				"Location" => $Location,
