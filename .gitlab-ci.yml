@@ -18,7 +18,7 @@ before_script:
 stage_deploy:
   only:
     refs:
-      - development
+      - master
   stage: deploy
   script:
     # Sync specific file formats from the repository to the server.
