@@ -3,20 +3,22 @@ image: php:7.2
 stages:
   - deploy
 
-before_script:
+before_script: 
   - apt-get update -qq
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-  - apt-get -y install rsync
   - eval $(ssh-agent -s)
-  - mkdir -p ~/home/absoluterpg/.ssh
-  - chmod 700 ~/home/absoluterpg/.ssh
-  - ssh-keyscan absoluterpg.com >> ~/home/absoluterpg/.ssh/authorized_keys
-  - chmod 644 ~/home/absoluterpg/.ssh/authorized_keys
-  - ssh-add <(echo "$STAGING_PRIVATE_KEY")
-
+  - apt-get -y install rsync
+  - ssh-add <(echo "$SSH_PRIVATE_KEY")
+  - mkdir -p ~/.ssh && chmod 700 ~/.ssh
+  - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
+  - ssh-keyscan 45.79.0.55 >> ~/.ssh/authorized_keys
+  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  - chmod 644 ~/.ssh
+  
 stage_deploy:
   only:
-    - development
+    refs:
+      - development
   stage: deploy
   script:
     # Sync specific file formats from the repository to the server.
@@ -24,6 +26,4 @@ stage_deploy:
     #   .js:        node scripts and/or included js files
     #   .json:      package.json & map.json files
     #   .scss/.css: layout system
-    - rsync -azhP --filter=':- .gitignore' --include='*/' --include='*.'{php,js,css,scss,tmx,sh} --exclude='*' ./ absolute@45.79.0.55:/var/www/html/
-    # Run the install bash script on the server
-    # - ssh absolute@45.79.0.55 "cd /var/www/html/config && echo '$USER_PASSWORD'"
+    - rsync -azhP --no-perms --filter=':- .gitignore' --include='*/' --include='*.'{php,js,css,scss,png,tmx,sh} --exclude='*' ./ gitlab@45.79.0.55:/var/www/html/absoluterpg.com/public_html/
