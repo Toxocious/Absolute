@@ -29,7 +29,7 @@
 					foreach ( $Itemdex as $Key => $Value )
 					{
 						echo "
-							<img class='iconSelect' src='" . Domain(1) . "/images/Items/{$Value['Item_Name']}.png' onclick='FetchItem({$Value['Item_ID']});' />
+							<img class='iconSelect' src='" . DOMAIN_SPRITES . "/images/Items/{$Value['Item_Name']}.png' onclick='FetchItem({$Value['Item_ID']});' />
 						";
 					}
 				?>

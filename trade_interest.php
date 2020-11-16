@@ -28,7 +28,7 @@
 	{
 		$.ajax({
 			type: 'POST',
-			url: '<?= Domain(1); ?>/core/ajax/trading/interest.php',
+			url: '<?= DOMAIN_ROOT; ?>/core/ajax/trading/interest.php',
 			data: { Type: Type },
 			success: function(data)
 			{
@@ -47,7 +47,7 @@
 
 		$.ajax({
 			type: 'POST',
-			url: '<?= Domain(1); ?>/core/ajax/trading/interest.php',
+			url: '<?= DOMAIN_ROOT; ?>/core/ajax/trading/interest.php',
 			data: { Update: [ ele.name, ele.value ], Type: Type },
 			success: function(data)
 			{

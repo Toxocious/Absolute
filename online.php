@@ -191,7 +191,7 @@
 							$RosterPoke[$i] = $Poke_Class->FetchPokemonData($Fetch_Roster[$i]['ID']);
 
 							echo "
-								<div class='slot popup cboxElement' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$RosterPoke[$i]['ID']}'>
+								<div class='slot popup cboxElement' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$RosterPoke[$i]['ID']}'>
 									<div>
 										<img src='{$RosterPoke[$i]['Icon']}' />
 									</div>

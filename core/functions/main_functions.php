@@ -330,21 +330,3 @@
 
     return $lastseen;
   }
-
-	/**
-	 * Determine which domain to tack onto URLs.
-	 */
-	function Domain($Area)
-	{
-		if ( $Area === 1 )
-		{
-			if ( $_SERVER['HTTP_HOST'] == "localhost" )
-			{
-				return;
-			}
-		}
-		else
-		{
-			return;
-		}
-	}

@@ -122,7 +122,7 @@
 				{
 					echo "
 						<div style='float: left; width: calc(100% / 3);'>
-							<a href='" . Domain(1) . "/clan.php?manage=members&id={$Value['id']}'>
+							<a href='" . DOMAIN_ROOT . "/clan.php?manage=members&id={$Value['id']}'>
 								{$Value['Username']}
 							</a>
 						</div>
@@ -153,7 +153,7 @@
 				{
 					$Success = "
 						You have successfully created the clan <b>{$Clan_Name}</b>!<br />
-						<a href='" . Domain(1) . "/clan.php'>Clan Home</a>
+						<a href='" . DOMAIN_ROOT . "/clan.php'>Clan Home</a>
 					";
 
 					try
@@ -347,10 +347,10 @@
 							echo "
 								<tr>
 									<td onclick='toggleDetails({$Value['id']});'>
-										<img src='" . Domain(1) . "/images/Assets/{$Status}.png' />
+										<img src='" . DOMAIN_SPRITES . "/images/Assets/{$Status}.png' />
 									</td>
 									<td>
-										<a href='" . Domain(1) . "/profile.php?id={$Value['id']}'>
+										<a href='" . DOMAIN_ROOT . "/profile.php?id={$Value['id']}'>
 											<span class='{$Value['Clan_Rank']}' style='font-size: 14px;'>{$Value['Username']}</span>
 										</a>
 									</td>

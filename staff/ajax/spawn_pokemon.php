@@ -101,7 +101,7 @@
 		$JSON = [
 			"Name" => $Name,
 			"ID" => $Pokedex['id'],
-			"Sprite" => Domain(1) . '/images/Pokemon/Sprites/Normal/' . $Identify . '.png',
+			"Sprite" => DOMAIN_SPRITES . '/images/Pokemon/Sprites/Normal/' . $Identify . '.png',
 			"Base_HP" => $Pokedex['HP'],
 			"Base_Attack" => $Pokedex['Attack'],
 			"Base_Defense" => $Pokedex['Defense'],

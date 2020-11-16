@@ -145,7 +145,7 @@
 					foreach ( $Prices as $key => $Price )
 					{
 						echo "
-							<img src='" . Domain(1) . "/images/Assets/{$Price['Name']}.png' style='height: 30px; width: 30px;' />
+							<img src='" . DOMAIN_SPRITES . "/images/Assets/{$Price['Name']}.png' style='height: 30px; width: 30px;' />
 							<b>{$Price['Name']}</b>: " . number_format($Price['Amount']) . "
 							<br />
 						";
@@ -305,7 +305,7 @@
 			echo "
 				<tr>
 					<td>
-						<img src='" . Domain(1) . "/images/Assets/{$Currency['Name']}.png' style='height: 32px; width: 32px;' />
+						<img src='" . DOMAIN_SPRITES . "/images/Assets/{$Currency['Name']}.png' style='height: 32px; width: 32px;' />
 						{$Currency['Name']}
 					</td>
 					<td>

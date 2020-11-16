@@ -124,7 +124,7 @@
         <div class='body interactions'>
           <div>
             <div style='float: left; padding: 3px; width: 50%;'>
-              <a href='<?= Domain(1); ?>/trades.php?Action=Create&ID=<?= $Profile_Data['id'] ?>' style='display: block;'>
+              <a href='<?= DOMAIN_ROOT; ?>/trades.php?Action=Create&ID=<?= $Profile_Data['id'] ?>' style='display: block;'>
                 Trade With <?= $Profile_Data['Username']; ?>
               </a>
             </div>

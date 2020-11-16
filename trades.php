@@ -7,7 +7,7 @@
 	<div class='body'>
 		<div class='nav'>
 			<div>
-				<a href='<?= Domain(1); ?>/shop.php?Shop=pokemon' style='display: block;'>Pokemon</a>
+				<a href='<?= DOMAIN_ROOT; ?>/shop.php?Shop=pokemon' style='display: block;'>Pokemon</a>
 			</div>
 		</div>
 		<div class='nav'>
@@ -81,8 +81,8 @@
 									echo "
 										<tr>
 											<td><a href='javascript:void(0);' onclick='TradeView({$Value['ID']});'>#" . number_format($Value['ID']) . "</a></td>
-											<td><a href='" . Domain(1) . "/profile.php?id={$Sender['ID']}'>{$Sender_Username}</a></td>
-											<td><a href='" . Domain(1) . "/profile.php?id={$Recipient['ID']}'>{$Recipient_Username}</a></td>
+											<td><a href='" . DOMAIN_ROOT . "/profile.php?id={$Sender['ID']}'>{$Sender_Username}</a></td>
+											<td><a href='" . DOMAIN_ROOT . "/profile.php?id={$Recipient['ID']}'>{$Recipient_Username}</a></td>
 											<td style='color: #888;'>{$Value['Status']}</td>
 										</tr>
 									";
@@ -146,7 +146,7 @@
 	{
 		$.ajax({
 			type: 'POST',
-			url: '<?= Domain(1); ?>/core/ajax/trading/view.php',
+			url: '<?= DOMAIN_ROOT; ?>/core/ajax/trading/view.php',
 			data: { Trade_ID: Trade_ID },
 			success: function(data)
 			{
@@ -163,7 +163,7 @@
 	{
 		$.ajax({
 			type: 'POST',
-			url: '<?= Domain(1); ?>/core/ajax/trading/manage.php',
+			url: '<?= DOMAIN_ROOT; ?>/core/ajax/trading/manage.php',
 			data: { Trade_ID: Trade_ID, Action: Action },
 			success: function(data)
 			{
@@ -193,7 +193,7 @@
 
 		$.ajax({
 			type: 'POST',
-			url: '<?= Domain(1); ?>/core/ajax/trading/prepare.php',
+			url: '<?= DOMAIN_ROOT; ?>/core/ajax/trading/prepare.php',
 			data: { ID: Recipient },
 			success: function(data)
 			{
@@ -213,7 +213,7 @@
 	{
 		$.ajax({
 			type: 'POST',
-			url: '<?= Domain(1); ?>/core/ajax/trading/create.php',
+			url: '<?= DOMAIN_ROOT; ?>/core/ajax/trading/create.php',
 			data: { },
 			success: function(data)
 			{

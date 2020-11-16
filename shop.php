@@ -29,7 +29,7 @@
 	<div class='body'>
 		<div class='nav'>
 			<div>
-				<a href='<?= Domain(1); ?>/shop.php?Shop=pokemon' style='display: block;'>Pokemon</a>
+				<a href='<?= DOMAIN_ROOT; ?>/shop.php?Shop=pokemon' style='display: block;'>Pokemon</a>
 			</div>
 		</div>
 
@@ -81,7 +81,7 @@
 					foreach ( $Price_Array[0] as $Currency => $Amount )
 					{
 						// Append to the price string for output later.
-						$Price_String .= "<img src='" . Domain(1) . "/images/Assets/{$Currency}.png' /> " . number_format($Amount) . "<br />";
+						$Price_String .= "<img src='" . DOMAIN_ROOT . "/images/Assets/{$Currency}.png' /> " . number_format($Amount) . "<br />";
 
 						// Now check to see if the user can afford it.
 						if ( $User_Data[$Currency] < $Amount )
@@ -143,7 +143,7 @@
 	{
 		$.ajax({
 			type: "POST",
-			url: "<?= Domain(1); ?>/core/ajax/shop.php",
+			url: "<?= DOMAIN_ROOT; ?>/core/ajax/shop.php",
 			data: { id: id, shop: '<?= substr($Shop, 0, -5); ?>' },
 			success: function(data)
 			{

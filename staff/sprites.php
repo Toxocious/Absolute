@@ -74,17 +74,17 @@
 						</b>
 						<br />
 
-						<img src='" . Domain(1) . "/images/Pokemon/Icons/Normal/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png' />
-						<img src='" . Domain(1) . "/images/Pokemon/Icons/Shiny/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png' />
-						<img src='" . Domain(1) . "/images/Pokemon/Icons/Sunset/" . $Pokemon['Pokedex_ID'] . ".png' />
+						<img src='" . DOMAIN_SPRITES . "/images/Pokemon/Icons/Normal/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png' />
+						<img src='" . DOMAIN_SPRITES . "/images/Pokemon/Icons/Shiny/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png' />
+						<img src='" . DOMAIN_SPRITES . "/images/Pokemon/Icons/Sunset/" . $Pokemon['Pokedex_ID'] . ".png' />
 					</td>
 					
 					<td style='text-align: center;'>
-						<img src='" . Domain(1) . "/images/Pokemon/Sprites/Normal/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . (($Pokemon['Alt_ID'] == 0) ? '' : '.' . $Pokemon['Alt_ID']) . ".png' />
+						<img src='" . DOMAIN_SPRITES . "/images/Pokemon/Sprites/Normal/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . (($Pokemon['Alt_ID'] == 0) ? '' : '.' . $Pokemon['Alt_ID']) . ".png' />
 					</td>
 
 					<td style='text-align: center;'>
-						<img src='" . Domain(1) . "/images/Pokemon/Sprites/Shiny/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . (($Pokemon['Alt_ID'] == 0) ? '' : '.' . $Pokemon['Alt_ID']) . ".png' />
+						<img src='" . DOMAIN_SPRITES . "/images/Pokemon/Sprites/Shiny/" . str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . (($Pokemon['Alt_ID'] == 0) ? '' : '.' . $Pokemon['Alt_ID']) . ".png' />
 					</td>
 
 					<td style='text-align: center;'>

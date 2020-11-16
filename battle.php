@@ -67,7 +67,7 @@
 				<!-- Battle Options/Bag -->
 				<div class='battle_options'>
 					<div style='padding-top: 6px;'>
-						<img src='<?= Domain(1); ?>/images/Assets/options.png' style='height: 50px; width: 50px;' />
+						<img src='<?= DOMAIN_ROOT; ?>/images/Assets/options.png' style='height: 50px; width: 50px;' />
 					</div>
 				</div>
 				<!-- Battle Options/Bag -->
