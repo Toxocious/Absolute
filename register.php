@@ -94,7 +94,7 @@
 						)
 						VALUES (?, ?, ?, ?, ?, ?, ?)
 					");
-					$User_Create->execute([ $Username, $Hashed_Password, $Base_Key, $Gender, time(), "images/Avatars/".$Avatar.".png", $Auth_Code ]);
+					$User_Create->execute([ $Username, $Hashed_Password, $Base_Key, $Gender, time(), "/Avatars/" . $Avatar . ".png", $Auth_Code ]);
 					$User_ID = $PDO->lastInsertId();
 
 					$User_Currency_Create = $PDO->prepare("INSERT INTO `user_currency` ( `User_ID` ) VALUES ( ? )");
