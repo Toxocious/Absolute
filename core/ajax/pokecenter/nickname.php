@@ -69,7 +69,7 @@
       echo "
         <div class='roster_slot full' style='padding: 5px;'>
           <div style='float: left;'>
-            <img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
+            <img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
           </div>
           <div style='float: left; width: calc(100% - 96px);'>
             <b>{$Roster_Slot[$i]['Display_Name']}</b><br />
@@ -83,8 +83,8 @@
     }
     else
     {
-      $Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
-      $Roster_Slot[$i]['Icon'] = Domain(3) . 'images/pokemon/0_mini.png';
+      $Roster_Slot[$i]['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
+      $Roster_Slot[$i]['Icon'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0_mini.png';
       $Roster_Slot[$i]['Display_Name'] = 'Empty';
       $Roster_Slot[$i]['Level'] = '0';
       $Roster_Slot[$i]['Experience'] = '0';

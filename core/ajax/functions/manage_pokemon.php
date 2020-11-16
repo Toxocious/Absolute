@@ -132,7 +132,7 @@
 				{
 					$Sprites .= "
 						<td colspan='7'>
-							<img src='" . Domain(1) . "images/pokemon/0.png' />
+							<img src='" . DOMAIN_SPRITES . "/Pokemon/Sprites/0.png' />
 						</td>
 					";
 
@@ -358,7 +358,7 @@
 								</div>
 
 								<div style='float: left; margin-left: -30px; padding: 3px;'>
-									<img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
+									<img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
 								</div>
 
 								<div class='info_cont' style='float: right; width: 189px;'>
@@ -375,7 +375,7 @@
 					}
 					else
 					{
-						$Roster_Slot[$i]['Sprite'] = Domain(3) . 'images/pokemon/0.png';
+						$Roster_Slot[$i]['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
 						$Roster_Slot[$i]['Display_Name'] = 'Empty';
 						$Roster_Slot[$i]['Level'] = '0';
 						$Roster_Slot[$i]['Experience'] = '0';
@@ -410,8 +410,8 @@
 						}
 						else
 						{
-							$RosterPoke[$i]['Icon'] = Domain(1) . "/images/Pokemon/0_mini.png";
-							$RosterPoke[$i]['Sprite'] = Domain(1) . "/images/Pokemon/0.png";
+							$RosterPoke[$i]['Icon'] = DOMAIN_SPRITES . "/Pokemon/Sprites/0_mini.png";
+							$RosterPoke[$i]['Sprite'] = DOMAIN_SPRITES . "/Pokemon/Sprites/0.png";
 							$RosterPoke[$i]['Display_Name'] = "Empty";
 							$RosterPoke[$i]['Level'] = '0';
 							$RosterPoke[$i]['Experience'] = '0';

@@ -26,12 +26,12 @@
       {
         $Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Fetch_Roster[$i]['ID']);
 
-        $Popup = "popup cboxElement' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'";
+        $Popup = "popup cboxElement' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'";
       }
       else
       {
         $Roster_Slot[$i]['ID'] = null;
-        $Roster_Slot[$i]['Sprite'] = Domain(1) . 'images/pokemon/0.png';
+        $Roster_Slot[$i]['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
         $Roster_Slot[$i]['Display_Name'] = 'Empty';
         $Roster_Slot[$i]['Level'] = '0';
         $Roster_Slot[$i]['Experience'] = '0';
@@ -46,12 +46,12 @@
 
       if ( $Roster_Slot[$i]['Item'] != null )
       {
-        $Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin-top: 48px;' />";
+        $Item = "<img src='" . DOMAIN_SPRITES . "{$Roster_Slot[$i]['Item_Icon']}' style='margin-top: 48px;' />";
       }
 
       if ( $Roster_Slot[$i]['Gender_Icon'] != null )
       {
-        $Gender = "<img src='{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; width: 20px;' /><br />";
+        $Gender = "<img src='" . DOMAIN_SPRITES . "{$Roster_Slot[$i]['Gender_Icon']}' style='height: 20px; width: 20px;' /><br />";
       }
 
       echo "

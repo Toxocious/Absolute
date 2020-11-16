@@ -60,7 +60,7 @@
 				'ID' => $User['id'],
 				'Username' => $User['Username'],
 				'Roster' => $User['Roster'],
-				'Avatar' => Domain(1) . $User['Avatar'],
+				'Avatar' => DOMAIN_ROOT . $User['Avatar'],
 				'Banned_RPG' => $Banned_RPG,
 				'Banned_Chat' => $Banned_Chat,
 				'Money' => $User['Money'],
@@ -184,7 +184,7 @@
 			 */
 			if ( $Link )
 			{
-				$Apply_Link_1 = "<a href='/profile.php?id={$User['id']}'>";
+				$Apply_Link_1 = "<a href='" . DOMAIN_ROOT . " /profile.php?id={$User['id']}'>";
 				$Apply_Link_2 = "</a>";
 			}
 			else

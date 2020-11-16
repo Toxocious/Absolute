@@ -18,7 +18,7 @@
       }
       else
       {
-        $Roster_Slot[$i]['Icon'] = Domain(3) . 'images/pokemon/0_mini.png';
+        $Roster_Slot[$i]['Icon'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0_mini.png';
         $Roster_Slot[$i]['Display_Name'] = 'Empty';
   
         echo "

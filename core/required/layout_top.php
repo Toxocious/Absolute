@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<title><?= $Current_Page['Name']; ?> :: The Pokemon Absolute</title>
-		<link href='<?= Domain(1); ?>/images/Icons/4 - Shiny Sunset/Mega/359-mega.png' rel='shortcut icon'>
+		<link href='<?= DOMAIN_ROOT; ?>/images/Icons/4 - Shiny Sunset/Mega/359-mega.png' rel='shortcut icon'>
 
 		<!--
 			** Using a new structure of CSS files.
@@ -17,21 +17,21 @@
 		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css?<?= time(); ?>' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css?<?= time(); ?>' />
 
-		<script type='text/javascript' src='<?= Domain(1); ?>/js/libraries.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/libraries.js'></script>
 		<?php
 			/**
 			 * Adds snowstorm.js if the current month is December.
 			 */
 			if ( date('m') == 12 )
 			{
-				echo "<script type='text/javascript' src='" . Domain(1) . "/js/snowstorm.js'></script>";	
+				echo "<script type='text/javascript' src='" . DOMAIN_ROOT . "/js/snowstorm.js'></script>";	
 			}
 
 			if ( isset($_SESSION['abso_user']) )
 			{
 		?>
-		<script type='text/javascript' src='<?= Domain(1); ?>/js/AbsoChat/Handler.js'></script>
-		<script type='text/javascript' src='<?= Domain(1); ?>/js/AbsoChat/absochat.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/Handler.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/absochat.js'></script>
 		<script type='text/javascript'>
 			$(function()
 			{
@@ -80,7 +80,7 @@
 				<div class='user'>
 					<div class="border-gradient margin-center hw-100px padding-0px">
 						<div>
-							<img src='<?= Domain(1) . '/' . $User_Data['Avatar']; ?>' />
+							<img src='<?= DOMAIN_SPRITES . '/' . $User_Data['Avatar']; ?>' />
 						</div>
 					</div>
 
@@ -96,14 +96,14 @@
 				<div class='stats'>
 					<div class='stat border-gradient w-150px'>
 						<div>
-							<img src='<?= Domain(1); ?>/images/Assets/Money.png' />
+							<img src='<?= DOMAIN_SPRITES; ?>/Assets/Money.png' />
 						</div>
 						<div>$<?= number_format($User_Data['Money']); ?></div>
 					</div>
 
 					<div class='stat border-gradient w-150px'>
 						<div>
-							<img src='<?= Domain(1); ?>/images/Assets/Abso_Coins.png' />
+							<img src='<?= DOMAIN_SPRITES; ?>/Assets/Abso_Coins.png' />
 						</div>
 						<div><?= number_format($User_Data['Abso_Coins']); ?></div>
 					</div>
@@ -122,7 +122,7 @@
 								$RosterPoke[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
 								
 								echo "
-									<div class='slot popup cboxElement border-gradient hover' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$RosterPoke[$i]['ID']}'>
+									<div class='slot popup cboxElement border-gradient hover' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$RosterPoke[$i]['ID']}'>
 										<div>
 											<img src='{$RosterPoke[$i]['Icon']}' />
 										</div>

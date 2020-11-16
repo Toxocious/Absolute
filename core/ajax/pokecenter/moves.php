@@ -113,8 +113,8 @@
     }
     else
     {
-      $Pokemon['Sprite'] = Domain(3) . 'images/pokemon/0.png';
-      $Pokemon['Icon'] = Domain(3) . 'images/pokemon/0_mini.png';
+      $Pokemon['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
+      $Pokemon['Icon'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0_mini.png';
       $Pokemon['Display_Name'] = 'Empty';
       $Pokemon['Level'] = '0';
       $Pokemon['Experience'] = '0';
@@ -167,7 +167,7 @@
 
         $.ajax({
           type: 'post',
-          url: '" . Domain(1) . "/core/ajax/pokecenter/moves.php',
+          url: '" . DOMAIN_ROOT . "/core/ajax/pokecenter/moves.php',
           data: { poke_id: poke_id, move_1: move_1, move_2: move_2, move_3: move_3, move_4: move_4, },
           success: function(data)
           {

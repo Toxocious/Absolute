@@ -39,7 +39,7 @@
 				$Slots .= "
 					<div class='border-gradient hover' style='margin: 0px 0px 0px 5px; float: left; height: 32px; width: 42px;'>
 						<div style='padding: 2px;'>
-							<img src='" . Domain(1) . "/images/Pokemon/0_mini.png' style='height: 30px; width: 40px;' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, " . ($i + 1) . ");\" />
+							<img src='" . DOMAIN_SPRITES . "/Pokemon/Sprites/0_mini.png' style='height: 30px; width: 40px;' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, " . ($i + 1) . ");\" />
 						</div>
 					</div>
 				";
@@ -54,7 +54,7 @@
 			<div style='flex-basis: 60%;'>
 				<div class='border-gradient hover hw-96px padding-0px' style='margin: 0 auto;'>
 					<div>
-						<img class='popup cboxElement' src='{$Pokemon['Sprite']}' href='" . Domain(1) . "/core/ajax/pokemon.php?id={$Pokemon['ID']}' />
+						<img class='popup cboxElement' src='{$Pokemon['Sprite']}' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Pokemon['ID']}' />
 					</div>
 				</div>
 

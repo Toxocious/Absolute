@@ -33,8 +33,8 @@
 <html>
 	<head>
 		<title>Pokemon Statistics :: The Pokemon Absolute</title>
-		<link href='<?= Domain(1); ?>/images/Icons/4 - Shiny Sunset/Mega/359-mega.png' rel='shortcut icon'>
-		<link href='<?= Domain(1); ?>/css/default.css' rel='stylesheet'>
+		<link href='<?= DOMAIN_ROOT; ?>/images/Icons/4 - Shiny Sunset/Mega/359-mega.png' rel='shortcut icon'>
+		<link href='<?= DOMAIN_ROOT; ?>/css/default.css' rel='stylesheet'>
 		<style type='text/css'>
 			html, body
 			{
@@ -122,7 +122,7 @@
 			<tbody>
 				<tr>
 					<td style='width: 25%;'><b>Owner</b></td>
-					<td style='width: 25%;'><a href='<?= Domain(1); ?>/profile.php?id=<?= $Pokemon['Owner_Current']; ?>'><?= $Pokemon['Owner_Current_Username']; ?></a></td>
+					<td style='width: 25%;'><a href='<?= DOMAIN_ROOT; ?>/profile.php?id=<?= $Pokemon['Owner_Current']; ?>'><?= $Pokemon['Owner_Current_Username']; ?></a></td>
 					<td style='width: 25%;'><b>Location</b></td>
 					<td style='width: 25%;'><?= $Pokemon['Location']; ?></td>
 				</tr>
@@ -150,7 +150,7 @@
 				</tr>
 				<tr>
 					<td colspan='1'><b>Obtained On</b></td>
-					<td colspan='3'><?= $Pokemon['Creation_Date']; ?> by <a href='<?= Domain(1); ?>/profile.php?id=<?= $Pokemon['Original_Owner']; ?>'><?= $Pokemon['Owner_Original_Username']; ?></a></td>
+					<td colspan='3'><?= $Pokemon['Creation_Date']; ?> by <a href='<?= DOMAIN_ROOT; ?>/profile.php?id=<?= $Pokemon['Original_Owner']; ?>'><?= $Pokemon['Owner_Original_Username']; ?></a></td>
 				</tr>
 			</tbody>
 		</table>

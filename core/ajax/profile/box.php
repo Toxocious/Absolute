@@ -132,8 +132,8 @@
             }
         ?>
 
-            <td div class='body_slot popup cboxElement' href='<?= Domain(1); ?>/core/ajax/pokemon.php?id=<?= $Poke_Data['ID']; ?>'>
-              <img src='images/Assets/<?= $Poke_Data['Gender']; ?>.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
+            <td div class='body_slot popup cboxElement' href='<?= DOMAIN_ROOT; ?>/core/ajax/pokemon.php?id=<?= $Poke_Data['ID']; ?>'>
+              <img src='<?= DOMAIN_SPRITES; ?>/Assets/<?= $Poke_Data['Gender']; ?>.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
               <!--<img src='images/Assets/Female.svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />-->
               <span style='float: left;'>
                 <img src='<?= $Poke_Data['Icon']; ?>' />

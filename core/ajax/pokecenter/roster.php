@@ -132,7 +132,7 @@
         {
           $Sprites .= "
             <td colspan='7'>
-              <img src='" . Domain(1) . "images/pokemon/0.png' />
+              <img src='" . DOMAIN_SPRITES . "/Pokemon/Sprites/0.png' />
             </td>
           ";
 
