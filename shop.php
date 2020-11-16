@@ -81,7 +81,7 @@
 					foreach ( $Price_Array[0] as $Currency => $Amount )
 					{
 						// Append to the price string for output later.
-						$Price_String .= "<img src='" . DOMAIN_ROOT . "/images/Assets/{$Currency}.png' /> " . number_format($Amount) . "<br />";
+						$Price_String .= "<img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' /> " . number_format($Amount) . "<br />";
 
 						// Now check to see if the user can afford it.
 						if ( $User_Data[$Currency] < $Amount )

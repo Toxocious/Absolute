@@ -227,21 +227,21 @@
 				$Type_Display = $Type;
 			}
 
-			if ( $Pokedex['Name_Alter'] !== null )
+			if ( $Pokedex['Forme'] !== null )
 			{
-				$Name = $Pokedex['Name'] . " " . $Pokedex['Name_Alter'];
-				$Display_Name = $Type_Display . $Pokedex['Name'] . " " . $Pokedex['Name_Alter'];
+				$Name = $Pokedex['Pokemon'] . " " . $Pokedex['Forme'];
+				$Display_Name = $Type_Display . $Pokedex['Pokemon'] . " " . $Pokedex['Forme'];
 			}
 			else
 			{
-				$Name = $Pokedex['Name'];
-				$Display_Name = $Type_Display . $Pokedex['Name'];
+				$Name = $Pokedex['Pokemon'];
+				$Display_Name = $Type_Display . $Pokedex['Pokemon'];
 			}
 
 			$Poke_Images = $this->FetchImages($Pokedex['Pokedex_ID'], $Pokedex['Alt_ID']);
 
 			return [
-				"ID" => $Pokedex['id'],
+				"ID" => $Pokedex['ID'],
 				"Pokedex_ID" => $Pokedex['Pokedex_ID'],
 				"Alt_ID" => $Pokedex['Alt_ID'],
 				"Name" => $Name,
@@ -252,8 +252,6 @@
 				"Base_Stats" => $BaseStats,
 				"Sprite" => $Poke_Images['Sprite'],
 				"Icon" => $Poke_Images['Icon'],
-				"Name" => $Pokedex['Name'],
-				"Name_Alter" => $Pokedex['Name_Alter'],
 			];
 		}
 
