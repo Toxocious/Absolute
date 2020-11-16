@@ -116,40 +116,6 @@
 				$this->CalcStats("Speed", $BaseStats[5], $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
 			];
 			
-			$Pokedex_ID = str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT);
-			$Pokemon_Forme = preg_replace('/(^\s*\()|(\)\s*$)/', '', $Pokemon['Forme']);
-			if ( $Pokemon['Alt_ID'] != 0 )
-			{
-
-				$Sprite = "/images/Pokemon/Sprites/{$Pokemon['Type']}/{$Pokedex_ID}-{$Pokemon_Forme}.png";
-				$Icon = "/images/Pokemon/Icons/{$Pokemon['Type']}/{$Pokedex_ID}-{$Pokemon_Forme}.png";
-
-				if ( !file_exists($Sprite) )
-				{
-					$Sprite = "/images/Pokemon/Sprites/Normal/{$Pokedex_ID}-{$Pokemon_Forme}.png";
-				}
-
-				if ( !file_exists($Icon) )
-				{
-					$Icon = "/images/Pokemon/Icons/Normal/{$Pokedex_ID}-{$Pokemon_Forme}.png";
-				}
-			}
-			else
-			{
-				$Sprite = "/images/Pokemon/Sprites/{$Pokemon['Type']}/{$Pokedex_ID}.png";
-				$Icon = "/images/Pokemon/Icons/{$Pokemon['Type']}/{$Pokedex_ID}.png";
-
-				if ( !file_exists($Sprite) )
-				{
-					$Sprite = "/images/Pokemon/Sprites/Normal/{$Pokedex_ID}.png";
-				}
-
-				if ( !file_exists($Icon) )
-				{
-					$Icon = "/images/Pokemon/Icons/Normal/{$Pokedex_ID}.png";
-				}
-			}
-
 			if ( $Pokemon['Nickname'] == null )
 			{
 				if ( $Pokemon['Type'] !== 'Normal' )
@@ -166,6 +132,8 @@
 				$Display_Name = $Pokemon['Nickname'];
 			}
 
+			$Poke_Images = $this->FetchImages($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon['Type']);
+
 			return [
 				"ID" => $Pokemon['ID'],
 				"Pokedex_ID" => $Pokemon['Pokedex_ID'],
@@ -178,10 +146,10 @@
 				"Slot" => $Pokemon['Slot'],
 				"Item" => $Item['Item_Name'],
 				"Item_ID" => $Item['Item_ID'],
-				"Item_Icon" => Domain(1) . "/images/Items/" . $Item['Item_Name'] . ".png",
+				"Item_Icon" => DOMAIN_SPRITES . "/Items/" . $Item['Item_Name'] . ".png",
 				"Gender" => $Gender,
 				"GenderShort" => $GenderShort,
-				"Gender_Icon" => Domain(1) . "/images/Assets/" . $Gender . ".svg",
+				"Gender_Icon" => DOMAIN_SPRITES . "/Assets/" . $Gender . ".svg",
 				"Level" => number_format($Level),
 				"Level_Raw" => $Level,
 				"Experience" => number_format($Experience),
@@ -207,8 +175,8 @@
 				"Biography" => $Pokemon['Biography'],
 				"Creation_Date" => date("F j, Y (g:i A)", $Pokemon['Creation_Date']),
 				"Creation_Location" => $Pokemon['Creation_Location'],
-				"Sprite" => Domain(1) . $Sprite,
-				"Icon" => Domain(1) . $Icon,
+				"Sprite" => $Poke_Images['Sprite'],
+				"Icon" => $Poke_Images['Icon'],
 			];
 		}
 
@@ -253,17 +221,6 @@
 				round($Pokedex['Speed']),
 			];
 
-			if ( $Pokedex['Alt_ID'] != 0 )
-			{
-				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokedex['Alt_ID'] . ".png";
-				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . "." . $Pokedex['Alt_ID'] . ".png";
-			}
-			else
-			{
-				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
-				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex['Pokedex_ID'], 3, "0", STR_PAD_LEFT) . ".png";
-			}
-
 			$Type_Display = '';
 			if ( $Type != 'Normal' )
 			{
@@ -281,6 +238,8 @@
 				$Display_Name = $Type_Display . $Pokedex['Name'];
 			}
 
+			$Poke_Images = $this->FetchImages($Pokedex['Pokedex_ID'], $Pokedex['Alt_ID']);
+
 			return [
 				"ID" => $Pokedex['id'],
 				"Pokedex_ID" => $Pokedex['Pokedex_ID'],
@@ -291,8 +250,8 @@
 				"Type_Primary" => $Pokedex['Type_Primary'],
 				"Type_Secondary" => $Pokedex['Type_Secondary'],
 				"Base_Stats" => $BaseStats,
-				"Sprite" => Domain(1) . $Sprite,
-				"Icon" => Domain(1) . $Icon,
+				"Sprite" => $Poke_Images['Sprite'],
+				"Icon" => $Poke_Images['Icon'],
 				"Name" => $Pokedex['Name'],
 				"Name_Alter" => $Pokedex['Name_Alter'],
 			];
@@ -429,17 +388,6 @@
 				);
 			}
 
-			if ( $Alt_ID != 0 )
-			{
-				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . "." . $Alt_ID . ".png";
-				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . "." . $Alt_ID . ".png";
-			}
-			else
-			{
-				$Sprite = "/images/Pokemon/Sprites/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . ".png";
-				$Icon = "/images/Pokemon/Icons/{$Type}/" . str_pad($Pokedex_ID, 3, "0", STR_PAD_LEFT) . ".png";
-			}
-
 			if ( $Type !== "Normal" )
 			{
 				$Name = $Type . $Pokemon['Name'];
@@ -554,6 +502,9 @@
 			$Pokemon_Create->execute([ $Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'], $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender, $IVs, $EVs, $Nature, time(), $Obtained_At ]);
 			$Poke_DB_ID = $PDO->lastInsertId();
 
+			// Have to wait until the Pokemon has been created to fetch it's icon and sprite.
+			$Poke_Images = $this->FetchImages($Pokedex_ID, $Alt_ID, $Type);
+
 			return [
 				"Name" => $Name,
 				"Forme" => $Pokemon['Forme'],
@@ -566,8 +517,8 @@
 				"IVs" => explode(',', $IVs),
 				"EVs" => explode(',', $EVs),
 				"Nature" => $Nature,
-				"Sprite" => $Sprite,
-				"Icon" => $Icon,
+				"Sprite" => $Poke_Images['Sprite'],
+				"Icon" => $Poke_Images['Icon'],
 			];	
 		}
 
@@ -701,7 +652,92 @@
 				"Name" => $Item['Item_Name'],
 				"Category" => $Item['Item_Type'],
 				"Description" => $Item['Item_Description'],
-				"Icon" => Domain(1) . "/images/Items/" . $Item['Item_ID'] . ".png",
+				"Icon" => DOMAIN_SPRITES . "/Items/" . $Item['Item_ID'] . ".png",
+			];
+		}
+
+		/**
+		 * Given a Pokemon's Pokedex_ID and Alt_ID, determine it's icon and sprite URLs.
+		 */
+		public function FetchImages($Pokedex_ID, $Alt_ID = 0, $Type = 'Normal')
+		{
+			clearstatcache(true);
+			global $PDO;
+
+			if ( !$Pokedex_ID )
+				return false;
+
+			try
+			{
+				$FetchPokemon = $PDO->prepare("SELECT `Pokedex_ID`, `Alt_ID`, `Forme` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+				$FetchPokemon->execute([ $Pokedex_ID, $Alt_ID ]);
+				$FetchPokemon->setFetchMode(PDO::FETCH_ASSOC);
+				$Pokemon = $FetchPokemon->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+
+			$Pokedex_ID = str_pad($Pokemon['Pokedex_ID'], 3, "0", STR_PAD_LEFT);
+			$Pokemon_Forme = strtolower(preg_replace('/(^\s*\()|(\)\s*$)/', '', $Pokemon['Forme']));
+
+			switch($Pokemon_Forme)
+			{
+				case 'mega':
+					$Pokemon_Forme = '-mega';
+					break;
+				case 'mega x':
+					$Pokemon_Forme = '-x-mega';
+					break;
+				case 'mega y':
+					$Pokemon_Forme = '-y-mega';
+					break;
+				case 'gigantamax':
+					$Pokemon_Forme = '-gmax';
+					break;
+				case 'dynamax':
+					$Pokemon_Forme = '-dmax';
+					break;
+				default:
+					$Pokemon_Forme = $Pokemon_Forme;
+					break;
+			}
+
+			if ( $Pokemon['Alt_ID'] != 0 )
+			{
+				$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
+				$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
+
+				if ( !file_exists($Sprite) )
+				{
+					$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
+				}
+
+				if ( !file_exists($Icon) )
+				{
+					$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
+				}
+			}
+			else
+			{
+				$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/{$Type}/{$Pokedex_ID}.png";
+				$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/{$Type}/{$Pokedex_ID}.png";
+
+				if ( !file_exists($Sprite) )
+				{
+					$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/Normal/{$Pokedex_ID}.png";
+				}
+
+				if ( !file_exists($Icon) )
+				{
+					$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/Normal/{$Pokedex_ID}.png";
+				}
+			}
+
+			return [
+				'Icon' => $Icon,
+				'Sprite' => $Sprite,
 			];
 		}
 
