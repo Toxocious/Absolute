@@ -590,6 +590,7 @@
 					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
 					$FetchPokedex->execute([ $Pokedex_ID, $Alt_ID ]);
 				}
+
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokemon = $FetchPokedex->fetch();
 			}
@@ -598,53 +599,12 @@
 				HandleError( $e->getMessage() );
 			}
 
-			if ( $Pokemon['Genderless'] == 100 )
+			$Weighter = new Weighter();
+			foreach (['Female', 'Male', 'Genderless'] as $Key)
 			{
-				$Gender = "Genderless";
+				$Weighter->add($Key, $Pokemon[$Key]);
 			}
-			else
-			{
-				if ( $Pokemon['Male'] == 100 )
-				{
-					if ( mt_rand(1, 420) == 4 )
-					{
-						$Gender = "(?)";
-					}
-					else
-					{
-						$Gender = "Male";
-					}
-				}
-				else if ( $Pokemon['Female'] == 100 )
-				{
-					if ( mt_rand(1, 420) == 4 )
-					{
-						$Gender = "(?)";
-					}
-					else
-					{
-						$Gender = "Female";
-					}
-				}
-				else
-				{
-					$Chance_M = mt_rand(1, $Pokemon['Male']);
-					$Chance_F = mt_rand(1, $Pokemon['Female']);
-
-					if ( mt_rand(1, 420) == 4 )
-					{
-						$Gender = "(?)";
-					}
-					else if ( $Chance_M > $Chance_F )
-					{
-						$Gender = "Male";
-					}
-					else
-					{
-						$Gender = "Female";
-					}
-				}
-			}
+			$Gender = $Weighter->get();
 
 			return $Gender;
 		}
