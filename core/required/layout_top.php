@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<title><?= $Current_Page['Name']; ?> :: The Pokemon Absolute</title>
-		<link href='<?= DOMAIN_ROOT; ?>/images/Icons/4 - Shiny Sunset/Mega/359-mega.png' rel='shortcut icon'>
+		<link href='<?= DOMAIN_SPRITES; ?>/Pokemon/Icons/Normal/359-mega.png' rel='shortcut icon'>
 
 		<!--
 			** Using a new structure of CSS files.

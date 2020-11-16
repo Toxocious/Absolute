@@ -36,7 +36,7 @@
 	<tbody>
 		<tr>
 			<td style='padding: 5px 30px;'>
-				<img src='<?= $News_Poster['Avatar']; ?>' /><br />
+				<img src='<?= DOMAIN_SPRITES . '/' . $News_Poster['Avatar']; ?>' /><br />
 				<?php
 					echo $User_Class->DisplayUserName($News_Post['Poster_ID']);
 					echo "<br />";
