@@ -67,6 +67,7 @@
 	$Navigation = new Navigation();
 	require_once $Dir_Root . '/core/classes/notification.php';
 	$Notification = new Notification();
+	require_once $Dir_Root . '/core/classes/weighter.php';
 
 	// Require some files.
 	require_once $Dir_Root . '/core/functions/formulas.php';
