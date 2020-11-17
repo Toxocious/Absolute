@@ -723,6 +723,11 @@ table
 
       &:first-child
       {
+        & > td:first-child:last-child
+        {
+          border-radius: var(--border-radius-tl-tr);
+        }
+
         & > td:first-child
         {
           border-radius: var(--border-radius-tl);
