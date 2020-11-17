@@ -195,7 +195,7 @@
 
       $.ajax({
         type: 'POST',
-        url: '<?= DOMAIN_ROOT; ?>/core/ajax/pokecenter/moves.php?req=update',
+        url: '/core/ajax/pokecenter/moves.php?req=update',
         data: { Poke_ID: Poke_ID, Move_Slot: Move_Slot, Move: Move },
         success: function(data)
         {
@@ -219,7 +219,7 @@
 
       $.ajax({
         type: 'POST',
-        url: '<?= DOMAIN_ROOT;?>/core/ajax/pokecenter/moves.php?req=select',
+        url: '/core/ajax/pokecenter/moves.php?req=select',
         data: { Poke_ID: Poke_ID, Move: Move },
         success: function(data)
         {
