@@ -19,27 +19,27 @@
 	<div class='body pokecenter'>
 		<div class='nav'>
 			<div>
-				<a href='#' onclick="showTab('roster');">
+				<a href='javascript:void(0);' onclick="showTab('roster');">
 					Roster
 				</a>
 			</div>
 			<div>
-				<a href='#' onclick="showTab('moves');">
+				<a href='javascript:void(0);' onclick="showTab('moves');">
 					Moves
 				</a>
 			</div>
 			<div>
-				<a href='#' onclick="showTab('inventory');">
+				<a href='javascript:void(0);' onclick="showTab('inventory');">
 					Inventory
 				</a>
 			</div>
 			<div>
-				<a href='#' onclick="showTab('nickname');">
+				<a href='javascript:void(0);' onclick="showTab('nickname');">
 					Nickname
 				</a>
 			</div>
 			<div>
-				<a href='#' onclick="showTab('release');">
+				<a href='javascript:void(0);' onclick="showTab('release');">
 					Release
 				</a>
 			</div>
