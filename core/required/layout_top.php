@@ -184,7 +184,7 @@
 		/**
 		 * If the user doesn't have any Pokemon in their roster, display a warning message.
 		 */
-		if ( count($Roster) !== 0 )
+		if ( count($Roster) == 0 )
 		{
 			echo "
 				<div class='warning' style='flex-basis: calc(100% - 25px); margin: 5px auto 0px;'>
