@@ -2,50 +2,6 @@
   require '../../required/session.php';
 
   /**
-   * Update the moves of the given Pokemon.
-   */
-  if ( isset($_POST['poke_id']) && isset($_POST['move_1']) && isset($_POST['move_2']) && isset($_POST['move_3']) && isset($_POST['move_4']) )
-  {
-    $Pokemon_ID = Purify($_POST['poke_id']);
-    $Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
-
-    $Moves = Purify($_POST['move_1']) . ',' . Purify($_POST['move_2']) . ',' . Purify($_POST['move_3']) . ',' . Purify($_POST['move_4']);
-    $Moves_Array = [
-      Purify($_POST['move_1']),
-      Purify($_POST['move_2']),
-      Purify($_POST['move_3']),
-      Purify($_POST['move_4']),
-    ];
-
-    if ( $Pokemon['Owner_Current'] !== $User_Data['id'] )
-    {
-      echo "<div class='error'>This Pokemon does not belong to you.</div>";
-    }
-    else if ( count(array_unique($Moves_Array)) != 4 )
-    {
-      echo "<div class='error'>You may not have the same move more than once.</div>";
-    }
-    else
-    {
-      try
-      {
-        $Update_Moves = $PDO->prepare("UPDATE `pokemon` SET `Moves` = ? WHERE `ID` = ? LIMIT 1");
-        $Update_Moves->execute([ $Moves, $Pokemon_ID ]);
-      }
-      catch( PDOException $e )
-      {
-        HandleError( $e->getMessage() );
-      }
-
-      echo "
-        <div class='success'>
-          <b>{$Pokemon['Display_Name']}'s</b> moves have been updated successfully.
-        </div>
-      ";
-    }
-  }
-
-  /**
    * Fetch an array of all of the moves in game.
    */
   try
@@ -58,6 +14,87 @@
   catch ( PDOException $e )
   {
     HandleError( $e->getMessage() );
+  }
+
+  /**
+   * Update the moves of the given Pokemon.
+   */
+  if ( isset($_GET['req']) )
+  {
+    $Request = Purify($_GET['req']);
+
+    /**
+     * Updating a given move of a Pokemon.
+     */
+    if ( $Request === 'update' )
+    {
+      if ( isset($_POST['Poke_ID']) && isset($_POST['Move_Slot']) && isset($_POST['Move']) )
+      {
+        $Pokemon_ID = Purify($_POST['Poke_ID']);
+        $Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
+        $Move_Slot = Purify($_POST['Move_Slot']);
+        $Move = Purify($_POST['Move']);
+
+        $Current_Moves = [
+          $Pokemon['Move_1'],
+          $Pokemon['Move_2'],
+          $Pokemon['Move_3'],
+          $Pokemon['Move_4'],
+        ];
+
+        if ( $Pokemon['Owner_Current'] !== $User_Data['id'] )
+        {
+          echo "<div class='error'>This Pokemon does not belong to you.</div>";
+        }
+        else if ( count(array_unique($Current_Moves)) != 4 )
+        {
+          echo "<div class='error'>You may not have the same move more than once.</div>";
+        }
+        else
+        {
+          try
+          {
+            $Update_Moves = $PDO->prepare("UPDATE `pokemon` SET `Move_{$Move_Slot}` = ? WHERE `ID` = ? LIMIT 1");
+            $Update_Moves->execute([ $Move, $Pokemon_ID ]);
+          }
+          catch( PDOException $e )
+          {
+            HandleError( $e->getMessage() );
+          }
+
+          echo "
+            <div class='success'>
+              <b>{$Pokemon['Display_Name']}'s</b> moves have been updated successfully.
+            </div>
+          ";
+        }
+      }
+    }
+
+    /**
+     * Selecting a move of a Pokemon.
+     */
+    else if ( $Request === 'select' )
+    {
+      $Pokemon_ID = Purify($_POST['Poke_ID']);
+      $Move = Purify($_POST['Move']);
+
+      $Move_Dropdown = "
+        <select name='{$Pokemon_ID}_Move_{$Move}' onchange='updateMove({$Pokemon_ID}, {$Move}, this);'>
+          <option>Select A Move</option>
+          <option value>---</option>
+      ";
+      foreach ( $Move_List as $Key => $Value )
+      {
+        $Move_Dropdown .= "<option value='{$Value['id']}'>{$Value['name']}</i>";
+      }
+      $Move_Dropdown .= "
+        </select>
+      ";
+
+      echo $Move_Dropdown;
+      exit;
+    }
   }
 
   /**
@@ -78,26 +115,6 @@
         '4' => $Poke_Class->FetchMoveData($Pokemon['Move_4']),
       ];
 
-      /**
-       * Set the moves list dropdown.
-       */
-      $Move_Dropdown = '';
-      for ( $m = 1; $m <= 4; $m++ )
-      {
-        $Move_Dropdown .= "
-          <select name='{$Pokemon['ID']}_move_{$m}' onchange='updateMoves({$Pokemon['ID']});'>
-            <option value='{$Moves[$m]['ID']}'>" . $Moves[$m]['Name'] . "</option>
-            <option value>---</option>
-        ";
-        foreach ( $Move_List as $Key => $Value )
-        {
-          $Move_Dropdown .= "<option value='{$Value['id']}'>{$Value['name']}</i>";
-        }
-        $Move_Dropdown .= "
-          </select>
-        ";
-      }
-
       $Sprites .= "
         <td>
           <img src='{$Pokemon['Sprite']}' /><br />
@@ -107,7 +124,18 @@
 
       $Moves_Echo .= "
         <td>
-          {$Move_Dropdown}
+          <div id='{$Pokemon['ID']}_Move_1' onclick='selectMove(\"{$Pokemon['ID']}\", 1);' style='padding: 3px 0px; width: 133px;'>
+            <b>{$Moves['1']['Name']}</b>
+          </div>
+          <div id='{$Pokemon['ID']}_Move_2' onclick='selectMove(\"{$Pokemon['ID']}\", 2);' style='padding: 3px 0px; width: 133px;'>
+            <b>{$Moves['2']['Name']}</b>
+          </div>
+          <div id='{$Pokemon['ID']}_Move_3' onclick='selectMove(\"{$Pokemon['ID']}\", 3);' style='padding: 3px 0px; width: 133px;'>
+            <b>{$Moves['3']['Name']}</b>
+          </div>
+          <div id='{$Pokemon['ID']}_Move_4' onclick='selectMove(\"{$Pokemon['ID']}\", 4);' style='padding: 3px 0px; width: 133px;'>
+            <b>{$Moves['4']['Name']}</b>
+          </div>
         </td>
       ";
     }
@@ -127,9 +155,7 @@
       ";
 
       $Moves_Echo .= "
-        <td>
-          
-        </td>
+        <td></td>
       ";
     }
   }
@@ -142,43 +168,67 @@
       {$Moves_Echo}
     </tr>
   ";
-
-  /**
-   * Display the user's roster and move dropdowns.
-   */
-  echo "
-    <table class='border-gradient' style='flex-basis: 100%;'>
-      <thead>
-        <th colspan='6'>Roster</th>
-      </thead>
-      <tbody>
-        {$Moves_Roster}
-      </tbody>
-    </table>
-    
-    <script type='text/javascript'>
-      function updateMoves(id)
-      {
-        let poke_id = id;
-        let move_1 = $('[name=\"'+poke_id+'_move_1\"]').val();
-        let move_2 = $('[name=\"'+poke_id+'_move_2\"]').val();
-        let move_3 = $('[name=\"'+poke_id+'_move_3\"]').val();
-        let move_4 = $('[name=\"'+poke_id+'_move_4\"]').val();
-
-        $.ajax({
-          type: 'post',
-          url: '" . DOMAIN_ROOT . "/core/ajax/pokecenter/moves.php',
-          data: { poke_id: poke_id, move_1: move_1, move_2: move_2, move_3: move_3, move_4: move_4, },
-          success: function(data)
-          {
-            $('#pokemon_center').html(data);
-          },
-          error: function(data)
-          {
-            $('#pokemon_center').html(data);
-          },
-        });
-      }
-    </script>
-	";
 ?>
+
+  <div class='description'>
+    To change the move of a Pokemon, simply click on the move that you wish to change, and a dropdown menu will appear in it's place, allowing you to select the move that you desire.
+  </div>
+
+  <table class='border-gradient' style='flex-basis: 100%;'>
+    <thead>
+      <th colspan='6'>Roster</th>
+    </thead>
+    <tbody>
+      <?= $Moves_Roster; ?>
+    </tbody>
+  </table>
+  
+  <script type='text/javascript'>
+    let isChanging = false;
+
+    function updateMove(Poke_ID, Move_Slot)
+    {
+      isChanging = false;
+
+      let Move = $('[name="' + Poke_ID + '_Move_' + Move_Slot + '"]').val();
+      let Move_Option = $('#' + Poke_ID + '_' + Move_Slot + ' option:selected').html();
+
+      $.ajax({
+        type: 'POST',
+        url: '<?= DOMAIN_ROOT; ?>/core/ajax/pokecenter/moves.php?req=update',
+        data: { Poke_ID: Poke_ID, Move_Slot: Move_Slot, Move: Move },
+        success: function(data)
+        {
+          $('#pokemon_center').html(data);
+        },
+        error: function(data)
+        {
+          $('#pokemon_center').html(data);
+        },
+      });
+
+      $('#' + Poke_ID + '_Move_' + Move_Slot).html(`<b>${Move_Option}</b>`);
+    }
+
+    function selectMove(Poke_ID, Move)
+    {
+      if ( isChanging )
+        return;
+
+      isChanging = true;
+
+      $.ajax({
+        type: 'POST',
+        url: '<?= DOMAIN_ROOT;?>/core/ajax/pokecenter/moves.php?req=select',
+        data: { Poke_ID: Poke_ID, Move: Move },
+        success: function(data)
+        {
+          $('#' + Poke_ID + '_Move_' + Move).html(data);
+        },
+        error: function(data)
+        {
+          console.log(data);
+        }
+      });
+    }
+  </script>

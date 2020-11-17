@@ -94,7 +94,6 @@
 
 			$EVs = explode(',', $Pokemon['EVs']);
 			$IVs = explode(',', $Pokemon['IVs']);
-			$Moves = explode(',', $Pokemon['Moves']);
 			$Level = FetchLevel($Pokemon['Experience'], 'Pokemon');
 			$Experience = $Pokemon['Experience'];
 
@@ -161,10 +160,10 @@
       	"Stats" => $Stats,
 				"IVs" => $IVs,
 				"EVs" => $EVs,
-				"Move_1" => $Moves[0],
-				"Move_2" => $Moves[1],
-				"Move_3" => $Moves[2],
-				"Move_4" => $Moves[3],
+				"Move_1" => $Pokemon['Move_1'],
+				"Move_2" => $Pokemon['Move_2'],
+				"Move_3" => $Pokemon['Move_3'],
+				"Move_4" => $Pokemon['Move_4'],
 				"Happiness" => $Pokemon['Happiness'],
 				"Owner_Current" => $Pokemon['Owner_Current'],
 				"Owner_Current_Username" => $Current_Owner['Username'],
