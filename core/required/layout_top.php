@@ -181,6 +181,18 @@
 	}
 	else
 	{
+		/**
+		 * If the user doesn't have any Pokemon in their roster, display a warning message.
+		 */
+		if ( count($Roster) !== 0 )
+		{
+			echo "
+				<div class='warning' style='flex-basis: calc(100% - 25px); margin: 5px auto 0px;'>
+					While you have an empty roster, certain parts of Absolute will be unavailable to you.
+				</div>
+			";
+		}
+
 		if ( $User_Data['RPG_Ban'] != 1 )
 		{
 ?>
@@ -219,7 +231,11 @@
 		{
 			if ( $User_Data['Power'] >= 7 )
 			{
-				echo "<div class='maintenance'>Despite this page being down for maintenance, you seem to be authorized to be here.</div>";
+				echo "
+					<div class='warning' style='margin-top: 5px;'>
+						Despite this page being down for maintenance, you seem to be authorized to be here.
+					</div>
+				";
 			}
 			else
 			{
@@ -234,18 +250,6 @@
 
 				exit();
 			}
-		}
-
-		/**
-		 * If the user doesn't have any Pokemon in their roster, display a warning message.
-		 */
-		if ( count($Roster) == 0 )
-		{
-			echo "
-				<div class='maintenance'>
-					While you have an empty roster, certain parts of Absolute will be unavailable to you.
-				</div>
-			";
 		}
 	}
 ?>
