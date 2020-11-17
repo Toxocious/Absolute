@@ -227,7 +227,13 @@
 
       if ( count($Box_Pokemon) == 0 )
       {
-        echo "<div style='padding: 8px;'>No Pokemon were found in your box.</div>";
+        echo "
+          <div class='flex' style='align-items: center; justify-content: center; height: 209px;'>
+            <div style='flex-basis: 100%'>
+              No Pok&eacute;mon were found in your box.
+            </div>
+          </div>
+        ";
       }
       else
       {
