@@ -57,7 +57,7 @@
 <script type='text/javascript'>
 	$(function()
 	{
-		showTab('Roster');
+		showTab('roster');
 	});
 	
 	/**
