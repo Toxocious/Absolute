@@ -96,6 +96,22 @@
 	$Fetch_Page->execute([$Parse_URL['path']]);
 	$Fetch_Page->setFetchMode(PDO::FETCH_ASSOC);
 	$Current_Page = $Fetch_Page->fetch();
+
+	/**
+	 * Handle session clearing here.
+	 */
+	if ( isset($_GET['Logout']) )
+	{
+		session_start();
+		$params = session_get_cookie_params();
+		setcookie(session_name(), '', time() - 42000,
+			$params["path"], $params["domain"],
+			$params["secure"], $params["httponly"]
+		);
+		session_destroy();
+		unset($_SESSION);
+		header("Location: login.php");
+	}
   
   /**
 	 * If the user is currently in a session, run the following code at the start of every page load.
