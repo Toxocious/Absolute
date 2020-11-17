@@ -26,19 +26,24 @@
 	$Time = time();
 
 	// Deal with the $_SERVER const.
-	if ( isset($_SERVER['HTTP_HOST']) )
+	if ( isset($_SERVER['HTTP_HOST']) && session_status() !== PHP_SESSION_ACTIVE )
 	{
 		if ( $_SERVER['HTTP_HOST'] == "localhost" )
 		{
 			session_set_cookie_params(0, '/', 'localhost');
 		}
-		
-		session_cache_limiter('private');
-		$cache_limiter = session_cache_limiter();
-
-		session_cache_expire(180);
-		$cache_expire = session_cache_expire();
+		else
+		{
+			session_set_cookie_params(0, '/', 'absoluterpg.com');
+		}
 	}
+
+	// No cache.
+	header("Content-Type: text/html; charset=UTF-8");
+	header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+	header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+	header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+	header("Pragma: no-cache");
 
 	// Start the session before doing anything else.
 	if ( !isset($_SESSION) )
