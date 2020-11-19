@@ -658,7 +658,6 @@
 		 */
 		public function FetchImages($Pokedex_ID, $Alt_ID = 0, $Type = 'Normal')
 		{
-			clearstatcache(true);
 			global $PDO;
 
 			if ( !$Pokedex_ID )
@@ -697,44 +696,30 @@
 					$Pokemon_Forme = '-dmax';
 					break;
 				default:
-					$Pokemon_Forme = $Pokemon_Forme;
+					$Pokemon_Forme = '';
 					break;
 			}
 
-			if ( $Pokemon['Alt_ID'] != 0 )
+			$Sprite = "images/Pokemon/Sprites/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
+			if ( !is_file($Sprite) && !file_exists($Sprite) )
 			{
-				$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
-				$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
-
-				if ( !file_exists($Sprite) )
-				{
-					$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
-				}
-
-				if ( !file_exists($Icon) )
-				{
-					$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
-				}
+				$Sprite = "images/Pokemon/Sprites/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
 			}
-			else
+
+			$Icon = "images/Pokemon/Icons/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
+			if ( !is_file($Icon) && !file_exists($Icon) )
 			{
-				$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/{$Type}/{$Pokedex_ID}.png";
-				$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/{$Type}/{$Pokedex_ID}.png";
-
-				if ( !file_exists($Sprite) )
-				{
-					$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/Normal/{$Pokedex_ID}.png";
-				}
-
-				if ( !file_exists($Icon) )
-				{
-					$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/Normal/{$Pokedex_ID}.png";
-				}
+				$Icon = "images/Pokemon/Icons/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
 			}
 
 			return [
-				'Icon' => $Icon,
-				'Sprite' => $Sprite,
+				'Icon' => DOMAIN_ROOT . '/' . $Icon,
+				'Sprite' => DOMAIN_ROOT . '/' . $Sprite,
+				'Debug' => [
+					'Pokedex_ID' => $Pokedex_ID,
+					'Pokemon_Forme' => $Pokemon_Forme,
+					'Pokemon_Type' => $Type,
+				],
 			];
 		}
 
