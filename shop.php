@@ -33,7 +33,7 @@
 			</div>
 		</div>
 
-		<div id='result' style='display: none; height: 116px; margin-bottom: 5px; width: 80%;'></div>
+		<div id='result' style='display: none; height: 103px; margin-bottom: 5px; width: 80%;'></div>
 
 		<div class='description' style='margin-bottom: 5px;'>
 			<?= $Description; ?>

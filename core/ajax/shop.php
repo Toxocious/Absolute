@@ -115,7 +115,7 @@
 					<b>Gender:</b> {$Pokemon_Created['Gender']}
 				</div>
 				<div>
-					<table class='standard' style='float: left; margin: 12px 0px 5px 5px; width: 49%;'>
+					<table class='border-gradient' style='float: left; margin: 12px 0px 5px 5px; width: 49%;'>
 						<thead>
 							<tr>
 								<th> </th>
