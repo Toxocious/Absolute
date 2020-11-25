@@ -59,20 +59,6 @@
 	{
 		showTab('roster');
 	});
-	
-	/**
-	 * Neato navigation styling.
-	 */
-	let navDivs = $('.pokecenter .nav div');
-	for ( let i = 0; i < navDivs.length; i++ )
-	{
-		navDivs[i].addEventListener("click", function()
-		{
-			let current = document.getElementsByClassName("active");
-			current[0].className = current[0].className.replace("active", "");
-			this.className += " active";
-		});
-	}
 	 
 	 /**
 	 	* Handle AJAX requests pertaining to moving Pokemon around, as well as displaying their stats if necessary.
