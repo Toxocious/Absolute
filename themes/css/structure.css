@@ -160,7 +160,7 @@ div.flex.wrap {
 .border-gradient > div:last-child {
   border-radius: var(--border-radius-tr-br);
   width: -webkit-fill-available;
-  padding: 4px;
+  padding: 5px;
 }
 .border-gradient > div:only-child {
   border-radius: var(--border-radius);
