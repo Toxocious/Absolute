@@ -36,6 +36,7 @@
 				"Name" => $Item['Item_Name'],
 				"Category" => $Item['Item_Type'],
 				"Description" => $Item['Item_Description'],
+				"Icon" => DOMAIN_SPRITES . "/Items/{$Item['Item_Name']}.png"
 			];
 		}
 
@@ -45,6 +46,9 @@
 		 */
 		public function FetchOwnedItem($Owner_ID, $Item_ID = null, $Limit = 1)
 		{
+			if ( !isset($Owner_ID) || !$Owner_ID )
+				return false;
+
 			global $PDO;
 
 			try
@@ -76,6 +80,120 @@
 				"Owner" => $Item['Owner_Current'],
 				"Quantity" => $Item['Quantity'],
 			];
+		}
+
+		/**
+		 * Attach an item to a given Pokemon.
+		 * @param $Item_ID :: The `Items`.`ID` of the given item.
+		 * @param $Pokemon_ID :: The `Pokemon`.`ID` of the given Pokemon.
+		 * @param $Owner_ID :: The `User`.`ID` of the given item's owner.
+		 */
+		public function Attach($Item_ID, $Pokemon_ID, $Owner_ID)
+		{
+			if ( !isset($Item_ID) || !isset($Pokemon_ID) )
+				return false;
+
+			global $PDO, $Poke_Class, $User_Class;
+
+			$Item_Data = $this->FetchOwnedItem($Owner_ID, $Item_ID);
+			$Owner_Data = $User_Class->FetchUserData($Owner_ID);
+			$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
+
+			if ( $Item_Data['Quantity'] < 1 )
+			{
+				return false;
+			}
+			else if ( $Item_Data['Owner'] !== $Owner_Data['ID'] )
+			{
+				return false;
+			}
+			else if ( $Pokemon_Data['Owner_Current'] !== $Owner_Data['ID'] )
+			{
+				return false;
+			}
+			else
+			{
+				try
+				{
+					$Update_Pokemon = $PDO->prepare("UPDATE `pokemon` SET `Item` = ? WHERE `ID` = ?");
+					$Update_Pokemon->execute([ $Item_Data['ID'], $Pokemon_ID ]);
+
+					$Update_Item = $PDO->prepare("UPDATE `items` SET `Quantity` = `Quantity` - 1 WHERE `Owner_Current` = ? AND `Item_ID` = ?");
+					$Update_Item->execute([ $Owner_Data['ID'], $Item_Data['ID'] ]);
+				}
+				catch ( PDOException $e )
+				{
+					HandleError($e);
+				}
+
+				return true;
+			}
+		}
+
+		/**
+		 * Unequip an item from a Pokemon.
+		 * @param $Poke_ID :: The `Pokemon`.`ID` of the given Pokemon.
+		 * @param $User_ID :: The `Users`.`ID` of the given Pokemon's owner.
+		 */
+		public function Unequip($Poke_ID, $User_ID)
+		{
+			global $PDO;
+			global $Poke_Class;
+			
+			$Owner_ID = Purify($User_ID);
+			$Pokemon_ID = Purify($Poke_ID);
+
+			$Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
+			$Item_Data = $this->FetchOwnedItem($Owner_ID, $Pokemon['Item_ID']);
+
+			if ( $Pokemon == "Error" )
+			{
+				return [
+					'Message' => 'This Pok&eacute;mon could not be found.',
+					'Type' => 'error',
+				];
+			}
+			else if ( $Pokemon['Owner_Current'] != $Owner_ID )
+			{
+				return [
+					'Message' => 'You don\'t own this Pok&eacute;mon.',
+					'Type' => 'error',
+				];
+			}
+			else if ( $Pokemon['Item_ID'] == null || $Pokemon['Item_ID'] == 0 )
+			{
+				return [
+					'Message' => 'This Pok&eacute;mon doesn\'t have an item equipped.',
+					'Type' => 'error',
+				];
+			}
+			else if ( $Pokemon['Location'] == "Trade" )
+			{
+				return [
+					'Message' => 'This Pok&eacute;mon is in a trade.',
+					'Type' => 'error',
+				];
+			}
+			else
+			{
+				try
+				{
+					$Update_Pokemon = $PDO->prepare("UPDATE `pokemon` SET `Item` = 0 WHERE `ID` = ?");
+					$Update_Pokemon->execute([ $Pokemon['ID'] ]);
+
+					$Update_Item = $PDO->prepare("UPDATE `items` SET `Quantity` = `Quantity` + 1 WHERE `Owner_Current` = ? AND `Item_ID` = ?");
+					$Update_Item->execute([ $Owner_ID, $Item_Data['ID'] ]);
+				}
+				catch ( PDOException $e )
+				{
+					HandleError( $e->getMessage() );
+				}
+
+				return [
+					'Message' => "You have detached your <b>{$Item_Data['Name']}</b> from <b>{$Pokemon['Display_Name']}</b>.",
+					'Type' => 'success',
+				]; 
+			}
 		}
 
 		/**
