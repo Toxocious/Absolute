@@ -139,17 +139,19 @@
 			data: { request: request, category: category, id: id, pokeid: pokeid },
 			success: function(data)
 			{
-				if ( request == 'item_data' )
+				switch (request)
 				{
-					$('#itemData').html(data);
-				}
-				else if ( request == 'item_tab' )
-				{
-					$('#activeTab').html(data);
-				}
-				else if ( request == 'attach' || request == 'detach' || request == 'detachall' )
-				{
-					$('#pokemon_center').html(data);
+					case 'item_data':
+						$('#itemData').html(data);
+						break;
+					case 'item_tab':
+						$('#activeTab').html(data);
+						break;
+					case 'attach':
+					case 'detach':
+					case 'detachall':
+						$('#pokemon_center').html(data);
+						break;
 				}
 			},
 			error: function(data)
