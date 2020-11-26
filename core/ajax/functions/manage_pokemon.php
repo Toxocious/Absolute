@@ -48,21 +48,11 @@
 				HandleError( $e->getMessage() );
 			}
 
-			if ( $Pokemon_Move == true )
-			{
-				if ( $Slot == 7 )
-				{
-					echo "<div class='success'><b>{$Pokemon_Data['Display_Name']}</b> has been moved to your box.</div>";
-				}
-				else
-				{
-					echo "<div class='success'><b>{$Pokemon_Data['Display_Name']}</b> has been moved to slot {$_POST['Slot']}.</div>";
-				}
-			}
-			else
-			{
-				echo $Pokemon_Move;
-			}
+			echo "
+				<div class='{$Pokemon_Move['Type']}'>
+					{$Pokemon_Move['Message']}
+				</div>
+			";
 
 			echo "
 				<table class='border-gradient' style='flex-basis: 100%;'>
