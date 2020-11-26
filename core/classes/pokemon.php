@@ -257,41 +257,49 @@
 		/**
 		 * Move a Pokemon from your box, into your roster, or vice-versa.
 		 */
-		public function MovePokemon($PokeID, $Slot = 7)
+		public function MovePokemon($Pokemon_ID, $Slot = 7)
 		{
 			global $PDO;
 			global $User_Data;
 
-			$Poke_Data = $this->FetchPokemonData($PokeID);
+			if ( !isset($Pokemon_ID) )
+			{
+				return [
+					'Message' => 'The ID of the Pok&eacute;mon that you\'re trying to move isn\'t set.',
+					'Type' => 'error',
+				];
+			}
+
+			$Poke_Data = $this->FetchPokemonData($Pokemon_ID);
 
 			if ( $Poke_Data == "Error" )
 			{
-				return "<div class='error'>This Pokemon doesn't exist.</div>";
+				return [
+					'Message' => 'This Pok&eacute;mon doesn\'t exist.',
+					'Type' => 'error',
+				];
 			}
 
 			if ( !in_array($Slot, [1, 2, 3, 4, 5, 6, 7]) )
 			{
-				return "<div class='error'>You have chosen an invalid slot.</div>";
+				return [
+					'Message' => 'You have chosen an invalid slot to move your Pok&eacute;mon to.',
+					'Type' => 'error',
+				];
 			}
 
 			if ( $Poke_Data['Owner_Current'] !== $User_Data['id'] )
 			{
-				return "<div class='error'>You are not the owner of the Pokemon that you have attempted to move.</div>";
-			}
-
-			if ( $Slot != 7 )
-			{
-				$Location = 'Roster';
-			}
-			else
-			{
-				$Location = 'Box';
+				return [
+					'Message' => 'The Pok&eacute;mon that you are trying to move doesn\'t belong to you.',
+					'Type' => 'error',
+				];
 			}
 
 			try
 			{
 				$Roster_Fetch = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6 ORDER BY `Slot` ASC LIMIT 6");
-				$Roster_Fetch->execute([$User_Data['id']]);
+				$Roster_Fetch->execute([ $User_Data['id'] ]);
 				$Roster_Fetch->setFetchMode(PDO::FETCH_ASSOC);
 				$Roster = $Roster_Fetch->fetchAll();
 			}
@@ -302,27 +310,36 @@
 
 			if ( $Slot == 7 )
 			{
+				$Location = 'Box';
+
 				try
 				{
 					$Box_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Box', `Slot` = 7 WHERE `ID` = ? LIMIT 1");
-					$Box_Move->execute([$Poke_Data['ID']]);
+					$Box_Move->execute([ $Poke_Data['ID'] ]);
 				}
 				catch ( PDOException $e )
 				{
 					HandleError( $e->getMessage() );
 				}
+
+				return [
+					'Message' => "You have moved your <b>{$Poke_Data['Display_Name']}</b> to your box.",
+					'Type' => 'success',
+				];
 			}
 			else
 			{
+				$Location = 'Roster';
+
 				if ( isset($Roster[$Slot - 1]) )
 				{
 					try
 					{
 						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
-      			$Roster_Move->execute([$Slot, $Poke_Data['ID']]);
+      			$Roster_Move->execute([ $Slot, $Poke_Data['ID'] ]);
 						
         		$Roster_Remove = $PDO->prepare("UPDATE `pokemon` SET `Location` = ?, `Slot` = ? WHERE `ID` = ? LIMIT 1");
-        		$Roster_Remove->execute([$Poke_Data['Location'], $Poke_Data['Slot'], $Roster[$Slot - 1]['ID']]);
+        		$Roster_Remove->execute([ $Poke_Data['Location'], $Poke_Data['Slot'], $Roster[$Slot - 1]['ID'] ]);
 					}
 					catch ( PDOException $e )
 					{
@@ -334,16 +351,19 @@
 					try
 					{
 						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
-						$Roster_Move->execute([count($Roster) + 1, $Poke_Data['ID']]);
+						$Roster_Move->execute([ count($Roster) + 1, $Poke_Data['ID'] ]);
 					}
 					catch (PDOException $e)
 					{
 						HandleError( $e->getMessage() );
 					}
 				}
-			}
 
-			return true;
+				return [
+					'Message' => "You have moved your <b>{$Poke_Data['Display_Name']}</b> to your roster.",
+					'Type' => 'success',
+				];
+			}
 		}
 
 		/**
