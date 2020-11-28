@@ -102,7 +102,7 @@
    */
   $Sprites = '';
   $Moves_Echo = '';
-  $Moves_Roster = '';
+  $Pokemon_Row = '';
   for ( $i = 0; $i < 6; $i++ )
   {
     if ( isset($Roster[$i]['ID']) )
@@ -115,15 +115,12 @@
         '4' => $Poke_Class->FetchMoveData($Pokemon['Move_4']),
       ];
 
-      $Sprites .= "
-        <td>
+      $Moves_Echo .= "
+        <td colspan='3' style='width: calc(100% / 6);'>
           <img src='{$Pokemon['Sprite']}' /><br />
           <b>{$Pokemon['Display_Name']}</b>
         </td>
-      ";
-
-      $Moves_Echo .= "
-        <td>
+        <td colspan='3' style='width: calc(100% / 6);'>
           <div id='{$Pokemon['ID']}_Move_1' onclick='selectMove(\"{$Pokemon['ID']}\", 1);' style='padding: 3px 0px; width: 133px;'>
             <b>{$Moves['1']['Name']}</b>
           </div>
@@ -142,44 +139,39 @@
     else
     {
       $Pokemon['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
-      $Pokemon['Icon'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0_mini.png';
-      $Pokemon['Display_Name'] = 'Empty';
-      $Pokemon['Level'] = '0';
-      $Pokemon['Experience'] = '0';
 
-      $Sprites .= "
-        <td style='width: 137px;'>
+      $Moves_Echo .= "
+        <td colspan='6' style='width: calc(100% / 3);'>
           <img src='{$Pokemon['Sprite']}' /><br />
           <b>Empty</b>
         </td>
       ";
+    }
 
-      $Moves_Echo .= "
-        <td></td>
+    if ( ($i + 1) % 3 === 0 )
+    {
+      $Pokemon_Row .= "
+        <tr>
+          {$Moves_Echo}
+        </tr>
       ";
+
+      $Sprites = '';
+      $Moves_Echo = '';
     }
   }
-
-  $Moves_Roster .= "
-    <tr>
-      {$Sprites}
-    </tr>
-    <tr>
-      {$Moves_Echo}
-    </tr>
-  ";
 ?>
 
   <div class='description'>
     To change the move of a Pokemon, simply click on the move that you wish to change, and a dropdown menu will appear in it's place, allowing you to select the move that you desire.
   </div>
 
-  <table class='border-gradient' style='flex-basis: 100%;'>
+  <table class='border-gradient' style='flex-basis: 85%;'>
     <thead>
-      <th colspan='6'>Roster</th>
+      <th colspan='18'>Roster</th>
     </thead>
     <tbody>
-      <?= $Moves_Roster; ?>
+      <?= $Pokemon_Row; ?>
     </tbody>
   </table>
   
