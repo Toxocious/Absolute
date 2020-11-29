@@ -115,20 +115,13 @@
 				$this->CalcStats("Speed", $BaseStats[5], $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
 			];
 			
-			if ( $Pokemon['Nickname'] == null )
+			if ( $Pokemon['Type'] !== 'Normal' )
 			{
-				if ( $Pokemon['Type'] !== 'Normal' )
-				{
-					$Display_Name = $Pokemon['Type'] . $Pokemon['Name'];
-				}
-				else
-				{
-					$Display_Name = $Pokemon['Name'];
-				}
+				$Display_Name = $Pokemon['Type'] . $Pokemon['Name'];
 			}
 			else
 			{
-				$Display_Name = $Pokemon['Nickname'];
+				$Display_Name = $Pokemon['Name'];
 			}
 
 			$Poke_Images = $this->FetchImages($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon['Type']);
