@@ -182,7 +182,7 @@
 			$Slot_Text = '';
 			for ( $i = 0; $i <= 5; $i++ )
 			{
-				if ( isset($Roster[$i]['ID'])  )
+				if ( isset($Roster[$i]['ID']) )
 				{
 					$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
 	
@@ -202,6 +202,16 @@
 							</td>
 						";
 					}				
+				}
+				else
+				{
+					$Roster_Slot[$i]['Icon'] = DOMAIN_SPRITES . "/Pokemon/Sprites/0_mini.png";
+
+					$Slot_Text .= "
+						<td colspan='1'>
+							<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' style='filter: grayscale(100%);' />
+						</td>
+					";
 				}
 			}
 
