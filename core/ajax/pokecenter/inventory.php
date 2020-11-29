@@ -422,7 +422,7 @@
 	$Category_Text = '';
 	foreach ( $Item_Categories as $Category )
 	{
-		$Category_Image = DOMAIN_SPRITES . "/Assets/bag_" . explode(' ', $Category)[0] . '.png';
+		$Category_Image = DOMAIN_SPRITES . "/Assets/bag_" . strtolower(explode(' ', $Category)[0]) . '.png';
 
 		$Category_Text .= "
 			<td style='padding: 5px 5px 3px; width: calc(100% / 6);' onclick=\"itemHandler('item_tab', '$Category');\">
