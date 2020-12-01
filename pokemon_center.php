@@ -182,6 +182,52 @@
 	}
 
 	/**
+	 * Release Pokemon.
+	 */
+	let Stage_Confirm;
+	let Release_List;
+	function ReleasePokemon(Release_Stage)
+  {
+    switch(Release_Stage)
+    {
+      case 2:
+				Stage_Confirm = confirm("Are you sure you want to release these Pokemon?");
+				Release_List = $('#ReleaseList').val();
+				break;
+
+      case 3:
+        Stage_Confirm = confirm("Are you sure you want to release these Pokemon?\nThis is your final warning; this process is irreversible.");
+        break;
+
+      default:
+        break;
+		}
+		
+		/**
+		 * The user has confirmed that they want to proceed with releasing their selected Pokemon.
+		 */
+		if ( Stage_Confirm )
+		{
+			$.ajax({
+				type: 'POST',
+				url: '<?= DOMAIN_ROOT; ?>/core/ajax/pokecenter/release.php',
+				data: {
+					Release_Stage: Release_Stage,
+					Release_List: Release_List
+				},
+				success: (data) =>
+				{
+					$('#pokemon_center').html(data);
+				},
+				error: (data) => 
+				{
+					$('#pokemon_center').html(data);
+				},
+			});
+		}
+  }
+
+	/**
 	 * Swap between tab content.
 	 */
 	function showTab(tab)
