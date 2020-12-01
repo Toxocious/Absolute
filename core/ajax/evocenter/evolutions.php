@@ -2,6 +2,263 @@
 	require '../../required/session.php';
 
 	/**
+	 * Check for any AJAX requests.
+	 */
+	if ( isset($_POST['Request']) )
+	{
+		$Request = Purify($_POST['Request']);
+
+		/**
+		 * Display all available evolutions of a Pokemon.
+		 */
+		if ( $Request === 'Show_Evos' )
+		{
+			if ( isset($_POST['Pokemon_ID']) )
+			{
+				$Pokemon_ID = Purify($_POST['Pokemon_ID']);
+				$Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
+
+				if ( !$Pokemon )
+				{
+					echo "
+						<thead>
+							<tr>
+								<th colspan='7'>
+									Selected Pok&eacute;mon
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td colspan='7' style='padding: 5px;'>
+									The Pok&eacute;mon that you selected does not exist.
+								</td>
+							</tr>
+						</tbody>
+					";
+
+					return;
+				}
+
+				try
+				{
+					$Fetch_Evolutions = $PDO->prepare("SELECT * FROM `evolution_data` WHERE `poke_id` = ? AND `alt_id` = ?");
+					$Fetch_Evolutions->execute([ $Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'] ]);
+					$Fetch_Evolutions->setFetchMode(PDO::FETCH_ASSOC);
+
+					$Num_Of_Evos = $Fetch_Evolutions->rowCount();
+				}
+				catch ( PDOException $e )
+				{
+					HandleError( $e );
+				}
+
+				$Time_Of_Day = (date('G') > 7 && date('G') < 19) ? 'Day' : 'Night';
+
+				if ( $Num_Of_Evos === 0 )
+				{
+					$Evolution_Text = "
+						<tr>
+							<td colspan='7' style='padding: 5px;'>
+								This Pok&eacute;mon may not evolve further.
+							</td>
+						</tr>
+					";
+				}
+				else
+				{
+					$Evolution_Text = '';
+
+					while ( $Evolution = $Fetch_Evolutions->fetch() )
+					{
+						$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution['to_poke_id'], $Evolution['to_alt_id'], $Pokemon['Type']);
+
+						/**
+						 * Check to if the Pokemon meets all of the requirements needed to evolve.
+						 */
+						$Error = false;
+						if ( $Evolution['level'] && $Evolution['level'] != 0 && ( $Pokemon['Level'] < $Evolution['level']) )
+						{
+							$Error = true;
+						}
+
+						if ( $Evolution['min_happy'] && $Evolution['min_happy'] > $Pokemon['Happiness'] )
+						{
+							$Error = true;
+						}
+
+						if ( $Evolution['item'] && $Evolution['item'] != $Pokemon['Item'] )
+						{
+							$Error = true;
+						}
+
+						if ( $Evolution['held_item'] && $Evolution['held_item'] != $Pokemon['Item'] )
+						{
+							$Error = true;
+						}
+
+						if ( $Evolution['gender'] && ucfirst($Evolution['gender']) != $Pokemon['Gender'] )
+						{
+							$Error = true;
+						}
+
+						if ( $Evolution['time'] && $Evolution['time'] !== $Time )
+						{
+							$Error = true;
+						}
+
+						/**
+						 * Display the appropriate evolution button.
+						 */
+						if ( $Error )
+						{
+							$Evolve_Button = "
+								<button class='disabled'>
+									Requirements Not Met
+								</div>
+							";
+						}
+						else
+						{
+							$Evolve_Button = "
+								<button onclick='evolve({$Pokemon['ID']}, {$Evolution_Data['Pokedex_ID']}, {$Evolution_Data['Alt_ID']});'>
+									Evolve into {$Evolution_Data['Display_Name']}
+								</div>
+							";
+						}
+
+						$Evolution_Text .= "
+							<tr>
+								<td style='width: 150px;'>
+									<img src='{$Evolution_Data['Icon']}' />
+								</td>
+								<td style='width: 100px;'>
+									<b>Level</b>
+								</td>
+								<td style='width: 100px;'>
+									<b>Gender</b>
+								</td>
+								<td style='width: 100px;'>
+									<b>Held Item</b>
+								</td>
+								<td style='width: 100px;'>
+									<b>Use Item</b>
+								</td>
+								<td style='width: 100px;'>
+									<b>Time of Day</b>
+								</td>
+								<td style='width: 100px;'>
+									<b>Happiness</b>
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<b>{$Evolution_Data['Display_Name']}</b>
+								</td>
+								<td>
+									" . ($Evolution['level'] > 0 ? $Evolution['level'] : 'N/A') . "
+								</td>
+								<td>
+									" . ($Evolution['gender'] ? ucfirst($Evolution['gender']) : 'N/A') . "
+								</td>
+								<td>
+									" . ($Evolution['held_item'] ? $Evolution['held_item'] : 'N/A') . "
+								</td>
+								<td>
+									" . ($Evolution['item'] ? $Evolution['item'] : 'N/A') . "
+								</td>
+								<td>
+									" . ($Evolution['time'] ? $Evolution['time'] : 'N/A') . "
+								</td>
+								<td>
+									" . ($Evolution['min_happy'] ? $Evolution['min_happy'] : 'N/A') . "
+								</td>
+							</tr>
+							<tr>
+								<td colspan='7'>
+									{$Evolve_Button}
+								</td>
+							</tr>
+						";
+					}
+				}
+
+				echo "
+					<thead>
+						<tr>
+							<th colspan='7'>
+								Selected Pok&eacute;mon
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan='1' style='width: 150px;'>
+								<img src='{$Pokemon['Icon']}' />
+							</td>
+							<td colspan='1' style='width: 100px;'>
+								<b>Level</b>
+							</td>
+							<td colspan='1' style='width: 100px;'>
+								<b>Gender</b>
+							</td>
+							<td colspan='1' style='width: 100px;'>
+								<b>Held Item</b>
+							</td>
+							<td colspan='1' style='width: 100px;'>
+								<b>Use Item</b>
+							</td>
+							<td colspan='1' style='width: 100px;'>
+								<b>Time of Day</b>
+							</td>
+							<td colspan='1' style='width: 100px;'>
+								<b>Happiness</b>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<b>{$Pokemon['Display_Name']}</b>
+							</td>
+							<td>
+								{$Pokemon['Level']}
+							</td>
+							<td>
+								{$Pokemon['Gender']}
+							</td>
+							<td>
+								" . ($Pokemon['Item'] ? $Pokemon['Item'] : 'No Item') . "
+							</td>
+							<td>
+								N/A
+							</td>
+							<td>
+								{$Time_Of_Day}
+							</td>
+							<td>
+								{$Pokemon['Happiness']}
+							</td>
+						</tr>
+					</tbody>
+
+					<thead>
+						<tr>
+							<th colspan='7'>
+								Available Evolutions
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						{$Evolution_Text}
+					</tbody>
+				";
+			}
+		}
+	}
+
+
+
+
+	/**
 	 * Handle the evolution of a Pokemon.
 	 */
 	if ( isset($_POST['evo_id']) && isset($_POST['evo_to']) && isset($_POST['evo_alt']) )
@@ -94,223 +351,4 @@
         handleError($e);
       }
 		}
-	}
-
-	/**
-	 * Display the available evoltuions of the selected Pokemon.
-	 */
-	if ( isset($_POST['id']) )
-	{
-		$Poke_ID = Purify($_POST['id']);
-		$Pokemon = $Poke_Class->FetchPokemonData($Poke_ID);
-		$Time_Of_Day = (date('G') > 7 && date('G') < 19) ? 'Day' : 'Night';
-
-		try
-		{
-			$Fetch_Evolutions = $PDO->prepare("SELECT * FROM `evolution_data` WHERE `poke_id` = ? AND `alt_id` = ?");
-			$Fetch_Evolutions->execute([ $Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'] ]);
-			$Fetch_Evolutions->setFetchMode(PDO::FETCH_ASSOC);
-			$Num_Of_Evos = $Fetch_Evolutions->rowCount();
-		}
-		catch ( PDOException $e )
-		{
-			HandleError( $e->getMessage() );
-		}
-
-		echo "
-			<table class='border-gradient' style='margin-bottom: 5px; width: 536px;'>
-				<thead>
-					<th colspan='7'>Selected Pok&eacute;mon</th>
-				</thead>
-				<tbody>
-					<tr>
-						<td style='width: 150px;'>
-							<img src='{$Pokemon['Icon']}' />
-						</td>
-						<td>
-							<b>Level</b>
-						</td>
-						<td>
-							<b>Gender</b>
-						</td>
-						<td>
-							<b>Held Item</b>
-						</td>
-						<td>
-							<b>Use Item</b>
-						</td>
-						<td>
-							<b>Time of Day</b>
-						</td>
-						<td>
-							<b>Happiness</b>
-						</td>
-					</tr>
-					<tr>
-						<td>
-							<b>{$Pokemon['Display_Name']}</b>
-						</td>
-						<td>
-							{$Pokemon['Level']}
-						</td>
-						<td>
-							{$Pokemon['Gender']}
-						</td>
-						<td>
-							" . ($Pokemon['Item'] ? $Pokemon['Item'] : 'No Item') . "
-						</td>
-						<td>
-							N/A
-						</td>
-						<td>
-							{$Time_Of_Day}
-						</td>
-						<td>
-							{$Pokemon['Happiness']}
-						</td>
-					</tr>
-				</tbody>
-			</table>
-
-			<table class='border-gradient' style='width: 536px;'>
-				<thead>
-					<th colspan='7'>Evolutions</th>
-				</thead>
-				<tbody>
-		";
-
-		/**
-		 * The Pokemon has no available evolutions.
-		 */
-		if ( $Num_Of_Evos === 0 )
-		{
-			echo "
-				<tr>
-					<td colspan='7' style='padding: 5px;'>
-						This Pokemon may not evolve further.
-					</td>
-				</tr>
-			";
-		}
-
-		while ( $Evolution = $Fetch_Evolutions->fetch() )
-		{
-			$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution['to_poke_id'], $Evolution['to_alt_id'], $Pokemon['Type']);
-			
-			/**
-			 * Check to see if you meet all of the evolution requirements.
-			 */
-			$Error = false;
-			if ( $Evolution['level'] != null && $Evolution['level'] != 0 && ( $Pokemon['Level'] < $Evolution['level']) )
-			{
-				$Error = true;
-			}
-
-			if ( $Evolution['min_happy'] != null && $Evolution['min_happy'] > $Pokemon['Happiness'] )
-			{
-				$Error = true;
-			}
-
-			if ( $Evolution['item'] != null && $Evolution['item'] != $Pokemon['Item'] )
-			{
-				$Error = true;
-			}
-
-			if ( $Evolution['held_item'] != null && $Evolution['held_item'] != $Pokemon['Item'] )
-			{
-				$Error = true;
-			}
-
-			if ( $Evolution['gender'] != null && ucfirst($Evolution['gender']) != $Pokemon['Gender'] )
-			{
-				$Error = true;
-			}
-
-			if ( $Evolution['time'] != null )
-			{
-				if ( $Evolution['time'] != $Time )
-				{
-					$Error = true;
-				}
-			}
-	
-			if ( $Error )
-			{
-				$Evolve_Button = "
-					<button class='disabled'>
-						Requirements Not Met
-					</div>
-				";
-			}
-			else
-			{
-				$Evolve_Button = "
-					<button onclick='evolve({$Pokemon['ID']}, {$Evolution_Data['Pokedex_ID']}, {$Evolution_Data['Alt_ID']});'>
-						Evolve into {$Evolution_Data['Display_Name']}!
-					</div>
-				";
-			}
-
-			echo "
-				<tr>
-					<td style='width: 150px;'>
-						<img src='{$Evolution_Data['Icon']}' />
-					</td>
-					<td>
-						<b>Level</b>
-					</td>
-					<td>
-						<b>Gender</b>
-					</td>
-					<td>
-						<b>Held Item</b>
-					</td>
-					<td>
-						<b>Use Item</b>
-					</td>
-					<td>
-						<b>Time of Day</b>
-					</td>
-					<td>
-						<b>Happiness</b>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<b>{$Evolution_Data['Display_Name']}</b>
-					</td>
-					<td>
-						" . ($Evolution['level'] > 0 ? $Evolution['level'] : 'N/A') . "
-					</td>
-					<td>
-						" . ($Evolution['gender'] ? ucfirst($Evolution['gender']) : 'N/A') . "
-					</td>
-					<td>
-						" . ($Evolution['held_item'] ? $Evolution['held_item'] : 'N/A') . "
-					</td>
-					<td>
-						" . ($Evolution['item'] ? $Evolution['item'] : 'N/A') . "
-					</td>
-					<td>
-						" . ($Evolution['time'] ? $Evolution['time'] : 'N/A') . "
-					</td>
-					<td>
-						" . ($Evolution['min_happy'] ? $Evolution['min_happy'] : 'N/A') . "
-					</td>
-				</tr>
-			";
-
-			echo "
-				<tr>
-					<td colspan='7'>
-						{$Evolve_Button}
-					</td>
-				</tr>
-			";
-		}
-
-		echo "
-				<tbody>
-			</table>
-		";
 	}
