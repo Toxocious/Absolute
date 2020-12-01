@@ -363,9 +363,50 @@
 		 * Release a Pokemon via it's `pokemon` DB ID.
 		 * Store all released Pokemon in the `released` database table.
 		 */
-		public function ReleasePokemon($PokeID)
+		public function ReleasePokemon($Pokemon_ID, $User_ID)
 		{
+			global $PDO, $User_Data;
 
+			if ( !$Pokemon_ID || !$User_ID )
+			{
+				return [
+					'Type' => 'error',
+					'Message' => 'The Pokemon/User ID wasn\'t set, please try again.',
+				];
+			}
+
+			$Pokemon = $this->FetchPokemonData($Pokemon_ID);
+
+			if ( $Pokemon['Owner_Current'] !== $User_Data['id'] )
+			{
+				return [
+					'Type' => 'error',
+					'Message' => 'You may not release a Pokemon that does not belong to you.',
+				];
+			}
+
+			try
+			{
+				$Release_Pokemon = $PDO->prepare("
+					INSERT INTO `released` (ID, Pokedex_ID, Alt_ID, Name, Forme, Type, Location, Slot, Item, Owner_Current, Owner_Original, Gender, Experience, IVs, EVs, Nature, Happiness, Trade_Interest, Challenge_Status, Moves, Move_1, Move_2, Move_3, Move_4, Nickname, Biography, Creation_Date, Creation_Location)
+					SELECT ID, Pokedex_ID, Alt_ID, Name, Forme, Type, Location, Slot, Item, Owner_Current, Owner_Original, Gender, Experience, IVs, EVs, Nature, Happiness, Trade_Interest, Challenge_Status, Moves, Move_1, Move_2, Move_3, Move_4, Nickname, Biography, Creation_Date, Creation_Location
+					FROM `pokemon`
+					WHERE ID = ?;
+
+					DELETE FROM `pokemon`
+					WHERE ID = ?;
+				");
+				$Release_Pokemon->execute([ $Pokemon_ID, $Pokemon_ID ]);
+			}
+			catch ( PDOException $e )
+			{
+				HandleError( $e );
+			}
+
+			return [
+				'Type' => 'success',
+				'Message' => "You have successfully release your {$Pokemon['Display_Name']}.",
+			];
 		}
 
 		/**
