@@ -47,7 +47,7 @@
 					}
 				}
 
-				if ( !isset($Pokemon) || $Pokemon == "Error" )
+				if ( !isset($Pokemon) || !$Pokemon )
 				{
 					echo "
 						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
