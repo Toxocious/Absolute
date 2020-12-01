@@ -53,7 +53,7 @@
 
 			if ( !isset($Pokemon) || !$Pokemon )
 			{
-				return "Error";
+				return false;
 			}
 			
 			switch($Pokemon['Gender'])
@@ -265,7 +265,7 @@
 
 			$Poke_Data = $this->FetchPokemonData($Pokemon_ID);
 
-			if ( $Poke_Data == "Error" )
+			if ( !$Poke_Data )
 			{
 				return [
 					'Message' => 'This Pok&eacute;mon doesn\'t exist.',

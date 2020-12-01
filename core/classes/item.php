@@ -146,7 +146,7 @@
 			$Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
 			$Item_Data = $this->FetchOwnedItem($Owner_ID, $Pokemon['Item_ID']);
 
-			if ( $Pokemon == "Error" )
+			if ( !$Pokemon )
 			{
 				return [
 					'Message' => 'This Pok&eacute;mon could not be found.',
