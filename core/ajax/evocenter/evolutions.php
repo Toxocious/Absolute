@@ -121,7 +121,7 @@
 						else
 						{
 							$Evolve_Button = "
-								<button onclick='evolve({$Pokemon['ID']}, {$Evolution_Data['Pokedex_ID']}, {$Evolution_Data['Alt_ID']});'>
+								<button onclick='Evolve_Pokemon({$Pokemon['ID']}, {$Evolution_Data['Pokedex_ID']}, {$Evolution_Data['Alt_ID']});'>
 									Evolve into {$Evolution_Data['Display_Name']}
 								</div>
 							";
@@ -253,102 +253,171 @@
 				";
 			}
 		}
-	}
-
-
-
-
-	/**
-	 * Handle the evolution of a Pokemon.
-	 */
-	if ( isset($_POST['evo_id']) && isset($_POST['evo_to']) && isset($_POST['evo_alt']) )
-	{
-		$My_Poke = Purify($_POST['evo_id']);
-		$Evo_To = Purify($_POST['evo_to']);
-		$Evo_Alt = Purify($_POST['evo_alt']);
-
-		$Pokemon = $Poke_Class->FetchPokemonData($My_Poke);
-
-		try
-		{
-			$Evolution_Data = $PDO->prepare("SELECT * FROM `evolution_data` WHERE `poke_id` = ?");
-			$Evolution_Data->execute([ $Pokemon['Pokedex_ID'] ]);
-			$Evolution_Data->setFetchMode(PDO::FETCH_ASSOC);
-			$Evolution = $Evolution_Data->fetch();
-		}
-		catch ( PDOException $e )
-		{
-			HandleError( $e->getMessage() );
-		}
-
-		$Evo_Data = $Poke_Class->FetchPokedexData($Evo_To, $Evo_Alt, $Pokemon['Type']);
 
 		/**
-		 * Double check to ensure that the Pokemon is able to evolve.
+		 * Handle the processing of a Pokemon.
 		 */
-		$Error = false;
-		if ( $Evolution['level'] != null && $Evolution['level'] != 0 && ( $Pokemon['Level'] < $Evolution['level']) )
+		if ( $Request === 'Evolve' )
 		{
-			$Error = true;
-		}
-
-		if ( $Evolution['min_happy'] != null && $Evolution['min_happy'] > $Pokemon['Happiness'] )
-		{
-			$Error = true;
-		}
-
-		if ( $Evolution['item'] != null && $Evolution['item'] != $Pokemon['Item'] )
-		{
-			$Error = true;
-		}
-
-		if ( $Evolution['held_item'] != null && $Evolution['held_item'] != $Pokemon['Item'] )
-		{
-			$Error = true;
-		}
-
-		if ( $Evolution['gender'] != null && ucfirst($Evolution['gender']) != $Pokemon['Gender'] )
-		{
-			$Error = true;
-		}
-
-		if ( $Evolution['time'] != null )
-		{
-			$Time = (date('G') > 7 && date('G') < 19) ? 'day' : 'night';
-			if ( $Evolution['time'] != $Time )
+			if (
+				!isset($_POST['Pokemon_ID']) ||
+				!isset($_POST['Evolution_ID']) ||
+				!isset($_POST['Evolution_Alt_ID'])
+			 )
 			{
-				$Error = true;
-			}
-		}
+				echo "
+					<thead>
+						<tr>
+							<th colspan='7'>
+								Evolutions
+							</th>
+						</tr>
+					</thead>
 
-		/**
-			* The Pokemon is truly able to evolve.
-			* Process the evolution here.
-			*/
-		if ( $Error == true )
-		{
-			echo "
-				<div class='error' style='margin-bottom: 5px;'>
-					This Pokemon doesn't meet all of the necessary requirements to evolve.
-				</div>
-			";
-		}
-		else if ( $Error == false )
-		{
-			echo "
-				<div class='success' style='margin-bottom: 5px;'>
-					You have successfully evolved your {$Pokemon['Display_Name']} into {$Evo_Data['Display_Name']}!
-				</div>
-			";
+					<tbody>
+						<tr>
+							<td colspan='7'>
+								<div class='error' style='margin: 0 auto;'>
+									<b>
+										An error occurred while processing the evolution of your Pok&eacute;mon.
+									</b>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='7' style='padding: 5px;'>
+								Please select the Pok&eacute;mon that you wish to evolve.
+							</td>
+						</tr>
+					</tbody>
+				";
+
+				return;
+			}
+
+			$Pokemon_ID = Purify($_POST['Pokemon_ID']);
+			$Evolution_ID = Purify($_POST['Evolution_ID']);
+			$Evolution_Alt_ID = Purify($_POST['Evolution_Alt_ID']);
+
+			$Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
 
 			try
 			{
-        $Update = $PDO->prepare("UPDATE `pokemon` SET `Name` = ?, `Pokedex_ID`= ? , `Alt_ID` = ? WHERE `ID` = ? AND `Owner_Current` = ? LIMIT 1");
-        $Update->execute([ $Evo_Data['Name'], $Evo_Data['Pokedex_ID'], $Evo_Data['Alt_ID'], $Pokemon['ID'], $User_Data['id'] ]);
+				$Evolution_Data = $PDO->prepare("SELECT * FROM `evolution_data` WHERE `poke_id` = ?");
+				$Evolution_Data->execute([ $Pokemon['Pokedex_ID'] ]);
+				$Evolution_Data->setFetchMode(PDO::FETCH_ASSOC);
+				$Evolution = $Evolution_Data->fetch();
 			}
 			catch ( PDOException $e )
 			{
-        handleError($e);
-      }
+				HandleError( $e->getMessage() );
+			}
+
+			$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution_ID, $Evolution_Alt_ID, $Pokemon['Type']);
+
+			$Time = (date('G') > 7 && date('G') < 19) ? 'day' : 'night';
+
+			/**
+			 * Double check to ensure that the Pokemon is able to evolve.
+			 */
+			$Error = false;
+			if ( $Evolution['level'] != null && $Evolution['level'] != 0 && ( $Pokemon['Level'] < $Evolution['level']) )
+			{
+				$Error = true;
+			}
+
+			if ( $Evolution['min_happy'] != null && $Evolution['min_happy'] > $Pokemon['Happiness'] )
+			{
+				$Error = true;
+			}
+
+			if ( $Evolution['item'] != null && $Evolution['item'] != $Pokemon['Item'] )
+			{
+				$Error = true;
+			}
+
+			if ( $Evolution['held_item'] != null && $Evolution['held_item'] != $Pokemon['Item'] )
+			{
+				$Error = true;
+			}
+
+			if ( $Evolution['gender'] != null && ucfirst($Evolution['gender']) != $Pokemon['Gender'] )
+			{
+				$Error = true;
+			}
+
+			if ( $Evolution['time'] != null )
+			{
+				if ( $Evolution['time'] != $Time )
+				{
+					$Error = true;
+				}
+			}
+
+			/**
+				* The Pokemon is truly able to evolve.
+				* Process the evolution here.
+				*/
+			if ( $Error )
+			{
+				$Evolution_Text = "
+					<tr>
+						<td colspan='7'>
+							<div class='error' style='margin: 0 auto;'>
+								<b>
+									This Pok&eacute;mon does not meet the requirements necessary to evolve.
+								</b>
+							</div>
+						</td>
+					</tr>
+				";
+			}
+			else
+			{
+				$Evolution_Text = "
+					<tr>
+						<td colspan='7'>
+							<div class='success' style='margin: 0 auto;'>
+								<img src='{$Evolution_Data['Sprite']}' />
+								<br />
+								<b>
+									You have successfully evolved your {$Pokemon['Display_Name']} into {$Evolution_Data['Display_Name']}!
+								</b>
+							</div>
+						</td>
+					</tr>
+				";
+
+				try
+				{
+					$Update = $PDO->prepare("UPDATE `pokemon` SET `Name` = ?, `Pokedex_ID`= ? , `Alt_ID` = ? WHERE `ID` = ? AND `Owner_Current` = ? LIMIT 1");
+					$Update->execute([ $Evolution_Data['Name'], $Evolution_Data['Pokedex_ID'], $Evolution_Data['Alt_ID'], $Pokemon['ID'], $User_Data['id'] ]);
+				}
+				catch ( PDOException $e )
+				{
+					handleError($e);
+				}
+			}
+
+			echo "
+				<thead>
+					<tr>
+						<th colspan='7'>
+							Evolutions
+						</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					{$Evolution_Text}
+					<tr>
+						<td colspan='7' style='padding: 5px;'>
+							Please select the Pok&eacute;mon that you wish to evolve.
+						</td>
+					</tr>
+				</tbody>
+			";
+
+			return;
 		}
 	}
