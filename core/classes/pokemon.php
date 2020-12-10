@@ -26,12 +26,12 @@
 				$FetchPokemon->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokemon = $FetchPokemon->fetch();
 
-				$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+				$FetchPokedex = $PDO->prepare("SELECT `Type_Primary`, `Type_Secondary`, `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
 				$FetchPokedex->execute([$Pokemon['ID'], $Pokemon['Alt_ID']]);
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokedex = $FetchPokedex->fetch();
 
-				$FetchItem = $PDO->prepare("SELECT * FROM `item_dex` WHERE `Item_ID` = ? LIMIT 1");
+				$FetchItem = $PDO->prepare("SELECT `Item_ID`, `Item_Name` FROM `item_dex` WHERE `Item_ID` = ? LIMIT 1");
 				$FetchItem->execute([$Pokemon['Item']]);
 				$FetchItem->setFetchMode(PDO::FETCH_ASSOC);
 				$Item = $FetchItem->fetch();
