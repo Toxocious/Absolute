@@ -196,28 +196,28 @@
 			switch ( $User['Rank'] )
 			{
 				case 'Administrator':
-					return "{$Apply_Link_1}<span class='administrator' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
+					return "{$Apply_Link_1}<span class='administrator' style='font-size: 12px;'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Bot':
-					return "{$Apply_Link_1}<span class='bot' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
+					return "{$Apply_Link_1}<span class='bot' style='font-size: 12px;'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Developer':
-					return "{$Apply_Link_1}<span class='developer' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
+					return "{$Apply_Link_1}<span class='developer' style='font-size: 12px;'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Super Moderator':
-					return "{$Apply_Link_1}<span class='super_mod' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
+					return "{$Apply_Link_1}<span class='super_mod' style='font-size: 12px;'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Moderator':
-					return "{$Apply_Link_1}<span class='moderator' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
+					return "{$Apply_Link_1}<span class='moderator' style='font-size: 12px;'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Chat Moderator':
-					return "{$Apply_Link_1}<span class='chat_mod' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
+					return "{$Apply_Link_1}<span class='chat_mod' style='font-size: 12px;'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				case 'Member':
-					return "{$Apply_Link_1}<span class='member' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
+					return "{$Apply_Link_1}<span class='member' style='font-size: 12px;'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 				default:
-					return "{$Apply_Link_1}<span class='member' style='font-size: 14px'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
+					return "{$Apply_Link_1}<span class='member' style='font-size: 12px;'>{$User['Username']}{$Append_ID}</span>{$Apply_Link_2}";
 					break;
 			}
 		}
