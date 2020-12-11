@@ -22,13 +22,13 @@
 			'Money'				=> [ 
 				'Value' => 'Money',
 				'Name' => 'Money',
-				'Icon' => 'images/Assets/money-placeholder.png',
+				'Icon' => 'images/Assets/Money.png',
 				'Tradeable' => true
 			],
 			'Abso_Coins'	=> [ 
 				'Value' => 'Abso_Coins',
 				'Name' => 'Absolute Coins',
-				'Icon' => 'images/Assets/money-placeholder.png',
+				'Icon' => 'images/Assets/Abso_Coins.png',
 				'Tradeable' => true
 			],
 		];
