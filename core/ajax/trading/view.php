@@ -172,10 +172,10 @@
 
 						echo "
 							<tr>
-								<td colspan='1' style='width: 76px;'>
+								<td colspan='2' style='width: 76px;'>
 									<img src='{$Item_Data['Icon']}' />
 								</td>
-								<td colspan='2'>
+								<td colspan='1'>
 									{$Item_Data['Name']}<br />
 									x" . number_format($Item_Params[2]) . "
 								</td>
@@ -194,10 +194,10 @@
 
 						echo "
 							<tr>
-								<td colspan='1' style='width: 76px;'>
+								<td colspan='2' style='width: 76px;'>
 									<img src='{$Currency_Data['Icon']}' />
 								</td>
-								<td colspan='2'>
+								<td colspan='1'>
 									{$Currency_Data['Name']}<br />
 									" . number_format($Currency_Info[1]) . "
 								</td>
@@ -285,10 +285,10 @@
 
 						echo "
 							<tr>
-								<td colspan='1' style='width: 76px;'>
+								<td colspan='2' style='width: 76px;'>
 									<img src='{$Item_Data['Icon']}' />
 								</td>
-								<td colspan='2'>
+								<td colspan='1'>
 									{$Item_Data['Name']}<br />
 									x" . number_format($Item_Params[2]) . "
 								</td>
@@ -307,10 +307,10 @@
 
 						echo "
 							<tr>
-								<td colspan='1' style='width: 76px;'>
+								<td colspan='2' style='width: 76px;'>
 									<img src='{$Currency_Data['Icon']}' />
 								</td>
-								<td colspan='2'>
+								<td colspan='1'>
 									{$Currency_Data['Name']}<br />
 									" . number_format($Currency_Info[1]) . "
 								</td>
