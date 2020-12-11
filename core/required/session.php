@@ -77,6 +77,7 @@
 	// Require some files.
 	require_once $Dir_Root . '/core/required/domains.php';
 	require_once $Dir_Root . '/core/functions/formulas.php';
+	require_once $Dir_Root . '/core/functions/pagination.php';
 	require_once $Dir_Root . '/core/functions/main_functions.php';
 
 	// Proxies sometimes send the X-Forwarded-For header to indicate the actual
