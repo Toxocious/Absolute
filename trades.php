@@ -1,5 +1,5 @@
 <?php
-	require 'core/required/layout_top.php';
+	require_once 'core/required/layout_top.php';
 ?>
 
 <div class='panel content'>
