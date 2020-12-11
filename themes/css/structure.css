@@ -483,6 +483,9 @@ table > tbody > tr > td {
   padding: var(--padding-3px);
   text-align: center;
 }
+table > tbody > tr > td a {
+  display: block;
+}
 
 /**
  * Main

@@ -763,6 +763,11 @@ table
         font-size: 12px;
         padding: var(--padding-3px);
         text-align: center;
+
+        a
+        {
+          display: block;
+        }
       }
     }
   }
