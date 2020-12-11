@@ -9,6 +9,7 @@ body {
 input[type=text] {
   border-color: var(--color-black);
   background: var(--color-secondary);
+  color: var(--color-white);
 }
 
 a:link,
