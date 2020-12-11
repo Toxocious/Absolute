@@ -8,6 +8,15 @@ body
   color: var(--color-white);
 }
 
+input
+{
+  &[type='text']
+  {
+    border-color: var(--color-black);
+    background: var(--color-secondary);
+  }
+}
+
 a:link,
 a:visited
 {

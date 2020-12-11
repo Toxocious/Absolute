@@ -8,10 +8,6 @@ body {
   height: 100%;
 }
 
-body {
-  margin: 0;
-}
-
 html {
   margin: 0;
   padding: 0;
@@ -20,6 +16,7 @@ html {
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 14px;
+  margin: 0;
 }
 
 a {
@@ -33,6 +30,14 @@ button {
 }
 button:not(.disabled):hover {
   cursor: pointer;
+}
+
+input[type=text] {
+  border: 2px solid;
+  border-radius: var(--border-radius);
+  padding: var(--padding-3px);
+  text-align: center;
+  width: 190px;
 }
 
 ul,
@@ -439,6 +444,7 @@ nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a {
   border-radius: var(--border-radius-bl-br);
   height: 26px;
   margin-bottom: 0px;
+  padding: 0px;
   text-align: center;
   width: 186px;
 }
