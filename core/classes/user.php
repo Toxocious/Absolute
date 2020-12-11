@@ -14,8 +14,6 @@
 
 		/**
 		 * Fetch the complete data set of a specific user via their `users` DB ID.
-		 * =========
-		 * Username, ID, Rank, Power, Playtime, Registration Date, Last Active, Signature, Chat/RPG Ban Details, Currencies
 		 */
 		public function FetchUserData($User_ID)
 		{
@@ -34,27 +32,17 @@
 			}
 
 			if ( !isset($User) || !$User )
-			{
-				return "Error";
-			}
+				return false;
 
 			if ( $User['RPG_Ban'] == 'yes' )
-			{
 				$Banned_RPG = true;
-			}
 			else
-			{
 				$Banned_RPG = false;
-			}
 
 			if ( $User['Chat_Ban'] == 'yes' )
-			{
 				$Banned_Chat = true;
-			}
 			else
-			{
 				$Banned_Chat = false;
-			}
 
 			return [
 				'ID' => $User['id'],
