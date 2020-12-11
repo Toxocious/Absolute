@@ -79,6 +79,7 @@
 				"Category" => $Item['Item_Type'],
 				"Owner" => $Item['Owner_Current'],
 				"Quantity" => $Item['Quantity'],
+				"Icon" => DOMAIN_SPRITES . "/Items/{$Item['Item_Name']}.png"
 			];
 		}
 
