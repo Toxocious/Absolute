@@ -6,11 +6,6 @@
 	 */
 	if ( isset($_POST['ID']) )
 	{
-		if ( !isset($User_Data) )
-		{
-			echo "To use this feature, you must be logged in.";
-		}
-
 		$Recipient_ID = $Purify->Cleanse($_POST['ID']);
 		$Recipient = $User_Class->FetchUserData($Recipient_ID);
 
