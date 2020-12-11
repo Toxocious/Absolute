@@ -1,278 +1,324 @@
 <?php
 	require '../../required/session.php';
 
-	if ( isset($_POST['Trade_ID']) )
+	if ( !isset($_POST['Trade_ID']) )
 	{
-		$Trade_ID = $Purify->Cleanse($_POST['Trade_ID']);
+		echo "
+			<div class='error'>
+				The trade that you are trying to view doesn't exist.
+			</div>
+		";
 
-		try
-		{
-			$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Receiver` = ?)");
-			$Trade_Query->execute([ $Trade_ID, $User_Data['id'], $User_Data['id'] ]);
-			$Trade_Query->setFetchMode(PDO::FETCH_ASSOC);
-			$Trade = $Trade_Query->fetch();
-		}
-		catch( PDOException $e )
-		{
-			HandleError( $e->getMessage() );
-		}
+		return;
+	}
 
-		if ( count($Trade) === 0 )
-		{
-			echo "<div class='error'>You may not view trades that you did not take part in.</div>";
-		}
-		else
-		{
-			$Sender = $User_Class->FetchUserData($Trade['Sender']);
-			$Recipient = $User_Class->FetchUserData($Trade['Receiver']);
+	$Trade_ID = $Purify->Cleanse($_POST['Trade_ID']);
 
-			switch ( $Trade['Status'] )
+	try
+	{
+		$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Receiver` = ?)");
+		$Trade_Query->execute([ $Trade_ID, $User_Data['id'], $User_Data['id'] ]);
+		$Trade_Query->setFetchMode(PDO::FETCH_ASSOC);
+		$Trade = $Trade_Query->fetch();
+	}
+	catch( PDOException $e )
+	{
+		HandleError( $e->getMessage() );
+	}
+
+	if ( count($Trade) === 0 )
+	{
+		echo "
+			<div class='error'>
+				You may not view trades that you did not take part in, or that do not exist.
+			</div>
+		";
+
+		return;
+	}
+
+	$Sender = $User_Class->FetchUserData($Trade['Sender']);
+	$Recipient = $User_Class->FetchUserData($Trade['Receiver']);
+
+	switch ( $Trade['Status'] )
+	{
+		case 'Accepted':
+			$Color = "#00ff00";
+			break;
+		case 'Declined':
+			$Color = "#ff0000";
+			break;
+		case 'Deleted':
+			$Color = "#999";
+			break;
+	}
+
+	$Trade_Status = '';
+	if ( $Trade['Status'] != 'Pending' )
+	{
+		$Trade_Status = "
+			<br />
+			This trade was <b style='color: {$Color}'>" . strtolower($Trade['Status']) . "</b>.
+		";
+	}
+?>
+
+<div class='description' style='flex-basis: 85%;'>
+	Viewing the offered contents of Trade #<?= number_format($Trade_ID); ?>.
+	<?= $Trade_Status; ?>
+</div>
+
+<div style='flex-basis: 85%;'>
+	<?php
+		if ( $Trade['Status'] == 'Pending' )
+		{
+			if ( $Trade['Sender'] != $User_Data['id'] )
 			{
-				case 'Accepted':
-					$Color = "#00ff00";
-					break;
-				case 'Declined':
-					$Color = "#ff0000";
-					break;
-				case 'Deleted':
-					$Color = "#999";
-					break;
+				echo "
+					<div>
+						<button onclick=\"TradeManage({$Trade['ID']}, 'Accepted');\" style='padding: 5px; width: 200px;'>
+							Accept Trade
+						</button>
+						<button onclick=\"TradeManage({$Trade['ID']}, 'Declined');\" style='padding: 5px; width: 200px;'>
+							Decline Trade
+						</button>
+					</div>
+				";
+			}
+			else
+			{
+				echo "
+					<div>
+						<button onclick=\"TradeManage({$Trade['ID']}, 'Deleted');\" style='padding: 5px; width: 200px;'>Cancel Trade</button>
+					</div>
+				";
+			}
+		}
+	?>
+</div>
+
+<table class='border-gradient' style='flex-basis: 46%; margin: 5px;'>
+	<thead>
+		<tr>
+			<th colspan='3'>
+				<b><?= $Sender['Username']; ?>'s Offer</b>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+		<?php
+			try
+			{
+				$Sender_Query = $PDO->prepare("SELECT `Sender`, `Sender_Pokemon`, `Sender_Currency`, `Sender_Items` FROM `trades` WHERE `ID` = ?");
+				$Sender_Query->execute([ $Trade_ID ]);
+				$Sender_Query->setFetchMode(PDO::FETCH_ASSOC);
+				$Sender_Content = $Sender_Query->fetch();
+			}
+			catch( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
 			}
 
-?>
-			<div class='description' style='margin-bottom: 5px;'>
-				Viewing the included contents of Trade #<?= number_format($Trade_ID); ?>.
-				<?php
-					if ( $Trade['Status'] != 'Pending' )
-					{
-						echo "<br />This trade was <b style='color: {$Color}'>{$Trade['Status']}</b>.";
-					}
-				?>
-			</div>
-
-			<?php
-				if ( $Trade['Status'] == 'Pending' )
+			if
+			(
+				empty($Sender_Content['Sender_Pokemon']) &&
+				empty($Sender_Content['Sender_Items']) &&
+				empty($Sender_Content['Sender_Currency'])
+			)
+			{
+				echo "
+					<tr>
+						<td colspan='3' style='padding: 12px;'>
+							<b>This user has nothing included in their side of the trade.</b>
+						</td>
+					</tr>
+				";
+			}
+			else
+			{
+				if ( !empty($Sender_Content['Sender_Pokemon']) )
 				{
-					if ( $Trade['Sender'] != $User_Data['id'] )
+					$Sender_Pokemon = explode(',', $Sender_Content['Sender_Pokemon']);
+					foreach ( $Sender_Pokemon as $Key => $Pokemon )
 					{
+						$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon);
+
 						echo "
-							<div style='margin-bottom: 5px;'>
-								<button onclick=\"TradeManage({$Trade['ID']}, 'Accepted');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Accept Trade</button>
-								<button onclick=\"TradeManage({$Trade['ID']}, 'Declined');\" style='padding: 5px; width: calc(100% / 2 - 2.5px);'>Decline Trade</button>
-							</div>
-						";
-					}
-					else
-					{
-						echo "
-							<div style='margin-bottom: 5px;'>
-								<button onclick=\"TradeManage({$Trade['ID']}, 'Deleted');\" style='padding: 5px; width: calc(100%);'>Delete Trade</button>
-							</div>
+							<tr>
+								<td colspan='1' style='width: 76px;'>
+									<img src='{$Pokemon_Data['Icon']}' />
+									" . ( $Pokemon_Data['Item'] ? "<img src='{$Pokemon_Data['Item_Icon']}' />" : '' ) . "
+								</td>
+								<td colspan='1' style='width: 34px;'>
+									<img src='{$Pokemon_Data['Gender_Icon']}' style='height: 20px; width: 20px;' />
+								</td>
+								<td colspan='1'>
+									{$Pokemon_Data['Display_Name']} (Level: " . number_format($Pokemon_Data['Level']) . ")
+									" . ($Pokemon_Data['Nickname'] ? "<br /><i>{$Pokemon_Data['Nickname']}</i>" : '')  . "
+								</td>
+							</tr>
 						";
 					}
 				}
-			?>
 
-			<div class='row'>
-				<div style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>
-					<div class='panel' style='margin-bottom: 5px;'>
-						<div class='head'><?= $Sender['Username']; ?>'s Belongings</div>
-						<div class='body'>
-							<?php
-								try
-								{
-									$Sender_Query = $PDO->prepare("SELECT `Sender`, `Sender_Pokemon`, `Sender_Currency`, `Sender_Items` FROM `trades` WHERE `ID` = ?");
-									$Sender_Query->execute([ $Trade_ID ]);
-									$Sender_Query->setFetchMode(PDO::FETCH_ASSOC);
-									$Sender_Content = $Sender_Query->fetch();
-								}
-								catch( PDOException $e )
-								{
-									HandleError( $e->getMessage() );
-								}
+				if ( !empty($Sender_Content['Sender_Items']) )
+				{
+					$Sender_Items = explode(',', $Sender_Content['Sender_Items']);
+					foreach ( $Sender_Items as $Key => $Item )
+					{
+						// row-id-quantity-owner
+						$Item_Params = explode('-', $Item);
+						$Item_Data = $Item_Class->FetchOwnedItem($Sender_Content['Sender'], $Item_Params[1]);
 
-								if
-								(
-									empty($Sender_Content['Sender_Pokemon']) && empty($Sender_Content['Sender_Items']) && empty($Sender_Content['Sender_Currency'])
-								)
-								{
-									echo "<div class='notice' style='margin: 5px; width: calc(100% - 10px);'>This user has nothing included in their side of the trade.</div>";
-								}
-								else
-								{
-									//echo "
-									//	<div class='page_nav'>
-									//		<div class='pagi' style='width: 100%;'>
-									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Sender_Content['Sender']}, \"Pokemon\");'>Pokemon</a></div>
-									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Sender_Content['Sender']}, \"Items\");'>Items</a></div>
-									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Sender_Content['Sender']}, \"Currency\");'>Currencies</a></div>
-									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Sender_Content['Sender']}, \"All\");'>Show All</a></div>
-									//		</div>
-									//	</div>
-									//";
+						echo "
+							<tr>
+								<td colspan='1' style='width: 76px;'>
+									<img src='{$Item_Data['Icon']}' />
+								</td>
+								<td colspan='2'>
+									{$Item_Data['Name']}<br />
+									x" . number_format($Item_Params[2]) . "
+								</td>
+							</tr>
+						";
+					}
+				}
 
-									if ( !empty($Sender_Content['Sender_Pokemon']) )
-									{
-										$Sender_Pokemon = explode(',', $Sender_Content['Sender_Pokemon']);
-										foreach ( $Sender_Pokemon as $Key => $Pokemon )
-										{
-											$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon);
+				if ( !empty($Sender_Content['Sender_Currency']) )
+				{
+					$Sender_Currency = explode(',', $Sender_Content['Sender_Currency']);
+					foreach ( $Sender_Currency as $Key => $Currency )
+					{
+						$Currency_Info = explode('-', $Currency);
+						$Currency_Data = $Constants->Currency[$Currency_Info[0]];
 
-											echo "
-												<div>
-													<img src='{$Pokemon_Data['Icon']}' />
-													<img src='{$Pokemon_Data['Gender_Icon']}' style='height: 20px; width: 20px;' />
-													{$Pokemon_Data['Display_Name']} (Level: " . number_format($Pokemon_Data['Level']) . ")
-												</div>
-												<hr />
-											";
-										}
-									}
+						echo "
+							<tr>
+								<td colspan='1' style='width: 76px;'>
+									<img src='{$Currency_Data['Icon']}' />
+								</td>
+								<td colspan='2'>
+									{$Currency_Data['Name']}<br />
+									" . number_format($Currency_Info[1]) . "
+								</td>
+							</tr>
+						";
+					}
+				}
+			}
+		?>
+	</tbody>
+</table>
 
-									if ( !empty($Sender_Content['Sender_Items']) )
-									{
-										$Sender_Items = explode(',', $Sender_Content['Sender_Items']);
-										foreach ( $Sender_Items as $Key => $Item )
-										{
-											// row-id-quantity-owner
-											$Item_Params = explode('-', $Item);
-											$Item_Data = $Item_Class->FetchOwnedItem($Sender_Content['Sender'], $Item_Params[1]);
+<table class='border-gradient' style='flex-basis: 46%; margin: 5px;'>
+	<thead>
+		<tr>
+			<th colspan='3'>
+				<b><?= $Recipient['Username']; ?>'s Offer</b>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php
+			try
+			{
+				$Recipient_Query = $PDO->prepare("SELECT `Recipient`, `Recipient_Pokemon`, `Recipient_Currency`, `Recipient_Items` FROM `trades` WHERE `ID` = ?");
+				$Recipient_Query->execute([ $Trade_ID ]);
+				$Recipient_Query->setFetchMode(PDO::FETCH_ASSOC);
+				$Recipient_Content = $Recipient_Query->fetch();
+			}
+			catch( PDOException $e )
+			{
+				HandleError( $e->getMessage() );
+			}
 
-											echo "
-												<div>
-													<img src='images/items/{$Item_Data['Name']}.png' />
-													{$Item_Data['Name']} (x" . number_format($Item_Params[2]) . ")
-												</div>
-												<hr />
-											";
-										}
-									}
+			if
+			(
+				empty($Recipient_Content['Recipient_Pokemon']) &&
+				empty($Recipient_Content['Recipient_Items']) &&
+				empty($Recipient_Content['Recipient_Currency'])
+			)
+			{
+				echo "
+					<tr>
+						<td colspan='3' style='padding: 12px;'>
+							<b>This user has nothing included in their side of the trade.</b>
+						</td>
+					</tr>
+				";
+			}
+			else
+			{
+				if ( !empty($Recipient_Content['Recipient_Pokemon']) )
+				{
+					$Recipient_Pokemon = explode(',', $Recipient_Content['Recipient_Pokemon']);
+					foreach ( $Recipient_Pokemon as $Key => $Pokemon )
+					{
+						$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon);
 
-									if ( !empty($Sender_Content['Sender_Currency']) )
-									{
-										$Sender_Currency = explode(',', $Sender_Content['Sender_Currency']);
-										foreach ( $Sender_Currency as $Key => $Currency )
-										{
-											$Currency_Info = explode('-', $Currency);
-											$Currency_Data = $Constants->Currency[$Currency_Info[0]];
+						echo "
+							<tr>
+								<td colspan='1' style='width: 76px;'>
+									<img src='{$Pokemon_Data['Icon']}' />
+									" . ( $Pokemon_Data['Item'] ? "<img src='{$Pokemon_Data['Item_Icon']}' />" : '' ) . "
+								</td>
+								<td colspan='1' style='width: 34px;'>
+									<img src='{$Pokemon_Data['Gender_Icon']}' style='height: 20px; width: 20px;' />
+								</td>
+								<td colspan='1'>
+									{$Pokemon_Data['Display_Name']} (Level: " . number_format($Pokemon_Data['Level']) . ")
+									" . ($Pokemon_Data['Nickname'] ? "<br /><i>{$Pokemon_Data['Nickname']}</i>" : '')  . "
+								</td>
+							</tr>
+						";
+					}
+				}
 
-											echo "
-												<div>
-													<img src='{$Currency_Data['Icon']}' style='height: 32px; width: 32px;' />
-													" . number_format($Currency_Info[1]) . "
-												</div>
-												<hr />
-											";
-										}
-									}
-								}
-							?>
-						</div>
-					</div>
-				</div>
+				if ( !empty($Recipient_Content['Recipient_Items']) )
+				{
+					$Recipient_Items = explode(',', $Recipient_Content['Recipient_Items']);
+					foreach ( $Recipient_Items as $Key => $Item )
+					{
+						// row-id-quantity-owner
+						$Item_Params = explode('-', $Item);
+						$Item_Data = $Item_Class->FetchOwnedItem($Recipient_Content['Recipient'], $Item_Params[1]);
 
-				<div style='float: left; width: calc(100% / 2 - 2.5px);'>
-					<div class='panel' style='margin-bottom: 5px;'>
-						<div class='head'><?= $Recipient['Username']; ?>'s Belongings</div>
-						<div class='body'>
-							<?php
-								try
-								{
-									$Receiver_Query = $PDO->prepare("SELECT `Receiver`, `Receiver_Pokemon`, `Receiver_Currency`, `Receiver_Items` FROM `trades` WHERE `ID` = ?");
-									$Receiver_Query->execute([ $Trade_ID ]);
-									$Receiver_Query->setFetchMode(PDO::FETCH_ASSOC);
-									$Receiver_Content = $Receiver_Query->fetch();
-								}
-								catch( PDOException $e )
-								{
-									HandleError( $e->getMessage() );
-								}
+						echo "
+							<tr>
+								<td colspan='1' style='width: 76px;'>
+									<img src='{$Item_Data['Icon']}' />
+								</td>
+								<td colspan='2'>
+									{$Item_Data['Name']}<br />
+									x" . number_format($Item_Params[2]) . "
+								</td>
+							</tr>
+						";
+					}
+				}
 
-								if
-								(
-									empty($Receiver_Content['Receiver_Pokemon']) && empty($Receiver_Content['Receiver_Items']) && empty($Receiver_Content['Receiver_Currency'])
-								)
-								{
-									echo "<div class='notice' style='margin: 5px; width: calc(100% - 10px);'>This user has nothing included in their side of the trade.</div>";
-								}
-								else
-								{
-									//echo "
-									//	<div class='page_nav'>
-									//		<div class='pagi' style='width: 100%;'>
-									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Receiver_Content['Receiver']}, \"Pokemon\");'>Pokemon</a></div>
-									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Receiver_Content['Receiver']}, \"Items\");'>Items</a></div>
-									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Receiver_Content['Receiver']}, \"Currency\");'>Currencies</a></div>
-									//			<div style='float: left; width: calc(100% / 4);'><a href='javascript:void(0);' style='display: block;' onclick='toggleCategory({$Receiver_Content['Receiver']}, \"All\");'>Show All</a></div>
-									//		</div>
-									//	</div>
-									//";
+				if ( !empty($Recipient_Content['Recipient_Currency']) )
+				{
+					$Recipient_Currency = explode(',', $Recipient_Content['Recipient_Currency']);
+					foreach ( $Recipient_Currency as $Key => $Currency )
+					{
+						$Currency_Info = explode('-', $Currency);
+						$Currency_Data = $Constants->Currency[$Currency_Info[0]];
 
-									if ( !empty($Receiver_Content['Receiver_Pokemon']) )
-									{
-										$Receiver_Pokemon = explode(',', $Receiver_Content['Receiver_Pokemon']);
-										foreach ( $Receiver_Pokemon as $Key => $Pokemon )
-										{
-											$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon);
-
-											echo "
-												<div>
-													<img src='{$Pokemon_Data['Icon']}' />
-													<img src='{$Pokemon_Data['Gender_Icon']}' style='height: 20px; width: 20px;' />
-													{$Pokemon_Data['Display_Name']} (Level: " . number_format($Pokemon_Data['Level']) . ")
-												</div>
-												<hr />
-											";
-										}
-									}
-
-									if ( !empty($Receiver_Content['Receiver_Items']) )
-									{
-										$Receiver_Items = explode(',', $Receiver_Content['Receiver_Items']);
-										foreach ( $Receiver_Items as $Key => $Item )
-										{
-											// row-id-quantity-owner
-											$Item_Params = explode('-', $Item);
-											$Item_Data = $Item_Class->FetchOwnedItem($Receiver_Content['Receiver'], $Item_Params[1]);
-
-											echo "
-												<div>
-													<img src='images/items/{$Item_Data['Name']}.png' />
-													{$Item_Data['Name']} (x" . number_format($Item_Params[2]) . ")
-												</div>
-												<hr />
-											";
-										}
-									}
-
-									if ( !empty($Receiver_Content['Receiver_Currency']) )
-									{
-										$Receiver_Currency = explode(',', $Receiver_Content['Receiver_Currency']);
-										foreach ( $Receiver_Currency as $Key => $Currency )
-										{
-											$Currency_Info = explode('-', $Currency);
-											$Currency_Data = $Constants->Currency[$Currency_Info[0]];
-
-											echo "
-												<div>
-													<img src='{$Currency_Data['Icon']}' style='height: 32px; width: 32px;' />
-													" . number_format($Currency_Info[1]) . "
-												</div>
-												<hr />
-											";
-										}
-									}
-								}
-							?>
-						</div>
-					</div>
-				</div>
-			</div>
-
-<?php
-		}
-	}
-	else
-	{
-		echo "<div class='error'>The trade that you're trying to view doesn't exist.</div>";
-	}
+						echo "
+							<tr>
+								<td colspan='1' style='width: 76px;'>
+									<img src='{$Currency_Data['Icon']}' />
+								</td>
+								<td colspan='2'>
+									{$Currency_Data['Name']}<br />
+									" . number_format($Currency_Info[1]) . "
+								</td>
+							</tr>
+						";
+					}
+				}
+			}
+		?>
+	</tbody>
+</table>
