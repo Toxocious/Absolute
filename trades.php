@@ -319,5 +319,5 @@
 </script>
 
 <?php
-	require 'core/required/layout_bottom.php';
-?>
+	require_once 'core/required/layout_bottom.php';
+	
