@@ -179,7 +179,7 @@
 
 				try
 				{
-					$Currency_Query = $PDO->prepare("SELECT `Money`, `Abso_Coins` FROM `users` WHERE `id` = ?");
+					$Currency_Query = $PDO->prepare("SELECT `Money`, `Abso_Coins` FROM `user_currency` WHERE `User_ID` = ?");
 					$Currency_Query->execute([ $User['ID'] ]);
 					$Currency_Query->setFetchMode(PDO::FETCH_ASSOC);
 					$Currency = $Currency_Query->fetch();
