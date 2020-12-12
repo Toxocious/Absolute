@@ -50,33 +50,49 @@
 				if ( !isset($Pokemon) || !$Pokemon )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							This Pokemon doesn't exist.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									This Pok&eacute;mon doesn't exist.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else if ( $Pokemon['Owner_Current'] != $User['ID'] )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							This Pokemon doesn't belong to {$User['Username']}.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									This Pok&eacute;mon doesn't belong to {$User['Username']}.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else if ( $Already_Included )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							This Pokemon is already included in the trade.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									This Pok&eacute;mon is already included in the trade.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else
 				{
 					echo "
-						<div class='success' style='margin: 5px; width: calc(100% - 10px);'>
-							<b>{$Pokemon['Display_Name']}</b> has been added to the trade.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #0f0;'>
+									{$Pokemon['Display_Name']} has been added to the trade.
+								</b>
+							</td>
+						</tr>
 					";
 
 					$_SESSION['Trade'][$Side]['Pokemon'][] = [
@@ -110,41 +126,61 @@
 				if ( !isset($Item) || $Item == "Error" )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							This Item doesn't exist.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									The item that you're trying to add, doesn't exist.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else if ( $Item['Owner'] != $User['ID'] )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							This Item doesn't belong to {$User['Username']}.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									This item doesn't belong to {$User['Username']}.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else if ( $Already_Included )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							This Item is already included in the trade.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									This item is already included within the trade.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else if ( $Item['Quantity'] <= 0 )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							This user doesn't own enough of this item.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									This user doesn't own enough of this item.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else
 				{
 					echo "
-						<div class='success' style='margin: 5px; width: calc(100% - 10px);'>
-							<b>{$Item['Name']}</b> has been added to the trade.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #0f0;'>
+									{$Item['Name']} has been added to the trade.
+								</b>
+							</td>
+						</tr>
 					";
 
 					$_SESSION['Trade'][$Side]['Items'][] = [
@@ -162,7 +198,7 @@
 			if ( $Type == 'Currency' )
 			{
 				$Currency_Data = [
-					"Name" => $Data['Name'],
+					"Name" => explode('-', $Data['Name'])[2],
 					"Amount" => $Data['Amount'],
 				];
 
@@ -192,33 +228,49 @@
 				if ( $Currency_Data['Amount'] <= 0 )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							Please add currency to the trade at a value of 0 or higher.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									Please add currency to the trade at a value of 0 or higher.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else if ( $Currency_Data['Amount'] > $Currency[$Currency_Data['Name']] )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							{$User['Username']} does not have enough {$Currency_Data['Name']} to add to the trade.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									{$User['Username']} does not have enough {$Currency_Data['Name']} to add to the trade.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else if ( $Already_Included )
 				{
 					echo "
-						<div class='error' style='margin: 5px; width: calc(100% - 10px);'>
-							You have already added {$Currency_Data['Name']} to {$User['Username']}'s side of the trade.
-						</div>
+					<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #f00;'>
+									You have already added {$Currency_Data['Name']} to {$User['Username']}'s side of the trade.
+								</b>
+							</td>
+						</tr>
 					";
 				}
 				else
 				{
 					echo "
-						<div class='success' style='margin: 5px; width: calc(100% - 10px);'>
-							{$Currency_Data['Amount']} {$Currency_Data['Name']} has been added to the trade.
-						</div>
+						<tr>
+							<td colspan='3' style='padding: 10px;'>
+								<b style='color: #0f0;'>
+									{$Currency_Data['Amount']} {$Currency_Data['Name']} has been added to the trade.
+								</b>
+							</td>
+						</tr>
 					";
 
 					$_SESSION['Trade'][$Side]['Currency'][] = [
@@ -267,7 +319,19 @@
 			foreach ( $_SESSION['Trade'][$Side]['Currency'] as $Key => $Currencies )
 			{
 				echo "
-					{$Currencies['Currency']} - " . number_format($Currencies['Quantity']) . "<br />
+					<tr>
+						<td colspan='1' style='width: 76px;'>
+							<img src='" . DOMAIN_SPRITES . "/Assets/{$Currencies['Currency']}.png' />
+						</td>
+						<td colspan='1'>
+							" . number_format($Currencies['Quantity']) . "
+						</td>
+						<td colspan='1' style='width: 76px;'>
+							<button onclick='' style='width: 70px;'>
+								Remove
+							</button>
+						</td>
+					</tr>
 				";
 			}
 		}
@@ -279,10 +343,20 @@
 				$Item_Data = $Item_Class->FetchItemData($Items['ID']);
 
 				echo "
-					<div>
-						<img src='images/items/{$Item_Data['Name']}.png' />
-						{$Item_Data['Name']} (x" . number_format($Items['Quantity']) . ")
-					</div>
+					<tr>
+						<td colspan='1' style='width: 76px;'>
+							<img src='{$Item_Data['Icon']}' />
+						</td>
+						<td colspan='1'>
+							{$Item_Data['Name']}
+							(x" . number_format($Items['Quantity']) . ")
+						</td>
+						<td colspan='1' style='width: 76px;'>
+							<button onclick='' style='width: 70px;'>
+								Remove
+							</button>
+						</td>
+					</tr>
 				";
 			}
 		}
@@ -294,12 +368,22 @@
 				$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon['ID']);
 
 				echo "
-					<div>
-						<img src='{$Pokemon_Data['Icon']}' />
-						<img src='{$Pokemon_Data['Gender_Icon']}' style='height: 20px; width: 20px;' />
-						{$Pokemon_Data['Display_Name']} (Level: " . $Pokemon_Data['Level'] . ")
-						<a href='#'>x</a>
-					</div>
+					<tr>
+						<td colspan='1' style='width: 76px;'>
+							<img src='{$Pokemon_Data['Icon']}' />
+							<img src='{$Pokemon_Data['Gender_Icon']}' style='height: 20px; width: 20px;' />
+						</td>
+						<td colspan='1'>
+							{$Pokemon_Data['Display_Name']} (Level: " . $Pokemon_Data['Level'] . ")
+							<br />
+							" . ($Pokemon_Data['Item'] ? $Pokemon_Data['Item_Name'] : '') . "
+						</td>
+						<td colspan='1' style='width: 76px;'>
+							<button onclick='' style='width: 70px;'>
+								Remove
+							</button>
+						</td>
+					</tr>
 				";
 			}
 		}
