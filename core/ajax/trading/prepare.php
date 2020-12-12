@@ -1,185 +1,300 @@
 <?php
 	require '../../required/session.php';
 
-	/**
-	 * Display the trade windows.
-	 */
-	if ( isset($_POST['ID']) )
+	if ( !isset($_POST['ID']) )
 	{
-		$Recipient_ID = $Purify->Cleanse($_POST['ID']);
-		$Recipient = $User_Class->FetchUserData($Recipient_ID);
+		echo "
+			<div class='error'>
+				Please specify the User ID or Username of the trainer that you would like to trade with.
+			</div>
+		";
 
-		if ( $Recipient_ID == 0 || $Recipient == "Error" )
-		{
-			echo "<div class='error'>The user that you're attempting to trade with does not exist.</div>";			
-		}
-		else if ( $User_Data['id'] === $Recipient_ID )
-		{
-			echo "<div class='error'>You may not trade with yourself.</div>";
-		}
-		else if ( $Recipient['Banned_RPG'] )
-		{
-			echo "<div class='error'>The user that you're attempting to trade with is currently banned.</div>";
-		}
-		else
-		{
-			$_SESSION['Trade'] = [
-				'Sender' => [
-					'User' => $User_Data['id'],
-					'Pokemon' => [],
-					'Currency' => [],
-					'Items' => []
-				],
-				'Receiver' => [
-					'User' => $Recipient['ID'],
-					'Pokemon' => [],
-					'Currency' => [],
-					'Items' => []
-				],
-			];	
-?>
+		return;
+	}
 
-				<div class='description' style='margin-bottom: 5px;'>Choose the pokemon, items, and/or currency to be added to the trade.</div>
-				<button onclick='TradeCreate();' style='margin-bottom: 5px; width: 50%;'>Create Trade</button>
-				
-				<div class='row'>
-					<div style='float: left; margin-right: 5px; width: calc(100% / 2 - 2.5px);'>
-						<div class='panel' style='margin-bottom: 5px;'>
-							<div class='head'><?= $User_Data['Username']; ?>'s Belongings</div>
-							<div class='body navi'>
-								<div>
-									<div style='float: left; width: calc(100% / 3);'>
-										<a href='javascript:void(0);' style='display: block; padding: 3px;' onclick="Swap('box', <?= $User_Data['id']; ?>)">Pokemon</a>
-									</div>
-									<div style='float: left; width: calc(100% / 3);'>
-										<a href='javascript:void(0);' style='display: block; padding: 3px;' onclick="Swap('inventory', <?= $User_Data['id']; ?>)">Inventory</a>
-									</div>
-									<div style='float: left; width: calc(100% / 3);'>
-										<a href='javascript:void(0);' style='display: block; padding: 3px;' onclick="Swap('currency', <?= $User_Data['id']; ?>)">Currency</a>
-									</div>
-								</div>
-								<hr />
+	$Recipient_ID = $Purify->Cleanse($_POST['ID']);
+	$Recipient = $User_Class->FetchUserData($Recipient_ID);
 
-								<div id='TabContent<?= $User_Data['id']; ?>'>
-									<?php
-										try
-										{
-											$Sender_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 50");
-											$Sender_Query->execute([$User_Data['id']]);
-											$Sender_Query->setFetchMode(PDO::FETCH_ASSOC);
-											$Sender_Box = $Sender_Query->fetchAll();
-
-											$Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = {$User_Data['id']} AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 50";
-											$Inputs = [];
-											$Page = 1;
-										}
-										catch ( PDOException $e )
-										{
-											HandleError( $e->getMessage() );
-										}
-
-										if ( count($Sender_Box) == 0 )
-										{
-											echo "<div style='padding: 5px;'>There are no Pokemon in this user's box.</div>";
-										}
-										else
-										{
-											echo "<div class='page_nav'>";
-											Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(' . $Page . ', ' . $User_Data['id'] . '); return false;"', 50);
-											echo "</div>";
-
-											echo "<div style='height: 160px; padding: 5px;'>";
-											foreach( $Sender_Box as $Index => $Pokemon )
-											{
-												$Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
-												echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='Action({$User_Data['id']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})' />";
-											}
-											echo "</div>";
-										}
-									?>
-								</div>
-							</div>
-						</div>
-
-						<div class='panel'>
-							<div class='head'>Included In Trade</div>
-							<div class='body' id='TradeIncluded<?= $User_Data['id']; ?>'>
-								<div style='padding: 12px;'>Nothing has been added to the trade yet.</div>
-							</div>
-						</div>
-					</div>
-
-					<div style='float: left; width: calc(100% / 2 - 2.5px);'>
-						<div class='panel' style='margin-bottom: 5px;'>
-							<div class='head'><?= $Recipient['Username']; ?>'s Belongings</div>
-							<div class='body navi'>
-								<div>
-									<div style='float: left; width: calc(100% / 3);'>
-										<a href='javascript:void(0);' style='display: block; padding: 3px;' onclick="Swap('box', <?= $Recipient['ID']; ?>)">Pokemon</a>
-									</div>
-									<div style='float: left; width: calc(100% / 3);'>
-										<a href='javascript:void(0);' style='display: block; padding: 3px;' onclick="Swap('inventory', <?= $Recipient['ID']; ?>)">Inventory</a>
-									</div>
-									<div style='float: left; width: calc(100% / 3);'>
-										<a href='javascript:void(0);' style='display: block; padding: 3px;' onclick="Swap('currency', <?= $Recipient['ID']; ?>)">Currency</a>
-									</div>
-								</div>
-								<hr />
-
-								<div id='TabContent<?= $Recipient['ID']; ?>'>
-									<?php
-										try
-										{
-											$Recipient_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 50");
-											$Recipient_Query->execute([$Recipient['ID']]);
-											$Recipient_Query->setFetchMode(PDO::FETCH_ASSOC);
-											$Recipient_Box = $Recipient_Query->fetchAll();
-
-											$Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = {$Recipient['ID']} AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 50";
-											$Inputs = [];
-											$Page = 1;
-										}
-										catch ( PDOException $e )
-										{
-											HandleError( $e->getMessage() );
-										}
-
-										if ( count($Recipient_Box) == 0 )
-										{
-											echo "<div style='padding: 85px 5px;'>There are no Pokemon in this user's box.</div>";
-										}
-										else
-										{
-											echo "<div class='page_nav'>";
-											Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $Recipient['ID'], $Inputs, $Page, 'onclick="updateBox(' . $Page . ', ' . $Recipient['ID'] . '); return false;"', 50);
-											echo "</div>";
-
-											echo "<div style='height: 160px; padding: 5px;'>";
-											foreach( $Recipient_Box as $Index => $Pokemon )
-											{
-												$Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
-												echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='Action({$Recipient['ID']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})' />";
-											}
-											echo "</div>";
-										}
-									?>
-								</div>
-							</div>
-						</div>
-
-						<div class='panel'>
-							<div class='head'>Included In Trade</div>
-							<div class='body' id='TradeIncluded<?= $Recipient['ID']; ?>'>
-								<div style='padding: 12px;'>Nothing has been added to the trade yet.</div>
-							</div>
-						</div>
-					</div>
-				</div>
-
-<?php
-		}
+	if ( $Recipient_ID == 0 || !$Recipient )
+	{
+		echo "<div class='error'>The user that you're attempting to trade with does not exist.</div>";
+	}
+	else if ( $User_Data['id'] === $Recipient_ID )
+	{
+		echo "<div class='error'>You may not trade with yourself.</div>";
+	}
+	else if ( $Recipient['Banned_RPG'] )
+	{
+		echo "<div class='error'>The user that you're attempting to trade with is currently banned.</div>";
 	}
 	else
 	{
-		echo "Please specify the recipient's ID.";
+		$_SESSION['Trade'] = [
+			'Sender' => [
+				'User' => $User_Data['id'],
+				'Pokemon' => [],
+				'Currency' => [],
+				'Items' => []
+			],
+			'Receiver' => [
+				'User' => $Recipient['ID'],
+				'Pokemon' => [],
+				'Currency' => [],
+				'Items' => []
+			],
+		];
+
 	}
+?>
+
+<div class='description' style='flex-basis: 85%;'>
+	Choose the pokemon, items, and/or currency to be added to the trade.
+</div>
+
+<div style='flex-basis: 85%;'>
+	<button onclick='TradeCreate();' style='width: 200px;'>
+		Create Trade
+	</button>
+</div>
+
+<div style='flex-basis: 50%;'>
+	<table class='border-gradient' style='margin: 5px auto; width: 100%;'>
+		<thead>
+			<tr>
+				<th colspan='21'>
+					<b><?= $User_Data['Username']; ?>'s Belongings</b>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan='7' style='padding: 5px;'>
+					<a href='javascript:void(0);' onclick="Change_Tab('box', <?= $User_Data['id']; ?>)">
+						<b>Pok&eacute;mon</b>
+					</a>
+				</td>
+				<td colspan='7' style='padding: 5px;'>
+					<a href='javascript:void(0);' onclick="Change_Tab('inventory', <?= $User_Data['id']; ?>)">
+						<b>Inventory</b>
+					</a>
+				</td>
+				<td colspan='7' style='padding: 5px;'>
+					<a href='javascript:void(0);' onclick="Change_Tab('currency', <?= $User_Data['id']; ?>)">
+						<b>Currency</b>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+		<tbody id='TabContent<?= $User_Data['id']; ?>'>
+			<?php
+				try
+				{
+					$Sender_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 35");
+					$Sender_Query->execute([ $User_Data['id'] ]);
+					$Sender_Query->setFetchMode(PDO::FETCH_ASSOC);
+					$Sender_Box = $Sender_Query->fetchAll();
+
+					$Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = {$User_Data['id']} AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 35";
+					$Inputs = [];
+					$Page = 1;
+				}
+				catch ( PDOException $e )
+				{
+					HandleError( $e->getMessage() );
+				}
+
+				if ( count($Sender_Box) == 0 )
+				{
+					echo "
+						<tr>
+							<td colspan='21' style='height: 220px; padding: 10px;'>
+								There are no Pok&eacute;mon in this trainer's box.
+							</td>
+						</tr>
+					";
+				}
+				else
+				{
+					Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $Inputs, $User_Data['id'], $Page, 35);
+
+					echo "<tr>";
+					$Total_Rendered = 0;
+					foreach( $Sender_Box as $Index => $Pokemon )
+					{
+						$Index++;
+						$Total_Rendered++;
+						$Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+
+						echo "
+							<td colspan='3' data-poke-id='{$Pokemon['ID']}'>
+								<img
+									class='spricon'
+									src='{$Pokemon['Icon']}'
+									onclick='Action({$User_Data['id']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})'
+								/>
+							</td>
+						";
+
+						if ( $Index % 7 === 0 && $Index % 35 !== 0 )
+							echo "</tr><tr>";
+					}
+
+					if ( $Total_Rendered <= 35 )
+					{
+						$Total_Rendered++;
+						
+						for ( $Total_Rendered; $Total_Rendered <= 35; $Total_Rendered++ )
+						{
+							echo "
+								<td colspan='3' style='padding: 20.5px; width: 56px;'></td>
+							";
+
+							if ( $Total_Rendered % 7 === 0 && $Total_Rendered % 35 !== 0 )
+								echo "</tr><tr>";
+						}
+					}
+
+					echo "</tr>";
+				}
+			?>
+		</tbody>
+	</table>
+
+	<table class='border-gradient' style='margin: 5px auto; width: 100%;'>
+		<thead>
+			<tr>
+				<th colspan='3'>
+					<b>Included In Trade</b>
+				</th>
+			</tr>
+		</thead>
+		<tbody id='TradeIncluded<?= $User_Data['id']; ?>'>
+			<tr>
+				<td colspan='3' style='padding: 10px;'>
+					Nothing has been added to the trade yet.
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div style='flex-basis: 50%;'>
+	<table class='border-gradient' style='margin: 5px auto; width: 100%;'>
+		<thead>
+			<tr>
+				<th colspan='21'>
+					<b><?= $Recipient['Username']; ?>'s Belongings</b>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan='7' style='padding: 5px;'>
+					<a href='javascript:void(0);' onclick="Change_Tab('box', <?= $Recipient['ID']; ?>)">
+						<b>Pok&eacute;mon</b>
+					</a>
+				</td>
+				<td colspan='7' style='padding: 5px;'>
+					<a href='javascript:void(0);' onclick="Change_Tab('inventory', <?= $Recipient['ID']; ?>)">
+						<b>Inventory</b>
+					</a>
+				</td>
+				<td colspan='7' style='padding: 5px;'>
+					<a href='javascript:void(0);' onclick="Change_Tab('currency', <?= $Recipient['ID']; ?>)">
+						<b>Currency</b>
+					</a>
+				</td>
+			</tr>
+		</tbody>
+		<tbody id='TabContent<?= $Recipient['ID']; ?>'>
+			<?php
+				try
+				{
+					$Recipient_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 35");
+					$Recipient_Query->execute([ $Recipient['ID'] ]);
+					$Recipient_Query->setFetchMode(PDO::FETCH_ASSOC);
+					$Recipient_Box = $Recipient_Query->fetchAll();
+
+					$Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = {$Recipient['ID']} AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 35";
+					$Inputs = [];
+					$Page = 1;
+				}
+				catch ( PDOException $e )
+				{
+					HandleError( $e->getMessage() );
+				}
+
+				if ( count($Recipient_Box) == 0 )
+				{
+					echo "
+						<tr>
+							<td colspan='21' style='height: 220px; padding: 10px;'>
+								There are no Pok&eacute;mon in this trainer's box.
+							</td>
+						</tr>
+					";
+				}
+				else
+				{
+					Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $Inputs, $Recipient['ID'], $Page, 35);
+
+					echo "<tr>";
+					$Total_Rendered = 0;
+					foreach( $Recipient_Box as $Index => $Pokemon )
+					{
+						$Index++;
+						$Total_Rendered++;
+						$Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+
+						echo "
+							<td colspan='3' data-poke-id='{$Pokemon['ID']}'>
+								<img
+									class='spricon'
+									src='{$Pokemon['Icon']}'
+									onclick='Action({$Recipient['ID']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})'
+								/>
+							</td>
+						";
+
+						if ( $Index % 7 === 0 && $Index % 35 !== 0 )
+							echo "</tr><tr>";
+					}
+
+					if ( $Total_Rendered <= 35 )
+					{
+						$Total_Rendered++;
+						
+						for ( $Total_Rendered; $Total_Rendered <= 35; $Total_Rendered++ )
+						{
+							echo "
+								<td colspan='3' style='padding: 20.5px; width: 56px;'></td>
+							";
+
+							if ( $Total_Rendered % 7 === 0 && $Total_Rendered % 35 !== 0 )
+								echo "</tr><tr>";
+						}
+					}
+
+					echo "</tr>";
+				}
+			?>
+		</tbody>
+	</table>
+
+	<table class='border-gradient' style='margin: 5px auto; width: 100%;'>
+		<thead>
+			<tr>
+				<th colspan='3'>
+					<b>Included In Trade</b>
+				</th>
+			</tr>
+		</thead>
+		<tbody id='TradeIncluded<?= $Recipient['ID']; ?>'>
+			<tr>
+				<td colspan='3' style='padding: 10px;'>
+					Nothing has been added to the trade yet.
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
