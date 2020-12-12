@@ -38,12 +38,12 @@
 						<tbody>
 							<tr>
 								<td>
-									<input type='text' placeholder='User ID' id='recipientID' style='text-align: center; width: 200px;'/>
+									<input type='text' placeholder='User ID' id='recipientID' />
 								</td>
 							</tr>
 							<tr>
 								<td>
-									<button onclick='TradePrepare();' style='width: 200px;'>
+									<button onclick='TradePrepare();'>
 										Begin A Trade
 									</button>
 								</td>
@@ -278,8 +278,6 @@
 			$('#TabContent' + User_ID + ' #' + Input_ID).val('');
 		}
 
-		$('#TradeIncluded' + User_ID).html("<div style='height: 190px; padding: 10px;'><div class='spinner' style='margin: -10px -10px; position: relative;'></div>");
-
 		$.ajax({
       url: 'core/ajax/trading/action.php',
       type: 'POST',
@@ -298,10 +296,8 @@
 	/**
 	 * Swap through the tabs: Pokemon, Inventory, and Currency.
 	 */
-	function Swap(Tab, User_ID)
+	function Change_Tab(Tab, User_ID)
 	{
-		$('#TabContent' + User_ID).html("<div style='height: 190px; padding: 10px;'><div class='spinner' style='margin: -10px -10px; position: relative;'></div>");
-
 		$.ajax({
       url: 'core/ajax/trading/' + Tab + '.php',
       type: 'POST',
@@ -317,30 +313,14 @@
 		});
 	}
 
-	//CurrentSearch = [0,0,0];
-	function updateBox(Page, User_ID)
+	function Update_Box(Page = 1, User_ID)
   {
-    if ( Page == 'auto' )
-    {
-      Page = currpage;
-    }
-    else
-    {
-      currpage = Page;
-    }
-
     $.ajax({
       url: 'core/ajax/trading/box.php',
       type: 'POST',
       data: {
         id: User_ID,
         Page: Page
-        //filter_type: CurrentSearch[0],
-        //filter_search: $('[name=pokemon_search]').val(),
-        //filter_select: $('[name=pokemon_select]').val(),
-        //filter_gender: CurrentSearch[1],
-        //filter_search_order: CurrentSearch[2],
-        //filter_order: CurrentSearch[2],
       },
       success: function(data)
       {
@@ -352,7 +332,6 @@
       }
     });
   }
-
 </script>
 
 <?php
