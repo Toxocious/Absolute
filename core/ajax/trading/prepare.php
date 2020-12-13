@@ -18,14 +18,20 @@
 	if ( $Recipient_ID == 0 || !$Recipient )
 	{
 		echo "<div class='error'>The user that you're attempting to trade with does not exist.</div>";
+
+		return;
 	}
 	else if ( $User_Data['id'] === $Recipient_ID )
 	{
 		echo "<div class='error'>You may not trade with yourself.</div>";
+
+		return;
 	}
 	else if ( $Recipient['Banned_RPG'] )
 	{
 		echo "<div class='error'>The user that you're attempting to trade with is currently banned.</div>";
+
+		return;
 	}
 	else
 	{
