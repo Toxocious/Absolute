@@ -264,9 +264,9 @@
 	}
 
 	/**
-	 * Add or Remove Pokemon, Items, or Currency from the trade.
+	 * Add Pokemon, Items, or Currency from the trade.
 	 */
-	function Action(User_ID, Action, Type, Data = null)
+	function Add_To_Trade(User_ID, Action, Type, Data = null)
 	{
 		if ( Type == 'Currency' )
 		{
@@ -288,6 +288,28 @@
 			},
 			error: function(data)
 			{
+				$('#TradeIncluded' + User_ID).html(data);
+			}
+		});
+	}
+
+	/**
+	 * Remove an object from the trade.
+	 */
+	function Remove_From_Trade(User_ID, Type, Name)
+	{
+		$.ajax({
+      url: 'core/ajax/trading/action.php',
+      type: 'POST',
+			data: { Action: 'Remove', ID: User_ID, Type: Type, Data: Name },
+			success: function(data)
+			{
+				console.log(data);
+				$('#TradeIncluded' + User_ID).html(data);
+			},
+			error: function(data)
+			{
+				console.log(data);
 				$('#TradeIncluded' + User_ID).html(data);
 			}
 		});
