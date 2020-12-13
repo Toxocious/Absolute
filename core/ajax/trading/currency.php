@@ -33,7 +33,7 @@
 						<input type='text' id='User-{$User_ID}-{$Value['Value']}' placeholder='0' style='width: 50%;' />
 					</td>
 					<td colspan='7'>
-						<button style='width: 50px;' onclick='Action($User_ID, \"Add\", \"Currency\", \"User-{$User_ID}-{$Value['Value']}\")'>Add</button>
+						<button style='width: 50px;' onclick='Add_To_Trade($User_ID, \"Add\", \"Currency\", \"User-{$User_ID}-{$Value['Value']}\")'>Add</button>
 					</td>
 				</tr>
 			";

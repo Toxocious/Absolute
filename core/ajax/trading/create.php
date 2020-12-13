@@ -10,19 +10,19 @@
 		if
 		( 
 			empty($_SESSION['Trade']['Sender']['Pokemon']) && empty($_SESSION['Trade']['Sender']['Currency']) && empty($_SESSION['Trade']['Sender']['Items']) && 
-			empty($_SESSION['Trade']['Receiver']['Pokemon']) && empty($_SESSION['Trade']['Receiver']['Currency']) && empty($_SESSION['Trade']['Receiver']['Items'])
+			empty($_SESSION['Trade']['Recipient']['Pokemon']) && empty($_SESSION['Trade']['Recipient']['Currency']) && empty($_SESSION['Trade']['Recipient']['Items'])
 		)
 		{
 			echo "<div class='error'>Both sides of the trade may not be empty.</div>";
 		}
 		else
 		{
-			$Receiver_Data = $User_Class->FetchUserData( $_SESSION['Trade']['Receiver']['User'] );
-			$Receiver_Username = $User_Class->DisplayUserName($Receiver_Data['ID']);
+			$Recipient_Data = $User_Class->FetchUserData( $_SESSION['Trade']['Recipient']['User'] );
+			$Recipient_Username = $User_Class->DisplayUserName($Recipient_Data['ID']);
 			
 			echo "
 				<div class='success'>
-					You have successfully sent a trade to <b>{$Receiver_Username}</b>.
+					You have successfully sent a trade to <b>{$Recipient_Username}</b>.
 				</div>
 			";
 
@@ -56,12 +56,12 @@
 			}
 
 			/**
-			 * Process the receiver's half of the trade.
+			 * Process the Recipient's half of the trade.
 			 */
-			$Receiver_Pokemon = '';
-			$Receiver_Currency = '';
-			$Receiver_Items = '';
-			foreach( $_SESSION['Trade']['Receiver']['Pokemon'] as $Key => $Pokemon_2 )
+			$Recipient_Pokemon = '';
+			$Recipient_Currency = '';
+			$Recipient_Items = '';
+			foreach( $_SESSION['Trade']['Recipient']['Pokemon'] as $Key => $Pokemon_2 )
 			{
 				try
 				{
@@ -73,15 +73,15 @@
 					HandleError( $e->getMessage() );
 				}
 
-				$Receiver_Pokemon .= $Pokemon_2['ID'] . ",";
+				$Recipient_Pokemon .= $Pokemon_2['ID'] . ",";
 			}
-			foreach( $_SESSION['Trade']['Receiver']['Currency'] as $Key => $Currency_2 )
+			foreach( $_SESSION['Trade']['Recipient']['Currency'] as $Key => $Currency_2 )
 			{
-				$Receiver_Currency .= $Currency_2['Currency'] . "-" . $Currency_2['Quantity'] . ",";
+				$Recipient_Currency .= $Currency_2['Currency'] . "-" . $Currency_2['Quantity'] . ",";
 			}
-			foreach( $_SESSION['Trade']['Receiver']['Items'] as $Key => $Items_2 )
+			foreach( $_SESSION['Trade']['Recipient']['Items'] as $Key => $Items_2 )
 			{
-				$Receiver_Items .= $Items_2['Row'] . "-" . $Items_2['ID'] . "-" . $Items_2['Quantity'] . "-" . $Items_2['Owner'] . ",";
+				$Recipient_Items .= $Items_2['Row'] . "-" . $Items_2['ID'] . "-" . $Items_2['Quantity'] . "-" . $Items_2['Owner'] . ",";
 			}
 
 			/**
@@ -95,10 +95,10 @@
 						`Sender_Pokemon`,
 						`Sender_Items`,
 						`Sender_Currency`,
-						`Receiver`,
-						`Receiver_Pokemon`,
-						`Receiver_Items`,
-						`Receiver_Currency`
+						`Recipient`,
+						`Recipient_Pokemon`,
+						`Recipient_Items`,
+						`Recipient_Currency`
 					)
 					VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 				");
@@ -107,10 +107,10 @@
 					substr($Sender_Pokemon, 0, -1),
 					substr($Sender_Items, 0, -1),
 					substr($Sender_Currency, 0, -1),
-					$_SESSION['Trade']['Receiver']['User'],
-					substr($Receiver_Pokemon, 0, -1),
-					substr($Receiver_Items, 0, -1),
-					substr($Receiver_Currency, 0, -1)
+					$_SESSION['Trade']['Recipient']['User'],
+					substr($Recipient_Pokemon, 0, -1),
+					substr($Recipient_Items, 0, -1),
+					substr($Recipient_Currency, 0, -1)
 				]);
 			}
 			catch( PDOException $e )
@@ -159,7 +159,7 @@
 <?php
 	try
 	{
-		$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Receiver`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Receiver` = ?) AND `Status` = ?");
+		$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Recipient`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Recipient` = ?) AND `Status` = ?");
 		$Pending_Query->execute([ $User_Data['id'], $User_Data['id'], 'Pending' ]);
 		$Pending_Query->setFetchMode(PDO::FETCH_ASSOC);
 		$Pending_Trades = $Pending_Query->fetchAll();
@@ -200,7 +200,7 @@
 			$Sender = $User_Class->FetchUserData($Value['Sender']);
 			$Sender_Username = $User_Class->DisplayUserName($Sender['ID']);
 			
-			$Recipient = $User_Class->FetchUserData($Value['Receiver']);
+			$Recipient = $User_Class->FetchUserData($Value['Recipient']);
 			$Recipient_Username = $User_Class->DisplayUserName($Recipient['ID']);
 
 			$Trade_Text .= "

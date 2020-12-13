@@ -16,7 +16,7 @@
 
 	try
 	{
-		$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Receiver` = ?)");
+		$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Recipient` = ?)");
 		$Trade_Query->execute([ $Trade_ID, $User_Data['id'], $User_Data['id'] ]);
 		$Trade_Query->setFetchMode(PDO::FETCH_ASSOC);
 		$Trade = $Trade_Query->fetch();
@@ -38,7 +38,7 @@
 	}
 
 	$Sender = $User_Class->FetchUserData($Trade['Sender']);
-	$Recipient = $User_Class->FetchUserData($Trade['Receiver']);
+	$Recipient = $User_Class->FetchUserData($Trade['Recipient']);
 
 	switch ( $Trade['Status'] )
 	{

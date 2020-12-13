@@ -11,7 +11,7 @@
 
 		try
 		{
-			$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Receiver` = ?) AND `Status` = ?");
+			$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Recipient` = ?) AND `Status` = ?");
 			$Trade_Query->execute([ $Trade_ID, $User_Data['id'], $User_Data['id'], 'Pending' ]);
 			$Trade_Query->setFetchMode(PDO::FETCH_ASSOC);
 			$Trade_Content = $Trade_Query->fetchAll();
@@ -36,7 +36,7 @@
 		if ( $Action == 'Accepted' )
 		{
 			$Sender = $User_Class->FetchUserData($Trade_Content[0]['Sender']);
-			$Recipient = $User_Class->FetchUserData($Trade_Content[0]['Receiver']);
+			$Recipient = $User_Class->FetchUserData($Trade_Content[0]['Recipient']);
 
 			/**
 			 * Process the sender's half of the trade.
@@ -71,7 +71,7 @@
 
 					// $User_ID, $Item_ID, $Quantity, $Subtract = false
 					$Update_Sender_Items = $Item_Class->SpawnItem( $Sender['ID'], $Item_Data['ID'], $Item_Params[2], true );
-					$Update_Receiver_Items = $Item_Class->SpawnItem( $Recipient['ID'], $Item_Data['ID'], $Item_Params[2] );
+					$Update_Recipient_Items = $Item_Class->SpawnItem( $Recipient['ID'], $Item_Data['ID'], $Item_Params[2] );
 				}
 			}
 
@@ -88,8 +88,8 @@
 						$Update_Sender_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` - ? WHERE `id` = ? LIMIT 1");
 						$Update_Sender_Currency->execute([ $Currency_Info[1], $Sender['ID'] ]);
 
-						$Update_Receiver_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` + ? WHERE `id` = ? LIMIT 1");
-						$Update_Receiver_Currency->execute([ $Currency_Info[1], $Recipient['ID'] ]);
+						$Update_Recipient_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` + ? WHERE `id` = ? LIMIT 1");
+						$Update_Recipient_Currency->execute([ $Currency_Info[1], $Recipient['ID'] ]);
 					}
 					catch( PDOException $e )
 					{
@@ -99,12 +99,12 @@
 			}
 
 			/**
-			 * Process the receiver's half of the trade.
+			 * Process the Recipient's half of the trade.
 			 */
-			if ( !empty($Trade_Content[0]['Receiver_Pokemon']) )
+			if ( !empty($Trade_Content[0]['Recipient_Pokemon']) )
 			{
-				$Receiver_Pokemon = explode(',', $Trade_Content[0]['Receiver_Pokemon']);
-				foreach( $Receiver_Pokemon as $Key => $Pokemon_2 )
+				$Recipient_Pokemon = explode(',', $Trade_Content[0]['Recipient_Pokemon']);
+				foreach( $Recipient_Pokemon as $Key => $Pokemon_2 )
 				{
 					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_2);
 
@@ -120,33 +120,33 @@
 				}
 			}
 
-			if ( !empty($Trade_Content[0]['Receiver_Items']) )
+			if ( !empty($Trade_Content[0]['Recipient_Items']) )
 			{
-				$Receiver_Items = explode(',', $Trade_Content[0]['Receiver_Items']);
-				foreach ( $Receiver_Items as $Key => $Item )
+				$Recipient_Items = explode(',', $Trade_Content[0]['Recipient_Items']);
+				foreach ( $Recipient_Items as $Key => $Item )
 				{
 					// row-id-quantity-owner
 					$Item_Params = explode('-', $Item);
-					$Item_Data = $Item_Class->FetchOwnedItem($Trade_Content[0]['Receiver'], $Item_Params[1]);
+					$Item_Data = $Item_Class->FetchOwnedItem($Trade_Content[0]['Recipient'], $Item_Params[1]);
 
 					// $User_ID, $Item_ID, $Quantity, $Subtract = false
-					$Update_Receiver_Items = $Item_Class->SpawnItem( $Recipient['ID'], $Item_Data['ID'], $Item_Params[2], true );
+					$Update_Recipient_Items = $Item_Class->SpawnItem( $Recipient['ID'], $Item_Data['ID'], $Item_Params[2], true );
 					$Update_Sender_Items = $Item_Class->SpawnItem( $Sender['ID'], $Item_Data['ID'], $Item_Params[2] );
 				}
 			}
 
-			if ( !empty($Trade_Content[0]['Receiver_Currency']) )
+			if ( !empty($Trade_Content[0]['Recipient_Currency']) )
 			{
-				$Receiver_Currency = explode(',', $Trade_Content[0]['Receiver_Currency']);
-				foreach ( $Receiver_Currency as $Key => $Currency )
+				$Recipient_Currency = explode(',', $Trade_Content[0]['Recipient_Currency']);
+				foreach ( $Recipient_Currency as $Key => $Currency )
 				{
 					$Currency_Info = explode('-', $Currency);
 					$Currency_Data = $Constants->Currency[$Currency_Info[0]];
 					
 					try
 					{
-						$Update_Receiver_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` - ? WHERE `id` = ? LIMIT 1");
-						$Update_Receiver_Currency->execute([ $Currency_Info[1], $Recipient['ID'] ]);
+						$Update_Recipient_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` - ? WHERE `id` = ? LIMIT 1");
+						$Update_Recipient_Currency->execute([ $Currency_Info[1], $Recipient['ID'] ]);
 						
 						$Update_Sender_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` + ? WHERE `id` = ? LIMIT 1");
 						$Update_Sender_Currency->execute([ $Currency_Info[1], $Sender['ID'] ]);
@@ -187,12 +187,12 @@
 			}
 
 			/**
-			 * Process the receiver's half of the trade.
+			 * Process the Recipient's half of the trade.
 			 */
-			if ( !empty($Trade_Content[0]['Receiver_Pokemon']) )
+			if ( !empty($Trade_Content[0]['Recipient_Pokemon']) )
 			{
-				$Receiver_Pokemon = explode(',', $Trade_Content[0]['Receiver_Pokemon']);
-				foreach( $Receiver_Pokemon as $Key => $Pokemon_2 )
+				$Recipient_Pokemon = explode(',', $Trade_Content[0]['Recipient_Pokemon']);
+				foreach( $Recipient_Pokemon as $Key => $Pokemon_2 )
 				{
 					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_2);
 
@@ -244,7 +244,7 @@
 <?php
 	try
 	{
-		$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Receiver`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Receiver` = ?) AND `Status` = ?");
+		$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Recipient`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Recipient` = ?) AND `Status` = ?");
 		$Pending_Query->execute([ $User_Data['id'], $User_Data['id'], 'Pending' ]);
 		$Pending_Query->setFetchMode(PDO::FETCH_ASSOC);
 		$Pending_Trades = $Pending_Query->fetchAll();
@@ -285,7 +285,7 @@
 			$Sender = $User_Class->FetchUserData($Value['Sender']);
 			$Sender_Username = $User_Class->DisplayUserName($Sender['ID']);
 			
-			$Recipient = $User_Class->FetchUserData($Value['Receiver']);
+			$Recipient = $User_Class->FetchUserData($Value['Recipient']);
 			$Recipient_Username = $User_Class->DisplayUserName($Recipient['ID']);
 
 			$Trade_Text .= "

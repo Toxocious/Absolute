@@ -42,7 +42,7 @@
     {
       $Links['Previous'] .= "
         <td colspan='3'>
-          <a href='javascript:void(0);' onclick='updateBox(1, {$User_ID});'>
+          <a href='javascript:void(0);' onclick='Update_Box(1, {$User_ID});'>
             &lt;&lt;
           </a>
         </td>
@@ -66,7 +66,7 @@
     {
       $Links['Previous'] .= "
         <td colspan='3'>
-          <a href='javascript:void(0);' onclick='updateBox(" . ( $Current_Page - 1 ) . ", {$User_ID});'>
+          <a href='javascript:void(0);' onclick='Update_Box(" . ( $Current_Page - 1 ) . ", {$User_ID});'>
             &lt;
           </a>
         </td>
@@ -90,7 +90,7 @@
     {
       $Links['Next'] .= "
         <td colspan='3'>
-          <a href='javascript:void(0);' onclick='updateBox(" . ( $Current_Page + 1 ) . ", {$User_ID});'>
+          <a href='javascript:void(0);' onclick='Update_Box(" . ( $Current_Page + 1 ) . ", {$User_ID});'>
             &gt;
           </a>
         </td>
@@ -114,7 +114,7 @@
     {
       $Links['Next'] .= "
         <td colspan='3'>
-          <a href='javascript:void(0);' onclick='updateBox({$Total_Pages}, {$User_ID});'>
+          <a href='javascript:void(0);' onclick='Update_Box({$Total_Pages}, {$User_ID});'>
             &gt;&gt;
           </a>
         </td>
@@ -179,7 +179,7 @@
           {
             $Links['Pages'] .= "
               <td colspan='3'>
-                <a href='javascript:void(0);' onclick='updateBox({$x}, {$User_ID});'>
+                <a href='javascript:void(0);' onclick='Update_Box({$x}, {$User_ID});'>
                   {$x}
                 </a>
               </td>
@@ -247,7 +247,7 @@
 
     if ( $Page != 1 )
     {
-      $Link_Previous .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='updateBox(1, " . $User . ");'> << </a></div>";
+      $Link_Previous .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='Update_Box(1, " . $User . ");'> << </a></div>";
     }
     else
     {
@@ -256,7 +256,7 @@
 
     if ( $Page > 1 )
     {
-      $Link_Previous .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page - 1 ) . ", " . $User . ");'> < </a></div>";
+      $Link_Previous .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='Update_Box(" . ( $Page - 1 ) . ", " . $User . ");'> < </a></div>";
     }
     else
     {
@@ -265,7 +265,7 @@
 
     if ( $Page < $Pages )
     {
-      $Link_Next .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . ( $Page + 1 ) . ", " . $User . ");'> > </a></div>";
+      $Link_Next .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='Update_Box(" . ( $Page + 1 ) . ", " . $User . ");'> > </a></div>";
     }
     else
     {
@@ -274,7 +274,7 @@
 
     if ( $Page != $Pages )
     {
-      $Link_Next .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='updateBox(" . $Pages . ", " . $User . ");'> >> </a></div>";
+      $Link_Next .= "<div style='flex-basis: 10%;'><a href='javascript:void(0);' onclick='Update_Box(" . $Pages . ", " . $User . ");'> >> </a></div>";
     }
     else
     {
@@ -304,7 +304,7 @@
         }
         else
         {
-          $Text .= "<div style='flex-basis: {$Width}'><a style='display: block;' href='javascript:void(0);' onclick=\"updateBox($x, $User);\">$x</a></div>";
+          $Text .= "<div style='flex-basis: {$Width}'><a style='display: block;' href='javascript:void(0);' onclick=\"Update_Box($x, $User);\">$x</a></div>";
         }
 			}
     }

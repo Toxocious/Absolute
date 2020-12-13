@@ -36,7 +36,7 @@
 <?php
 	try
 	{
-		$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Receiver`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Receiver` = ?) AND `Status` = ?");
+		$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Recipient`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Recipient` = ?) AND `Status` = ?");
 		$Pending_Query->execute([ $User_Data['id'], $User_Data['id'], 'Pending' ]);
 		$Pending_Query->setFetchMode(PDO::FETCH_ASSOC);
 		$Pending_Trades = $Pending_Query->fetchAll();
@@ -77,7 +77,7 @@
 			$Sender = $User_Class->FetchUserData($Value['Sender']);
 			$Sender_Username = $User_Class->DisplayUserName($Sender['ID']);
 			
-			$Recipient = $User_Class->FetchUserData($Value['Receiver']);
+			$Recipient = $User_Class->FetchUserData($Value['Recipient']);
 			$Recipient_Username = $User_Class->DisplayUserName($Recipient['ID']);
 
 			$Trade_Text .= "

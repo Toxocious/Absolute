@@ -42,14 +42,13 @@
 				'Currency' => [],
 				'Items' => []
 			],
-			'Receiver' => [
+			'Recipient' => [
 				'User' => $Recipient['ID'],
 				'Pokemon' => [],
 				'Currency' => [],
 				'Items' => []
 			],
 		];
-
 	}
 ?>
 
@@ -136,7 +135,7 @@
 								<img
 									class='spricon'
 									src='{$Pokemon['Icon']}'
-									onclick='Action({$User_Data['id']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})'
+									onclick='Add_To_Trade({$User_Data['id']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})'
 								/>
 							</td>
 						";
@@ -257,7 +256,7 @@
 								<img
 									class='spricon'
 									src='{$Pokemon['Icon']}'
-									onclick='Action({$Recipient['ID']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})'
+									onclick='Add_To_Trade({$Recipient['ID']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})'
 								/>
 							</td>
 						";
