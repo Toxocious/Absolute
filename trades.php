@@ -304,12 +304,10 @@
 			data: { Action: 'Remove', ID: User_ID, Type: Type, Data: Name },
 			success: function(data)
 			{
-				console.log(data);
 				$('#TradeIncluded' + User_ID).html(data);
 			},
 			error: function(data)
 			{
-				console.log(data);
 				$('#TradeIncluded' + User_ID).html(data);
 			}
 		});
