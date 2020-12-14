@@ -4,22 +4,37 @@
 
 <div class='panel content'>
 	<div class='head'>Trade Interest</div>
-	<div class='body'>
-		<div id='AJAX'></div>
-
-		<div class='panel' style='margin-bottom: 5px;'>
-			<div class='head'>Filter</div>
-			<div class='body navi'>
-				<div>
-					<div><a href='javascript:void(0);' onclick='Filter("Normal")' style='display: block; float: left; padding: 2px; width: calc(100% / 2);'>Normal</a></div>
-					<div><a href='javascript:void(0);' onclick='Filter("Shiny")' style='display: block; float: left; padding: 2px; width: calc(100% / 2);'>Shiny</a></div>
-				</div>
-			</div>
+	<div class='body padding-5px'>
+		<div class='description'>
+			Below, you can set how interested you are in trading each of your Pok&eacute;mon.
+			<br />
+			Pok&eacute;mon that you set to 'No', will not show up in trades.
 		</div>
 
-		<div id='PokeList'>
-			<div class='notice'>Please select an option from the filter list.</div>
-		</div>
+		<table class='border-gradient' style='width: 600px;'>
+			<thead>	
+				<tr>
+					<th colspan='6'>Pok&eacute;mon Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan='3' style='width: 50%;'>
+						<a href='javascript:void(0);' onclick='Filter("Normal");'>
+							<b style='font-size: 14px;'>Normal</b>
+						</a>
+					</td>
+					<td colspan='3' style='width: 50%;'>
+						<a href='javascript:void(0);' onclick='Filter("Shiny");'>
+							<b style='font-size: 14px;'>Shiny</b>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+			<tbody id='PokeList'>
+				
+			</tbody>
+		</table>
 	</div>
 </div>
 

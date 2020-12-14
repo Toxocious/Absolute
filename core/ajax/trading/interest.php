@@ -28,7 +28,7 @@
 		$Poke_ID = substr($Poke_ID, 3, -1);
 		$Poke_Data = $Poke_Class->FetchPokemonData($Poke_ID);
 
-		if ( $Poke_Data != 'Error' )
+		if ( $Poke_Data )
 		{
 			try
 			{
@@ -41,17 +41,17 @@
 			}
 
 			echo "
-				<div class='success' style='margin-bottom: 5px;'>
-					The trade interest of your <b>{$Poke_Data['Display_Name']}</b> has been set to <b>{$Interest}</b>.
-				</div>
+				<b style='color: #0f0;'>
+					The trade interest of your {$Poke_Data['Display_Name']} has been set to {$Interest}.
+				</b>
 			";
 		}
 		else
 		{
 			echo "
-				<div class='error' style='margin-bottom: 5px;'>
+				<b style='color: #f00;'>
 					An error has occurred. Please try again.
-				</div>
+				</b>
 			";
 		}
 	}
@@ -76,10 +76,17 @@
 		}
 
 		echo "
-			<div class='panel'>
-				<div class='head'>Boxed " . $Type . " Pokemon</div>
-				<div class='body'>
-					<table div class='body_cont' style='width: 100%;'>
+			<tr>
+				<td colspan='6' style='padding: 5px;'>
+					<b>{$Type} Pok&eacute;mon</b>
+				</td>
+			</tr>
+
+			<tr>
+				<td id='AJAX' colspan='6' style='padding: 5px;'>
+					Please update the trade interest status of your Pok&eacute;mon.
+				</td>
+			</tr>
 		";
 		
 		$Pokemon_Count = 0;
@@ -100,14 +107,14 @@
 					$Check_3 = '';
 					break;
 				case 'Yes':
-					$Check_2 = " checked";
 					$Check_1 = '';
+					$Check_2 = " checked";
 					$Check_3 = '';
 					break;
 				case 'No':
-					$Check_3 = " checked";
 					$Check_1 = '';
 					$Check_2 = '';
+					$Check_3 = " checked";
 					break;
 				default:
 					$Check_1 = '';
@@ -117,31 +124,17 @@
 			}
 
 			echo "
-				<td div class='body_slot' style='padding: 0px;'>
-					<img src='images/Assets/" . $Poke_Data['Gender'] . ".svg' style='float: left; height: 20px; margin-top: 5px; width: 20px;' />
-					<span style='float: left;'>
-						<img src='" . $Poke_Data['Icon'] . "' />
-					</span>
-					<div style='padding-top: 2px;'>
-						<div style='font-size: 12px; margin-right: 55px; padding-top: 0px;'>
-							" . $Poke_Data['Display_Name'] . "<br />
-							(Level: " . $Poke_Data['Level'] . ")
-						</div>
-
-						<div>
-							<div style='background: #25e845; float: left; padding: 0px 2px; width: calc(100% / 3);'>
-								Yes
-								<input type='radio' name='id[{$Poke_Data['ID']}]' value='y' onclick='Update(this);' {$Check_2}>
-							</div>
-							<div style='background: #fcbc19; float: left; padding: 0px 2px; width: calc(100% / 3);'>
-								No
-								<input type='radio' name='id[{$Poke_Data['ID']}]' value='n' onclick='Update(this);' {$Check_3}>
-							</div>
-							<div style='background: #444; float: left; padding: 0px 2px; width: calc(100% / 3);'>
-								Undecided
-								<input type='radio' name='id[{$Poke_Data['ID']}]' value='u' onclick='Update(this);' {$Check_1}>
-							</div>
-						</div>
+				<td colspan='1' style='width: 76px;'>
+					<img src='" . $Poke_Data['Icon'] . "' />
+					<img src='images/Assets/" . $Poke_Data['Gender'] . ".svg' style='height: 20px; width: 20px;' />
+				</td>
+				<td colspan='2' style='width: 224px;'>
+					{$Poke_Data['Display_Name']}<br />
+					(Level: {$Poke_Data['Level']})
+					<div>
+						Yes <input type='radio' name='id[{$Poke_Data['ID']}]' value='y' onclick='Update(this);' {$Check_2}>
+						No <input type='radio' name='id[{$Poke_Data['ID']}]' value='n' onclick='Update(this);' {$Check_3}>
+						Undecided <input type='radio' name='id[{$Poke_Data['ID']}]' value='u' onclick='Update(this);' {$Check_1}>
 					</div>
 				</td>
 			";
@@ -151,30 +144,31 @@
 
 		if ( $Pokemon_Count == 0 )
 		{
-			echo "<div style='padding: 5px;'>No Pokemon have been found given your search parameters.</div>";
+			echo "
+				<tr>
+					<td style='padding: 5px;'>
+						No Poke&eacute;mon have been found given your search parameters.
+					</td>
+				</tr>
+			";
 		}
 
 		if ( $Pokemon_Count % 2 == 1 )
 		{
-			echo "<td div class='body_slot'></td>";
+			echo "
+				<td colspan='3'></td>
+			";
 		}
-
-		if ( $Pokemon_Count % 2 == 2 )
-		{
-			echo "<td div class='body_slot'></td>";
-		}
-
-		echo "
-					</table>
-				</div>
-			</div>
-		";
 	}
 	else
 	{
 		echo "
-			<div class='error'>
-				An error has occurred while attempting to fetch the specified type of Pokemon.
-			</div>
+			<tr>
+				<td colspan='6'>
+					<b style='color: #f00;'>
+						An error has occurred while fetching the specified type of Pok&eacute;mon.
+					</b>
+				</td>
+			</tr>
 		";
 	}
