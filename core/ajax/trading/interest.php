@@ -61,12 +61,23 @@
 	 */
 	else if ( isset($_POST['Type']) )
 	{
-		$Type = $Purify->Cleanse($_POST['Type']);
+		$Page = isset($_POST['Page']) ? $Purify->Cleanse($_POST['Page']) : 1;
+		$Type = isset($_POST['Type']) ? $Purify->Cleanse($_POST['Type']) : 'Normal';
+		$User_ID = $User_Data['id'];
+
+		$Display_Limit = 50;
+		
+		$Begin = ($Page - 1) * $Display_Limit;
+		if ( $Begin < 0 )
+			$Begin = 1;
+
+		$Query = "SELECT `ID`, `Name`, `Type`, `Trade_Interest` FROM `Pokemon` WHERE `Type` = ? AND `Owner_Current` = ?  ORDER BY `Pokedex_ID`, `ID` ASC";
+		$Inputs = [ $Type, $User_ID ];
 
 		try
 		{
-			$Query_Box = $PDO->prepare("SELECT `ID`, `Name`, `Type`, `Trade_Interest` FROM `pokemon` WHERE `Type` = ? AND `Owner_Current` = ?");
-			$Query_Box->execute([ $Type, $User_Data['id'] ]);
+			$Query_Box = $PDO->prepare($Query . " LIMIT " . $Begin . "," . $Display_Limit);
+			$Query_Box->execute( $Inputs );
 			$Query_Box->setFetchMode(PDO::FETCH_ASSOC);
 			$Poke_List = $Query_Box->fetchAll();
 		}
@@ -75,20 +86,24 @@
 			HandleError( $e->getMessage() );
 		}
 
+		$Pagination = Pagination(str_replace('`ID`, `Name`, `Type`, `Trade_Interest`', 'COUNT(*)', $Query), $Inputs, $User_ID, $Page, $Display_Limit, 2);
+
 		echo "
 			<tr>
-				<td colspan='6' style='padding: 5px;'>
+				<td colspan='14' style='padding: 5px;'>
 					<b>{$Type} Pok&eacute;mon</b>
 				</td>
 			</tr>
 
 			<tr>
-				<td id='AJAX' colspan='6' style='padding: 5px;'>
+				<td id='AJAX' colspan='14' style='padding: 5px;'>
 					Please update the trade interest status of your Pok&eacute;mon.
 				</td>
 			</tr>
+
+			{$Pagination}
 		";
-		
+
 		$Pokemon_Count = 0;
 		foreach( $Poke_List as $Key => $Value )
 		{
@@ -102,19 +117,19 @@
 			switch( $Value['Trade_Interest'] )
 			{
 				case 'Undecided':
-					$Check_1 = " checked";
+					$Check_1 = "checked";
 					$Check_2 = '';
 					$Check_3 = '';
 					break;
 				case 'Yes':
 					$Check_1 = '';
-					$Check_2 = " checked";
+					$Check_2 = "checked";
 					$Check_3 = '';
 					break;
 				case 'No':
 					$Check_1 = '';
 					$Check_2 = '';
-					$Check_3 = " checked";
+					$Check_3 = "checked";
 					break;
 				default:
 					$Check_1 = '';
@@ -124,11 +139,11 @@
 			}
 
 			echo "
-				<td colspan='1' style='width: 76px;'>
+				<td colspan='2' style='min-width: 76px; width: 76px;'>
 					<img src='" . $Poke_Data['Icon'] . "' />
 					<img src='images/Assets/" . $Poke_Data['Gender'] . ".svg' style='height: 20px; width: 20px;' />
 				</td>
-				<td colspan='2' style='width: 224px;'>
+				<td colspan='5' style='min-width: 224px; width: 224px;'>
 					{$Poke_Data['Display_Name']}<br />
 					(Level: {$Poke_Data['Level']})
 					<div>
@@ -146,8 +161,8 @@
 		{
 			echo "
 				<tr>
-					<td style='padding: 5px;'>
-						No Poke&eacute;mon have been found given your search parameters.
+					<td colspan='14' style='padding: 5px;'>
+						No Pok&eacute;mon have been found given your search parameters.
 					</td>
 				</tr>
 			";
@@ -164,7 +179,7 @@
 	{
 		echo "
 			<tr>
-				<td colspan='6'>
+				<td colspan='14'>
 					<b style='color: #f00;'>
 						An error has occurred while fetching the specified type of Pok&eacute;mon.
 					</b>

@@ -11,21 +11,21 @@
 			Pok&eacute;mon that you set to 'No', will not show up in trades.
 		</div>
 
-		<table class='border-gradient' style='width: 600px;'>
+		<table class='border-gradient' style='width: 700px;'>
 			<thead>	
 				<tr>
-					<th colspan='6'>Pok&eacute;mon Type</th>
+					<th colspan='14'>Pok&eacute;mon Type</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<td colspan='3' style='width: 50%;'>
-						<a href='javascript:void(0);' onclick='Filter("Normal");'>
+					<td colspan='7' style='min-width: 350px;'>
+						<a href='javascript:void(0);' onclick='Update_Box(1, <?= $User_Data["id"]; ?>, "Normal");'>
 							<b style='font-size: 14px;'>Normal</b>
 						</a>
 					</td>
-					<td colspan='3' style='width: 50%;'>
-						<a href='javascript:void(0);' onclick='Filter("Shiny");'>
+					<td colspan='7' style='min-width: 350px;'>
+						<a href='javascript:void(0);' onclick='Update_Box(1, <?= $User_Data["id"]; ?>, "Shiny");'>
 							<b style='font-size: 14px;'>Shiny</b>
 						</a>
 					</td>
@@ -39,12 +39,16 @@
 </div>
 
 <script type='text/javascript'>
-	function Filter(Type)
+	let Current_Type;
+
+	function Update_Box(Page, User_ID, Type = (Current_Type ? Current_Type : 'Normal'))
 	{
+		Current_Type = Type;
+
 		$.ajax({
 			type: 'POST',
 			url: '<?= DOMAIN_ROOT; ?>/core/ajax/trading/interest.php',
-			data: { Type: Type },
+			data: { Page: Page, User_ID: User_ID, Type: Type },
 			success: function(data)
 			{
 				$('#PokeList').html(data);
@@ -58,12 +62,10 @@
 
 	function Update(ele)
 	{
-		let Type = $("#PokeList .panel-heading").text().split(' ')[1];
-
 		$.ajax({
 			type: 'POST',
 			url: '<?= DOMAIN_ROOT; ?>/core/ajax/trading/interest.php',
-			data: { Update: [ ele.name, ele.value ], Type: Type },
+			data: { Update: [ ele.name, ele.value ], Type: Current_Type },
 			success: function(data)
 			{
 				$('#AJAX').html(data);
