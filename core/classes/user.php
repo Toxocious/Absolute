@@ -48,7 +48,7 @@
 				'ID' => $User['id'],
 				'Username' => $User['Username'],
 				'Roster' => $User['Roster'],
-				'Avatar' => DOMAIN_ROOT . $User['Avatar'],
+				'Avatar' => DOMAIN_SPRITES . $User['Avatar'],
 				'Banned_RPG' => $Banned_RPG,
 				'Banned_Chat' => $Banned_Chat,
 				'Money' => $User['Money'],
