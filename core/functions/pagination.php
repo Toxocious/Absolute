@@ -3,7 +3,7 @@
    * Used to handle the processing and displayment of content
    * that is loaded via AJAX across multiple pages.
    */
-  function Pagination( $SQL_Query, $SQL_Parameters, $User_ID, $Current_Page, $Display_Limit )
+  function Pagination( $SQL_Query, $SQL_Parameters, $User_ID, $Current_Page, $Display_Limit, $Colspan = 3 )
   {
     global $PDO;
 
@@ -12,6 +12,7 @@
     $User_ID = Purify($User_ID);
     $Current_Page = Purify($Current_Page);
     $Display_Limit = Purify($Display_Limit);
+    $Colspan = $Colspan > 0 ? Purify($Colspan) : $Colspan = 3;
 
     try
     {
@@ -41,7 +42,7 @@
     if ( $Current_Page !== 1 )
     {
       $Links['Previous'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <a href='javascript:void(0);' onclick='Update_Box(1, {$User_ID});'>
             &lt;&lt;
           </a>
@@ -51,7 +52,7 @@
     else
     {
       $Links['Previous'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <span>
             &lt;&lt;
           </span>
@@ -65,7 +66,7 @@
     if ( $Current_Page > 1 )
     {
       $Links['Previous'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <a href='javascript:void(0);' onclick='Update_Box(" . ( $Current_Page - 1 ) . ", {$User_ID});'>
             &lt;
           </a>
@@ -75,7 +76,7 @@
     else
     {
       $Links['Previous'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <span>
             &lt;
           </span>
@@ -89,7 +90,7 @@
     if ( $Current_Page < $Total_Pages )
     {
       $Links['Next'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <a href='javascript:void(0);' onclick='Update_Box(" . ( $Current_Page + 1 ) . ", {$User_ID});'>
             &gt;
           </a>
@@ -99,7 +100,7 @@
     else
     {
       $Links['Next'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <span>
             &gt;
           </span>
@@ -113,7 +114,7 @@
     if ( $Current_Page != $Total_Pages )
     {
       $Links['Next'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <a href='javascript:void(0);' onclick='Update_Box({$Total_Pages}, {$User_ID});'>
             &gt;&gt;
           </a>
@@ -123,7 +124,7 @@
     else
     {
       $Links['Next'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <span>
             &gt;&gt;
           </span>
@@ -137,15 +138,15 @@
     if ( $Total_Pages == 1 )
     {
       $Links['Pages'] .= "
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
 
         </td>
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
           <b>
             1
           </b>
         </td>
-        <td colspan='3'>
+        <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
 
         </td>
       ";
@@ -155,7 +156,7 @@
       if ( $Current_Page == 1 )
       {
         $Links['Pages'] .= "
-          <td colspan='3'>
+          <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
             
           </td>
         ";
@@ -168,7 +169,7 @@
           if ( $x == $Current_Page )
           {
             $Links['Pages'] .= "
-              <td colspan='3'>
+              <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
                 <b>
                   {$x}
                 </b>
@@ -178,7 +179,7 @@
           else
           {
             $Links['Pages'] .= "
-              <td colspan='3'>
+              <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
                 <a href='javascript:void(0);' onclick='Update_Box({$x}, {$User_ID});'>
                   {$x}
                 </a>
@@ -191,7 +192,7 @@
       if ( $Current_Page == $Total_Pages )
       {
         $Links['Pages'] .= "
-          <td colspan='3'>
+          <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
             
           </td>
         ";
