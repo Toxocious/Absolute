@@ -69,23 +69,15 @@
 	
 						echo "
 							<table class='border-gradient'  style='flex-basis: 280px; margin: 3px;'>
-								<thead>
-									<tr>
-										<th colspan='3'>
-											{$Staff_Username}
-										</th>
-									</tr>
-								</thead>
+					
 								<tbody>
 									<tr>
-										<td colspan='1' rowspan='3' style='width: 100px;'>
+										<td rowspan='2' style='width: 100px;'>
 											<img src='{$Staff_Data['Avatar']}' />
 										</td>
-									</tr>
-									<tr>
-										<td colspan='2' style='border-radius: 6px 6px 0px 0px;'>
+										<td colspan='2'>
 											<b>
-											{$Staff_Data['Username']}
+											{$Staff_Username}
 											</b>
 										</td>
 									</tr>
@@ -97,7 +89,7 @@
 										</td>
 									</tr>
 									<tr>
-										<td colspan='3'>
+										<td colspan='3' style='padding: 5px;'>
 											" . ($Staff_Data['Staff_Message'] ? $Staff_Data['Staff_Message'] : 'This user has yet to set their staff message.') . "
 										</td>
 									</tr>
