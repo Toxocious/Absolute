@@ -172,7 +172,7 @@
 			 */
 			if ( $Link )
 			{
-				$Apply_Link_1 = "<a href='" . DOMAIN_ROOT . " /profile.php?id={$User['id']}'>";
+				$Apply_Link_1 = "<a href='" . DOMAIN_ROOT . "/profile.php?id={$User['id']}'>";
 				$Apply_Link_2 = "</a>";
 			}
 			else
