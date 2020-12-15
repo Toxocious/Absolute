@@ -2,10 +2,69 @@
 	require 'core/required/layout_top.php';
 
 	$Last_Active = time() - 60 * 15;
-
+	
 	try
 	{
-		$Fetch_Online_Users = $PDO->prepare("SELECT `id`, `Avatar`, `Last_Page`, `Last_Active` FROM `users` WHERE `Last_Active` > ?");
+		$Fetch_Online_Staff = $PDO->prepare("SELECT `id`, `Avatar`, `Last_Page`, `Last_Active` FROM `users` WHERE `Power` > 1 AND `Last_Active` >= ? ORDER BY `Power`");
+		$Fetch_Online_Staff->execute([ $Last_Active ]);
+		$Fetch_Online_Staff->setFetchMode(PDO::FETCH_ASSOC);
+		$Online_Staff = $Fetch_Online_Staff->fetchAll();
+	}
+	catch( PDOException $e )
+	{
+		HandleError( $e->getMessage() );
+	}
+
+	$Online_List_Text = '';
+
+	if ( $Online_Staff )
+	{
+		$Online_List_Text .= "
+			<div style='flex-basis: 100%;'>
+				<h2>Online Staff</h2>
+			</div>
+		";
+
+		foreach ( $Online_Staff as $Staff_Key => $Staff_Val )
+		{
+			$Staff_Data = $User_Class->FetchUserData($Staff_Val['id']);
+			$Staff_Username = $User_Class->DisplayUsername($Staff_Val['id'], true, true, true);
+
+			$Online_List_Text .= "
+				<table class='border-gradient' style='flex-basis: 280px; margin: 3px;'>
+					<tbody>
+						<tr>
+							<td rowspan='2' style='width: 100px;'>
+								<img src='{$Staff_Data['Avatar']}' />
+							</td>
+							<td colspan='2'>
+								<b>
+								{$Staff_Username}
+								</b>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='2'>
+								" . lastseen($Staff_Val['Last_Active'], 'week') . "
+							</td>
+						</tr>
+						<tr>
+							<td colspan='3' style='padding: 5px;'>
+								{$Staff_Val['Last_Page']}
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			";
+		}
+	}
+
+	/**
+	 * Fetch non-staff members.
+	 */
+	try
+	{
+		$Fetch_Online_Users = $PDO->prepare("SELECT `id`, `Avatar`, `Last_Page`, `Last_Active` FROM `users` WHERE `Power` = 1 AND `Last_Active` >= ? ORDER BY `Last_Active` DESC, `id` ASC");
 		$Fetch_Online_Users->execute([ $Last_Active ]);
 		$Fetch_Online_Users->setFetchMode(PDO::FETCH_ASSOC);
 		$Online_Users = $Fetch_Online_Users->fetchAll();
@@ -14,207 +73,83 @@
 	{
 		HandleError( $e->getMessage() );
 	}
+
+	$Online_List_Text .= "
+		<div style='flex-basis: 100%; margin-top: 5px;'>
+			<table class='border-gradient' style='width: 500px;'>
+				<thead>
+					<th colspan='3'>
+						Online Trainers
+					</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td colspan='1' style='padding: 5px; width: calc(100% / 3);'>
+							<b>Username/ID</b>
+						</td>
+						<td colspan='1' style='padding: 5px; width: calc(100% / 3);'>
+							<b>Last Active</b>
+						</td>
+						<td colspan='1' style='padding: 5px; width: calc(100% / 3);'>
+							<b>Page Visiting</b>
+						</td>
+					</tr>
+				</tbody>
+				<tbody>
+	";
+
+	if ( $Online_Users )
+	{
+		foreach ( $Online_Users as $User_Key => $User_Val )
+		{
+			$Online_User_Data = $User_Class->FetchUserData($User_Val['id']);
+			$User_Username = $User_Class->DisplayUsername($User_Val['id'], true, true, true);
+
+			$Online_List_Text .= "
+				<tr>
+					<td colspan='1'>
+						{$User_Username}
+					</td>
+					<td colspan='1'>
+						" . lastseen($User_Val['Last_Active'], 'week') . "
+					</td>
+					<td colspan='1'>
+						{$User_Val['Last_Page']}
+					</td>
+				</tr>
+			";
+		}
+	}
+	else
+	{
+		$Online_List_Text .= "
+			<tr>
+				<td colspan='3' style='padding: 10px;'>
+					There are currently no active trainers online.
+				</td>
+			</tr>
+		";
+	}
+
+	$Online_List_Text .= "
+				</tbody>
+			</table>
+		</div>
+	";
 ?>
 
-<style>
-	.trainer_card
-	{
-		/*float: left;*/
-		flex-grow: 1;
-		margin-top: 10px;
-		max-width: calc(100% / 3);
-		width: 290px;
-	}
-
-	.trainer_card:nth-child(3n+2)
-	{
-    margin-left: 5px;
-    margin-right: 5px;
-	}
-
-	.trainer_card > .trainer_avatar
-	{
-		background: linear-gradient(180deg, #8090b0 0, #334364);
-    border-radius: 50%;
-		box-shadow: 0px 1px 5px #000;
-    height: 104px;
-    padding: 2px;
-    width: 104px;
-    position: relative;
-    margin: 0px 93px;
-    margin-bottom: -53px;
-	}
-
-	.trainer_card > .trainer_avatar > div
-	{
-		background: #253147;
-    border-radius: 50%;
-    height: 100px;
-    width: 100px;
-	}
-
-	.trainer_card > .trainer_avatar > div > a > img
-	{
-		border-radius: 50%;
-		height: 100px;
-    width: 100px;
-	}
-
-	.trainer_card > .trainer_url
-	{
-		background: #2c3a55;
-    border: 2px solid #4a618f;
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-		padding-top: 55px;
-	}
-
-	.trainer_card > .trainer_roster
-	{
-		background: #1d2639;
-    border: 2px solid #4a618f;
-    border-bottom: none;
-    border-top: none;
-		height: 50px;
-		padding: 5px 0px;
-	}
-
-	.trainer_card > .trainer_roster > .slot
-	{
-		background: linear-gradient(180deg, #8090b0 0, #334364);
-		border-radius: 50%;
-		box-shadow: 0px 1px 5px #000;
-    height: 40px;
-    padding: 2px;
-		float: left;
-    width: 40px;
-	}
-
-	.trainer_card > .trainer_roster > .slot > div
-	{
-		background: #253147;
-    border-radius: 50%;
-    height: 36px;
-    padding: 3px 0px 0px 0px;
-    width: 36px;
-	}
-
-	.trainer_card > .trainer_roster > .slot > div:hover {
-    background: #3b4d72;
-    cursor: pointer;
-	}
-
-	.trainer_card > .trainer_roster > .slot > div > img
-	{
-		border-radius: 50%;
-    margin-left: -2px;
-	}
-
-	.trainer_card > .trainer_roster > .slot:nth-child(1) { margin-left: 7px; }
-	.trainer_card > .trainer_roster > .slot:nth-child(2) { margin-left: 7px; }
-	.trainer_card > .trainer_roster > .slot:nth-child(3) { margin-left: 7px; }
-	.trainer_card > .trainer_roster > .slot:nth-child(4) { margin-left: 7px; }
-	.trainer_card > .trainer_roster > .slot:nth-child(5) { margin-left: 7px; }
-	.trainer_card > .trainer_roster > .slot:nth-child(6) { margin-left: 7px; }
-
-	.trainer_card > .trainer_page
-	{
-		background: #2c3a55;
-    border: 2px solid #4a618f;
-    border-bottom-left-radius: 6px;
-    border-bottom-right-radius: 6px;
-	}
-
-	.trainer_card > .trainer_page > div:nth-child(1)
-	{
-		display: inline-block;
-    padding: 5px;
-    text-align: left;
-    width: calc(50% - 5px);
-	}
-
-	.trainer_card > .trainer_page > div:nth-child(2)
-	{
-		display: inline-block;
-    padding: 5px;
-    width: calc(50% - 5px);
-    text-align: right;
-	}
-</style>
-
 <div class='panel content'>
-	<div class='head'>Online Users</div>
-	<div class='body'>
-		<div class='description' style='margin: 0px auto 5px'>
-			All users that have been online in the past fifteen minutes are displayed below.
+	<div class='head'>Online List</div>
+	<div class='body' style='padding: 5px;'>
+		<div class='description'>
+			All trainers that have been online in the past fifteen minutes are displayed below.
 		</div>
 
-		<div class='row' style='display: flex; flex-wrap: wrap;'>
-			<?php
-				foreach ( $Online_Users as $User_Key => $User_Val )
-				{
-					$Online_Username = $User_Class->DisplayUsername($User_Val['id'], true, true, true);
-
-					try
-					{
-						$Fetch_Pokemon = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-						$Fetch_Pokemon->execute([ $User_Val['id'] ]);
-						$Fetch_Pokemon->setFetchMode(PDO::FETCH_ASSOC);
-						$Fetch_Roster = $Fetch_Pokemon->fetchAll();
-					}
-					catch ( PDOException $e )
-					{
-						HandleError( $e->getMessage() );
-					}
-
-					echo "
-						<div class='trainer_card'>
-							<div class='trainer_avatar'>
-								<div>
-									<a href='/profile.php?id={$User_Val['id']}'>
-										<img src='{$User_Val['Avatar']}' />
-									</a>
-								</div>
-							</div>
-
-							<div class='trainer_url'>
-								<b>{$Online_Username}</b>
-							</div>
-
-							<div class='trainer_roster'>
-					";
-
-					for ( $i = 0; $i <= 5; $i++ )
-					{
-						if ( isset($Fetch_Roster[$i]['ID']) )
-						{
-							$RosterPoke[$i] = $Poke_Class->FetchPokemonData($Fetch_Roster[$i]['ID']);
-
-							echo "
-								<div class='slot popup cboxElement' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$RosterPoke[$i]['ID']}'>
-									<div>
-										<img src='{$RosterPoke[$i]['Icon']}' />
-									</div>
-								</div>
-							";
-						}
-					}
-
-					echo "
-							</div>
-
-							<div class='trainer_page'>
-								<div>{$User_Val['Last_Page']}</div>
-								<div>" . lastseen($User_Val['Last_Active'], 'week') . "</div>
-							</div>
-						</div>
-					";
-				}
-			?>
+		<div class='row' style='display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;'>
+			<?= $Online_List_Text; ?>
 		</div>
 	</div>
 </div>
 
 <?php
 	require 'core/required/layout_bottom.php';
-?>
