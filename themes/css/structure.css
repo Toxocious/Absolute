@@ -60,6 +60,15 @@ ul > li > a {
   padding: 5px;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 5px;
+}
+
 div.BODY-CONTAINER {
   border-left: var(--border-style);
   border-right: var(--border-style);
