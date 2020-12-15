@@ -37,7 +37,7 @@
 			If you require assistance with something, please don't hesitate to contact one of them.
 		</div>
 
-		<div class='row' style='display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; padding-bottom: 5px;'>
+		<div class='row' style='display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;'>
 			<?php
 				foreach ( $Staff_Categories as $Staff_Category )
 				{
@@ -69,7 +69,6 @@
 	
 						echo "
 							<table class='border-gradient'  style='flex-basis: 280px; margin: 3px;'>
-					
 								<tbody>
 									<tr>
 										<td rowspan='2' style='width: 100px;'>
