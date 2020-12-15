@@ -206,6 +206,9 @@ footer {
   border-color: var(--color-primary);
 }
 
+/**
+ * Specific coloring for each member rank category.
+ */
 .member {
   border-color: var(--rank-member);
   color: var(--rank-member);
@@ -245,6 +248,20 @@ footer {
   animation-iteration-count: infinite;
   animation-timing-function: linear;
   animation-direction: alternate;
+}
+
+/**
+ * Keyframe animations.
+ */
+@keyframes rainbow {
+  from {
+    -webkit-filter: hue-rotate(360deg);
+    filter: hue-rotate(360deg);
+  }
+  to {
+    -webkit-filter: hue-rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
 }
 
 /*# sourceMappingURL=theme.css.map */
