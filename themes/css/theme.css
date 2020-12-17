@@ -192,6 +192,38 @@ nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a:h
 }
 
 /**
+ * Colorbox Modal
+ */
+#cboxOverlay {
+  background: #111;
+  color: #fff;
+}
+
+#colorbox {
+  border-color: var(--border-color);
+  color: #fff;
+}
+#colorbox > #cboxWrapper {
+  color: #fff;
+}
+#colorbox > #cboxWrapper #cboxContent {
+  background: #000;
+  border-color: var(--color-primary);
+  color: #fff;
+}
+#colorbox > #cboxWrapper #cboxContent #cboxLoadingOverlay {
+  background: #000;
+}
+#colorbox > #cboxWrapper #cboxContent #cboxLoadedContent {
+  background: #000;
+  color: #fff;
+}
+#colorbox > #cboxWrapper #cboxContent #cboxLoadedContent .cboxIframe {
+  background: #111;
+  color: #fff;
+}
+
+/**
  * Table
  */
 table > tbody {

@@ -852,3 +852,166 @@ footer
     }
   }
 }
+
+/**
+ * Colorbox Modal
+ */
+#cboxOverlay
+{
+  height: 100%;
+  left: 0;
+  overflow: hidden;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 2;
+}
+
+#colorbox
+{
+  left: 0;
+  outline: 0;
+  overflow: hidden;
+  position: absolute;
+  top: 0;
+  z-index: 10;
+
+  & > #cboxWrapper
+  {
+    left: 0;
+    max-width: none;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+
+    & > div > *
+    {
+      &#cboxBottomLeft,
+      &#cboxMiddleLeft
+      {
+        clear: left;
+      }
+    }
+
+    #cboxContent
+    {
+      border: var(--border-style);
+      border-radius: var(--border-radius);
+      box-sizing: content-box;
+      margin-top: 32px;
+      overflow: visible;
+      position: relative;
+      z-index: 10;
+
+      #cboxLoadingGraphic,
+      #cboxLoadingOverlay
+      {
+        height: 100%;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+      }
+
+      #cboxLoadedContent
+      {
+        border: 0;
+        border-radius: var(--border-radius);
+        box-sizing: content-box;
+        overflow: auto;
+        padding: 1px;
+
+        .cboxIframe
+        {
+          border: 0;
+          border-radius: 6px;
+          box-sizing: content-box;
+          display: block;
+          height: 100%;
+          width: 100%;
+        }
+
+        #cboxCurrent,
+        #cboxTitle
+        {
+          position: absolute;
+          top: -22px;
+        }
+
+        #cboxCurrent
+        {
+          right: 205px;
+          text-indent: -9999px;
+        }
+
+        #cboxTitle
+        {
+          font-size: 14px;
+          font-weight: 700;
+          left: 0;
+          margin: 0;
+        }
+      }
+
+      #cboxClose,
+      #cboxNext,
+      #cboxPrevious,
+      #cboxSlideshow
+      {
+        border: 0;
+        cursor: pointer;
+        height: 20px;
+        margin: 0;
+        overflow: visible;
+        padding: 0;
+        position: absolute;
+        text-indent: -9999px;
+        top: -20px;
+        width: 20px;
+      }
+
+      #cboxPrevious
+      {
+        background-position: 0 0;
+        right: 44px;
+      }
+
+      #cboxNext
+      {
+        background-position: -25px 0;
+        right: 22px;
+      }
+
+      #cboxClose
+      {
+        background-position: -50px 0;
+        display: none;
+        right: 0;
+      }
+
+      #cboxPrevious:hover
+      {
+        background-position: 0 -25px;
+      }
+
+      #cboxNext:hover
+      {
+        background-position: -25px -25px;
+      }
+
+      #cboxClose:hover
+      {
+        background-position: -50px -25px;
+        display: none;
+      }
+
+      #cboxClose:active,
+      #cboxNext:active,
+      #cboxPrevious:active
+      {
+        outline: 0;
+      }
+    }
+  }
+}
