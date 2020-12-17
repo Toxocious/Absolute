@@ -713,6 +713,7 @@
 		public function FetchImages($Pokedex_ID, $Alt_ID = 0, $Type = 'Normal')
 		{
 			global $PDO;
+			global $Dir_Root;
 
 			if ( !$Pokedex_ID )
 				return false;
@@ -754,26 +755,23 @@
 					break;
 			}
 
-			$Sprite = "images/Pokemon/Sprites/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
-			if ( !is_file($Sprite) && !file_exists($Sprite) )
+			$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
+			$Relative_Sprite = str_replace(DOMAIN_SPRITES, $Dir_Root . '/images', $Sprite);
+			if ( !file_exists($Relative_Sprite) )
 			{
-				$Sprite = "images/Pokemon/Sprites/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
+				$Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
 			}
 
-			$Icon = "images/Pokemon/Icons/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
-			if ( !is_file($Icon) && !file_exists($Icon) )
+			$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
+			$Relative_Icon = str_replace(DOMAIN_SPRITES, $Dir_Root . '/images', $Icon);
+			if ( !file_exists($Relative_Icon) )
 			{
-				$Icon = "images/Pokemon/Icons/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
+				$Icon = DOMAIN_SPRITES . "/Pokemon/Icons/Normal/{$Pokedex_ID}{$Pokemon_Forme}.png";
 			}
 
 			return [
-				'Icon' => DOMAIN_ROOT . '/' . $Icon,
-				'Sprite' => DOMAIN_ROOT . '/' . $Sprite,
-				'Debug' => [
-					'Pokedex_ID' => $Pokedex_ID,
-					'Pokemon_Forme' => $Pokemon_Forme,
-					'Pokemon_Type' => $Type,
-				],
+				'Icon' => $Icon,
+				'Sprite' => $Sprite,
 			];
 		}
 
