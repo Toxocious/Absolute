@@ -22,20 +22,62 @@
 
 <div class='panel content'>
 	<div class='head'>Global Rankings</div>
-	<div class='body'>
+	<div class='body' style='padding: 5px;'>
+		<div class='flex' style='flex-direction: row; flex-wrap: wrap; justify-content: center;'>
+			<table class='border-gradient' style='width: 65%;'>
+				<tbody>
+					<tr>
+						<td style='padding: 5px;'>
+							<a href='javascript:void(0);' onclick="Display_Tab('Pokemon');" style='font-size: 14px;'>
+								<b>Pok&eacute;mon</b>
+							</a>
+						</td>
+						<td style='padding: 5px;'>
+							<a href='javascript:void(0);' onclick="Display_Tab('Trainer');" style='font-size: 14px;'>
+								<b>Trainers</b>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 
-		<!--
-		<div class='panel' style='margin-bottom: 5px;'>
-			<div class='head'>Categories</div>
-			<div class='body'>
-				<div>Pokemon</div>
-				<div>Trainer</div>
+			<div id='Rankings_AJAX' style='flex-basis: 100%;'>
+				<table class='border-gradient' style='margin: 5px auto; flex-basis: 35%; width: 35%;'>
+					<thead>
+						<th colspan='3'>
+							<b><?= $Top['Display_Name']; ?></b>
+						</th>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan='1' rowspan='2' style='width: 100px;'>
+								<img src='<?= $Top['Sprite']; ?>' />
+							</td>
+							<td colspan='2'>
+								<b><?= $Top['Display_Name'] ?></b>
+								<?= ($Top['Nickname'] ? "<br />( <i>{$Top['Nickname']}</i> )" : '') ?>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='2'>
+								<b>Level</b>: <?= $Top['Level'] ?>
+								<br />
+								<b>Experience</b>: <?= $Top['Experience']; ?>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='3' style='padding: 5px;'>
+								<b>Current Owner</b>
+								<?= $User_Class->DisplayUserName($Top['Owner_Current'], false, true, true); ?>
+							</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
-		-->
 
-		<div id='RankingAJAX'>
-			
+		<!--
+		<div id='RankingAJAX32'>
 			<div class='panel' style='margin: 0px auto 5px; width: 50%;'>
 				<div class='head'>Top Pokemon</div>
 				<div class='body'>
@@ -92,9 +134,35 @@
 			</table>
 
 		</div>
-
+		-->
 	</div>
 </div>
+
+<script type='text/javascript'>
+	let Current_Tab = 'Pokemon';
+
+	function Display_Tab(Tab = Current_Tab)
+	{
+		$.ajax({
+			type: 'POST',
+			url: '<?= DOMAIN_ROOT; ?>/core/ajax/rankings/tab.php',
+			data: { Tab: Tab },
+			success: (data) =>
+			{
+				$('#Rankings_AJAX').html(data);
+			},
+			error: (data) =>
+			{
+				$('#Rankings_AJAX').html(data);
+			},
+		});
+	}
+
+	$(function()
+	{
+		Display_Tab(Current_Tab);
+	});
+</script>
 
 <?php
 	require 'core/required/layout_bottom.php';
