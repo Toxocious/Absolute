@@ -1,6 +1,9 @@
 <?php
   define("PATH_ROOT", dirname(__DIR__));
 
+  define("SERVER_ROOT",  $_SERVER['DOCUMENT_ROOT']);
+  define("SERVER_SPRITES", $_SERVER['DOCUMENT_ROOT'] . "/images");
+
   // Localhost domains.
   if ( $_SERVER['HTTP_HOST'] === 'localhost' )
   {
@@ -21,3 +24,4 @@
       define("DOMAIN_SPRITES", "http://absoluterpg.com/images");
     }
   }
+  
