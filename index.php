@@ -19,6 +19,7 @@
 	else
 	{
 		$Last_Active = strtotime("-24 hours", time());
+
 		try
 		{
 			$Online_Query = $PDO->query("SELECT COUNT(`id`) FROM `users` WHERE `last_active` > $Last_Active");
@@ -46,18 +47,33 @@
 			<div><a href='discord.php' style='display: block;'>Discord</a></div>
 		</div>
 
-		<div class='description' style='background: #334364; margin-bottom: 3px; width: 70%;'>
-			Of the <b><?= number_format($User_Count); ?></b> registered users on Absolute, <b><?= number_format($Online_Count); ?></b> of them have been online today!<br />
-			The Pokemon Absolute is home to <b><?= number_format($Pokemon_Count); ?></b> Pokemon!
+		<div class='description' style='width: 70%;'>
+			The Pok&eacute;mon Absolute is home to <b><?= number_format($User_Count); ?></b> trainers and <b><?= number_format($Pokemon_Count); ?></b> Pok&eacute;mon!
 		</div>
+		
+		<div class='flex wrap'>
+			<div style='flex-basis: 250px;'>
+				<img src='images/Assets/Prof_Syc.png' style='height: 345px; transform: scaleX(-1); width: 230px;' />
+			</div>
 
-		<div style='text-align: left; width: 100%;'>
-			<img src='images/Assets/Prof_Syc.png' style='height: 345px; transform: scaleX(-1); width: 230px;' />
-
-			<div style='float: right; text-align: center; width: calc(100% - 230px);'>
-				Hello, and welcome to the world of Absolute!<br />
+			<div style='flex-basis: calc(100% - 250px);'>
+				The Pok&eacute;mon Absolute is an up-to-date multiplayer Pok&eacute;mon RPG, featuring all currently released canonical Pok&eacute;mon
+				from the main Pok&eacute;mon games!
+				<br /><br />
+				Among featuring a plethora of unique gameplay content to explore, we offer content that will appeal to all
+				trainers, new and old, including content that Pok&eacute;mon veterans will find nostalgic.
+				<br /><br />
+				Sign up, catch and train brand new Pok&eacute;mon, and initiate trades with other users so that you can rise to the top!
+				<br /><br />
+				We have all sorts of Pok&eacute;mon, including Normal and Shiny ones!
 				<br />
-				Absolute is fan-made Pokemon RPG, with numerous amounts of features, and various pieces of content.
+				<img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/Normal/359.png' />
+				<img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/Shiny/359.png' />
+
+				<div style='font-size: 12px; margin-top: 20px;'>
+					This website is designed and optimized for Chromium based browsers.<br />
+					It's recommended to use a Chromium based browser such as Google Chrome or Brave while browsing this website.
+				</div>
 			</div>
 		</div>
 	</div>
