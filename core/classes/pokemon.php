@@ -165,7 +165,7 @@
 				"Trade_Interest" => $Pokemon['Trade_Interest'],
 				"Challenge_Status" => $Pokemon['Challenge_Status'],
 				"Biography" => $Pokemon['Biography'],
-				"Creation_Date" => date("F j, Y (g:i A)", $Pokemon['Creation_Date']),
+				"Creation_Date" => date("M j, Y (g:i A)", $Pokemon['Creation_Date']),
 				"Creation_Location" => $Pokemon['Creation_Location'],
 				"Sprite" => $Poke_Images['Sprite'],
 				"Icon" => $Poke_Images['Icon'],
