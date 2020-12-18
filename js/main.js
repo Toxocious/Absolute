@@ -1,7 +1,7 @@
 /**
  * Colorbox trigger.
  */
-$("a.popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
+$(".popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491, zIndex: 2 });
 
 /**
  * Userbar roster tooltip hovering functionality.
