@@ -172,7 +172,7 @@
         }
 
         $Display = [
-          'Sprite' => (isset($Poke_Rank_Data) ? $Poke_Rank_Data['Sprite'] : $User_Rank_Data['Avatar']),
+          'Sprite' => (isset($Poke_Rank_Data) ? $Poke_Rank_Data['Icon'] : $User_Rank_Data['Avatar']),
           'Display_Name' => (isset($Poke_Rank_Data) ? $Poke_Rank_Data['Display_Name'] : $Username),
           'Nickname' => (isset($Poke_Rank_Data) ? "<br /><i>{$Poke_Rank_Data['Nickname']}</i>" : ''),
           'Level' => (isset($Poke_Rank_Data) ? $Poke_Rank_Data['Level'] : $User_Rank_Data['Trainer_Level']),
