@@ -194,9 +194,9 @@
             <td colspan='5' style='width: 100px;'>
               <img src='{$Display['Sprite']}' />
             </td>
-            <td colspan='9' style='width: 150px;'>
-              {$Display['Display_Name']}
-              {$Display['Nickname']}
+            <td colspan='9' style='width: 150px;'" . ($Tab === 'Pokemon' ? " href='" .DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Rank_Val['ID']}' class='popup cboxElement'" : '') . ">
+                {$Display['Display_Name']}
+                {$Display['Nickname']}
             </td>
             <td colspan='9' style='width: 150px;'>
               Level: {$Display['Level']}
@@ -212,3 +212,7 @@
     ?>
   </tbody>
 </table>
+
+<script type="text/javascript">
+  $(".cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491, maxWidth: 686, maxHeight: 529 });
+</script>
