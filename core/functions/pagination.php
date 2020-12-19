@@ -3,7 +3,16 @@
    * Used to handle the processing and displayment of content
    * that is loaded via AJAX across multiple pages.
    */
-  function Pagination( $SQL_Query, $SQL_Parameters, $User_ID, $Current_Page, $Display_Limit, $Colspan = 3 )
+  function Pagination
+  (
+    string $SQL_Query,
+    array $SQL_Parameters,
+    int $User_ID,
+    int $Current_Page,
+    int $Display_Limit,
+    int $Colspan = 3,
+    string $Onclick_Link = null
+  )
   {
     global $PDO;
 
