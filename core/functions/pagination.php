@@ -22,6 +22,9 @@
     $Current_Page = Purify($Current_Page);
     $Display_Limit = Purify($Display_Limit);
     $Colspan = $Colspan > 0 ? Purify($Colspan) : $Colspan = 3;
+    $Onclick_Link = Purify($Onclick_Link);
+    
+    $Temp_Link = $Onclick_Link;
 
     try
     {
@@ -48,11 +51,18 @@
     /**
      * Display the proper element to go back to page one.
      */
-    if ( $Current_Page !== 1 )
+    if ( $Current_Page != 1 )
     {
+      $Temp_Link = $Onclick_Link;
+
+      if ( !$Temp_Link )
+        $Temp_Link = "onclick='Update_Box(1, {$User_ID});'";
+      else
+        $Temp_Link = str_replace('[PAGE]', 1, $Temp_Link);
+
       $Links['Previous'] .= "
         <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-          <a href='javascript:void(0);' onclick='Update_Box(1, {$User_ID});'>
+          <a href='javascript:void(0);' {$Temp_Link}>
             &lt;&lt;
           </a>
         </td>
@@ -74,9 +84,16 @@
      */
     if ( $Current_Page > 1 )
     {
+      $Temp_Link = $Onclick_Link;
+
+      if ( !$Temp_Link )
+        $Temp_Link = "onclick='Update_Box(" . ( $Current_Page - 1 ) . ", {$User_ID});'";
+      else
+        $Temp_Link = str_replace('[PAGE]', ( $Current_Page - 1 ), $Temp_Link);
+
       $Links['Previous'] .= "
         <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-          <a href='javascript:void(0);' onclick='Update_Box(" . ( $Current_Page - 1 ) . ", {$User_ID});'>
+          <a href='javascript:void(0);' {$Temp_Link}>
             &lt;
           </a>
         </td>
@@ -98,9 +115,16 @@
      */
     if ( $Current_Page < $Total_Pages )
     {
+      $Temp_Link = $Onclick_Link;
+
+      if ( !$Temp_Link )
+        $Temp_Link = "onclick='Update_Box(" . ( $Current_Page + 1 ) . ", {$User_ID});'";
+      else
+        $Temp_Link = str_replace('[PAGE]', ( $Current_Page + 1 ), $Temp_Link);
+
       $Links['Next'] .= "
         <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-          <a href='javascript:void(0);' onclick='Update_Box(" . ( $Current_Page + 1 ) . ", {$User_ID});'>
+          <a href='javascript:void(0);' {$Temp_Link}>
             &gt;
           </a>
         </td>
@@ -122,9 +146,16 @@
      */
     if ( $Current_Page != $Total_Pages )
     {
+      $Temp_Link = $Onclick_Link;
+
+      if ( !$Temp_Link )
+        $Temp_Link = "onclick='Update_Box({$Total_Pages}, {$User_ID});'";
+      else
+        $Temp_Link = str_replace('[PAGE]', $Total_Pages, $Temp_Link);
+
       $Links['Next'] .= "
         <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-          <a href='javascript:void(0);' onclick='Update_Box({$Total_Pages}, {$User_ID});'>
+          <a href='javascript:void(0);' {$Temp_Link}>
             &gt;&gt;
           </a>
         </td>
@@ -187,9 +218,16 @@
           }
           else
           {
+            $Temp_Link = $Onclick_Link;
+
+            if ( !$Temp_Link )
+              $Temp_Link = "onclick='Update_Box({$x}, {$User_ID});'";
+            else
+              $Temp_Link = str_replace('[PAGE]', $x, $Temp_Link);
+
             $Links['Pages'] .= "
               <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                <a href='javascript:void(0);' onclick='Update_Box({$x}, {$User_ID});'>
+                <a href='javascript:void(0);' {$Temp_Link}>
                   {$x}
                 </a>
               </td>
@@ -212,7 +250,7 @@
      * Display the pages to the user.
      */
     echo "
-      <tr data-current-page='{$Current_Page}' data-total-pages='{$Total_Pages}' >
+      <tr data-current-page='{$Current_Page}' data-total-pages='{$Total_Pages}'>
         {$Links['Previous']}
         {$Links['Pages']}
         {$Links['Next']}
