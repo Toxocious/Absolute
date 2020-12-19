@@ -154,9 +154,14 @@
 <table class='border-gradient' style='margin: 5px auto; flex-basis: 70%; width: 600px;'>
   <tbody>
     <?php
+      Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Rankings_Query), $Rankings_Parameters, $User_Data['id'], $Current_Page, $Display_Limit, 5, "onclick='Update_Page([PAGE]);'");
+    ?>
+  </tbody>
+  <tbody>
+    <?php
       foreach ( $Rankings as $Rank_Key => $Rank_Val )
       {
-        if ( $Rank_Key === 0 )
+        if ( $Rank_Key + $Begin === 0 )
           continue;
 
         $Rank_Key++;
@@ -183,22 +188,22 @@
 
         echo "
           <tr>
-            <td colspan='1' style='width: 50px;'>
-              #{$Rank_Key}
+            <td colspan='7' style='width: 50px;'>
+              #" . ($Rank_Key + $Begin) . "
             </td>
-            <td colspan='1' style='width: 100px;'>
+            <td colspan='7' style='width: 100px;'>
               <img src='{$Display['Sprite']}' />
             </td>
-            <td colspan='1' style='width: 150px;'>
+            <td colspan='7' style='width: 150px;'>
               {$Display['Display_Name']}
               {$Display['Nickname']}
             </td>
-            <td colspan='1' style='width: 150px;'>
+            <td colspan='7' style='width: 150px;'>
               Level: {$Display['Level']}
               <br />
               Exp: {$Display['Experience']}
             </td>
-            <td colspan='1' style='width: 150px;'>
+            <td colspan='7' style='width: 150px;'>
               {$Display['Username']}
             </td>
           </tr>
