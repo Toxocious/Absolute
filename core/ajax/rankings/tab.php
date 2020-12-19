@@ -4,6 +4,7 @@
   if ( !isset($_POST['Tab']) )
   {
     echo "
+      <br />
       <div class='error'>
         An error occurred while processing your input.<br />
         Please try again.
@@ -28,7 +29,7 @@
   switch($Tab)
   {
     case 'Pokemon':
-      $Rankings_Query = "SELECT `ID` FROM `pokemon` ORDER BY `Experience` DESC LIMIT {$Begin},{$Display_Limit}";
+      $Rankings_Query = "SELECT `ID` FROM `pokemon` ORDER BY `Experience` DESC";
       $Rankings_Parameters = [];
 
       $First_Place_Query = "SELECT `ID` FROM `pokemon` ORDER BY `Experience` DESC LIMIT 1";
@@ -37,7 +38,7 @@
       break;
 
     case 'Trainer':
-      $Rankings_Query = "SELECT `id` FROM `users` ORDER BY `TrainerExp` DESC LIMIT {$Begin},{$Display_Limit}";
+      $Rankings_Query = "SELECT `id` FROM `users` ORDER BY `TrainerExp` DESC";
       $Rankings_Parameters = [];
 
       $First_Place_Query = "SELECT `id` FROM `users` ORDER BY `TrainerExp` DESC LIMIT 1";
@@ -46,7 +47,7 @@
       break;
 
     default:
-      $Rankings_Query = "SELECT `ID` FROM `pokemon` ORDER BY `Experience` DESC LIMIT {$Begin},{$Display_Limit}";
+      $Rankings_Query = "SELECT `ID` FROM `pokemon` ORDER BY `Experience` DESC";
       $Rankings_Parameters = [];
 
       $First_Place_Query = "SELECT `ID` FROM `pokemon` ORDER BY `Experience` DESC LIMIT 1";
@@ -58,7 +59,7 @@
   /**
    * Perform the database queries.
    */
-  $Fetch_Rankings = $PDO->prepare($Rankings_Query);
+  $Fetch_Rankings = $PDO->prepare($Rankings_Query . " LIMIT " . $Begin . "," . $Display_Limit);
   $Fetch_Rankings->execute($Rankings_Parameters);
   $Fetch_Rankings->setFetchMode(PDO::FETCH_ASSOC);
   $Rankings = $Fetch_Rankings->fetchAll();
