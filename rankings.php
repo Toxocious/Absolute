@@ -41,6 +41,25 @@
 			data: { Tab: Tab },
 			success: (data) =>
 			{
+				Current_Tab = Tab;
+				
+				$('#Rankings_AJAX').html(data);
+			},
+			error: (data) =>
+			{
+				$('#Rankings_AJAX').html(data);
+			},
+		});
+	}
+
+	function Update_Page(Page)
+	{
+		$.ajax({
+			type: 'POST',
+			url: '<?= DOMAIN_ROOT; ?>/core/ajax/rankings/tab.php',
+			data: { Tab: Current_Tab, Page: Page },
+			success: (data) =>
+			{
 				$('#Rankings_AJAX').html(data);
 			},
 			error: (data) =>
