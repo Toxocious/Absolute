@@ -64,6 +64,8 @@
 	$Poke_Class = new Pokemon();
 	require_once $Dir_Root . '/core/classes/user.php';
 	$User_Class = new User();
+	require_once $Dir_Root . '/core/classes/clan.php';
+	$Clan_Class = new Clan();
 	require_once $Dir_Root . '/core/classes/item.php';
 	$Item_Class = new Item();
 	require_once $Dir_Root . '/core/classes/purify.php';
