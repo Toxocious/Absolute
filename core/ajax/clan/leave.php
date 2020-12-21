@@ -1,17 +1,6 @@
 <?php
   require_once '../../required/layout_top.php';
 
-  if ( !$User_Data['id'] )
-  {
-    echo "
-      <div class='error' style='margin-bottom: 0px;'>
-        To access this page, you must be logged in.
-      </div>
-    ";
-
-    return;
-  }
-
   $User_Clan = $Clan_Class->FetchClanData($User_Data['Clan']);
 ?>
 
