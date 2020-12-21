@@ -23,11 +23,15 @@ a {
   text-decoration: none;
 }
 
+input[type=button],
+input[type=submit],
 button {
   border-radius: var(--border-radius);
   padding: var(--padding-3px);
   width: 200px;
 }
+input[type=button]:not(.disabled):hover,
+input[type=submit]:not(.disabled):hover,
 button:not(.disabled):hover {
   cursor: pointer;
 }
@@ -38,6 +42,13 @@ input[type=text] {
   padding: var(--padding-3px);
   text-align: center;
   width: 190px;
+}
+
+select {
+  border: var(--border-style);
+  border-radius: var(--border-radius);
+  padding: var(--padding-4px);
+  width: 200px;
 }
 
 ul,

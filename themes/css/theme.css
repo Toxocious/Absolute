@@ -7,8 +7,8 @@ body {
 }
 
 input[type=text] {
-  border-color: var(--color-black);
   background: var(--color-secondary);
+  border-color: var(--color-black);
   color: var(--color-white);
 }
 
@@ -21,16 +21,28 @@ a:hover {
   color: var(--color-white);
 }
 
+input[type=button],
+input[type=submit],
 button {
   background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
   border-color: var(--border-color-secondary);
   color: var(--color-white);
 }
+input[type=button].disabled,
+input[type=submit].disabled,
 button.disabled {
   background: linear-gradient(180deg, var(--color-light-grey) 0, var(--color-dark-grey));
 }
+input[type=button]:not(.disabled):hover,
+input[type=submit]:not(.disabled):hover,
 button:not(.disabled):hover {
   background: linear-gradient(180deg, var(--color-primary) 0, var(--color-quinary));
+}
+
+select {
+  background: var(--color-secondary);
+  border-color: var(--color-black);
+  color: var(--color-white);
 }
 
 /**

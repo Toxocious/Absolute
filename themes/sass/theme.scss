@@ -12,8 +12,8 @@ input
 {
   &[type='text']
   {
-    border-color: var(--color-black);
     background: var(--color-secondary);
+    border-color: var(--color-black);
     color: var(--color-white);
   }
 }
@@ -29,6 +29,8 @@ a:hover
   color: var(--color-white);
 }
 
+input[type='button'],
+input[type='submit'],
 button
 {
   background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
@@ -44,6 +46,13 @@ button
   {
     background: linear-gradient(180deg, var(--color-primary) 0, var(--color-quinary));
   }
+}
+
+select
+{
+  background: var(--color-secondary);
+  border-color: var(--color-black);
+  color: var(--color-white);
 }
 
 /**

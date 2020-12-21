@@ -28,6 +28,8 @@ a
   text-decoration: none;
 }
 
+input[type='button'],
+input[type='submit'],
 button
 {
   border-radius: var(--border-radius);
@@ -50,6 +52,14 @@ input
     text-align: center;
     width: 190px;
   }
+}
+
+select
+{
+  border: var(--border-style);
+  border-radius: var(--border-radius);
+  padding: var(--padding-4px);
+  width: 200px;
 }
 
 ul,
