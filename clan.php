@@ -85,8 +85,12 @@
 					</tbody>
 				</table>
 
+			<?php
+				if ( $Clan_Data['ID'] === $User_Data['id'] )
+				{
+			?>
+			
 				<br />
-
 				<table class='border-gradient' style='width: 400px;'>
 					<thead>
 						<tr>
@@ -130,6 +134,11 @@
 						</tr>
 					</tbody>
 				</table>
+
+			<?php
+				}
+			?>
+
 			</div>
 
 			<div style='flex-basis: 50%;'>
