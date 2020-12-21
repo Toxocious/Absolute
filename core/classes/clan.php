@@ -17,7 +17,7 @@
     {
       global $PDO;
 
-      if ( !$Clan_ID )
+      if ( !$Clan_ID || $Clan_ID === 0 )
         return false;
 
       try
@@ -38,10 +38,36 @@
       return [
         'ID' => $Clan['ID'],
         'Name' => $Clan['Name'],
-        'Experience' => $Clan['Experience'],
-        'Money' => $Clan['Money'],
+        'Experience' => number_format($Clan['Experience']),
+        'Experience_Raw' => $Clan['Experience'],
+        'Money' => number_format($Clan['Money']),
+        'Money_Raw' => $Clan['Money'],
         'Avatar' => ($Clan['Avatar'] ? DOMAIN_SPRITES . "/" . $Clan['Avatar'] : null),
         'Signature' => $Clan['Signature'],
       ];
+    }
+
+    /**
+     * Remove a user from a clan.
+     * @param int $User_ID
+     */
+    public function LeaveClan(int $User_ID)
+    {
+      global $PDO;
+
+      if ( !$User_ID || $User_ID < 0 )
+        return false;
+
+      try
+      {
+        $Select_Query = $PDO->prepare("UPDATE `users` SET `Clan` = 0 WHERE `id` = ?");
+        $Select_Query->execute([ $User_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
     }
   }
