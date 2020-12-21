@@ -41,7 +41,11 @@
 						echo "
 							<tr>
 								<td>#" . number_format($Key) . "</td>
-								<td>{$Value['Name']}</td>
+								<td>
+									<a href='" . DOMAIN_ROOT . "/clan.php?clan_id={$Key}'>
+										{$Value['Name']}
+									</a>
+								</td>
 								<td>" . number_format($Value['Experience']) . "</td>
 								<td>$" . number_format($Value['Money']) . "</td>
 							</tr>
