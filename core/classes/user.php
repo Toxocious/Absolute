@@ -72,20 +72,17 @@
 		}
 
 		/**
-		 * Update the user's currency.
-		 * @param $User_ID - The id of the user that we're updating.
-		 * @param $Currency - The DB field name of the currency that we're updating.
-		 * @param $Amount - The amount that we're manipulating the field by.
-		 * @param $Operand - What action to take on the db field, ie addition, subtraction, etc.
+		 * Remove some of the user's currency.
+		 * @param int $User_ID - The id of the user that we're updating.
+		 * @param string $Currency - The DB field name of the currency that we're updating.
+		 * @param int $Amount - The amount of currency that we're removing.
 		 */
 		public function RemoveCurrency(int $User_ID, string $Currency, int $Amount)
 		{
 			global $PDO;
 
-			if ( !$User_ID || !$Currency )
-			{
+			if ( !$User_ID || !$Currency || !$Amount )
 				return false;
-			}
 
 			try
 			{
@@ -96,6 +93,8 @@
 			{
 				HandleError($e);
 			}
+
+			return true;
 		}
 
 		/**
