@@ -1,17 +1,45 @@
 <?php
 	require 'core/required/layout_top.php';
 
-	/**
-	 * The user is currently in a clan; display the clan home page to the user.
-	 */
-	if ( $User_Data['Clan'] > 0 )
+	if ( !isset($_GET['clan_id']) && $User_Data['Clan'] == 0 )
 	{
-		$User_Clan = $Clan_Class->FetchClanData($User_Data['Clan']);
+		$Creation_Cost = number_format($Constants->Clan['Creation_Cost']);
+?>
+
+<div class='panel content'>
+	<div class='head'>Create A Clan</div>
+	<div class='body' style='padding: 5px;'>
+		<div class='description'>
+			You may create a clan at the cost of $<?= $Creation_Cost ?>.
+		</div>
+
+		<form method='POST'>
+			<input type="text" name="name" placeholder='Clan Name' />
+			<br />
+			<input type='submit' name='create' value='Create Clan' />
+		</form>
+	</div>
+</div>
+
+<?php
+	}
+	else
+	{
+		if ( isset($_GET['clan_id']) )
+		{
+			$Clan_ID = $Purify->Cleanse($_GET['clan_id']);
+
+			$Clan_Data = $Clan_Class->FetchClanData($Clan_ID);
+		}
+		else
+		{
+			$Clan_Data = $Clan_Class->FetchClanData($User_Data['Clan']);
+		}
 
 		try
 		{
 			$Member_Query = $PDO->prepare("SELECT `id` FROM `users` WHERE `Clan` = ? ORDER BY `Clan_Exp` DESC");
-			$Member_Query->execute([ $User_Clan['ID'] ]);
+			$Member_Query->execute([ $Clan_Data['ID'] ]);
 			$Member_Query->setFetchMode(PDO::FETCH_ASSOC);
 			$Members = $Member_Query->fetchAll();
 		}
@@ -23,7 +51,7 @@
 
 <div class='panel content'>
 	<div class='head'>
-		<?= $User_Clan['Name']; ?>'s Clan Home
+		<?= $Clan_Data['Name']; ?>'s Clan Home
 	</div>
 	<div class='body' style='padding: 5px;'>
 		<div class='flex'>
@@ -32,10 +60,10 @@
 					<tbody>
 						<tr>
 							<td colspan='2' style='height: 200px; width: 200px;'>
-								<?= ( $User_Clan['Avatar'] ? "<img src='{$User_Clan['Avatar']}' />" : 'This clan has no avatar set.' ); ?>
+								<?= ( $Clan_Data['Avatar'] ? "<img src='{$Clan_Data['Avatar']}' />" : 'This clan has no avatar set.' ); ?>
 							</td>
 							<td colspan='2' style='height: 200px; width: 200px;'>
-								<?= ( $User_Clan['Signature'] ? $User_Clan['Signature'] : 'This clan has no signature set.' ); ?>
+								<?= ( $Clan_Data['Signature'] ? $Clan_Data['Signature'] : 'This clan has no signature set.' ); ?>
 							</td>
 						</tr>
 						<tr>
@@ -43,7 +71,7 @@
 								<b>Money</b>
 							</td>
 							<td colspan='2'>
-								$<?= $User_Clan['Money']; ?>
+								$<?= $Clan_Data['Money']; ?>
 							</td>
 						</tr>
 						<tr>
@@ -51,7 +79,7 @@
 								<b>Clan Experience</b>
 							</td>
 							<td colspan='2'>
-								<?= $User_Clan['Experience']; ?>
+								<?= $Clan_Data['Experience']; ?>
 							</td>
 						</tr>
 					</tbody>
@@ -70,26 +98,26 @@
 					<tbody>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='' class='popup cboxElement'>Clan Link</a>
+								<a href=''>Clan Link</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href='' class='popup cboxElement'>Clan Link</a>
-							</td>
-						</tr>
-						<tr>
-							<td colspan='1' style='width: 50%;'>
-								<a href='' class='popup cboxElement'>Clan Link</a>
-							</td>
-							<td colspan='1' style='width: 50%;'>
-								<a href='' class='popup cboxElement'>Clan Link</a>
+								<a href=''>Clan Link</a>
 							</td>
 						</tr>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='' class='popup cboxElement'>Clan Link</a>
+								<a href=''>Clan Link</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href='' class='popup cboxElement'>Clan Link</a>
+								<a href=''>Clan Link</a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='1' style='width: 50%;'>
+								<a href=''>Clan Link</a>
+							</td>
+							<td colspan='1' style='width: 50%;'>
+								<a href=''>Clan Link</a>
 							</td>
 						</tr>
 						<tr>
@@ -97,7 +125,7 @@
 								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/leave.php'>Leave Clan</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href='' class='popup cboxElement'></a>
+								<a href=''></a>
 							</td>
 						</tr>
 					</tbody>
@@ -150,31 +178,3 @@
 
 <?php
 	}
-
-	/**
-	 * The user is currently not in a clan.
-	 */
-	else
-	{
-		$Creation_Cost = number_format($Constants->Clan['Creation_Cost']);
-?>
-
-<div class='panel content'>
-	<div class='head'>Create A Clan</div>
-	<div class='body' style='padding: 5px;'>
-		<div class='description'>
-			You may create a clan at the cost of $<?= $Creation_Cost ?>.
-		</div>
-
-		<form method='POST'>
-			<input type="text" name="name" placeholder='Clan Name' />
-			<br />
-			<input type='submit' name='create' value='Create Clan' />
-		</form>
-	</div>
-</div>
-
-<?php
-	}
-
-	require 'core/required/layout_bottom.php';
