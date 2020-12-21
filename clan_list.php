@@ -20,7 +20,7 @@
 		<div class='description'>
       Every clan that has been created can be found below.
       <br />
-			Can you make it to the top?
+			Can your clan make it to the top?
 		</div>
 
 		<table class='border-gradient' style='width: 700px;'>
