@@ -89,7 +89,7 @@
 				if ( $Clan_Data['ID'] === $User_Data['id'] )
 				{
 			?>
-			
+
 				<br />
 				<table class='border-gradient' style='width: 400px;'>
 					<thead>
@@ -102,34 +102,10 @@
 					<tbody>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href=''>Clan Link</a>
-							</td>
-							<td colspan='1' style='width: 50%;'>
-								<a href=''>Clan Link</a>
-							</td>
-						</tr>
-						<tr>
-							<td colspan='1' style='width: 50%;'>
-								<a href=''>Clan Link</a>
-							</td>
-							<td colspan='1' style='width: 50%;'>
-								<a href=''>Clan Link</a>
-							</td>
-						</tr>
-						<tr>
-							<td colspan='1' style='width: 50%;'>
-								<a href=''>Clan Link</a>
-							</td>
-							<td colspan='1' style='width: 50%;'>
-								<a href=''>Clan Link</a>
-							</td>
-						</tr>
-						<tr>
-							<td colspan='1' style='width: 50%;'>
 								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/leave.php'>Leave Clan</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href=''></a>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/donate.php'>Donate to Clan</a>
 							</td>
 						</tr>
 					</tbody>
@@ -171,9 +147,15 @@
 								
 								echo "
 									<tr>
-										<td>{$Member['Username']}</td>
-										<td>{$Member['Clan_Title']}</td>
-										<td>{$Member['Clan_Exp']}</td>
+										<td class='" . strtolower($Member['Clan_Rank']) . "'>
+											{$Member['Username']}
+										</td>
+										<td>
+											{$Member['Clan_Title']}
+										</td>
+										<td>
+											{$Member['Clan_Exp']}
+										</td>
 									</tr>
 								";
 							}
