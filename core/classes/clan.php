@@ -42,6 +42,8 @@
         'Experience_Raw' => $Clan['Experience'],
         'Money' => number_format($Clan['Money']),
         'Money_Raw' => $Clan['Money'],
+        'Abso_Coins' => number_format($Clan['Abso_Coins']),
+        'Abso_Coins_Raw' => $Clan['Abso_Coins'],
         'Avatar' => ($Clan['Avatar'] ? DOMAIN_SPRITES . "/" . $Clan['Avatar'] : null),
         'Signature' => $Clan['Signature'],
       ];
@@ -64,6 +66,43 @@
         $Select_Query->execute([ $User_ID ]);
       }
       catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
+     * Donate a given currency to a clan.
+     * @param int $User_ID - ID of the User donating the currency.
+     * @param int $Clan_ID - ID of the Clan that the user is donating to.
+     * @param string $Currency - Value of the Currency that is being donated.
+     * @param int $Quantity - Amount of currency being donated.
+     */
+    public function DonateCurrency(int $User_ID, int $Clan_ID, string $Currency, int $Quantity)
+    {
+      global $PDO, $User_Class;
+
+      if ( !$User_ID || !$Clan_ID || !$Currency || !$Quantity )
+        return false;
+
+      $Clan_Data = $this->FetchClanData($Clan_ID);
+
+      if ( !$Clan_ID )
+        return false;
+
+      $User_Class->RemoveCurrency($User_ID, $Currency, $Quantity);
+
+      try
+      {
+        $Donate_Currency = $PDO->prepare("INSERT INTO `clan_donations` ( `Clan_ID`, `Donator_ID`, `Currency`, `Quantity`, `Timestamp` ) VALUES ( ?, ?, ?, ?, ? )");
+        $Donate_Currency->execute([ $Clan_ID, $User_ID, $Currency, $Quantity, time() ]);
+
+        $Add_Currency = $PDO->prepare("UPDATE `clans` SET `$Currency` = `$Currency` + ? LIMIT 1");
+        $Add_Currency->execute([ $Quantity ]);
+      }
+      catch (PDOException $e)
       {
         HandleError($e);
       }
