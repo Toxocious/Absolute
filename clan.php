@@ -68,19 +68,35 @@
 						</tr>
 						<tr>
 							<td colspan='2'>
-								<b>Money</b>
-							</td>
-							<td colspan='2'>
-								$<?= $Clan_Data['Money']; ?>
-							</td>
-						</tr>
-						<tr>
-							<td colspan='2'>
 								<b>Clan Experience</b>
 							</td>
 							<td colspan='2'>
 								<?= $Clan_Data['Experience']; ?>
 							</td>
+						</tr>
+						<tr>
+						<?php
+							foreach ( $Constants->Currency as $Currency )
+							{
+								echo "
+									<td colspan='2'>
+										<img src='{$Currency['Icon']}' />
+									</td>
+								";
+							}
+						?>
+						</tr>
+						<tr>
+						<?php
+							foreach ( $Constants->Currency as $Currency )
+							{
+								echo "
+									<td colspan='2'>
+										{$Clan_Data[$Currency['Value']]}
+									</td>
+								";
+							}
+						?>
 						</tr>
 					</tbody>
 				</table>
