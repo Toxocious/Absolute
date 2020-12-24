@@ -50,6 +50,73 @@
     }
 
     /**
+     * Kick a member from their clan.
+     * @param int $Clan_ID
+     * @param int $User_ID
+     */
+    public function KickMember(int $Clan_ID, int $User_ID)
+    {
+      global $PDO, $User_Class;
+
+      if ( !$Clan_ID || !$User_ID )
+        return false;
+
+      $Clan_Data = $this->FetchClanData($Clan_ID);
+      if ( !$Clan_Data )
+        return false;
+
+      $Member_Data = $User_Class->FetchUserData($User_ID);
+      if ( $Member_Data['Clan'] != $Clan_Data['ID'] )
+        return false;
+
+      try
+      {
+        $Kick_Member = $PDO->prepare("UPDATE `users` SET `Clan` = 0 WHERE `id` = ? LIMIT 1");
+        $Kick_Member->execute([ $User_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
+     * Update a member's clan title.
+     * @param int $Clan_ID
+     * @param int $User_ID
+     * @param string $Title
+     */
+    public function UpdateTitle(int $Clan_ID, int $User_ID, string $Title)
+    {
+      global $PDO, $User_Class;
+
+      if ( !$Clan_ID || !$User_ID || !$Title )
+        return false;
+
+      $Clan_Data = $this->FetchClanData($Clan_ID);
+      if ( !$Clan_Data )
+        return false;
+
+      $Member_Data = $User_Class->FetchUserData($User_ID);
+      if ( $Member_Data['Clan'] != $Clan_Data['ID'] )
+        return false;
+
+      try
+      {
+        $Kick_Member = $PDO->prepare("UPDATE `users` SET `Clan_Title` = ? WHERE `id` = ? LIMIT 1");
+        $Kick_Member->execute([ $Title, $User_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
      * Remove a user from a clan.
      * @param int $User_ID
      */
