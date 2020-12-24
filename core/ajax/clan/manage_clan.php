@@ -136,13 +136,11 @@
       processData: false,
       success: (json) =>
       {
-        console.log(json);
         $('#ajaxResult').html(json.Text);
         $('#clanAvatar').attr('src', json.Avatar + '?' + Date.now());
       },
       error: (json) =>
       {
-        console.log(json);
         $('#ajaxResult').html(json.Text);
         $('#clanAvatar').attr('src', json.Avatar + '?' + Date.now());
       }
