@@ -1,5 +1,5 @@
 <?php
-	require 'core/required/layout_top.php';
+	require_once 'core/required/layout_top.php';
 
 	if ( !isset($_GET['clan_id']) && $User_Data['Clan'] == 0 )
 	{
@@ -106,8 +106,7 @@
 				{
 			?>
 
-				<br />
-				<table class='border-gradient' style='width: 400px;'>
+				<table class='border-gradient' style='margin-top: 5px; width: 400px;'>
 					<thead>
 						<tr>
 							<th colspan='2'>
@@ -128,6 +127,59 @@
 				</table>
 
 			<?php
+					if ( in_array($User_Data['Clan_Rank'], ['Moderator', 'Administrator']) )
+					{
+			?>
+
+				<table class='border-gradient' style='margin-top: 5px; width: 400px;'>
+					<thead>
+						<tr>
+							<th colspan='2'>
+								<b>Moderator Options</b>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan='1' style='width: 50%;'>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/manage_members.php'>Manage Members</a>
+							</td>
+							<td colspan='1' style='width: 50%;'>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/.php'>Clan Option Link</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			<?php
+					}
+
+					if ( $User_Data['Clan_Rank'] == 'Administrator' )
+					{
+			?>
+
+				<table class='border-gradient' style='margin-top: 5px; width: 400px;'>
+					<thead>
+						<tr>
+							<th colspan='2'>
+								<b>Administrator Options</b>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td colspan='1' style='width: 50%;'>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/.php'>Clan Option Link</a>
+							</td>
+							<td colspan='1' style='width: 50%;'>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/.php'>Clan Option Link</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+			<?php
+					}
 				}
 			?>
 
