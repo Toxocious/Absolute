@@ -102,7 +102,7 @@
 				</table>
 
 			<?php
-				if ( $Clan_Data['ID'] === $User_Data['id'] )
+				if ( $Clan_Data['ID'] === $User_Data['Clan'] )
 				{
 			?>
 
