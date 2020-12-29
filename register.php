@@ -6,13 +6,15 @@
 		echo "
 			<div class='panel content'>
 				<div class='head'>Register</div>
-				<div class='body'>
+				<div class='body' style='padding: 5px;'>
 					You may not access this page while you're logged in.
 				</div>
 			</div>
 		";
+
 		require 'core/required/layout_bottom.php';
-		exit();
+
+		return;
 	}
 	else
 	{
