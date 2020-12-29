@@ -102,8 +102,11 @@ div
 {
   &.BODY-CONTAINER
   {
+    align-content: baseline;
     border-left: var(--border-style);
     border-right: var(--border-style);
+    display: var(--display-flex);
+    flex-wrap: wrap;
     margin: 0 auto;
     min-height: 100%;
     width: 1100px;
@@ -116,6 +119,7 @@ div
   {
     border: var(--border-style);
     border-radius: var(--border-radius);
+    flex-basis: calc(100% - 26px);
     margin: 0 auto 5px;
     padding: var(--padding-5px);
     text-align: center;
@@ -300,9 +304,11 @@ header
   background-size: var(--banner-bg-size);
   border-bottom: var(--border-style);
   display: var(--display-flex);
+  flex-basis: 100%;
   height: var(--banner-height);
   justify-content: flex-start;
   position: relative;
+  
 
   & > div
   {
@@ -366,6 +372,7 @@ header
  */
 nav
 {
+  flex-basis: 100%;
   height: 35px;
   margin: 5px 5px 0px;
   text-align: center;
@@ -396,6 +403,7 @@ nav
     border: var(--border-style);
     border-radius: var(--border-radius);
     float: left;
+    width: 1086px;
 
     & > .nav-item
     {
@@ -482,7 +490,7 @@ nav
 /**
  * Sidebar
  */
-.sidebar
+aside
 {
   margin: 5px 0px 5px 5px;
   min-width: 194px;
@@ -614,7 +622,7 @@ nav
   {
     float: left;
     margin: 5px;
-    width: calc(100% - 213px);
+    width: 100%;
 
     & > .body
     {
@@ -807,7 +815,9 @@ table
  */
 main
 {
-  width: 100%;
+  align-content: baseline;
+  flex-basis: auto;
+  width: calc(100% - 199px);
   min-height: 100%;
   z-index: 2;
   position: relative;

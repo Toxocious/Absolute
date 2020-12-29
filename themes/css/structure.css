@@ -81,8 +81,11 @@ h6 {
 }
 
 div.BODY-CONTAINER {
+  align-content: baseline;
   border-left: var(--border-style);
   border-right: var(--border-style);
+  display: var(--display-flex);
+  flex-wrap: wrap;
   margin: 0 auto;
   min-height: 100%;
   width: 1100px;
@@ -90,6 +93,7 @@ div.BODY-CONTAINER {
 div.description, div.error, div.success, div.warning {
   border: var(--border-style);
   border-radius: var(--border-radius);
+  flex-basis: calc(100% - 26px);
   margin: 0 auto 5px;
   padding: var(--padding-5px);
   text-align: center;
@@ -205,6 +209,7 @@ header {
   background-size: var(--banner-bg-size);
   border-bottom: var(--border-style);
   display: var(--display-flex);
+  flex-basis: 100%;
   height: var(--banner-height);
   justify-content: flex-start;
   position: relative;
@@ -245,6 +250,7 @@ header > .roster > .slot > div {
  * Navigation Bar
  */
 nav {
+  flex-basis: 100%;
   height: 35px;
   margin: 5px 5px 0px;
   text-align: center;
@@ -268,6 +274,7 @@ nav > .nav-container {
   border: var(--border-style);
   border-radius: var(--border-radius);
   float: left;
+  width: 1086px;
 }
 nav > .nav-container > .nav-item {
   text-align: center;
@@ -316,66 +323,66 @@ nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a {
 /**
  * Sidebar
  */
-.sidebar {
+aside {
   margin: 5px 0px 5px 5px;
   min-width: 194px;
 }
-.sidebar > .panel > .head {
+aside > .panel > .head {
   border: none;
 }
-.sidebar > .panel > .body {
+aside > .panel > .body {
   border-radius: var(--border-radius-tl-tr);
   height: 415px;
   overflow-y: auto;
   padding: 3px;
   text-align: center;
 }
-.sidebar > .chat .message {
+aside > .chat .message {
   font-size: 12px;
 }
-.sidebar > .chat .message > .avatar {
+aside > .chat .message > .avatar {
   border-radius: var(--border-radius-tl-tr);
   height: 42px;
   padding: 2px;
   width: 42px;
 }
-.sidebar > .chat .message > .avatar > a {
+aside > .chat .message > .avatar > a {
   display: block;
   border-radius: var(--border-radius-tl-tr);
 }
-.sidebar > .chat .message > .avatar > a > img {
+aside > .chat .message > .avatar > a > img {
   border-radius: var(--border-radius-tl-tr);
   height: 42px;
   width: 42px;
 }
-.sidebar > .chat .message > .username {
+aside > .chat .message > .username {
   float: left;
   margin-left: 50px;
   margin-top: -40px;
   text-align: left;
 }
-.sidebar > .chat .message > .username > a > b {
+aside > .chat .message > .username > a > b {
   font-size: 12px;
 }
-.sidebar > .chat .message > .master-title {
+aside > .chat .message > .master-title {
   float: right;
   margin-top: -36px;
   opacity: 0.5;
 }
-.sidebar > .chat .message > .text {
+aside > .chat .message > .text {
   border-radius: var(--border-radius-tr-br-bl);
   padding: 2px;
   margin-top: -2px;
 }
-.sidebar > .chat .message > .text > div {
+aside > .chat .message > .text > div {
   border-radius: var(--border-radius-tr-br-bl);
   padding: 3px;
 }
-.sidebar > .chat .message.private > .text > div {
+aside > .chat .message.private > .text > div {
   border-radius: var(--border-radius-tr-br-bl);
   padding: 3px;
 }
-.sidebar > .chat .message:not(:last-child) {
+aside > .chat .message:not(:last-child) {
   margin-bottom: 3px;
 }
 
@@ -398,7 +405,7 @@ nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a {
 .panel.content {
   float: left;
   margin: 5px;
-  width: calc(100% - 213px);
+  width: 100%;
 }
 .panel.content > .body {
   text-align: center;
@@ -517,7 +524,9 @@ table > tbody > tr > td a {
  * Main
  */
 main {
-  width: 100%;
+  align-content: baseline;
+  flex-basis: auto;
+  width: calc(100% - 199px);
   min-height: 100%;
   z-index: 2;
   position: relative;

@@ -182,23 +182,23 @@ nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a:h
 /**
  * Sidebar
  */
-.sidebar > .panel > .head {
+aside > .panel > .head {
   background: none;
 }
-.sidebar > .panel.chat .message > .avatar {
+aside > .panel.chat .message > .avatar {
   background: linear-gradient(180deg, var(--color-tertiary) 0, var(--color-gradient-one));
 }
-.sidebar > .panel.chat .message > .avatar > a {
+aside > .panel.chat .message > .avatar > a {
   background: var(--color-quinary);
 }
-.sidebar > .panel.chat .message > .text {
+aside > .panel.chat .message > .text {
   background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-tertiary));
   box-shadow: var(--box-shadow);
 }
-.sidebar > .panel.chat .message > .text > div {
+aside > .panel.chat .message > .text > div {
   background: var(--color-quinary);
 }
-.sidebar > .panel.chat .message.private > .text > div {
+aside > .panel.chat .message.private > .text > div {
   background: var(--color-chat-pmsg);
   box-shadow: var(--box-shadow);
 }
