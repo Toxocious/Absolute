@@ -20,53 +20,55 @@
 			 */
 			if ( date('m') == 12 )
 			{
-				echo "<script type='text/javascript' src='" . DOMAIN_ROOT . "/js/snowstorm.js'></script>";	
-			}
-
-			if ( isset($_SESSION['abso_user']) )
+				//echo "<script type='text/javascript' src='" . DOMAIN_ROOT . "/js/snowstorm.js'></script>";	
+      }
+      
+      /**
+       * Include the necessary Absolute Chat scripts.
+       */
+      if ( isset($_SESSION['abso_user']) )
 			{
+        echo "
+          <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/AbsoChat/Handler.js'></script>
+          <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/AbsoChat/absochat.js'></script>
+          <script type='text/javascript'>
+            $(function()
+            {
+              Absolute.user = {
+                user_id: " . $User_Data['id'] . ",
+                postcode: " . $User_Data['Auth_Code'] . ",
+              }
+      
+              Absolute.Enable();
+      
+              $('#chatMessage').keydown((e) =>
+              {
+                if ( e.keyCode == 13 )
+                {
+                  let text = $('#chatMessage').val().trim();
+                  if ( text != '' && Absolute.user.connected )
+                  {
+                    socket.emit('chat-message',
+                    {
+                      user: Absolute.user,
+                      text: text,
+                    });
+      
+                    $('#chatMessage').val('').trigger('input');
+                  }
+      
+                  return false;
+                }
+              });
+            });
+          </script>
+        ";
+      }
 		?>
-		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/Handler.js'></script>
-		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/absochat.js'></script>
-		<script type='text/javascript'>
-			$(function()
-			{
-				Absolute.user = {
-					user_id: <?= $User_Data['id']; ?>, 
-					postcode: <?= $User_Data['Auth_Code']; ?>,
-				}
-
-				Absolute.Enable();
-
-				$('#chatMessage').keydown((e) =>
-				{
-					if ( e.keyCode == 13 )
-					{
-						let text = $('#chatMessage').val().trim();
-						if ( text != '' && Absolute.user.connected )
-						{
-							socket.emit('chat-message',
-							{
-								user: Absolute.user,
-								text: text,
-							});
-
-							$('#chatMessage').val('').trigger('input');
-						}
-
-						return false;
-					}
-				});
-			});
-		</script>
-		<?php
-			}
-		?>
-	</head>
+  </head>
 
 	<body>
 		<div class='BODY-CONTAINER'>
-
 			<header>
 				<?php
 					if ( isset($_SESSION['abso_user']) )
@@ -132,120 +134,152 @@
 				<?php
 					}
 				?>
-			</header>
+      </header>
+      
+      <?php
+        /**
+         * Display the correct navigation bar to the user.
+         */
+        if ( isset($_SESSION['abso_user']) )
+        {
+          if ( $User_Data['RPG_Ban'] == 0 )
+          {
+            if ( strpos($Parse_URL['path'], '/staff/') !== false && $User_Data['Power'] !== 1 )
+            {
+              $Navigation->Render("Staff");
+            }
+            else
+            {
+              $Navigation->Render("Member");
+            }
+          }
+        }
 
-			<?php
-				/**
-				 * Render the nav menu if the user has an active session.
-				 */
-				if ( isset($_SESSION['abso_user']) )
-				{
-					if ( $User_Data['RPG_Ban'] != 1 )
-					{
-						if ( strpos($Parse_URL['path'], '/staff/') === false )
-						{
-							$Navigation->Render("Member");
-						}
-						else
-						{
-							$Navigation->Render("Staff");
-						}
-					}
-				}
-			?>
+        /**
+         * The user does not have an active session.
+         */
+        if ( !isset($_SESSION['abso_user']) )
+        {
+          if ( $Current_Page['Logged_In'] == 'yes' )
+          {
+            echo "
+              <div class='panel content' style='margin: 5px; width: calc(100% - 10px);'>
+                <div class='head'>Error</div>
+                <div class='body' style='padding: 5px;'>
+                  You must be logged in to view this page.
+                  <br />
+                  <br />
+                  <a href='" . DOMAIN_ROOT . "login.php'><b>Login</b></a> or <a href='" . DOMAIN_ROOT . "register.php'><b>Register</b></a>
+                </div>
+              </div>
+            ";
+      
+            require_once 'layout_bottom.php';
+          }
+      
+          /**
+           * Check to see if the page is currently under maintenance.
+           */
+          if ( $Current_Page['Maintenance'] === 'yes' )
+          {
+            echo "
+              <div class='panel content' style='margin: 5px; width: calc(100% - 10px);'>
+                <div class='head'>Maintenance</div>
+                <div class='body' style='padding: 5px;'>
+                  This page is currently undergoing maintenance, please check back later.
+                  <br />
+                  <br />
+                  <a href='javascript:void(0);' onclick='window.history.go(-1); return false;'>
+                    Go Back
+                  </a>
+                </div>
+              </div>
+            ";
+      
+            require_once 'layout_bottom.php';
+          }
+      
+          return;
+        }
+      ?>
 
-			<main>
+      <aside>
+        <div class='panel chat' id='AbsoChat'>
+          <div class='head'>
+            Absolute Chat
+          </div>
+          <div class='user_options' id='user_options' style='display: none'></div>
+          <div class='body' id='chatContent'>
+            <div style='margin-top: 150px;'>
+              <div class='spinner' style='left: 42.5%; position: relative;'></div>
+            </div>
+          </div>
+          <?php
+            if ( $User_Data['RPG_Ban'] == 0 && $User_Data['Chat_Ban'] == 0 )
+            {
+          ?>
+          <div class="foot">
+            <form name="chat_form">
+              <input type="text" name="chatMessage" id="chatMessage" autocomplete="off">
+            </form>
+          </div>
+          <?php
+            }
+          ?>
+        </div>
+      </aside>
 
-<?php
-	if ( !isset($_SESSION['abso_user']) )
-	{
-		if ( $Current_Page['Logged_In'] == 'yes' )
-		{
-			echo "
-				<div class='panel content' style='margin: 5px; width: calc(100% - 10px);'>
-					<div class='head'>Error</div>
-					<div class='body'>
-						You must be logged in to view this page.
-						<br /><br />
-						<a href='login.php'><b>Login</b></a> or <a href='register.php'><b>Register</b></a>
-					</div>
-				</div>
-			";
+      <main>
+        <?php
+          /**
+           * Content to display if the user is not currently banned.
+           */
+          if ( $User_Data['RPG_Ban'] == 0 )
+          {
+            /**
+             * If the user doesn't have any Pokemon in their roster, display a warning message.
+             */
+            if ( count($Roster) == 0 )
+            {
+              echo "
+                <div class='warning'>
+                  While you have an empty roster, much of Absolute will be unavailable to you.
+                </div>
+              ";
+            }
 
-			exit();
-		}
-	}
-	else
-	{
-		/**
-		 * If the user doesn't have any Pokemon in their roster, display a warning message.
-		 */
-		if ( count($Roster) == 0 )
-		{
-			echo "
-				<div class='warning' style='flex-basis: calc(100% - 25px); margin: 5px auto 0px;'>
-					While you have an empty roster, certain parts of Absolute will be unavailable to you.
-				</div>
-			";
-		}
+            /**
+             * Check for any notifications before any further page content gets loaded.
+             */
+            $Notification->ShowNotification($User_Data['id']);
+          }
 
-		if ( $User_Data['RPG_Ban'] != 1 )
-		{
-?>
+          /**
+           * Check to see if the page is currently under maintenance.
+           */
+          if ( $Current_Page['Maintenance'] === 'yes' )
+          {
+            if ( $User_Data['Power'] >= 7 )
+            {
+              echo "
+                <div class='warning' style='margin: 5px auto 0px;'>
+                  Despite this page being down for maintenance, you seem to be authorized to be here.
+                </div>
+              ";
+            }
+            else
+            {
+              echo "
+                <div class='panel content'>
+                  <div class='head'>Maintenance</div>
+                  <div class='body'>
+                    This page is currently undergoing maintenance, please check back later.
+                  </div>
+                </div>
+              ";
 
-				<div class='sidebar'>
-					<div class='panel chat' id='AbsoChat'>
-						<div class='head'>
-							Chat
-						</div>
-						<div class='user_options' id='user_options' style='display: none'></div>
-						<div class='body' id='chatContent'>
-							<div style='margin-top: 150px;'>
-								<div class='spinner' style='left: 42.5%; position: relative;'></div>
-							</div>
-						</div>
-						<div class="foot">
-							<form name="chat_form">
-								<input type="text" name="chatMessage" id="chatMessage" autocomplete="off">
-							</form>
-						</div>
-					</div>
-				</div>
+              require_once 'layout_bottom.php';
 
-	<?php
-		}
-
-		/**
-		 * Check for any notifications before any further page content gets loaded.
-		 */
-		$Notification->ShowNotification($User_Data['id']);
-
-		/**
-		 * Check to see if the page is currently under maintenance.
-		 */
-		if ( $Current_Page['Maintenance'] === 'yes' )
-		{
-			if ( $User_Data['Power'] >= 7 )
-			{
-				echo "
-					<div class='warning' style='margin-top: 5px;'>
-						Despite this page being down for maintenance, you seem to be authorized to be here.
-					</div>
-				";
-			}
-			else
-			{
-				echo "
-					<div class='panel content'>
-						<div class='head'>Maintenance</div>
-						<div class='body'>
-							This page is currently undergoing maintenance, please check back later.
-						</div>
-					</div>
-				";
-
-				exit();
-			}
-		}
-	}
-?>
+              return;
+            }
+          }
