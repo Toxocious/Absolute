@@ -46,9 +46,6 @@
 				HandleError( $e->getMessage() );
 			}
 
-			// Set the default width of the navbar.
-			$Nav_Width = " style='width: 100%;'";
-
 			echo "
 				<nav>
 			";
@@ -60,12 +57,12 @@
 
 				if ( strpos($URL['path'], '/staff/') === false )
 				{
-					$Link_URL = '/staff/';
+					$Link_URL = DOMAIN_ROOT . '/staff/';
 					$Link_Name = 'Staff Panel';
 				}
 				else
 				{
-					$Link_URL = '/index.php';
+					$Link_URL = DOMAIN_ROOT . '/index.php';
 					$Link_Name = 'Index';
 				}
 
@@ -73,12 +70,16 @@
 					<div class='button' style='margin-right: 5px;'>
 						<a href='{$Link_URL}'>{$Link_Name}</a>
 					</div>
+
+					<ul class='nav-container'{$Nav_Width}>
 				";
 			}
-
-			echo "
-					<ul class='nav-container'{$Nav_Width}>
-			";
+			else
+			{
+				echo "
+					<ul class='nav-container'>
+				";
+			}
 
 			// Loop through navigation headers.
 			$Display_Links = '';
@@ -122,7 +123,7 @@
 						{
 							$Display_Links .= "
 								<li class='dropdown-item'>
-									<a href='{$Link['Link']}'>{$Link['Name']}</a>
+									<a href='" . DOMAIN_ROOT . "{$Link['Link']}'>{$Link['Name']}</a>
 								</li>
 							";
 						}
