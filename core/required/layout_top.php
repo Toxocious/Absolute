@@ -5,17 +5,13 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?= $Current_Page['Name']; ?> :: The Pokemon Absolute</title>
+		<title><?= $Current_Page['Name']; ?> :: The Pok&eacute;mon Absolute</title>
 		<link href='<?= DOMAIN_SPRITES; ?>/Pokemon/Icons/Normal/359-mega.png' rel='shortcut icon'>
 
-		<!--
-			** Using a new structure of CSS files.
-			** These are to be generated via SASS .scss files.
-		-->
-		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= ($User_Data['Theme'] ? $User_Data['Theme'] : 'absol'); ?>.css?<?= time(); ?>' />
-		<link type='text/css' rel='stylesheet' href='/themes/css/root.css?<?= time(); ?>' />
-		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css?<?= time(); ?>' />
-		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css?<?= time(); ?>' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= ($User_Data['Theme'] ? $User_Data['Theme'] : 'absol'); ?>.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/root.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css' />
 
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/libraries.js'></script>
 		<?php
