@@ -17,11 +17,11 @@
 
 	if ( !isset($_SESSION['abso_user']) )
 	{
-		$style = " style='margin: 5px; style: width: calc(100% - 14px);'";
+		$style = " style='margin: 5px; width: calc(100% - 14px);'";
 	}
 	else
 	{
-		$style = " style='margin: 5px 5px; width: calc(100% - 210px);'";
+		$style = " style='margin: 5px 5px;'";
 	}
 ?>
 

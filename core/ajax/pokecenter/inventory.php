@@ -503,7 +503,7 @@
 	 * Display the user's inventory.
 	 */
 	echo "
-		<table class='border-gradient' style='margin-bottom: 5px; flex-basis: 90%;'>
+		<table class='border-gradient' style='margin-bottom: 5px; flex-basis: 800px;'>
 			<thead>
 				<tr>
 					<th colspan='6'>

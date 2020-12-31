@@ -66,7 +66,7 @@
     }
 ?>
 
-<table class='border-gradient' style='flex-basis: 100%;'>
+<table class='border-gradient' style='flex-basis: 100%; max-width: 870px;'>
   <thead>
     <th colspan='21'>
       Roster

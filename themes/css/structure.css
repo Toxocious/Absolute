@@ -481,7 +481,6 @@ aside > .chat .message:not(:last-child) {
  */
 table {
   font-size: 14px;
-  max-width: 90%;
   margin: 0 auto;
 }
 table > tbody > tr:first-child:last-child > td:first-child:last-child {

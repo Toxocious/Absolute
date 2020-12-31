@@ -120,7 +120,7 @@
    * Display the user's roster.
    */
   echo "
-    <table class='border-gradient' style='flex-basis: 85%;'>
+    <table class='border-gradient' style='flex-basis: 870px;'>
       <thead>
         <tr>
           <th colspan='6'>
