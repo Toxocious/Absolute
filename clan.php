@@ -117,10 +117,10 @@
 					<tbody>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/leave.php'>Leave Clan</a>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/donate.php'>Donate to Clan</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/donate.php'>Donate to Clan</a>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/leave.php'>Leave Clan</a>
 							</td>
 						</tr>
 					</tbody>
