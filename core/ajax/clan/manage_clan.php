@@ -95,7 +95,7 @@
             </td>
           </tr>
           <tr>
-            <td colspan='2' style='height: 150px;'>
+            <td colspan='2' style='height: 150px;' id='clanSignature'>
               <?= $Clan_Data['Signature']; ?>
             </td>
           </tr>
@@ -106,7 +106,7 @@
           </tr>
           <tr>
             <td colspan='2'>
-              <form method='POST'>
+              <form id='updateSignatureForm'>
                 <textarea name='signature' rows='6' cols='50'></textarea>
                 <br />
                 <input type='submit' value='Update Signature' />
@@ -143,6 +143,33 @@
       {
         $('#ajaxResult').html(json.Text);
         $('#clanAvatar').attr('src', json.Avatar + '?' + Date.now());
+      }
+    });
+  });
+
+  $('#updateSignatureForm').submit(e =>
+  {
+    e.preventDefault();
+
+    let Signature_Data = new FormData(document.getElementById("updateSignatureForm"));
+
+    $.ajax({
+      type: 'POST',
+      url: 'update_signature.php',
+      enctype: 'multipart/form-data',
+      data: Signature_Data,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: (json) =>
+      {
+        $('#ajaxResult').html(json.Text);
+        $('#clanSignature').html(json.Signature);
+      },
+      error: (json) =>
+      {
+        $('#ajaxResult').html(json.Text);
+        $('#clanSignature').html(json.Signature);
       }
     });
   });
