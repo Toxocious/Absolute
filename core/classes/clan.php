@@ -117,6 +117,35 @@
     }
 
     /**
+     * Update a clan's signature.
+     * @param int $Clan_ID
+     * @param string $Signature
+     */
+    public function UpdateSignature(int $Clan_ID, string $Signature)
+    {
+      global $PDO, $User_Class;
+
+      if ( !$Clan_ID || !$Signature )
+        return false;
+
+      $Clan_Data = $this->FetchClanData($Clan_ID);
+      if ( !$Clan_Data )
+        return false;
+
+      try
+      {
+        $Kick_Member = $PDO->prepare("UPDATE `clans` SET `Signature` = ? WHERE `id` = ? LIMIT 1");
+        $Kick_Member->execute([ $Signature, $Clan_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
      * Remove a user from a clan.
      * @param int $User_ID
      */
