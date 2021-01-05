@@ -6,6 +6,16 @@ body {
   color: var(--color-white);
 }
 
+hr.faded {
+  background-color: var(--color-primary);
+  background-image: linear-gradient(left, var(--color-quadternary) 2%, var(--color-var(--color-primary)) 50%, var(--color-quadternary) 98%);
+  background-image: -o-linear-gradient(left, var(--color-quadternary) 2%, var(--color-var(--color-primary)) 50%, var(--color-quadternary) 98%);
+  background-image: -moz-linear-gradient(left, var(--color-quadternary) 2%, var(--color-var(--color-primary)) 50%, var(--color-quadternary) 98%);
+  background-image: -webkit-linear-gradient(left, var(--color-quadternary) 2%, var(--color-var(--color-primary)) 50%, var(--color-quadternary) 98%);
+  background-image: -ms-linear-gradient(left, var(--color-quadternary) 2%, #E6E6E6 50%, var(--color-quadternary) 98%);
+  background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0.02, var(--color-quadternary)), color-stop(0.5, var(--color-primary)), color-stop(0.98, var(--color-quadternary)));
+}
+
 input[type=text] {
   background: var(--color-secondary);
   border-color: var(--color-black);

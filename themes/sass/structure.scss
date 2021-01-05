@@ -23,6 +23,17 @@ body
   margin: 0;
 }
 
+hr
+{
+  &.faded
+  {
+    height: 1px;
+    border: none;
+    width: 80%;
+    margin: 5px auto;
+  }
+}
+
 a
 {
   text-decoration: none;
