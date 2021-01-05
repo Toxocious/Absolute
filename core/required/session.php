@@ -75,6 +75,7 @@
 	require_once $Dir_Root . '/core/classes/notification.php';
 	$Notification = new Notification();
 	require_once $Dir_Root . '/core/classes/weighter.php';
+	require_once $Dir_Root . '/core/classes/direct_message.php';
 
 	// Require some files.
 	require_once $Dir_Root . '/core/required/domains.php';
