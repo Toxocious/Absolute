@@ -22,6 +22,12 @@ input[type=text] {
   color: var(--color-white);
 }
 
+textarea {
+  background: var(--color-secondary);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
 a:link,
 a:visited {
   color: var(--color-primary);

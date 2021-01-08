@@ -51,6 +51,12 @@ input[type=text] {
   width: 190px;
 }
 
+textarea {
+  border: var(--border-style);
+  border-radius: var(--border-radius);
+  margin: 0;
+}
+
 select {
   border: var(--border-style);
   border-radius: var(--border-radius);
@@ -225,11 +231,21 @@ header > div {
   flex-basis: auto;
   margin: 5px;
 }
-header > .user > div:last-child > div {
-  padding: var(--padding-0px);
+header > .user > div:first-child {
+  display: var(--display-flex);
 }
-header > .user > div:last-child > div > a {
-  padding: var(--padding-4px);
+header > .user > div:first-child > div:first-child {
+  flex-basis: 100px;
+  margin-left: 2px;
+  margin-right: 5px;
+}
+header > .user > div:first-child > div:last-child {
+  flex-basis: 36px;
+  height: 36px;
+  width: 36px;
+}
+header > .user > div:last-child {
+  flex-basis: 100%;
 }
 header > .stats > .stat {
   margin: 0px 0px 7px 5px;

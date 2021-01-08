@@ -336,17 +336,28 @@ header
 
   & > .user
   {
+    & > div:first-child
+    {
+      display: var(--display-flex);
+
+      & > div:first-child
+      {
+        flex-basis: 100px;
+        margin-left: 2px;
+        margin-right: 5px;
+      }
+
+      & > div:last-child
+      {
+        flex-basis: 36px;
+        height: 36px;
+        width: 36px;
+      }
+    }
+
     & > div:last-child
     {
-      & > div
-      {
-        padding: var(--padding-0px);
-
-        & > a
-        {
-          padding: var(--padding-4px);
-        }
-      }
+      flex-basis: 100%;
     }
   }
 
