@@ -76,15 +76,25 @@
 				?>
 				
 				<div class='user'>
-					<div class="border-gradient margin-center hw-100px padding-0px">
-						<div>
-							<img src='<?= DOMAIN_SPRITES . '/' . $User_Data['Avatar']; ?>' />
-						</div>
-					</div>
+          <div>
+            <div class="border-gradient hw-100px padding-0px">
+              <div>
+                <img src='<?= DOMAIN_SPRITES . '/' . $User_Data['Avatar']; ?>' />
+              </div>
+            </div>
+            
+            <div class='border-gradient hover' style='height: 34px;'>
+              <div style='height: 24px;'>
+                <a href='<?= DOMAIN_ROOT; ?>/direct_messages.php'>
+                  <img src='<?= DOMAIN_SPRITES; ?>/items/letter.png' />
+                </a>
+              </div>
+            </div>
+          </div>
 
 					<div class="border-gradient hover w-150px padding-5px m-top-m22px">
 						<div>
-							<a href="/profile.php?id=1">
+							<a href="<?= DOMAIN_ROOT; ?>/profile.php?id=1">
 								<b><?= $User_Class->DisplayUserName($User_Data['id'], false, false); ?></b>
 							</a>
 						</div>
@@ -129,7 +139,8 @@
 							}
 						}
 					?>
-				</div>
+        </div>
+        
 
 				<?php
 					}
