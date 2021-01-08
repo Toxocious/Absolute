@@ -65,6 +65,13 @@ input
   }
 }
 
+textarea
+{
+  border: var(--border-style);
+  border-radius: var(--border-radius);
+  margin: 0;
+}
+
 select
 {
   border: var(--border-style);

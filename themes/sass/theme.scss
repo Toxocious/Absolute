@@ -32,6 +32,13 @@ input
   }
 }
 
+textarea
+{
+  background: var(--color-secondary);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+
 a:link,
 a:visited
 {
