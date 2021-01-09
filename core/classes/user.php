@@ -65,7 +65,7 @@
 				$Banned_Chat = false;
 
 			return [
-				'ID' => $User['id'],
+				'ID' => (int) $User['id'],
 				'Username' => $User['Username'],
 				'Roster' => $User['Roster'],
 				'Avatar' => DOMAIN_SPRITES . $User['Avatar'],
