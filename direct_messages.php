@@ -101,6 +101,7 @@
       success: (data) =>
       {
         $('#direct-messages').html(data);
+        $('#dm-message').focus();
         SmoothScrollToBottom('message-container');
 
         $('#dm-message').keydown(e =>
@@ -112,6 +113,7 @@
       error: (data) =>
       {
         $('#direct-messages').html(data);
+        $('#dm-message').focus();
         SmoothScrollToBottom('message-container');
 
         $('#dm-message').keydown(e =>
@@ -175,6 +177,7 @@
           alert("There was an error while attempting to send your message.\n", data);
 
         $('#dm-message').val('');
+        $('#dm-message').focus();
         DisplayDirectMessage(Group_ID);
       },
       error: (data) =>
@@ -183,6 +186,7 @@
           alert("There was an error while attempting to send your message.\n", data);
           
         $('#dm-message').val('');
+        $('#dm-message').focus();
         DisplayDirectMessage(Group_ID);
       },
     });
