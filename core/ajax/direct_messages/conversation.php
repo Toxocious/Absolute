@@ -44,6 +44,8 @@
     return;
   }
 
+  $Direct_Message->ReadDirectMessage($Group_ID, $User_Data['id']);
+
   $Total_Messages = count($Messages);
 
   echo "

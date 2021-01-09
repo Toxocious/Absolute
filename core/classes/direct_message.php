@@ -116,6 +116,45 @@
     }
 
     /**
+     * Update the group direct message read db value when the user reads a DM.
+     */
+    public function ReadDirectMessage
+    (
+      int $Group_ID,
+      int $User_ID
+    )
+    {
+      global $PDO;
+
+      if ( !$Group_ID || !$User_ID )
+        return false;
+      
+      $Conversation = $this->FetchGroup($Group_ID);
+      if ( !$Conversation )
+        return false;
+
+      if ( !$this->IsParticipating($Conversation['Group_ID'], $User_ID) )
+        return false;
+
+      try
+      {
+        $Fetch_Messages = $PDO->prepare("UPDATE `direct_message_groups` SET `Unread_Messages` = 0 WHERE `Group_ID` = ? AND `User_ID` = ? LIMIT 1");
+        $Fetch_Messages->execute([ $Group_ID, $User_ID ]);
+        $Fetch_Messages->setFetchMode(PDO::FETCH_ASSOC);
+        $Messages = $Fetch_Messages->fetchAll();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( !$Messages )
+        return false;
+
+      return true;
+    }
+
+    /**
      * Check to see if a user is a participant in a given direct message.
      * @param $Group_ID - ID of a given direct message.
      * @param $User_ID - ID of the user that we're checking to see if they're a participant in the message.
