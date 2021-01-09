@@ -268,6 +268,10 @@ header > .roster > .slot:not(:first-child):not(:nth-child(2)) {
 header > .roster > .slot > div {
   padding: 0;
 }
+header > .direct-message {
+  margin-left: auto;
+  margin-top: auto;
+}
 
 /**
  * Navigation Bar
