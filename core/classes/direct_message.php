@@ -141,6 +141,45 @@
         $Fetch_Messages = $PDO->prepare("UPDATE `direct_message_groups` SET `Unread_Messages` = 0 WHERE `Group_ID` = ? AND `User_ID` = ? LIMIT 1");
         $Fetch_Messages->execute([ $Group_ID, $User_ID ]);
         $Fetch_Messages->setFetchMode(PDO::FETCH_ASSOC);
+        $Messages = $Fetch_Messages->fetch();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( !$Messages )
+        return false;
+
+      return true;
+    }
+
+    /**
+     * Update the unread messages count for all users in a direct message.
+     */
+    public function UpdateReadCount
+    (
+      int $Group_ID,
+      int $User_ID
+    )
+    {
+      global $PDO;
+
+      if ( !$Group_ID || !$User_ID )
+        return false;
+      
+      $Conversation = $this->FetchGroup($Group_ID);
+      if ( !$Conversation )
+        return false;
+
+      if ( !$this->IsParticipating($Conversation['Group_ID'], $User_ID) )
+        return false;
+
+      try
+      {
+        $Fetch_Messages = $PDO->prepare("UPDATE `direct_message_groups` SET `Unread_Messages` = `Unread_Messages` + 1 WHERE `Group_ID` = ? AND `User_ID` != ?");
+        $Fetch_Messages->execute([ $Group_ID, $User_ID ]);
+        $Fetch_Messages->setFetchMode(PDO::FETCH_ASSOC);
         $Messages = $Fetch_Messages->fetchAll();
       }
       catch ( PDOException $e )
@@ -344,6 +383,8 @@
 
       if ( !$this->IsParticipating($Group_ID, $User_ID) )
         return false;
+
+      $this->UpdateReadCount($Group_ID, $User_ID);
 
       try
       {
