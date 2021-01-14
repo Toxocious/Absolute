@@ -188,6 +188,7 @@
             ";
       
             require_once 'layout_bottom.php';
+            exit;
           }
       
           /**
@@ -212,9 +213,10 @@
             ";
       
             require_once 'layout_bottom.php';
+            exit;
           }
-      
-          exit;
+
+          return;
         }
       ?>
 
