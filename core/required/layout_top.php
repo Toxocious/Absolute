@@ -174,15 +174,17 @@
           if ( $Current_Page['Logged_In'] == 'yes' )
           {
             echo "
-              <div class='panel content' style='margin: 5px; width: calc(100% - 10px);'>
-                <div class='head'>Error</div>
-                <div class='body' style='padding: 5px;'>
-                  You must be logged in to view this page.
-                  <br />
-                  <br />
-                  <a href='" . DOMAIN_ROOT . "login.php'><b>Login</b></a> or <a href='" . DOMAIN_ROOT . "register.php'><b>Register</b></a>
+              <main style='width: 100%;'>
+                <div class='panel content'>
+                  <div class='head'>Error</div>
+                  <div class='body' style='padding: 5px;'>
+                    You must be logged in to view this page.
+                    <br />
+                    <br />
+                    <a href='" . DOMAIN_ROOT . "login.php'><b>Login</b></a> or <a href='" . DOMAIN_ROOT . "register.php'><b>Register</b></a>
+                  </div>
                 </div>
-              </div>
+              </main>
             ";
       
             require_once 'layout_bottom.php';
@@ -194,23 +196,25 @@
           if ( $Current_Page['Maintenance'] === 'yes' )
           {
             echo "
-              <div class='panel content' style='margin: 5px; width: calc(100% - 10px);'>
-                <div class='head'>Maintenance</div>
-                <div class='body' style='padding: 5px;'>
-                  This page is currently undergoing maintenance, please check back later.
-                  <br />
-                  <br />
-                  <a href='javascript:void(0);' onclick='window.history.go(-1); return false;'>
-                    Go Back
-                  </a>
+              <main style='width: 100%;'>
+                <div class='panel content'>
+                  <div class='head'>Maintenance</div>
+                  <div class='body' style='padding: 5px;'>
+                    This page is currently undergoing maintenance, please check back later.
+                    <br />
+                    <br />
+                    <a href='javascript:void(0);' onclick='window.history.go(-1); return false;'>
+                      Go Back
+                    </a>
+                  </div>
                 </div>
-              </div>
+              </main>
             ";
       
             require_once 'layout_bottom.php';
           }
       
-          return;
+          exit;
         }
       ?>
 
