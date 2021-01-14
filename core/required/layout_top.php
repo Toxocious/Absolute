@@ -181,7 +181,7 @@
                     You must be logged in to view this page.
                     <br />
                     <br />
-                    <a href='" . DOMAIN_ROOT . "login.php'><b>Login</b></a> or <a href='" . DOMAIN_ROOT . "register.php'><b>Register</b></a>
+                    <a href='" . DOMAIN_ROOT . "/login.php'><b>Login</b></a> or <a href='" . DOMAIN_ROOT . "/register.php'><b>Register</b></a>
                   </div>
                 </div>
               </main>
