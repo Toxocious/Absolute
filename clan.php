@@ -25,15 +25,12 @@
 	}
 	else
 	{
+		$Clan_Data = $Clan_Class->FetchClanData($User_Data['Clan']);
+
 		if ( isset($_GET['clan_id']) )
 		{
 			$Clan_ID = $Purify->Cleanse($_GET['clan_id']);
-
 			$Clan_Data = $Clan_Class->FetchClanData($Clan_ID);
-		}
-		else
-		{
-			$Clan_Data = $Clan_Class->FetchClanData($User_Data['Clan']);
 		}
 
 		try
