@@ -245,3 +245,5 @@
 
 <?php
 	}
+
+	require_once 'core/required/layout_bottom.php';
