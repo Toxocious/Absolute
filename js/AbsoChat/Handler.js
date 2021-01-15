@@ -39,8 +39,9 @@ const Handler = {
       };
 
       this.Messages.push(Message_Data);
-      this.Display();
     }
+
+    this.Display();
   },
 
   /**
@@ -54,25 +55,40 @@ const Handler = {
     Handler.Message = '';
 
     /**
+     * The client didn't connect to the chat for one reason or another.
+     * Display that Absol is likely offline.
+     */
+    if ( typeof Absolute.user.connected === 'undefined' )
+    {
+      Handler.Message = `
+        <table style="width: 100%; height: 100%;">
+          <tr>
+            <td style="width: 100%; height: 100%;" valign="middle">
+              <img src='../../images/Pokemon/Sprites/Normal/359.png' />
+              <br />
+              <b style="color: #ff0000; font-size: 14px;">Absolute Chat is offline.</b>
+              <br /><br />
+              Absol is currently offline for one reason or another.
+            </td>
+          </tr>
+        </table>
+      `;
+    }
+
+    /**
      * Determine how many messages to loop through.
      */
     let Iterations = 0;
     if ( this.Messages.length < this.MaxMessages )
-    {
       Iterations = this.Messages.length;
-    }
     else
-    {
       Iterations = this.MaxMessages;
-    }
 
     /**
      * Loop through the messages array.
      */
     for ( let i = 0; i < Iterations; i++ )
-    {
       this.RenderMessage( this.Messages[i] );
-    }
 
     $('#AbsoChat').find('#chatContent').first().html(Handler.Message);
     $('#chatContent').scrollTop( $('#chatContent')[0].scrollHeight );

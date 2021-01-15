@@ -29,8 +29,8 @@
       if ( isset($_SESSION['abso_user']) )
 			{
         echo "
-          <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/AbsoChat/Handler.js'></script>
           <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/AbsoChat/absochat.js'></script>
+          <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/AbsoChat/Handler.js'></script>
           <script type='text/javascript'>
             $(function()
             {

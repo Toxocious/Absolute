@@ -6,6 +6,11 @@ const Absolute = {
   user: {},
   messages: {},
 
+  isConnected: function()
+  {
+    return socket.connected;
+  },
+
   handleInputBox: function()
   {
     if ( !Absolute.user.connected )
@@ -15,7 +20,7 @@ const Absolute = {
   },
 
   /**
-   * Sending a message.
+   * Initialization of Absolute Chat.
    */
   Enable: function()
   {
@@ -25,10 +30,9 @@ const Absolute = {
     if ( typeof socket != 'object' )
     {
       /**
-       * Set the active prop to true.
+       * Create new array of messages.
        */
-      Absolute.active = true;
-      Absolute.user.connected = true;
+      Handler.Messages = [];
 
       /**
        * Start the connection to the server.
@@ -46,6 +50,9 @@ const Absolute = {
        */
       socket.on("connect", function()
       {
+        Absolute.active = true;
+        Absolute.user.connected = true;
+
         Handler.Clear();
         Absolute.handleInputBox();
 
@@ -89,5 +96,15 @@ const Absolute = {
         Handler.AddMessage(data);
       });
     }
+
+    Handler.Display();
+  },
+
+  /**
+   * Disabling of Absolute Chat.
+   */
+  Disable: function()
+  {
+    Absolute.active = false;
   },
 };
