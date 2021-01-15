@@ -352,6 +352,7 @@ nav > .nav-container > .nav-item.has-dropdown > .dropdown > .dropdown-item > a {
  */
 aside {
   margin: 5px 0px 5px 5px;
+  max-width: 194px;
   min-width: 194px;
 }
 aside > .panel > .head {
