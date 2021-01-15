@@ -54,6 +54,8 @@
 		<div class='flex'>
 			<div style='flex-basis: 50%;'>
 				<table class='border-gradient' style='width: 400px;'>
+					<thead>
+					</thead>
 					<tbody>
 						<tr>
 							<td colspan='2' style='height: 200px; width: 200px;'>
@@ -63,6 +65,16 @@
 								<?= ( $Clan_Data['Signature'] ? $Clan_Data['Signature'] : 'This clan has no signature set.' ); ?>
 							</td>
 						</tr>
+					</tbody>
+
+					<thead>
+						<tr>
+							<th colspan='4'>
+								Statistics
+							</th>
+						</tr>
+					</thead>
+					<tbody>
 						<tr>
 							<td colspan='2'>
 								<b>Clan Experience</b>
@@ -71,29 +83,39 @@
 								<?= $Clan_Data['Experience']; ?>
 							</td>
 						</tr>
+					</tbody>
+					
+					<thead>
 						<tr>
-						<?php
-							foreach ( $Constants->Currency as $Currency )
-							{
-								echo "
-									<td colspan='2'>
-										<img src='{$Currency['Icon']}' />
-									</td>
-								";
-							}
-						?>
+							<th colspan='4'>
+								Currencies
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<?php
+								foreach ( $Constants->Currency as $Currency )
+								{
+									echo "
+										<td colspan='2'>
+											<img src='{$Currency['Icon']}' />
+										</td>
+									";
+								}
+							?>
 						</tr>
 						<tr>
-						<?php
-							foreach ( $Constants->Currency as $Currency )
-							{
-								echo "
-									<td colspan='2'>
-										{$Clan_Data[$Currency['Value']]}
-									</td>
-								";
-							}
-						?>
+							<?php
+								foreach ( $Constants->Currency as $Currency )
+								{
+									echo "
+										<td colspan='2'>
+											{$Clan_Data[$Currency['Value']]}
+										</td>
+									";
+								}
+							?>
 						</tr>
 					</tbody>
 				</table>
