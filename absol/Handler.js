@@ -51,7 +51,7 @@ module.exports = {
     /**
      * Log the message to a log file.
      */
-    const Log = (Private.isPrivate ? `[PRIVATE TO #${Private.Private_To} ] ` : '') + `[${Current_Date}] ${Message_Data.User.Name}: ${Message_Data.Message.Content}`;
+    const Log = (Private.isPrivate ? `[PRIVATE TO #${Private.Private_To}] ` : '') + `[${Current_Date}] ${Message_Data.User.Name}: ${Message_Data.Message.Content}`;
     this.LogMessage(Log, 'chatlog.txt');
 
     /**

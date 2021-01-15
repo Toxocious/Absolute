@@ -64,7 +64,7 @@ const Handler = {
         <table style="width: 100%; height: 100%;">
           <tr>
             <td style="width: 100%; height: 100%;" valign="middle">
-              <img src='../../images/Pokemon/Sprites/Normal/359.png' />
+              <img src='https://${location.hostname}/images/Pokemon/Sprites/Normal/359.png' />
               <br />
               <b style="color: #ff0000; font-size: 14px;">Absolute Chat is offline.</b>
               <br /><br />
@@ -105,7 +105,7 @@ const Handler = {
         User: {
           ID: message.User.ID,
           Username: message.User.Name,
-          Avatar: message.User.Avatar ? message.User.Avatar : '../../images/Pokemon/0.png',
+          Avatar: message.User.Avatar ? message.User.Avatar : `https://${location.hostname}/images/Pokemon/Sprites/0.png`,
           Rank: message.User.Rank,
         },
         Message: {
@@ -141,7 +141,7 @@ const Handler = {
               ${Message_Data.Message.Timestamp}
             </div>
             <div class='master-title'>
-              <img src='https://localhost/images/Pokemon/Icons/Shiny/359.1.png' />
+              <img src='https://${location.hostname}/images/Pokemon/Icons/Normal/359.1.png' />
             </div>
             <div class="text">
               <div>
