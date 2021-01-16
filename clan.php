@@ -172,7 +172,7 @@
 								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/.php'>Clan Upgrades</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/.php'>Send A Clan-wide PM</a>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/send_message.php'>Send A Clan-wide PM</a>
 							</td>
 						</tr>
 					</tbody>
