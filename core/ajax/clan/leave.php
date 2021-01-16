@@ -108,3 +108,6 @@
     ?>
   </div>
 </div>
+
+<?php
+  require_once '../../required/layout_bottom.php';
