@@ -113,6 +113,14 @@
       if ( $Member_Data['Clan'] != $Clan_Data['ID'] )
         return false;
 
+      $Direct_Message = new DirectMessage();
+      $Participating_DM_Groups = $Direct_Message->FetchMessageList($Member_Data['ID']);
+      foreach ( $Participating_DM_Groups as $DM_Group )
+      {
+        if ( $DM_Group['Clan_ID'] == $Member_Data['Clan'] )
+          $Direct_Message->RemoveUserFromGroup($DM_Group['Group_ID'], $Member_Data['ID']);
+      }
+
       try
       {
         $Kick_Member = $PDO->prepare("UPDATE `users` SET `Clan` = 0 WHERE `id` = ? LIMIT 1");
@@ -195,10 +203,22 @@
      */
     public function LeaveClan(int $User_ID)
     {
-      global $PDO;
+      global $PDO, $User_Class;
 
       if ( !$User_ID || $User_ID < 0 )
         return false;
+
+      $Member_Data = $User_Class->FetchUserData($User_ID);
+      if ( !$Member_Data['Clan'] )
+        return false;
+
+      $Direct_Message = new DirectMessage();
+      $Participating_DM_Groups = $Direct_Message->FetchMessageList($Member_Data['ID']);
+      foreach ( $Participating_DM_Groups as $DM_Group_K => $DM_Group )
+      {
+        if ( $DM_Group['Clan_ID'] == $Member_Data['Clan'] )
+          $Direct_Message->RemoveUserFromGroup($DM_Group['Group_ID'], $Member_Data['ID']);
+      }
 
       try
       {
