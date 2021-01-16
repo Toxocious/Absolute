@@ -222,7 +222,7 @@
 
       try
       {
-        $Select_Query = $PDO->prepare("UPDATE `users` SET `Clan` = 0 WHERE `id` = ?");
+        $Select_Query = $PDO->prepare("UPDATE `users` SET `Clan` = 0, `Clan_Exp` = 0, `Clan_Rank` = 'Member', `Clan_Title` = null WHERE `id` = ? LIMIT 1");
         $Select_Query->execute([ $User_ID ]);
       }
       catch ( PDOException $e )
