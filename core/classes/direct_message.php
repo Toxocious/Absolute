@@ -441,5 +441,50 @@
 
       return true;
     }
+
+    /**
+     * Remove a user from a specified direct message group.
+     */
+    public function RemoveUserFromGroup
+    (
+      int $Group_ID,
+      int $User_ID
+    )
+    {
+      global $PDO, $User_Class;
+
+      if ( !$Group_ID || !$User_ID )
+        return false;
+
+      if ( !$this->FetchGroup($Group_ID) )
+        return false;
+
+      if ( !$this->IsParticipating($Group_ID, $User_ID) )
+        return false;
+
+      $Member_Data = $User_Class->FetchUserData($User_ID);
+
+      $Create_Message = $this->CreateMessage(
+        $Group_ID,
+        "{$Member_Data['Username']} has been removed from the group.",
+        3,
+        $Member_Data['Clan']
+      );
+
+      if ( !$Create_Message )
+        return false;
+
+      try
+      {
+        $RemoveFromGroup = $PDO->prepare("DELETE FROM `direct_message_groups` WHERE `Group_ID` = ? AND `User_ID` = ?");
+        $RemoveFromGroup->execute([ $Group_ID, $User_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
   }
   
