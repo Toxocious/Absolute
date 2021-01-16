@@ -3,9 +3,9 @@
 
   $Error = false;
 
-  if ( !isset($_POST['Title']) )
-    $_POST['Title'] = '';
-  
+  /**
+   * Check to see if an empty message is being sent.
+   */
   if ( !isset($_POST['Message']) )
   {
     $Error = true;
@@ -15,17 +15,45 @@
     ";
   }
 
-  if
-  (
-    !isset($_SESSION['direct_message']['users']) ||
-    count($_SESSION['direct_message']['users']) < 1
-  )
+  /**
+   * If a clan message is being sent, don't check to see if the message is being sent to anyone.
+   */
+  if ( !isset($_SESSION['direct_message']['clan_data']) )
   {
-    $Error = true;
+    /**
+     * Check to see if the message is being sent to at least one user.
+     */
+    if
+    (
+      !isset($_SESSION['direct_message']['users']) ||
+      count($_SESSION['direct_message']['users']) < 1
+    )
+    {
+      $Error = true;
 
-    $Text = "
-      You must select at least <b>1</b> player to send a direct message to.
-    ";
+      $Text = "
+        You must select at least <b>1</b> player to send a direct message to.
+      ";
+    }
+  }
+
+  /**
+   * Handle processing of the title.
+   * Clan Messages will default to "<Clan Name> Announcement".
+   * If no title is specified, the title shall remain blank.
+   */
+  if ( !isset($_POST['Title']) )
+  {
+    if ( isset($_SESSION['direct_message']['clan_data']) )
+    {
+      $Clan_ID = $User_Data['Clan'];
+      $_POST['Title'] = $_SESSION['direct_message']['clan_data']['Name'] . ": Clan Announcement";
+    }
+    else
+    {
+      $Clan_ID = null;
+      $_POST['Title'] = '';
+    }
   }
 
   if ( !$Error )
@@ -34,7 +62,7 @@
     $Message = Purify($_POST['Message']);
 
     $Direct_Message = new DirectMessage();
-    $Group_ID = $Direct_Message->ComposeMessage($Title, $Message, $_SESSION['direct_message']['users']);
+    $Group_ID = $Direct_Message->ComposeMessage($Title, $Message, $_SESSION['direct_message']['users'], $Clan_ID);
 
     if ( $Group_ID )
       $Text = "You have successfully started a new direct message.";
