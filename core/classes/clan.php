@@ -50,6 +50,50 @@
     }
 
     /**
+     * Fetch all given users that are in a clan.
+     * @param int $Clan_ID
+     */
+    public function FetchMembers(int $Clan_ID)
+    {
+      global $PDO;
+
+      if ( !$Clan_ID || $Clan_ID === 0 )
+        return false;
+
+      try
+      {
+        $Fetch_Clan = $PDO->prepare("SELECT `ID` FROM `clans` WHERE `ID` = ? LIMIT 1");
+        $Fetch_Clan->execute([ $Clan_ID ]);
+        $Fetch_Clan->setFetchMode(PDO::FETCH_ASSOC);
+        $Clan = $Fetch_Clan->fetch();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( !$Clan )
+        return false;
+
+      try
+      {
+        $Fetch_Members = $PDO->prepare("SELECT `id` FROM `users` WHERE `Clan` = ?");
+        $Fetch_Members->execute([ $Clan_ID ]);
+        $Fetch_Members->setFetchMode(PDO::FETCH_ASSOC);
+        $Members = $Fetch_Members->fetchAll();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( !$Members )
+        return false;
+
+      return $Members;
+    }
+
+    /**
      * Kick a member from their clan.
      * @param int $Clan_ID
      * @param int $User_ID
