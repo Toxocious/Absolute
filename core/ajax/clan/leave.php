@@ -38,30 +38,41 @@
     <?php
       if ( isset($_POST['Leave_Clan']) )
       {
-        $Leave_Status = $Clan_Class->LeaveClan($User_Data['id']);
-        
-        if ( $Leave_Status )
+        if ( $User_Data['Clan_Rank'] == 'Administrator' )
         {
-          $Leave_Message = "
-            <td>
-              <div class='success' style='margin-bottom: 0px;'>
-                You have successfully left your clan.
-              </div>
-            </td>
+          echo "
+            <div class='warning' style='margin: 0 auto;'>
+              Please transfer ownership of the clan to someone else prior to leaving the clan.
+            </div>
           ";
         }
         else
         {
-          $Leave_Message = "
-            <td>
-              <div class='error' style='margin-bottom: 0px;'>
-                An error occurred while processing your input.
-              </div>
-            </td>
-          ";
+          $Leave_Status = $Clan_Class->LeaveClan($User_Data['id']);
+          
+          if ( $Leave_Status )
+          {
+            $Leave_Message = "
+              <td>
+                <div class='success' style='margin-bottom: 0px;'>
+                  You have successfully left your clan.
+                </div>
+              </td>
+            ";
+          }
+          else
+          {
+            $Leave_Message = "
+              <td>
+                <div class='error' style='margin-bottom: 0px;'>
+                  An error occurred while processing your input.
+                </div>
+              </td>
+            ";
+          }
+  
+          echo $Leave_Message;
         }
-
-        echo $Leave_Message;
       }
       else
       {
