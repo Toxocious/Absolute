@@ -61,8 +61,6 @@
           ];
         }
       }
-
-      var_dump($_SESSION['direct_message']['users']);
     ?>
 
     <div class='warning' id='ajax-result'>
