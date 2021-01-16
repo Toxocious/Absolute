@@ -24,6 +24,15 @@
       Here, you may leave your clan.
       <br />
       Doing so is permanent, and, to rejoin the clan, you'll have to re-apply to it in the future.
+      <br /><br />
+      By leaving your clan, you agree to forfeit:
+      <br />
+      &bull; All donated currency
+      <br />
+      &bull; All earned Clan Experience
+      <br />
+      &bull; Participation in your clan's direct message group
+      <br />
     </div>
 
     <?php
