@@ -298,24 +298,24 @@
 
       $Group_ID = $this->FetchGroupID();
 
-      foreach ( $Included_Users as $User )
+      /**
+       * If a clan announcement direct message group is already created, do not create another one.
+       * Instead, fetch the group's db information, and set $Group_ID as appropriate.
+       */
+      if ( $this->FetchGroup(0, $Clan_ID) )
       {
-        $Fetched_User = $User_Class->FetchUserData($User['User_ID']);
-        
-        if ( !$Fetched_User )
-          return false;
-        
-        /**
-         * If a clan announcement direct message group is already created, do not create another one.
-         * Instead, fetch the group's db information, and set $Group_ID as appropriate.
-         */
-        if ( $this->FetchGroup(0, $Clan_ID) )
+        $Group_Data = $this->FetchGroup(0, $Clan_ID);
+        $Group_ID = $Group_Data['Group_ID'];
+      }
+      else
+      {
+        foreach ( $Included_Users as $User )
         {
-          $Group_Data = $this->FetchGroup(0, $Clan_ID);
-          $Group_ID = $Group_Data['Group_ID'];
-        }
-        else
-        {
+          $Fetched_User = $User_Class->FetchUserData($User['User_ID']);
+          
+          if ( !$Fetched_User )
+            return false;
+          
           $Create_Message_Group = $this->CreateMessageGroup($Group_ID, $Group_Title, $Message_Text, $Fetched_User['ID'], $Clan_ID);
           if ( !$Create_Message_Group )
             return false;
