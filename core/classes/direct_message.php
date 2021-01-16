@@ -48,18 +48,28 @@
      */
     public function FetchGroup
     (
-      int $Group_ID
+      int $Group_ID = null,
+      int $Clan_ID = null
     )
     {
       global $PDO;
 
-      if ( !$Group_ID )
+      if ( !$Group_ID && !$Clan_ID )
         return false;
 
       try
       {
-        $Check_Conversation = $PDO->prepare("SELECT * FROM `direct_message_groups` WHERE `Group_ID` = ? LIMIT 1");
-        $Check_Conversation->execute([ $Group_ID ]);
+        if ( $Clan_ID )
+        {
+          $Check_Conversation = $PDO->prepare("SELECT * FROM `direct_message_groups` WHERE `Clan_ID` = ? LIMIT 1");
+          $Check_Conversation->execute([ $Clan_ID ]);
+        }
+        else
+        {
+          $Check_Conversation = $PDO->prepare("SELECT * FROM `direct_message_groups` WHERE `Group_ID` = ? LIMIT 1");
+          $Check_Conversation->execute([ $Group_ID ]);
+        }
+
         $Check_Conversation->setFetchMode(PDO::FETCH_ASSOC);
         $Conversation = $Check_Conversation->fetch();
       }
@@ -175,10 +185,14 @@
       if ( !$this->IsParticipating($Conversation['Group_ID'], $User_ID) )
         return false;
 
+      $Message_Count = 1;
+      if ( count($this->FetchMessageList()) == 1 )
+        $Message_Count = 0;
+
       try
       {
-        $Fetch_Messages = $PDO->prepare("UPDATE `direct_message_groups` SET `Unread_Messages` = `Unread_Messages` + 1 WHERE `Group_ID` = ? AND `User_ID` != ?");
-        $Fetch_Messages->execute([ $Group_ID, $User_ID ]);
+        $Fetch_Messages = $PDO->prepare("UPDATE `direct_message_groups` SET `Unread_Messages` = `Unread_Messages` + ? WHERE `Group_ID` = ? AND `User_ID` != ?");
+        $Fetch_Messages->execute([ $Message_Count, $Group_ID, $User_ID ]);
         $Fetch_Messages->setFetchMode(PDO::FETCH_ASSOC);
         $Messages = $Fetch_Messages->fetchAll();
       }
@@ -266,10 +280,11 @@
     (
       string $Group_Title,
       string $Message_Text,
-      array $Included_Users
+      array $Included_Users,
+      int $Clan_ID = null
     )
     {
-      global $PDO, $User_Class;
+      global $User_Class;
 
       if ( !$Message_Text || !$Included_Users )
         return false;
@@ -279,6 +294,7 @@
       
       $Group_Title = Purify($Group_Title);
       $Message_Text = Purify($Message_Text);
+      $Clan_ID = Purify($Clan_ID);
 
       $Group_ID = $this->FetchGroupID();
 
@@ -289,14 +305,26 @@
         if ( !$Fetched_User )
           return false;
         
-        $Create_Message_Group = $this->CreateMessageGroup($Group_ID, $Group_Title, $Message_Text, $Fetched_User['ID']);
-        if ( !$Create_Message_Group )
-          return false;
+        /**
+         * If a clan announcement direct message group is already created, do not create another one.
+         * Instead, fetch the group's db information, and set $Group_ID as appropriate.
+         */
+        if ( $this->FetchGroup(0, $Clan_ID) )
+        {
+          $Group_Data = $this->FetchGroup(0, $Clan_ID);
+          $Group_ID = $Group_Data['Group_ID'];
+        }
+        else
+        {
+          $Create_Message_Group = $this->CreateMessageGroup($Group_ID, $Group_Title, $Message_Text, $Fetched_User['ID'], $Clan_ID);
+          if ( !$Create_Message_Group )
+            return false;
+        }
       }
 
       $Message_Creator = $User_Class->FetchUserData($Included_Users[0]['User_ID']);
       
-      $Create_Message = $this->CreateMessage($Group_ID, $Message_Text, $Message_Creator['ID']);
+      $Create_Message = $this->CreateMessage($Group_ID, $Message_Text, $Message_Creator['ID'], $Clan_ID);
       if ( !$Create_Message )
         return false;
 
@@ -311,7 +339,8 @@
       int $Group_ID,
       string $Group_Title,
       string $Message_Text,
-      int $User_ID
+      int $User_ID,
+      int $Clan_ID = null
     )
     {
       global $PDO, $User_Class, $User_Data;
@@ -323,6 +352,7 @@
       $Message_Text = Purify($Message_Text);
       $Group_ID = Purify($Group_ID);
       $User_ID = Purify($User_ID);
+      $Clan_ID = Purify($Clan_ID);
 
       $Fetch_User = $User_Class->FetchUserData($User_ID);
       if ( !$Fetch_User )
@@ -336,12 +366,13 @@
       {
         $Create_Message_Group = $PDO->prepare("
           INSERT INTO `direct_message_groups`
-          (`Group_ID`, `Group_Name`, `User_ID`, `Unread_Messages`, `Last_Message`)
-          VALUES (?, ?, ?, ?, ?)
+          (`Group_ID`, `Group_Name`, `Clan_ID`, `User_ID`, `Unread_Messages`, `Last_Message`)
+          VALUES (?, ?, ?, ?, ?, ?)
         ");
         $Create_Message_Group->execute([
           $Group_ID,
           $Group_Title,
+          $Clan_ID,
           $User_ID,
           $Unread_Messages,
           time()
@@ -362,7 +393,8 @@
     (
       int $Group_ID,
       string $Message_Text,
-      int $User_ID
+      int $User_ID,
+      int $Clan_ID = null
     )
     {
       global $PDO, $User_Class;
@@ -373,6 +405,7 @@
       $Message_Text = Purify($Message_Text);
       $Group_ID = Purify($Group_ID);
       $User_ID = Purify($User_ID);
+      $Clan_ID = Purify($Clan_ID);
 
       if ( !$this->FetchGroup($Group_ID) )
         return false;
@@ -390,11 +423,12 @@
       {
         $Create_Message = $PDO->prepare("
           INSERT INTO `direct_messages`
-          (`Group_ID`, `User_ID`, `Message`, `Timestamp`)
-          VALUES (?, ?, ?, ?)
+          (`Group_ID`, `Clan_ID`, `User_ID`, `Message`, `Timestamp`)
+          VALUES (?, ?, ?, ?, ?)
         ");
         $Create_Message->execute([
           $Group_ID,
+          $Clan_ID,
           $User_ID,
           $Message_Text,
           time()
