@@ -246,7 +246,7 @@
 								<b>Clan Title</b>
 							</td>
 							<td colspan='1' style='width: 25%;'>
-								<b>Clan Exp.</b>
+								<b>Clan Experience</b>
 							</td>
 						</tr>
 					</tbody>
@@ -258,8 +258,12 @@
 								
 								echo "
 									<tr>
-										<td class='" . strtolower($Member['Clan_Rank']) . "'>
-											{$Member['Username']}
+										<td>
+											<a href='" . DOMAIN_ROOT . "/profiles.php?id={$Member['ID']}'>
+												<b class='" . strtolower($Member['Clan_Rank']) . "'>
+													{$Member['Username']}
+												</b>
+											</a>
 										</td>
 										<td>
 											{$Member['Clan_Title']}
