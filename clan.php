@@ -169,7 +169,7 @@
 						</tr>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/.php'>Clan Upgrades</a>
+								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/clan_upgrades.php'>Clan Upgrades</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
 								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/send_message.php'>Send A Clan Announcement</a>
