@@ -46,7 +46,7 @@
 										{$Value['Name']}
 									</a>
 								</td>
-								<td>" . number_format($Value['Experience']) . "</td>
+								<td>" . number_format(FetchLevel($Value['Experience'], 'Clan')) . "</td>
 								<td>$" . number_format($Value['Money']) . "</td>
 							</tr>
 						";
