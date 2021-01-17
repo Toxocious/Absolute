@@ -77,10 +77,26 @@
 					<tbody>
 						<tr>
 							<td colspan='2'>
+								<b>Clan Level</b>
+							</td>
+							<td colspan='2'>
+								<?= number_format(FetchLevel($Clan_Data['Experience_Raw'], 'Clan')); ?>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='2'>
 								<b>Clan Experience</b>
 							</td>
 							<td colspan='2'>
 								<?= $Clan_Data['Experience']; ?>
+							</td>
+						</tr>
+						<tr>
+							<td colspan='2'>
+								<b>Clan Points</b>
+							</td>
+							<td colspan='2'>
+								<?= $Clan_Data['Clan_Points']; ?>
 							</td>
 						</tr>
 					</tbody>
