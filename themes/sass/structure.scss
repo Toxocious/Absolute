@@ -867,17 +867,13 @@ main
  */
 footer
 {
-  display: none;
-  visibility: hidden;
-
   bottom: 0;
-  border: 2px solid;
-  border-bottom: 0px;
+  border-top: var(--border-style);
   height: 46px;
-  margin-left: -2px;
   padding: 5px;
-  position: absolute;
-  width: 1090px;
+  position: sticky;
+  top: calc(100% - 46px);
+  width: 1092px;
   z-index: 2;
   
   display: flex;
