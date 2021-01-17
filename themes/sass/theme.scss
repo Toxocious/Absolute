@@ -415,6 +415,21 @@ footer
 {
   background: var(--color-quadternary);
   border-color: var(--color-primary);
+
+  .social-links
+  {
+    .icon
+    {
+      clip-rule: 'evenodd';
+      fill: var(--color-primary);
+      fill-rule: 'evenodd';
+      
+      &:hover
+      {
+        fill: var(--color-white);
+      }
+    }
+  }
 }
 
 /**

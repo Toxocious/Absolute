@@ -899,7 +899,16 @@ footer
     & > a
     {
       float: right;
-      transition: all 300ms;
+      height: 34px;
+      max-height: 34px;
+      transition: all 150ms;
+
+      .icon
+      {
+        height: 34px;
+        transition: all 150ms;
+        width: 34px;
+      }
     }
   }
 }
