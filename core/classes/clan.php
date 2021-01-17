@@ -44,6 +44,8 @@
         'Money_Raw' => $Clan['Money'],
         'Abso_Coins' => number_format($Clan['Abso_Coins']),
         'Abso_Coins_Raw' => $Clan['Abso_Coins'],
+        'Clan_Points' => number_format($Clan['Clan_Points']),
+        'Clan_Points_Raw' => $Clan['Clan_Points'],
         'Avatar' => ($Clan['Avatar'] ? DOMAIN_SPRITES . "/" . $Clan['Avatar'] : null),
         'Signature' => $Clan['Signature'],
       ];
