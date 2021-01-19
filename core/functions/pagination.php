@@ -17,7 +17,7 @@
     global $PDO;
 
     $SQL_Query = Purify($SQL_Query);
-    $SQL_Parameters = Purify($SQL_Parameters);
+    $SQL_Parameters = count($SQL_Parameters) > 0 ? Purify($SQL_Parameters) : null;
     $User_ID = Purify($User_ID);
     $Current_Page = Purify($Current_Page);
     $Display_Limit = Purify($Display_Limit);

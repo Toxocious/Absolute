@@ -110,9 +110,9 @@
 				return (object) $Input_As_Text;
 			case 'NULL':
 				return null;
-			case 'unknown type':
-				return false;
 		}
+
+		return false;
 	}
 
 	/**
