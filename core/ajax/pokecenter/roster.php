@@ -262,7 +262,7 @@
     }
   }
 
-  function updateBox(page)
+  function Update_Box(page)
   {
     if ( page == 'auto' )
     {
