@@ -15,7 +15,7 @@
 			</thead>
 			
 			<tbody>
-				<tr id='evoRoster'>
+				<tr id='Evo_Roster'>
 					<?php
 						for ( $i = 0; $i <= 5; $i++ )
 						{
@@ -103,10 +103,29 @@
 			success: function(data)
 			{
 				$('#Evo_Data').html(data);
+				Display_Roster();
 			},
 			error: function(data)
 			{
 				$('#Evo_Data').html(data);
+				Display_Roster();
+			}
+		});
+	}
+
+	function Display_Roster()
+	{
+		$.ajax({
+			type: 'GET',
+			url: 'core/ajax/evocenter/roster.php',
+			data: { },
+			success: function(data)
+			{
+				$('#Evo_Roster').html(data);
+			},
+			error: function(data)
+			{
+				$('#Evo_Roster').html(data);
 			}
 		});
 	}
