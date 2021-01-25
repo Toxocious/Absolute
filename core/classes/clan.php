@@ -271,4 +271,29 @@
 
       return true;
     }
+
+    /**
+     * Fetch all currently available clan upgrades.
+     */
+    public function FetchAvailableUpgrades()
+    {
+      global $PDO;
+
+      try
+      {
+        $Fetch_Upgrades = $PDO->prepare("SELECT * FROM `clan_upgrades_data`");
+        $Fetch_Upgrades->execute([ ]);
+        $Fetch_Upgrades->setFetchMode(PDO::FETCH_ASSOC);
+        $Upgrades = $Fetch_Upgrades->fetchAll();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( !$Upgrades )
+        return false;
+
+      return $Upgrades;
+    }
   }
