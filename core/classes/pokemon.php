@@ -230,7 +230,7 @@
 				$Display_Name = $Type_Display . $Pokedex['Pokemon'];
 			}
 
-			$Poke_Images = $this->FetchImages($Pokedex['Pokedex_ID'], $Pokedex['Alt_ID']);
+			$Poke_Images = $this->FetchImages($Pokedex['Pokedex_ID'], $Pokedex['Alt_ID'], $Type);
 
 			return [
 				"ID" => $Pokedex['ID'],
