@@ -273,9 +273,9 @@
     }
 
     /**
-     * Fetch all currently available clan upgrades.
+     * Fetch all possible clan upgrades.
      */
-    public function FetchAvailableUpgrades()
+    public function FetchAllClanUpgrades()
     {
       global $PDO;
 
