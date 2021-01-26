@@ -251,7 +251,7 @@
 
       $Clan_Data = $this->FetchClanData($Clan_ID);
 
-      if ( !$Clan_ID )
+      if ( !$Clan_Data )
         return false;
 
       $User_Class->RemoveCurrency($User_ID, $Currency, $Quantity);
