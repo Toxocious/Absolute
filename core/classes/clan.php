@@ -296,4 +296,90 @@
 
       return $Upgrades;
     }
+
+    /**
+     * Fetch all upgrades that are available to a given clan.
+     * @param int $Clan_ID
+     */
+    public function FetchUpgrades
+    (
+      int $Clan_ID
+    )
+    {
+      if ( !$Clan_ID )
+        return false;
+
+      $Upgrades = $this->FetchAllClanUpgrades();
+      if ( !$Upgrades )
+        return false;
+
+      foreach ( $Upgrades as $Key => $Upgrade )
+      {
+        $Upgrade['ID'] = intval($Upgrade['ID']);
+        $Upgrade_Data = $this->FetchPurchasedUpgrade($Clan_ID, $Upgrade['ID']);
+
+        if ( !$Upgrade_Data )
+        {
+          $Upgrades[$Key] = [
+            'Purchase_ID' => -1,
+            'Clan_ID' => $Clan_ID,
+            'ID' => $Upgrade['ID'],
+            'Name' => $Upgrade['Name'],
+            'Description' => $Upgrade['Description'],
+            'Base_Cost' => $Upgrade['Base_Cost'],
+            'Current_Level' => 0,
+            'Suffix' => $Upgrade['Suffix'],
+          ];
+        }
+        else
+        {
+          $Upgrades[$Key] = [
+            'Purchase_ID' => $Upgrade_Data['ID'],
+            'Clan_ID' => $Upgrade_Data['Clan_ID'],
+            'ID' => $Upgrade_Data['ID'],
+            'Name' => $Upgrade['Name'],
+            'Description' => $Upgrade['Description'],
+            'Base_Cost' => $Upgrade['Base_Cost'],
+            'Current_Level' => $Upgrade_Data['Current_Level'],
+            'Suffix' => $Upgrade['Suffix'],
+          ];
+        }
+      }
+
+      return $Upgrades;
+    }
+
+    /**
+     * Fetch the current upgrade level of a given boost, given a Clan ID and Upgrade ID.
+     * @param int $Clan_ID
+     * @param int $Upgrade_ID
+     */
+    public function FetchPurchasedUpgrade
+    (
+      int $Clan_ID,
+      int $Upgrade_ID
+    )
+    {
+      global $PDO;
+
+      if ( !$Clan_ID || !$Upgrade_ID )
+        return false;
+      
+      try
+      {
+        $Fetch_Upgrade = $PDO->prepare("SELECT * FROM `clan_upgrades_purchased` WHERE `Clan_ID` = ? AND `Upgrade_ID` = ? LIMIT 1");
+        $Fetch_Upgrade->execute([ $Clan_ID, $Upgrade_ID ]);
+        $Fetch_Upgrade->setFetchMode(PDO::FETCH_ASSOC);
+        $Upgrade = $Fetch_Upgrade->fetch();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( !$Upgrade )
+        return false;
+
+      return $Upgrade;
+    }
   }
