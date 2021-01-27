@@ -55,7 +55,8 @@
 
             foreach ( $Upgrade['Cost'] as $Cost )
             {
-              $Upgrade_Cost_Text .= number_format($Cost['Quantity']) . " " . $Cost['Name'] . "<br />";
+              if ( $Cost['Quantity'] > 0 )
+                $Upgrade_Cost_Text .= number_format($Cost['Quantity']) . " " . $Cost['Name'] . "<br />";
             }
 
             echo "
