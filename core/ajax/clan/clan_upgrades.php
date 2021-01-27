@@ -35,6 +35,33 @@
       Here, you may upgrade various aspects of your clan that will help to further your progression as a clan.
     </div>
 
+    <table class='border-gradient' style='flex-basis: 400px; margin-bottom: 5px; width: 400px;'>
+      <tbody>
+        <tr>
+          <td colspan='1' style='width: calc(100% / 3);'>
+            <b>Clan Points</b>
+          </td>
+          <td colspan='1' style='width: calc(100% / 3);'>
+            <b>Money</b>
+          </td>
+          <td colspan='1' style='width: calc(100% / 3);'>
+            <b>Absolute Coins</b>
+          </td>
+        </tr>
+        <tr>
+          <td colspan='1'>
+            <?= $Clan_Data['Clan_Points']; ?>
+          </td>
+          <td colspan='1'>
+            <?= $Clan_Data['Money']; ?>
+          </td>
+          <td colspan='1'>
+            <?= $Clan_Data['Abso_Coins']; ?>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
     <table class='border-gradient' style='flex-basis: 600px; width: 600px;'>
       <?php
         $Upgrades_List = $Clan_Class->FetchUpgrades($Clan_Data['ID']);
