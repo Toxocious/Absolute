@@ -326,9 +326,22 @@
             'ID' => $Upgrade['ID'],
             'Name' => $Upgrade['Name'],
             'Description' => $Upgrade['Description'],
-            'Base_Cost' => $Upgrade['Base_Cost'],
             'Current_Level' => 0,
             'Suffix' => $Upgrade['Suffix'],
+            'Cost' => [
+              'Clan_Points' => [
+                'Name' => 'Clan Points',
+                'Quantity' => $Upgrade['Clan_Point_Cost'],
+              ],
+              'Money' => [
+                'Name' => 'Money',
+                'Quantity' => $Upgrade['Money_Cost'],
+              ],
+              'Abso_Coin' => [
+                'Name' => 'Absolute Coins',
+                'Quantity' => $Upgrade['Abso_Coin_Cost'],
+              ],
+            ],
           ];
         }
         else
@@ -339,9 +352,22 @@
             'ID' => $Upgrade_Data['ID'],
             'Name' => $Upgrade['Name'],
             'Description' => $Upgrade['Description'],
-            'Base_Cost' => $Upgrade['Base_Cost'],
             'Current_Level' => $Upgrade_Data['Current_Level'],
             'Suffix' => $Upgrade['Suffix'],
+            'Cost' => [
+              'Clan_Points' => [
+                'Name' => 'Clan Points',
+                'Quantity' => $Upgrade['Clan_Point_Cost'] + $Upgrade_Data['Current_Level'],
+              ],
+              'Money' => [
+                'Name' => 'Money',
+                'Quantity' => $Upgrade['Money_Cost'] * ($Upgrade_Data['Current_Level'] + 1),
+              ],
+              'Abso_Coin' => [
+                'Name' => 'Absolute Coins',
+                'Quantity' => $Upgrade['Abso_Coin_Cost'] * ($Upgrade_Data['Current_Level'] + 1),
+              ],
+            ],
           ];
         }
       }

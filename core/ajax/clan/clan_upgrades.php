@@ -51,11 +51,12 @@
         {
           foreach ( $Upgrades_List as $Upgrade )
           {
-            $Upgrade_Data = [
-              'Clan_Points' => $Upgrade['Current_Level'] + $Upgrade['Base_Cost'],
-              'Money' => ($Upgrade['Current_Level'] + $Upgrade['Base_Cost']) * 100000,
-              'Abso_Coin' => ($Upgrade['Current_Level'] + $Upgrade['Base_Cost']) * 10,
-            ];
+            $Upgrade_Cost_Text = '';
+
+            foreach ( $Upgrade['Cost'] as $Cost )
+            {
+              $Upgrade_Cost_Text .= number_format($Cost['Quantity']) . " " . $Cost['Name'] . "<br />";
+            }
 
             echo "
               <thead>
@@ -76,11 +77,7 @@
                     <b>Upgrade Cost</b>
                   </td>
                   <td colspan='1' rowspan='2' style='padding: 5px; width: 150px;'>
-                    {$Upgrade_Data['Clan_Points']} Clan Points
-                    <br />
-                    &#36;" . number_format($Upgrade_Data['Money']) . "
-                    <br />
-                    " . $Upgrade_Data['Abso_Coin'] . " Absolute Coin(s)
+                    {$Upgrade_Cost_Text}
                   </td>
                   <td colspan='1' style='padding: 5px; width: 150px;'>
                     <b>Current Level</b>
