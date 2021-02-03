@@ -1,5 +1,5 @@
 <?php
-  require_once '../../required/layout_top.php';
+  require_once '../core/required/layout_top.php';
 
   $Clan_Data = $Clan_Class->FetchClanData($User_Data['Clan']);
 ?>
@@ -192,4 +192,4 @@
 </div>
 
 <?php
-  require_once '../../required/layout_bottom.php';
+  require_once '../core/required/layout_bottom.php';

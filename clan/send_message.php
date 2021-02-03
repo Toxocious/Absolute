@@ -1,5 +1,5 @@
 <?php
-  require_once '../../required/layout_top.php';
+  require_once '../core/required/layout_top.php';
 
   /**
    * Reset the compose session data.
@@ -127,4 +127,4 @@
 </script>
 
 <?php
-  require_once '../../required/layout_bottom.php';
+  require_once '../core/required/layout_bottom.php';

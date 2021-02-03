@@ -152,10 +152,10 @@
 					<tbody>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/leave.php'>Leave Clan</a>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/leave.php'>Leave Clan</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/donate.php'>Donate to Clan</a>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/donate.php'>Donate to Clan</a>
 							</td>
 						</tr>
 					</tbody>
@@ -177,18 +177,18 @@
 					<tbody>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/manage_members.php'>Manage Members</a>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/manage_members.php'>Manage Members</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/manage_clan.php'>Manage Clan</a>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/manage_clan.php'>Manage Clan</a>
 							</td>
 						</tr>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/clan_upgrades.php'>Clan Upgrades</a>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/clan_upgrades.php'>Clan Upgrades</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/send_message.php'>Send A Clan Announcement</a>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/send_message.php'>Send A Clan Announcement</a>
 							</td>
 						</tr>
 					</tbody>
