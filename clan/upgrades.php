@@ -36,18 +36,20 @@
     </div>
 
     <table class='border-gradient' style='flex-basis: 400px; margin-bottom: 5px; width: 400px;'>
-      <tbody>
+      <thead>
         <tr>
-          <td colspan='1' style='width: calc(100% / 3);'>
+          <th colspan='1' style='width: calc(100% / 3);'>
             <b>Clan Points</b>
-          </td>
-          <td colspan='1' style='width: calc(100% / 3);'>
+          </th>
+          <th colspan='1' style='width: calc(100% / 3);'>
             <b>Money</b>
-          </td>
-          <td colspan='1' style='width: calc(100% / 3);'>
+          </th>
+          <th colspan='1' style='width: calc(100% / 3);'>
             <b>Absolute Coins</b>
-          </td>
+          </th>
         </tr>
+      </thead>
+      <tbody>
         <tr>
           <td colspan='1'>
             <?= $Clan_Data['Clan_Points']; ?>
