@@ -185,7 +185,7 @@
 						</tr>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/clan/clan_upgrades.php'>Clan Upgrades</a>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/upgrades.php'>Clan Upgrades</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
 								<a href='<?= DOMAIN_ROOT; ?>/clan/send_message.php'>Send A Clan Announcement</a>
