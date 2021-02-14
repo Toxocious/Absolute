@@ -106,7 +106,7 @@
   {
     $.ajax({
       type: 'POST',
-      url: 'display_member.php',
+      url: '<?= DOMAIN_ROOT; ?>/core/ajax/clan/display_member.php',
       data: { User_ID: User_ID },
       success: (data) =>
       {
@@ -123,7 +123,7 @@
   {
     $.ajax({
       type: 'GET',
-      url: 'member_list.php',
+      url: '<?= DOMAIN_ROOT; ?>/core/ajax/clan/member_list.php',
       data: { },
       success: (data) =>
       {
