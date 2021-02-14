@@ -142,7 +142,7 @@
 
     $.ajax({
       type: 'POST',
-      url: 'manage_title.php',
+      url: '<?= DOMAIN_ROOT; ?>/core/ajax/clan/manage_title.php',
       data: { User_ID: User_ID, Title: Title },
       success: (data) =>
       {
@@ -160,7 +160,7 @@
   {
     $.ajax({
       type: 'POST',
-      url: 'kick_member.php',
+      url: '<?= DOMAIN_ROOT; ?>/core/ajax/clan/kick_member.php',
       data: { User_ID: User_ID },
       success: (data) =>
       {
