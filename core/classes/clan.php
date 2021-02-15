@@ -440,4 +440,66 @@
 
       return $Upgrade;
     }
+
+    /**
+     * Fetch the data of a given clan upgrade.
+     * @param int $Upgrade_ID
+     */
+    public function PurchaseUpgrade
+    (
+      int $Clan_ID,
+      int $Upgrade_ID
+    )
+    {
+      global $PDO;
+
+      if ( !$Clan_ID || !$Upgrade_ID )
+        return false;
+
+      $Clan_Data = $this->FetchClanData($Clan_ID);
+      if ( !$Clan_Data )
+        return false;
+
+      $Upgrade_Data = $this->FetchUpgradeData($Upgrade_ID);
+      if ( !$Upgrade_Data )
+        return false;
+
+      $Purchased_Upgrade = $this->FetchPurchasedUpgrade($Clan_Data['ID'], $Upgrade_Data['ID']);
+      if ( $Purchased_Upgrade )
+      {
+        $New_Level = $Purchased_Upgrade['Current_Level'] + 1;
+
+        try
+        {
+          $Purchase_Upgrade = $PDO->prepare("
+            UPDATE `clan_upgrades_purchased`
+            SET `Current_Level` = ?
+            WHERE `Clan_ID` = ? AND `Upgrade_ID` = ?
+          ");
+          $Purchase_Upgrade->execute([ $New_Level, $Clan_Data['ID'], $Upgrade_Data['ID'] ]);
+        }
+        catch ( PDOException $e )
+        {
+          HandleError($e);
+        }
+      }
+      else
+      {
+        try
+        {
+          $Purchase_Upgrade = $PDO->prepare("
+            INSERT INTO `clan_upgrades_purchased`
+            (`Clan_ID`, `Upgrade_ID`)
+            VALUES (?, ?)
+          ");
+          $Purchase_Upgrade->execute([ $Clan_Data['ID'], $Upgrade_Data['ID'] ]);
+        }
+        catch ( PDOException $e )
+        {
+          HandleError($e);
+        }
+      }
+
+      return true;
+    }
   }
