@@ -500,6 +500,6 @@
         }
       }
 
-      return true;
+      return $this->FetchPurchasedUpgrade($Clan_Data['ID'], $Upgrade_Data['ID']);
     }
   }
