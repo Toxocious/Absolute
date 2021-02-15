@@ -3,7 +3,8 @@
   {
     public $PDO;
 
-		public function __construct()
+		public function __construct
+    ()
 		{
 			global $PDO;
 			$this->PDO = $PDO;
@@ -13,7 +14,10 @@
      * Fetch database information for a Clan, given a Clan ID.
      * @param int $Clan_ID
      */
-    public function FetchClanData(int $Clan_ID)
+    public function FetchClanData
+    (
+      int $Clan_ID
+    )
     {
       global $PDO;
 
@@ -55,7 +59,10 @@
      * Fetch all given users that are in a clan.
      * @param int $Clan_ID
      */
-    public function FetchMembers(int $Clan_ID)
+    public function FetchMembers
+    (
+      int $Clan_ID
+    )
     {
       global $PDO;
 
@@ -100,7 +107,11 @@
      * @param int $Clan_ID
      * @param int $User_ID
      */
-    public function KickMember(int $Clan_ID, int $User_ID)
+    public function KickMember
+    (
+      int $Clan_ID,
+      int $User_ID
+    )
     {
       global $PDO, $User_Class;
 
@@ -142,7 +153,12 @@
      * @param int $User_ID
      * @param string $Title
      */
-    public function UpdateTitle(int $Clan_ID, int $User_ID, string $Title)
+    public function UpdateTitle
+    (
+      int $Clan_ID,
+      int $User_ID,
+      string $Title
+    )
     {
       global $PDO, $User_Class;
 
@@ -175,7 +191,11 @@
      * @param int $Clan_ID
      * @param string $Signature
      */
-    public function UpdateSignature(int $Clan_ID, string $Signature)
+    public function UpdateSignature
+    (
+      int $Clan_ID,
+      string $Signature
+    )
     {
       global $PDO, $User_Class;
 
@@ -203,7 +223,10 @@
      * Remove a user from a clan.
      * @param int $User_ID
      */
-    public function LeaveClan(int $User_ID)
+    public function LeaveClan
+    (
+      int $User_ID
+    )
     {
       global $PDO, $User_Class;
 
@@ -236,13 +259,51 @@
     }
 
     /**
+     * Update the currencies of a given clan.
+     * @param int $Clan_ID
+     * @param array $Currencies
+     */
+    public function UpdateCurrencies
+    (
+      int $Clan_ID,
+      array $Currencies
+    )
+    {
+      global $PDO;
+
+      foreach ( $Currencies as $Currency => $Quantity )
+      {
+        try
+        {
+          $Update_Currency = $PDO->prepare("
+            UPDATE `clans`
+            SET `{$Currency}` = ?
+            WHERE `ID` = ?
+            LIMIT 1
+          ");
+          $Update_Currency->execute([ $Quantity, $Clan_ID ]);
+        }
+        catch ( PDOException $e )
+        {
+          HandleError($e);
+        }
+      }
+    }
+
+    /**
      * Donate a given currency to a clan.
      * @param int $User_ID - ID of the User donating the currency.
      * @param int $Clan_ID - ID of the Clan that the user is donating to.
      * @param string $Currency - Value of the Currency that is being donated.
      * @param int $Quantity - Amount of currency being donated.
      */
-    public function DonateCurrency(int $User_ID, int $Clan_ID, string $Currency, int $Quantity)
+    public function DonateCurrency
+    (
+      int $User_ID,
+      int $Clan_ID,
+      string $Currency,
+      int $Quantity
+    )
     {
       global $PDO, $User_Class;
 
@@ -307,7 +368,8 @@
     /**
      * Fetch all possible clan upgrades.
      */
-    public function FetchAllClanUpgrades()
+    public function FetchAllClanUpgrades
+    ()
     {
       global $PDO;
 
