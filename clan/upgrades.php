@@ -55,13 +55,13 @@
       </thead>
       <tbody>
         <tr>
-          <td colspan='1'>
+          <td colspan='1' id='Clan_Points'>
             <?= $Clan_Data['Clan_Points']; ?>
           </td>
-          <td colspan='1'>
+          <td colspan='1' id='Money'>
             <?= $Clan_Data['Money']; ?>
           </td>
-          <td colspan='1'>
+          <td colspan='1' id='Abso_Coins'>
             <?= $Clan_Data['Abso_Coins']; ?>
           </td>
         </tr>
@@ -162,6 +162,7 @@
       {
         if ( req.status === 200 )
         {
+          FetchCurrencies();
           document.querySelector('#AJAXRequest').innerHTML = req.responseText;
           resolve(req.response);
         }
@@ -171,7 +172,34 @@
           reject(Error(req.statusText))
         }
       };
-    })
+    });
+  }
+
+  const FetchCurrencies = () =>
+  {
+    return new Promise((resolve, reject) =>
+    {
+      const req = new XMLHttpRequest();
+      req.open('GET', '<?= DOMAIN_ROOT; ?>/core/ajax/clan/fetch_currencies.php');
+      req.send();
+      req.onerror = (error) => reject(Error(`Network Error: ${error}`));
+      req.onload = () =>
+      {
+        if ( req.status === 200 )
+        {
+          let Currencies = JSON.parse(req.responseText);
+          Object.keys(Currencies).map((Currency) =>
+          {
+            document.querySelector(`#${Currency}`).innerHTML = Currencies[Currency]
+          });
+          resolve(req.response);
+        }
+        else
+        {
+          reject(Error(req.statusText))
+        }
+      };
+    });
   }
 </script>
 
