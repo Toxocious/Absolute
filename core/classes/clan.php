@@ -273,6 +273,38 @@
     }
 
     /**
+     * Fetch the data of a given clan upgrade.
+     * @param int $Upgrade_ID
+     */
+    public function FetchUpgradeData
+    (
+      int $Upgrade_ID
+    )
+    {
+      global $PDO;
+
+      if ( !$Upgrade_ID )
+        return false;
+
+      try
+      {
+        $Fetch_Upgrade = $PDO->prepare("SELECT * FROM `clan_upgrades_data` WHERE `ID` = ? LIMIT 1");
+        $Fetch_Upgrade->execute([ $Upgrade_ID ]);
+        $Fetch_Upgrade->setFetchMode(PDO::FETCH_ASSOC);
+        $Upgrade_Data = $Fetch_Upgrade->fetch();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( !$Upgrade_Data )
+        return false;
+
+      return $Upgrade_Data;
+    }
+
+    /**
      * Fetch all possible clan upgrades.
      */
     public function FetchAllClanUpgrades()
