@@ -35,6 +35,10 @@
       Here, you may upgrade various aspects of your clan that will help to further your progression as a clan.
     </div>
 
+    <div class='warning' id='AJAXRequest'>
+      Awaiting the purchase of an upgrade.
+    </div>
+
     <table class='border-gradient' style='flex-basis: 400px; margin-bottom: 5px; width: 400px;'>
       <thead>
         <tr>
@@ -139,6 +143,37 @@
     </table>
   </div>
 </div>
+
+<script type='text/javascript'>
+  const PurchaseUpgrade = (Upgrade_ID) =>
+  {
+    const Upgrade_Data = new FormData();
+    Upgrade_Data.append('Upgrade_ID', Upgrade_ID);
+
+    document.querySelector('#AJAXRequest').innerHTML = 'Loading';
+
+    return new Promise((resolve, reject) =>
+    {
+      const req = new XMLHttpRequest();
+      req.open('POST', '<?= DOMAIN_ROOT; ?>/core/ajax/clan/purchase_upgrade.php');
+      req.send(Upgrade_Data);
+      req.onerror = (error) => reject(Error(`Network Error: ${error}`));
+      req.onload = () =>
+      {
+        if ( req.status === 200 )
+        {
+          document.querySelector('#AJAXRequest').innerHTML = req.responseText;
+          resolve(req.response);
+        }
+        else
+        {
+          document.querySelector('#AJAXRequest').innerHTML = req.statusText;
+          reject(Error(req.statusText))
+        }
+      };
+    })
+  }
+</script>
 
 <?php
   require_once '../core/required/layout_bottom.php';
