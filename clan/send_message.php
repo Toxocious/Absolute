@@ -34,7 +34,7 @@
 ?>
 
 <div class='panel content'>
-  <div class='head'>Manage Clan Members</div>
+  <div class='head'>Send Clan Announcement</div>
   <div class='body' style='padding: 5px;'>
     <?php
       if ( $Error_Text !== '' )

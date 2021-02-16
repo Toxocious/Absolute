@@ -5,7 +5,7 @@
 ?>
 
 <div class='panel content'>
-  <div class='head'>Manage Clan Members</div>
+  <div class='head'>Manage Clan</div>
   <div class='body' style='padding: 5px;'>
     <?php
       if ( !$Clan_Data )
