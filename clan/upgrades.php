@@ -75,9 +75,15 @@
         if ( !$Upgrades_List )
         {
           echo "
-            <div class='error'>
-              An error occurred while attempting to fetch the available upgrades for your clan.
-            </div>
+            <tbody>
+              <tr>
+                <td>
+                  <div class='error'>
+                    An error occurred while attempting to fetch the available upgrades for your clan.
+                  </div>
+                </td>
+              </tr>
+            </tbody>
           ";
         }
         else
