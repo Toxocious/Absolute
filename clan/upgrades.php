@@ -90,12 +90,18 @@
         {
           foreach ( $Upgrades_List as $Index => $Upgrade )
           {
+            $Can_Purchase = true;
             $Upgrade_Cost_Text = '';
 
-            foreach ( $Upgrade['Cost'] as $Cost )
+            foreach ( $Upgrade['Cost'] as $Index => $Cost )
             {
               if ( $Cost['Quantity'] > 0 )
+              {
+                if ( $Cost['Quantity'] > $Clan_Data[$Index . '_Raw'])
+                  $Can_Purchase = false;
+
                 $Upgrade_Cost_Text .= number_format($Cost['Quantity']) . " " . $Cost['Name'] . "<br />";
+              }
             }
 
             echo "
@@ -136,7 +142,7 @@
                 </tr>
                 <tr>
                   <td colspan='4'>
-                    <button onclick='PurchaseUpgrade({$Upgrade['ID']});'>
+                    <button id='Upgrade_{$Upgrade['ID']}_Button' onclick='PurchaseUpgrade({$Upgrade['ID']});'" . ($Can_Purchase ? '' : ' disabled') . ">
                       Purchase Upgrade
                     </button>
                   </td>
@@ -209,12 +215,12 @@
     });
   }
 
-  const FetchUpgrade = (Upgrade_ID) =>
+  const FetchUpgrade = () =>
   {
     return new Promise((resolve, reject) =>
     {
       const req = new XMLHttpRequest();
-      req.open('GET', '<?= DOMAIN_ROOT; ?>/core/ajax/clan/fetch_upgrade.php?Upgrade_ID=' + Upgrade_ID);
+      req.open('GET', '<?= DOMAIN_ROOT; ?>/core/ajax/clan/fetch_upgrade.php');
       req.send(null);
       req.onerror = (error) => reject(Error(`Network Error: ${error}`));
       req.onload = () =>
@@ -222,9 +228,13 @@
         if ( req.status === 200 )
         {
           const Upgrade_Data = JSON.parse(req.responseText);
-          document.querySelector(`#Upgrade_${Upgrade_ID}_Bonus`).innerHTML = Upgrade_Data.Bonus;
-          document.querySelector(`#Upgrade_${Upgrade_ID}_Cost`).innerHTML = Upgrade_Data.Cost;
-          document.querySelector(`#Upgrade_${Upgrade_ID}_Level`).innerHTML = Upgrade_Data.Level;
+          for ( let i = 1; i <= <?= count($Upgrades_List); ?>; i++ )
+          {
+            document.querySelector(`#Upgrade_${i}_Bonus`).innerHTML = Upgrade_Data[i - 1]['Bonus'];
+            document.querySelector(`#Upgrade_${i}_Cost`).innerHTML = Upgrade_Data[i - 1]['Cost'];
+            document.querySelector(`#Upgrade_${i}_Level`).innerHTML = Upgrade_Data[i - 1]['Level'];
+            document.querySelector(`#Upgrade_${i}_Button`).disabled = Upgrade_Data[i - 1]['Disabled'];
+          }
           resolve(req.response);
         }
         else

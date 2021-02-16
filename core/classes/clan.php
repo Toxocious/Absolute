@@ -451,15 +451,15 @@
             'Cost' => [
               'Clan_Points' => [
                 'Name' => 'Clan Points',
-                'Quantity' => $Upgrade['Clan_Point_Cost'] + $Upgrade_Data['Current_Level'],
+                'Quantity' => $Upgrade['Clan_Points_Cost'] + $Upgrade_Data['Current_Level'],
               ],
               'Money' => [
                 'Name' => 'Money',
                 'Quantity' => $Upgrade['Money_Cost'] * ($Upgrade_Data['Current_Level'] + 1),
               ],
-              'Abso_Coin' => [
+              'Abso_Coins' => [
                 'Name' => 'Absolute Coins',
-                'Quantity' => $Upgrade['Abso_Coin_Cost'] * ($Upgrade_Data['Current_Level'] + 1),
+                'Quantity' => $Upgrade['Abso_Coins_Cost'] * ($Upgrade_Data['Current_Level'] + 1),
               ],
             ],
           ];

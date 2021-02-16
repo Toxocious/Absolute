@@ -34,14 +34,14 @@
         {
           $Upgrade_Cost = [
             'Money' => $Clan_Upgrades[$Upgrade_Data['ID'] - 1]['Cost']['Money']['Quantity'],
-            'Abso_Coin' => $Clan_Upgrades[$Upgrade_Data['ID'] - 1]['Cost']['Abso_Coin']['Quantity'],
+            'Abso_Coins' => $Clan_Upgrades[$Upgrade_Data['ID'] - 1]['Cost']['Abso_Coins']['Quantity'],
             'Clan_Points' => $Clan_Upgrades[$Upgrade_Data['ID'] - 1]['Cost']['Clan_Points']['Quantity'],
           ];
 
           if
           (
             $Clan_Data['Money_Raw'] >= $Upgrade_Cost['Money'] &&
-            $Clan_Data['Abso_Coins_Raw'] >= $Upgrade_Cost['Abso_Coin'] &&
+            $Clan_Data['Abso_Coins_Raw'] >= $Upgrade_Cost['Abso_Coins'] &&
             $Clan_Data['Clan_Points_Raw'] >= $Upgrade_Cost['Clan_Points']
           )
           {
@@ -53,7 +53,7 @@
                 $Clan_Data['ID'],
                 [
                   'Money' => $Clan_Data['Money_Raw'] - $Upgrade_Cost['Money'],
-                  'Abso_Coins' => $Clan_Data['Abso_Coins_Raw'] - $Upgrade_Cost['Abso_Coin'],
+                  'Abso_Coins' => $Clan_Data['Abso_Coins_Raw'] - $Upgrade_Cost['Abso_Coins'],
                   'Clan_Points' => $Clan_Data['Clan_Points_Raw'] - $Upgrade_Cost['Clan_Points'],
                 ]
               );
