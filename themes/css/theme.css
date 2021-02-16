@@ -44,14 +44,18 @@ button {
   border-color: var(--border-color-secondary);
   color: var(--color-white);
 }
-input[type=button].disabled,
+input[type=button].disabled, input[type=button]:disabled,
 input[type=submit].disabled,
-button.disabled {
+input[type=submit]:disabled,
+button.disabled,
+button:disabled {
   background: linear-gradient(180deg, var(--color-light-grey) 0, var(--color-dark-grey));
 }
-input[type=button]:not(.disabled):hover,
+input[type=button]:not(.disabled):hover, input[type=button]:disabled:hover,
 input[type=submit]:not(.disabled):hover,
-button:not(.disabled):hover {
+input[type=submit]:disabled:hover,
+button:not(.disabled):hover,
+button:disabled:hover {
   background: linear-gradient(180deg, var(--color-primary) 0, var(--color-quinary));
 }
 

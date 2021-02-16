@@ -58,12 +58,14 @@ button
   border-color: var(--border-color-secondary);
   color: var(--color-white);
   
-  &.disabled
+  &.disabled,
+  &:disabled
   {
     background: linear-gradient(180deg, var(--color-light-grey) 0, var(--color-dark-grey));
   }
 
-  &:not(.disabled):hover
+  &:not(.disabled):hover,
+  &:disabled:hover
   {
     background: linear-gradient(180deg, var(--color-primary) 0, var(--color-quinary));
   }
