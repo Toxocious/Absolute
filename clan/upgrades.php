@@ -88,7 +88,7 @@
         }
         else
         {
-          foreach ( $Upgrades_List as $Upgrade )
+          foreach ( $Upgrades_List as $Index => $Upgrade )
           {
             $Upgrade_Cost_Text = '';
 
@@ -116,13 +116,13 @@
                   <td colspan='1' rowspan='2' style='padding: 5px; width: 150px;'>
                     <b>Upgrade Cost</b>
                   </td>
-                  <td colspan='1' rowspan='2' style='padding: 5px; width: 150px;'>
+                  <td id='Upgrade_{$Upgrade['ID']}_Cost' colspan='1' rowspan='2' style='padding: 5px; width: 150px;'>
                     {$Upgrade_Cost_Text}
                   </td>
                   <td colspan='1' style='padding: 5px; width: 150px;'>
                     <b>Current Level</b>
                   </td>
-                  <td colspan='1' style='padding: 5px; width: 150px;'>
+                  <td id='Upgrade_{$Upgrade['ID']}_Level' colspan='1' style='padding: 5px; width: 150px;'>
                     {$Upgrade['Current_Level']}
                   </td>
                 </tr>
@@ -130,7 +130,7 @@
                   <td colspan='1'>
                     <b>Current Bonus</b>
                   </td>
-                  <td colspan='1'>
+                  <td id='Upgrade_{$Upgrade['ID']}_Bonus' colspan='1'>
                     +{$Upgrade['Current_Level']}{$Upgrade['Suffix']}
                   </td>
                 </tr>
@@ -169,6 +169,7 @@
         if ( req.status === 200 )
         {
           FetchCurrencies();
+          FetchUpgrade(Upgrade_ID);
           document.querySelector('#AJAXRequest').innerHTML = req.responseText;
           resolve(req.response);
         }
@@ -198,6 +199,32 @@
           {
             document.querySelector(`#${Currency}`).innerHTML = Currencies[Currency]
           });
+          resolve(req.response);
+        }
+        else
+        {
+          reject(Error(req.statusText))
+        }
+      };
+    });
+  }
+
+  const FetchUpgrade = (Upgrade_ID) =>
+  {
+    return new Promise((resolve, reject) =>
+    {
+      const req = new XMLHttpRequest();
+      req.open('GET', '<?= DOMAIN_ROOT; ?>/core/ajax/clan/fetch_upgrade.php?Upgrade_ID=' + Upgrade_ID);
+      req.send(null);
+      req.onerror = (error) => reject(Error(`Network Error: ${error}`));
+      req.onload = () =>
+      {
+        if ( req.status === 200 )
+        {
+          const Upgrade_Data = JSON.parse(req.responseText);
+          document.querySelector(`#Upgrade_${Upgrade_ID}_Bonus`).innerHTML = Upgrade_Data.Bonus;
+          document.querySelector(`#Upgrade_${Upgrade_ID}_Cost`).innerHTML = Upgrade_Data.Cost;
+          document.querySelector(`#Upgrade_${Upgrade_ID}_Level`).innerHTML = Upgrade_Data.Level;
           resolve(req.response);
         }
         else
