@@ -212,7 +212,7 @@
 					<tbody>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
-								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/.php'>Clan Option Link</a>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/disband.php'>Disband Clan</a>
 							</td>
 							<td colspan='1' style='width: 50%;'>
 								<a href='<?= DOMAIN_ROOT; ?>/core/ajax/clan/.php'>Clan Option Link</a>
