@@ -220,6 +220,46 @@
     }
 
     /**
+     * Disband a clan.
+     * @param int $Clan_ID
+     */
+    public function DisbandClan
+    (
+      int $Clan_ID
+    )
+    {
+      global $PDO;
+
+      if ( !$Clan_ID )
+        return false;
+
+      $Clan_Members = $this->FetchMembers($Clan_ID);
+      if ( !$Clan_Members )
+        return false;
+
+      foreach ( $Clan_Members as $Member )
+        $this->LeaveClan($Member['id']);
+
+      try
+      {
+        $Disband_Clan = $PDO->prepare("DELETE FROM `clans` WHERE `ID` = ? LIMIT 1");
+        $Disband_Clan->execute([ $Clan_ID ]);
+
+        $Remove_Donations = $PDO->prepare("DELETE FROM `clan_donations` WHERE `Clan_ID` = ?");
+        $Remove_Donations->execute([ $Clan_ID ]);
+        
+        $Remove_Upgrades = $PDO->prepare("DELETE FROM `clan_upgrades_purchased` WHERE `Clan_ID` = ?");
+        $Remove_Upgrades->execute([ $Clan_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
      * Remove a user from a clan.
      * @param int $User_ID
      */
