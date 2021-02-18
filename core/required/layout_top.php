@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?= $Current_Page['Name']; ?> :: The Pok&eacute;mon Absolute</title>
+		<title><?= $Current_Page['Name']; ?> &mdash; The Pok&eacute;mon Absolute</title>
 		<link href='<?= DOMAIN_SPRITES; ?>/Pokemon/Icons/Normal/359-mega.png' rel='shortcut icon'>
 
 		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= ($User_Data['Theme'] ? $User_Data['Theme'] : 'absol'); ?>.css' />
