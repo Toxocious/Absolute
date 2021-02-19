@@ -2,6 +2,8 @@
   require_once '../core/required/layout_top.php';
 
   $Clan_Data = $Clan_Class->FetchClanData($User_Data['Clan']);
+
+  $Disbanded = false;
 ?>
 
 <div class='panel content'>
@@ -60,6 +62,8 @@
             $Disband_Clan = $Clan_Class->DisbandClan($Clan_Data['ID']);
             if ( $Disband_Clan )
             {
+              $Disbanded = true;
+
               echo "
                 <div class='success'>
                   You have successfully disbanded your clan.
@@ -93,6 +97,9 @@
           ";
         }
       }
+
+      if ( $Disbanded )
+      {
     ?>
 
     <form method='POST'>
@@ -133,6 +140,10 @@
         </tbody>
       </table>
     </form>
+
+    <?php
+      }
+    ?>
   </div>
 </div>
 
