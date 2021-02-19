@@ -117,7 +117,10 @@
     {
       global $PDO, $User_Class;
 
-      if ( !$Clan_ID || !$User_ID || $Clan_Rank )
+      if ( !$Clan_ID || !$User_ID || !$Clan_Rank )
+        return false;
+
+      if ( !in_array($Clan_Rank, ['Member', 'Moderator', 'Administrator']) )
         return false;
 
       $Clan_Data = $this->FetchClanData($Clan_ID);
