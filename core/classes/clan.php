@@ -103,6 +103,45 @@
     }
 
     /**
+     * Set a clan member's clan rank.
+     * @param int $Clan_ID
+     * @param int $User_ID
+     * @param int $Clan_Rank
+     */
+    public function UpdateRank
+    (
+      int $Clan_ID,
+      int $User_ID,
+      string $Clan_Rank
+    )
+    {
+      global $PDO, $User_Class;
+
+      if ( !$Clan_ID || !$User_ID || $Clan_Rank )
+        return false;
+
+      $Clan_Data = $this->FetchClanData($Clan_ID);
+      if ( !$Clan_Data )
+        return false;
+
+      $Member_Data = $User_Class->FetchUserData($User_ID);
+      if ( $Member_Data['Clan'] != $Clan_Data['ID'] )
+        return false;
+
+      try
+      {
+        $Update_Rank = $PDO->prepare("UPDATE `users` SET `Clan_Rank` = ? WHERE `id` = ? AND `Clan` = ? LIMIT 1");
+        $Update_Rank->execute([ $Clan_Rank, $User_ID, $Clan_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
      * Kick a member from their clan.
      * @param int $Clan_ID
      * @param int $User_ID
