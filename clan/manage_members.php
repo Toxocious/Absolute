@@ -24,8 +24,8 @@
       Here, you may manage your clan members clan status here.
     </div>
 
-    <table class='border-gradient' style='margin-bottom: 5px; width: 300px;'>
-      <tbody id='SelectedUser'>
+    <table class='border-gradient' id='SelectedUser' style='margin-bottom: 5px; width: 300px;'>
+      <tbody>
         <tr>
           <td colspan='4' style='padding: 5px;'>
             Select a member from below to view available management options.
@@ -60,18 +60,7 @@
       </tbody>
       <tbody id='MemberList'>
         <?php
-          try
-          {
-            $Member_Query = $PDO->prepare("SELECT `id` FROM `users` WHERE `Clan` = ? ORDER BY `Clan_Exp` DESC");
-            $Member_Query->execute([ $Clan_Data['ID'] ]);
-            $Member_Query->setFetchMode(PDO::FETCH_ASSOC);
-            $Members = $Member_Query->fetchAll();
-          }
-          catch ( PDOException $e )
-          {
-            HandleError($e);
-          }
-
+          $Members = $Clan_Class->FetchMembers($Clan_Data['ID']);
           foreach ( $Members as $Index => $Member )
           {
             $Member = $User_Class->FetchUserData($Member['id']);
@@ -79,7 +68,7 @@
             echo "
               <tr>
                 <td class='" . strtolower($Member['Clan_Rank']) . "'>
-                  {$Member['Username']}
+                  <b>{$Member['Username']}</b>
                 </td>
                 <td>
                   {$Member['Clan_Title']}
@@ -102,6 +91,36 @@
 </div>
 
 <script type='text/javascript'>
+  UpdatePosition = (User_ID, Position) =>
+  {
+    const Position_Data = new FormData();
+    Position_Data.append('User_ID', User_ID);
+    Position_Data.append('Position', Position);
+
+    return new Promise((resolve, reject) =>
+    {
+      const req = new XMLHttpRequest();
+      req.open('POST', '<?= DOMAIN_ROOT; ?>/core/ajax/clan/update_position.php');
+      req.send(Position_Data);
+      req.onerror = (error) => reject(Error(`Network Error: ${error}`));
+      req.onload = () =>
+      {
+        if ( req.status === 200 )
+        {
+          document.querySelector('#SelectedUser').innerHTML = req.responseText;
+          memberList();
+          resolve(req.response);
+        }
+        else
+        {
+          document.querySelector('#SelectedUser').innerHTML = req.statusText;
+          memberList();
+          reject(Error(req.statusText))
+        }
+      };
+    });
+  }
+  
   FetchUserData = (User_ID) =>
   {
     $.ajax({
@@ -147,7 +166,7 @@
       success: (data) =>
       {
         $('#SelectedUser').html(data);
-        memberList();
+        
       },
       error: (data) =>
       {

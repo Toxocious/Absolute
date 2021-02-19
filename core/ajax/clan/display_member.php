@@ -15,8 +15,7 @@
   }
 
   $Clan_Data = $Clan_Class->FetchClanData($User_Data['Clan']);
-
-  if ( !$Clan_Data['ID'] )
+  if ( !$Clan_Data )
   {
     echo "
       <tr>
@@ -46,43 +45,68 @@
     return;
   }
 
-  $Kick_Button = "
-    <button onclick='kickMember({$Fetched_User['ID']});'>
-      Kick Member
-    </button>
-  ";
+  if ( $Fetched_User['ID'] == $User_Data['id'] )
+  {
+    $Kick_Button = '';
 
-  if ( $Fetched_User['ID'] === $User_Data['id'] )
+    $Position_Button = '';
+  }
+  else
   {
     $Kick_Button = "
-      You may not kick yourself from the clan.
+      <tr>
+        <td colspan='2'>
+          <button onclick='kickMember({$Fetched_User['ID']});'>
+            Kick Member
+          </button>
+        </td>
+      </tr>
     ";
+
+    if ( $User_Data['Clan_Rank'] == 'Administrator' )
+    {
+      if ( $Fetched_User['Clan_Rank'] == 'Member' )
+        $Position = 'Moderator';
+      else
+        $Position = 'Member'; 
+
+      $Position_Button = "
+        <tr>
+          <td colspan='2'>
+            <button onclick='UpdatePosition({$Fetched_User['ID']}, \"{$Position}\");'>
+              Set Position to {$Position}
+            </button>
+          </td>
+        </tr>
+      ";
+    }
   }
 
   echo "
-    <tr>
-      <td colspan='2'>
-        <b>Manage {$Fetched_User['Username']}'s Clan Position</b>
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2' style='width: 100px;'>
-        <img src='{$Fetched_User['Avatar']}' />
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2'>
-        {$Kick_Button}
-      </td>
-    </tr>
-    <tr>
-      <td colspan='2' style='width: 200px;'>
-        <input type='text' name='title' id='title' placeholder='Insert Clan Title' />
-        <br />
-        <button onclick='changeTitle({$Fetched_User['ID']});' style='margin-top: 5px;'>
-          Bestow Title
-        </button>
-      </td>
-    </tr>
+    <thead>
+      <tr>
+        <td colspan='2'>
+          <b>Manage {$Fetched_User['Username']}</b>
+        </td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td colspan='2' style='width: 100px;'>
+          <img src='{$Fetched_User['Avatar']}' />
+        </td>
+      </tr>
+      <tr>
+        <td colspan='2' style='width: 200px;'>
+          <input type='text' name='title' id='title' placeholder='Insert Clan Title' />
+          <br />
+          <button onclick='changeTitle({$Fetched_User['ID']});' style='margin-top: 5px;'>
+            Bestow Title
+          </button>
+        </td>
+      </tr>
+      {$Position_Button}
+      {$Kick_Button}
+    </tbody>
   ";
   

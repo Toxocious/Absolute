@@ -47,7 +47,7 @@
   $Fetched_User = $User_Class->FetchUserData($User_ID);
   $User_Clan = $Clan_Class->FetchClanData($Fetched_User['Clan']);
 
-  if ( $Clan_Data['ID'] !== $User_Clan['ID'] )
+  if ( $Clan_Data['ID'] != $User_Clan['ID'] )
   {
     echo "
       <tr>
@@ -60,7 +60,7 @@
     return;
   }
 
-  if ( $User_Data['Clan_Rank'] === 'Member' )
+  if ( $User_Data['Clan_Rank'] == 'Member' )
   {
     echo "
       <tr>

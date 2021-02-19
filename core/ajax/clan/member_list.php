@@ -37,7 +37,7 @@
     echo "
       <tr>
         <td class='" . strtolower($Member['Clan_Rank']) . "'>
-          {$Member['Username']}
+          <b>{$Member['Username']}</b>
         </td>
         <td>
           {$Member['Clan_Title']}

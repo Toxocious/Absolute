@@ -86,7 +86,7 @@
 
       try
       {
-        $Fetch_Members = $PDO->prepare("SELECT `id` FROM `users` WHERE `Clan` = ?");
+        $Fetch_Members = $PDO->prepare("SELECT `id` FROM `users` WHERE `Clan` = ? ORDER BY `Clan_Rank` ASC, `Clan_Exp` DESC");
         $Fetch_Members->execute([ $Clan_ID ]);
         $Fetch_Members->setFetchMode(PDO::FETCH_ASSOC);
         $Members = $Fetch_Members->fetchAll();
