@@ -128,7 +128,7 @@
 
     $.ajax({
       type: 'POST',
-      url: 'upload_avatar.php',
+      url: '<?= DOMAIN_ROOT; ?>/core/ajax/clan/upload_avatar.php',
       enctype: 'multipart/form-data',
       data: Avatar_Data,
       cache: false,
@@ -155,7 +155,7 @@
 
     $.ajax({
       type: 'POST',
-      url: 'update_signature.php',
+      url: '<?= DOMAIN_ROOT; ?>/core/ajax/clan/update_signature.php',
       enctype: 'multipart/form-data',
       data: Signature_Data,
       cache: false,
