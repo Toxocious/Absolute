@@ -64,6 +64,8 @@
                 $Promote_User = $Clan_Class->UpdateRank($Clan_Data['ID'], $Member_Data['ID'], 'Administrator');
                 if ( $Promote_User )
                 {
+                  $Passed_Ownership = true;
+
                   echo "
                     <div class='success'>
                       You have successfully passed ownership of {$Clan_Data['Name']} to {$Member_Data['Username']}.
@@ -116,7 +118,7 @@
         }
       }
 
-      if ( $Passed_Ownership )
+      if ( !$Passed_Ownership )
       {
     ?>
 
