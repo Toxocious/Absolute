@@ -98,7 +98,7 @@
         }
       }
 
-      if ( $Disbanded )
+      if ( !$Disbanded )
       {
     ?>
 
