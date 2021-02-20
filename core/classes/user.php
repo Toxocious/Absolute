@@ -26,23 +26,8 @@
 
 			try
 			{
-				$Fetch_User_Check = $PDO->prepare("SELECT `id` FROM `users` WHERE `id` = ? OR `Username` = ? LIMIT 1");
-				$Fetch_User_Check->execute([ $User_Query, $User_Query ]);
-				$Fetch_User_Check->setFetchMode(PDO::FETCH_ASSOC);
-				$User_Check = $Fetch_User_Check->fetch();
-			}
-			catch ( PDOException $e )
-			{
-				HandleError( $e->getMessage() );
-			}
-
-			if ( !$User_Check )
-				return false;
-
-			try
-			{
 				$Fetch_User = $PDO->prepare("SELECT * FROM `users` INNER JOIN `user_currency` ON `users`.`id`=`user_currency`.`User_ID` WHERE `id` = ?");
-				$Fetch_User->execute([ $User_Check['id'] ]);
+				$Fetch_User->execute([ $User_Query ]);
 				$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 				$User = $Fetch_User->fetch();
 			}
