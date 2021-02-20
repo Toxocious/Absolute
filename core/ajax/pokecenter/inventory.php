@@ -63,7 +63,7 @@
 					";
 				}
 
-				else if ( $Poke_Data['Owner_Current'] !== $User_Data['id'] )
+				else if ( $Poke_Data['Owner_Current'] != $User_Data['id'] )
 				{
 					echo "
 						<div class='error'>
@@ -74,13 +74,24 @@
 
 				else
 				{
-					$Item_Class->Attach($Item_ID, $Pokemon_ID, $User_Data['id']);
+					$Attach_Item = $Item_Class->Attach($Item_ID, $Pokemon_ID, $User_Data['id']);
 
-					echo "
-						<div class='success'>
-							You have successfully attached your {$Item_Data['Name']} to your {$Poke_Data['Display_Name']}.
-						</div>
-					";
+					if ( $Attach_Item )
+					{
+						echo "
+							<div class='success'>
+								You have successfully attached your {$Item_Data['Name']} to your {$Poke_Data['Display_Name']}.
+							</div>
+						";
+					}
+					else
+					{
+						echo "
+							<div class='error'>
+								An error occurred while attempting to attach the item to your Pok&eacute;mon.
+							</div>
+						";
+					}
 				}
 			}
 		}

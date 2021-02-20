@@ -101,34 +101,28 @@
 			$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
 
 			if ( $Item_Data['Quantity'] < 1 )
-			{
 				return false;
-			}
-			else if ( $Item_Data['Owner'] !== $Owner_Data['ID'] )
-			{
-				return false;
-			}
-			else if ( $Pokemon_Data['Owner_Current'] !== $Owner_Data['ID'] )
-			{
-				return false;
-			}
-			else
-			{
-				try
-				{
-					$Update_Pokemon = $PDO->prepare("UPDATE `pokemon` SET `Item` = ? WHERE `ID` = ?");
-					$Update_Pokemon->execute([ $Item_Data['ID'], $Pokemon_ID ]);
 
-					$Update_Item = $PDO->prepare("UPDATE `items` SET `Quantity` = `Quantity` - 1 WHERE `Owner_Current` = ? AND `Item_ID` = ?");
-					$Update_Item->execute([ $Owner_Data['ID'], $Item_Data['ID'] ]);
-				}
-				catch ( PDOException $e )
-				{
-					HandleError($e);
-				}
+			if ( $Item_Data['Owner'] != $Owner_Data['ID'] )
+				return false;
 
-				return true;
+			if ( $Pokemon_Data['Owner_Current'] != $Owner_Data['ID'] )
+				return false;
+
+			try
+			{
+				$Update_Pokemon = $PDO->prepare("UPDATE `pokemon` SET `Item` = ? WHERE `ID` = ?");
+				$Update_Pokemon->execute([ $Item_Data['ID'], $Pokemon_ID ]);
+
+				$Update_Item = $PDO->prepare("UPDATE `items` SET `Quantity` = `Quantity` - 1 WHERE `Owner_Current` = ? AND `Item_ID` = ?");
+				$Update_Item->execute([ $Owner_Data['ID'], $Item_Data['ID'] ]);
 			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+
+			return true;
 		}
 
 		/**
