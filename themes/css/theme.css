@@ -111,7 +111,7 @@ div.warning {
 .border-gradient.hover > div:hover {
   background: var(--color-secondary);
 }
-.border-gradient div {
+.border-gradient > div {
   background: var(--color-quadternary);
 }
 
