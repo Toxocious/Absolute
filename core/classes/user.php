@@ -49,6 +49,17 @@
 			else
 				$Banned_Chat = false;
 
+				if ( $User['Playtime'] == 0 )
+					$Playtime = "None";
+				elseif ( $User['Playtime'] <= 59 )
+					$Playtime = $User['Playtime']." Second(s)";
+				elseif ( $User['Playtime'] >= 60 && $User['Playtime'] <= 3599 )
+					$Playtime = floor($User['Playtime'] / 60)." Minute(s)";
+				elseif ( $User['Playtime'] >= 3600 && $User['Playtime'] <= 86399 )
+					$Playtime = round($User['Playtime'] / 3600, 1)." Hour(s)";
+				else
+					$Playtime = round($User['Playtime'] / 86400, 2)." Day(s)";
+
 			return [
 				'ID' => (int) $User['id'],
 				'Username' => $User['Username'],
@@ -73,6 +84,10 @@
 				'Rank' => $User['Rank'],
 				'Mastery_Points_Total' => $User['Mastery_Points_Total'],
 				'Mastery_Points_Used' => $User['Mastery_Points_Used'],
+				'Last_Active' => $User['Last_Active'],
+				'Date_Registered' => $User['Date_Registered'],
+				'Last_Page' => $User['Last_Page'],
+				'Playtime' => $Playtime,
 			];
 		}
 
