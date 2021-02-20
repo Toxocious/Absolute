@@ -238,7 +238,7 @@ ABSOLUTE.on('connection', function(socket)
                     user_id: 3,
                     username: 'Absol',
                     rank: 'bot',
-                    avatar: `${PATH_ROOT}/images/Avatars/Custom/3.png`,
+                    avatar: `/Avatars/Custom/3.png`,
                   },
                   COMMAND_RESPONSE.message,
                   {
@@ -260,7 +260,7 @@ ABSOLUTE.on('connection', function(socket)
                     user_id: 3,
                     username: 'Absol',
                     rank: 'bot',
-                    avatar: `${PATH_ROOT}/images/Avatars/Custom/3.png`,
+                    avatar: `/Avatars/Custom/3.png`,
                   },
                   'The desired command does not exist.',
                   {
@@ -305,7 +305,7 @@ ABSOLUTE.on('connection', function(socket)
                 user_id: 3,
                 username: 'Absol',
                 rank: 'bot',
-                avatar: `${PATH_ROOT}/images/Avatars/Custom/3.png`,
+                avatar: `/Avatars/Custom/3.png`,
               },
               `An error occurred while attempting to fetch the data for user #${User_Data.ID}.`,
               {
@@ -331,7 +331,7 @@ setTimeout(function()
         user_id: 3,
         username: 'Absol',
         rank: 'bot',
-        avatar: `${PATH_ROOT}/images/Avatars/Custom/3.png`,
+        avatar: `/Avatars/Custom/3.png`,
       },
       'Welcome to Pok&eacute;mon Absolute.',
       {

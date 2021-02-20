@@ -130,7 +130,7 @@ const Handler = {
           <div class="message${(Message_Data.Message.Private.isPrivate ? ' private' : '')}" data-msg-id="${Message_Data.Message.ID}">
             <div class="avatar">
               <a href='/profile.php?id=${Message_Data.User.ID}'>
-                <img src="${Message_Data.User.Avatar}" />
+                <img src="/images/${Message_Data.User.Avatar}" />
               </a>
             </div>
             <div class="username">
@@ -139,9 +139,6 @@ const Handler = {
               </a>
               <br />
               ${Message_Data.Message.Timestamp}
-            </div>
-            <div class='master-title'>
-              <img src='https://${location.hostname}/images/Pokemon/Icons/Normal/359.1.png' />
             </div>
             <div class="text">
               <div>
