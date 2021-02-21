@@ -86,7 +86,7 @@
             <div class='border-gradient hover' style='height: 34px;'>
               <div style='height: 24px;'>
                 <a href='<?= DOMAIN_ROOT; ?>/direct_messages.php'>
-                  <img src='<?= DOMAIN_SPRITES; ?>/items/letter.png' />
+                  <img src='<?= DOMAIN_SPRITES; ?>/Items/letter.png' />
                 </a>
               </div>
             </div>
