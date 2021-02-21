@@ -25,7 +25,7 @@
         echo "
           <tr>
             <td>
-              An error occurred while attempting to fetch this user's roster.
+              This user currently doesn't have any Pok&eacute;mon in their roster.
             </td>
           </tr>
         ";

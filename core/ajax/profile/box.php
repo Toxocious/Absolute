@@ -72,7 +72,13 @@
   <?php
     if ( count($Box_Pokemon) == 0 )
     {
-      echo "<div style='padding: 5px;'>No Pokemon have been found given your search parameters.</div>";
+      echo "
+        <tr>
+          <td colspan='10' style='padding: 5px;'>
+            No Pokemon have been found given your search parameters.
+          </td>
+        </tr>
+      ";
     }
     else
     {
