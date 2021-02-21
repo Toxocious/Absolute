@@ -42,8 +42,33 @@ exports.FetchUser = (User_ID) =>
       {
         if ( user )
         {
-          user.map((user_item, index) =>
+          user.map((user_item) =>
           {
+            switch (user_item.dataValues.Rank)
+            {
+              case "Member":
+                user_item.dataValues.Rank = 'member';
+                break;
+              case "Chat Moderator":
+                user_item.dataValues.Rank = 'chat_mod';
+                break;
+              case "Moderator":
+                user_item.dataValues.Rank = 'moderator';
+                break;
+              case "Super Moderator":
+                user_item.dataValues.Rank = 'super_mod';
+                break;
+              case "Bot":
+                user_item.dataValues.Rank = 'bot';
+                break;
+              case "Developer":
+                user_item.dataValues.Rank = 'developer';
+                break;
+              case "Administrator":
+                user_item.dataValues.Rank = 'administrator';
+                break;
+            }
+
             User_Data.push(user_item.dataValues);
           });
           
