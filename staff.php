@@ -20,7 +20,7 @@
 		],
 		[
 			'Power' => 3,
-			'Rank' => 'Trial Moderator',
+			'Rank' => 'Bot',
 		],
 		[
 			'Power' => 2,
