@@ -161,35 +161,6 @@
       CurrentSearch[row-1] = 0;
     }
   }
-
-  const Update_Page = (page) =>
-  {
-    if (page == 'auto')
-      page = currpage;
-    else
-      currpage = page;
-
-    $.ajax({
-      url:'core/ajax/profile/box.php',
-      type: "POST",
-      data: {
-        id: <?= $User_ID; ?>,
-        filter_type: CurrentSearch[0],
-        filter_gender: CurrentSearch[1],
-        filter_search_order: CurrentSearch[2],
-        page: page
-      },
-      success: function(data)
-      {
-        $('#ProfileAJAX').html(data);
-        $(".popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
-      },
-      error: function(data)
-      {
-        $('#ProfileAJAX').html('<div class="error">An error has occurred. Please refresh the page.</div>');
-      }
-    });
-  }
 </script>
 
 <?php
