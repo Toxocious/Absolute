@@ -1,49 +1,48 @@
 <?php
-  require '../../required/session.php';
+  require_once '../../required/session.php';
 
-  if ( isset($_GET['id']) )
+  if ( isset($_GET['User_ID']) )
+  {
+    $User_ID = Purify($_GET['User_ID']);    
+    $User_Info = $User_Class->FetchUserData($User_ID);
+
+    if ( $User_Info )
+    {
+      echo "
+        <tr>
+          <td colspan='2'>
+            <b>Trainer Level</b>
+          </td>
+          <td colspan='2'>
+            {$User_Info['Trainer_Level']}
+            <br />
+            (<i>{$User_Info['Trainer_Exp']} Exp.</i>)
+          </td>
+        </tr>
+      ";
+    }
+    else
+    {
+      echo "
+        <tbody>
+          <tr>
+            <td style='padding: 5px;'>
+              An invalid user has been selected.
+            </td>
+          </tr>
+        </tbody>
+      ";
+    }
+	}
+  else
   {
 		echo "
-      <div class='panel'>
-        <div class='head'>Statistics</div>
-        <div class='body'>
-
-        <div style='float: left; padding: 5px; width: 50%;'>
-          <b style='font-size: 18px;'>Trainer Level</b>
-          <div class='progress green'>
-            <span class='progress-left'>
-              <span class='progress-bar'></span>
-            </span>
-            <span class='progress-right'>
-              <span class='progress-bar'></span>
-            </span>
-            <div class='progress-value'>
-              <div style='font-size: 16px; font-weight: bold; margin-top: -7px;'>10,000</div>
-              <div style='font-size: 12px; margin-top: -85px;'>1,000,000,000,000</div>
-            </div>
-          </div>
-        </div>
-
-        <div style='float: left; padding: 5px; width: 50%;'>
-          <b style='font-size: 18px;'>Map Level</b>
-          <div class='progress green'>
-            <span class='progress-left'>
-              <span class='progress-bar'></span>
-            </span>
-            <span class='progress-right'>
-              <span class='progress-bar'></span>
-            </span>
-            <div class='progress-value'>
-              <div style='font-size: 16px; font-weight: bold; margin-top: -7px;'>1,000</div>
-              <div style='font-size: 12px; margin-top: -85px;'>1,000,000,000</div>
-            </div>
-          </div>
-        </div>
-
-        </div>
-      </div>
+      <tbody>
+        <tr>
+          <td style='padding: 5px;'>
+            An invalid user has been selected.
+          </td>
+        </tr>
+      </tbody>
     ";
-	}
-
-	exit();
-?>
+  }
