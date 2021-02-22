@@ -20,10 +20,12 @@
 
 		switch ($Type)
 		{
+			case 'Trainer':
+				return floor(pow($Experience + 1, 1 / 2.5));
 			case 'Pokemon':
-				return floor( pow( $Experience + 1, 1 / 3 ) );
+				return floor(pow($Experience + 1, 1 / 3));
 			case 'Clan':
-				return floor( pow($Experience / 3, 1 / 2.2 ) + 1 );
+				return floor(pow($Experience + 1, 1 / 2.2));
 			default:
 				return false;
 		}
@@ -41,8 +43,12 @@
 
 		switch ($Object)
 		{
+			case 'Trainer':
+				return pow($Level, 2.5);
 			case 'Pokemon':
-				return pow( $Level, 3 );
+				return pow($Level, 3);
+			case 'Clan':
+				return pow($Level, 2.2);
 			default: 
 				return false;
 		}
