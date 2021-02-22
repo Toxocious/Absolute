@@ -174,10 +174,10 @@
 
 		if ( !isset($_SESSION['abso_user']) )
 		{
-			$Current_Page['Logged_In'] = 'no';
+			$Current_Page['Logged_In'] = 'yes';
 		}
 		else
 		{
-			$Current_Page['Logged_In'] = 'yes';
+			$Current_Page['Logged_In'] = 'no';
 		}
 	}
