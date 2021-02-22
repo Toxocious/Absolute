@@ -51,18 +51,18 @@
               </tr>
               <tr>
                 <td colspan='2'>
-                  <b>Last Online</b>
-                </td>
-                <td colspan='2'>
-                  <?= lastseen($Profile_User['Last_Active'], 'week'); ?>
-                </td>
-              </tr>
-              <tr>
-                <td colspan='2'>
                   <b>Playtime</b>
                 </td>
                 <td colspan='2'>
                   <?= $Profile_User['Playtime']; ?>
+                </td>
+              </tr>
+              <tr>
+                <td colspan='2'>
+                  <b>Last Online</b>
+                </td>
+                <td colspan='2'>
+                  <?= lastseen($Profile_User['Last_Active'], 'week'); ?>
                 </td>
               </tr>
               <tr>
