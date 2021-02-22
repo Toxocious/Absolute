@@ -70,6 +70,8 @@
 	$Item_Class = new Item();
 	require_once $Dir_Root . '/core/classes/purify.php';
 	$Purify = new Purify();
+	require_once $Dir_Root . '/core/classes/shop.php';
+	$Shop_Class = new Shop();
 	require_once $Dir_Root . '/core/classes/navigation.php';
 	$Navigation = new Navigation();
 	require_once $Dir_Root . '/core/classes/notification.php';
