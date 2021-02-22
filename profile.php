@@ -241,6 +241,33 @@
       };
     });
   }
+
+  const UpdateInventory = (User_ID, Page) =>
+  {
+    if ( !User_ID || !Page )
+      return;
+
+    return new Promise((resolve, reject) =>
+    {
+      const req = new XMLHttpRequest();
+      req.open('GET', `<?= DOMAIN_ROOT; ?>/core/ajax/profile/inventory.php?User_ID=${User_ID}&Category=${Page}`);
+      req.send(null);
+      req.onerror = (error) => reject(Error(`Network Error: ${error}`));
+      req.onload = () =>
+      {
+        if ( req.status === 200 )
+        {
+          document.querySelector('#ProfileAJAX').innerHTML = req.responseText;
+          resolve(req.response);
+        }
+        else
+        {
+          document.querySelector('#ProfileAJAX').innerHTML = req.statusText;
+          reject(Error(req.statusText))
+        }
+      };
+    });
+  }
 </script>
 
 <?php
