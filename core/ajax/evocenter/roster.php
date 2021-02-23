@@ -10,7 +10,7 @@
         $Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
   
         echo "
-          <td style='width: calc(100% / 6);' onclick='displayEvos({$Roster_Slot[$i]['ID']});'>
+          <td style='width: calc(100% / 6);' onclick='Display_Evos({$Roster_Slot[$i]['ID']});'>
             <img class='spricon' src='{$Roster_Slot[$i]['Icon']}' ?><br />
             <b>{$Roster_Slot[$i]['Display_Name']}</b><br />
           </td>
@@ -34,3 +34,4 @@
   {
     echo "Your Absolute login session is invalid.";
   }
+  
