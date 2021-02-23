@@ -440,13 +440,9 @@
 			}
 
 			if ( $Type !== "Normal" )
-			{
-				$Name = $Type . $Pokemon['Name'];
-			}
+				$Display_Name = $Type . $Pokemon['Name'];
 			else
-			{
-				$Name = $Pokemon['Name'];
-			}
+				$Display_Name = $Pokemon['Name'];
 
 			if ( $Gender == null )
 			{
@@ -557,8 +553,9 @@
 			$Poke_Images = $this->FetchImages($Pokedex_ID, $Alt_ID, $Type);
 
 			return [
-				"Name" => $Name,
+				"Name" => $Pokemon['Name'],
 				"Forme" => $Pokemon['Forme'],
+				'Display_Name' => $Display_Name,
 				"Exp" => $Experience,
 				"Gender" => $Gender,
 				"Location" => $Location,
@@ -582,7 +579,7 @@
 
 			try
 			{
-				if ( ($Pokedex_ID == null || $Pokedex_ID == 0) && $Alt_ID == null )
+				if ( $DB_ID )
 				{
 					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `id` = ? LIMIT 1");
 					$FetchPokedex->execute([ $DB_ID ]);
@@ -600,6 +597,9 @@
 			{
 				HandleError( $e->getMessage() );
 			}
+
+			if ( !$Pokemon )
+				return false;
 
 			$Weighter = new Weighter();
 			foreach (['Female', 'Male', 'Genderless'] as $Key)
