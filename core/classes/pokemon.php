@@ -124,6 +124,9 @@
 				$Display_Name = $Pokemon['Name'];
 			}
 
+			if ( $Pokemon['Forme'] )
+				$Display_Name .= " {$Pokemon['Forme']}";
+
 			$Poke_Images = $this->FetchImages($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon['Type']);
 
 			return [
@@ -219,16 +222,12 @@
 				$Type_Display = $Type;
 			}
 
+			$Name = $Pokedex['Pokemon'];
+
 			if ( $Pokedex['Forme'] !== null )
-			{
-				$Name = $Pokedex['Pokemon'] . " " . $Pokedex['Forme'];
 				$Display_Name = $Type_Display . $Pokedex['Pokemon'] . " " . $Pokedex['Forme'];
-			}
 			else
-			{
-				$Name = $Pokedex['Pokemon'];
 				$Display_Name = $Type_Display . $Pokedex['Pokemon'];
-			}
 
 			$Poke_Images = $this->FetchImages($Pokedex['Pokedex_ID'], $Pokedex['Alt_ID'], $Type);
 

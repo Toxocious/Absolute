@@ -390,8 +390,8 @@
 
 				try
 				{
-					$Update = $PDO->prepare("UPDATE `pokemon` SET `Name` = ?, `Pokedex_ID`= ? , `Alt_ID` = ? WHERE `ID` = ? AND `Owner_Current` = ? LIMIT 1");
-					$Update->execute([ $Evolution_Data['Name'], $Evolution_Data['Pokedex_ID'], $Evolution_Data['Alt_ID'], $Pokemon['ID'], $User_Data['id'] ]);
+					$Update = $PDO->prepare("UPDATE `pokemon` SET `Name` = ?, `Forme` = ?, `Pokedex_ID`= ? , `Alt_ID` = ? WHERE `ID` = ? AND `Owner_Current` = ? LIMIT 1");
+					$Update->execute([ $Evolution_Data['Name'], $Evolution_Data['Forme'], $Evolution_Data['Pokedex_ID'], $Evolution_Data['Alt_ID'], $Pokemon['ID'], $User_Data['id'] ]);
 				}
 				catch ( PDOException $e )
 				{
