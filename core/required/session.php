@@ -171,13 +171,5 @@
 	{
 		$Current_Page['Name'] = 'Index';
 		$Current_Page['Maintenance'] = 'no';
-
-		if ( !isset($_SESSION['abso_user']) )
-		{
-			$Current_Page['Logged_In'] = 'yes';
-		}
-		else
-		{
-			$Current_Page['Logged_In'] = 'no';
-		}
+		$Current_Page['Logged_In'] = 'no';
 	}

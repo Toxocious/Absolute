@@ -194,7 +194,7 @@
           /**
            * Check to see if the page is currently under maintenance.
            */
-          if ( $Current_Page['Maintenance'] === 'yes' )
+          if ( $Current_Page['Maintenance'] == 'yes' )
           {
             echo "
               <main style='width: 100%;'>
