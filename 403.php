@@ -12,9 +12,9 @@
 ?>
 
 <div class='panel content'<?= $width; ?>>
-	<div class='head'>404 NOT FOUND</div>
-	<div class='body'>
-		The page that you are looking for could not be found.<br /><br />
+	<div class='head'>403 FORBIDDEN</div>
+	<div class='body' style='padding: 5px;'>
+		Access to the requested resource is forbidden.<br /><br />
 		
 		<a href="javascript:history.go(-1);">Go Back A Page?</a>
 	</div>

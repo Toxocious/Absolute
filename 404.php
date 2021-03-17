@@ -13,7 +13,7 @@
 
 <div class='panel content'<?= $width; ?>>
 	<div class='head'>404 NOT FOUND</div>
-	<div class='body'>
+	<div class='body' style='padding: 5px;'>
 		The page that you are looking for could not be found.<br /><br />
 		
 		<a href="javascript:history.go(-1);">Go Back A Page?</a>
