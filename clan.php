@@ -259,7 +259,7 @@
 								echo "
 									<tr>
 										<td>
-											<a href='" . DOMAIN_ROOT . "/profiles.php?id={$Member['ID']}'>
+											<a href='" . DOMAIN_ROOT . "/profile.php?id={$Member['ID']}'>
 												<b class='" . strtolower($Member['Clan_Rank']) . "'>
 													{$Member['Username']}
 												</b>
