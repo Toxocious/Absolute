@@ -173,3 +173,4 @@
 		$Current_Page['Maintenance'] = 'no';
 		$Current_Page['Logged_In'] = 'no';
 	}
+	
