@@ -54,66 +54,83 @@
    */
   $User_Roster = '';
   $Roster_Nick_Row = '';
-  for ( $i = 0; $i <= 5; $i++ )
+  if ( $User_Data['Roster'] )
   {
-    if ( isset($Roster[$i]['ID']) )
+    for ( $i = 0; $i <= 5; $i++ )
     {
-      $Roster_Slot[$i] = $Poke_Class->FetchPokemonData(Purify($Roster[$i]['ID']));
+      if ( isset($User_Data['Roster'][$i]['ID']) )
+      {
+        $Roster_Slot[$i] = $Poke_Class->FetchPokemonData(Purify($User_Data['Roster'][$i]['ID']));
 
-      $Nickname = $Roster_Slot[$i]['Nickname'] ? "(<i>" . $Roster_Slot[$i]['Nickname'] . "</i>)" : "";
+        $Nickname = $Roster_Slot[$i]['Nickname'] ? "(<i>" . $Roster_Slot[$i]['Nickname'] . "</i>)" : "";
 
-      $User_Roster .= "
-        <td colspan='1' style='width: calc(100% / 6);'>
-          <img
-            class='spricon popup cboxElement'
-            src='{$Roster_Slot[$i]['Sprite']}'
-            href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'
-          />
-          <br />
-          <b>{$Roster_Slot[$i]['Display_Name']}</b>
-          <br />
-          {$Nickname}
-        </td>
-      ";
+        $User_Roster .= "
+          <td colspan='1' style='width: calc(100% / 6);'>
+            <img
+              class='spricon popup cboxElement'
+              src='{$Roster_Slot[$i]['Sprite']}'
+              href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'
+            />
+            <br />
+            <b>{$Roster_Slot[$i]['Display_Name']}</b>
+            <br />
+            {$Nickname}
+          </td>
+        ";
 
-      $Roster_Nick_Row .= "
-        <td colspan='1' style='width: calc(100% / 6);'>
-          <input
-            type='text'
-            name='{$Roster_Slot[$i]['ID']}_nick'
-            style='margin: 0; max-width: 90%; text-align: center; width: 90%;'
-          />
-          <br />
-          <button
-            onclick='Nickname({$Roster_Slot[$i]['ID']});'
-            style='width: 100%;'
-          >
-            Update Nickname
-          </button>
-        </td>
-      ";
+        $Roster_Nick_Row .= "
+          <td colspan='1' style='width: calc(100% / 6);'>
+            <input
+              type='text'
+              name='{$Roster_Slot[$i]['ID']}_nick'
+              style='margin: 0; max-width: 90%; text-align: center; width: 90%;'
+            />
+            <br />
+            <button
+              onclick='Nickname({$Roster_Slot[$i]['ID']});'
+              style='width: 100%;'
+            >
+              Update Nickname
+            </button>
+          </td>
+        ";
+      }
+      else
+      {
+        $Roster_Slot[$i]['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
+        $Roster_Slot[$i]['Display_Name'] = 'Empty';
+
+        $User_Roster .= "
+          <td colspan='1'>
+            <img
+              src='{$Roster_Slot[$i]['Sprite']}'
+            />
+            <br />
+            <b>{$Roster_Slot[$i]['Display_Name']}</b>
+          </td>
+        ";
+
+        $Roster_Nick_Row .= "
+          <td colspan='1'>
+            <i>Not Available</i>
+          </td>
+        ";
+      }
     }
-    else
-    {
-      $Roster_Slot[$i]['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
-      $Roster_Slot[$i]['Display_Name'] = 'Empty';
+  }
+  else
+  {
+    $User_Roster = "
+      <td colspan='6'>
+        Your roster is currently empty.
+      </td>
+    ";
 
-      $User_Roster .= "
-        <td colspan='1'>
-          <img
-            src='{$Roster_Slot[$i]['Sprite']}'
-          />
-          <br />
-          <b>{$Roster_Slot[$i]['Display_Name']}</b>
-        </td>
-      ";
-
-      $Roster_Nick_Row .= "
-        <td colspan='1'>
-          <i>Not Available</i>
-        </td>
-      ";
-    }
+    $Roster_Nick_Row = "
+      <td colspan='6' style='padding: 10px;'>
+        
+      </td>
+    ";
   }
 
   /**

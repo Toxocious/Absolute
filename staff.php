@@ -43,7 +43,7 @@
 				{
 					try
 					{
-						$Fetch_Staff = $PDO->prepare("SELECT `id`, `Username`, `Avatar`, `Rank`, `Last_Active`, `Staff_Message` FROM `users` WHERE `Power` = ? ORDER BY `id` ASC");
+						$Fetch_Staff = $PDO->prepare("SELECT `ID`, `Username`, `Avatar`, `Rank`, `Last_Active`, `Staff_Message` FROM `users` WHERE `Power` = ? ORDER BY `id` ASC");
 						$Fetch_Staff->execute([ $Staff_Category['Power'] ]);
 						$Fetch_Staff->setFetchMode(PDO::FETCH_ASSOC);
 						$Staff_Members = $Fetch_Staff->fetchAll();
@@ -64,8 +64,8 @@
 
 					foreach ( $Staff_Members as $User_Key => $User_Val )
 					{
-						$Staff_Data = $User_Class->FetchUserData($User_Val['id']);
-						$Staff_Username = $User_Class->DisplayUsername($User_Val['id'], true, true, true);
+						$Staff_Data = $User_Class->FetchUserData($User_Val['ID']);
+						$Staff_Username = $User_Class->DisplayUsername($User_Val['ID'], true, true, true);
 	
 						echo "
 							<table class='border-gradient'  style='flex-basis: 280px; margin: 3px;'>

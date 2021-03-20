@@ -1,5 +1,5 @@
 <?php
-  require '../../required/session.php';
+  require_once '../../required/session.php';
 
 	if ( isset($_POST['id']) )
 	{
@@ -89,6 +89,3 @@
       ";
     }
   }
-
-	exit();
-?>

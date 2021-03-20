@@ -8,18 +8,7 @@
 
     if ( $User_Info )
     {
-      try
-      {
-        $Fetch_Pokemon = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-        $Fetch_Pokemon->execute([ $User_ID ]);
-        $Fetch_Pokemon->setFetchMode(PDO::FETCH_ASSOC);
-        $Fetch_Roster = $Fetch_Pokemon->fetchAll();
-      }
-      catch ( PDOException $e )
-      {
-        HandleError( $e->getMessage() );
-      }
-
+      $Fetch_Roster = $User_Class->FetchRoster($User_ID);
       if ( !$Fetch_Roster )
       {
         echo "

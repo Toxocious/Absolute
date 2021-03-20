@@ -21,7 +21,7 @@
 
 		return;
 	}
-	else if ( $User_Data['id'] === $Recipient_ID )
+	else if ( $User_Data['ID'] === $Recipient_ID )
 	{
 		echo "<div class='error'>You may not trade with yourself.</div>";
 
@@ -37,7 +37,7 @@
 	{
 		$_SESSION['Trade'] = [
 			'Sender' => [
-				'User' => $User_Data['id'],
+				'User' => $User_Data['ID'],
 				'Pokemon' => [],
 				'Currency' => [],
 				'Items' => []
@@ -74,32 +74,32 @@
 		<tbody>
 			<tr>
 				<td colspan='7' style='padding: 5px;'>
-					<a href='javascript:void(0);' onclick="Change_Tab('box', <?= $User_Data['id']; ?>)">
+					<a href='javascript:void(0);' onclick="Change_Tab('box', <?= $User_Data['ID']; ?>)">
 						<b>Pok&eacute;mon</b>
 					</a>
 				</td>
 				<td colspan='7' style='padding: 5px;'>
-					<a href='javascript:void(0);' onclick="Change_Tab('inventory', <?= $User_Data['id']; ?>)">
+					<a href='javascript:void(0);' onclick="Change_Tab('inventory', <?= $User_Data['ID']; ?>)">
 						<b>Inventory</b>
 					</a>
 				</td>
 				<td colspan='7' style='padding: 5px;'>
-					<a href='javascript:void(0);' onclick="Change_Tab('currency', <?= $User_Data['id']; ?>)">
+					<a href='javascript:void(0);' onclick="Change_Tab('currency', <?= $User_Data['ID']; ?>)">
 						<b>Currency</b>
 					</a>
 				</td>
 			</tr>
 		</tbody>
-		<tbody id='TabContent<?= $User_Data['id']; ?>'>
+		<tbody id='TabContent<?= $User_Data['ID']; ?>'>
 			<?php
 				try
 				{
 					$Sender_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 35");
-					$Sender_Query->execute([ $User_Data['id'] ]);
+					$Sender_Query->execute([ $User_Data['ID'] ]);
 					$Sender_Query->setFetchMode(PDO::FETCH_ASSOC);
 					$Sender_Box = $Sender_Query->fetchAll();
 
-					$Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = {$User_Data['id']} AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 35";
+					$Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = {$User_Data['ID']} AND `Location` = 'Box' AND `Trade_Interest` != 'No' ORDER BY `Pokedex_ID` ASC LIMIT 35";
 					$Inputs = [];
 					$Page = 1;
 				}
@@ -120,7 +120,7 @@
 				}
 				else
 				{
-					Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $Inputs, $User_Data['id'], $Page, 35);
+					Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $Inputs, $User_Data['ID'], $Page, 35);
 
 					echo "<tr>";
 					$Total_Rendered = 0;
@@ -135,7 +135,7 @@
 								<img
 									class='spricon'
 									src='{$Pokemon['Icon']}'
-									onclick='Add_To_Trade({$User_Data['id']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})'
+									onclick='Add_To_Trade({$User_Data['ID']}, \"Add\", \"Pokemon\", {$Pokemon['ID']})'
 								/>
 							</td>
 						";
@@ -173,7 +173,7 @@
 				</th>
 			</tr>
 		</thead>
-		<tbody id='TradeIncluded<?= $User_Data['id']; ?>'>
+		<tbody id='TradeIncluded<?= $User_Data['ID']; ?>'>
 			<tr>
 				<td colspan='3' style='padding: 10px;'>
 					Nothing has been added to the trade yet.

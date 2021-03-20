@@ -35,7 +35,7 @@
             $(function()
             {
               Absolute.user = {
-                user_id: " . $User_Data['id'] . ",
+                user_id: " . $User_Data['ID'] . ",
                 postcode: " . $User_Data['Auth_Code'] . ",
               }
       
@@ -79,7 +79,7 @@
           <div>
             <div class="border-gradient hw-100px padding-0px">
               <div>
-                <img src='<?= DOMAIN_SPRITES . '/' . $User_Data['Avatar']; ?>' />
+                <img src='<?= $User_Data['Avatar']; ?>' />
               </div>
             </div>
             
@@ -95,7 +95,7 @@
 					<div class="border-gradient hover w-150px padding-5px m-top-m22px">
 						<div>
 							<a href="<?= DOMAIN_ROOT; ?>/profile.php?id=1">
-								<b><?= $User_Class->DisplayUserName($User_Data['id'], false, false); ?></b>
+								<b><?= $User_Class->DisplayUserName($User_Data['ID'], false, false); ?></b>
 							</a>
 						</div>
 					</div>
@@ -123,21 +123,21 @@
 
 				<div class='roster'>
 					<?php
-						for ( $i = 0; $i <= 5; $i++ )
-						{
-							if ( isset($Roster[$i]['ID']) )
-							{
-								$RosterPoke[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
-								
-								echo "
-									<div class='slot popup cboxElement border-gradient hover' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$RosterPoke[$i]['ID']}'>
-										<div>
-											<img src='{$RosterPoke[$i]['Icon']}' />
-										</div>
-									</div>
-								";
-							}
-						}
+            if ( $User_Data['Roster'] )
+            {
+              foreach ( $User_Data['Roster'] as $Roster_Pokemon )
+              {
+                $Roster_Pokemon = $Poke_Class->FetchPokemonData($Roster_Pokemon['ID']);
+
+                echo "
+                  <div class='slot popup cboxElement border-gradient hover' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Pokemon['ID']}'>
+                    <div>
+                      <img src='{$Roster_Pokemon['Icon']}' />
+                    </div>
+                  </div>
+                ";
+              }
+            }
 					?>
         </div>
         
@@ -151,9 +151,9 @@
         /**
          * Display the correct navigation bar to the user.
          */
-        if ( isset($_SESSION['abso_user']) )
+        if ( isset($User_Data) )
         {
-          if ( $User_Data['RPG_Ban'] == 0 )
+          if ( !$User_Data['Banned_RPG'] )
           {
             if ( strpos($Parse_URL['path'], '/staff/') !== false && $User_Data['Power'] !== 1 )
             {
@@ -169,7 +169,7 @@
         /**
          * The user does not have an active session.
          */
-        if ( !isset($_SESSION['abso_user']) )
+        if ( !isset($User_Data) )
         {
           if ( $Current_Page['Logged_In'] == 'yes' )
           {
@@ -194,7 +194,7 @@
           /**
            * Check to see if the page is currently under maintenance.
            */
-          if ( $Current_Page['Maintenance'] == 'yes' )
+          if ( $Current_Page['Maintenance'] === 'yes' )
           {
             echo "
               <main style='width: 100%;'>
@@ -232,7 +232,11 @@
             </div>
           </div>
           <?php
-            if ( $User_Data['RPG_Ban'] == 0 && $User_Data['Chat_Ban'] == 0 )
+            if
+            (
+              !$User_Data['Banned_RPG'] &&
+              !$User_Data['Banned_Chat']
+            )
             {
           ?>
           <div class="foot">
@@ -251,15 +255,15 @@
           /**
            * Content to display if the user is not currently banned.
            */
-          if ( $User_Data['RPG_Ban'] == 0 )
+          if ( $User_Data['Banned_RPG'] == 0 )
           {
             /**
              * If the user doesn't have any Pokemon in their roster, display a warning message.
              */
-            if ( count($Roster) == 0 )
+            if ( !$User_Data['Roster'] )
             {
               echo "
-                <div class='warning'>
+                <div class='warning' style='margin: 5px auto 0px'>
                   While you have an empty roster, much of Absolute will be unavailable to you.
                 </div>
               ";
@@ -268,7 +272,7 @@
             /**
              * Check for any notifications before any further page content gets loaded.
              */
-            $Notification->ShowNotification($User_Data['id']);
+            $Notification->ShowNotification($User_Data['ID']);
           }
 
           /**

@@ -11,7 +11,7 @@
   }
 
   $_SESSION['direct_message']['users'][] = [
-    'User_ID' => $User_Data['id'],
+    'User_ID' => $User_Data['ID'],
   ];
 ?>
 

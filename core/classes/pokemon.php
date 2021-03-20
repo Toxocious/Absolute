@@ -280,7 +280,7 @@
 				];
 			}
 
-			if ( $Poke_Data['Owner_Current'] !== $User_Data['id'] )
+			if ( $Poke_Data['Owner_Current'] !== $User_Data['ID'] )
 			{
 				return [
 					'Message' => 'The Pok&eacute;mon that you are trying to move doesn\'t belong to you.',
@@ -291,7 +291,7 @@
 			try
 			{
 				$Roster_Fetch = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6 ORDER BY `Slot` ASC LIMIT 6");
-				$Roster_Fetch->execute([ $User_Data['id'] ]);
+				$Roster_Fetch->execute([ $User_Data['ID'] ]);
 				$Roster_Fetch->setFetchMode(PDO::FETCH_ASSOC);
 				$Roster = $Roster_Fetch->fetchAll();
 			}
@@ -376,7 +376,7 @@
 
 			$Pokemon = $this->FetchPokemonData($Pokemon_ID);
 
-			if ( $Pokemon['Owner_Current'] !== $User_Data['id'] )
+			if ( $Pokemon['Owner_Current'] !== $User_Data['ID'] )
 			{
 				return [
 					'Type' => 'error',

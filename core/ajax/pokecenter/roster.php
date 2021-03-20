@@ -1,7 +1,7 @@
 <?php
 	require '../../required/session.php';
 
-  if ( isset($User_Data['id']) )
+  if ( isset($User_Data['ID']) )
 	{
     /**
      * Set the search query for the user's box.
@@ -18,7 +18,7 @@
     }
 
     $Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Box'";
-    $Inputs = [$User_Data['id']];
+    $Inputs = [$User_Data['ID']];
 
     if ( $Filter_Type != '0' )
     {
@@ -51,7 +51,7 @@
     try
     {
       $Fetch_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-      $Fetch_Roster->execute([$User_Data['id']]);
+      $Fetch_Roster->execute([$User_Data['ID']]);
       $Fetch_Roster->setFetchMode(PDO::FETCH_ASSOC);
       $Roster = $Fetch_Roster->fetchAll();
 
@@ -79,38 +79,68 @@
       $Slots = '';
       $Sprites = '';
 
-      for ( $Slot = 0; $Slot < 6; $Slot++ )
+      if ( $User_Data['Roster'] )
       {
-        if ( isset($Roster[$Slot]) )
+        for ( $Slot = 0; $Slot < 6; $Slot++ )
         {
-          $Pokemon = $Poke_Class->FetchPokemonData($Roster[$Slot]['ID']);
-
-          $Sprites .= "
-            <td colspan='3'>
-              <img src='{$Pokemon['Sprite']}' />
-            </td>
-            <td colspan='4'>
-              <b>{$Pokemon['Display_Name']}</b><br />
-              <b>Level</b><br />
-              {$Pokemon['Level']}<br />
-              <b>Experience</b><br />
-              {$Pokemon['Experience']}
-            </td>
-          ";
-
-          $Items .= "<img src='{$Pokemon['Item_Icon']}' style='margin-top: 48px;' />";
-
-          for ( $x = 1; $x <= 7; ++$x )
+          if ( isset($User_Data['Roster'][$Slot]) )
           {
-            if ( $x == 7 )
+            $Pokemon = $Poke_Class->FetchPokemonData($Roster[$Slot]['ID']);
+  
+            $Sprites .= "
+              <td colspan='3'>
+                <img src='{$Pokemon['Sprite']}' />
+              </td>
+              <td colspan='4'>
+                <b>{$Pokemon['Display_Name']}</b><br />
+                <b>Level</b><br />
+                {$Pokemon['Level']}<br />
+                <b>Experience</b><br />
+                {$Pokemon['Experience']}
+              </td>
+            ";
+  
+            $Items .= "<img src='{$Pokemon['Item_Icon']}' style='margin-top: 48px;' />";
+  
+            for ( $x = 1; $x <= 7; ++$x )
             {
-              $Slots .= "
-                <td>
-                  <a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, $x);\" style='padding: 0px 13px;'>X</a>
-                </td>
-              ";
+              if ( $x == 7 )
+              {
+                $Slots .= "
+                  <td>
+                    <a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, $x);\" style='padding: 0px 13px;'>X</a>
+                  </td>
+                ";
+              }
+              else if ( $x == $Slot + 1 || $x > count($Roster) )
+              {
+                $Slots .= "
+                  <td>
+                    <span style='color: #000; padding: 0px 13px;'>$x</span>
+                  </td>
+                ";
+              }
+              else
+              {
+                $Slots .= "
+                  <td>
+                    <a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, $x);\" style='padding: 0px 13px;'>$x</a>
+                  </td>
+                ";
+              }
             }
-            else if ( $x == $Slot + 1 || $x > count($Roster) )
+          }
+          else
+          {
+            $Sprites .= "
+              <td colspan='7'>
+                <img src='" . DOMAIN_SPRITES . "/Pokemon/Sprites/0.png' />
+              </td>
+            ";
+  
+            $Items .= "";
+  
+            for ( $x = 1; $x <= 7; $x++ )
             {
               $Slots .= "
                 <td>
@@ -118,74 +148,53 @@
                 </td>
               ";
             }
-            else
-            {
-              $Slots .= "
-                <td>
-                  <a href='javascript:void(0);' onclick=\"handlePokemon('Move', {$Pokemon['ID']}, $x);\" style='padding: 0px 13px;'>$x</a>
-                </td>
-              ";
-            }
           }
-        }
-        else
-        {
-          $Sprites .= "
-            <td colspan='7'>
-              <img src='" . DOMAIN_SPRITES . "/Pokemon/Sprites/0.png' />
-            </td>
-          ";
-
-          $Items .= "ITEM";
-
-          for ( $x = 1; $x <= 7; $x++ )
+  
+          if ( ($Slot + 1) % 3 === 0 )
           {
-            $Slots .= "
-              <td>
-                <span style='color: #000; padding: 0px 13px;'>$x</span>
-              </td>
+            echo "
+              <tr>
+                {$Slots}
+              </tr>
+              <tr>
+                {$Sprites}
+              </tr>
             ";
+  
+            $Items = '';
+            $Slots = '';
+            $Sprites = '';
           }
         }
-
-        if ( ($Slot + 1) % 3 === 0 )
-        {
-          echo "
-            <tr>
-              {$Slots}
-            </tr>
-            <tr>
-              {$Sprites}
-            </tr>
-          ";
-
-          $Items = '';
-          $Slots = '';
-          $Sprites = '';
-        }
+      }
+      else
+      {
+        echo "
+          <td colspan='21' style='padding: 10px;'>
+            Your roster is currently empty.
+          </td>
+        ";
       }
     ?>
   </tbody>
 </table>
 
-<?php
-  try
-  {
-    $Box_Query = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` = 7 ORDER BY `Pokedex_ID` ASC LIMIT 35");
-    $Box_Query->execute([$User_Data['id']]);
-    $Box_Query->setFetchMode(PDO::FETCH_ASSOC);
-    $Box_Pokemon = $Box_Query->fetchAll();
-  }
-  catch (PDOException $e)
-  {
-    HandleError( $e->getMessage() );
-  }
-?>
-
 <div class='panel' style='flex-basis: calc(100% / 3 - 10px); margin: 5px 3px 5px 10px;'>
   <div class='head'>Box</div>
   <div class='body' id='Pokebox'>
     <?php
+      try
+      {
+        $Box_Query = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` = 7 ORDER BY `Pokedex_ID` ASC LIMIT 35");
+        $Box_Query->execute([$User_Data['ID']]);
+        $Box_Query->setFetchMode(PDO::FETCH_ASSOC);
+        $Box_Pokemon = $Box_Query->fetchAll();
+      }
+      catch (PDOException $e)
+      {
+        HandleError( $e->getMessage() );
+      }
+
       if ( count($Box_Pokemon) == 0 )
       {
         echo "
@@ -198,7 +207,7 @@
       }
       else
       {
-        $Pagination = Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
+        $Pagination = Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['ID'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
 
         echo "
           {$Pagination}
@@ -277,7 +286,7 @@
       url:'core/ajax/pokecenter/box.php',
       type: 'POST',
       data: {
-        id: parseInt(<?= $User_Data['id']; ?>),
+        id: parseInt(<?= $User_Data['ID']; ?>),
         filter_type: CurrentSearch[0],
         //filter_search: $('[name=pokemon_search]').val(),
         //filter_select: $('[name=pokemon_select]').val(),

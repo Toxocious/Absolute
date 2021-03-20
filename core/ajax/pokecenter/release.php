@@ -31,11 +31,11 @@
 
         $Release_Pokemon = $Poke_Class->FetchPokemonData($Poke_ID);
   
-        if ( $Release_Pokemon['Owner_Current'] === $User_Data['id'] )
+        if ( $Release_Pokemon['Owner_Current'] === $User_Data['ID'] )
         {
           $Owner_Of_Pokemon++;
 
-          $Poke_Class->ReleasePokemon($Release_Pokemon['ID'], $User_Data['id']);
+          $Poke_Class->ReleasePokemon($Release_Pokemon['ID'], $User_Data['ID']);
         }
       }
 
@@ -100,7 +100,7 @@
 
         $Release_Pokemon = $Poke_Class->FetchPokemonData($Poke_ID);
 
-        if ( $Release_Pokemon['Owner_Current'] === $User_Data['id'] )
+        if ( $Release_Pokemon['Owner_Current'] === $User_Data['ID'] )
         {
           $Release_Text .= "
             <tr>
@@ -150,7 +150,7 @@
     try
     {
       $Select_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Location` = 'Box' AND `Slot` = 7 AND `Owner_Current` = ? ORDER BY `Pokedex_ID` ASC, `Alt_ID` ASC, `ID` ASC");
-      $Select_Query->execute([ $User_Data['id'] ]);
+      $Select_Query->execute([ $User_Data['ID'] ]);
       $Select_Query->setFetchMode(PDO::FETCH_ASSOC);
       $Result = $Select_Query->fetchAll();
       $Result_Count = $Select_Query->rowCount();

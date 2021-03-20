@@ -48,7 +48,7 @@
         }
         else
         {
-          $Leave_Status = $Clan_Class->LeaveClan($User_Data['id']);
+          $Leave_Status = $Clan_Class->LeaveClan($User_Data['ID']);
           
           if ( $Leave_Status )
           {

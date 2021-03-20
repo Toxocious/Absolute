@@ -23,7 +23,7 @@
   $Group_ID = Purify(intval($_GET['Group_ID']));
 
   $Direct_Message = new DirectMessage();
-  $Messages = $Direct_Message->FetchMessage($Group_ID, $User_Data['id']);
+  $Messages = $Direct_Message->FetchMessage($Group_ID, $User_Data['ID']);
 
   /**
    * Unable to fetch the message history of the selected direct message.
@@ -44,7 +44,7 @@
     return;
   }
 
-  $Direct_Message->ReadDirectMessage($Group_ID, $User_Data['id']);
+  $Direct_Message->ReadDirectMessage($Group_ID, $User_Data['ID']);
 
   $Total_Messages = count($Messages);
 

@@ -154,7 +154,7 @@
 <table class='border-gradient' style='margin: 5px auto; flex-basis: 70%; width: 700px;'>
   <tbody>
     <?php
-      Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Rankings_Query), $Rankings_Parameters, $User_Data['id'], $Current_Page, $Display_Limit, 5, "onclick='Update_Page([PAGE]);'");
+      Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Rankings_Query), $Rankings_Parameters, $User_Data['ID'], $Current_Page, $Display_Limit, 5, "onclick='Update_Page([PAGE]);'");
     ?>
   </tbody>
   <tbody>

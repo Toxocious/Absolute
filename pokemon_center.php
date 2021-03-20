@@ -4,7 +4,7 @@
 	try
 	{
 		$Fetch_Pokemon = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-		$Fetch_Pokemon->execute([$User_Data['id']]);
+		$Fetch_Pokemon->execute([$User_Data['ID']]);
 		$Fetch_Pokemon->setFetchMode(PDO::FETCH_ASSOC);
 		$Fetch_Roster = $Fetch_Pokemon->fetchAll();
 	}

@@ -58,7 +58,7 @@
 
 				echo "<div class='success' style='margin-bottom: 5px;'>You have spawned in the configured Pokemon for {$Recipient_Data}.<br /></div>";
 
-				$Notification->SendNotification( $User_Data['id'], $Recipient, "{$User_Data['Username']} has spawned in a {$Spawned_Pokemon['Display_Name']} for you." );
+				$Notification->SendNotification( $User_Data['ID'], $Recipient, "{$User_Data['Username']} has spawned in a {$Spawned_Pokemon['Display_Name']} for you." );
 			}
 			else
 			{

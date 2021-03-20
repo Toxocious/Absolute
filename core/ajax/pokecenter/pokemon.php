@@ -1,7 +1,7 @@
 <?php
 	require '../../required/session.php';
 
-	if ( isset($User_Data['id']) && isset($_POST['PokeID']) )
+	if ( isset($User_Data['ID']) && isset($_POST['PokeID']) )
 	{
 		$Pokemon = $Poke_Class->FetchPokemonData(Purify($_POST['PokeID']));
 		$Pokemon_Level = number_format(FetchLevel($Pokemon['Experience_Raw'], 'Pokemon'));
@@ -22,9 +22,9 @@
 		$Slots = '';
 		for ( $i = 0; $i <= 5; $i++ )
 		{
-			if ( isset($Roster[$i]['ID'])  )
+			if ( isset($User_Data['Roster'][$i]['ID'])  )
 			{
-				$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
+				$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($User_Data['Roster'][$i]['ID']);
 
 				$Slots .= "
 					<div class='border-gradient hover' style='margin: 0px 0px 0px 5px; float: left; height: 32px; width: 42px;'>

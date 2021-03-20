@@ -1,65 +1,39 @@
 <?php
-	require 'core/required/session.php';
-	require 'battles/battle.php';
+	require_once 'core/required/session.php';
 
-	if ( isset($_SESSION['abso_user']) )
+	if
+	(
+		!$User_Data ||
+		!$User_Data['Roster'] ||
+		$User_Data['Banned_RPG']
+	)
 	{
-		// Check to see if the user is banned.
-		// Banned users may not battle.
-		try
-		{
-			$Query_User = $PDO->prepare("SELECT * FROM `users` WHERE `RPG_Ban` = 'no' AND `id` = ? LIMIT 1");
-			$Query_User->execute([ $_SESSION['abso_user'] ]);
-			$Query_User->setFetchMode(PDO::FETCH_ASSOC);
-			$User = $Query_User->fetch();
-		}
-		catch ( PDOException $e )
-		{
-			HandleError( $e->getMessage() );
-		}
+		header('Location: /index.php');
+		return;
+	}
 
-		// The user is banned; redirect them to the login page.
-		if ( !isset($User['id']) )
-		{
-			header('Location: /login.php');
-			exit;
-		}
-		// The user has nothing in their roster; redirect them to the Pokemon Center.
-		else if ( $User['Roster'] == 0 )
-		{
-			header('Location: /pokemon_center.php');
-			exit;
-		}
-		// The battle and foe has been set.
-		else if ( !isset($_GET['Battle']) && !isset($_GET['Foe']) )
-		{
-			header('Location: /battle_search.php');
-			exit;
-		}
-		// Everything is good; start the battle.
-		else
-		{
-			$Battle_Mode = $_GET['Battle'];
+	if
+	(
+		!isset($_GET['Battle_Type']) ||
+		!isset($_GET['Foe'])
+	)
+	{
+		header('Location: /battle_search.php');
+		return;
+	}
 
-			$Battle = new $Battle_Mode();
-			$Create = $Battle->Create_Battle( $_GET['Foe'] );
+	$Battle_Mode = $_GET['Battle'];
 
-			//echo "<pre>";var_dump($_SESSION['Battle']);echo "</pre>";
+	$Battle = new $Battle_Mode();
+	$Create = $Battle->Create_Battle( $_GET['Foe'] );
 
-			if ( $Create )
-			{
-				header('Location: /battle.php');
-				exit;
-			}
-			else
-			{
-				header("Location: /battle_search.php");
-    		exit;
-			}
-		}
+	if ( $Create )
+	{
+		header('Location: /battle.php');
+		return;
 	}
 	else
 	{
-		header('Location: /index.php');
-		exit;
+		header("Location: /battle_search.php");
+		return;
 	}

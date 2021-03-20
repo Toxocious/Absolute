@@ -13,12 +13,12 @@
   $Message = Purify($_POST['Message']);
 
   $Direct_Message = new DirectMessage();
-  $Participant_Check = $Direct_Message->IsParticipating($Group_ID, $User_Data['id']);
+  $Participant_Check = $Direct_Message->IsParticipating($Group_ID, $User_Data['ID']);
 
   if ( !$Participant_Check )
     return;
 
-  $Messages = $Direct_Message->CreateMessage($Group_ID, $Message, $User_Data['id']);
+  $Messages = $Direct_Message->CreateMessage($Group_ID, $Message, $User_Data['ID']);
 
   if ( !$Message )
   {

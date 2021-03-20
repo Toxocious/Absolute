@@ -4,7 +4,7 @@
 	 */
 	if ( isset($_POST['Explore']) )
 	{
-		require 'core/required/session.php';
+		require_once 'core/required/session.php';
 
 		unset($_SESSION['Maps']);
 

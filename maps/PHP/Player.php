@@ -71,7 +71,7 @@
 			try
 			{
 				$Fetch_Pos = $PDO->prepare("SELECT `Map_X`, `Map_Y`, `Map_Z` FROM `users` WHERE `id` = ? LIMIT 1");
-				$Fetch_Pos->execute([ $User_Data['id'] ]);
+				$Fetch_Pos->execute([ $User_Data['ID'] ]);
 				$Fetch_Pos->setFetchMode(PDO::FETCH_ASSOC);
 				$Position = $Fetch_Pos->fetch();
 			}
@@ -141,7 +141,7 @@
 					$Spawn_Data['Spawn_Coords'] = explode(',', $Spawn_Data['Spawn_Coords']);
 
 					$Update_Pos = $PDO->prepare("UPDATE `users` SET `Map_ID` = ?, `Map_X` = ?, `Map_Y` = ?, `Map_Z` = ? WHERE `id` = ? LIMIT 1");
-					$Update_Pos->execute([ $Spawn_Data['name'], $Spawn_Data['Spawn_Coords'][0], $Spawn_Data['Spawn_Coords'][1], $Spawn_Data['Spawn_Coords'][2], $User_Data['id'] ]);
+					$Update_Pos->execute([ $Spawn_Data['name'], $Spawn_Data['Spawn_Coords'][0], $Spawn_Data['Spawn_Coords'][1], $Spawn_Data['Spawn_Coords'][2], $User_Data['ID'] ]);
 				}
 				catch( PDOException $e )
 				{
@@ -179,7 +179,7 @@
 				try
 				{
 					$Update_Pos = $PDO->prepare("UPDATE `users` SET `Map_X` = ?, `Map_Y` = ?, `Map_Z` = ? WHERE `id` = ? LIMIT 1");
-					$Update_Pos->execute([ $x, $y, $z, $User_Data['id'] ]);
+					$Update_Pos->execute([ $x, $y, $z, $User_Data['ID'] ]);
 				}
 				catch( PDOException $e )
 				{
@@ -208,7 +208,7 @@
 			try
 			{
 				$Update_Map = $PDO->prepare("UPDATE `users` SET `Map_ID` = ? WHERE `id` = ? LIMIT 1");
-        $Update_Map->execute([ $Map_ID, $User_Data['id'] ]);
+        $Update_Map->execute([ $Map_ID, $User_Data['ID'] ]);
 			}
 			catch( PDOException $e )
 			{

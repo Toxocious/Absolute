@@ -42,7 +42,7 @@
           $Pokemon['Move_4'],
         ];
 
-        if ( $Pokemon['Owner_Current'] !== $User_Data['id'] )
+        if ( $Pokemon['Owner_Current'] !== $User_Data['ID'] )
         {
           echo "<div class='error'>This Pokemon does not belong to you.</div>";
         }
@@ -103,62 +103,74 @@
   $Sprites = '';
   $Moves_Echo = '';
   $Pokemon_Row = '';
-  for ( $i = 0; $i < 6; $i++ )
+
+  if ( $User_Data['Roster'] )
   {
-    if ( isset($Roster[$i]['ID']) )
+    for ( $i = 0; $i < 6; $i++ )
     {
-      $Pokemon = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
-      $Moves = [
-        '1' => $Poke_Class->FetchMoveData($Pokemon['Move_1']),
-        '2' => $Poke_Class->FetchMoveData($Pokemon['Move_2']),
-        '3' => $Poke_Class->FetchMoveData($Pokemon['Move_3']),
-        '4' => $Poke_Class->FetchMoveData($Pokemon['Move_4']),
-      ];
-
-      $Moves_Echo .= "
-        <td colspan='3' style='width: calc(100% / 6);'>
-          <img src='{$Pokemon['Sprite']}' /><br />
-          <b>{$Pokemon['Display_Name']}</b>
-        </td>
-        <td colspan='3' style='width: calc(100% / 6);'>
-          <div id='{$Pokemon['ID']}_Move_1' onclick='selectMove(\"{$Pokemon['ID']}\", 1);' style='padding: 3px 0px; width: 133px;'>
-            <b>{$Moves['1']['Name']}</b>
-          </div>
-          <div id='{$Pokemon['ID']}_Move_2' onclick='selectMove(\"{$Pokemon['ID']}\", 2);' style='padding: 3px 0px; width: 133px;'>
-            <b>{$Moves['2']['Name']}</b>
-          </div>
-          <div id='{$Pokemon['ID']}_Move_3' onclick='selectMove(\"{$Pokemon['ID']}\", 3);' style='padding: 3px 0px; width: 133px;'>
-            <b>{$Moves['3']['Name']}</b>
-          </div>
-          <div id='{$Pokemon['ID']}_Move_4' onclick='selectMove(\"{$Pokemon['ID']}\", 4);' style='padding: 3px 0px; width: 133px;'>
-            <b>{$Moves['4']['Name']}</b>
-          </div>
-        </td>
-      ";
+      if ( isset($User_Data['Roster'][$i]['ID']) )
+      {
+        $Pokemon = $Poke_Class->FetchPokemonData($User_Data['Roster'][$i]['ID']);
+        $Moves = [
+          '1' => $Poke_Class->FetchMoveData($Pokemon['Move_1']),
+          '2' => $Poke_Class->FetchMoveData($Pokemon['Move_2']),
+          '3' => $Poke_Class->FetchMoveData($Pokemon['Move_3']),
+          '4' => $Poke_Class->FetchMoveData($Pokemon['Move_4']),
+        ];
+  
+        $Moves_Echo .= "
+          <td colspan='3' style='width: calc(100% / 6);'>
+            <img src='{$Pokemon['Sprite']}' /><br />
+            <b>{$Pokemon['Display_Name']}</b>
+          </td>
+          <td colspan='3' style='width: calc(100% / 6);'>
+            <div id='{$Pokemon['ID']}_Move_1' onclick='selectMove(\"{$Pokemon['ID']}\", 1);' style='padding: 3px 0px; width: 133px;'>
+              <b>{$Moves['1']['Name']}</b>
+            </div>
+            <div id='{$Pokemon['ID']}_Move_2' onclick='selectMove(\"{$Pokemon['ID']}\", 2);' style='padding: 3px 0px; width: 133px;'>
+              <b>{$Moves['2']['Name']}</b>
+            </div>
+            <div id='{$Pokemon['ID']}_Move_3' onclick='selectMove(\"{$Pokemon['ID']}\", 3);' style='padding: 3px 0px; width: 133px;'>
+              <b>{$Moves['3']['Name']}</b>
+            </div>
+            <div id='{$Pokemon['ID']}_Move_4' onclick='selectMove(\"{$Pokemon['ID']}\", 4);' style='padding: 3px 0px; width: 133px;'>
+              <b>{$Moves['4']['Name']}</b>
+            </div>
+          </td>
+        ";
+      }
+      else
+      {
+        $Pokemon['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
+  
+        $Moves_Echo .= "
+          <td colspan='6' style='width: calc(100% / 3);'>
+            <img src='{$Pokemon['Sprite']}' /><br />
+            <b>Empty</b>
+          </td>
+        ";
+      }
+  
+      if ( ($i + 1) % 3 === 0 )
+      {
+        $Pokemon_Row .= "
+          <tr>
+            {$Moves_Echo}
+          </tr>
+        ";
+  
+        $Sprites = '';
+        $Moves_Echo = '';
+      }
     }
-    else
-    {
-      $Pokemon['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
-
-      $Moves_Echo .= "
-        <td colspan='6' style='width: calc(100% / 3);'>
-          <img src='{$Pokemon['Sprite']}' /><br />
-          <b>Empty</b>
-        </td>
-      ";
-    }
-
-    if ( ($i + 1) % 3 === 0 )
-    {
-      $Pokemon_Row .= "
-        <tr>
-          {$Moves_Echo}
-        </tr>
-      ";
-
-      $Sprites = '';
-      $Moves_Echo = '';
-    }
+  }
+  else
+  {
+    $Pokemon_Row = "
+      <td colspan='9' style='padding: 10px;'>
+        Your roster is currently empty.
+      </td>
+    ";
   }
 ?>
 

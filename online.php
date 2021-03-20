@@ -5,7 +5,7 @@
 	
 	try
 	{
-		$Fetch_Online_Staff = $PDO->prepare("SELECT `id`, `Avatar`, `Last_Page`, `Last_Active` FROM `users` WHERE `Power` > 1 AND `Last_Active` >= ? ORDER BY `Power`");
+		$Fetch_Online_Staff = $PDO->prepare("SELECT `ID`, `Avatar`, `Last_Page`, `Last_Active` FROM `users` WHERE `Power` > 1 AND `Last_Active` >= ? ORDER BY `Power`");
 		$Fetch_Online_Staff->execute([ $Last_Active ]);
 		$Fetch_Online_Staff->setFetchMode(PDO::FETCH_ASSOC);
 		$Online_Staff = $Fetch_Online_Staff->fetchAll();
@@ -27,8 +27,8 @@
 
 		foreach ( $Online_Staff as $Staff_Key => $Staff_Val )
 		{
-			$Staff_Data = $User_Class->FetchUserData($Staff_Val['id']);
-			$Staff_Username = $User_Class->DisplayUsername($Staff_Val['id'], true, true, true);
+			$Staff_Data = $User_Class->FetchUserData($Staff_Val['ID']);
+			$Staff_Username = $User_Class->DisplayUsername($Staff_Val['ID'], true, true, true);
 
 			$Online_List_Text .= "
 				<table class='border-gradient' style='flex-basis: 280px; margin: 3px;'>
@@ -64,7 +64,7 @@
 	 */
 	try
 	{
-		$Fetch_Online_Users = $PDO->prepare("SELECT `id`, `Avatar`, `Last_Page`, `Last_Active` FROM `users` WHERE `Power` = 1 AND `Last_Active` >= ? ORDER BY `Last_Active` DESC, `id` ASC");
+		$Fetch_Online_Users = $PDO->prepare("SELECT `ID`, `Avatar`, `Last_Page`, `Last_Active` FROM `users` WHERE `Power` = 1 AND `Last_Active` >= ? ORDER BY `Last_Active` DESC, `id` ASC");
 		$Fetch_Online_Users->execute([ $Last_Active ]);
 		$Fetch_Online_Users->setFetchMode(PDO::FETCH_ASSOC);
 		$Online_Users = $Fetch_Online_Users->fetchAll();
@@ -102,8 +102,8 @@
 	{
 		foreach ( $Online_Users as $User_Key => $User_Val )
 		{
-			$Online_User_Data = $User_Class->FetchUserData($User_Val['id']);
-			$User_Username = $User_Class->DisplayUsername($User_Val['id'], true, true, true);
+			$Online_User_Data = $User_Class->FetchUserData($User_Val['ID']);
+			$User_Username = $User_Class->DisplayUsername($User_Val['ID'], true, true, true);
 
 			$Online_List_Text .= "
 				<tr>

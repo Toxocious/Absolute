@@ -20,7 +20,7 @@
 				'Info' => [
 					'Request' => $Request,
 					'Valid_Requests' => $Valid_Requests,
-					'User_ID' => $User_Data['id'],
+					'User_ID' => $User_Data['ID'],
 					'Time' => time(),
 				],
 			];
@@ -51,7 +51,7 @@
 				$Item_ID = Purify($_POST['id']);
 				$Pokemon_ID = Purify($_POST['pokeid']);
 		
-				$Item_Data = $Item_Class->FetchOwnedItem($User_Data['id'], $Item_ID);
+				$Item_Data = $Item_Class->FetchOwnedItem($User_Data['ID'], $Item_ID);
 				$Poke_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
 
 				if ( $Item_Data['Quantity'] < 1 )
@@ -63,7 +63,7 @@
 					";
 				}
 
-				else if ( $Poke_Data['Owner_Current'] != $User_Data['id'] )
+				else if ( $Poke_Data['Owner_Current'] != $User_Data['ID'] )
 				{
 					echo "
 						<div class='error'>
@@ -74,7 +74,7 @@
 
 				else
 				{
-					$Attach_Item = $Item_Class->Attach($Item_ID, $Pokemon_ID, $User_Data['id']);
+					$Attach_Item = $Item_Class->Attach($Item_ID, $Pokemon_ID, $User_Data['ID']);
 
 					if ( $Attach_Item )
 					{
@@ -121,9 +121,9 @@
 				/**
 				 * Check to see if the requesting user is the owner of the Pokemon.
 				 */
-				if ( $Poke_Data['Owner_Current'] === $User_Data['id'] )
+				if ( $Poke_Data['Owner_Current'] === $User_Data['ID'] )
 				{
-					$Item_Removal = $Item_Class->Unequip($Pokemon_ID, $User_Data['id']);
+					$Item_Removal = $Item_Class->Unequip($Pokemon_ID, $User_Data['ID']);
 
 					echo "
 						<div class='{$Item_Removal['Type']}'>
@@ -150,7 +150,7 @@
 			try
 			{
 				$Fetch_Equipped = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Item` != 0 AND `Owner_Current` = ?");
-				$Fetch_Equipped->execute([ $User_Data['id'] ]);
+				$Fetch_Equipped->execute([ $User_Data['ID'] ]);
 				$Fetch_Equipped->setFetchMode(PDO::FETCH_ASSOC);
 				$Items = $Fetch_Equipped->fetchAll();
 			}
@@ -161,7 +161,7 @@
 
 			foreach( $Items as $Key => $Value )
 			{
-				$Item_Class->Unequip($Value['ID'], $User_Data['id']);
+				$Item_Class->Unequip($Value['ID'], $User_Data['ID']);
 			}
 
 			if ( count($Items) == 0 )
@@ -191,36 +191,52 @@
 			$Item_Data = $Item_Class->FetchItemData($Item_ID);
 
 			$Slot_Text = '';
-			for ( $i = 0; $i <= 5; $i++ )
+
+
+			if ( $User_Data['Roster'] )
 			{
-				if ( isset($Roster[$i]['ID']) )
+				for ( $i = 0; $i < 6; $i++ )
 				{
-					$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
-	
-					if ( $Roster_Slot[$i]['Item'] == null )
+					if ( isset($User_Data['Roster'][$i]['ID']) )
 					{
-						$Slot_Text .= "
-							<td colspan='1'>
-								<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' onclick=\"itemHandler('attach', '{$Item_Data['Category']}', {$Item_Data['ID']}, {$Roster_Slot[$i]['ID']});\" />
-							</td>
-						";
+						$Pokemon = $Poke_Class->FetchPokemonData($User_Data['Roster'][$i]['ID']);
+
+						if ( !$Pokemon['Item'] )
+						{
+							$Slot_Text .= "
+								<td colspan='1'>
+									<img class='spricon' src='{$Pokemon['Icon']}' onclick=\"itemHandler('attach', '{$Item_Data['Category']}', {$Item_Data['ID']}, {$Pokemon['ID']});\" />
+								</td>
+							";
+						}
+						else
+						{
+							$Slot_Text .= "
+								<td colspan='1'>
+									<img class='spricon' src='{$Pokemon['Icon']}' style='filter: grayscale(100%);' />
+								</td>
+							";
+						}
 					}
 					else
 					{
+						$Pokemon['Icon'] = DOMAIN_SPRITES . "/Pokemon/Sprites/0_mini.png";
+
 						$Slot_Text .= "
 							<td colspan='1'>
-								<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' style='filter: grayscale(100%);' />
+								<img class='spricon' src='{$Pokemon['Icon']}' style='filter: grayscale(100%);' />
 							</td>
 						";
-					}				
+					}
 				}
-				else
+			}
+			else
+			{
+				for ( $i = 0; $i < 6; $i++ )
 				{
-					$Roster_Slot[$i]['Icon'] = DOMAIN_SPRITES . "/Pokemon/Sprites/0_mini.png";
-
 					$Slot_Text .= "
 						<td colspan='1'>
-							<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' style='filter: grayscale(100%);' />
+							<img class='spricon' src='{$Pokemon['Icon']}' style='filter: grayscale(100%);' />
 						</td>
 					";
 				}
@@ -274,7 +290,7 @@
 			try
 			{
 				$Fetch_Items = $PDO->prepare("SELECT * FROM `items` WHERE `Owner_Current` = ? AND `Item_Type` = ? AND `Quantity` > 0 ORDER BY `Item_Name` ASC");
-				$Fetch_Items->execute([$User_Data['id'], $Category]);
+				$Fetch_Items->execute([$User_Data['ID'], $Category]);
 				$Fetch_Items->setFetchMode(PDO::FETCH_ASSOC);
 				$Items = $Fetch_Items->fetchAll();
 			}
@@ -364,12 +380,12 @@
 	try
 	{
 		$Fetch_Equipped = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Item` != 0 AND `Owner_Current` = ?");
-		$Fetch_Equipped->execute([ $User_Data['id'] ]);
+		$Fetch_Equipped->execute([ $User_Data['ID'] ]);
 		$Fetch_Equipped->setFetchMode(PDO::FETCH_ASSOC);
 		$Equipped_Pokes = $Fetch_Equipped->fetchAll();
 
 		$Fetch_Items = $PDO->prepare("SELECT * FROM `items` WHERE `Owner_Current` = ? AND `Item_Type` = ? AND `Quantity` > 0 ORDER BY `Item_Name` ASC");
-		$Fetch_Items->execute([ $User_Data['id'], $Item_Type ]);
+		$Fetch_Items->execute([ $User_Data['ID'], $Item_Type ]);
 		$Fetch_Items->setFetchMode(PDO::FETCH_ASSOC);
 		$Items = $Fetch_Items->fetchAll();
 	}
