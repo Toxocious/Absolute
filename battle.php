@@ -1,6 +1,6 @@
 <?php
-	require 'core/required/layout_top.php';
-	require 'battles/battle.php';
+	require_once 'core/required/layout_top.php';
+	require_once 'battles/battle.php';
 
 	if ( !isset($_SESSION['Battle']) )
 	{
@@ -288,4 +288,4 @@
 </script>
 
 <?php
-	require 'core/required/layout_bottom.php';
+	require_once 'core/required/layout_bottom.php';

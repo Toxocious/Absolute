@@ -1,5 +1,5 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	if ( isset($_SESSION['abso_user']) )
 	{

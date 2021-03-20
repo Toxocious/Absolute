@@ -1,5 +1,5 @@
 <?php
-	require 'core/required/layout_top.php';
+	require_once 'core/required/layout_top.php';
 
 	$Staff_Categories = [
 		[
@@ -34,7 +34,7 @@
 	<div class='body' style='padding: 5px;'>
 		<div class='description' style='margin: 0px auto 5px'>
 			All members of Absolute's staff team are listed below.<br />
-			If you require assistance with something, please don't hesitate to contact one of them.
+			If you require_once assistance with something, please don't hesitate to contact one of them.
 		</div>
 
 		<div class='row' style='display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;'>
@@ -105,4 +105,4 @@
 </div>
 
 <?php
-	require 'core/required/layout_bottom.php';
+	require_once 'core/required/layout_bottom.php';

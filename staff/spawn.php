@@ -1,5 +1,5 @@
 <?php
-	require '../core/required/layout_top.php';
+	require_once '../core/required/layout_top.php';
 	
 	checkUserPower($User_Data['Power'], 7);
 ?>
@@ -14,5 +14,5 @@
 </div>
 
 <?php
-	require '../core/required/layout_bottom.php';
+	require_once '../core/required/layout_bottom.php';
 ?>

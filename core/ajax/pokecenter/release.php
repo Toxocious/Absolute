@@ -1,5 +1,5 @@
 <?php
-  require '../../required/session.php';
+  require_once '../../required/session.php';
 
   /**
    * Determine the current state of the user's release process.

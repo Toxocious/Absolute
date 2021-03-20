@@ -1,5 +1,5 @@
 <?php
-  require '../../required/session.php';
+  require_once '../../required/session.php';
 
   /**
    * Fetch an array of all of the moves in game.

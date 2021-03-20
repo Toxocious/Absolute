@@ -1,5 +1,5 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	/**
 	 * Handle both accepting trades, as well as declining/deleting trades.

@@ -1,5 +1,5 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	if ( isset($User_Data['ID']) && isset($_POST['PokeID']) )
 	{

@@ -1,6 +1,6 @@
 <?php	
-	require '../core/required/session.php';
-	require '../core/functions/staff.php';
+	require_once '../core/required/session.php';
+	require_once '../core/functions/staff.php';
 
 	/**
 	 * Fetch the user's data in preparation for a ban.

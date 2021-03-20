@@ -1,6 +1,6 @@
 <?php
-	require '../../core/required/session.php';
-	require '../../core/functions/staff.php';
+	require_once '../../core/required/session.php';
+	require_once '../../core/functions/staff.php';
 
 	/**
 	 * Fetching the appropriate data of the requested staff member.

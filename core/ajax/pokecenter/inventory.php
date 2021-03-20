@@ -1,5 +1,5 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	/**
 	 * Check for any AJAX requests.

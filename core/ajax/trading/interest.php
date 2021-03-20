@@ -1,5 +1,5 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	/**
 	 * Update the trade interest status of the chosen Pokemon.

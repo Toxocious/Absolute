@@ -1,5 +1,5 @@
 <?php
-	require 'core/required/layout_top.php';
+	require_once 'core/required/layout_top.php';
 ?>
 
 <div class='panel content'>
@@ -79,5 +79,5 @@
 </script>
 
 <?php
-	require 'core/required/layout_bottom.php';
+	require_once 'core/required/layout_bottom.php';
 ?>
