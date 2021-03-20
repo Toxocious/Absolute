@@ -302,6 +302,84 @@
     }
 
     /**
+     * Add a user to the clan.
+     * @param int $Clan_ID
+     * @param int $User_ID
+     */
+    public function JoinClan
+    (
+      int $Clan_ID,
+      int $User_ID
+    )
+    {
+      global $PDO, $User_Class;
+
+      if ( !$Clan_ID || !$User_ID )
+        return false;
+
+      $Member_Data = $User_Class->FetchUserData($User_ID);
+      if ( $Member_Data['Clan'] )
+        return false;
+
+      $Clan_Data = $this->FetchClanData($Clan_ID);
+      if ( !$Clan_Data )
+        return false;
+
+      try
+      {
+        $Apply_Membership = $PDO->prepare("
+          UPDATE `users`
+          SET `Clan` = ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Apply_Membership->execute([ $Clan_ID, $User_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      $Direct_Message = new DirectMessage();
+      $Clan_DM = $Direct_Message->FetchGroup(null, $Clan_ID);
+      if ( !$Clan_DM )
+        return false;
+
+      try
+      {
+        $Apply_Participation = $PDO->prepare("
+          INSERT INTO `direct_message_groups`
+          (`Group_ID`, `Group_Name`, `Clan_ID`, `User_ID`, `Unread_Messages`, `Last_Message`)
+          VALUES (?, ?, ?, ?, ?, ?)
+        ");
+        $Apply_Participation->execute([
+          $Clan_DM['Group_ID'],
+          "{$Clan_Data['Name']}: Clan Announcement",
+          $Clan_ID,
+          $User_ID,
+          1,
+          time()
+        ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      $Create_Message = $Direct_Message->CreateMessage(
+        $Clan_DM['Group_ID'],
+        "{$Member_Data['Username']} has joined {$Clan_Data['Name']}!",
+        3,
+        $Member_Data['Clan']
+      );
+
+      if ( !$Create_Message )
+        return false;
+
+      return true;
+    }
+
+    /**
      * Remove a user from a clan.
      * @param int $User_ID
      */
