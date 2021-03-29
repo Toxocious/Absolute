@@ -105,6 +105,7 @@
 				'Playtime' => $Playtime,
 				'Auth_Code' => $User['Auth_Code'],
 				'Theme' => $User['Theme'],
+				'Battle_Theme' => $User['Battle_Theme'],
 			];
 		}
 
