@@ -31,7 +31,7 @@
 
 	switch ($Battle_Type)
 	{
-		case 'Trainer':
+		case 'trainer':
 			$Battle = new Trainer();
 			break;
 		default:
