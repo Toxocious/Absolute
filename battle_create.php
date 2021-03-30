@@ -1,5 +1,6 @@
 <?php
 	require_once 'core/required/session.php';
+	require_once 'battles/classes/battle.php';
 
 	if
 	(
@@ -22,18 +23,33 @@
 		return;
 	}
 
-	$Battle_Mode = $_GET['Battle'];
+	$Battle_Type = strtolower(Purify($_GET['Battle_Type']));
+	$Foe = strtolower(Purify($_GET['Foe']));
+	
+	$_SESSION['Battle']['Battle_Type'] = $Battle_Type;
+	$_SESSION['Battle']['Ally']['ID'] = $User_Data['ID'];
 
-	$Battle = new $Battle_Mode();
-	$Create = $Battle->Create_Battle( $_GET['Foe'] );
+	switch ($Battle_Type)
+	{
+		case 'Trainer':
+			$Battle = new Trainer();
+			break;
+		default:
+			$Battle = new Trainer();
+			break;
+	}
 
-	if ( $Create )
+	$Create_Battle = $Battle->CreateBattle($_GET['Foe']);
+	
+	if ( $Create_Battle )
 	{
 		header('Location: /battle.php');
 		return;
 	}
 	else
 	{
+		unset($_SESSION['Battle']);
 		header("Location: /battle_search.php");
+		
 		return;
 	}
