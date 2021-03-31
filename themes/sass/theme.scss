@@ -116,6 +116,25 @@ div
     border-color: var(--border-color-warning);
     color: var(--color-warning);
   }
+
+  .progress-container
+  {
+    background: var(--color-sexary);
+    border: 1px solid var(--color-black);
+
+    .progress-bar
+    {
+      &.hp
+      {
+        background: var(--border-color-success);
+      }
+
+      &.exp
+      {
+        background: var(--color-primary);
+      }
+    }
+  }
 }
 
 /**

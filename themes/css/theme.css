@@ -92,6 +92,16 @@ div.warning {
   border-color: var(--border-color-warning);
   color: var(--color-warning);
 }
+div .progress-container {
+  background: var(--color-sexary);
+  border: 1px solid var(--color-black);
+}
+div .progress-container .progress-bar.hp {
+  background: var(--border-color-success);
+}
+div .progress-container .progress-bar.exp {
+  background: var(--color-primary);
+}
 
 /**
  * Apply drop shadow to an element.

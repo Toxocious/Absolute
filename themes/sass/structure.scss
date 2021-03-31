@@ -144,6 +144,21 @@ div
     width: var(--set-80p);   
   }
 
+  .progress-container
+  {
+    border-radius: 10px;
+    height: 6px;
+    padding: 2px;
+    width: 100px;
+
+    .progress-bar
+    {
+      border-radius: 6px;
+      height: 6px;
+      width: 0px;
+    }
+  }
+
   &.br-50p
   {
     border-radius: 50%;

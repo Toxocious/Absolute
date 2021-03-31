@@ -112,6 +112,17 @@ div.description, div.error, div.success, div.warning {
   text-align: center;
   width: var(--set-80p);
 }
+div .progress-container {
+  border-radius: 10px;
+  height: 6px;
+  padding: 2px;
+  width: 100px;
+}
+div .progress-container .progress-bar {
+  border-radius: 6px;
+  height: 6px;
+  width: 0px;
+}
 div.br-50p {
   border-radius: 50%;
 }
