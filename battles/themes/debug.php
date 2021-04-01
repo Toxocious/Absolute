@@ -4,9 +4,9 @@
 	if ( !isset($_SESSION['Battle']) )
 	{
 		echo "
-    <div class='panel content'>
-      <div class='head'>Battle</div>
-      <div class='body' style='padding: 5px;'>
+      <div class='panel content'>
+        <div class='head'>Battle</div>
+        <div class='body' style='padding: 5px;'>
           <div class='error' style='margin: 5px auto 5px;'>
             A battle has not yet been created.
           </div>
@@ -26,32 +26,32 @@
         <div class='flex' style='flex-wrap: wrap; justify-content: center;'>
           <div style='flex-basis: 49%;'>
             <div class='flex' style='justify-content: center; flex-basis: 100%;'>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Ally_Slot_0' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Ally_Slot_1' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Ally_Slot_2' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Ally_Slot_3' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Ally_Slot_4' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient'>
+              <div class='border-gradient hover'>
                 <div slot='Ally_Slot_5' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
@@ -85,7 +85,7 @@
                 </div>
 
                 <div class='border-gradient' style='margin-bottom: 5px; width: 158px;'>
-                  <div style='font-size: 12px; text-align: left;'>
+                  <div style='font-size: 12px; text-align: center;'>
                     <b>HP</b>: (<span slot='Ally_HP'>0</span> / <span slot='Ally_Max_HP'>0</span>)
                     <div class='progress-container' style='width: 140px;'>
                       <div class='progress-bar hp' style='width: 50px;'></div>
@@ -94,8 +94,8 @@
                 </div>
 
                 <div class='border-gradient' style='width: 158px;'>
-                  <div style='font-size: 12px; text-align: left;'>
-                    <b>Exp</b>: (0 / 0)
+                  <div style='font-size: 12px; text-align: center;'>
+                    <b>Exp To Level</b>: 0
                     <div class='progress-container' style='width: 140px;'>
                       <div class='progress-bar exp' style='width: 50px;'></div>
                     </div>
@@ -107,33 +107,33 @@
 
           <div style='flex-basis: 49%;'>
             <div class='flex' style='justify-content: center;'>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Foe_Slot_0' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Foe_Slot_1' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Foe_Slot_2' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
 
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Foe_Slot_3' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient' style='margin-right: 5px;'>
+              <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Foe_Slot_4' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
-              <div class='border-gradient'>
+              <div class='border-gradient hover'>
                 <div slot='Foe_Slot_5' style='padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
@@ -148,7 +148,7 @@
                 </div>
 
                 <div class='border-gradient' style='margin-bottom: 5px; width: 158px;'>
-                  <div style='font-size: 12px; text-align: right;'>
+                  <div style='font-size: 12px; text-align: center;'>
                     <b>HP</b>: (<span slot='Foe_HP'>0</span> / <span slot='Foe_Max_HP'>0</span>)
                     <div class='progress-container' style='width: 140px;'>
                       <div class='progress-bar hp' style='width: 50px;'></div>
@@ -157,8 +157,8 @@
                 </div>
 
                 <div class='border-gradient' style='width: 158px;'>
-                  <div style='font-size: 12px; text-align: right;'>
-                    <b>Exp</b>: (0 / 0)
+                  <div style='font-size: 12px; text-align: center;'>
+                    <b>Exp To Level</b>: 0
                     <div class='progress-container' style='width: 140px;'>
                       <div class='progress-bar exp' style='width: 50px;'></div>
                     </div>
@@ -196,7 +196,7 @@
 
           <div class='border-gradient' style='flex-basis: 96%; margin-top: 5px;'>
             <div id='BattleDialogue'>
-              battle dialogue
+              Loading Battle State
             </div>
           </div>
         </div>
