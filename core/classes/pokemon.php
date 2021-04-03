@@ -408,11 +408,27 @@
 		/**
 		 * Spawn a Pokemon into the game.
 		 */
-		public function CreatePokemon($Pokedex_ID, $Alt_ID, $Level = 5, $Type = "Normal", $Gender = null, $Obtained_At = "Unknown", $Location, $Slot, $Owner, $Nature = null, $IVs = null, $EVs = null)
+		public function CreatePokemon
+		(
+			$Pokedex_ID,
+			$Alt_ID,
+			$Level = 5,
+			$Type = "Normal",
+			$Gender = null,
+			$Obtained_At = "Unknown",
+			$Location,
+			$Slot,
+			$Owner,
+			$Nature = null,
+			$IVs = null,
+			$EVs = null
+		)
 		{
 			global $PDO;
 
 			$Pokemon = $this->FetchPokedexData($Pokedex_ID, $Alt_ID, $Type);
+			if ( !$Pokemon )
+				return false;
 
 			/**
 			 * Check the variable inputs.
@@ -440,10 +456,12 @@
 			else
 				$Display_Name = $Pokemon['Name'];
 
-			if ( $Gender == null )
-			{
+			if ( !$Gender )
 				$Gender = $this->GenerateGender($Pokemon['ID']);
-			}
+
+			$Ability = $this->GenerateAbility($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']);
+			if ( !$Ability )
+				$Ability = null;
 
 			try
 			{
@@ -507,7 +525,6 @@
 			{
 				$IVs = mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31);
 			}
-			$IVTotal = array_sum(explode(',', $IVs));
 
 			if ( $EVs == null )
 			{
@@ -537,32 +554,38 @@
 					`EVs`,
 					`Nature`,
 					`Creation_Date`,
-					`Creation_Location`
+					`Creation_Location`,
+					`Ability`
 				) 
 				VALUES
-				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			");
-			$Pokemon_Create->execute([ $Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'], $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender, $IVs, $EVs, $Nature, time(), $Obtained_At ]);
+			$Pokemon_Create->execute([
+				$Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'],
+				$Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender,
+				$IVs, $EVs, $Nature, time(), $Obtained_At, $Ability
+			]);
 			$Poke_DB_ID = $PDO->lastInsertId();
 
 			// Have to wait until the Pokemon has been created to fetch it's icon and sprite.
 			$Poke_Images = $this->FetchImages($Pokedex_ID, $Alt_ID, $Type);
 
 			return [
-				"Name" => $Pokemon['Name'],
-				"Forme" => $Pokemon['Forme'],
+				'Name' => $Pokemon['Name'],
+				'Forme' => $Pokemon['Forme'],
 				'Display_Name' => $Display_Name,
-				"Exp" => $Experience,
-				"Gender" => $Gender,
-				"Location" => $Location,
-				"Slot" => $Slot,
-				"PokeID" => $Poke_DB_ID,
-				"Stats" => $Pokemon['Base_Stats'],
-				"IVs" => explode(',', $IVs),
-				"EVs" => explode(',', $EVs),
-				"Nature" => $Nature,
-				"Sprite" => $Poke_Images['Sprite'],
-				"Icon" => $Poke_Images['Icon'],
+				'Exp' => $Experience,
+				'Gender' => $Gender,
+				'Location' => $Location,
+				'Slot' => $Slot,
+				'PokeID' => $Poke_DB_ID,
+				'Stats' => $Pokemon['Base_Stats'],
+				'IVs' => explode(',', $IVs),
+				'EVs' => explode(',', $EVs),
+				'Nature' => $Nature,
+				'Ability' => $Ability,
+				'Sprite' => $Poke_Images['Sprite'],
+				'Icon' => $Poke_Images['Icon'],
 			];	
 		}
 
@@ -577,12 +600,12 @@
 			{
 				if ( $DB_ID )
 				{
-					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `id` = ? LIMIT 1");
+					$FetchPokedex = $PDO->prepare("SELECT `Female`, `Male`, `Genderless` FROM `pokedex` WHERE `id` = ? LIMIT 1");
 					$FetchPokedex->execute([ $DB_ID ]);
 				}
 				else
 				{
-					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+					$FetchPokedex = $PDO->prepare("SELECT `Female`, `Male`, `Genderless` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
 					$FetchPokedex->execute([ $Pokedex_ID, $Alt_ID ]);
 				}
 
