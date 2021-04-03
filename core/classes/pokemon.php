@@ -608,6 +608,37 @@
 		}
 
 		/**
+		 * Generate an ability for the specified Pokemon.
+		 * @param int $Pokedex_ID
+		 * @param int $Alt_ID
+		 */
+		public function GenerateAbility
+		(
+			int $Pokedex_ID,
+			int $Alt_ID
+		)
+		{
+			$Abilities = $this->FetchAbilities($Pokedex_ID, $Alt_ID);
+			if ( !$Abilities )
+				return false;
+
+			if ( $Abilities['Hidden_Ability'] && mt_rand(1, 50) == 1 )
+				return $Abilities['Hidden_Ability'];
+			else
+			{
+				if ( !$Abilities['Ability_2'] )
+					return $Abilities['Ability_1'];
+				else
+				{
+					if ( mt_rand(1, 2) == 1 )
+						return $Abilities['Ability_1'];
+					else
+						return $Abilities['Ability_2'];
+				}
+			}
+		}
+
+		/**
 		 * Function to render a dropdown menu that consists of Pokemon in the `pokedex` database table.
 		 */
 		public function RenderDropdown()
