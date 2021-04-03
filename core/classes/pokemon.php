@@ -116,13 +116,9 @@
 			];
 			
 			if ( $Pokemon['Type'] !== 'Normal' )
-			{
 				$Display_Name = $Pokemon['Type'] . $Pokemon['Name'];
-			}
 			else
-			{
 				$Display_Name = $Pokemon['Name'];
-			}
 
 			if ( $Pokemon['Forme'] )
 				$Display_Name .= " {$Pokemon['Forme']}";
@@ -130,48 +126,49 @@
 			$Poke_Images = $this->FetchImages($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon['Type']);
 
 			return [
-				"ID" => $Pokemon['ID'],
-				"Pokedex_ID" => $Pokemon['Pokedex_ID'],
-				"Alt_ID" => $Pokemon['Alt_ID'],
-				"Nickname" => $Pokemon['Nickname'],
-				"Display_Name" => $Display_Name,
-				"Name" => $Pokemon['Name'],
-				"Type" => $Pokemon['Type'],
-				"Location" => $Pokemon['Location'],
-				"Slot" => $Pokemon['Slot'],
-				"Item" => $Item['Item_Name'],
-				"Item_ID" => $Item['Item_ID'],
-				"Item_Icon" => DOMAIN_SPRITES . "/Items/" . $Item['Item_Name'] . ".png",
-				"Gender" => $Gender,
-				"GenderShort" => $GenderShort,
-				"Gender_Icon" => DOMAIN_SPRITES . "/Assets/" . $Gender . ".svg",
-				"Level" => number_format($Level),
-				"Level_Raw" => $Level,
-				"Experience" => number_format($Experience),
-				"Experience_Raw" => $Experience,
-				"Type_Primary" => $Pokedex['Type_Primary'],
-				"Type_Secondary" => $Pokedex['Type_Secondary'],
-				"Nature" => $Pokemon['Nature'],
-				"BaseStats" => $BaseStats,
-      	"Stats" => $Stats,
-				"IVs" => $IVs,
-				"EVs" => $EVs,
-				"Move_1" => $Pokemon['Move_1'],
-				"Move_2" => $Pokemon['Move_2'],
-				"Move_3" => $Pokemon['Move_3'],
-				"Move_4" => $Pokemon['Move_4'],
-				"Happiness" => $Pokemon['Happiness'],
-				"Owner_Current" => $Pokemon['Owner_Current'],
-				"Owner_Current_Username" => $Current_Owner['Username'],
-				"Owner_Original" => $Pokemon['Owner_Original'],
-				"Owner_Original_Username" => $Original_Owner['Username'],
-				"Trade_Interest" => $Pokemon['Trade_Interest'],
-				"Challenge_Status" => $Pokemon['Challenge_Status'],
-				"Biography" => $Pokemon['Biography'],
-				"Creation_Date" => date("M j, Y (g:i A)", $Pokemon['Creation_Date']),
-				"Creation_Location" => $Pokemon['Creation_Location'],
-				"Sprite" => $Poke_Images['Sprite'],
-				"Icon" => $Poke_Images['Icon'],
+				'ID' => $Pokemon['ID'],
+				'Pokedex_ID' => $Pokemon['Pokedex_ID'],
+				'Alt_ID' => $Pokemon['Alt_ID'],
+				'Nickname' => $Pokemon['Nickname'],
+				'Display_Name' => $Display_Name,
+				'Name' => $Pokemon['Name'],
+				'Type' => $Pokemon['Type'],
+				'Location' => $Pokemon['Location'],
+				'Slot' => $Pokemon['Slot'],
+				'Item' => $Item['Item_Name'],
+				'Item_ID' => $Item['Item_ID'],
+				'Item_Icon' => DOMAIN_SPRITES . '/Items/' . $Item['Item_Name'] . '.png',
+				'Gender' => $Gender,
+				'GenderShort' => $GenderShort,
+				'Gender_Icon' => DOMAIN_SPRITES . '/Assets/' . $Gender . '.svg',
+				'Level' => number_format($Level),
+				'Level_Raw' => $Level,
+				'Experience' => number_format($Experience),
+				'Experience_Raw' => $Experience,
+				'Type_Primary' => $Pokedex['Type_Primary'],
+				'Type_Secondary' => $Pokedex['Type_Secondary'],
+				'Ability' => $Pokemon['Ability'],
+				'Nature' => $Pokemon['Nature'],
+				'BaseStats' => $BaseStats,
+      	'Stats' => $Stats,
+				'IVs' => $IVs,
+				'EVs' => $EVs,
+				'Move_1' => $Pokemon['Move_1'],
+				'Move_2' => $Pokemon['Move_2'],
+				'Move_3' => $Pokemon['Move_3'],
+				'Move_4' => $Pokemon['Move_4'],
+				'Happiness' => $Pokemon['Happiness'],
+				'Owner_Current' => $Pokemon['Owner_Current'],
+				'Owner_Current_Username' => $Current_Owner['Username'],
+				'Owner_Original' => $Pokemon['Owner_Original'],
+				'Owner_Original_Username' => $Original_Owner['Username'],
+				'Trade_Interest' => $Pokemon['Trade_Interest'],
+				'Challenge_Status' => $Pokemon['Challenge_Status'],
+				'Biography' => $Pokemon['Biography'],
+				'Creation_Date' => date('M j, Y (g:i A)', $Pokemon['Creation_Date']),
+				'Creation_Location' => $Pokemon['Creation_Location'],
+				'Sprite' => $Poke_Images['Sprite'],
+				'Icon' => $Poke_Images['Icon'],
 			];
 		}
 
