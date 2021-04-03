@@ -675,6 +675,42 @@
 		}
 
 		/**
+		 * Fetch the available abilities of a Pokemon.
+		 * @param int $Pokedex_ID
+		 * @param int $Alt_ID
+		 */
+		public function FetchAbilities
+		(
+			int $Pokedex_ID,
+			int $Alt_ID
+		)
+		{
+			global $PDO;
+
+			try
+			{
+				$Fetch_Abilities = $PDO->prepare("
+					SELECT `Ability_1`, `Ability_2`, `Hidden_Ability`
+					FROM `pokedex`
+					WHERE `Pokedex_ID` = ? AND `Alt_ID` = ?
+					LIMIT 1
+				");
+				$Fetch_Abilities->execute([ $Pokedex_ID, $Alt_ID ]);
+				$Fetch_Abilities->setFetchMode(PDO::FETCH_ASSOC);
+				$Abilities = $Fetch_Abilities->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+
+			if ( !$Abilities )
+				return false;
+
+			return $Abilities;
+		}
+
+		/**
 		 * Fetch the data of a given move via it's `moves` DB ID.
 		 */
 		public function FetchMoveData($Move_ID)
