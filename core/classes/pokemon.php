@@ -27,7 +27,7 @@
 				$Pokemon = $FetchPokemon->fetch();
 
 				$FetchPokedex = $PDO->prepare("SELECT `Type_Primary`, `Type_Secondary`, `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
-				$FetchPokedex->execute([$Pokemon['ID'], $Pokemon['Alt_ID']]);
+				$FetchPokedex->execute([$Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']]);
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokedex = $FetchPokedex->fetch();
 
