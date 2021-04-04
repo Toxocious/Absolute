@@ -97,22 +97,13 @@
 			$Level = FetchLevel($Pokemon['Experience'], 'Pokemon');
 			$Experience = $Pokemon['Experience'];
 
-			$BaseStats = [
-				round($Pokedex['HP'] + $StatBonus),
-				round($Pokedex['Attack'] + $StatBonus),
-				round($Pokedex['Defense'] + $StatBonus),
-				round($Pokedex['SpAttack'] + $StatBonus),
-				round($Pokedex['SpDefense'] + $StatBonus),
-				round($Pokedex['Speed'] + $StatBonus),
-			];
-
 			$Stats = [
-				$this->CalcStats("HP", $BaseStats[0], $Level, $IVs[0], $EVs[0], $Pokemon['Nature']),
-				$this->CalcStats("Attack", $BaseStats[1], $Level, $IVs[1], $EVs[1], $Pokemon['Nature']),
-				$this->CalcStats("Defense", $BaseStats[2], $Level, $IVs[2], $EVs[2], $Pokemon['Nature']),
-				$this->CalcStats("SpAtk", $BaseStats[3], $Level, $IVs[3], $EVs[3], $Pokemon['Nature']),
-				$this->CalcStats("SpDef", $BaseStats[4], $Level, $IVs[4], $EVs[4], $Pokemon['Nature']),
-				$this->CalcStats("Speed", $BaseStats[5], $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
+				$this->CalcStat('HP', floor($Pokedex['HP'] + $StatBonus), $Level, $IVs[0], $EVs[0], $Pokemon['Nature']),
+				$this->CalcStat('Attack', floor($Pokedex['Attack'] + $StatBonus), $Level, $IVs[1], $EVs[1], $Pokemon['Nature']),
+				$this->CalcStat('Defense', floor($Pokedex['Defense'] + $StatBonus), $Level, $IVs[2], $EVs[2], $Pokemon['Nature']),
+				$this->CalcStat('SpAttack', floor($Pokedex['SpAttack'] + $StatBonus), $Level, $IVs[3], $EVs[3], $Pokemon['Nature']),
+				$this->CalcStat('SpDefense', floor($Pokedex['SpDefense'] + $StatBonus), $Level, $IVs[4], $EVs[4], $Pokemon['Nature']),
+				$this->CalcStat('Speed', floor($Pokedex['Speed'] + $StatBonus), $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
 			];
 			
 			if ( $Pokemon['Type'] !== 'Normal' )
@@ -149,7 +140,6 @@
 				'Type_Secondary' => $Pokedex['Type_Secondary'],
 				'Ability' => $Pokemon['Ability'],
 				'Nature' => $Pokemon['Nature'],
-				'BaseStats' => $BaseStats,
       	'Stats' => $Stats,
 				'IVs' => $IVs,
 				'EVs' => $EVs,
