@@ -904,59 +904,55 @@
 		 * Calculate the stats of a Pokemon depending on it's EV's, IV's, and Nature.
 		 * Makes use of the official stat formulas found on Bulbapedia: https://bulbapedia.bulbagarden.net/wiki/Statistic
 		 */
-		public function CalcStats($Stat, $BaseStat, $Level, $IVs, $EVs, $Nature)
+		public function CalcStat
+		(
+			string $Stat_Name,
+			int $Base_Stat,
+			int $Level,
+			int $IV,
+			int $EV,
+			string $Nature
+		)
 		{
-			$Fetch_Nature = array_search($Nature, $this->Natures());
-			$Nature_Mult = 1;
+			if
+			(
+				!isset($Stat_Name) ||
+				!isset($Base_Stat) ||
+				!isset($Level) ||
+				!isset($IV) ||
+				!isset($EV) ||
+				!isset($Nature)
+			)
+				return -1;
 
-			if ($Fetch_Nature >= 0 && $Fetch_Nature <= 3 && $Stat == 'Attack')
-			{
-				$Nature_Mult = 1.1;
-			}	
-			if ($Fetch_Nature >= 4 && $Fetch_Nature <= 7 && $Stat == 'Defense')
-			{
-				$Nature_Mult = 1.1;
-			}
-			if ($Fetch_Nature >= 8 && $Fetch_Nature <= 11 && $Stat == 'SpAtk')
-			{
-				$Nature_Mult = 1.1;
-			}
-			if ($Fetch_Nature >= 12 && $Fetch_Nature <= 15 && $Stat == 'SpDef')
-			{
-				$Nature_Mult = 1.1;
-			}
-			if ($Fetch_Nature >= 16 && $Fetch_Nature <= 19 && $Stat == 'Speed')
-			{
-				$Nature_Mult = 1.1;
-			}
-			if (($Fetch_Nature == 4 || $Fetch_Nature == 8 || $Fetch_Nature == 12 || $Fetch_Nature == 16) && $Stat == 'Attack')
-			{
-				$Nature_Mult = 0.9;
-			}
-			if (($Fetch_Nature == 0 || $Fetch_Nature == 9 || $Fetch_Nature == 13 || $Fetch_Nature == 17) && $Stat == 'Defense')
-			{
-				$Nature_Mult = 0.9;
-			}
-			if (($Fetch_Nature == 1 || $Fetch_Nature == 5 || $Fetch_Nature == 14 || $Fetch_Nature == 18) && $Stat == 'SpAtk')
-			{
-				$Nature_Mult = 0.9;
-			}
-			if (($Fetch_Nature == 2 || $Fetch_Nature == 6 || $Fetch_Nature == 10 || $Fetch_Nature == 19) && $Stat == 'SpDef')
-			{
-				$Nature_Mult = 0.9;
-			}
-			if (($Fetch_Nature == 3 || $Fetch_Nature == 7 || $Fetch_Nature == 11 || $Fetch_Nature == 15) && $Stat == 'Speed')
-			{
-				$Nature_Mult = 0.9;
-			}
+			if ( $Level < 1 )
+				$Level = 1;
+
+			if ( $IV > 31 )
+				$IV = 31;
+
+			if ( $EV > 252 )
+				$EV = 252;
 			
-			if ($Stat == 'HP')
+			if ( $Stat_Name == 'HP' )
 			{
-				return floor( ( ( ( 2 * $BaseStat + $IVs + ( $EVs / 4 ) ) * $Level ) / 100 ) + $Level + 10 );
+				if ( $Base_Stat == 1 )
+					return 1;
+				
+				return floor((((2 * $Base_Stat + $IV + ($EV / 4)) * $Level) / 100) + $Level + 10);
 			}
 			else
 			{
-				return floor( ( ( ( $IVs + 2 * $BaseStat + ( $EVs / 4 ) ) * $Level / 100 ) + 5) * $Nature_Mult );
+				$Nature_Data = $this->Natures()[$Nature];
+
+				if ( $Nature_Data['Plus'] == $Stat_Name )
+					$Nature_Bonus = 1.1;
+				else if ( $Nature_Data['Minus'] == $Stat_Name )
+					$Nature_Bonus = 0.9;
+				else
+					$Nature_Bonus = 1;
+
+				return floor(((((2 * $Base_Stat + $IV + ($EV / 4)) * $Level) / 100) + 5) * $Nature_Bonus);
 			}
 		}
 
