@@ -34,6 +34,9 @@
 			{
 				document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('src', Roster[i].Icon);
 
+				if ( Roster[i].Fainted )
+					document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('style', 'filter: grayscale(100%);');
+
 				if ( Roster[i].Active )
 				{
 					document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('src', Roster[i].Sprite);
@@ -41,6 +44,9 @@
 					document.querySelector(`[slot='${Side}_HP']`).innerHTML = Roster[i].HP;
 					document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Roster[i].Max_HP;
 					document.querySelector(`[slot='${Side}_Level']`).innerHTML = Roster[i].Level.toLocaleString();
+
+					if ( Roster[i].Fainted )
+						document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');
 				}
 			}
 		},
