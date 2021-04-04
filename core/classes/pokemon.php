@@ -966,31 +966,111 @@
 		public function Natures()
 		{
 			return [
-				'Lonely',		// +Attack / -Defense
-				'Adamant',	// +Attack / -Special Attack
-				'Naughty',	// +Attack / -Special Defense
-				'Brave',		// +Attack / -Speed
-				'Bold',  		// +Defense / -Attack
-				'Impish',		// +Defense / -Special Attack
-				'Lax',   		// +Defense / -Special Defense
-				'Relaxed',	// +Defense / -Speed
-				'Modest',		// +Special Attack / -Attack
-				'Mild',   	// +Special Attack / -Defense
-				'Rash',   	// +Special Attack / -Special Defense
-				'Quiet',  	// +Special Attack / -Speed
-				'Calm',   	// +Special Defense / -Attack
-				'Gentle', 	// +Special Defense / -Defense
-				'Careful',	// +Special Defense / -Special Attack
-				'Sassy',  	// +Special Defense / -Speed
-				'Timid',  	// +Speed / -Attack
-				'Hasty',  	// +Speed / -Defense
-				'Jolly',  	// +Speed / -Special Attack
-				'Naive',  	// +Speed / -Special Defense
-				'Bashful',	// Neutral
-				'Docile',		// Neutral
-				'Hardy', 		// Neutral
-				'Quirky',		// Neutral
-				'Serious',	// Neutral
+				'Adamant' => [
+					'Plus' => 'Attack',
+					'Minus' => 'SpAttack'
+				],
+				'Brave' => [
+					'Plus' => 'Attack',
+					'Minus' => 'Speed'
+				],
+				'Lonely' => [
+					'Plus' => 'Attack',
+					'Minus' => 'Defense'
+				],
+				'Naughty' => [
+					'Plus' => 'Attack',
+					'Minus' => 'SpDefense'
+				],
+
+				'Bold' => [
+					'Plus' => 'Defense',
+					'Minus' => 'Attack'
+				],
+				'Impish' => [
+					'Plus' => 'Defense',
+					'Minus' => 'SpAttack'
+				],
+				'Lax' => [
+					'Plus' => 'Defense',
+					'Minus' => 'SpDefense'
+				],
+				'Relaxed' => [
+					'Plus' => 'Defense',
+					'Minus' => 'Speed'
+				],
+
+				'Modest' => [
+					'Plus' => 'SpAttack',
+					'Minus' => 'Attack'
+				],
+				'Modest' => [
+					'Plus' => 'SpAttack',
+					'Minus' => 'Defense'
+				],
+				'Modest' => [
+					'Plus' => 'SpAttack',
+					'Minus' => 'SpDefense'
+				],
+				'Modest' => [
+					'Plus' => 'SpAttack',
+					'Minus' => 'Speed'
+				],
+
+				'Calm' => [
+					'Plus' => 'SpDefense',
+					'Minus' => 'Attack'
+				],
+				'Careful' => [
+					'Plus' => 'SpDefense',
+					'Minus' => 'SpAttack'
+				],
+				'Gentle' => [
+					'Plus' => 'SpDefense',
+					'Minus' => 'Defense'
+				],
+				'Sassy' => [
+					'Plus' => 'SpDefense',
+					'Minus' => 'Speed'
+				],
+
+				'Hasty' => [
+					'Plus' => 'Speed',
+					'Minus' => 'Defense'
+				],
+				'Jolly' => [
+					'Plus' => 'Speed',
+					'Minus' => 'SpAttack'
+				],
+				'Naive' => [
+					'Plus' => 'Speed',
+					'Minus' => 'SpDefense'
+				],
+				'Timid' => [
+					'Plus' => 'Speed',
+					'Minus' => 'Attack'
+				],
+
+				'Bashful' => [
+					'Plus' => null,
+					'Minus' => null
+				],
+				'Docile' => [
+					'Plus' => null,
+					'Minus' => null
+				],
+				'Hardy' => [
+					'Plus' => null,
+					'Minus' => null
+				],
+				'Quirky' => [
+					'Plus' => null,
+					'Minus' => null
+				],
+				'Serious' => [
+					'Plus' => null,
+					'Minus' => null
+				],
 			];
 		}
 	}
