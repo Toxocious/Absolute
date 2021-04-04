@@ -25,10 +25,7 @@
 
 		OnPageLoad: () =>
 		{
-			setTimeout(() =>
-			{
-				Battle.HandleRequest(null, null);
-			}, 250);
+			Battle.HandleRequest(null, null);
 		},
 
 		RenderRoster: (Side, Roster) =>
