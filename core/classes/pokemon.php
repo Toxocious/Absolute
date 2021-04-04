@@ -734,6 +734,45 @@
 		}
 
 		/**
+		 * Fetch the base stats of a Pokemon.
+		 * @param int $Pokedex_ID
+		 * @param int $Alt_ID
+		 */
+		public function FetchBaseStats
+		(
+			int $Pokedex_ID,
+			int $Alt_ID
+		)
+		{
+			global $PDO;
+
+			if ( !$Pokedex_ID || !$Alt_ID )
+				return false;
+
+			try
+			{
+				$Fetch_Stats = $PDO->prepare("
+					SELECT `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed`
+					FROM `pokedex`
+					WHERE `Pokedex_ID` = ? AND `Alt_ID` = ?
+					LIMIT 1
+				");
+				$Fetch_Stats->execute([ $Pokedex_ID, $Alt_ID ]);
+				$Fetch_Stats->setFetchMode(PDO::FETCH_ASSOC);
+				$Stats = $Fetch_Stats->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+
+			if ( !$Stats )
+				return false;
+
+			return $Stats;
+		}
+
+		/**
 		 * Fetch the data of a given move via it's `moves` DB ID.
 		 */
 		public function FetchMoveData($Move_ID)
