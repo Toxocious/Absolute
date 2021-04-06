@@ -48,6 +48,11 @@
 					if ( Roster[i].Fainted )
 						document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');
 				}
+				else
+				{
+					if ( Side == 'Ally' )
+						document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot});`);
+				}
 			}
 		},
 
