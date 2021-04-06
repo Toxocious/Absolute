@@ -56,6 +56,13 @@
 			}
 		},
 
+		SwitchPokemon: (Slot) =>
+		{
+			if ( !Slot || Slot < 2 || Slot > 5 )
+				return false;
+
+			Battle.HandleRequest(`Action=Switch&Slot=${Slot}`);
+		},
 		HandleRequest: (Data, Callback) =>
 		{
 			if ( !this.Loading )
