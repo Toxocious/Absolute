@@ -58,7 +58,7 @@
 
 		SwitchPokemon: (Slot) =>
 		{
-			if ( !Slot || Slot < 2 || Slot > 5 )
+			if ( !Slot )
 				return false;
 
 			Battle.HandleRequest(`Action=Switch&Slot=${Slot}`);
