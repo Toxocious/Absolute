@@ -1,6 +1,6 @@
 <?php
   use BattleHandler\Battle;
-  
+
   class Status
   {
     public $Pokemon_ID = null;

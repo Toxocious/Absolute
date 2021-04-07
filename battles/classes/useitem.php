@@ -1,6 +1,6 @@
 <?php
   use BattleHandler\Battle;
-  
+
   class UseItem
   {
     public $Pokemon_ID = null;
@@ -12,6 +12,6 @@
 
     public function __construct()
     {
-      
+
     }
   }

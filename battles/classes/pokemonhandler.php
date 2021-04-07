@@ -4,13 +4,13 @@
   class PokemonHandler
   {
     public $Pokemon_ID = null;
-    
+
     public $Display_Name = null;
 
     public $Side = null;
     public $Active = null;
     public $Slot = null;
-    
+
     public $Shiny = null;
     public $Gender = null;
     public $Level = null;
@@ -30,7 +30,7 @@
 
     public $Status = null;
     public $Status_Stage = null;
-    
+
     public $Last_Move = null;
 
     public $Sprite = null;
@@ -49,7 +49,7 @@
       $this->Side = $Side;
       $this->Slot = $Slot;
       $this->Active = ($Slot == 1 ? true : false);
-      
+
       $this->Fainted = false;
 
       $this->ProcessPokemon();

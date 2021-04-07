@@ -1,9 +1,9 @@
 <?php
-	require_once 'core/required/layout_top.php';
+  require_once 'core/required/layout_top.php';
 
-	if ( !isset($_SESSION['Battle']) )
-	{
-		echo "
+  if ( !isset($_SESSION['Battle']) )
+  {
+    echo "
       <div class='panel content'>
         <div class='head'>Battle</div>
         <div class='body' style='padding: 5px;'>
@@ -12,15 +12,15 @@
           </div>
         </div>
       </div>
-		";
+    ";
 
     return;
-	}
+  }
 ?>
 
 <div class='panel content'>
-	<div class='head'>Battle</div>
-	<div class='body' style='padding: 5px;'>
+  <div class='head'>Battle</div>
+  <div class='body' style='padding: 5px;'>
     <div class='flex' style='justify-content: center;'>
       <div style='flex-basis: 70%;' id='BattleWindow'>
         <div class='flex' style='flex-wrap: wrap; justify-content: center;'>
@@ -207,4 +207,3 @@
 
 <?php
   require_once 'core/required/layout_bottom.php';
-  

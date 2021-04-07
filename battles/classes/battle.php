@@ -1,6 +1,6 @@
 <?php
   namespace BattleHandler;
-  
+
   spl_autoload_register(function($Class)
   {
     $Battle_Directory = dirname(__DIR__, 1);
@@ -8,7 +8,7 @@
 
     if ( file_exists($Battle_Directory . "\\classes\\{$Class}.php"))
       require_once $Battle_Directory . "\\classes\\{$Class}.php";
-    
+
     if ( file_exists($Battle_Directory . "\\fights\\{$Class}.php"))
       require_once $Battle_Directory . "\\fights\\{$Class}.php";
   });
@@ -20,7 +20,7 @@
 
     public $Battle_Sim = false;
     public $Battle_Sim_Difficulty = false;
-    
+
     public $Battle_Type = null;
 
     public $Processing_Side = null;
@@ -39,7 +39,7 @@
 
     public $Battle_ID = null;
 
-    public $Turn_ID = 0;
+    public $Turn_ID = 1;
 
     public function __construct()
     {
