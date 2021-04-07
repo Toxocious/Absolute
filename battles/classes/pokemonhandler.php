@@ -100,4 +100,17 @@
 
       return $this;
     }
+
+    /**
+     * Switch into the desired Pokemon.
+     */
+    public function SwitchInto()
+    {
+      $_SESSION['Battle']['Ally']['Active'] = $this;
+
+      return [
+        'Type' => 'Success',
+        'Text' => "You have switched your {$this->Display_Name} into battle!"
+      ];
+    }
   }
