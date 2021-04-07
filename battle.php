@@ -72,7 +72,7 @@
 				return new Promise((resolve, reject) =>
 				{
 					const req = new XMLHttpRequest();
-					req.open('GET', `<?= DOMAIN_ROOT; ?>/battles/ajax/handler.php?Battle_ID=${this.ID}`);
+					req.open('GET', `<?= DOMAIN_ROOT; ?>/battles/ajax/handler.php?Battle_ID=${this.ID}&${Data}`);
 					req.send();
 					req.onerror = (error) => reject(Error(`Network Error: ${error}`));
 					req.onload = () =>
