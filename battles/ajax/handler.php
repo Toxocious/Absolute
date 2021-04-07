@@ -1,8 +1,8 @@
 <?php
   if ( isset($_GET['Battle_ID']) )
   {
+    require_once '../../battles/classes/battle.php';
     require_once '../../core/required/session.php';
-	  require_once '../../battles/classes/battle.php';
 
     $Fight = $_SESSION['Battle']['Battle_Type'];
     $Battle = new $Fight();
