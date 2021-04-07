@@ -28,14 +28,22 @@
       Battle.HandleRequest(null, null);
     },
 
+    SwitchPokemon: (Slot) =>
+    {
+      if ( !Slot )
+        return false;
+
+      Battle.HandleRequest(`Action=Switch&Slot=${Slot}`);
+    },
+
     RenderRoster: (Side, Roster, Active) =>
     {
       if ( Active )
       {
         document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('src', Active.Sprite);
         document.querySelector(`[slot='${Side}_Name']`).innerHTML = Active.Display_Name;
-        document.querySelector(`[slot='${Side}_HP']`).innerHTML = Active.HP;
-        document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Active.Max_HP;
+        document.querySelector(`[slot='${Side}_HP']`).innerHTML = Active.HP.toLocaleString();
+        document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Active.Max_HP.toLocaleString();
         document.querySelector(`[slot='${Side}_Level']`).innerHTML = Active.Level.toLocaleString();
 
         if ( Active.Fainted )
@@ -60,14 +68,6 @@
           }
         }
       }
-    },
-
-    SwitchPokemon: (Slot) =>
-    {
-      if ( !Slot )
-        return false;
-
-      Battle.HandleRequest(`Action=Switch&Slot=${Slot}`);
     },
 
     HandleRequest: (Data, Callback) =>
