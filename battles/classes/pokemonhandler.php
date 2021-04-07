@@ -18,8 +18,8 @@
     public $HP = null;
     public $Max_HP = null;
 
-    public $Base_Stats = null;
-    public $Current_Stats = null;
+    public $Stats = null;
+
     public $IVs = null;
     public $EVs = null;
 
@@ -72,16 +72,22 @@
       $this->Level = $Pokemon['Level_Raw'];
       $this->HP = $Pokemon['Stats'][0];
       $this->Max_HP = $Pokemon['Stats'][0];
-      $this->Current_Stats['Attack'] = $Pokemon['Stats'][1];
-      $this->Current_Stats['Defense'] = $Pokemon['Stats'][2];
-      $this->Current_Stats['SpAttack'] = $Pokemon['Stats'][3];
-      $this->Current_Stats['SpDefense'] = $Pokemon['Stats'][4];
-      $this->Current_Stats['Speed'] = $Pokemon['Stats'][5];
-      $this->Base_Stats['Attack'] = $Pokemon['Stats'][1];
-      $this->Base_Stats['Defense'] = $Pokemon['Stats'][2];
-      $this->Base_Stats['SpAttack'] = $Pokemon['Stats'][3];
-      $this->Base_Stats['SpDefense'] = $Pokemon['Stats'][4];
-      $this->Base_Stats['Speed'] = $Pokemon['Stats'][5];
+      $this->Stats = [
+        'Base' => [
+          'Attack' => $Pokemon['Stats'][1],
+          'Defense' => $Pokemon['Stats'][2],
+          'SpAttack' => $Pokemon['Stats'][3],
+          'SpDefense' => $Pokemon['Stats'][4],
+          'Speed' => $Pokemon['Stats'][5],
+        ],
+        'Current' => [
+          'Attack' => $Pokemon['Stats'][1],
+          'Defense' => $Pokemon['Stats'][2],
+          'SpAttack' => $Pokemon['Stats'][3],
+          'SpDefense' => $Pokemon['Stats'][4],
+          'Speed' => $Pokemon['Stats'][5],
+        ],
+      ];
       $this->IVs = $Pokemon['IVs'];
       $this->EVs = $Pokemon['EVs'];
       $this->Moves = [
