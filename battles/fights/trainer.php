@@ -1,6 +1,6 @@
 <?php
   use BattleHandler\Battle;
-  
+
   class Trainer extends Battle
   {
     public $Earn_Exp = true;
@@ -35,14 +35,16 @@
 
       $this->Processing_Side = 'Ally';
       $this->Ally['Roster'] = $Roster_Handler->CreateRoster($this->Ally['ID'], 'Ally');
+      $this->Ally['Active'] = $this->Ally['Roster'][0];
       $this->Ally['Hash'] = $Roster_Handler->GetRosterHash($this->Ally['ID'], 'Ally');
-      
+
       $this->Foe['ID'] = $Foe_ID;
       if ( !$User_Class->FetchUserData($this->Foe['ID']) )
         return false;
 
       $this->Processing_Side = 'Foe';
       $this->Foe['Roster'] = $Roster_Handler->CreateRoster($this->Foe['ID'], 'Foe');
+      $this->Foe['Active'] = $this->Foe['Roster'][0];
       $this->Foe['Hash'] = $Roster_Handler->GetRosterHash($this->Foe['ID'], 'Foe');
 
       $this->Processing_Side = null;
@@ -50,6 +52,7 @@
       $this->Started = true;
       $this->Battle_ID = bin2hex(random_bytes(10));
 
+      $_SESSION['Battle']['Turn_ID'] = $this->Turn_ID;
       $_SESSION['Battle']['Time_Started'] = $this->Time_Started;
       $_SESSION['Battle']['Battle_Type'] = $this->Battle_Type;
       $_SESSION['Battle']['Started'] = $this->Started;
