@@ -28,30 +28,36 @@
 			Battle.HandleRequest(null, null);
 		},
 
-		RenderRoster: (Side, Roster) =>
+		RenderRoster: (Side, Roster, Active) =>
 		{
+      if ( Active )
+      {
+        document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('src', Active.Sprite);
+        document.querySelector(`[slot='${Side}_Name']`).innerHTML = Active.Display_Name;
+        document.querySelector(`[slot='${Side}_HP']`).innerHTML = Active.HP;
+        document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Active.Max_HP;
+        document.querySelector(`[slot='${Side}_Level']`).innerHTML = Active.Level.toLocaleString();
+
+        if ( Active.Fainted )
+        {
+          document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');
+        }
+      }
+
 			for ( let i = 0; i < Roster.length; i++ )
 			{
 				document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('src', Roster[i].Icon);
 
 				if ( Roster[i].Fainted )
+        {
 					document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('style', 'filter: grayscale(100%);');
-
-				if ( Roster[i].Active )
-				{
-					document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('src', Roster[i].Sprite);
-					document.querySelector(`[slot='${Side}_Name']`).innerHTML = Roster[i].Display_Name;
-					document.querySelector(`[slot='${Side}_HP']`).innerHTML = Roster[i].HP;
-					document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Roster[i].Max_HP;
-					document.querySelector(`[slot='${Side}_Level']`).innerHTML = Roster[i].Level.toLocaleString();
-
-					if ( Roster[i].Fainted )
-						document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');
 				}
 				else
 				{
 					if ( Side == 'Ally' )
+          {
 						document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot});`);
+          }
 				}
 			}
 		},
@@ -63,8 +69,10 @@
 
 			Battle.HandleRequest(`Action=Switch&Slot=${Slot}`);
 		},
+
 		HandleRequest: (Data, Callback) =>
 		{
+			console.log(Data);
 			if ( !this.Loading )
 			{
 				this.ID = '<?= $_SESSION['Battle']['Battle_ID']; ?>';
@@ -82,8 +90,8 @@
 
 						if ( req.status === 200 )
 						{
-							Battle.RenderRoster('Ally', JSON_Data.Ally.Roster);
-							Battle.RenderRoster('Foe', JSON_Data.Foe.Roster);
+							Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active);
+							Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active);
 
 							document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
 							resolve(req.response);
@@ -98,6 +106,6 @@
 			}
 		},
 	};
-	
+
 	window.onload = Battle.OnPageLoad();
 </script>
