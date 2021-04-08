@@ -86,6 +86,28 @@
           {
             document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot});`);
           }
+
+          switch (Roster[i].Status)
+          {
+            case 'BadlyPoisoned':
+            case 'Poisoned':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(117, 80, 155, 0.7)';
+              break;
+            case 'Burned':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(208, 78, 27, 0.7)';
+              break;
+            case 'Frozen':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(27, 184, 208, 0.7)';
+              break;
+            case 'Paralyzed':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(208, 190, 27, 0.7)';
+              break;
+            case 'Sleep':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(127, 125, 108, 0.7)';
+              break;
+            default:
+              break;
+          }
         }
       }
     },
