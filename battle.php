@@ -74,9 +74,11 @@
         {
           document.querySelector(`[slot='${Side}_Slot_${i}']`).closest('div[class]').style.boxShadow = '';
         }
+
         if ( Roster[i].Fainted )
         {
           document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('style', 'filter: grayscale(100%);');
+          document.querySelector(`[slot='${Side}_Slot_${i}']`).style.background = '#444';
         }
         else
         {
