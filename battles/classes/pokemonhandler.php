@@ -72,6 +72,8 @@
       $this->Level = $Pokemon['Level_Raw'];
       $this->HP = $Pokemon['Stats'][0];
       $this->Max_HP = $Pokemon['Stats'][0];
+      $this->Exp = $Pokemon['Experience_Raw'];
+      $this->Exp_Needed = FetchExpToNextLevel($Pokemon['Experience_Raw'], 'Pokemon', true);
       $this->Stats = [
         'Base' => [
           'Attack' => $Pokemon['Stats'][1],
