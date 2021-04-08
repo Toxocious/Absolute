@@ -38,18 +38,28 @@
 
     RenderRoster: (Side, Roster, Active) =>
     {
-      if ( Active )
-      {
-        document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('src', Active.Sprite);
-        document.querySelector(`[slot='${Side}_Name']`).innerHTML = Active.Display_Name;
-        document.querySelector(`[slot='${Side}_HP']`).innerHTML = Active.HP.toLocaleString();
-        document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Active.Max_HP.toLocaleString();
-        document.querySelector(`[slot='${Side}_Level']`).innerHTML = Active.Level.toLocaleString();
+      if
+      (
+        typeof Side === undefined ||
+        typeof Roster === undefined ||
+        typeof Active === undefined
+      )
+        return;
 
-        if ( Active.Fainted )
-        {
-          document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');
-        }
+      document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('src', Active.Sprite);
+      document.querySelector(`[slot='${Side}_Name']`).innerHTML = Active.Display_Name;
+      document.querySelector(`[slot='${Side}_HP']`).innerHTML = Active.HP.toLocaleString();
+      document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Active.Max_HP.toLocaleString();
+      document.querySelector(`[slot='${Side}_Level']`).innerHTML = Active.Level.toLocaleString();
+
+      document.querySelector(`[slot='${Side}_HP_Bar']`).setAttribute('style', `width: ` + ((Active.HP / Active.Max_HP) * 100) + `%`);
+      document.querySelector(`[slot='${Side}_Exp_Bar']`).setAttribute('style', `width: ${Active.Exp_Needed.Percent}%`);
+      document.querySelector(`[slot='${Side}_Exp_Needed']`).innerHTML = Active.Exp_Needed.Exp.toLocaleString();
+
+
+      if ( Active.Fainted )
+      {
+        document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');
       }
 
       for ( let i = 0; i < Roster.length; i++ )
@@ -76,6 +86,7 @@
       if ( !this.Loading )
       {
         this.ID = '<?= $_SESSION['Battle']['Battle_ID']; ?>';
+        this.Loading = true;
 
         return new Promise((resolve, reject) =>
         {
@@ -87,6 +98,8 @@
           {
             let JSON_Data = JSON.parse(req.response);
             console.log(JSON_Data);
+
+            this.Loading = false;
 
             if ( req.status === 200 )
             {
