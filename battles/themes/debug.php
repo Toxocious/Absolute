@@ -88,16 +88,16 @@
                   <div style='font-size: 12px; text-align: center;'>
                     <b>HP</b>: (<span slot='Ally_HP'>0</span> / <span slot='Ally_Max_HP'>0</span>)
                     <div class='progress-container' style='width: 140px;'>
-                      <div class='progress-bar hp' style='width: 50px;'></div>
+                      <div class='progress-bar hp' slot='Ally_HP_Bar' style='width: 100%;'></div>
                     </div>
                   </div>
                 </div>
 
                 <div class='border-gradient' style='width: 158px;'>
                   <div style='font-size: 12px; text-align: center;'>
-                    <b>Exp To Level</b>: 0
+                    <b>Level Up</b>: <span slot='Ally_Exp_Needed'>0</span> Exp
                     <div class='progress-container' style='width: 140px;'>
-                      <div class='progress-bar exp' style='width: 50px;'></div>
+                      <div class='progress-bar exp' slot='Ally_Exp_Bar' style='width: 100%;'></div>
                     </div>
                   </div>
                 </div>
@@ -151,16 +151,16 @@
                   <div style='font-size: 12px; text-align: center;'>
                     <b>HP</b>: (<span slot='Foe_HP'>0</span> / <span slot='Foe_Max_HP'>0</span>)
                     <div class='progress-container' style='width: 140px;'>
-                      <div class='progress-bar hp' style='width: 50px;'></div>
+                      <div class='progress-bar hp' slot='Foe_HP_Bar' style='width: 100%;'></div>
                     </div>
                   </div>
                 </div>
 
                 <div class='border-gradient' style='width: 158px;'>
                   <div style='font-size: 12px; text-align: center;'>
-                    <b>Exp To Level</b>: 0
+                    <b>Level Up</b>: <span slot='Foe_Exp_Needed'>0</span> Exp
                     <div class='progress-container' style='width: 140px;'>
-                      <div class='progress-bar exp' style='width: 50px;'></div>
+                      <div class='progress-bar exp' slot='Foe_Exp_Bar' style='width: 100%;'></div>
                     </div>
                   </div>
                 </div>
