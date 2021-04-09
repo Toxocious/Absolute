@@ -35,10 +35,17 @@
     }
     else
     {
-      $Output['Message'] = [
-        'Type' => 'Success',
-        'Text' => 'The battle has begun.'
-      ];
+      if ( isset($_SESSION['Battle']['Dialogue']) )
+      {
+        $Output['Message'] = $_SESSION['Battle']['Dialogue'];
+      }
+      else
+      {
+        $Output['Message'] = [
+          'Type' => 'Success',
+          'Text' => 'The battle has begun.'
+        ];
+      }
     }
 
     foreach ( ['Ally', 'Foe'] as $Side )
@@ -53,5 +60,7 @@
       'Text' => 'Your Battle ID is not set.'
     ];
   }
+
+  $_SESSION['Battle']['Dialogue'] = $Output['Message'];
 
   echo json_encode($Output);
