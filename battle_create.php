@@ -23,9 +23,11 @@
 		return;
 	}
 
+  unset($_SESSION['Battle']);
+
 	$Battle_Type = strtolower(Purify($_GET['Battle_Type']));
 	$Foe = strtolower(Purify($_GET['Foe']));
-	
+
 	$_SESSION['Battle']['Battle_Type'] = $Battle_Type;
 	$_SESSION['Battle']['Ally']['ID'] = $User_Data['ID'];
 
@@ -40,7 +42,7 @@
 	}
 
 	$Create_Battle = $Battle->CreateBattle($_GET['Foe']);
-	
+
 	if ( $Create_Battle )
 	{
 		header('Location: /battle.php');
@@ -50,6 +52,6 @@
 	{
 		unset($_SESSION['Battle']);
 		header("Location: /battle_search.php");
-		
+
 		return;
 	}
