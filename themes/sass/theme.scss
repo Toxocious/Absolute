@@ -51,6 +51,8 @@ input
 
   &[type='button']
   {
+    text-shadow: 1px 1px 2px rgb(0 0 0 / 50%);
+
     &.Normal
     {
       background: #aa9;
