@@ -16,12 +16,6 @@ hr.faded {
   background-image: -webkit-gradient(linear, left bottom, right bottom, color-stop(0.02, var(--color-quadternary)), color-stop(0.5, var(--color-primary)), color-stop(0.98, var(--color-quadternary)));
 }
 
-input[type=text] {
-  background: var(--color-secondary);
-  border-color: var(--color-black);
-  color: var(--color-white);
-}
-
 textarea {
   background: var(--color-secondary);
   border-color: var(--color-black);
@@ -35,6 +29,66 @@ a:visited {
 
 a:hover {
   color: var(--color-white);
+}
+
+input[type=text] {
+  background: var(--color-secondary);
+  border-color: var(--color-black);
+  color: var(--color-white);
+}
+input[type=button].Normal {
+  background: #aa9;
+}
+input[type=button].Fire {
+  background: #f42;
+}
+input[type=button].Water {
+  background: #39f;
+}
+input[type=button].Electric {
+  background: #fc3;
+}
+input[type=button].Grass {
+  background: #7c5;
+}
+input[type=button].Ice {
+  background: #6cf;
+}
+input[type=button].Fighting {
+  background: #b54;
+}
+input[type=button].Poison {
+  background: #a59;
+}
+input[type=button].Ground {
+  background: #db5;
+}
+input[type=button].Flying {
+  background: #89f;
+}
+input[type=button].Psychic {
+  background: #f59;
+}
+input[type=button].Bug {
+  background: #ab2;
+}
+input[type=button].Rock {
+  background: #ba6;
+}
+input[type=button].Ghost {
+  background: #66b;
+}
+input[type=button].Dragon {
+  background: #76e;
+}
+input[type=button].Dark {
+  background: #754;
+}
+input[type=button].Steel {
+  background: #aab;
+}
+input[type=button].Fairy {
+  background: #e9e;
 }
 
 input[type=button],
