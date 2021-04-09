@@ -51,11 +51,9 @@
       document.querySelector(`[slot='${Side}_HP']`).innerHTML = Active.HP.toLocaleString();
       document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Active.Max_HP.toLocaleString();
       document.querySelector(`[slot='${Side}_Level']`).innerHTML = Active.Level.toLocaleString();
-
       document.querySelector(`[slot='${Side}_HP_Bar']`).setAttribute('style', `width: ` + ((Active.HP / Active.Max_HP) * 100) + `%`);
       document.querySelector(`[slot='${Side}_Exp_Bar']`).setAttribute('style', `width: ${Active.Exp_Needed.Percent}%`);
       document.querySelector(`[slot='${Side}_Exp_Needed']`).innerHTML = Active.Exp_Needed.Exp.toLocaleString();
-
 
       if ( Active.Fainted )
       {
@@ -77,8 +75,7 @@
 
         if ( Roster[i].Fainted )
         {
-          document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('style', 'filter: grayscale(100%);');
-          document.querySelector(`[slot='${Side}_Slot_${i}']`).style.background = '#444';
+          document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('style', 'background: #444; filter: grayscale(100%);');
         }
         else
         {
@@ -112,6 +109,18 @@
       }
     },
 
+    RenderMoves: (Moves) =>
+    {
+      if ( typeof Moves === undefined )
+        return false;
+
+      for ( let i = 0; i < Moves.length; i++ )
+      {
+        document.querySelector(`[move='Move_${i}']`).setAttribute('class', Moves[i].Type);
+        document.querySelector(`[move='Move_${i}']`).value = Moves[i].Name;
+      }
+    },
+
     HandleRequest: (Data, Callback) =>
     {
       console.log(Data);
@@ -135,6 +144,7 @@
 
             if ( req.status === 200 )
             {
+              Battle.RenderMoves(JSON_Data.Ally.Active.Moves);
               Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active);
               Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active);
 

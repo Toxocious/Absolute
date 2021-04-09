@@ -188,10 +188,30 @@
           </div>
 
           <div style='flex-basis: 96%;'>
-            <input type='button' value='Vine Whip' style='width: 24%; padding: 5px 0px;' />
-            <input type='button' value='Vine Whip' style='width: 24%; padding: 5px 0px;' />
-            <input type='button' value='Vine Whip' style='width: 24%; padding: 5px 0px;' />
-            <input type='button' value='Vine Whip' style='width: 24%; padding: 5px 0px;' />
+            <input
+              move='Move_0'
+              type='button'
+              value='???'
+              style='font-weight: bold; padding: 5px 0px; width: 24%;'
+            />
+            <input
+              move='Move_1'
+              type='button'
+              value='???'
+              style='font-weight: bold; padding: 5px 0px; width: 24%;'
+            />
+            <input
+              move='Move_2'
+              type='button'
+              value='???'
+              style='font-weight: bold; padding: 5px 0px; width: 24%;'
+            />
+            <input
+              move='Move_3'
+              type='button'
+              value='???'
+              style='font-weight: bold; padding: 5px 0px; width: 24%;'
+            />
           </div>
 
           <div class='border-gradient' style='flex-basis: 96%; margin-top: 5px;'>
