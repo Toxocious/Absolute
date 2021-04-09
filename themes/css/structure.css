@@ -121,6 +121,7 @@ div .progress-container {
 div .progress-container .progress-bar {
   border-radius: 6px;
   height: 6px;
+  transition: width 0.5s;
   width: 0px;
 }
 div.br-50p {

@@ -46,7 +46,7 @@ button
   border-radius: var(--border-radius);
   padding: var(--padding-3px);
   width: 200px;
-  
+
   &:not(.disabled):hover
   {
     cursor: pointer;
@@ -141,7 +141,7 @@ div
     margin: 0 auto 5px;
     padding: var(--padding-5px);
     text-align: center;
-    width: var(--set-80p);   
+    width: var(--set-80p);
   }
 
   .progress-container
@@ -155,6 +155,7 @@ div
     {
       border-radius: 6px;
       height: 6px;
+      transition: width 0.5s;
       width: 0px;
     }
   }
@@ -167,7 +168,7 @@ div
   &.flex
   {
     display: var(--display-flex);
-    
+
     &.wrap
     {
       flex-wrap: wrap;
@@ -341,7 +342,7 @@ header
   height: var(--banner-height);
   justify-content: flex-start;
   position: relative;
-  
+
 
   & > div
   {
@@ -871,7 +872,7 @@ main
   min-height: 100%;
   z-index: 2;
   position: relative;
-  
+
   align-items: flex-start;
   display: flex;
   flex-wrap: wrap;
@@ -890,7 +891,7 @@ footer
   top: calc(100% - 46px);
   width: 1092px;
   z-index: 2;
-  
+
   display: flex;
   flex-direction: row;
   align-items: center;
