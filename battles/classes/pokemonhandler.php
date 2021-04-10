@@ -140,4 +140,12 @@
         'Text' => "You have sent {$this->Display_Name} into battle!"
       ];
     }
+
+    /**
+     * Fetch a random move from the selected Pokemon.
+     */
+    public function FetchRandomMove()
+    {
+      return new Move(mt_rand(0, (count($this->Moves) - 1)));
+    }
   }
