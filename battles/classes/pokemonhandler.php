@@ -1,6 +1,4 @@
 <?php
-  use BattleHandler\Battle;
-
   class PokemonHandler
   {
     public $Pokemon_ID = null;
@@ -52,10 +50,15 @@
 
       $this->Fainted = false;
 
-      $this->ProcessPokemon();
+      $this->SetupPokemon();
     }
 
-    public function ProcessPokemon()
+    /**
+     * Setup the specified Pokemon for the battle.
+     * Sets the base data of the Pokemon.
+     * Called once per Pokemon per battle.
+     */
+    public function SetupPokemon()
     {
       global $Poke_Class;
 
