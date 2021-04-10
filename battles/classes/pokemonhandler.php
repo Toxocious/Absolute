@@ -111,11 +111,33 @@
      */
     public function SwitchInto()
     {
+      if ( $this->Active )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'The Pok&eacute;mon you\'re switching into is already active!'
+        ];
+      }
+
+      if ( $this->HP == 0 )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'The Pok&eacute;mon that you\'re switching into is fainted.',
+        ];
+      }
+
+      foreach ($_SESSION['Battle']['Ally']['Roster'] as $Roster_Pokemon)
+        if ( $Roster_Pokemon->Pokemon_ID != $this->Pokemon_ID )
+          $Roster_Pokemon->Active = false;
+        else
+          $Roster_Pokemon->Active = true;
+
       $_SESSION['Battle']['Ally']['Active'] = $this;
 
       return [
         'Type' => 'Success',
-        'Text' => "You have switched your {$this->Display_Name} into battle!"
+        'Text' => "You have sent {$this->Display_Name} into battle!"
       ];
     }
   }
