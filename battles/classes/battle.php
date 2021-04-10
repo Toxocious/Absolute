@@ -62,6 +62,15 @@
         ];
       }
 
+      /**
+       * Set the used moves now, and determine who will attack first.
+       * Done now, so that we can process pre-move conditions:
+       *  abilities
+       *  pre-move effects
+       */
+      $this->Ally_Move = $Move ? $Move : null;
+      $this->Foe_Move = $_SESSION['Battle']['Foe']['Active']->FetchRandomMove();
+
       switch ($Action)
       {
         case 'Switch':
