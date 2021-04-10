@@ -63,44 +63,8 @@
       switch ($Action)
       {
         case 'Switch':
-          if ( !isset($_GET['Slot']) )
-          {
-            $Output['Message'] = [
-              'Type' => 'Error',
-              'Text' => 'An error occurred while switching your active Pok&eacute;mon.'
-            ];
-          }
-          else
-          {
-            $Slot = Purify($_GET['Slot']) - 1;
-
-            if ( $_SESSION['Battle']['Ally']['Active']->Pokemon_ID != $_SESSION['Battle']['Ally']['Roster'][$Slot]->Pokemon_ID )
-            {
-              if ( $_SESSION['Battle']['Ally']['Roster'][$Slot]->HP <= 0 )
-              {
-                $Output['Message'] = [
-                  'Type' => 'Error',
-                  'Text' => 'You can not swap into a fainted Pok&eacute;mon.'
-                ];
-              }
-              else
-              {
-                foreach ($_SESSION['Battle']['Ally']['Roster'] as $Roster_Pokemon)
-                  $Roster_Pokemon->Active = false;
-
-                $_SESSION['Battle']['Ally']['Roster'][$Slot]->Active = true;
-
-                $Output['Message'] = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
-              }
-            }
-            else
-            {
-              $Output['Message'] = [
-                'Type' => 'Error',
-                'Text' => 'The Pok&eacute;mon that you\'re switching into is already out!'
-              ];
-            }
-          }
+          $Slot = Purify($_GET['Slot']) - 1;
+          $Output['Message'] = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
           break;
 
         default:
