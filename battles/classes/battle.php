@@ -25,6 +25,8 @@
 
     public $Processing_Side = null;
 
+    public $Ally_Move = null;
+    public $Foe_Move = null;
     public $Last_Move = null;
 
     public $Weather = null;
