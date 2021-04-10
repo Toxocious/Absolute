@@ -44,10 +44,12 @@
     /**
      * Once the client has chosen an action, process the current turn.
      * @param string $Action
+     * @param $Move
      */
     public function ProcessTurn
     (
-      string $Action
+      string $Action,
+      $Move = null
     )
     {
       if ( !$Action || !in_array($Action, ['Switch', 'Attack', 'UseItem', 'Flee']) )
