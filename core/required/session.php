@@ -56,7 +56,7 @@
 	{
 		$Dir_Root = realpath($_SERVER["DOCUMENT_ROOT"]);
 	}
-	
+
 	// Require all necessary classes.
 	require_once $Dir_Root . '/core/classes/constants.php';
 	$Constants = new Constants();
@@ -98,7 +98,7 @@
 	    $_SERVER['REMOTE_ADDR'] = $IP_List[0]; // The first proxy in the list is the client IP.
 	  }
 	}
-	
+
 	/**
 	 * Get page data.
 	 */
@@ -123,7 +123,7 @@
 		unset($_SESSION);
 		header("Location: login.php");
 	}
-  
+
   /**
 	 * If the user is currently in a session, run the following code at the start of every page load.
 	 */
@@ -145,11 +145,11 @@
 		{
 			$_SESSION['Playtime'] = $Time;
 		}
-		
+
 		$Playtime = $Time - $_SESSION['Playtime'];
 		$Playtime = $Playtime > 20 ? 20 : $Playtime;
 		$_SESSION['Playtime'] = $Time;
-		
+
 		//$User_Data['Playtime'] += $Playtime;
 
 		try
@@ -175,4 +175,3 @@
 		$Current_Page['Maintenance'] = 'no';
 		$Current_Page['Logged_In'] = 'no';
 	}
-	

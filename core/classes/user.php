@@ -134,14 +134,14 @@
 			{
 				HandleError($e);
 			}
-			
+
 			if ( !$User )
 				return false;
 
 			try
 			{
-				$Fetch_Roster = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = ? AND `Slot` <= 6 LIMIT 6");
-				$Fetch_Roster->execute([ $User_ID, 'Roster' ]);
+				$Fetch_Roster = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
+				$Fetch_Roster->execute([ $User_ID ]);
 				$Fetch_Roster->setFetchMode(PDO::FETCH_ASSOC);
 				$Roster = $Fetch_Roster->fetchAll();
 			}
@@ -184,9 +184,9 @@
 		 */
 		public function FetchMasteries($User_ID)
 		{
-			
+
 		}
-		
+
 		/**
 		 * Displays the user rank where applicable (staff page, profiles, etc).
 		 */
