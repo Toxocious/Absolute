@@ -63,7 +63,7 @@
                   <tbody>
                     <tr>
                       <td slot='Ally_Active' style='padding: 0px;'>
-                        <img src='<?= DOMAIN_SPRITES; ?>//Pokemon/Sprites/0.png' />
+                        <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0.png' />
                       </td>
                     </tr>
                   </tbody>
@@ -171,7 +171,7 @@
                   <tbody>
                     <tr>
                       <td slot='Foe_Active' style='padding: 0px;'>
-                        <img src='<?= DOMAIN_SPRITES; ?>//Pokemon/Sprites/0.png' />
+                        <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0.png' />
                       </td>
                     </tr>
                   </tbody>
