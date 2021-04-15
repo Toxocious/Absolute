@@ -116,7 +116,8 @@
 
       for ( let i = 0; i < Moves.length; i++ )
       {
-        document.querySelector(`[move='Move_${i}']`).setAttribute('class', Moves[i].Type);
+        document.querySelector(`[move='Move_${i}']`).setAttribute('onclick', `Battle.Move(${Moves[i].ID})`);
+        document.querySelector(`[move='Move_${i}']`).setAttribute('class', Moves[i].Move_Type);
         document.querySelector(`[move='Move_${i}']`).value = Moves[i].Name;
       }
     },
