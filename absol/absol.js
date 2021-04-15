@@ -37,8 +37,11 @@ const CONFIG = {
     SERVER_PORT: 3001,
     MESSAGE_PORT: 9001,
     SSL: {
-      cert: FS.readFileSync('C:/xampp/apache/conf/ssl.crt/server.crt'),
-      key: FS.readFileSync('C:/xampp/apache/conf/ssl.key/server.key'),
+      // Localhost XAMPP SSL Cert
+      // cert: FS.readFileSync('C:/xampp/apache/conf/ssl.crt/server.crt'),
+      // key: FS.readFileSync('C:/xampp/apache/conf/ssl.key/server.key'),
+      cert: FS.readFileSync('/etc/letsencrypt/live/www.absoluterpg.com/fullchain.pem'),
+      key: FS.readFileSync('/etc/letsencrypt/live/www.absoluterpg.com/privkey.pem')
     }
   }
 };
