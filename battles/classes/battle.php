@@ -75,7 +75,17 @@
       {
         case 'Switch':
           $Slot = Purify($_GET['Slot']) - 1;
-          $Output['Message'] = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+          if ( $Slot < 0 || $Slot > 5 )
+          {
+            return [
+              'Type' => 'Error',
+              'Text' => 'You may not switch into an invalid Pok&eacute;mon.'
+            ];
+          }
+          else
+          {
+            $Output['Message'] = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+          }
           break;
 
         default:
