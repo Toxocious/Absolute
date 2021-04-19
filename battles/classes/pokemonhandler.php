@@ -146,6 +146,6 @@
      */
     public function FetchRandomMove()
     {
-      return new Move(mt_rand(0, (count($this->Moves) - 1)));
+      return mt_rand(0, (count($this->Moves) - 1));
     }
   }
