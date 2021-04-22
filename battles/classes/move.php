@@ -25,6 +25,15 @@
     public $Min_Turns = null;
     public $Stat_Chance = null;
 
+    public $HP_Boost = null;
+    public $Attack_Boost = null;
+    public $Defense_Boost = null;
+    public $SpAttack_Boost = null;
+    public $SpDefense_Boost = null;
+    public $Speed_Boost = null;
+    public $Accuracy_Boost = null;
+    public $Evasion_Boost = null;
+
     public $Success = null;
 
     public function __construct($Move)
@@ -35,7 +44,7 @@
       {
         $Fetch_Move = $PDO->prepare("
           SELECT *
-          FROM `moves_v2`
+          FROM `moves`
           WHERE `ID` = ?
           LIMIT 1
         ");
@@ -75,6 +84,14 @@
       $this->Min_Turns = $Move_Data['Min_Turns'];
       $this->Stat_Chance = $Move_Data['Stat_Chance'];
 
+      $this->HP_Boost = $Move_Data['HP_Boost'];
+      $this->Attack_Boost = $Move_Data['Attack_Boost'];
+      $this->Defense_Boost = $Move_Data['Defense_Boost'];
+      $this->SpAttack_Boost = $Move_Data['SpAttack_Boost'];
+      $this->SpDefense_Boost = $Move_Data['SpDefense_Boost'];
+      $this->Speed_Boost = $Move_Data['Speed_Boost'];
+      $this->Accuracy_Boost = $Move_Data['Accuracy_Boost'];
+      $this->Evasion_Boost = $Move_Data['Evasion_Boost'];
       return $this;
     }
   }
