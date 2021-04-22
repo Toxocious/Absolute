@@ -99,5 +99,96 @@
       }
 
       return $Output['Message'];
+    /**
+     * Determine which Pokemon attacks first.
+     * Determined by Move Priority, then Pokemon Speed, and if tied, randomly chosen.
+     */
+    public function DetermineFirstAttacker
+    (
+      $Ally_Move,
+      $Foe_Move
+    )
+    {
+      if ( !isset($Ally_Move) || !isset($Foe_Move) )
+        return false;
+
+      $Ally = $_SESSION['Battle']['Ally']['Active'];
+      $Foe = $_SESSION['Battle']['Foe']['Active'];
+
+      $Move_Data = [
+        'Ally' => [
+          'Name' => $Ally_Move['Name'],
+          'Priority' => $Ally_Move['Priority'],
+          'Damage_Type' => $Ally_Move['Damage_Type'],
+          'Move_Type' => $Ally_Move['Move_Type']
+        ],
+        'Foe' => [
+          'Name' => $Foe_Move['Name'],
+          'Priority' => $Foe_Move['Priority'],
+          'Damage_Type' => $Foe_Move['Damage_Type'],
+          'Move_Type' => $Foe_Move['Move_Type']
+        ],
+      ];
+
+      foreach (['Ally', 'Foe'] as $Side)
+      {
+        if ( in_array($_SESSION['Battle'][$Side]['Active']->Ability, ['Gale Wings', 'Prankster']) )
+        {
+          if ( $_SESSION['Battle'][$Side]['Active']->HP == $_SESSION['Battle'][$Side]['Active']->Max_HP )
+          {
+            if
+            (
+              $Move_Data[$Side]['Damage_Type'] == 'Status' ||
+              $Move_Data[$Side]['Move_Type'] == 'Flying'
+            )
+            {
+              $Move_Data[$Side]['Priority'] += 1;
+            }
+          }
+        }
+
+        if ( $_SESSION['Battle'][$Side]['Active']->Ability == 'Triage' )
+        {
+          if
+          (
+            $Move_Data[$Side]['Category'] == 'Heal' ||
+            $Move_Data[$Side]['Drain'] > 0 ||
+            $Move_Data[$Side]['Healing'] > 0
+          )
+          {
+            $Move_Data[$Side]['Priority'] += 3;
+          }
+        }
+      }
+
+      if ( $Move_Data['Ally']['Priority'] == 0 && $Move_Data['Foe']['Priority'] == 0 )
+      {
+        if ( $Ally->Stats['Current']['Speed'] > $Foe->Stats['Current']['Speed'] )
+          return 'Ally';
+        else if ( $Ally->Stats['Current']['Speed'] < $Foe->Stats['Current']['Speed'] )
+          return 'Foe';
+        else
+          return mt_rand(1, 2) === 1 ? 'Ally' : 'Foe';
+      }
+      else
+      {
+        if ( $Move_Data['Ally']['Priority'] == $Move_Data['Foe']['Priority'] )
+        {
+          if ( $Ally->Stats['Current']['Speed'] > $Foe->Stats['Current']['Speed'] )
+            return 'Ally';
+          else if ( $Ally->Stats['Current']['Speed'] < $Foe->Stats['Current']['Speed'] )
+            return 'Foe';
+          else
+            return mt_rand(1, 2) === 1 ? 'Ally' : 'Foe';
+        }
+        else if ( $Move_Data['Ally']['Priority'] > $Move_Data['Foe']['Priority'] )
+        {
+          return 'Ally';
+        }
+        else
+        {
+          return 'Foe';
+        }
+      }
     }
   }
