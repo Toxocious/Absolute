@@ -84,6 +84,8 @@
           'SpAttack' => $Pokemon['Stats'][3],
           'SpDefense' => $Pokemon['Stats'][4],
           'Speed' => $Pokemon['Stats'][5],
+          'Accuracy' => 100,
+          'Evasion' => 100,
         ],
         'Current' => [
           'Attack' => $Pokemon['Stats'][1],
@@ -91,6 +93,8 @@
           'SpAttack' => $Pokemon['Stats'][3],
           'SpDefense' => $Pokemon['Stats'][4],
           'Speed' => $Pokemon['Stats'][5],
+          'Accuracy' => 100,
+          'Evasion' => 100,
         ],
       ];
       $this->IVs = $Pokemon['IVs'];
