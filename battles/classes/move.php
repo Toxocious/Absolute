@@ -142,6 +142,49 @@
           return true;
       }
     }
+
+    /**
+     * Determine how effective the move was.
+     */
+    public function MoveEffectiveness
+    (
+      string $Side
+    )
+    {
+      $Types = [
+        "Normal", "Fighting", "Flying", "Poison", "Ground",
+        "Rock", "Bug", "Ghost", "Steel", "Fire", "Water"," Grass",
+        "Electric", "Psychic", "Ice", "Dragon", "Dark", "Fairy"
+      ];
+
+      $Type_Chart = [
+        [1, 1, 1, 1, 1, .5, 1, 0, .5, 1, 1, 1, 1, 1, 1, 1, 1, 1],       // Normal
+        [2, 1, .5, .5, 1, 2, .5, 0, 2, 1, 1, 1, 1, .5, 2, 1, 2, .5],    // Fighting
+        [1, 2, 1, 1, 1, .5, 2, 1, .5, 1, 1, 2, .5, 1, 1, 1, 1, 1],      // Flying
+        [1, 1, 1, .5, .5, .5, 1, .5, 0, 1, 1, 2, 1, 1, 1, 1, 1, 2],     // Poison
+        [1, 1, 0, 2, 1, 2, .5, 1, 2, 2, 1, .5, 2, 1, 1, 1, 1, 1],       // Ground
+        [1, .5, 2, 1, .5, 1, 2, 1, .5, 2, 1, 1, 1, 1, 2, 1, 1, 1],      // Rock
+        [1, .5, .5, .5, 1, 1, 1, .5, .5, .5, 1, 2, 1, 2, 1, 1, 2, .5],  // Bug
+        [0, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, .5, 1],        // Ghost
+        [1, 1, 1, 1, 1, 2, 1, 1, .5, .5, .5, 1, .5, 1, 2, 1, 1, 2],     // Steel
+        [1, 1, 1, 1, 1, .5, 2, 1, 2, .5, .5, 2, 1, 1, 2, .5, 1, 1],     // Fire
+        [1, 1, 1, 1, 2, 2, 1, 1, 1, 2, .5, .5, 1, 1, 1, .5, 1, 1],      // Water
+        [1, 1, .5, .5, 2, 2, .5, 1, .5, .5, 2, .5, 1, 1, 1, .5, 1, 1],  // Grass
+        [1, 1, 2, 1, 0, 1, 1, 1, 1, 1, 2, .5, .5, 1, 1, .5, 1, 1],      // Electric
+        [1, 2, 1, 2, 1, 1, 1, 1, .5, 1, 1, 1, 1, .5, 1, 1, 0, 1],       // Psychic
+        [1, 1, 2, 1, 2, 1, 1, 1, .5, .5, .5, 2, 1, 1, .5, 2, 1, 1],     // Ice
+        [1, 1, 1, 1, 1, 1, 1, 1, .5, 1, 1, 1, 1, 1, 1, 2, 1, 0],        // Dragon
+        [1, .5, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 1, 1, .5, .5],      // Dark
+        [1, 2, 1, .5, 1, 1, 1, 1, .5, .5, 1, 1, 1, 1, 1, 2, 2, 1],      // Fairy
+      ];
+
+      $Move_Type = array_search($this->Move_Type, $Types);
+      $Type_1_Mult = array_search($_SESSION['Battle'][$Side]['Active']->Primary_Type, $Types);
+      $Type_2_Mult = array_search($_SESSION['Battle'][$Side]['Active']->Secondary_Type, $Types);
+
+      return $Type_Chart[$Move_Type][$Type_1_Mult] * $Type_Chart[$Move_Type][$Type_2_Mult];
+    }
+
     /**
      * Determine if the move gets STAB applied to it.
      */
