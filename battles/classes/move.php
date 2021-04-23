@@ -100,16 +100,20 @@
      * Determine if the move will crit.
      */
     public function DoesMoveCrit($Side)
+    public function DoesMoveCrit
+    (
+      string $Side
+    )
     {
       switch ( $Side )
       {
         case 'Ally':
-          $Ally_Active = $_SESSION['Battle']['Ally']['Active']->Display_Name;
-          $Foe_Active = $_SESSION['Battle']['Foe']['Active']->Display_Name;
+          $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
+          $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
           break;
         case 'Foe':
-          $Ally_Active = $_SESSION['Battle']['Foe']['Active']->Display_Name;
-          $Foe_Active = $_SESSION['Battle']['Ally']['Active']->Display_Name;
+          $Ally_Active = $_SESSION['Battle']['Foe']['Active'];
+          $Foe_Active = $_SESSION['Battle']['Ally']['Active'];
           break;
       }
 
