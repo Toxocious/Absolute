@@ -142,4 +142,26 @@
           return true;
       }
     }
+    /**
+     * Determine if the move gets STAB applied to it.
+     */
+    public function CalculateSTAB
+    (
+      string $Side
+    )
+    {
+      if
+      (
+        $_SESSION['Battle'][$Side]['Active']->Primary_Type == $this->Move_Type ||
+        $_SESSION['Battle'][$Side]['Active']->Secondary_Type == $this->Move_Type
+      )
+      {
+        if ( $_SESSION['Battle'][$Side]['Active']->Ability == 'Adaptibility' )
+          return 2;
+
+        return 1.5;
+      }
+
+      return 1;
+    }
   }
