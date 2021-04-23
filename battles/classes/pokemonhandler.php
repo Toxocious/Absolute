@@ -16,6 +16,9 @@
     public $HP = null;
     public $Max_HP = null;
 
+    public $Primary_Type = null;
+    public $Secondary_Type = null;
+
     public $Stats = null;
 
     public $IVs = null;
@@ -26,8 +29,20 @@
 
     public $Item = null;
 
-    public $Status = null;
-    public $Status_Stage = null;
+    /**
+     * Should contain an array of arrays, if not null.
+     * Each child array containing data of the status.
+     *
+     * [
+     *  'Type' => 'Burn',
+     *  'Turns_Left' => 3,
+     * ],
+     * [
+     *  'Type' => 'Confusion',
+     *  'Turns_Left' => 1
+     * ],
+     */
+    public $Statuses = null;
 
     public $Last_Move = null;
 
@@ -35,6 +50,8 @@
     public $Icon = null;
 
     public $Fainted = false;
+
+    public $Dialogue = null;
 
     public function __construct
     (
@@ -75,6 +92,8 @@
       $this->Level = $Pokemon['Level_Raw'];
       $this->HP = $Pokemon['Stats'][0];
       $this->Max_HP = $Pokemon['Stats'][0];
+      $this->Primary_Type = $Pokemon['Primary_Type'];
+      $this->Secondary_Type = $Pokemon['Secondary_Type'];
       $this->Exp = $Pokemon['Experience_Raw'];
       $this->Exp_Needed = FetchExpToNextLevel($Pokemon['Experience_Raw'], 'Pokemon', true);
       $this->Stats = [
