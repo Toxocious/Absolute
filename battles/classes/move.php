@@ -1,5 +1,7 @@
 <?php
-  class Move
+  use BattleHandler\Battle;
+
+  class Move extends Battle
   {
     public $ID = null;
     public $Name = null;
