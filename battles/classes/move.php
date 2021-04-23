@@ -96,4 +96,46 @@
       $this->Evasion_Boost = $Move_Data['Evasion_Boost'];
       return $this;
     }
+    /**
+     * Determine if the move will crit.
+     */
+    public function DoesMoveCrit($Side)
+    {
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Ally_Active = $_SESSION['Battle']['Ally']['Active']->Display_Name;
+          $Foe_Active = $_SESSION['Battle']['Foe']['Active']->Display_Name;
+          break;
+        case 'Foe':
+          $Ally_Active = $_SESSION['Battle']['Foe']['Active']->Display_Name;
+          $Foe_Active = $_SESSION['Battle']['Ally']['Active']->Display_Name;
+          break;
+      }
+
+      if ( !$this->Crit_Chance )
+        return false;
+
+      if ( in_array($Foe_Active->Ability, ['Battle Armor', 'Shell Armor']) )
+        return false;
+
+      if ( isset($Foe_Active->Statuses['Lucky Chant']) )
+        return false;
+
+      if ( $Ally_Active->Ability == 'Merciless' )
+        if ( isset($Foe_Active->Statuses['Poisoned']) )
+          return true;
+
+      switch ( $this->Crit_Chance )
+      {
+        case 0:
+          return mt_rand(1, 24) === 1;
+        case 1:
+          return mt_rand(1, 8) === 1;
+        case 2:
+          return mt_rand(1, 2) === 1;
+        default:
+          return true;
+      }
+    }
   }
