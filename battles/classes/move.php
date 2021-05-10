@@ -137,12 +137,12 @@
       {
         case 113:
           if ( $Ally_Active->Item == 'Lucky Punch' )
-            $this->Crit_Chance++;
+            $this->Crit_Chance += 2;
           break;
 
         case 83:
           if ( $Ally_Active->Item == 'Stick' )
-            $this->Crit_Chance++;
+            $this->Crit_Chance += 2;
           break;
       }
 
