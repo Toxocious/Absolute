@@ -130,6 +130,33 @@
         if ( isset($Foe_Active->Statuses['Poisoned']) )
           return true;
 
+      if ( $Ally_Active->Ability == 'Super Luck' )
+        $this->Crit_Chance++;
+
+      switch ( $Ally_Active->Pokedex_ID )
+      {
+        case 113:
+          if ( $Ally_Active->Item == 'Lucky Punch' )
+            $this->Crit_Chance++;
+          break;
+
+        case 83:
+          if ( $Ally_Active->Item == 'Stick' )
+            $this->Crit_Chance++;
+          break;
+      }
+
+      switch ( $Ally_Active->Item )
+      {
+        case 'Scope Lens':
+        case 'Razor Claw':
+          $this->Crit_Chance++;
+          break;
+      }
+
+      if ( $Ally_Active->Item == 'Scope Lens' )
+        $this->Crit_Chance++;
+
       switch ( $this->Crit_Chance )
       {
         case 0:
