@@ -173,4 +173,18 @@
     {
       return mt_rand(0, (count($this->Moves) - 1));
     }
+
+    /**
+     * Determine if the Pokemon has a given status ailment.
+     */
+    public function HasStatus
+    (
+      $Status
+    )
+    {
+      if ( isset($this->Statuses[$Status]) )
+        return true;
+
+      return false;
+    }
   }
