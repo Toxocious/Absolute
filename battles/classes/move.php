@@ -209,7 +209,41 @@
       $Type_1_Mult = array_search($_SESSION['Battle'][$Side]['Active']->Primary_Type, $Types);
       $Type_2_Mult = array_search($_SESSION['Battle'][$Side]['Active']->Secondary_Type, $Types);
 
-      return $Type_Chart[$Move_Type][$Type_1_Mult] * $Type_Chart[$Move_Type][$Type_2_Mult];
+      $Effective_Mult = $Type_Chart[$Move_Type][$Type_1_Mult] * $Type_Chart[$Move_Type][$Type_2_Mult];
+
+      switch ( $Effective_Mult )
+      {
+        case 0:
+          return [
+            'Mult' => $Effective_Mult,
+            'Text' => 'It was completely ineffective.'
+          ];
+        case .25:
+          return [
+            'Mult' => $Effective_Mult,
+            'Text' => 'It was quite ineffective.'
+          ];
+        case .5:
+          return [
+            'Mult' => $Effective_Mult,
+            'Text' => 'It was not very effective.'
+          ];
+        case 1:
+          return [
+            'Mult' => $Effective_Mult,
+            'Text' => ''
+          ];
+        case 2:
+          return [
+            'Mult' => $Effective_Mult,
+            'Text' => 'It was super effective.'
+          ];
+        case 4:
+          return [
+            'Mult' => $Effective_Mult,
+            'Text' => 'It was extremely effective.'
+          ];
+      }
     }
 
     /**
