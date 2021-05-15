@@ -83,6 +83,8 @@
       if ( !$Pokemon )
         return false;
 
+      $this->Pokedex_ID = $Pokemon['Pokedex_ID'];
+      $this->Alt_ID = $Pokemon['Alt_ID'];
       $this->Sprite = $Pokemon['Sprite'];
       $this->Icon = $Pokemon['Icon'];
       $this->Display_Name = $Pokemon['Display_Name'];
