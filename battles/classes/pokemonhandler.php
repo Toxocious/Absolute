@@ -65,8 +65,6 @@
       $this->Slot = $Slot;
       $this->Active = ($Slot == 1 ? true : false);
 
-      $this->Fainted = false;
-
       $this->SetupPokemon();
     }
 
