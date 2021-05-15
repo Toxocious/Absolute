@@ -268,4 +268,73 @@
 
       return 1;
     }
+
+    /**
+     * Calculates how much damage the move will do.
+     */
+    public function CalcDamage
+    (
+      $Side,
+      $STAB,
+      $Crit,
+      $Move_Effectiveness
+    )
+    {
+      if ( !isset($STAB) || !isset($Crit) || !isset($Move_Effectiveness) )
+        return -1;
+
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      $Crit_Mult = 1;
+      if ( $Crit )
+        if ( $Attacker->Ability == 'Sniper' )
+          $Crit_Mult = 2.25;
+        else
+          $Crit_Mult = 1.5;
+
+      $Weather_Mult = 1;
+      switch ( $this->Weather )
+      {
+        case 'Rain':
+          if ( $this->Move_Type == 'Water' )
+            $Weather_Mult = 1.5;
+          else if ( $this->Move_type == 'Fire' )
+            $Weather_Mult = 0.5;
+          break;
+
+        case 'Harsh Sunlight':
+          if ( $this->Move_Type == 'Fire' )
+            $Weather_Mult = 1.5;
+          else if ( $this->Move_type == 'Water' )
+            $Weather_Mult = 0.5;
+          break;
+      }
+
+      $Status_Mult = 1;
+      if ( $Attacker->Ability == 'Guts' )
+        if
+        (
+          $Attacker->HasStatus('Burn') ||
+          $Attacker->HasStatus('Freeze') ||
+          $Attacker->HasStatus('Paralyze') ||
+          $Attacker->HasStatus('Poison') ||
+          $Attacker->HasStatus('Sleep')
+        )
+          $Status_Mult = 1.5;
+      else
+        if ( $Attacker->HasStatus('Burn') )
+          $Status_Mult = 0.5;
+
+      return floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Current']['Attack'] / $Defender->Stats['Current']['Defense'] / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness['Mult'] * $Status_Mult * 1);
+    }
   }
