@@ -92,8 +92,8 @@
       $this->Level = $Pokemon['Level_Raw'];
       $this->HP = $Pokemon['Stats'][0];
       $this->Max_HP = $Pokemon['Stats'][0];
-      $this->Primary_Type = $Pokemon['Primary_Type'];
-      $this->Secondary_Type = $Pokemon['Secondary_Type'];
+      $this->Primary_Type = $Pokemon['Type_Primary'];
+      $this->Secondary_Type = $Pokemon['Type_Secondary'];
       $this->Exp = $Pokemon['Experience_Raw'];
       $this->Exp_Needed = FetchExpToNextLevel($Pokemon['Experience_Raw'], 'Pokemon', true);
       $this->Stats = [
