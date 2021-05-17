@@ -20,9 +20,9 @@
 			 */
 			if ( date('m') == 12 )
 			{
-				//echo "<script type='text/javascript' src='" . DOMAIN_ROOT . "/js/snowstorm.js'></script>";	
+				//echo "<script type='text/javascript' src='" . DOMAIN_ROOT . "/js/snowstorm.js'></script>";
       }
-      
+
       /**
        * Include the necessary Absolute Chat scripts.
        */
@@ -38,9 +38,9 @@
                 user_id: " . $User_Data['ID'] . ",
                 postcode: " . $User_Data['Auth_Code'] . ",
               }
-      
+
               Absolute.Enable();
-      
+
               $('#chatMessage').keydown((e) =>
               {
                 if ( e.keyCode == 13 )
@@ -53,10 +53,10 @@
                       user: Absolute.user,
                       text: text,
                     });
-      
+
                     $('#chatMessage').val('').trigger('input');
                   }
-      
+
                   return false;
                 }
               });
@@ -74,7 +74,7 @@
 					if ( isset($_SESSION['abso_user']) )
 					{
 				?>
-				
+
 				<div class='user'>
           <div>
             <div class="border-gradient hw-100px padding-0px">
@@ -82,7 +82,7 @@
                 <img src='<?= $User_Data['Avatar']; ?>' />
               </div>
             </div>
-            
+
             <div class='border-gradient hover' style='height: 34px;'>
               <div style='height: 24px;'>
                 <a href='<?= DOMAIN_ROOT; ?>/direct_messages.php'>
@@ -140,13 +140,13 @@
             }
 					?>
         </div>
-        
+
 
 				<?php
 					}
 				?>
       </header>
-      
+
       <?php
         /**
          * Display the correct navigation bar to the user.
@@ -186,11 +186,11 @@
                 </div>
               </main>
             ";
-      
+
             require_once 'layout_bottom.php';
             exit;
           }
-      
+
           /**
            * Check to see if the page is currently under maintenance.
            */
@@ -211,7 +211,7 @@
                 </div>
               </main>
             ";
-      
+
             require_once 'layout_bottom.php';
             exit;
           }
@@ -222,9 +222,6 @@
 
       <aside>
         <div class='panel chat' id='AbsoChat'>
-          <div class='head'>
-            Absolute Chat
-          </div>
           <div class='user_options' id='user_options' style='display: none'></div>
           <div class='body' id='chatContent'>
             <div style='margin-top: 150px;'>
