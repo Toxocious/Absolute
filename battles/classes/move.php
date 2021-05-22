@@ -5,6 +5,8 @@
   {
     public $ID = null;
     public $Name = null;
+    public $Slot = null;
+
     public $Accuracy = null;
     public $Power = null;
     public $Priority = null;
@@ -38,7 +40,11 @@
 
     public $Success = null;
 
-    public function __construct($Move)
+    public function __construct
+    (
+      $Move,
+      $Slot
+    )
     {
       global $PDO;
 
@@ -64,6 +70,8 @@
 
       $this->ID = $Move_Data['ID'];
       $this->Name = $Move_Data['Name'];
+      $this->Slot = $Slot;
+
       $this->Accuracy = $Move_Data['Accuracy'];
       $this->Power = $Move_Data['Power'];
       $this->Priority = $Move_Data['Priority'];
@@ -94,12 +102,12 @@
       $this->Speed_Boost = $Move_Data['Speed_Boost'];
       $this->Accuracy_Boost = $Move_Data['Accuracy_Boost'];
       $this->Evasion_Boost = $Move_Data['Evasion_Boost'];
+
       return $this;
     }
     /**
      * Determine if the move will crit.
      */
-    public function DoesMoveCrit($Side)
     public function DoesMoveCrit
     (
       string $Side
@@ -338,6 +346,6 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
-      return floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Current']['Attack'] / $Defender->Stats['Current']['Defense'] / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness['Mult'] * $Status_Mult * 1);
+      return floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Current']['Attack'] / $Defender->Stats['Current']['Defense'] / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
     }
   }
