@@ -169,7 +169,9 @@
      */
     public function FetchRandomMove()
     {
-      return mt_rand(0, (count($this->Moves) - 1));
+      $Fetch_Move = mt_rand(0, (count($this->Moves) - 1));
+
+      return $this->Moves[$Fetch_Move];
     }
 
     /**
