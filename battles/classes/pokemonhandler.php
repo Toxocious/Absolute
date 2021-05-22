@@ -164,6 +164,21 @@
       ];
     }
 
+    /**
+     * Increase the Pokemon's current HP.
+     */
+    public function IncreaseHP
+    (
+      int $Heal
+    )
+    {
+      $this->HP -= $Heal;
+
+      if ( $this->HP > $this->Max_HP )
+        $this->HP = 0;
+
+      return $this->HP;
+    }
 
     /**
      * Decrease the Pokemon's current HP.
@@ -180,6 +195,7 @@
 
       return $this->HP;
     }
+
     /**
      * Fetch the desired move object.
      */
