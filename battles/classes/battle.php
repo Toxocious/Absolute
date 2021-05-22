@@ -18,10 +18,9 @@
     public $Started = false;
     public $Ended = false;
 
-    public $Battle_Sim = false;
-    public $Battle_Sim_Difficulty = false;
-
-    public $Battle_Type = null;
+    private $Battle_Type = null;
+    private $Battle_Sim = false;
+    private $Battle_Sim_Difficulty = false;
 
     public $Processing_Side = null;
 
@@ -40,14 +39,17 @@
 
     public $Time_Started = null;
     public $Time_Ended = null;
-    public $Layout = null;
 
     public $Ally = null;
     public $Foe = null;
 
-    public $Battle_ID = null;
+    private $Battle_ID = null;
 
-    public $Turn_ID = 1;
+    private $Turn_ID = 1;
+    private $Turn_Dialogue = [
+      'Type' => null,
+      'Text' => null,
+    ];
 
     /**
      * Once the client has chosen an action, process the current turn.
