@@ -6,10 +6,10 @@
     $Battle_Directory = dirname(__DIR__, 1);
     $Class = strtolower($Class);
 
-    if ( file_exists($Battle_Directory . "\\classes\\{$Class}.php"))
+    if (file_exists($Battle_Directory . "\\classes\\{$Class}.php"))
       require_once $Battle_Directory . "\\classes\\{$Class}.php";
 
-    if ( file_exists($Battle_Directory . "\\fights\\{$Class}.php"))
+    if (file_exists($Battle_Directory . "\\fights\\{$Class}.php"))
       require_once $Battle_Directory . "\\fights\\{$Class}.php";
   });
 
