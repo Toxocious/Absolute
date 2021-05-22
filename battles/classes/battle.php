@@ -58,8 +58,7 @@
      */
     public function ProcessTurn
     (
-      string $Action,
-      $Move = null
+      string $Action
     )
     {
       if ( !$Action || !in_array($Action, ['Switch', 'Attack', 'UseItem', 'Flee']) )
