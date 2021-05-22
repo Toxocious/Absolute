@@ -101,6 +101,17 @@
       }
 
       return $Output['Message'];
+
+    /**
+     * Sets the battle state up to be continued.
+     */
+    public function Continue()
+    {
+      return [
+        'Type' => 'Success',
+        'Text' => 'The battle has continued.',
+      ];
+    }
     /**
      * Determine which Pokemon attacks first.
      * Determined by Move Priority, then Pokemon Speed, and if tied, randomly chosen.
