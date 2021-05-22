@@ -117,16 +117,16 @@
 
       $Move_Data = [
         'Ally' => [
-          'Name' => $Ally_Move['Name'],
-          'Priority' => $Ally_Move['Priority'],
-          'Damage_Type' => $Ally_Move['Damage_Type'],
-          'Move_Type' => $Ally_Move['Move_Type']
+          'Name' => $Ally_Move->Name,
+          'Priority' => $Ally_Move->Priority,
+          'Damage_Type' => $Ally_Move->Damage_Type,
+          'Move_Type' => $Ally_Move->Move_Type
         ],
         'Foe' => [
-          'Name' => $Foe_Move['Name'],
-          'Priority' => $Foe_Move['Priority'],
-          'Damage_Type' => $Foe_Move['Damage_Type'],
-          'Move_Type' => $Foe_Move['Move_Type']
+          'Name' => $Foe_Move->Name,
+          'Priority' => $Foe_Move->Priority,
+          'Damage_Type' => $Foe_Move->Damage_Type,
+          'Move_Type' => $Foe_Move->Move_Type
         ],
       ];
 
