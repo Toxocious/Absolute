@@ -119,10 +119,10 @@
       $this->IVs = $Pokemon['IVs'];
       $this->EVs = $Pokemon['EVs'];
       $this->Moves = [
-        new Move($Pokemon['Move_1']),
-        new Move($Pokemon['Move_2']),
-        new Move($Pokemon['Move_3']),
-        new Move($Pokemon['Move_4']),
+        new Move($Pokemon['Move_1'], 0),
+        new Move($Pokemon['Move_2'], 1),
+        new Move($Pokemon['Move_3'], 2),
+        new Move($Pokemon['Move_4'], 3),
       ];
       $this->Item = new HeldItem($Pokemon['Item_ID']);
 
