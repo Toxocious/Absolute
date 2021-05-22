@@ -164,6 +164,22 @@
       ];
     }
 
+
+    /**
+     * Decrease the Pokemon's current HP.
+     */
+    public function DecreaseHP
+    (
+      int $Damage
+    )
+    {
+      $this->HP -= $Damage;
+
+      if ( $this->HP < 0 )
+        $this->HP = 0;
+
+      return $this->HP;
+    }
     /**
      * Fetch the desired move object.
      */
