@@ -112,6 +112,17 @@
         'Text' => 'The battle has continued.',
       ];
     }
+
+    /**
+     * Restarts the battle.
+     */
+    public function Restart()
+    {
+      return [
+        'Type' => 'Success',
+        'Text' => 'The battle has been restarted.',
+      ];
+    }
     /**
      * Determine which Pokemon attacks first.
      * Determined by Move Priority, then Pokemon Speed, and if tied, randomly chosen.
