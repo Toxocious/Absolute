@@ -131,15 +131,27 @@
     }
 
     /**
-     * Switch into the desired Pokemon.
+     * Perform an attack via the client's active Pokemon.
+     * @param $Move
      */
-    public function SwitchInto()
+    public function Attack
+    (
+      $Move
+    )
     {
-      if ( $this->Active )
+      if ( !isset($Move) )
       {
         return [
           'Type' => 'Error',
-          'Text' => 'The Pok&eacute;mon you\'re switching into is already active!'
+          'Text' => 'Select a valid move to attack with.<br />'
+        ];
+      }
+
+      if ( $this->Fainted )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$this->Display_Name} is fainted and can not attack.<br />"
         ];
       }
 
@@ -147,7 +159,12 @@
       {
         return [
           'Type' => 'Error',
-          'Text' => 'The Pok&eacute;mon that you\'re switching into is fainted.',
+          'Text' => "{$this->Display_Name} is currently fainted, and may not attack.<br />"
+        ];
+      }
+
+      return $this->Moves[$Move->Slot]->ProcessAttack($this->Side);
+    }
         ];
       }
 
