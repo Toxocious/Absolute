@@ -165,16 +165,35 @@
 
       return $this->Moves[$Move->Slot]->ProcessAttack($this->Side);
     }
+
+    /**
+     * Switch into the desired Pokemon.
+     */
+    public function SwitchInto()
+    {
+      if ( $this->Active )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'The Pok&eacute;mon you\'re switching into is already active!'
         ];
       }
 
       foreach ($_SESSION['Battle']['Ally']['Roster'] as $Roster_Pokemon)
-        if ( $Roster_Pokemon->Pokemon_ID != $this->Pokemon_ID )
-          $Roster_Pokemon->Active = false;
-        else
+        $Roster_Pokemon->Active = false;
+        if ( $Roster_Pokemon->Pokemon_ID == $this->Pokemon_ID )
           $Roster_Pokemon->Active = true;
 
+      $this->Participated = true;
       $_SESSION['Battle']['Ally']['Active'] = $this;
+
+      if ( $this->HP == 0 )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'The Pok&eacute;mon that you\'re switching into is fainted.',
+        ];
+      }
 
       return [
         'Type' => 'Success',
