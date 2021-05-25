@@ -97,6 +97,9 @@
       $this->Secondary_Type = $Pokemon['Type_Secondary'];
       $this->Exp = $Pokemon['Experience_Raw'];
       $this->Exp_Needed = FetchExpToNextLevel($Pokemon['Experience_Raw'], 'Pokemon', true);
+      $this->Exp_Yield = $Pokemon['Exp_Yield'];
+      $this->Owner_Original = $Pokemon['Owner_Original'];
+      $this->Owner_Current = $Pokemon['Owner_Current'];
       $this->Stats = [
         'Base' => [
           'Attack' => $Pokemon['Stats'][1],
