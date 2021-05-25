@@ -49,6 +49,7 @@
     public $Sprite = null;
     public $Icon = null;
 
+    public $Participated = false;
     public $Fainted = false;
 
     public $Dialogue = null;
