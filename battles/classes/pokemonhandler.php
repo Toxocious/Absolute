@@ -65,6 +65,7 @@
       $this->Side = $Side;
       $this->Slot = $Slot;
       $this->Active = ($Slot == 1 ? true : false);
+      $this->Participated = ($Slot == 1 ? true : false);
 
       $this->SetupPokemon();
     }
