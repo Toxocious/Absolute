@@ -205,6 +205,45 @@
     }
 
     /**
+     * Increase the Pokemon's current Exp.
+     */
+    public function IncreaseExp()
+    {
+      $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
+    /**
+     * Calculate how much experience is earned when a foe faints.
+     */
+    public function CalcExp
+    (
+      int $Exp_Divisor
+    )
+    {
+      if ( $this->Active )
+        $Ally_Active = $this;
+      else
+        $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
+
+      $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
+
+      if ( $this->Item->Name == 'Exp Share' )
+        $s = 2;
+      else
+        $s = 1;
+
+      if ( $this->Owner_Original == $this->Owner_Current )
+        $t = 1;
+      else
+        $t = 1.5;
+
+      if ( $this->Item->Name == 'Lucky Egg' )
+        $e = 1.5;
+      else
+        $e = 1;
+
+      return floor($Foe_Active->Exp_Yield * $Foe_Active->Level / 5 * $s * pow((2 * $Foe_Active->Level + 10), 2.5) / pow(($Foe_Active->Level + $Ally_Active->Level + 20), 2.5) + 1) * $t * $e / $Exp_Divisor;
+    }
+
+    /**
      * Increase the Pokemon's current HP.
      */
     public function IncreaseHP
