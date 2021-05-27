@@ -209,7 +209,41 @@
      */
     public function IncreaseExp()
     {
-      $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
+      $Exp_Divisor = 0;
+      foreach ( $_SESSION['Battle']['Ally']['Roster'] as $Pokemon )
+      {
+        if
+        (
+          $Pokemon->Participated ||
+          $Pokemon->Item->Name == 'Exp Share'
+        )
+          $Exp_Divisor++;
+      }
+
+      if ( $Exp_Divisor < 1 )
+        $Exp_Divisor = 1;
+
+      $Dialogue = [
+        'Type' => 'Success',
+        'Text' => ''
+      ];
+
+      foreach ( $_SESSION['Battle']['Ally']['Roster'] as $Pokemon )
+      {
+        if
+        (
+          $Pokemon->Participated ||
+          $Pokemon->Item->Name == 'Exp Share'
+        )
+        {
+          $Exp = number_format($this->CalcExp($Exp_Divisor));
+          $Dialogue['Text'] .= "{$Pokemon->Display_Name} has gained {$Exp} experience.<br />";
+        }
+      }
+
+      return $Dialogue;
+    }
+
     /**
      * Calculate how much experience is earned when a foe faints.
      */
