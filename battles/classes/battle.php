@@ -61,7 +61,7 @@
       string $Action
     )
     {
-      if ( !$Action || !in_array($Action, ['Switch', 'Attack', 'UseItem', 'Flee']) )
+      if ( !isset($Action) || !in_array($Action, ['Switch', 'Attack', 'UseItem', 'Flee']) )
       {
         return [
           'Type' => 'Error',
