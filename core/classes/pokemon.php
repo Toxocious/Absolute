@@ -26,7 +26,7 @@
 				$FetchPokemon->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokemon = $FetchPokemon->fetch();
 
-				$FetchPokedex = $PDO->prepare("SELECT `Type_Primary`, `Type_Secondary`, `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+				$FetchPokedex = $PDO->prepare("SELECT `Exp_Yield`, `Type_Primary`, `Type_Secondary`, `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
 				$FetchPokedex->execute([$Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']]);
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokedex = $FetchPokedex->fetch();
@@ -55,7 +55,7 @@
 			{
 				return false;
 			}
-			
+
 			switch($Pokemon['Gender'])
 			{
 				case 'Female':
@@ -71,7 +71,7 @@
 				case '(?)':
 					$Gender = '(?)'; $GenderShort = '(?)';
 					break;
-				default: 
+				default:
 					$Gender = "(?)"; $GenderShort = "(?)";
 					break;
 			}
@@ -87,7 +87,7 @@
 				case 'Sunset':
 					$StatBonus = 10;
 					break;
-				default: 
+				default:
 					$StatBonus = 0;
 					break;
 			}
@@ -105,7 +105,7 @@
 				$this->CalcStat('SpDefense', floor($Pokedex['SpDefense'] + $StatBonus), $Level, $IVs[4], $EVs[4], $Pokemon['Nature']),
 				$this->CalcStat('Speed', floor($Pokedex['Speed'] + $StatBonus), $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
 			];
-			
+
 			if ( $Pokemon['Type'] !== 'Normal' )
 				$Display_Name = $Pokemon['Type'] . $Pokemon['Name'];
 			else
@@ -148,6 +148,7 @@
 				'Move_3' => $Pokemon['Move_3'],
 				'Move_4' => $Pokemon['Move_4'],
 				'Happiness' => $Pokemon['Happiness'],
+        'Exp_Yield' => $Pokedex['Exp_Yield'],
 				'Owner_Current' => $Pokemon['Owner_Current'],
 				'Owner_Current_Username' => $Current_Owner['Username'],
 				'Owner_Original' => $Pokemon['Owner_Original'],
@@ -316,7 +317,7 @@
 					{
 						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
       			$Roster_Move->execute([ $Slot, $Poke_Data['ID'] ]);
-						
+
         		$Roster_Remove = $PDO->prepare("UPDATE `pokemon` SET `Location` = ?, `Slot` = ? WHERE `ID` = ? LIMIT 1");
         		$Roster_Remove->execute([ $Poke_Data['Location'], $Poke_Data['Slot'], $Roster[$Slot - 1]['ID'] ]);
 					}
@@ -471,7 +472,7 @@
 				{
 					$Slots_Used[$Party['Slot']] = 1;
 				}
-	
+
 				if ( $Slots_Used[1] == 0 )
 				{
 					$Location = "Roster";
@@ -546,7 +547,7 @@
 					`Creation_Date`,
 					`Creation_Location`,
 					`Ability`
-				) 
+				)
 				VALUES
 				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			");
@@ -576,7 +577,7 @@
 				'Ability' => $Ability,
 				'Sprite' => $Poke_Images['Sprite'],
 				'Icon' => $Poke_Images['Icon'],
-			];	
+			];
 		}
 
 		/**
@@ -923,12 +924,12 @@
 
 			if ( $EV > 252 )
 				$EV = 252;
-			
+
 			if ( $Stat_Name == 'HP' )
 			{
 				if ( $Base_Stat == 1 )
 					return 1;
-				
+
 				return floor((((2 * $Base_Stat + $IV + ($EV / 4)) * $Level) / 100) + $Level + 10);
 			}
 			else
