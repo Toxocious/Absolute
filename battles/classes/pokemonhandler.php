@@ -1,4 +1,5 @@
 <?php
+
   class PokemonHandler
   {
     public $Pokemon_ID = null;
@@ -210,6 +211,8 @@
      */
     public function IncreaseExp()
     {
+      global $PDO;
+
       $Exp_Divisor = 0;
       foreach ( $_SESSION['Battle']['Ally']['Roster'] as $Pokemon )
       {
@@ -237,8 +240,30 @@
           $Pokemon->Item->Name == 'Exp Share'
         )
         {
-          $Exp = number_format($this->CalcExp($Exp_Divisor));
-          $Dialogue['Text'] .= "{$Pokemon->Display_Name} has gained {$Exp} experience.<br />";
+          $Exp = $this->CalcExp($Exp_Divisor);
+
+          try
+          {
+            $Update_Exp = $PDO->prepare("
+              UPDATE `pokemon`
+              SET `Experience` = `Experience` + ?
+              WHERE `ID` = ?
+              LIMIT 1
+            ");
+            $Update_Exp->execute([
+              $Exp,
+              $Pokemon->Pokemon_ID
+            ]);
+          }
+          catch ( PDOException $e )
+          {
+            HandleError($e);
+          }
+
+          $this->Exp += $Exp;
+          $this->Exp_Needed = FetchExpToNextLevel($this->Exp, 'Pokemon', true);
+
+          $Dialogue['Text'] .= "{$Pokemon->Display_Name} has gained " . number_format($Exp) . " experience.<br />";
         }
       }
 
