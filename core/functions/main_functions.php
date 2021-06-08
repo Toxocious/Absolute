@@ -17,7 +17,7 @@
 	/**
 	 * Function that allows us to connect to the database.
 	 */
-	function DatabaseConnect($DB = DATABASE_TABLE, $User = DATABASE_USER, $Pass = DATABASE_PASSWORD)
+	function DatabaseConnect()
 	{
 		$Host = 'localhost';
 		$Char_Set = 'utf8mb4';
@@ -30,7 +30,7 @@
 
 		try
 		{
-			$PDO = new PDO("mysql:host=$Host; dbname=$DB; charset=$Char_Set; ", $User, $Pass);
+			$PDO = new PDO("mysql:host={$Host}; dbname=" . DATABASE_TABLE . "; charset={$Char_Set};", DATABASE_USER, DATABASE_PASSWORD, $PDO_Attributes);
 		}
 		catch (PDOException $e)
 		{
