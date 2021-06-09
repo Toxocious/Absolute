@@ -1,12 +1,10 @@
 <?php
-  use BattleHandler\Battle;
-
   class Status
   {
-    public $Pokemon_ID = null;
+    public $Pokemon = null;
 
     public $Status = null;
-    public $Status_Stage = null;
+    public $Turns_Left = null;
 
     public function __construct()
     {
