@@ -358,14 +358,32 @@
 
     /**
      * Determine if the Pokemon has a given status ailment.
+
+    /**
+     * Determine if the Pokemon has a given status.
      */
     public function HasStatus
     (
-      $Status
+      string $Status
     )
     {
       if ( isset($this->Statuses[$Status]) )
         return true;
+
+      return false;
+    }
+
+    /**
+     * Determine if a Pokemon has one of many given statuses.
+     */
+    public function HasStatusFromArray
+    (
+      array $Checking_For_Statuses
+    )
+    {
+      foreach ( $this->Statuses as $Status => $Status_Data )
+        if ( in_array($Status, $Checking_For_Statuses) )
+          return true;
 
       return false;
     }
