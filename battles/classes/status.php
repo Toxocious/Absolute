@@ -6,8 +6,43 @@
     public $Status = null;
     public $Turns_Left = null;
 
-    public function __construct()
+    public function __construct
+    (
+      PokemonHandler $Pokemon,
+      string $Status_Name,
+      int $Status_Turns = null
+    )
     {
+      $Status_Data = $this->AllStatuses()[$Status_Name];
+      if ( !isset($Status_Data) )
+        return false;
+
+      if ( $Pokemon->HasStatus($Status_Data['Name']) )
+        return false;
+
+      if ( !$Status_Data['Volatile'] )
+      {
+        if ( in_array($Pokemon->Item, ['Flame Orb', 'Toxic Orb']) )
+          if ( in_array($Pokemon->Ability, ['Flower Veil']) )
+            return false;
+
+        if ( in_array($Pokemon->Ability, ['Leaf Guard', 'Comatose']) )
+          return false;
+
+        if ( $Pokemon->HasStatus('Safeguard') )
+          return false;
+      }
+
+      if ( $Pokemon->Ability == 'Shields Down' )
+        return false;
+
+      if ( !isset($Status_Turns) )
+        $Status_Turns = mt_rand($Status_Data['Min_Turns'], $Status_Data['Max_Turns']);
+
+      $this->Pokemon = $Pokemon;
+      $this->Status = $Status_Data;
+      $this->Turns_Left = $Status_Turns;
+    }
 
     /**
      * An array of all statuses, volatile and otherwise.
