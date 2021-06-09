@@ -30,19 +30,6 @@
 
     public $Item = null;
 
-    /**
-     * Should contain an array of arrays, if not null.
-     * Each child array containing data of the status.
-     *
-     * [
-     *  'Type' => 'Burn',
-     *  'Turns_Left' => 3,
-     * ],
-     * [
-     *  'Type' => 'Confusion',
-     *  'Turns_Left' => 1
-     * ],
-     */
     public $Statuses = null;
 
     public $Last_Move = null;
