@@ -127,6 +127,7 @@
         document.querySelector(`[move='Move_${i}']`).setAttribute('onclick', `Battle.Attack(${i + 1})`);
         document.querySelector(`[move='Move_${i}']`).setAttribute('class', Moves[i].Move_Type);
         document.querySelector(`[move='Move_${i}']`).value = Moves[i].Name;
+        document.querySelector(`[move='Move_${i}']`).disabled = Moves[i].Disabled;
       }
     },
 
