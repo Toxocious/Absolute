@@ -357,7 +357,39 @@
     }
 
     /**
-     * Determine if the Pokemon has a given status ailment.
+     * Set a status on the Pokemon.
+     */
+    public function SetStatus
+    (
+      string $Status,
+      int $Turns = null
+    )
+    {
+      /**
+       * A Pokémon cannot gain non-volatile status conditions when it is affected by
+       *  Safeguard, Leaf Guard, Flower Veil, Shields Down, or Comatose.
+       *
+       * A Pokémon will cure its status condition when affected by
+       *  Refresh, Heal Bell, Aromatherapy, Psycho Shift, Jungle Healing, G-Max Sweetness,
+       *  Natural Cure, Shed Skin, Hydration, or Lum Berry.
+       *
+       * If a Pokémon under a status condition (such as a poisoned Cascoon) evolves, the
+       *  condition will be kept, even if the Pokémon gains a new type or Ability that would normally prevent it.
+       */
+
+      $Attempt_Status = new Status(
+        $this->Pokemon_ID,
+        $Status,
+        $Turns
+      );
+
+      if ( !$Attempt_Status )
+        return false;
+
+      $this->Statuses[$Attempt_Status->Status] = $Attempt_Status;
+
+      return true;
+    }
 
     /**
      * Determine if the Pokemon has a given status.
