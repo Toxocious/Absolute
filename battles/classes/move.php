@@ -66,7 +66,12 @@
       }
 
       if ( !$Move_Data )
-        return false;
+      {
+        $this->Name = 'Invalid Move';
+        $this->Disabled = true;
+
+        return $this;
+      }
 
       $this->ID = $Move_Data['ID'];
       $this->Name = $Move_Data['Name'];
