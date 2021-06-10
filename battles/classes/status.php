@@ -22,7 +22,7 @@
 
       if ( !$Status_Data['Volatile'] )
       {
-        if ( in_array($Pokemon->Item, ['Flame Orb', 'Toxic Orb']) )
+        if ( in_array($Pokemon->Item->Name, ['Flame Orb', 'Toxic Orb']) )
           if ( in_array($Pokemon->Ability, ['Flower Veil']) )
             return false;
 
