@@ -338,14 +338,7 @@
 
       $Status_Mult = 1;
       if ( $Attacker->Ability == 'Guts' )
-        if
-        (
-          $Attacker->HasStatus('Burn') ||
-          $Attacker->HasStatus('Freeze') ||
-          $Attacker->HasStatus('Paralyze') ||
-          $Attacker->HasStatus('Poison') ||
-          $Attacker->HasStatus('Sleep')
-        )
+        if ( $Attacker->HasStatusFromArray(['Burn', 'Freeze', 'Paralyze', 'Poison', 'Sleep']) )
           $Status_Mult = 1.5;
       else
         if ( $Attacker->HasStatus('Burn') )
