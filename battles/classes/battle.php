@@ -214,4 +214,69 @@
         }
       }
     }
+
+    /**
+     * Set the current weather.
+     */
+    public function SetWeather
+    (
+      string $Weather
+    )
+    {
+      $this->Weather = $Weather;
+      $this->Weather_Turns_Left = 5;
+
+      switch ($Weather)
+      {
+        case 'Clear Skies':
+          return [
+            'Text' => 'The skies are crystal clear.<br />'
+          ];
+
+        case 'Fog':
+          return [
+            'Text' => 'The fog is deep...',
+          ];
+
+        case 'Hail':
+          return [
+            'Text' => 'It started to hail!<br />'
+          ];
+
+        case 'Rain':
+          return [
+            'Text' => 'It started to rain!<br />'
+          ];
+
+        case 'Heavy Rain':
+          return [
+            'Text' => 'A heavy rain begain to fall!<br />'
+          ];
+
+        case 'Sandstorm':
+          return [
+            'Text' => 'A sandstorm kicked up!<br />'
+          ];
+
+        case 'Harsh Sunlight':
+          return [
+            'Text' => 'The sunlight turned harsh!<br />'
+          ];
+
+        case 'Extremely Harsh Sunlight':
+          return [
+            'Text' => 'The sunlight turned extremely harsh!<br />'
+          ];
+
+        case 'Shadowy Aura':
+          return [
+            'Text' => 'A shadowy aura filled the sky!<br />'
+          ];
+
+        case 'Strong Wings':
+          return [
+            'Text' => 'Mysterious strong winds are protecting Flying-type Pok&eacute;mon!<br />'
+          ];
+      }
+    }
   }
