@@ -121,45 +121,63 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
-          $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
           break;
         case 'Foe':
-          $Ally_Active = $_SESSION['Battle']['Foe']['Active'];
-          $Foe_Active = $_SESSION['Battle']['Ally']['Active'];
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
           break;
       }
 
-      if ( !$this->Crit_Chance )
+      switch ($this->Name)
+      {
+        case 'Dragon Rage':
+        case 'Seismic Toss':
+        case 'Final Gambit':
+        case 'Night Shade':
+        case 'Sonicboom':
+          return false;
+          break;
+      }
+
+      if
+      (
+        $this->Crit_Chance == null ||
+        $this->Crit_Chance == 0
+      )
         return false;
 
-      if ( in_array($Foe_Active->Ability, ['Battle Armor', 'Shell Armor']) )
+      if ( $Defender->HasStatus('Lucky Chant') )
         return false;
 
-      if ( isset($Foe_Active->Statuses['Lucky Chant']) )
+      if ( in_array($Defender->Ability, ['Battle Armor', 'Shell Armor']) )
         return false;
 
-      if ( $Ally_Active->Ability == 'Merciless' )
-        if ( isset($Foe_Active->Statuses['Poisoned']) )
+      if ( isset($Defender->Statuses['Lucky Chant']) )
+        return false;
+
+      if ( $Attacker->Ability == 'Merciless' )
+        if ( isset($Defender->Statuses['Poisoned']) )
           return true;
 
-      if ( $Ally_Active->Ability == 'Super Luck' )
+      if ( $Attacker->Ability == 'Super Luck' )
         $this->Crit_Chance++;
 
-      switch ( $Ally_Active->Pokedex_ID )
+      switch ( $Attacker->Pokedex_ID )
       {
         case 113:
-          if ( $Ally_Active->Item == 'Lucky Punch' )
+          if ( $Attacker->Item == 'Lucky Punch' )
             $this->Crit_Chance += 2;
           break;
 
         case 83:
-          if ( $Ally_Active->Item == 'Stick' )
+          if ( $Attacker->Item == 'Stick' )
             $this->Crit_Chance += 2;
           break;
       }
 
-      switch ( $Ally_Active->Item )
+      switch ( $Attacker->Item )
       {
         case 'Scope Lens':
         case 'Razor Claw':
@@ -167,7 +185,7 @@
           break;
       }
 
-      if ( $Ally_Active->Item == 'Scope Lens' )
+      if ( $Attacker->Item == 'Scope Lens' )
         $this->Crit_Chance++;
 
       switch ( $this->Crit_Chance )
