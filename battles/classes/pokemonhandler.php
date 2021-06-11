@@ -379,6 +379,20 @@
     }
 
     /**
+     * Remove a statues from the Pokemon.
+     */
+    public function RemoveStatus
+    (
+      string $Status_Name
+    )
+    {
+      if ( $this->HasStatus($Status_Name) )
+        unset($this->Statuses[$Status_Name]);
+
+      return true;
+    }
+
+    /**
      * Determine if the Pokemon has a given status.
      */
     public function HasStatus
