@@ -350,4 +350,15 @@
 
       return $Damage;
     }
+
+    /**
+     * Calculates how much healing the move will do.
+     */
+    public function CalcHealing
+    (
+      int $Damage_Dealt
+    )
+    {
+
+    }
   }
