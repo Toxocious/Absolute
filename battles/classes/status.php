@@ -181,6 +181,11 @@
           'Max_Turns' => -1,
           'Volatile' => true
         ],
+        'Move Locked' => [
+          'Min_Turns' => 1,
+          'Max_Turns' => 5,
+          'Volatile' => true
+        ],
         'Nightmare' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
