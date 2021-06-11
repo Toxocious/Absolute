@@ -45,7 +45,7 @@
 
     private $Battle_ID = null;
 
-    private $Turn_ID = 1;
+    public $Turn_ID = 1;
     private $Turn_Dialogue = [
       'Type' => null,
       'Text' => null,
@@ -69,6 +69,9 @@
         ];
       }
 
+
+      $_SESSION['Battle']['Turn_ID']++;
+      $this->Turn_ID = $_SESSION['Battle']['Turn_ID'];
       /**
        * Set the used moves now, and determine who will attack first.
        * Done now, so that we can process pre-move conditions:
