@@ -167,17 +167,17 @@
       switch ( $Attacker->Pokedex_ID )
       {
         case 113:
-          if ( $Attacker->Item == 'Lucky Punch' )
+          if ( $Attacker->Item->Name == 'Lucky Punch' )
             $this->Crit_Chance += 2;
           break;
 
         case 83:
-          if ( $Attacker->Item == 'Stick' )
+          if ( $Attacker->Item->Name == 'Stick' )
             $this->Crit_Chance += 2;
           break;
       }
 
-      switch ( $Attacker->Item )
+      switch ( $Attacker->Item->Name )
       {
         case 'Scope Lens':
         case 'Razor Claw':
@@ -185,7 +185,7 @@
           break;
       }
 
-      if ( $Attacker->Item == 'Scope Lens' )
+      if ( $Attacker->Item->Name == 'Scope Lens' )
         $this->Crit_Chance++;
 
       switch ( $this->Crit_Chance )
