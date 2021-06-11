@@ -110,6 +110,101 @@
 
       return $this;
     }
+
+    /**
+     * Determing if the move will hit.
+     */
+    public function DoesMoveHit
+    (
+      string $Side
+    )
+    {
+      if ( $this->Accuracy === 0 )
+        return false;
+
+      if ( $this->Accuracy === 'None' )
+        return true;
+
+      if ( $this->Effect_Short == 'Causes a one-hit KO.' )
+        if ( mt_rand(1, 100) < 30 )
+          return true;
+        else
+          return false;
+
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      switch ($this->Name)
+      {
+        case 'Flying Press':
+          if ( $Defender->HasStatus('Minimize') )
+            return true;
+          break;
+
+        case 'Thunder':
+        case 'Hurricane':
+          switch ($this->Weather)
+          {
+            case 'Rain':
+              return true;
+            case 'Sunlight':
+              $this->Accuracy = 50;
+              break;
+            default:
+              break;
+          }
+          break;
+
+        case 'Blizzard':
+          if ( $this->Weather == 'Hail' )
+            return true;
+          break;
+
+        case 'Dream Eater':
+          if ( $Defender->HasStatus('Sleep') )
+            return true;
+          else
+            return false;
+          break;
+      }
+
+      if ( $Defender->HasStatus('Bounce') )
+        if ( !in_array($this->Name, ['Gust', 'Twister', 'Thunder', 'Sky Uppercut']) )
+          return false;
+
+      if ( $Defender->HasStatus('Dig') )
+        if ( !in_array($this->Name, ['Earthquake', 'Magnitude', 'Fissure']) )
+          return false;
+
+      if ( $Defender->HasStatus('Dive') )
+        if ( !in_array($this->Name, ['Surf', 'Whirlpool', 'Low Kick']) )
+          return false;
+
+      if ( $Defender->HasStatus('Fly') )
+        if ( !in_array($this->Name, ['Gust', 'Twister', 'Thunder', 'Sky Uppercut', 'Smack Down']) )
+          return false;
+
+      if ( $Defender->HasStatus('Sky Drop') )
+        if ( !in_array($this->Name, ['Gust', 'Thunder', 'Twister', 'Sky Uppercut', 'Hurricane', 'Smack Down']) )
+          return false;
+
+      $Accuracy_Mod = $Attacker->Accuracy / $Defender->Evasion;
+
+      if ( mt_rand(1, 100) < $this->Accuracy * $Accuracy_Mod )
+        return true;
+
+      return false;
+    }
+
     /**
      * Determine if the move will crit.
      */
