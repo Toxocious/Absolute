@@ -155,7 +155,10 @@
         ];
       }
 
-      return $this->Moves[$Move->Slot]->ProcessAttack($this->Side);
+      if ( $this->HasStatus('Move Locked') )
+        return $this->Moves[$this->Last_Move]->ProcessAttack($this->Side);
+      else
+        return $this->Moves[$Move->Slot]->ProcessAttack($this->Side);
     }
 
     /**
