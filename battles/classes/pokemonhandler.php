@@ -323,17 +323,6 @@
     }
 
     /**
-     * Fetch the desired move object.
-     */
-    public function FetchMove
-    (
-      $Move
-    )
-    {
-      return $this->Moves[$Move];
-    }
-
-    /**
      * Fetch a random move from the selected Pokemon.
      */
     public function FetchRandomMove()
