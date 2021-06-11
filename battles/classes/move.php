@@ -377,6 +377,6 @@
       int $Damage_Dealt
     )
     {
-
+      return 0;
     }
   }
