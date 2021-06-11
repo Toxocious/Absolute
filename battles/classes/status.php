@@ -1,10 +1,9 @@
 <?php
   class Status
   {
-    public $Pokemon = null;
-
-    public $Status = null;
+    public $Name = null;
     public $Turns_Left = null;
+    public $Volatile = null;
 
     public function __construct
     (
@@ -17,7 +16,7 @@
       if ( !isset($Status_Data) )
         return false;
 
-      if ( $Pokemon->HasStatus($Status_Data['Name']) )
+      if ( $Pokemon->HasStatus($Status_Name) )
         return false;
 
       if ( !$Status_Data['Volatile'] )
@@ -39,9 +38,9 @@
       if ( !isset($Status_Turns) )
         $Status_Turns = mt_rand($Status_Data['Min_Turns'], $Status_Data['Max_Turns']);
 
-      $this->Pokemon = $Pokemon;
-      $this->Status = $Status_Data;
+      $this->Name = $Status_Name;
       $this->Turns_Left = $Status_Turns;
+      $this->Volatile = $Status_Data['Volatile'];
     }
 
     /**
