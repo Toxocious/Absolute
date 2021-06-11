@@ -365,7 +365,7 @@
        */
 
       $Attempt_Status = new Status(
-        $this->Pokemon_ID,
+        $this,
         $Status,
         $Turns
       );
@@ -373,7 +373,7 @@
       if ( !$Attempt_Status )
         return false;
 
-      $this->Statuses[$Attempt_Status->Status] = $Attempt_Status;
+      $this->Statuses[$Attempt_Status->Name] = $Attempt_Status;
 
       return true;
     }
