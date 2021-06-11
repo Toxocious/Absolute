@@ -279,4 +279,66 @@
           ];
       }
     }
+
+    /**
+     * End the current weather.
+     */
+    public function EndWeather()
+    {
+      switch ($this->Weather)
+      {
+        case 'Clear Skies':
+          return [
+            'Text' => ''
+          ];
+
+        case 'Fog':
+          return [
+            'Text' => 'The fog has been blown away!<br />',
+          ];
+
+        case 'Hail':
+          return [
+            'Text' => 'The hail stopped.<br />'
+          ];
+
+        case 'Rain':
+          return [
+            'Text' => 'The rain stopped.<br />'
+          ];
+
+        case 'Heavy Rain':
+          return [
+            'Text' => 'The heavy rain has lifted!<br />'
+          ];
+
+        case 'Sandstorm':
+          return [
+            'Text' => 'The sandstorm subsided.<br />'
+          ];
+
+        case 'Harsh Sunlight':
+          return [
+            'Text' => 'The harsh sunlight faded.<br />'
+          ];
+
+        case 'Extremely Harsh Sunlight':
+          return [
+            'Text' => 'The harsh sunlight faded.<br />'
+          ];
+
+        case 'Shadowy Aura':
+          return [
+            'Text' => 'The shadowy aura faded away!<br />'
+          ];
+
+        case 'Strong Wings':
+          return [
+            'Text' => 'The mysterious strong winds have dissipated!<br />'
+          ];
+      }
+
+      $this->Weather = null;
+      $this->Weather_Turns_Left = null;
+    }
   }
