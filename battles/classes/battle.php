@@ -230,12 +230,12 @@
       {
         case 'Clear Skies':
           return [
-            'Text' => 'The skies are crystal clear.<br />'
+            'Text' => ''
           ];
 
         case 'Fog':
           return [
-            'Text' => 'The fog is deep...',
+            'Text' => 'The fog is deep...<br />',
           ];
 
         case 'Hail':
