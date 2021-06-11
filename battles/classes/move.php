@@ -148,25 +148,23 @@
         case 'Flying Press':
           if ( $Defender->HasStatus('Minimize') )
             return true;
+
           break;
 
         case 'Thunder':
         case 'Hurricane':
-          switch ($this->Weather)
-          {
-            case 'Rain':
-              return true;
-            case 'Sunlight':
-              $this->Accuracy = 50;
-              break;
-            default:
-              break;
-          }
+          if ( $this->Weather == 'Rain' )
+            return true;
+
+          if ( $this->Weather == 'Sunlight' )
+            $this->Accuracy = 50;
+
           break;
 
         case 'Blizzard':
           if ( $this->Weather == 'Hail' )
             return true;
+
           break;
 
         case 'Dream Eater':
