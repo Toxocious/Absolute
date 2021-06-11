@@ -344,7 +344,27 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
-      $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Current']['Attack'] / $Defender->Stats['Current']['Defense'] / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+      /**
+       * Some moves do a specific amount of damage; handle that here.
+       */
+      switch ($this->Name)
+      {
+        case 'Seismic Toss':
+        case 'Night Shade':
+          $Damage = $Defender->Level * $Move_Effectiveness;
+          break;
+        case 'Dragon Rage':
+          $Damage = 40;
+          if ( $Defender->Primary_Type == 'Fairy' || $Defender->Secondary_Type == 'Fairy' )
+            $Damage = 0;
+          break;
+        case 'Sonicboom':
+          $Damage = 20;
+          break;
+        default:
+          $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Current']['Attack'] / $Defender->Stats['Current']['Defense'] / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+      }
+
       if ( $Damage < 0 )
         $Damage = 0;
 
