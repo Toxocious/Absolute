@@ -118,7 +118,8 @@
       $this->Accuracy_Boost = $Move_Data['Accuracy_Boost'];
       $this->Evasion_Boost = $Move_Data['Evasion_Boost'];
 
-      return $this;
+      $this->Class_Name = $Move_Data['Class_Name'];
+    }
 
     /**
      * Determines whether or not the user can move.
