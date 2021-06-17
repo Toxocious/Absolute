@@ -122,6 +122,86 @@
     }
 
     /**
+     * Begin processing an attack.
+     */
+    public function ProcessAttack
+    (
+      string $Side
+    )
+    {
+      if ( !class_exists($this->Class_Name) )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$this->Class_Name} has not yet been programmed.",
+          'Damage' => 0,
+          'Heal' => 0
+        ];
+      }
+
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      $Attacker_Can_Move = $this->CanUserMove($Side);
+      if ( $Attacker_Can_Move['Type'] == 'Error' )
+      {
+        return [
+          'Type' => $Attacker_Can_Move['Type'],
+          'Text' => $Attacker_Can_Move['Text'],
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
+      $Does_Move_Hit = $this->DoesMoveHit($Side);
+      if ( !$Does_Move_Hit )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}, but it missed!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
+      $Attacker->Last_Move = $this->Slot;
+
+      $Move_Effectiveness = $this->MoveEffectiveness($Defender);
+      if ( $Move_Effectiveness['Mult'] > 0 )
+        $Does_Move_Crit = $this->DoesMoveCrit($Side);
+      else
+        $Does_Move_Crit = false;
+
+      $STAB = $this->CalculateSTAB($Side);
+
+      $Move_Class = new $this->Class_Name($this);
+      $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+
+      return [
+        'Type' => 'Success',
+        'Text' =>
+          ($Attacker_Can_Move['Type'] == 'Success' ? "{$Attacker_Can_Move['Text']}" : '') .
+          ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
+          "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Handle_Move['Damage']) . "</b> damage to {$Defender->Display_Name}." .
+          (isset($Handle_Move['Text']) ? "<br />{$Handle_Move['Text']}" : '') .
+          ($Handle_Move['Healing'] > 0 ? "<br />{$Attacker->Display_Name} healed for {$Handle_Move['Healing']} HP!" : '') .
+          ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
+          ($Does_Move_Crit ? '<br />It critically hit!' : ''),
+        'Damage' => $Handle_Move['Damage'],
+        'Heal' => $Handle_Move['Healing'],
+      ];
+    }
+
+    /**
      * Determines whether or not the user can move.
      */
     public function CanUserMove
@@ -320,6 +400,7 @@
             return true;
           else
             return false;
+
           break;
       }
 
