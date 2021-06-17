@@ -546,6 +546,7 @@
     /**
      * Calculates how much damage the move will do.
      */
+    /*
     public function CalcDamage
     (
       $Side,
@@ -582,14 +583,14 @@
         case 'Rain':
           if ( $this->Move_Type == 'Water' )
             $Weather_Mult = 1.5;
-          else if ( $this->Move_type == 'Fire' )
+          else if ( $this->Move_Type == 'Fire' )
             $Weather_Mult = 0.5;
           break;
 
         case 'Harsh Sunlight':
           if ( $this->Move_Type == 'Fire' )
             $Weather_Mult = 1.5;
-          else if ( $this->Move_type == 'Water' )
+          else if ( $this->Move_Type == 'Water' )
             $Weather_Mult = 0.5;
           break;
       }
@@ -608,6 +609,7 @@
 
       return $Damage;
     }
+    */
 
     /**
      * Calculates how much healing the move will do.
