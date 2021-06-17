@@ -342,7 +342,7 @@
         if ( !in_array($this->Name, ['Gust', 'Thunder', 'Twister', 'Sky Uppercut', 'Hurricane', 'Smack Down']) )
           return false;
 
-      $Accuracy_Mod = $Attacker->Accuracy / $Defender->Evasion;
+      $Accuracy_Mod = $Attacker->Stats['Current']['Accuracy'] / $Defender->Stats['Current']['Evasion'];
 
       if ( mt_rand(1, 100) < $this->Accuracy * $Accuracy_Mod )
         return true;
