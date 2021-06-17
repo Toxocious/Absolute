@@ -119,6 +119,143 @@
       $this->Evasion_Boost = $Move_Data['Evasion_Boost'];
 
       return $this;
+
+    /**
+     * Determines whether or not the user can move.
+     */
+    public function CanUserMove
+    (
+      string $Side
+    )
+    {
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      if ( $Attacker->HasStatus('Charging') )
+      {
+        $Attacker->RemoveStatus('Charging');
+
+        return [
+          'Type' => 'Error',
+          'Text' => ''
+        ];;
+      }
+
+      if ( $Attacker->HasStatus('Freeze') )
+      {
+        if
+        (
+          in_array($this->Name, ['Fusion Flare', 'Flame Wheel', 'Sacred Fire', 'Flare Blitz', 'Scald']) ||
+          $this->Weather == 'Sunlight'
+        )
+        {
+          $Attacker->RemoveStatus('Freeze');
+
+          return [
+            'Type' => 'Success',
+            'Text' => "{$Attacker->Display_Name} has thawed out.<br />",
+          ];
+        }
+
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} is frozen.<br />",
+        ];
+      }
+
+      if ( $Attacker->HasStatus('Paralysis') )
+      {
+        if ( mt_rand(1, 5) !== 1 )
+        {
+          return [
+            'Type' => 'Success',
+            'Text' => "{$Attacker->Display_Name} is no longer paralyzed.<br />",
+          ];
+        }
+
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} is completely paralyzed.<br />",
+        ];
+      }
+
+      if ( $Attacker->HasStatus('Sleep') )
+      {
+        if ( $this->Name == 'Snore' )
+        {
+          return [
+            'Type' => 'Success',
+            'Text' => '',
+          ];
+        }
+
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} is sound asleep.<br />",
+        ];
+      }
+
+      if ( $Attacker->HasStatus('Recharging') )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} is recharging.<br />",
+        ];
+      }
+
+      if ( $Attacker->HasStatus('Flinch') )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} was flinched.<br />",
+        ];
+      }
+
+      if ( $Attacker->HasStatus('Confusion') )
+      {
+        if ( mt_rand(1, 3) !== 1 )
+        {
+          return [
+            'Type' => 'Success',
+            'Text' => '',
+          ];
+        }
+
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} hurt itself in confusion.<br />",
+        ];
+      }
+
+      if ( $Attacker->HasStatus('Infatuation') )
+      {
+        if ( mt_rand(1, 2) !== 1 )
+        {
+          return [
+            'Type' => 'Success',
+            'Text' => '',
+          ];
+        }
+
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} is immobilized by love.<br />",
+        ];
+      }
+
+      return [
+        'Type' => 'Success',
+        'Text' => ''
+      ];
     }
 
     /**
