@@ -199,6 +199,48 @@
     }
 
     /**
+     * Generic move handler for moves that do not have, or not require, a stand-alone class.
+     */
+    public function HandleMove
+    (
+      string $Side,
+      int $STAB,
+      bool $Does_Move_Crit,
+      float $Move_Effectiveness
+    )
+    {
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      if ( $this->Min_Hits == 'None' )
+        $this->Min_Hits = 1;
+
+      if ( $this->Max_Hits == 'None' )
+        $this->Max_Hits = 1;
+
+      $Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
+
+      $Damage = 0;
+      for ( $Hits = 0; $Hits < $Total_Hits; $Hits++ )
+        $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
+
+      return [
+        'Text' => ($Total_Hits > 1 ? "It hit {$Total_Hits} times!" : ''),
+        'Damage' => $Damage,
+        'Healing' => 0,
+      ];
+    }
+
+    /**
      * Determines whether or not the user can move.
      */
     public function CanUserMove
