@@ -83,12 +83,13 @@
       float $Move_Effectiveness
     )
     {
+      $Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
       $Damage = 0;
-      for ( $Hits = 0; $Hits < 2; $Hits++ )
+      for ( $Hits = 0; $Hits < $Total_Hits; $Hits++ )
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       return [
-        'Text' => 'It hit two times!',
+        'Text' => "It hit {$Total_Hits} times!",
         'Damage' => $Damage,
         'Healing' => 0,
       ];
