@@ -407,7 +407,7 @@
       if ( $this->Effect_Short == 'Causes a one-hit KO.' )
         if ( $Attacker->Level < $Defender->Level )
           return false;
-        else if ( $Attacker->Stats['Speed'] < $Defender->Stats['Speed'] )
+        else if ( $Attacker->Stats['Current']['Speed'] < $Defender->Stats['Current']['Speed'] )
           return false;
         else if ( $Attacker->HasStatusFromArray(['No Guard', 'Lock-On']) )
           return true;
