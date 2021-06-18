@@ -392,12 +392,6 @@
       if ( $this->Accuracy === 'None' )
         return true;
 
-      if ( $this->Effect_Short == 'Causes a one-hit KO.' )
-        if ( mt_rand(1, 100) < 30 )
-          return true;
-        else
-          return false;
-
       switch ( $Side )
       {
         case 'Ally':
