@@ -95,7 +95,7 @@
 
       if ( mt_rand(1, 10) === 1 )
       {
-        $Defender->SetStatus('Burn');
+        $Defender->SetStatus($this->Ailment);
         $Text = "{$Defender->Display_Name} has been burnt!";
       }
 

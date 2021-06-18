@@ -95,7 +95,7 @@
 
       if ( mt_rand(1, 10) === 1 )
       {
-        $Defender->SetStatus('Freeze');
+        $Defender->SetStatus($this->Ailment);
         $Text = "{$Defender->Display_Name} has frozen!";
       }
 
