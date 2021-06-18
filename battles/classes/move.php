@@ -129,16 +129,6 @@
       string $Side
     )
     {
-      if ( !class_exists($this->Class_Name) )
-      {
-        return [
-          'Type' => 'Error',
-          'Text' => "{$this->Class_Name} has not yet been programmed.",
-          'Damage' => 0,
-          'Heal' => 0
-        ];
-      }
-
       switch ( $Side )
       {
         case 'Ally':
@@ -183,8 +173,15 @@
 
       $STAB = $this->CalculateSTAB($Side);
 
-      $Move_Class = new $this->Class_Name($this);
-      $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+      if ( !class_exists($this->Class_Name) )
+      {
+        $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+      }
+      else
+      {
+        $Move_Class = new $this->Class_Name($this);
+        $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+      }
 
       return [
         'Type' => 'Success',
