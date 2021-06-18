@@ -210,6 +210,11 @@
           'Max_Turns' => 1,
           'Volatile' => true
         ],
+        'Semi-Invulnerability' => [
+          'Min_Turns' => 1,
+          'Max_Turns' => 5,
+          'Volatile' => true
+        ],
         'Substitute' => [
           'Min_Turns' => 1,
           'Max_Turns' => -1,
