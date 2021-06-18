@@ -94,11 +94,15 @@
       }
 
       if ( mt_rand(1, 10) === 1 )
+      {
         $Defender->SetStatus('Freeze');
+        $Text = "{$Defender->Display_Name} has frozen!";
+      }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       return [
+        'Text' => (isset($Text) ? $Text : ''),
         'Damage' => $Damage,
         'Healing' => 0,
       ];
