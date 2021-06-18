@@ -155,8 +155,14 @@
         ];
       }
 
-      if ( $this->HasStatus('Move Locked') )
+      if
+      (
+        $this->HasStatus('Move Locked') ||
+        $this->HasStatus('Charging')
+      )
+      {
         return $this->Moves[$this->Last_Move]->ProcessAttack($this->Side);
+      }
       else
         return $this->Moves[$Move->Slot]->ProcessAttack($this->Side);
     }
