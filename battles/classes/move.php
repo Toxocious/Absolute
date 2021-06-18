@@ -163,8 +163,6 @@
         ];
       }
 
-      $Attacker->Last_Move = $this->Slot;
-
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
       if ( $Move_Effectiveness['Mult'] > 0 )
         $Does_Move_Crit = $this->DoesMoveCrit($Side);
@@ -173,26 +171,21 @@
 
       $STAB = $this->CalculateSTAB($Side);
 
-      if ( !class_exists($this->Class_Name) )
-      {
-        $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
-      }
-      else
+      if ( class_exists($this->Class_Name) )
       {
         $Move_Class = new $this->Class_Name($this);
         $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
       }
+      else
+      {
+        $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+      }
+
+      $Attacker->Last_Move = $this->Slot;
 
       return [
         'Type' => 'Success',
-        'Text' =>
-          ($Attacker_Can_Move['Type'] == 'Success' ? "{$Attacker_Can_Move['Text']}" : '') .
-          ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
-          "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Handle_Move['Damage']) . "</b> damage to {$Defender->Display_Name}." .
-          (isset($Handle_Move['Text']) ? "<br />{$Handle_Move['Text']}" : '') .
-          ($Handle_Move['Healing'] > 0 ? "<br />{$Attacker->Display_Name} healed for {$Handle_Move['Healing']} HP!" : '') .
-          ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
-          ($Does_Move_Crit ? '<br />It critically hit!' : ''),
+        'Text' => $Handle_Move['Text'],
         'Damage' => $Handle_Move['Damage'],
         'Heal' => $Handle_Move['Healing'],
       ];
