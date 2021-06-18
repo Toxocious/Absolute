@@ -71,7 +71,7 @@
         ],
         'Freeze' => [
           'Min_Turns' => 1,
-          'Max_Turns' => -1,
+          'Max_Turns' => 5,
           'Volatile' => false
         ],
         'Sleep' => [
