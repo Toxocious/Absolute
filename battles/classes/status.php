@@ -165,6 +165,11 @@
           'Max_Turns' => 5,
           'Volatile' => true
         ],
+        'Lock-On' => [
+          'Min_Turns' => 1,
+          'Max_Turns' => 5,
+          'Volatile' => true
+        ],
         'Magic Coat' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
