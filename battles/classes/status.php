@@ -195,6 +195,11 @@
           'Max_Turns' => -1,
           'Volatile' => true
         ],
+        'No Guard' => [
+          'Min_Turns' => 1,
+          'Max_Turns' => 5,
+          'Volatile' => true
+        ],
         'Perish Song' => [
           'Min_Turns' => 3,
           'Max_Turns' => 3,
