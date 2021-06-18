@@ -209,18 +209,6 @@
       float $Move_Effectiveness
     )
     {
-      switch ( $Side )
-      {
-        case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']['Active'];
-          $Defender = $_SESSION['Battle']['Foe']['Active'];
-          break;
-        case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']['Active'];
-          $Defender = $_SESSION['Battle']['Ally']['Active'];
-          break;
-      }
-
       if ( $this->Min_Hits == 'None' )
         $this->Min_Hits = 1;
 
@@ -416,7 +404,14 @@
         else if ( $Attacker->Level > $Defender->Level + 70 )
           return true;
         else
-          return mt_rand(1, ($Attacker->Level - $Defender->Level + 30)) === 1;
+        {
+          $Level_Diff = 30;
+          if ( $this->Name == 'Sheer Cold' )
+            if ( $Attacker->Primary_Type != 'Ice' || $Attacker->Secondary_Type != 'Ice' )
+              $Level_Diff = 20;
+
+          return mt_rand(1, ($Attacker->Level - $Defender->Level + $Level_Diff)) === 1;
+        }
 
       switch ($this->Name)
       {
