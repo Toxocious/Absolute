@@ -98,7 +98,8 @@
       $_SESSION['Battle']['Pay_Day'] += $Damage;
 
       return [
-        'Text' => "{$Attacker->Display_Name} has scattered some coins onto the field.",
+        'Text' => '',
+        'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => $Damage,
         'Healing' => 0,
       ];

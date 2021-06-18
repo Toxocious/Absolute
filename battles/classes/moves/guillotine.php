@@ -89,7 +89,8 @@
       $Damage = $Defender->HP;
 
       return [
-        'Text' => 'It was a one-hit knock-out!',
+        'Text' => '',
+        'Effect_Text' => 'It was a one-hit knock-out!',
         'Damage' => $Damage,
         'Healing' => 0,
       ];

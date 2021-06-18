@@ -102,7 +102,8 @@
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       return [
-        'Text' => (isset($Text) ? $Text : ''),
+        'Text' => '',
+        'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => $Damage,
         'Healing' => 0,
       ];

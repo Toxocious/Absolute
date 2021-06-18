@@ -96,13 +96,14 @@
       if ( mt_rand(1, 10) === 1 )
       {
         $Defender->SetStatus($this->Ailment);
-        $Text = "{$Defender->Display_Name} has been frozen!";
+        $Effect_Text = "{$Defender->Display_Name} has been frozen!";
       }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       return [
-        'Text' => (isset($Text) ? $Text : ''),
+        'Text' => '',
+        'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => $Damage,
         'Healing' => 0,
       ];
