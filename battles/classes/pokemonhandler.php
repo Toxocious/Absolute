@@ -406,6 +406,9 @@
       array $Checking_For_Statuses
     )
     {
+      if ( !$this->Statuses )
+        return false;
+
       foreach ( $this->Statuses as $Status => $Status_Data )
         if ( in_array($Status, $Checking_For_Statuses) )
           return true;
