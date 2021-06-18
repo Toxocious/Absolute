@@ -410,6 +410,20 @@
           break;
       }
 
+      if ( $this->Effect_Short == 'Causes a one-hit KO.' )
+        if ( $Attacker->Level < $Defender->Level )
+          return false;
+        else if ( $Attacker->Stats['Speed'] < $Defender->Stats['Speed'] )
+          return false;
+        else if ( $Attacker->HasStatusFromArray(['No Guard', 'Lock-On']) )
+          return true;
+        else if ( $Defender->HasStatus('Semi-Invulnerable') )
+          return false;
+        else if ( $Attacker->Level > $Defender->Level + 70 )
+          return true;
+        else
+          return mt_rand(1, ($Attacker->Level - $Defender->Level + 30)) === 1;
+
       switch ($this->Name)
       {
         case 'Flying Press':
