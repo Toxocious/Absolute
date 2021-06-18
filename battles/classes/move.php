@@ -240,22 +240,10 @@
       {
         case 'Ally':
           $Attacker = $_SESSION['Battle']['Ally']['Active'];
-          $Defender = $_SESSION['Battle']['Foe']['Active'];
           break;
         case 'Foe':
           $Attacker = $_SESSION['Battle']['Foe']['Active'];
-          $Defender = $_SESSION['Battle']['Ally']['Active'];
           break;
-      }
-
-      if ( $Attacker->HasStatus('Charging') )
-      {
-        $Attacker->RemoveStatus('Charging');
-
-        return [
-          'Type' => 'Error',
-          'Text' => ''
-        ];;
       }
 
       if ( $Attacker->HasStatus('Freeze') )
@@ -307,7 +295,7 @@
         }
 
         return [
-          'Type' => 'Success',
+          'Type' => 'Error',
           'Text' => "{$Attacker->Display_Name} is sound asleep.<br />",
         ];
       }
@@ -333,15 +321,10 @@
         if ( mt_rand(1, 3) !== 1 )
         {
           return [
-            'Type' => 'Success',
-            'Text' => '',
+            'Type' => 'Error',
+            'Text' => "{$Attacker->Display_Name} hurt itself in confusion.<br />",
           ];
         }
-
-        return [
-          'Type' => 'Error',
-          'Text' => "{$Attacker->Display_Name} hurt itself in confusion.<br />",
-        ];
       }
 
       if ( $Attacker->HasStatus('Infatuation') )
@@ -349,15 +332,10 @@
         if ( mt_rand(1, 2) !== 1 )
         {
           return [
-            'Type' => 'Success',
-            'Text' => '',
+            'Type' => 'Error',
+            'Text' => "{$Attacker->Display_Name} is immobilized by love.<br />",
           ];
         }
-
-        return [
-          'Type' => 'Error',
-          'Text' => "{$Attacker->Display_Name} is immobilized by love.<br />",
-        ];
       }
 
       return [
