@@ -202,6 +202,18 @@
       float $Move_Effectiveness
     )
     {
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
       if ( $this->Min_Hits == 'None' )
         $this->Min_Hits = 1;
 
@@ -214,8 +226,19 @@
       for ( $Hits = 0; $Hits < $Total_Hits; $Hits++ )
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
+      $Healing = 0;
+
+      $Text = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
+              ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
+              "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
+              ($Total_Hits > 1 ? "<br />It hit {$Total_Hits} times!" : '') .
+              ($Healing > 0 ? "<br />{$Attacker->Display_Name} healed for {$Healing} HP!" : '') .
+              ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
+              ($Does_Move_Crit ? '<br />It critically hit!' : '');
+
       return [
-        'Text' => ($Total_Hits > 1 ? "It hit {$Total_Hits} times!" : ''),
+        'Text' => $Text,
+        'Effect_Text' => '',
         'Damage' => $Damage,
         'Healing' => 0,
       ];
