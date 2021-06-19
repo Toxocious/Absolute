@@ -186,8 +186,8 @@
       return [
         'Type' => 'Success',
         'Text' => $Handle_Move['Text'],
-        'Damage' => $Handle_Move['Damage'],
-        'Heal' => $Handle_Move['Healing'],
+        'Damage' => (isset($Handle_Move['Damage']) && $Handle_Move['Damage'] > 0 ? $Handle_Move['Damage'] : 0),
+        'Heal' => (isset($Handle_Move['Healing']) && $Handle_Move['Healing'] > 0 ? $Handle_Move['Healing'] : 0),
       ];
     }
 
