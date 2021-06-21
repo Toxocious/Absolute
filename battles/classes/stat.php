@@ -15,7 +15,7 @@
       $this->Stat_Name = $Stat_Name;
       $this->Base_Value = $Base_Value;
       $this->Current_Value = $Base_Value;
-      $this->Modifier = 1;
+      $this->Stage = 0;
     }
 
     public function SetValue()
@@ -45,11 +45,14 @@
     )
     {
       $this->Stage += $Stage;
+
+      if ( $this->Stage > 6 )
+        $this->Stage = 6;
     }
 
     public function ResetStat()
     {
       $this->Current_Value = $this->Base_Value;
-      $this->Modifier = 1;
+      $this->Stage = 0;
     }
   }
