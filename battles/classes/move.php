@@ -389,7 +389,7 @@
       if ( $this->Effect_Short == 'Causes a one-hit KO.' )
         if ( $Attacker->Level < $Defender->Level )
           return false;
-        else if ( $Attacker->Stats['Current']['Speed'] < $Defender->Stats['Current']['Speed'] )
+        else if ( $Attacker->Stats['Speed']->Current_Value < $Defender->Stats['Speed']->Current_Value )
           return false;
         else if ( $Attacker->HasStatusFromArray(['No Guard', 'Lock-On']) )
           return true;
@@ -460,7 +460,7 @@
         if ( !in_array($this->Name, ['Gust', 'Thunder', 'Twister', 'Sky Uppercut', 'Hurricane', 'Smack Down']) )
           return false;
 
-      $Accuracy_Mod = $Attacker->Stats['Current']['Accuracy'] / $Defender->Stats['Current']['Evasion'];
+      $Accuracy_Mod = $Attacker->Stats['Accuracy']->Current_Value / $Defender->Stats['Evasion']->Current_Value;
 
       if ( mt_rand(1, 100) < $this->Accuracy * $Accuracy_Mod )
         return true;
@@ -720,7 +720,7 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
-      $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Current']['Attack'] / $Defender->Stats['Current']['Defense'] / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+      $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Attack']->Current_Value / $Defender->Stats['Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
       if ( $Damage < 0 )
         $Damage = 0;
 
