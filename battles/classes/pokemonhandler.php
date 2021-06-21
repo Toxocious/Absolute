@@ -90,13 +90,13 @@
       $this->Owner_Original = $Pokemon['Owner_Original'];
       $this->Owner_Current = $Pokemon['Owner_Current'];
       $this->Stats = [
-        'Attack' => new Stat($Pokemon['Stats'][1]),
-        'Defense' => new Stat($Pokemon['Stats'][2]),
-        'Sp_Attack' => new Stat($Pokemon['Stats'][3]),
-        'Sp_Defense' => new Stat($Pokemon['Stats'][4]),
-        'Speed' => new Stat($Pokemon['Stats'][5]),
-        'Accuracy' => new Stat(100),
-        'Evasion' => new Stat(100),
+        'Attack' => new Stat('Attack', $Pokemon['Stats'][1]),
+        'Defense' => new Stat('Defense', $Pokemon['Stats'][2]),
+        'Sp_Attack' => new Stat('Sp_Attack', $Pokemon['Stats'][3]),
+        'Sp_Defense' => new Stat('Sp_Defense', $Pokemon['Stats'][4]),
+        'Speed' => new Stat('Speed', $Pokemon['Stats'][5]),
+        'Accuracy' => new Stat('Accuracy', 100),
+        'Evasion' => new Stat('Evasion', 100),
       ];
       $this->IVs = $Pokemon['IVs'];
       $this->EVs = $Pokemon['EVs'];
