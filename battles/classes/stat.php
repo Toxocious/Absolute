@@ -1,26 +1,43 @@
 <?php
   class Stat
   {
+    public $Stat_Name = null;
     public $Base_Value = null;
     public $Current_Value = null;
-    public $Modifier = null;
+    public $Stage = null;
 
     public function __construct
     (
+      string $Stat_Name,
       int $Base_Value
     )
     {
+      $this->Stat_Name = $Stat_Name;
       $this->Base_Value = $Base_Value;
       $this->Current_Value = $Base_Value;
       $this->Modifier = 1;
     }
 
-    public function SetModifier
+    public function CalcValue()
+    {
+      if ( in_array($this->Stat_Name, ['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed']) )
+        if ( $this->Stage >= 0 )
+          return ($this->Stage + 2) / 2;
+        else
+          return 2 / (($this->Stage * 1) + 2);
+      else
+        if ( $this->Stage >= 0 )
+          return ($this->Stage + 3) / 3;
+        else
+          return 3 / (($this->Stage * 1) + 3);
+    }
+
+    public function SetStage
     (
-      int $Modifier = 1
+      int $Stage = 1
     )
     {
-      $this->Current_Value *= $Modifier;
+      $this->Stage += $Stage;
     }
 
     public function ResetStat()
