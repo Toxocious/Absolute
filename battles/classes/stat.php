@@ -18,7 +18,14 @@
       $this->Modifier = 1;
     }
 
-    public function CalcValue()
+    public function SetValue()
+    {
+      $Modifier = $this->CalcModifier();
+
+      $this->Current_Value *= $Modifier;
+    }
+
+    public function CalcModifier()
     {
       if ( in_array($this->Stat_Name, ['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed']) )
         if ( $this->Stage >= 0 )
