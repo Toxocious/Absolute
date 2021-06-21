@@ -99,8 +99,7 @@
         if ( $Attacker->Ability == 'Simple' )
           $Stages *= 2;
 
-        $Attacker->Stats['Attack']->SetStage($Stages);
-        $Attacker->Stats['Attack']->SetValue();
+        $Attacker->Stats['Attack']->SetValue($Stages);
 
         $Effect_Text = "{$Attacker->Display_Name}'s Attack rose sharply!";
       }

@@ -18,8 +18,12 @@
       $this->Stage = 0;
     }
 
-    public function SetValue()
+    public function SetValue
+    (
+      $Stage = 0
+    )
     {
+      $this->SetStage($Stage);
       $Modifier = $this->CalcModifier();
 
       $this->Current_Value *= $Modifier;
@@ -41,7 +45,7 @@
 
     public function SetStage
     (
-      int $Stage = 1
+      int $Stage = 0
     )
     {
       $this->Stage += $Stage;
