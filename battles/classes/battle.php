@@ -125,6 +125,7 @@
         'Text' => 'The battle has been restarted.',
       ];
     }
+
     /**
      * Determine which Pokemon attacks first.
      * Determined by Move Priority, then Pokemon Speed, and if tied, randomly chosen.
@@ -189,9 +190,9 @@
 
       if ( $Move_Data['Ally']['Priority'] == 0 && $Move_Data['Foe']['Priority'] == 0 )
       {
-        if ( $Ally->Stats['Current']['Speed'] > $Foe->Stats['Current']['Speed'] )
+        if ( $Ally->Stats['Speed']->Current_Value > $Foe->Stats['Speed']->Current_Value )
           return 'Ally';
-        else if ( $Ally->Stats['Current']['Speed'] < $Foe->Stats['Current']['Speed'] )
+        else if ( $Ally->Stats['Speed']->Current_Value < $Foe->Stats['Speed']->Current_Value )
           return 'Foe';
         else
           return mt_rand(1, 2) === 1 ? 'Ally' : 'Foe';
@@ -200,9 +201,9 @@
       {
         if ( $Move_Data['Ally']['Priority'] == $Move_Data['Foe']['Priority'] )
         {
-          if ( $Ally->Stats['Current']['Speed'] > $Foe->Stats['Current']['Speed'] )
+          if ( $Ally->Stats['Speed']->Current_Value > $Foe->Stats['Speed']->Current_Value )
             return 'Ally';
-          else if ( $Ally->Stats['Current']['Speed'] < $Foe->Stats['Current']['Speed'] )
+          else if ( $Ally->Stats['Speed']->Current_Value < $Foe->Stats['Speed']->Current_Value )
             return 'Foe';
           else
             return mt_rand(1, 2) === 1 ? 'Ally' : 'Foe';
