@@ -142,13 +142,115 @@
           }
 
           break;
+
+        case 'Attack':
+          if ( !isset($_GET['Move']) )
+          {
+            return [
+              'Type' => 'Error',
+              'Text' => 'There was an error when processing your selected move.'
+            ];
+          }
+
+          if
+          (
+            $Ally_Active->HP == 0 ||
+            $Foe_Active->HP == 0
+          )
+          {
+            return [
+              'Type' => 'Error',
+              'Text' => 'Moves may not be used while an active Pok&eacute;mon is fainted.'
+            ];
+          }
+
+          $Move_Slot = Purify($_GET['Move']) - 1;
+
+          $this->Ally_Move = $Ally_Active->Moves[$Move_Slot];
+          $this->Foe_Move = $Foe_Active->FetchRandomMove();
+
+          $First_Attacker = $this->DetermineFirstAttacker($this->Ally_Move, $this->Foe_Move);
+
+          switch ( $First_Attacker )
+          {
+            case 'Ally':
+              $Ally_Attack = $Ally_Active->Attack($this->Ally_Move);
+
+              $this->Turn_Dialogue['Text'] .= $Ally_Attack['Text'];
+              $this->Turn_Dialogue['Text'] .= '<br /><br />';
+
+              $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
+
+              if ( $Foe_Active->HP > 0 )
+              {
+                $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+
+                $this->Turn_Dialogue['Text'] .= $Foe_Attack['Text'];
+
+                $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
+
+                if ( $Ally_Active->HP <= 0 )
+                {
+                  $this->Turn_Dialogue['Text'] .= '<br /><br />';
+                  $this->Turn_Dialogue['Text'] .= "{$Ally_Active->Display_Name} has fainted.";
+                }
+              }
+              else
+              {
+                $this->Turn_Dialogue['Text'] .= "{$Foe_Active->Display_Name} has fainted.";
+                $this->Turn_Dialogue['Text'] .= '<br /><br />';
+                $this->Turn_Dialogue['Text'] .= $Ally_Active->IncreaseExp()['Text'];
+              }
+              break;
+
+            case 'Foe':
+              $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+
+              $this->Turn_Dialogue['Text'] .= $Foe_Attack['Text'];
+              $this->Turn_Dialogue['Text'] .= '<br /><br />';
+
+              $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
+
+              if ( $Ally_Active->HP > 0 )
+              {
+                $Ally_Attack = $Ally_Active->Attack($this->Ally_Move);
+
+                $this->Turn_Dialogue['Text'] .= $Ally_Attack['Text'];
+
+                $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
+
+                if ( $Foe_Active->HP <= 0 )
+                {
+                  $this->Turn_Dialogue['Text'] .= '<br /><br />';
+                  $this->Turn_Dialogue['Text'] .= "{$Foe_Active->Display_Name} has fainted.";
+                }
+              }
+              else
+              {
+                $this->Turn_Dialogue['Text'] .= "{$Ally_Active->Display_Name} has fainted.";
+                $this->Turn_Dialogue['Text'] .= '<br /><br />';
+                $this->Turn_Dialogue['Text'] .= $Ally_Active->IncreaseExp()['Text'];
+              }
+              break;
+          }
+
           break;
 
         default:
+          return [
+            'Type' => 'Error',
+            'Text' => "Attempting to process action of {$Action}.",
+          ];
           break;
       }
 
-      return $Output['Message'];
+      /**
+       * If either side's Pokemon has fainted, determine whether or
+       * not the battle should prompt the user to continue or to restart.
+       */
+
+      return $this->Turn_Dialogue;
+    }
 
     /**
      * Sets the battle state up to be continued.
