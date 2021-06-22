@@ -57,7 +57,7 @@
                 </div>
               </div>
             </div>
-            <div class='flex' style='flex-basis: 100%; margin: 5px 10px;'>
+            <div class='flex' style='flex-basis: 100%; justify-content: center; margin: 5px 10px;'>
               <div style='flex-basis: 120px; margin-right: 5px; width: 120px;'>
                 <table class='border-gradient' style='width: 120px;'>
                   <tbody>
@@ -139,7 +139,7 @@
                 </div>
               </div>
             </div>
-            <div class='flex' style='flex-basis: 100%; margin: 5px 10px;'>
+            <div class='flex' style='flex-basis: 100%; justify-content: center; margin: 5px 10px;'>
               <div style='flex-basis: 160px; width: 160px;'>
                 <div class='border-gradient' style='margin-bottom: 5px; width: 158px;'>
                   <div slot='Foe_Name' style='font-size: 12px;'>
