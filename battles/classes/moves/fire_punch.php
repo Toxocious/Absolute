@@ -168,7 +168,21 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
-      $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats->Attack->Current_Value / $Defender->Stats->Defense->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+
+      switch ($this->Damage_Type)
+      {
+        case 'Physical':
+          $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Attack']->Current_Value / $Defender->Stats['Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+          break;
+
+        case 'Special':
+          $Damage = $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['SpAttack']->Current_Value / $Defender->Stats['SpDefense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+          break;
+
+        default:
+          $Damage = 0;
+      }
+
       if ( $Damage < 0 )
         $Damage = 0;
 
