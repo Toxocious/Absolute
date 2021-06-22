@@ -83,6 +83,12 @@
 
       switch ($Action)
       {
+        /**
+         * On switch out, a check for abilities, moves, etc. that prevent
+         * the Ally's active Pokemon from switching out needs to be done.
+         *  - Abilities :: Arena Trap, etc
+         *  - Moves :: Mean Look, etc
+         */
         case 'Switch':
           $Slot = Purify($_GET['Slot']) - 1;
           if ( $Slot < 0 || $Slot > 5 )
@@ -92,10 +98,53 @@
               'Text' => 'You may not switch into an invalid Pok&eacute;mon.'
             ];
           }
+
+          $this->Foe_Move = $Foe_Active->FetchRandomMove();
+
+          /**
+           * Checking to see if the selected move is Pursuit.
+           */
+          if
+          (
+            $this->Foe_Move->Name == 'Pursuit'
+          )
+          {
+            if
+            (
+              $Foe_Active->HP > 0 &&
+              $Ally_Active->HP > 0
+            )
+            {
+              $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+              $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
+
+              $this->Turn_Dialogue['Text'] .= $Foe_Attack['Text'];
+              $this->Turn_Dialogue['Text'] .= '<br /><br />';
+            }
+
+            $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+            $this->Turn_Dialogue['Text'] .= $Perform_Switch['Text'];
+          }
           else
           {
-            $Output['Message'] = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+            $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+            $this->Turn_Dialogue['Text'] .= $Perform_Switch['Text'];
+
+            if
+            (
+              $Foe_Active->HP > 0 &&
+              $Ally_Active->HP > 0
+            )
+            {
+              $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+              $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
+
+              $this->Turn_Dialogue['Text'] .= '<br /><br />';
+              $this->Turn_Dialogue['Text'] .= $Foe_Attack['Text'];
+            }
           }
+
+          break;
           break;
 
         default:
