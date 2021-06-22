@@ -69,18 +69,15 @@
         ];
       }
 
+      $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
+      $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
 
       $_SESSION['Battle']['Turn_ID']++;
       $this->Turn_ID = $_SESSION['Battle']['Turn_ID'];
-      /**
-       * Set the used moves now, and determine who will attack first.
-       * Done now, so that we can process pre-move conditions:
-       *  abilities
-       *  pre-move effects
-       */
-      $this->Ally_Move = $Move ? $Move : null;
-      $this->Foe_Move = $_SESSION['Battle']['Foe']['Active']->FetchRandomMove();
 
+      /**
+       * Process the requested action.
+       */
       switch ($Action)
       {
         /**
