@@ -186,7 +186,7 @@
       return [
         'Type' => 'Success',
         'Text' => $Handle_Move['Text'] .
-                  ($Handle_Move['Effect_Text'] != '' ? "<br />{$Handle_Move['Effect_Text']}" : ''),
+                  (isset($Handle_Move['Effect_Text']) && $Handle_Move['Effect_Text'] != '' ? "<br />{$Handle_Move['Effect_Text']}" : ''),
         'Damage' => (isset($Handle_Move['Damage']) && $Handle_Move['Damage'] > 0 ? $Handle_Move['Damage'] : 0),
         'Heal' => (isset($Handle_Move['Healing']) && $Handle_Move['Healing'] > 0 ? $Handle_Move['Healing'] : 0),
       ];
