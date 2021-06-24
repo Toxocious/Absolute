@@ -102,7 +102,11 @@
       {
         $Effect_Text = 'It had no effect.';
       }
-      else if ( $Turn_First_Attacker == 'Foe' )
+      else if
+      (
+        $Turn_First_Attacker == 'Foe' ||
+        $Defender->Ability == 'Magic Bounce'
+      )
       {
         $Random_Slot = mt_rand(1, count($_SESSION['Battle']['Ally']['Roster']));
         $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Random_Slot]->SwitchInto();
