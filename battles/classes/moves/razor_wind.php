@@ -105,14 +105,14 @@
           $Attacker->SetStatus('Charging');
 
           return [
-            'Text' => "{$Attacker->Display_Name} whipped up a whirlwind!<br />",
+            'Text' => "{$Attacker->Display_Name} whipped up a whirlwind!",
             'Damage' => 0,
             'Healing' => 0,
           ];
         }
         else
         {
-          $Effect_Text = "{$Attacker->Display_Name} whipped up a whirlwind!<br />";
+          $Effect_Text = "{$Attacker->Display_Name} whipped up a whirlwind!";
         }
       }
 
