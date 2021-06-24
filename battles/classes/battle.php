@@ -81,6 +81,8 @@
       switch ($Action)
       {
         /**
+         * https://bulbapedia.bulbagarden.net/wiki/Recall
+         *
          * On switch out, a check for abilities, moves, etc. that prevent
          * the Ally's active Pokemon from switching out needs to be done.
          *  - Abilities :: Arena Trap, etc
@@ -170,6 +172,7 @@
           $this->Foe_Move = $Foe_Active->FetchRandomMove();
 
           $First_Attacker = $this->DetermineFirstAttacker($this->Ally_Move, $this->Foe_Move);
+          $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'] = $First_Attacker;
 
           switch ( $First_Attacker )
           {
