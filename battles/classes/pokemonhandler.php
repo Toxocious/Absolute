@@ -146,6 +146,14 @@
         ];
       }
 
+      if ( !$this->Can_Attack )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => ''
+        ]
+      }
+
       if
       (
         $this->HasStatus('Move Locked') ||
