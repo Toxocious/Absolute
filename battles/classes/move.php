@@ -154,19 +154,6 @@
         }
       }
 
-      if ( $Attacker->HasStatus('Taunt') )
-      {
-        if ( $this->Damage_Type == 'Status' )
-        {
-          return [
-            'Type' => 'Error',
-            'Text' => "{$Attacker->Display_Name} can't use {$this->Name} due to the Taunt.",
-            'Damage' => 0,
-            'Heal' => 0,
-          ];
-        }
-      }
-
       $Attacker_Can_Move = $this->CanUserMove($Side);
       if ( $Attacker_Can_Move['Type'] == 'Error' )
       {
