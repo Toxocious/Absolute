@@ -151,7 +151,7 @@
         return [
           'Type' => 'Error',
           'Text' => ''
-        ]
+        ];
       }
 
       if
