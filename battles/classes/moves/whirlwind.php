@@ -104,7 +104,7 @@
       }
       else if
       (
-        $Turn_First_Attacker == 'Foe' ||
+        $Turn_First_Attacker != $Side ||
         $Defender->Ability == 'Magic Bounce'
       )
       {
