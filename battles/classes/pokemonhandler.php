@@ -34,6 +34,8 @@
 
     public $Last_Move = null;
 
+    public $Can_Attack = true;
+
     public $Sprite = null;
     public $Icon = null;
 
@@ -328,6 +330,17 @@
       $Fetch_Move = mt_rand(0, (count($this->Moves) - 1));
 
       return $this->Moves[$Fetch_Move];
+    }
+
+    /**
+     * Set whether or not the Pokemon may attack this turn.
+     */
+    public function SetCanAttack
+    (
+      bool $Can_Attack = true
+    )
+    {
+      $this->Can_Attack = $Can_Attack;
     }
 
     /**
