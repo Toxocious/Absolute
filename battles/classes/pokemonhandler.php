@@ -187,7 +187,7 @@
 
       return [
         'Type' => 'Success',
-        'Text' => "You have sent {$this->Display_Name} into battle!"
+        'Text' => "Has been sent {$this->Display_Name} into battle!"
       ];
     }
 
