@@ -86,9 +86,11 @@
       switch ( $Side )
       {
         case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
           $Defender = $_SESSION['Battle']['Foe']['Active'];
           break;
         case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
           $Defender = $_SESSION['Battle']['Ally']['Active'];
           break;
       }
@@ -102,7 +104,9 @@
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       return [
-        'Text' => '',
+        'Text' => "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
+                  ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
+                  ($Does_Move_Crit ? '<br />It critically hit!' : ''),
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => $Damage,
         'Healing' => 0,
