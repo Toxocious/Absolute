@@ -98,15 +98,19 @@
           break;
       }
 
-      if ( $Attacker->Item->Name == 'Grip Claw' )
-        $Defender->SetStatus('Bind', 7);
-      else
-        $Defender->SetStatus('Bind');
+      if ( !$Defender->HasStatus('Bind') )
+        if ( $Attacker->Item->Name == 'Grip Claw' )
+          $Defender->SetStatus('Bind', 7);
+        else
+          $Defender->SetStatus('Bind');
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       return [
-        'Text' => null,
+        'Text' => "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
+                  ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
+                  ($Does_Move_Crit ? '<br />It critically hit!' : ''),
+        'Effect_Text' => "{$Defender->Display_Name} was squeezed by {$Attacker->Display_Name}'s Bind!",
         'Damage' => $Damage,
         'Healing' => 0,
       ];
