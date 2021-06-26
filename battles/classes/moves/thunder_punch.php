@@ -96,7 +96,7 @@
       if ( mt_rand(1, 10) === 1 )
       {
         $Defender->SetStatus($this->Ailment);
-        $Text = "{$Defender->Display_Name} has been paralyzed!";
+        $Effect_Text = "{$Defender->Display_Name} has been paralyzed!";
       }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
