@@ -1,0 +1,194 @@
+<?php
+  use BattleHandler\Battle;
+
+  class Bind extends Battle
+  {
+    public $Name = null;
+    public $Accuracy = null;
+    public $Power = null;
+    public $Priority = null;
+    public $Max_PP = null;
+    public $Current_PP = null;
+    public $Damage_Type = null;
+    public $Move_Type = null;
+
+    public $Flinch_Chance = null;
+    public $Crit_Chance = null;
+    public $Effect_Chance = null;
+    public $Effect_Short = null;
+    public $Ailment = null;
+    public $Ailment_Chance = null;
+    public $Drain = null;
+    public $Healing = null;
+    public $Max_Hits = null;
+    public $Max_Turns = null;
+    public $Min_Hits = null;
+    public $Min_Turns = null;
+    public $Stat_Chance = null;
+
+    public $HP_Boost = null;
+    public $Attack_Boost = null;
+    public $Defense_Boost = null;
+    public $SpAttack_Boost = null;
+    public $SpDefense_Boost = null;
+    public $Speed_Boost = null;
+    public $Accuracy_Boost = null;
+    public $Evasion_Boost = null;
+
+    public $Class_Name = null;
+
+    public function __construct
+    (
+      Move $Move_Data
+    )
+    {
+      $this->Name = $Move_Data->Name;
+
+      $this->Accuracy = $Move_Data->Accuracy;
+      $this->Power = $Move_Data->Power;
+      $this->Priority = $Move_Data->Priority;
+      $this->Max_PP = $Move_Data->Max_PP;
+      $this->Current_PP = $Move_Data->Current_PP;
+      $this->Damage_Type = $Move_Data->Damage_Type;
+      $this->Move_Type = $Move_Data->Move_Type;
+
+      $this->Flinch_Chance = $Move_Data->Flinch_Chance;
+      $this->Crit_Chance = $Move_Data->Crit_Chance;
+      $this->Effect_Chance = $Move_Data->Effect_Chance;
+      $this->Effect_Short = $Move_Data->Effect_Short;
+      $this->Ailment = $Move_Data->Ailment;
+      $this->Ailment_Chance = $Move_Data->Ailment_Chance;
+      $this->Drain = $Move_Data->Drain;
+      $this->Healing = $Move_Data->Healing;
+      $this->Max_Hits = $Move_Data->Max_Hits;
+      $this->Max_Turns = $Move_Data->Max_Turns;
+      $this->Min_Hits = $Move_Data->Min_Hits;
+      $this->Min_Turns = $Move_Data->Min_Turns;
+      $this->Stat_Chance = $Move_Data->Stat_Chance;
+
+      $this->HP_Boost = $Move_Data->HP_Boost;
+      $this->Attack_Boost = $Move_Data->Attack_Boost;
+      $this->Defense_Boost = $Move_Data->Defense_Boost;
+      $this->SpAttack_Boost = $Move_Data->SpAttack_Boost;
+      $this->SpDefense_Boost = $Move_Data->SpDefense_Boost;
+      $this->Speed_Boost = $Move_Data->Speed_Boost;
+      $this->Accuracy_Boost = $Move_Data->Accuracy_Boost;
+      $this->Evasion_Boost = $Move_Data->Evasion_Boost;
+
+      $this->Class_Name = $Move_Data->Class_Name;
+    }
+
+    public function ProcessMove
+    (
+      string $Side,
+      int $STAB,
+      bool $Does_Move_Crit,
+      float $Move_Effectiveness
+    )
+    {
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      if ( $Attacker->Item->Name == 'Grip Claw' )
+        $Defender->SetStatus('Bind', 7);
+      else
+        $Defender->SetStatus('Bind');
+
+      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
+
+      return [
+        'Text' => null,
+        'Damage' => $Damage,
+        'Healing' => 0,
+      ];
+    }
+
+    /**
+     * Calculates how much damage the move will do.
+     */
+    public function CalcDamage
+    (
+      $Side,
+      $STAB,
+      $Crit,
+      $Move_Effectiveness
+    )
+    {
+      if ( !isset($STAB) || !isset($Crit) || !isset($Move_Effectiveness) )
+        return -1;
+
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      $Crit_Mult = 1;
+      if ( $Crit )
+        if ( $Attacker->Ability == 'Sniper' )
+          $Crit_Mult = 2.25;
+        else
+          $Crit_Mult = 1.5;
+
+      $Weather_Mult = 1;
+      switch ( $this->Weather )
+      {
+        case 'Rain':
+          if ( $this->Move_Type == 'Water' )
+            $Weather_Mult = 1.5;
+          else if ( $this->Move_Type == 'Fire' )
+            $Weather_Mult = 0.5;
+          break;
+
+        case 'Harsh Sunlight':
+          if ( $this->Move_Type == 'Fire' )
+            $Weather_Mult = 1.5;
+          else if ( $this->Move_Type == 'Water' )
+            $Weather_Mult = 0.5;
+          break;
+      }
+
+      $Status_Mult = 1;
+      if ( $Attacker->Ability == 'Guts' )
+        if ( $Attacker->HasStatusFromArray(['Burn', 'Freeze', 'Paralyze', 'Poison', 'Sleep']) )
+          $Status_Mult = 1.5;
+      else
+        if ( $Attacker->HasStatus('Burn') )
+          $Status_Mult = 0.5;
+
+
+      switch ($this->Damage_Type)
+      {
+        case 'Physical':
+          $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Attack']->Current_Value / $Defender->Stats['Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+          break;
+
+        case 'Special':
+          $Damage = $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Sp_Attack']->Current_Value / $Defender->Stats['Sp_Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+          break;
+
+        default:
+          $Damage = 0;
+      }
+
+      if ( $Damage < 0 )
+        $Damage = 0;
+
+      return $Damage;
+    }
+  }
