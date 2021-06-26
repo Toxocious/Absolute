@@ -79,9 +79,11 @@
       switch ( $Side )
       {
         case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
           $Defender = $_SESSION['Battle']['Foe']['Active'];
           break;
         case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
           $Defender = $_SESSION['Battle']['Ally']['Active'];
           break;
       }
@@ -89,7 +91,7 @@
       $Damage = $Defender->HP;
 
       return [
-        'Text' => '',
+        'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
         'Effect_Text' => 'It was a one-hit knock-out!',
         'Damage' => $Damage,
         'Healing' => 0,
