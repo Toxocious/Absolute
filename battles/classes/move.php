@@ -23,6 +23,7 @@
     public $Current_PP = null;
     public $Damage_Type = null;
     public $Move_Type = null;
+    public $Contact = null;
 
     public $Flinch_Chance = null;
     public $Crit_Chance = null;
@@ -94,6 +95,7 @@
       $this->Current_PP = $Move_Data['PP'];
       $this->Damage_Type = $Move_Data['Damage_Type'];
       $this->Move_Type = $Move_Data['Move_Type'];
+      $this->Contact = $Move_Data['Contact'];
 
       $this->Flinch_Chance = $Move_Data['Flinch_Chance'];
       $this->Crit_Chance = $Move_Data['Crit_Chance'];
