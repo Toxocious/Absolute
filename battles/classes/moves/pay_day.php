@@ -3,6 +3,7 @@
 
   class Pay_Day extends Battle
   {
+    public $Name = null;
     public $Accuracy = null;
     public $Power = null;
     public $Priority = null;
@@ -41,6 +42,7 @@
       Move $Move_Data
     )
     {
+      $this->Name = $Move_Data->Name;
       $this->Accuracy = $Move_Data->Accuracy;
       $this->Power = $Move_Data->Power;
       $this->Priority = $Move_Data->Priority;
@@ -106,7 +108,7 @@
         'Text' => "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
                   ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
                   ($Does_Move_Crit ? '<br />It critically hit!' : ''),
-        'Effect_Text' => "{$Damage} coins have been scattered on the field.",
+        'Effect_Text' => number_format($Damage) . " coins have been scattered on the field.",
         'Damage' => $Damage,
         'Healing' => 0,
       ];
