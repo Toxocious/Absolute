@@ -576,6 +576,29 @@
     }
 
     /**
+     * Determine if the move makes physical contact.
+     */
+    public function DoesMoveMakeContact
+    (
+      string $Side
+    )
+    {
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      if ( $Defender->HasStatus('Substitute') )
+        return false;
+
+      return $this->Contact;
+    }
+    /**
      * Determine how effective the move was.
      */
     public function MoveEffectiveness
