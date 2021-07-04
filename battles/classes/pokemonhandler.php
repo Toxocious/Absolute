@@ -431,4 +431,21 @@
 
       return false;
     }
+
+    /**
+     * Determine if the Pokemon has a specified typing.
+     */
+    public function HasTyping
+    (
+      array $Typings
+    )
+    {
+      if ( in_array($this->Primary_Type, $Typings) )
+        return true;
+
+      if ( in_array($this->Secondary_Type, $Typings) )
+        return true;
+
+      return false;
+    }
   }
