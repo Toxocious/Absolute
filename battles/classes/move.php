@@ -38,6 +38,7 @@
     public $Min_Hits = null;
     public $Min_Turns = null;
     public $Stat_Chance = null;
+    public $Total_Hits = null;
 
     public $HP_Boost = null;
     public $Attack_Boost = null;
@@ -236,10 +237,10 @@
       if ( $this->Max_Hits == 'None' )
         $this->Max_Hits = 1;
 
-      $Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
+      $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
 
       $Damage = 0;
-      for ( $Hits = 0; $Hits < $Total_Hits; $Hits++ )
+      for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       $Healing = 0;
@@ -247,7 +248,7 @@
       $Text = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
               ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
               "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
-              ($Total_Hits > 1 ? "<br />It hit {$Total_Hits} times!" : '') .
+              ($this->Total_Hits > 1 ? "<br />It hit {$this->Total_Hits} times!" : '') .
               ($Healing > 0 ? "<br />{$Attacker->Display_Name} healed for {$Healing} HP!" : '') .
               ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
               ($Does_Move_Crit ? '<br />It critically hit!' : '');
