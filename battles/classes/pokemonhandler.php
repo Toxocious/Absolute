@@ -352,6 +352,20 @@
     }
 
     /**
+     * Set the Pokemon's Ability.
+     */
+    public function SetAbility
+    (
+      string $Ability
+    )
+    {
+      if ( $this->Ability == $Ability )
+        return false;
+
+      return $this->Ability = $Ability;
+    }
+
+    /**
      * Set a status on the Pokemon.
      */
     public function SetStatus
