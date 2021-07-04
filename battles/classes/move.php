@@ -231,6 +231,21 @@
           break;
       }
 
+      if ( $this->Contact )
+      {
+        $Handle_Contact = $this->HandleContact($Side);
+        if ( isset($Handle_Contact['Damage']) && $Handle_Contact['Damage'] == 0 )
+        {
+          return [
+            'Text' =>
+              ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
+              ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
+              "{$Attacker->Display_Name} used {$this->Name}." .
+              $Handle_Contact['Text'],
+          ];
+        }
+      }
+
       if ( $this->Min_Hits == 'None' )
         $this->Min_Hits = 1;
 
