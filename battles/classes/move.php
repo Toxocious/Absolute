@@ -266,7 +266,8 @@
               ($this->Total_Hits > 1 ? "<br />It hit {$this->Total_Hits} times!" : '') .
               ($Healing > 0 ? "<br />{$Attacker->Display_Name} healed for {$Healing} HP!" : '') .
               ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
-              ($Does_Move_Crit ? '<br />It critically hit!' : '');
+              ($Does_Move_Crit ? '<br />It critically hit!' : '') .
+              ($this->Contact ? $this->HandleContact($Side)['Text'] : '');
 
       return [
         'Text' => $Text,
