@@ -1,6 +1,7 @@
 <?php
   class HeldItem
   {
+    public $ID = null;
     public $Name = null;
     public $Effect = null;
     public $Description = null;
@@ -28,7 +29,8 @@
 
       if ( !$Item_Data )
         return false;
-      
+
+      $this->ID = $Item_Data['Item_ID'];
       $this->Name = $Item_Data['Item_Name'];
       $this->Description = $Item_Data['Item_Description'];
       $this->Effect = null;
