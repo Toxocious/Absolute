@@ -614,6 +614,364 @@
 
       return $this->Contact;
     }
+
+    /**
+    * Handle contact effects.
+    */
+    public function HandleContact
+    (
+      string $Side
+    )
+    {
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']['Active'];
+          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']['Active'];
+          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          break;
+      }
+
+      if ( $Defender->HasStatus('Protect') )
+      {
+        return [
+          'Text' => "{$Defender->Display_Name} was protected from the attack!",
+          'Damage' => 0,
+        ];
+      }
+
+      if ( $Defender->HasStatus('Substitute') )
+      {
+        return [
+          'Text' => "It hit {$Defender->Display_Name}'s Substitute!",
+        ];
+      }
+
+      if ( $Defender->Last_Move == 'Baneful Bunker' )
+      {
+        if
+        (
+          !$Attacker->HasTyping(['Poison', 'Steel']) ||
+          $Attacker->Ability != 'Immunity'
+        )
+        {
+          $Text = "<br />{$Attacker->Display_Name} was poisoned from the contact!";
+
+          if ( $Attacker->Item->Name != 'Protective Pads' )
+            $Attacker->SetStatus('Poison');
+        }
+
+        return [
+          'Text' => "{$Defender->Display_Name} was protected by it's Baneful Bunker!" .
+                    (isset($Text) ? $Text : ''),
+          'Damage' => 0
+        ];
+      }
+
+      if ( $Defender->Last_Move == 'Beak Blast')
+        if ( $Defender->HasStatus('Charging') )
+          if ( $Attacker->Item->Name != 'Protective Pads' )
+            $Attacker->SetStatus('Burn');
+
+      if ( $Defender->Last_Move == "King's Shield" )
+      {
+        if ( $this->Damage_Type != 'Status' )
+        {
+          if ( $Attacker->Item->Name != 'Protective Pads' )
+          {
+            $Attacker->Stats['Attack']->SetValue(-2);
+            $Effect_Text = "{$Attacker->Display_Name}'s Attack harshly dropped!<br />";
+          }
+
+          return [
+            'Text' => "
+              {$Defender->Display_Name} was protected from the attack!<br />" .
+              (isset($Effect_Text) ? $Effect_Text : ''),
+          ];
+        }
+      }
+
+      if ( $Defender->Last_Move == 'Obstruct' )
+      {
+        if ( $this->Damage_Type != 'Status' )
+        {
+          if ( $Attacker->Item->Name != 'Protective Pads' )
+          {
+            $Attacker->Stats['Defense']->SetValue(-2);
+            $Effect_Text = "{$Attacker->Display_Name}'s Defense harshly dropped!<br />";
+
+          }
+
+          return [
+            'Text' => "
+              {$Defender->Display_Name} was protected from the attack!<br />" .
+              (isset($Effect_Text) ? $Effect_Text : ''),
+          ];
+        }
+      }
+
+      if ( $Defender->Last_Move == 'Spiky Shield' )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          $Attacker->DecreaseHP(floor($Attacker->Max_HP / 8));
+          $Effect_Text = "{$Attacker->Display_Name}'s was hurt by the foe's Spiky Shield!<br />";
+        }
+
+        return [
+          'Text' => "
+            {$Defender->Display_Name} was protected from the attack!<br />" .
+            (isset($Effect_Text) ? $Effect_Text : ''),
+        ];
+      }
+
+      $Text = '';
+      $Damage_Mod = 1;
+
+      if ( $Defender->Ability == 'Aftermath' )
+      {
+        if ( $Attacker->Ability != 'Damp' )
+        {
+          if ( $Attacker->Item->Name != 'Protective Pads' )
+          {
+            $Attacker->DecreaseHP(floor($Attacker->Max_HP / 4));
+
+            $Text .= "{$Attacker->Display_Name} took damage from the Aftermath!<br />";
+          }
+        }
+      }
+
+      if ( $Defender->Ability == 'Cute Charm' )
+      {
+        if
+        (
+          $Attacker->Gender != 'Genderless' &&
+          $Defender->Gender != 'Genderless' &&
+          $Attacker->Gender != $Defender->Gender
+        )
+        {
+          if ( $Attacker->Item->Name != 'Protective Pads' )
+          {
+            $Attacker->SetStatus('Infatuated');
+
+            $Text .= "{$Attacker->Display_Name} has become infatuated!<br />";
+          }
+        }
+      }
+
+      if ( $Defender->Ability == 'Effect Spore' )
+      {
+        if
+        (
+          !$Attacker->HasTyping(['Grass']) ||
+          $Attacker->Ability != 'Overcoat' ||
+          $Attacker->Item->Name != 'Safety Goggles' ||
+          $Attacker->Item->Name != 'Protective Pads'
+        )
+        {
+          for ( $i = 0; $i < $this->Total_Hits; $i++ )
+          {
+            if ( mt_rand(1, 10) === 1 )
+            {
+              $Affliction_Odds = mt_rand(1, 3);
+
+              switch ($Affliction_Odds)
+              {
+                case 1:
+                  $Attacker->SetStatus('Paralysis');
+                  $Text .= "{$Attacker->Display_Name} has been paralyzed by the {$Defender->Display_Name}'s Effect Spore!<br />";
+                  break;
+                case 2:
+                  $Attacker->SetStatus('Poisoned');
+                  $Text .= "{$Attacker->Display_Name} has been poisoned by the {$Defender->Display_Name}'s Effect Spore!<br />";
+                  break;
+                case 3:
+                  $Attacker->SetStatus('Sleep');
+                  $Text .= "{$Attacker->Display_Name} has been forced asleep by the {$Defender->Display_Name}'s Effect Spore!<br />";
+                  break;
+              }
+            }
+          }
+        }
+      }
+
+      if ( $Defender->Ability == 'Flame Body' )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          for ( $i = 0; $i < $this->Total_Hits; $i++ )
+          {
+            if ( mt_rand(1, 10) <= 3 )
+            {
+              $Attacker->SetStatus('Burned');
+
+              $Text .= "{$Attacker->Display_Name} was burned!<br />";
+            }
+          }
+        }
+      }
+
+      if ( $Defender->Ability == 'Fluffy' )
+      {
+        $Damage_Mod /= 2;
+
+        if ( $this->Move_Type == 'Fire' )
+          $Damage_Mod * 2;
+      }
+
+      if ( in_array($Defender->Ability, ['Gooey', 'Tangling Hair']) )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          for ( $i = 0; $i < $this->Total_Hits; $i++ )
+          {
+            $Attacker->Stats['Speed']->SetModifier(-1);
+
+            $Text .= "{$Attacker->Display_Name} speed has dropped from the goo!<br />";
+          }
+        }
+      }
+
+      if ( in_array($Defender->Ability, ['Iron Barbs', 'Rough Skin']) )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          $Attacker->DecreaseHP(floor($Attacker->Max_HP / 8));
+
+          $Text .= "{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Ability}!<br />";
+        }
+      }
+
+      if ( $Defender->Ability == 'Mummy' )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          $Attacker->SetAbility('Mummy');
+
+          $Text .= "{$Attacker->Display_Name}'s Ability has become Mummy!<br />";
+        }
+      }
+
+      if ( $Defender->Ability == 'Perish Body' )
+      {
+        if ( $Attacker->Item->Name == 'Protective Pads' )
+        {
+          $Defender->SetStatus('Perish Body');
+
+          $Text .= "{$Defender->Display_Name} will perish in 3 turns.<br />";
+        }
+        else
+        {
+          $Attacker->SetStatus('Perish Body');
+          $Defender->SetStatus('Perish Body');
+
+          $Text .= "
+            {$Attacker->Display_Name} will perish in 3 turns.<br />
+            {$Defender->Display_Name} will perish in 3 turns.<br />
+          ";
+        }
+      }
+
+      if ( $Defender->Ability == 'Pickpocket' )
+      {
+        if
+        (
+          $Attacker->Item->Name != 'Protective Pads' ||
+          $Attacker->Ability != 'Sticky Hold' ||
+          ($Attacker->Pokedex_ID != 382 && $Attacker->Item->Name == 'Blue Orb') ||
+          ($Defender->Pokedex_ID != 382 && $Defender->Item->Name == 'Blue Orb') ||
+          ($Attacker->Pokedex_ID != 383 && $Attacker->Item->Name == 'Red Orb') ||
+          ($Defender->Pokedex_ID != 383 && $Defender->Item->Name == 'Red Orb') ||
+          ($Attacker->Pokedex_ID != 487 && $Attacker->Item->Name == 'Griseous Orb') ||
+          ($Defender->Pokedex_ID != 487 && $Defender->Item->Name == 'Griseous Orb') ||
+          ($Attacker->Pokedex_ID != 493 && strpos($Attacker->Item->Name, 'Plate') > -1) ||
+          ($Defender->Pokedex_ID != 493 && strpos($Defender->Item->Name, 'Plate') > -1) ||
+          ($Attacker->Pokedex_ID != 773 && strpos($Attacker->Item->Name, 'Memory') > -1) ||
+          ($Defender->Pokedex_ID != 773 && strpos($Defender->Item->Name, 'Memory') > -1) ||
+          ($Attacker->Pokedex_ID != 649 && strpos($Attacker->Item->Name, 'Drive') > -1) ||
+          ($Defender->Pokedex_ID != 649 && strpos($Defender->Item->Name, 'Drive') > -1)
+        )
+        {
+          if
+          (
+            !$Defender->Item &&
+            $Attacker->Item
+          )
+          {
+            $Defender->Item = new HeldItem($Attacker->Item->ID);
+
+            $Text .= "{$Defender->Display_Name} stole {$Attacker->Display_Name}'s {$Attacker->Item->Name}!<br />";
+          }
+        }
+      }
+
+      if ( $Defender->Ability == 'Poison Point' )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          for ( $i = 0; $i < $this->Total_Hits; $i++ )
+          {
+            if ( mt_rand(1, 10) <= 3 )
+            {
+              $Attacker->SetStatus('Poisoned');
+
+              $Text .= "{$Attacker->Display_Name} was poisoned!<br />";
+            }
+          }
+        }
+      }
+
+      if ( $Defender->Ability == 'Static' )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          for ( $i = 0; $i < $this->Total_Hits; $i++ )
+          {
+            if ( mt_rand(1, 10) <= 3 )
+            {
+              $Attacker->SetStatus('Paralysis');
+
+              $Text .= "{$Attacker->Display_Name} was paralyzed!<br />";
+            }
+          }
+        }
+      }
+
+      if ( $Defender->Ability == 'Wandering Spirit' )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          if
+          (
+            !in_array($Attacker->Ability, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode']) ||
+            !in_array($Defender->Ability, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode'])
+          )
+          {
+            $Attacker_Ability = $Attacker->Ability;
+            $Defender_Ability = $Defender->Ability;
+
+            $Attacker->Ability = $Defender->Ability;
+            $Defender->Ability = $Attacker->Ability;
+
+            $Text .= "{$Attacker->Display_Name} has swapped abilities with {$Defender->Display_Name}!<br />";
+          }
+        }
+      }
+
+      if ( $Defender->Item->Name == 'Rocky Helmet' )
+      {
+        if ( $Attacker->Item->Name != 'Protective Pads' )
+        {
+          $Attacker->DecreaseHP(floor($Attacker->Max_HP / 6));
+
+          $Text .= "{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
+        }
+      }
+    }
+
     /**
      * Determine how effective the move was.
      */
