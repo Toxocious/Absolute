@@ -991,15 +991,15 @@
 					'Plus' => 'SpAttack',
 					'Minus' => 'Attack'
 				],
-				'Modest' => [
+				'Mild' => [
 					'Plus' => 'SpAttack',
 					'Minus' => 'Defense'
 				],
-				'Modest' => [
+				'Quiet' => [
 					'Plus' => 'SpAttack',
 					'Minus' => 'SpDefense'
 				],
-				'Modest' => [
+				'Rash' => [
 					'Plus' => 'SpAttack',
 					'Minus' => 'Speed'
 				],
