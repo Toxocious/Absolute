@@ -655,14 +655,16 @@
       {
         if
         (
-          !$Attacker->HasTyping(['Poison', 'Steel']) ||
-          $Attacker->Ability != 'Immunity'
+          $Attacker->Item->Name != 'Protective Pads' &&
+          (
+            !$Attacker->HasTyping(['Poison', 'Steel']) ||
+            $Attacker->Ability != 'Immunity'
+          )
         )
         {
           $Text = "<br />{$Attacker->Display_Name} was poisoned from the contact!";
 
-          if ( $Attacker->Item->Name != 'Protective Pads' )
-            $Attacker->SetStatus('Poison');
+          $Attacker->SetStatus('Poison');
         }
 
         return [
