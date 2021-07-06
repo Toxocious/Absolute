@@ -231,6 +231,14 @@
           break;
       }
 
+      if ( $Defender->HasStatus('Protect') )
+      {
+        return [
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Defender->Display_Name} was protected from the attack!",
+        ];
+      }
+
       if ( $this->Contact )
       {
         $Handle_Contact = $this->HandleContact($Side);
@@ -634,14 +642,6 @@
           $Attacker = $_SESSION['Battle']['Foe']['Active'];
           $Defender = $_SESSION['Battle']['Ally']['Active'];
           break;
-      }
-
-      if ( $Defender->HasStatus('Protect') )
-      {
-        return [
-          'Text' => "{$Defender->Display_Name} was protected from the attack!",
-          'Damage' => 0,
-        ];
       }
 
       if ( $Defender->HasStatus('Substitute') )
