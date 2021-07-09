@@ -144,12 +144,23 @@
           break;
       }
 
+      if ( $Defender->HasStatus('Protect') )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Defender->Display_Name} was protected from the attack!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
       if ( $Attacker->HasStatus('Taunt') )
       {
         if ( $this->Damage_Type == 'Status' )
         {
           return [
-            'Type' => 'Error',
+            'Type' => 'Success',
             'Text' => "{$Attacker->Display_Name} can't use {$this->Name} due to the Taunt.",
             'Damage' => 0,
             'Heal' => 0,
@@ -229,14 +240,6 @@
           $Attacker = $_SESSION['Battle']['Foe']['Active'];
           $Defender = $_SESSION['Battle']['Ally']['Active'];
           break;
-      }
-
-      if ( $Defender->HasStatus('Protect') )
-      {
-        return [
-          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
-                    "{$Defender->Display_Name} was protected from the attack!",
-        ];
       }
 
       if ( $this->Contact )
