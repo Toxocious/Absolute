@@ -194,12 +194,18 @@
 
                 if ( $Ally_Active->HP <= 0 )
                 {
+                  for ( $i = 0; $i < 4; $i++ )
+                    $Ally_Active->Moves[$i]->Disabled = true;
+
                   $this->Turn_Dialogue['Text'] .= '<br /><br />';
                   $this->Turn_Dialogue['Text'] .= "{$Ally_Active->Display_Name} has fainted.";
                 }
               }
               else
               {
+                for ( $i = 0; $i < 4; $i++ )
+                  $Ally_Active->Moves[$i]->Disabled = true;
+
                 $this->Turn_Dialogue['Text'] .= "{$Foe_Active->Display_Name} has fainted.";
                 $this->Turn_Dialogue['Text'] .= '<br /><br />';
                 $this->Turn_Dialogue['Text'] .= $Ally_Active->IncreaseExp()['Text'];
@@ -224,12 +230,18 @@
 
                 if ( $Foe_Active->HP <= 0 )
                 {
+                  for ( $i = 0; $i < 4; $i++ )
+                    $Ally_Active->Moves[$i]->Disabled = true;
+
                   $this->Turn_Dialogue['Text'] .= '<br /><br />';
                   $this->Turn_Dialogue['Text'] .= "{$Foe_Active->Display_Name} has fainted.";
                 }
               }
               else
               {
+                for ( $i = 0; $i < 4; $i++ )
+                  $Ally_Active->Moves[$i]->Disabled = true;
+
                 $this->Turn_Dialogue['Text'] .= "{$Ally_Active->Display_Name} has fainted.";
                 $this->Turn_Dialogue['Text'] .= '<br /><br />';
                 $this->Turn_Dialogue['Text'] .= $Ally_Active->IncreaseExp()['Text'];
