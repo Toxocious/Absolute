@@ -27,32 +27,32 @@
           <div style='flex-basis: 49%;'>
             <div class='flex' style='justify-content: center; flex-basis: 100%;'>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Ally_Slot_0' style='padding: 0px; width: 40px;'>
+                <div slot='Ally_Slot_0' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Ally_Slot_1' style='padding: 0px; width: 40px;'>
+                <div slot='Ally_Slot_1' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Ally_Slot_2' style='padding: 0px; width: 40px;'>
+                <div slot='Ally_Slot_2' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Ally_Slot_3' style='padding: 0px; width: 40px;'>
+                <div slot='Ally_Slot_3' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Ally_Slot_4' style='padding: 0px; width: 40px;'>
+                <div slot='Ally_Slot_4' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover'>
-                <div slot='Ally_Slot_5' style='padding: 0px; width: 40px;'>
+                <div slot='Ally_Slot_5' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
@@ -108,33 +108,33 @@
           <div style='flex-basis: 49%;'>
             <div class='flex' style='justify-content: center;'>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Foe_Slot_0' style='padding: 0px; width: 40px;'>
+                <div slot='Foe_Slot_0' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Foe_Slot_1' style='padding: 0px; width: 40px;'>
+                <div slot='Foe_Slot_1' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Foe_Slot_2' style='padding: 0px; width: 40px;'>
+                <div slot='Foe_Slot_2' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
 
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Foe_Slot_3' style='padding: 0px; width: 40px;'>
+                <div slot='Foe_Slot_3' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover' style='margin-right: 5px;'>
-                <div slot='Foe_Slot_4' style='padding: 0px; width: 40px;'>
+                <div slot='Foe_Slot_4' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
               <div class='border-gradient hover'>
-                <div slot='Foe_Slot_5' style='padding: 0px; width: 40px;'>
+                <div slot='Foe_Slot_5' style='height: 30px; padding: 0px; width: 40px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png' />
                 </div>
               </div>
