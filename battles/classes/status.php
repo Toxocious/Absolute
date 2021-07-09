@@ -250,6 +250,11 @@
           'Max_Turns' => -1,
           'Volatile' => true
         ],
+        'Trapped' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => true
+        ],
         'Withdrawing' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
