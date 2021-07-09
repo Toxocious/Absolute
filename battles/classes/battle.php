@@ -80,175 +80,12 @@
        */
       switch ($Action)
       {
-        /**
-         * https://bulbapedia.bulbagarden.net/wiki/Recall
-         *
-         * On switch out, a check for abilities, moves, etc. that prevent
-         * the Ally's active Pokemon from switching out needs to be done.
-         *  - Abilities :: Arena Trap, etc
-         *  - Moves :: Mean Look, etc
-         */
         case 'Switch':
-          $Slot = Purify($_GET['Slot']) - 1;
-          if ( $Slot < 0 || $Slot > 5 )
-          {
-            return [
-              'Type' => 'Error',
-              'Text' => 'You may not switch into an invalid Pok&eacute;mon.'
-            ];
-          }
-
-          $this->Foe_Move = $Foe_Active->FetchRandomMove();
-
-          /**
-           * Checking to see if the selected move is Pursuit.
-           */
-          if
-          (
-            $this->Foe_Move->Name == 'Pursuit'
-          )
-          {
-            if
-            (
-              $Foe_Active->HP > 0 &&
-              $Ally_Active->HP > 0
-            )
-            {
-              $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
-              $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
-
-              $this->Turn_Dialogue['Text'] .= $Foe_Attack['Text'];
-              $this->Turn_Dialogue['Text'] .= '<br /><br />';
-            }
-
-            $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
-            $this->Turn_Dialogue['Text'] .= $Perform_Switch['Text'];
-          }
-          else
-          {
-            $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
-            $this->Turn_Dialogue['Text'] .= $Perform_Switch['Text'];
-
-            if
-            (
-              $Foe_Active->HP > 0 &&
-              $Ally_Active->HP > 0
-            )
-            {
-              $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
-              $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
-
-              $this->Turn_Dialogue['Text'] .= '<br /><br />';
-              $this->Turn_Dialogue['Text'] .= $Foe_Attack['Text'];
-            }
-          }
-
+          $this->Turn_Dialogue = $this->HandleSwitch($_GET['Slot']);
           break;
 
         case 'Attack':
-          if ( !isset($_GET['Move']) )
-          {
-            return [
-              'Type' => 'Error',
-              'Text' => 'There was an error when processing your selected move.'
-            ];
-          }
-
-          if
-          (
-            $Ally_Active->HP == 0 ||
-            $Foe_Active->HP == 0
-          )
-          {
-            return [
-              'Type' => 'Error',
-              'Text' => 'Moves may not be used while an active Pok&eacute;mon is fainted.'
-            ];
-          }
-
-          $Move_Slot = Purify($_GET['Move']) - 1;
-
-          $this->Ally_Move = $Ally_Active->Moves[$Move_Slot];
-          $this->Foe_Move = $Foe_Active->FetchRandomMove();
-
-          $First_Attacker = $this->DetermineFirstAttacker($this->Ally_Move, $this->Foe_Move);
-          $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'] = $First_Attacker;
-
-          switch ( $First_Attacker )
-          {
-            case 'Ally':
-              $Ally_Attack = $Ally_Active->Attack($this->Ally_Move);
-
-              $this->Turn_Dialogue['Text'] .= $Ally_Attack['Text'];
-              $this->Turn_Dialogue['Text'] .= '<br /><br />';
-
-              $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
-
-              if ( $Foe_Active->HP > 0 )
-              {
-                $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
-
-                $this->Turn_Dialogue['Text'] .= $Foe_Attack['Text'];
-
-                $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
-
-                if ( $Ally_Active->HP <= 0 )
-                {
-                  for ( $i = 0; $i < 4; $i++ )
-                    $Ally_Active->Moves[$i]->Disabled = true;
-
-                  $this->Turn_Dialogue['Text'] .= '<br /><br />';
-                  $this->Turn_Dialogue['Text'] .= "{$Ally_Active->Display_Name} has fainted.";
-                }
-              }
-              else
-              {
-                for ( $i = 0; $i < 4; $i++ )
-                  $Ally_Active->Moves[$i]->Disabled = true;
-
-                $this->Turn_Dialogue['Text'] .= "{$Foe_Active->Display_Name} has fainted.";
-                $this->Turn_Dialogue['Text'] .= '<br /><br />';
-                $this->Turn_Dialogue['Text'] .= $Ally_Active->IncreaseExp()['Text'];
-              }
-              break;
-
-            case 'Foe':
-              $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
-
-              $this->Turn_Dialogue['Text'] .= $Foe_Attack['Text'];
-              $this->Turn_Dialogue['Text'] .= '<br /><br />';
-
-              $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
-
-              if ( $Ally_Active->HP > 0 )
-              {
-                $Ally_Attack = $Ally_Active->Attack($this->Ally_Move);
-
-                $this->Turn_Dialogue['Text'] .= $Ally_Attack['Text'];
-
-                $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
-
-                if ( $Foe_Active->HP <= 0 )
-                {
-                  for ( $i = 0; $i < 4; $i++ )
-                    $Ally_Active->Moves[$i]->Disabled = true;
-
-                  $this->Turn_Dialogue['Text'] .= '<br /><br />';
-                  $this->Turn_Dialogue['Text'] .= "{$Foe_Active->Display_Name} has fainted.";
-                }
-              }
-              else
-              {
-                for ( $i = 0; $i < 4; $i++ )
-                  $Ally_Active->Moves[$i]->Disabled = true;
-
-                $this->Turn_Dialogue['Text'] .= "{$Ally_Active->Display_Name} has fainted.";
-                $this->Turn_Dialogue['Text'] .= '<br /><br />';
-                $this->Turn_Dialogue['Text'] .= $Ally_Active->IncreaseExp()['Text'];
-              }
-              break;
-          }
-
+          $this->Turn_Dialogue = $this->HandleAttack($_GET['Move']);
           break;
 
         default:
@@ -286,6 +123,216 @@
       return [
         'Type' => 'Success',
         'Text' => 'The battle has been restarted.',
+      ];
+    }
+
+    /**
+     * Handle the process of attacking the foe's Pokemon.
+     */
+    public function HandleAttack
+    (
+      int $Move
+    )
+    {
+      $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
+      $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
+
+      if ( !isset($Ally_Active->Moves[$Move]) )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'There was an error when processing your selected move.'
+        ];
+      }
+
+      if
+      (
+        $Ally_Active->HP == 0 ||
+        $Foe_Active->HP == 0
+      )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'Moves may not be used while an active Pok&eacute;mon is fainted.'
+        ];
+      }
+
+      $Move_Slot = Purify($Move) - 1;
+
+      $this->Ally_Move = $Ally_Active->Moves[$Move_Slot];
+      $this->Foe_Move = $Foe_Active->FetchRandomMove();
+
+      $First_Attacker = $this->DetermineFirstAttacker($this->Ally_Move, $this->Foe_Move);
+      $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'] = $First_Attacker;
+
+      $Attack_Dialogue = '';
+
+      switch ( $First_Attacker )
+      {
+        case 'Ally':
+          $Ally_Attack = $Ally_Active->Attack($this->Ally_Move);
+
+          $Attack_Dialogue .= $Ally_Attack['Text'];
+          $Attack_Dialogue .= '<br /><br />';
+
+          $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
+
+          if ( $Foe_Active->HP > 0 )
+          {
+            $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+
+            $Attack_Dialogue .= $Foe_Attack['Text'];
+
+            $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
+
+            if ( $Ally_Active->HP <= 0 )
+            {
+              for ( $i = 0; $i < 4; $i++ )
+                $Ally_Active->Moves[$i]->Disabled = true;
+
+              $Attack_Dialogue .= '<br /><br />';
+              $Attack_Dialogue .= "{$Ally_Active->Display_Name} has fainted.";
+            }
+          }
+          else
+          {
+            for ( $i = 0; $i < 4; $i++ )
+              $Ally_Active->Moves[$i]->Disabled = true;
+
+            $Attack_Dialogue .= "{$Foe_Active->Display_Name} has fainted.";
+            $Attack_Dialogue .= '<br /><br />';
+            $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
+          }
+          break;
+
+        case 'Foe':
+          $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+
+          $Attack_Dialogue .= $Foe_Attack['Text'];
+          $Attack_Dialogue .= '<br /><br />';
+
+          $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
+
+          if ( $Ally_Active->HP > 0 )
+          {
+            $Ally_Attack = $Ally_Active->Attack($this->Ally_Move);
+
+            $Attack_Dialogue .= $Ally_Attack['Text'];
+
+            $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
+
+            if ( $Foe_Active->HP <= 0 )
+            {
+              for ( $i = 0; $i < 4; $i++ )
+                $Ally_Active->Moves[$i]->Disabled = true;
+
+              $Attack_Dialogue .= '<br /><br />';
+              $Attack_Dialogue .= "{$Foe_Active->Display_Name} has fainted.";
+            }
+          }
+          else
+          {
+            for ( $i = 0; $i < 4; $i++ )
+              $Ally_Active->Moves[$i]->Disabled = true;
+
+            $Attack_Dialogue .= "{$Ally_Active->Display_Name} has fainted.";
+            $Attack_Dialogue .= '<br /><br />';
+            $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
+          }
+          break;
+      }
+
+      return [
+        'Type' => 'Success',
+        'Text' => $Attack_Dialogue
+      ];
+    }
+
+    /**
+     * Handle the process of switching your active Pokemon.
+     *
+     * https://bulbapedia.bulbagarden.net/wiki/Recall
+     *
+     * On switch out, a check for abilities, moves, etc. that prevent
+     * the Ally's active Pokemon from switching out needs to be done.
+     *  - Abilities :: Arena Trap, etc
+     *  - Moves :: Mean Look, etc
+     */
+    public function HandleSwitch
+    (
+      int $Slot
+    )
+    {
+      $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
+      $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
+
+      $Slot = Purify($Slot) - 1;
+      if ( !isset($_SESSION['Battle']['Ally']['Roster'][$Slot]) )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'You may not switch into an invalid Pok&eacute;mon.'
+        ];
+      }
+
+      if ( $Ally_Active->HasStatus('Trapped') )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Ally_Active->Display_Name} is trapped and may not switch out!"
+        ];
+      }
+
+      $Switch_Dialogue = '';
+
+      $this->Foe_Move = $Foe_Active->FetchRandomMove();
+
+      /**
+       * Checking to see if the selected move is Pursuit.
+       */
+      if
+      (
+        $this->Foe_Move->Name == 'Pursuit'
+      )
+      {
+        if
+        (
+          $Foe_Active->HP > 0 &&
+          $Ally_Active->HP > 0
+        )
+        {
+          $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+          $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
+
+          $Switch_Dialogue .= $Foe_Attack['Text'];
+          $Switch_Dialogue .= '<br /><br />';
+        }
+
+        $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+        $Switch_Dialogue .= $Perform_Switch['Text'];
+      }
+      else
+      {
+        $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+        $Switch_Dialogue .= $Perform_Switch['Text'];
+
+        if
+        (
+          $Foe_Active->HP > 0 &&
+          $Ally_Active->HP > 0
+        )
+        {
+          $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+          $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
+
+          $Switch_Dialogue .= '<br /><br />';
+          $Switch_Dialogue .= $Foe_Attack['Text'];
+        }
+      }
+
+      return [
+        'Type' => 'Success',
+        'Text' => $Switch_Dialogue,
       ];
     }
 
