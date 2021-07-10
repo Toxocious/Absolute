@@ -331,6 +331,15 @@
     }
 
     /**
+     * Disable the Pokemon's moves from being used.
+     */
+    public function DisableMoves()
+    {
+      for ( $i = 0; $i < 4; $i++ )
+        $this->Moves[$i]->Disabled = true;
+    }
+
+    /**
      * Fetch a random move from the selected Pokemon.
      */
     public function FetchRandomMove()
