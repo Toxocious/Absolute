@@ -187,8 +187,7 @@
 
             if ( $Ally_Active->HP <= 0 )
             {
-              for ( $i = 0; $i < 4; $i++ )
-                $Ally_Active->Moves[$i]->Disabled = true;
+              $Ally_Active->DisableMoves();
 
               $Attack_Dialogue .= '<br /><br />';
               $Attack_Dialogue .= "{$Ally_Active->Display_Name} has fainted.";
@@ -196,8 +195,7 @@
           }
           else
           {
-            for ( $i = 0; $i < 4; $i++ )
-              $Ally_Active->Moves[$i]->Disabled = true;
+            $Ally_Active->DisableMoves();
 
             $Attack_Dialogue .= "{$Foe_Active->Display_Name} has fainted.";
             $Attack_Dialogue .= '<br /><br />';
@@ -223,8 +221,7 @@
 
             if ( $Foe_Active->HP <= 0 )
             {
-              for ( $i = 0; $i < 4; $i++ )
-                $Ally_Active->Moves[$i]->Disabled = true;
+              $Ally_Active->DisableMoves();
 
               $Attack_Dialogue .= '<br /><br />';
               $Attack_Dialogue .= "{$Foe_Active->Display_Name} has fainted.";
@@ -232,8 +229,7 @@
           }
           else
           {
-            for ( $i = 0; $i < 4; $i++ )
-              $Ally_Active->Moves[$i]->Disabled = true;
+            $Ally_Active->DisableMoves();
 
             $Attack_Dialogue .= "{$Ally_Active->Display_Name} has fainted.";
           }
