@@ -236,8 +236,6 @@
               $Ally_Active->Moves[$i]->Disabled = true;
 
             $Attack_Dialogue .= "{$Ally_Active->Display_Name} has fainted.";
-            $Attack_Dialogue .= '<br /><br />';
-            $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
           }
           break;
       }
