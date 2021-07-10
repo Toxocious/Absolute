@@ -19,12 +19,12 @@ for ( const FILE of FUNCTIONS )
 /**
  * Fetch all of our command files, and set them dynamically.
  */
-const COMMANDLIST = new Set();
+const COMMANDLIST = new Map();
 const COMMANDS = FS.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for ( const FILE of COMMANDS )
 {
   COMMAND = require( PATH.resolve(`./commands/${FILE}`) );
-  COMMANDLIST.add([COMMAND.name, COMMAND]);
+  COMMANDLIST.set(COMMAND.name + '.js', COMMAND);
 }
 
 /**
@@ -205,11 +205,12 @@ ABSOLUTE.on('connection', function(socket)
              */
             const ARGS = data.text.slice(CONFIG.PREFIX.length).split(' ');
             const COMMAND_NAME = ARGS.shift().toLowerCase() + '.js';
+            const COMMAND_DATA = COMMANDLIST.get(COMMAND_NAME);
 
             /**
              * Determine if the command exists or not, and process it.
              */
-            if ( COMMANDS.includes(COMMAND_NAME) ) 
+            if ( COMMAND_DATA != undefined )
             {
               /**
               * Execute the command and return it's response.
@@ -220,7 +221,7 @@ ABSOLUTE.on('connection', function(socket)
               *  message: STRING,
               * }
               */
-              const COMMAND_RESPONSE = COMMAND.execute(
+              const COMMAND_RESPONSE = COMMAND_DATA.execute(
                 {
                   ID: User_Data.ID,
                   Rank: User_Data.Rank
