@@ -158,6 +158,7 @@ ABSOLUTE.on('connection', function(socket)
            */
           User_Data.Username = Fetched_User[0].Username;
           User_Data.Rank = Fetched_User[0].Rank;
+          User_Data.Power = Fetched_User[0].Power;
           User_Data.Avatar = Fetched_User[0].Avatar;
           User_Data.Chat_Ban = Fetched_User[0].Chat_Ban;
           User_Data.Chat_Ban_Data = Fetched_User[0].Chat_Ban_Data;
@@ -212,6 +213,29 @@ ABSOLUTE.on('connection', function(socket)
              */
             if ( COMMAND_DATA != undefined )
             {
+              if
+              (
+                COMMAND_DATA.power_level &&
+                COMMAND_DATA.power_level > User_Data.Power
+              )
+              {
+                return socket.emit("chat-message",
+                  MESSAGEHANDLER.AddMessage(
+                    {
+                      user_id: 3,
+                      username: 'Absol',
+                      rank: 'bot',
+                      avatar: `/Avatars/Custom/3.png`,
+                    },
+                    'You do not have the power level required to use this command.',
+                    {
+                      isPrivate: true,
+                      Private_To: User_Data.ID,
+                    }
+                  )
+                );
+              }
+
               /**
               * Execute the command and return it's response.
               * @param array
