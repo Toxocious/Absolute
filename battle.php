@@ -28,18 +28,46 @@
       Battle.HandleRequest(null, null);
     },
 
-    Attack: (Move) =>
+    Attack: (Move, event) =>
     {
       if ( typeof Move === undefined )
         return;
 
+      event = event || window.event;
+      console.log(event);
+
       Battle.HandleRequest(`Action=Attack&Move=${Move}`);
     },
 
-    SwitchPokemon: (Slot) =>
+    Continue: (Postcode, event) =>
     {
-      if ( !Slot )
+      if ( typeof Postcode === undefined )
         return false;
+
+      event = event || window.event;
+      console.log(event);
+
+      Battle.HandleRequest(`Action=Continue&Postcode=${Postcode}`);
+    },
+
+    Restart: (Postcode, event) =>
+    {
+      if ( typeof Postcode === undefined )
+        return false;
+
+      event = event || window.event;
+      console.log(event);
+
+      Battle.HandleRequest(`Action=Restart&Postcode=${Postcode}`);
+    },
+
+    SwitchPokemon: (Slot, event) =>
+    {
+      if ( typeof Slot === undefined )
+        return false;
+
+      event = event || window.event;
+      console.log(event);
 
       Battle.HandleRequest(`Action=Switch&Slot=${Slot}`);
     },
@@ -89,7 +117,7 @@
         {
           if ( Side == 'Ally' )
           {
-            document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot});`);
+            document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot}, e);`);
           }
 
           switch (Roster[i].Status)
@@ -124,7 +152,7 @@
 
       for ( let i = 0; i < Moves.length; i++ )
       {
-        document.querySelector(`[move='Move_${i}']`).setAttribute('onclick', `Battle.Attack(${i + 1})`);
+        document.querySelector(`[move='Move_${i}']`).setAttribute('onclick', `Battle.Attack(${i + 1}, event)`);
         document.querySelector(`[move='Move_${i}']`).setAttribute('class', Moves[i].Move_Type);
         document.querySelector(`[move='Move_${i}']`).value = Moves[i].Name;
         document.querySelector(`[move='Move_${i}']`).disabled = Moves[i].Disabled;
