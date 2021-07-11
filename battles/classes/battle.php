@@ -337,6 +337,14 @@
       ];
     }
 
+    public function GeneratePostcode
+    (
+      string $Codename
+    )
+    {
+      $_SESSION['Battle']['Postcodes'][$Codename] = bin2hex(random_bytes(10));
+    }
+
     /**
      * Determine which Pokemon attacks first.
      * Determined by Move Priority, then Pokemon Speed, and if tied, randomly chosen.
