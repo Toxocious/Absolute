@@ -44,11 +44,33 @@
       return $this;
     }
 
+    /**
+     * Finds and returns the index of the next non-fainted Pokemon in the roster.
+     * Returns false if all are fainted.
+     */
+    public function NextPokemon()
+    {
+      foreach ($this->Roster as $Key => $Pokemon)
+      {
+        if ( $Pokemon->HP > 0 )
+          return $Key;
+      }
+
+      return false;
+    }
+
+    /**
+     * Fetches the user's roster hash.
+     * Used to see if the user's roster changes mid battle.
+     */
     public function GetRosterHash()
     {
       return $this->Roster_Hash;
     }
 
+    /**
+     * Sets the user's roster hash.
+     */
     public function SetRosterHash()
     {
 
