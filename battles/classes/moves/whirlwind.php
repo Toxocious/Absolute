@@ -82,12 +82,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']['Active'];
-          $Defender = $_SESSION['Battle']['Foe']['Active'];
+          $Attacker = $_SESSION['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']['Active'];
-          $Defender = $_SESSION['Battle']['Ally']['Active'];
+          $Attacker = $_SESSION['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Battle']['Ally']->Active;
           break;
       }
 
@@ -108,8 +108,8 @@
         $Defender->Ability == 'Magic Bounce'
       )
       {
-        $Random_Slot = mt_rand(1, count($_SESSION['Battle']['Ally']['Roster']));
-        $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Random_Slot]->SwitchInto();
+        $Random_Slot = mt_rand(1, count($_SESSION['Battle']['Ally']->Roster));
+        $Perform_Switch = $_SESSION['Battle']['Ally']->Roster[$Random_Slot]->SwitchInto();
 
         $Effect_Text = "
           It got redirected back at {$Attacker->Display_Name}!<br />
@@ -118,11 +118,11 @@
       }
       else
       {
-        $Random_Slot = mt_rand(1, count($_SESSION['Battle']['Foe']['Roster']));
-        $Perform_Switch = $_SESSION['Battle']['Foe']['Roster'][$Random_Slot]->SwitchInto();
-        $_SESSION['Battle']['Foe']['Active']->SetCanAttack(false);
+        $Random_Slot = mt_rand(1, count($_SESSION['Battle']['Foe']->Roster));
+        $Perform_Switch = $_SESSION['Battle']['Foe']->Roster[$Random_Slot]->SwitchInto();
+        $_SESSION['Battle']['Foe']->Active->SetCanAttack(false);
 
-        $Effect_Text = "<br />{$_SESSION['Battle']['Foe']['Active']->Display_Name} has been sent into battle!";
+        $Effect_Text = "<br />{$_SESSION['Battle']['Foe']->Active->Display_Name} has been sent into battle!";
       }
 
       return [

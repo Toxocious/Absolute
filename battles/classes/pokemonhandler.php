@@ -179,13 +179,13 @@
         ];
       }
 
-      foreach ($_SESSION['Battle']['Ally']['Roster'] as $Roster_Pokemon)
+      foreach ($_SESSION['Battle']['Ally']->Roster as $Roster_Pokemon)
         $Roster_Pokemon->Active = false;
         if ( $Roster_Pokemon->Pokemon_ID == $this->Pokemon_ID )
           $Roster_Pokemon->Active = true;
 
       $this->Participated = true;
-      $_SESSION['Battle']['Ally']['Active'] = $this;
+      $_SESSION['Battle']['Ally']->Active = $this;
 
       if ( $this->HP == 0 )
       {
@@ -202,6 +202,36 @@
     }
 
     /**
+     * Handle what happens when the Pokemon faints.
+     */
+    public function HandleFaint()
+    {
+      switch ( $this->Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Battle']['Foe']->Active;
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Battle']['Ally']->Active;
+          break;
+      }
+
+      if ( $Defender->HasStatus('Destiny Bond') )
+      {
+        $Defender->DecreaseHP($Defender->HP);
+        $Dialogue = "<br />{$this->Display_Name} took its foe down with it!";
+      }
+
+      return [
+        'Type' => 'Success',
+        'Text' => "{$this->Display_Name} has fainted." .
+                  (isset($Dialogue) ? $Dialogue : ''),
+      ];
+    }
+
+    /**
      * Increase the Pokemon's current Exp.
      */
     public function IncreaseExp()
@@ -209,7 +239,7 @@
       global $PDO;
 
       $Exp_Divisor = 0;
-      foreach ( $_SESSION['Battle']['Ally']['Roster'] as $Pokemon )
+      foreach ( $_SESSION['Battle']['Ally']->Roster as $Pokemon )
       {
         if
         (
@@ -227,7 +257,7 @@
         'Text' => ''
       ];
 
-      foreach ( $_SESSION['Battle']['Ally']['Roster'] as $Pokemon )
+      foreach ( $_SESSION['Battle']['Ally']->Roster as $Pokemon )
       {
         if
         (
@@ -276,9 +306,9 @@
       if ( $this->Active )
         $Ally_Active = $this;
       else
-        $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
+        $Ally_Active = $_SESSION['Battle']['Ally']->Active;
 
-      $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
+      $Foe_Active = $_SESSION['Battle']['Foe']->Active;
 
       if ( $this->Item->Name == 'Exp Share' )
         $s = 2;

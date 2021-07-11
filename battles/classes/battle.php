@@ -43,7 +43,7 @@
     public $Ally = null;
     public $Foe = null;
 
-    private $Battle_ID = null;
+    public $Battle_ID = null;
 
     public $Turn_ID = 1;
     private $Turn_Dialogue = [
@@ -68,9 +68,6 @@
           'Text' => 'An error occurred while performing your desired action.'
         ];
       }
-
-      $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
-      $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
 
       $_SESSION['Battle']['Turn_ID']++;
       $this->Turn_ID = $_SESSION['Battle']['Turn_ID'];
@@ -134,8 +131,8 @@
       int $Move
     )
     {
-      $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
-      $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
+      $Ally_Active = $_SESSION['Battle']['Ally']->Active;
+      $Foe_Active = $_SESSION['Battle']['Foe']->Active;
 
       if ( !isset($Ally_Active->Moves[$Move]) )
       {
@@ -189,15 +186,19 @@
             {
               $Ally_Active->DisableMoves();
 
+              $Faint_Data = $Ally_Active->HandleFaint();
+
               $Attack_Dialogue .= '<br /><br />';
-              $Attack_Dialogue .= "{$Ally_Active->Display_Name} has fainted.";
+              $Attack_Dialogue .= $Faint_Data['Text'];
             }
           }
           else
           {
             $Ally_Active->DisableMoves();
 
-            $Attack_Dialogue .= "{$Foe_Active->Display_Name} has fainted.";
+            $Faint_Data = $Foe_Active->HandleFaint();
+
+            $Attack_Dialogue .= $Faint_Data['Text'];
             $Attack_Dialogue .= '<br /><br />';
             $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
           }
@@ -221,7 +222,7 @@
 
             if ( $Foe_Active->HP <= 0 )
             {
-              $Ally_Active->DisableMoves();
+              // $Ally_Active->DisableMoves();
 
               $Attack_Dialogue .= '<br /><br />';
               $Attack_Dialogue .= "{$Foe_Active->Display_Name} has fainted.";
@@ -229,7 +230,7 @@
           }
           else
           {
-            $Ally_Active->DisableMoves();
+            // $Ally_Active->DisableMoves();
 
             $Attack_Dialogue .= "{$Ally_Active->Display_Name} has fainted.";
           }
@@ -257,11 +258,11 @@
       int $Slot
     )
     {
-      $Ally_Active = $_SESSION['Battle']['Ally']['Active'];
-      $Foe_Active = $_SESSION['Battle']['Foe']['Active'];
+      $Ally_Active = $_SESSION['Battle']['Ally']->Active;
+      $Foe_Active = $_SESSION['Battle']['Foe']->Active;
 
       $Slot = Purify($Slot) - 1;
-      if ( !isset($_SESSION['Battle']['Ally']['Roster'][$Slot]) )
+      if ( !isset($_SESSION['Battle']['Ally']->Roster[$Slot]) )
       {
         return [
           'Type' => 'Error',
@@ -302,12 +303,12 @@
           $Switch_Dialogue .= '<br /><br />';
         }
 
-        $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+        $Perform_Switch = $_SESSION['Battle']['Ally']->Roster[$Slot]->SwitchInto();
         $Switch_Dialogue .= $Perform_Switch['Text'];
       }
       else
       {
-        $Perform_Switch = $_SESSION['Battle']['Ally']['Roster'][$Slot]->SwitchInto();
+        $Perform_Switch = $_SESSION['Battle']['Ally']->Roster[$Slot]->SwitchInto();
         $Switch_Dialogue .= $Perform_Switch['Text'];
 
         if
@@ -343,8 +344,8 @@
       if ( !isset($Ally_Move) || !isset($Foe_Move) )
         return false;
 
-      $Ally = $_SESSION['Battle']['Ally']['Active'];
-      $Foe = $_SESSION['Battle']['Foe']['Active'];
+      $Ally = $_SESSION['Battle']['Ally']->Active;
+      $Foe = $_SESSION['Battle']['Foe']->Active;
 
       $Move_Data = [
         'Ally' => [
@@ -363,9 +364,9 @@
 
       foreach (['Ally', 'Foe'] as $Side)
       {
-        if ( in_array($_SESSION['Battle'][$Side]['Active']->Ability, ['Gale Wings', 'Prankster']) )
+        if ( in_array($_SESSION['Battle'][$Side]->Active->Ability, ['Gale Wings', 'Prankster']) )
         {
-          if ( $_SESSION['Battle'][$Side]['Active']->HP == $_SESSION['Battle'][$Side]['Active']->Max_HP )
+          if ( $_SESSION['Battle'][$Side]->Active->HP == $_SESSION['Battle'][$Side]->Active->Max_HP )
           {
             if
             (
@@ -378,7 +379,7 @@
           }
         }
 
-        if ( $_SESSION['Battle'][$Side]['Active']->Ability == 'Triage' )
+        if ( $_SESSION['Battle'][$Side]->Active->Ability == 'Triage' )
         {
           if
           (

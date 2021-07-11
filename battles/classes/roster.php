@@ -39,14 +39,4 @@
 
       return $PokemonHandler;
     }
-
-    public function GetRosterHash($Side_ID)
-    {
-      return 0;
-    }
-
-    public function SetRosterHash($Side_ID)
-    {
-
-    }
   }

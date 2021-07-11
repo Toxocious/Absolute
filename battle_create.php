@@ -29,7 +29,6 @@
 	$Foe = strtolower(Purify($_GET['Foe']));
 
 	$_SESSION['Battle']['Battle_Type'] = $Battle_Type;
-	$_SESSION['Battle']['Ally']['ID'] = $User_Data['ID'];
 
 	switch ($Battle_Type)
 	{
@@ -41,7 +40,7 @@
 			break;
 	}
 
-	$Create_Battle = $Battle->CreateBattle($_GET['Foe']);
+	$Create_Battle = $Battle->CreateBattle($User_Data['ID'], $Foe);
 
 	if ( $Create_Battle )
 	{
