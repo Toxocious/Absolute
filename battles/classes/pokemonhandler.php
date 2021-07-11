@@ -1,6 +1,7 @@
 <?php
+  use BattleHandler\Battle;
 
-  class PokemonHandler
+  class PokemonHandler extends Battle
   {
     public $Pokemon_ID = null;
 
@@ -209,25 +210,37 @@
       switch ( $this->Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Battle']['Ally'];
+          $Defender = $_SESSION['Battle']['Foe'];
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Battle']['Foe'];
+          $Defender = $_SESSION['Battle']['Ally'];
           break;
       }
 
-      if ( $Defender->HasStatus('Destiny Bond') )
+      if ( $Defender->Active->HasStatus('Destiny Bond') )
       {
-        $Defender->DecreaseHP($Defender->HP);
+        $Defender->Active->DecreaseHP($Defender->Active->HP);
         $Dialogue = "<br />{$this->Display_Name} took its foe down with it!";
+      }
+
+      if ( $Attacker->NextPokemon() )
+      {
+        $this->GeneratePostcode('Continue');
+        $Continue = true;
+      }
+      else
+      {
+        $this->GeneratePostcode('Restart');
+        $Continue = false;
       }
 
       return [
         'Type' => 'Success',
         'Text' => "{$this->Display_Name} has fainted." .
                   (isset($Dialogue) ? $Dialogue : ''),
+        'Can_Continue' => $Continue,
       ];
     }
 
