@@ -243,6 +243,41 @@
           break;
       }
 
+      /**
+       * Render the 'Continue Battle' or 'Restart Battle' button if applicable.
+       */
+      if ( isset($Faint_Data) )
+      {
+        if ( $Faint_Data['Can_Continue'] )
+        {
+          $Attack_Dialogue = "
+            <input
+              type='button'
+              value='Continue Battle'
+              style='font-weight: bold; padding: 5px 0px;'
+              onclick='Battle.Continue();'
+              continue='{$_SESSION['Battle']['Postcodes']['Continue']}'
+            />
+            <br /><br />
+            {$Attack_Dialogue}
+          ";
+        }
+        else
+        {
+          $Attack_Dialogue = "
+            <input
+              type='button'
+              value='Restart Battle'
+              style='font-weight: bold; padding: 5px 0px;'
+              onclick='Battle.Restart();'
+              restart='{$_SESSION['Battle']['Postcodes']['Restart']}'
+            />
+            <br /><br />
+            {$Attack_Dialogue}
+          ";
+        }
+      }
+
       return [
         'Type' => 'Success',
         'Text' => $Attack_Dialogue
