@@ -222,17 +222,23 @@
 
             if ( $Foe_Active->HP <= 0 )
             {
-              // $Ally_Active->DisableMoves();
+              $Ally_Active->DisableMoves();
 
+              $Faint_Data = $Foe_Active->HandleFaint();
+
+              $Attack_Dialogue .= $Faint_Data['Text'];
               $Attack_Dialogue .= '<br /><br />';
-              $Attack_Dialogue .= "{$Foe_Active->Display_Name} has fainted.";
+              $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
             }
           }
           else
           {
-            // $Ally_Active->DisableMoves();
+            $Ally_Active->DisableMoves();
 
-            $Attack_Dialogue .= "{$Ally_Active->Display_Name} has fainted.";
+            $Faint_Data = $Ally_Active->HandleFaint();
+
+            $Attack_Dialogue .= '<br /><br />';
+            $Attack_Dialogue .= $Faint_Data['Text'];
           }
           break;
       }
