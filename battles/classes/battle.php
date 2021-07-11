@@ -263,8 +263,7 @@
               type='button'
               value='Continue Battle'
               style='font-weight: bold; padding: 5px 0px;'
-              onclick='Battle.Continue();'
-              continue='{$_SESSION['Battle']['Postcodes']['Continue']}'
+              onclick='Battle.Continue(\"{$_SESSION['Battle']['Postcodes']['Continue']}\");'
             />
             <br /><br />
             {$Attack_Dialogue}
@@ -277,8 +276,7 @@
               type='button'
               value='Restart Battle'
               style='font-weight: bold; padding: 5px 0px;'
-              onclick='Battle.Restart();'
-              restart='{$_SESSION['Battle']['Postcodes']['Restart']}'
+              onclick='Battle.Restart(\"{$_SESSION['Battle']['Postcodes']['Restart']}\");'
             />
             <br /><br />
             {$Attack_Dialogue}
