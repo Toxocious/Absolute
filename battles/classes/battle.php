@@ -61,7 +61,7 @@
       string $Action
     )
     {
-      if ( !isset($Action) || !in_array($Action, ['Switch', 'Attack', 'UseItem', 'Flee']) )
+      if ( !isset($Action) || !in_array($Action, ['Switch', 'Attack', 'Continue', 'Restart', 'UseItem', 'Flee']) )
       {
         return [
           'Type' => 'Error',
@@ -83,6 +83,14 @@
 
         case 'Attack':
           $this->Turn_Dialogue = $this->HandleAttack($_GET['Move']);
+          break;
+
+        case 'Continue':
+          $this->Turn_Dialogue = $this->Continue($_GET['Postcode']);
+          break;
+
+        case 'Restart':
+          $this->Turn_Dialogue = $this->Restart($_GET['Postcode']);
           break;
 
         default:
