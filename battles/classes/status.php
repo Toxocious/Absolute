@@ -125,6 +125,11 @@
           'Max_Turns' => -1,
           'Volatile' => true
         ],
+        'Destiny Bond' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => true,
+        ],
         'Embargo' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
