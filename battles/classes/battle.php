@@ -54,14 +54,20 @@
     /**
      * Once the client has chosen an action, process the current turn.
      * @param string $Action
-     * @param $Move
+     * @param string|int $Data
      */
     public function ProcessTurn
     (
-      string $Action
+      string $Action,
+      $Data
     )
     {
-      if ( !isset($Action) || !in_array($Action, ['Switch', 'Attack', 'Continue', 'Restart', 'UseItem', 'Flee']) )
+      if
+      (
+        !isset($Action) ||
+        !isset($Data) ||
+        !in_array($Action, ['Switch', 'Attack', 'Continue', 'Restart', 'UseItem', 'Flee'])
+      )
       {
         return [
           'Type' => 'Error',
@@ -78,19 +84,19 @@
       switch ($Action)
       {
         case 'Switch':
-          $this->Turn_Dialogue = $this->HandleSwitch($_GET['Slot']);
+          $this->Turn_Dialogue = $this->HandleSwitch($Data);
           break;
 
         case 'Attack':
-          $this->Turn_Dialogue = $this->HandleAttack($_GET['Move']);
+          $this->Turn_Dialogue = $this->HandleAttack($Data);
           break;
 
         case 'Continue':
-          $this->Turn_Dialogue = $this->Continue($_GET['Postcode']);
+          $this->Turn_Dialogue = $this->Continue($Data);
           break;
 
         case 'Restart':
-          $this->Turn_Dialogue = $this->Restart($_GET['Postcode']);
+          $this->Turn_Dialogue = $this->Restart($Data);
           break;
 
         default:

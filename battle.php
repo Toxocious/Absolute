@@ -25,7 +25,7 @@
 
     OnPageLoad: () =>
     {
-      Battle.HandleRequest(null, null);
+      Battle.HandleRequest(null, null, null);
     },
 
     Attack: (Move, event) =>
@@ -34,9 +34,8 @@
         return;
 
       event = event || window.event;
-      console.log(event);
 
-      Battle.HandleRequest(`Action=Attack&Move=${Move}`);
+      Battle.HandleRequest('Attack', Move, event);
     },
 
     Continue: (Postcode, event) =>
@@ -45,9 +44,8 @@
         return false;
 
       event = event || window.event;
-      console.log(event);
 
-      Battle.HandleRequest(`Action=Continue&Postcode=${Postcode}`);
+      Battle.HandleRequest('Continue', Postcode, event);
     },
 
     Restart: (Postcode, event) =>
@@ -56,9 +54,8 @@
         return false;
 
       event = event || window.event;
-      console.log(event);
 
-      Battle.HandleRequest(`Action=Restart&Postcode=${Postcode}`);
+      Battle.HandleRequest('Restart', Postcode, event);
     },
 
     SwitchPokemon: (Slot, event) =>
@@ -67,9 +64,8 @@
         return false;
 
       event = event || window.event;
-      console.log(event);
 
-      Battle.HandleRequest(`Action=Switch&Slot=${Slot}`);
+      Battle.HandleRequest('Switch', Slot, event);
     },
 
     RenderRoster: (Side, Roster, Active) =>
@@ -159,19 +155,35 @@
       }
     },
 
-    HandleRequest: (Data, Callback) =>
+    HandleRequest: (Action, Data, Data_Event) =>
     {
-      console.log(Data);
       if ( !this.Loading )
       {
         this.ID = '<?= $_SESSION['Battle']['Battle_ID']; ?>';
         this.Loading = true;
 
+        const Data_Val = new FormData();
+        Data_Val.append('Battle_ID', this.ID);
+
+        if ( Action )
+          Data_Val.append('Action', Action);
+
+        if ( Data )
+          Data_Val.append('Data', Data);
+
+        if ( Data_Event )
+        {
+          Data_Val.append('Is_Trusted', Data_Event.isTrusted);
+          Data_Val.append('Client_X', Data_Event.clientX);
+          Data_Val.append('Client_Y', Data_Event.clientY);
+          Data_Val.append('Input_Type', Data_Event.type);
+        }
+
         return new Promise((resolve, reject) =>
         {
           const req = new XMLHttpRequest();
-          req.open('GET', `<?= DOMAIN_ROOT; ?>/battles/ajax/handler.php?Battle_ID=${this.ID}&${Data}`);
-          req.send();
+          req.open('POST', `<?= DOMAIN_ROOT; ?>/battles/ajax/handler.php`);
+          req.send(Data_Val);
           req.onerror = (error) => reject(Error(`Network Error: ${error}`));
           req.onload = () =>
           {

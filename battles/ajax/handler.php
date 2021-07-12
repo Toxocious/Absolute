@@ -1,5 +1,5 @@
 <?php
-  if ( !isset($_GET['Battle_ID']) )
+  if ( !isset($_POST['Battle_ID']) )
   {
     $Output['Message'] = [
       'Type' => 'Error',
@@ -13,7 +13,7 @@
   $Fight = $_SESSION['Battle']['Battle_Type'];
   $Battle = new $Fight();
 
-  if ( $_GET['Battle_ID'] != $_SESSION['Battle']['Battle_ID'] )
+  if ( $_POST['Battle_ID'] != $_SESSION['Battle']['Battle_ID'] )
   {
     $Output = null;
 
@@ -31,11 +31,18 @@
   /**
    * Process the desired battle action.
    */
-  if ( isset($_GET['Action']) )
+  if
+  (
+    isset($_POST['Action']) &&
+    $_POST['Action'] != 'null' &&
+    isset($_POST['Data']) &&
+    $_POST['Data'] != 'null'
+  )
   {
-    $Action = Purify($_GET['Action']);
+    $Action = Purify($_POST['Action']);
+    $Data = Purify($_POST['Data']);
 
-    $Turn_Data = $Battle->ProcessTurn($Action);
+    $Turn_Data = $Battle->ProcessTurn($Action, $Data);
 
     $Output['Message'] = $Turn_Data;
   }
