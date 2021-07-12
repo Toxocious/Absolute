@@ -37,6 +37,18 @@
     $_POST['Data'] != 'null'
   )
   {
+    if ( isset($_POST['Client_X']) )
+      $_SESSION['Battle']['Input']['Client_X'] = Purify($_POST['Client_X']);
+
+    if ( isset($_POST['Client_Y']) )
+      $_SESSION['Battle']['Input']['Client_Y'] = Purify($_POST['Client_Y']);
+
+    if ( isset($_POST['Input_Type']) )
+      $_SESSION['Battle']['Input']['Type'] = Purify($_POST['Input_Type']);
+
+    if ( isset($_POST['Is_Trusted']) )
+      $_SESSION['Battle']['Input']['Is_Trusted'] = Purify($_POST['Is_Trusted']);
+
     $Action = Purify($_POST['Action']);
     $Data = Purify($_POST['Data']);
 
