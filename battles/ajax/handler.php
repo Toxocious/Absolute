@@ -15,9 +15,7 @@
 
   if ( $_POST['Battle_ID'] != $_SESSION['Battle']['Battle_ID'] )
   {
-    $Output = null;
-
-    return;
+    $_SESSION['Battle']['Protection']['Battle_ID'] = 'Invalid Postcode';
   }
 
   $Output = [
