@@ -118,11 +118,46 @@
     /**
      * Sets the battle state up to be continued.
      */
-    public function Continue()
+    public function Continue
+    (
+      string $Postcode
+    )
     {
+      if ( !isset($Postcode) )
+      {
+
+      }
+
+      $Dialogue = '';
+
+      if ( $_SESSION['Battle']['Ally']->Active->HP <= 0 )
+      {
+        $Ally_Next_Pokemon = $_SESSION['Battle']['Ally']->NextPokemon();
+        if ( $Ally_Next_Pokemon )
+        {
+          $Ally_Switch_Into = $_SESSION['Battle']['Ally']->Roster[$Ally_Next_Pokemon]->SwitchInto();
+
+          $Dialogue .= $Ally_Switch_Into['Text'];
+        }
+      }
+
+      if ( $_SESSION['Battle']['Foe']->Active->HP <= 0 )
+      {
+        $Foe_Next_Pokemon = $_SESSION['Battle']['Foe']->NextPokemon();
+        if ( $Foe_Next_Pokemon )
+        {
+          $Foe_Switch_Into = $_SESSION['Battle']['Foe']->Roster[$Foe_Next_Pokemon]->SwitchInto();
+          $_SESSION['Battle']['Foe']->Active->EnableMoves();
+
+          $Dialogue .= $Foe_Switch_Into['Text'];
+        }
+      }
+
+      $_SESSION['Battle']['Ally']->Active->EnableMoves();
+
       return [
         'Type' => 'Success',
-        'Text' => 'The battle has continued.',
+        'Text' => $Dialogue,
       ];
     }
 
