@@ -180,14 +180,6 @@
         ];
       }
 
-      foreach ($_SESSION['Battle']['Ally']->Roster as $Roster_Pokemon)
-        $Roster_Pokemon->Active = false;
-        if ( $Roster_Pokemon->Pokemon_ID == $this->Pokemon_ID )
-          $Roster_Pokemon->Active = true;
-
-      $this->Participated = true;
-      $_SESSION['Battle']['Ally']->Active = $this;
-
       if ( $this->HP == 0 )
       {
         return [
@@ -196,9 +188,20 @@
         ];
       }
 
+      foreach ($_SESSION['Battle'][$this->Side]->Roster as $Roster_Pokemon)
+      {
+        $Roster_Pokemon->Active = false;
+
+        if ( $Roster_Pokemon->Pokemon_ID == $this->Pokemon_ID )
+          $Roster_Pokemon->Active = true;
+      }
+
+      $this->Participated = true;
+      $_SESSION['Battle'][$this->Side]->Active = $this;
+
       return [
         'Type' => 'Success',
-        'Text' => "Has been sent {$this->Display_Name} into battle!"
+        'Text' => "{$this->Display_Name} has been sent into battle!"
       ];
     }
 
