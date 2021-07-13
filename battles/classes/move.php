@@ -15,6 +15,7 @@
     public $ID = null;
     public $Name = null;
     public $Slot = null;
+    public $Disabled = null;
 
     public $Accuracy = null;
     public $Power = null;
@@ -88,6 +89,7 @@
       $this->ID = $Move_Data['ID'];
       $this->Name = $Move_Data['Name'];
       $this->Slot = $Slot;
+      $this->Disabled = false;
 
       $this->Accuracy = $Move_Data['Accuracy'];
       $this->Power = $Move_Data['Power'];
