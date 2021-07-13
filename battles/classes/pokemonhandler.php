@@ -383,6 +383,15 @@
     }
 
     /**
+     * Enable the Pokemon's moves so that they may be used.
+     */
+    public function EnableMoves()
+    {
+      for ( $i = 0; $i < 4; $i++ )
+        $this->Moves[$i]->Disabled = false;
+    }
+
+    /**
      * Fetch a random move from the selected Pokemon.
      */
     public function FetchRandomMove()
