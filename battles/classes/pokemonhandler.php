@@ -228,6 +228,9 @@
         $Dialogue = "<br />{$this->Display_Name} took its foe down with it!";
       }
 
+      $Continue = false;
+      $Restart = false;
+
       if ( $Attacker->NextPokemon() )
       {
         $this->GeneratePostcode('Continue');
@@ -236,14 +239,15 @@
       else
       {
         $this->GeneratePostcode('Restart');
-        $Continue = false;
+        $Restart = false;
       }
 
       return [
         'Type' => 'Success',
         'Text' => "{$this->Display_Name} has fainted." .
                   (isset($Dialogue) ? $Dialogue : ''),
-        'Can_Continue' => $Continue,
+        'Continue' => $Continue,
+        'Restart' => $Restart,
       ];
     }
 
