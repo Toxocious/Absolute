@@ -308,6 +308,12 @@
 
               $Attack_Dialogue .= '<br /><br />';
               $Attack_Dialogue .= $Faint_Data['Text'];
+
+              if ( $Faint_Data['Restart'] )
+              {
+                $End_Battle = $this->EndBattle('Ally');
+                $Attack_Dialogue .= "<br />{$End_Battle['Text']}";
+              }
             }
           }
           else
@@ -319,6 +325,12 @@
             $Attack_Dialogue .= $Faint_Data['Text'];
             $Attack_Dialogue .= '<br /><br />';
             $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
+
+            if ( $Faint_Data['Restart'] )
+            {
+              $End_Battle = $this->EndBattle('Foe');
+              $Attack_Dialogue .= "<br />{$End_Battle['Text']}";
+            }
           }
           break;
 
@@ -347,6 +359,12 @@
               $Attack_Dialogue .= $Faint_Data['Text'];
               $Attack_Dialogue .= '<br /><br />';
               $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
+
+              if ( $Faint_Data['Restart'] )
+              {
+                $End_Battle = $this->EndBattle('Foe');
+                $Attack_Dialogue .= "<br />{$End_Battle['Text']}";
+              }
             }
           }
           else
@@ -357,6 +375,12 @@
 
             $Attack_Dialogue .= '<br /><br />';
             $Attack_Dialogue .= $Faint_Data['Text'];
+
+            if ( $Faint_Data['Restart'] )
+            {
+              $End_Battle = $this->EndBattle('Ally');
+              $Attack_Dialogue .= "<br />{$End_Battle['Text']}";
+            }
           }
           break;
       }
