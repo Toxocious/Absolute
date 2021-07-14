@@ -201,10 +201,40 @@
         'Text' => isset($Dialogue) ? $Dialogue : '',
       ];
     }
+
+    /**
+     * Performs the necessary code at the end of a battle.
+     */
+    public function EndBattle
+    (
+      string $Side
+    )
     {
+      if ( $Side == 'Ally' )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "You have been defeated.",
+        ];
+      }
+
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Loser = $_SESSION['Battle']['Ally'];
+          $Winner = $_SESSION['Battle']['Foe'];
+          break;
+        case 'Foe':
+          $Loser = $_SESSION['Battle']['Foe'];
+          $Winner = $_SESSION['Battle']['Ally'];
+          break;
+      }
+
+      $Dialogue = "{$Loser->Username} has been defeated.";
+
       return [
         'Type' => 'Success',
-        'Text' => 'The battle has been restarted.',
+        'Text' => $Dialogue,
       ];
     }
 
