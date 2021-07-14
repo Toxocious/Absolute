@@ -222,6 +222,8 @@
           break;
       }
 
+      $this->Fainted = true;
+
       if ( $Defender->Active->HasStatus('Destiny Bond') )
       {
         $Defender->Active->DecreaseHP($Defender->Active->HP);
