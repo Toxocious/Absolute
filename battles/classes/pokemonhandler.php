@@ -248,6 +248,7 @@
                   (isset($Dialogue) ? $Dialogue : ''),
         'Continue' => $Continue,
         'Restart' => $Restart,
+        'Loser' => $this->Side
       ];
     }
 
