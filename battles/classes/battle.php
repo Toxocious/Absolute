@@ -513,6 +513,10 @@
       ];
     }
 
+    /**
+     * Generate the necessary postcodes.
+     * @param string $Codename
+     */
     public function GeneratePostcode
     (
       string $Codename
