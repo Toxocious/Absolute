@@ -239,7 +239,7 @@
       else
       {
         $this->GeneratePostcode('Restart');
-        $Restart = false;
+        $Restart = true;
       }
 
       return [
