@@ -11,6 +11,8 @@
     public $Roster = null;
     public $Roster_Hash = null;
 
+    public $Clan = null;
+
     public function __construct
     (
       int $User_ID,
@@ -40,6 +42,11 @@
       $this->Roster_Hash = $User['Roster_Hash'];
       $this->Active = $Roster[0];
       $this->Roster = $Roster;
+
+      $Clan = new ClanHandler($User['Clan']);
+      $Clan = $Clan->Initialize();
+      if ( $Clan )
+        $this->Clan = $Clan;
 
       return $this;
     }
