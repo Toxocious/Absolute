@@ -390,7 +390,7 @@
        */
       if ( isset($Faint_Data) )
       {
-        if ( $Faint_Data['Can_Continue'] )
+        if ( $Faint_Data['Continue'] )
         {
           $Attack_Dialogue = "
             <input
@@ -403,7 +403,8 @@
             {$Attack_Dialogue}
           ";
         }
-        else
+
+        if ( $Faint_Data['Restart'] )
         {
           $Attack_Dialogue = "
             <input
