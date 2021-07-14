@@ -164,7 +164,43 @@
     /**
      * Restarts the battle.
      */
-    public function Restart()
+    public function Restart
+    (
+      string $Postcode
+    )
+    {
+      if ( !isset($_SESSION['Battle']) )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'An error occurred while restarting your battle.',
+        ];
+      }
+
+      if ( !isset($Postcode) )
+      {
+
+      }
+
+      $Ally_ID = $_SESSION['Battle']['Ally']->ID;
+      $Foe_ID = $_SESSION['Battle']['Foe']->ID;
+      $Fight = $_SESSION['Battle']['Battle_Type'];
+
+      unset($_SESSION['Battle']);
+
+      $Battle = new $Fight();
+      $Restart = $Battle->CreateBattle($Ally_ID, $Foe_ID);
+
+      if ( !$Restart )
+        $Dialogue = 'An error occurred while restarting your battle.';
+      else
+        $Dialogue = 'The battle has begun.';
+
+      return [
+        'Type' => 'Success',
+        'Text' => isset($Dialogue) ? $Dialogue : '',
+      ];
+    }
     {
       return [
         'Type' => 'Success',
