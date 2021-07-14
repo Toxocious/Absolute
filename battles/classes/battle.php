@@ -155,6 +155,9 @@
 
       $_SESSION['Battle']['Ally']->Active->EnableMoves();
 
+      if ( isset($_SESSION['Battle']['Postcodes']['Continue']) )
+        unset($_SESSION['Battle']['Postcodes']['Continue']);
+
       return [
         'Type' => 'Success',
         'Text' => $Dialogue,
