@@ -91,6 +91,10 @@
       {
         document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');
       }
+      else
+      {
+        document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', '');
+      }
 
       for ( let i = 0; i < Roster.length; i++ )
       {
@@ -111,6 +115,8 @@
         }
         else
         {
+          document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('style', '');
+
           if ( Side == 'Ally' )
           {
             document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot}, e);`);
