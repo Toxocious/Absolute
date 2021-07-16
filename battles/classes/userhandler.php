@@ -90,6 +90,42 @@
 
       return true;
     }
+
+    /**
+     * Increases the amount of Abso_Coins the user has.
+     * @param int $Abso_Coins_Gained
+     */
+    public function IncreaseAbsoCoins
+    (
+      int $Abso_Coins_Gained
+    )
+    {
+      global $PDO;
+
+      if ( !isset($Abso_Coins_Gained) )
+        return false;
+
+      if ( $Abso_Coins_Gained < 0 )
+        return false;
+
+      try
+      {
+        $Update_Abso_Coins = $PDO->prepare("
+          UPDATE `user_currency`
+          SET `Abso_Coins` = `Abso_Coins` + ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Abso_Coins->execute([ $Abso_Coins_Gained, $this->ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
     /**
      * Finds and returns the index of the next non-fainted Pokemon in the roster.
      * Returns false if all are fainted.
