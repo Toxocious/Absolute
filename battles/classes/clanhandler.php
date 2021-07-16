@@ -45,6 +45,41 @@
     }
 
     /**
+     * Increase the clan's exp.
+     * @param int $Clan_Exp
+     */
+    public function IncreaseExp
+    (
+      int $Clan_Exp
+    )
+    {
+      global $PDO;
+
+      if ( !isset($Clan_Exp) )
+        return false;
+
+      if ( $Clan_Exp < 0 )
+        return false;
+
+      try
+      {
+        $Update_Clan_Exp = $PDO->prepare("
+          UPDATE `clans`
+          SET `Experience` = `Experience` + ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Clan_Exp->execute([ $Clan_Exp, $this->ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
      * Determine if the user has a given clan upgrade.
      */
     public function HasUpgrade
