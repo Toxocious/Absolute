@@ -70,6 +70,9 @@
       if ( isset($_SESSION['Battle']['Pay_Day']) )
         $Money += $_SESSION['Battle']['Pay_Day'];
 
+      if ( $_SESSION['Battle']['Ally']->Active->Item->Name == 'Amulet Coin' )
+        $Money *= 2;
+
       $Clan_Bonus = $_SESSION['Battle']['Ally']->Clan->HasUpgrade(4);
       if ( $Clan_Bonus )
         $Money *= floor(100 / $Clan_Bonus['Current_Level']);
