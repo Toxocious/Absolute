@@ -24,6 +24,7 @@
 
     public $Earn_Pokemon_Exp = true;
     public $Earn_Trainer_Exp = true;
+    public $Earn_Clan_Exp = true;
     public $Earn_Money = true;
     public $Earn_Abso_Coins = true;
 
