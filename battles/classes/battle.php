@@ -66,6 +66,14 @@
       $Data
     )
     {
+      if ( !isset($_SESSION['Battle']) )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'An error occurred while processing your battle action.',
+        ];
+      }
+
       if
       (
         !isset($Action) ||
@@ -176,14 +184,6 @@
       string $Postcode
     )
     {
-      if ( !isset($_SESSION['Battle']) )
-      {
-        return [
-          'Type' => 'Error',
-          'Text' => 'An error occurred while restarting your battle.',
-        ];
-      }
-
       if ( !isset($Postcode) )
       {
 
