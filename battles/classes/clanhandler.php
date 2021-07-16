@@ -27,6 +27,8 @@
 
       $this->ID = $Clan['ID'];
       $this->Name = $Clan['Name'];
+      $this->Level = FetchLevel($Clan['Experience_Raw'], 'Clan');
+      $this->Exp = $Clan['Experience_Raw'];
       $this->Bonuses = null;
 
       $Fetch_Bonuses = $Clan_Class->FetchUpgrades($Clan['ID']);
