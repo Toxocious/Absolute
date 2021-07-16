@@ -57,6 +57,40 @@
     }
 
     /**
+     * Increases the amount of Money the user has.
+     * @param int $Money_Gained
+     */
+    public function IncreaseMoney
+    (
+      int $Money_Gained
+    )
+    {
+      global $PDO;
+
+      if ( !isset($Money_Gained) )
+        return false;
+
+      if ( $Money_Gained < 0 )
+        return false;
+
+      try
+      {
+        $Update_Money = $PDO->prepare("
+          UPDATE `user_currency`
+          SET `Money` = `Money` + ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Money->execute([ $Money_Gained, $this->ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+    /**
      * Finds and returns the index of the next non-fainted Pokemon in the roster.
      * Returns false if all are fainted.
      */
