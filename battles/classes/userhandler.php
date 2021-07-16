@@ -90,6 +90,8 @@
         HandleError($e);
       }
 
+      $this->Trainer_Exp += $Trainer_Exp;
+
       return true;
     }
 
