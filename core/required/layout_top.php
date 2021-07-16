@@ -106,14 +106,14 @@
 						<div>
 							<img src='<?= DOMAIN_SPRITES; ?>/Assets/Money.png' />
 						</div>
-						<div>$<?= number_format($User_Data['Money']); ?></div>
+						<div id='user_money'>$<?= number_format($User_Data['Money']); ?></div>
 					</div>
 
 					<div class='stat border-gradient w-150px'>
 						<div>
 							<img src='<?= DOMAIN_SPRITES; ?>/Assets/Abso_Coins.png' />
 						</div>
-						<div><?= number_format($User_Data['Abso_Coins']); ?></div>
+						<div id='user_abso_coins'><?= number_format($User_Data['Abso_Coins']); ?></div>
 					</div>
 
 					<div class='stat border-gradient w-150px'>
