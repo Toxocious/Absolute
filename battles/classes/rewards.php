@@ -56,4 +56,20 @@
 
       return $Trainer_Exp;
     }
+
+    /**
+     * Calculate how much Clan Exp the user has earned.
+     */
+    public function CalcClanExpYield()
+    {
+      $Clan_Exp = 0;
+
+      $Clan_Exp += count($_SESSION['Battle']['Foe']->Roster);
+
+      $Clan_Bonus = $_SESSION['Battle']['Ally']->Clan->HasUpgrade(1);
+      if ( $Clan_Bonus )
+        $Clan_Exp += $Clan_Bonus['Current_Level'];
+
+      return $Clan_Exp;
+    }
   }
