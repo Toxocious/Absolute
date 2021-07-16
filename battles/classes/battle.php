@@ -255,6 +255,19 @@
         ";
       }
 
+      if ( $this->Earn_Abso_Coins )
+      {
+        $Abso_Coins_Gain = $Rewards->CalcAbsoCoinYield();
+        $_SESSION['Battle']['Ally']->IncreaseAbsoCoins($Abso_Coins_Gain);
+
+        $Dialogue .= "
+          <div style='display: inline-block; font-weight: bold; margin-top: 5px; width: 50px;'>
+            +" . number_format($Abso_Coins_Gain) . "
+            <img src='" . DOMAIN_SPRITES . "/Assets/Abso_Coins.png' style='vertical-align: middle;' />
+          </div>
+        ";
+      }
+
       return [
         'Type' => 'Success',
         'Text' => $Dialogue,
