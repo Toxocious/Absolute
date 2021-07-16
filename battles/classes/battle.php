@@ -22,7 +22,10 @@
     private $Battle_Sim = false;
     private $Battle_Sim_Difficulty = false;
 
-    public $Processing_Side = null;
+    public $Earn_Pokemon_Exp = true;
+    public $Earn_Trainer_Exp = true;
+    public $Earn_Money = true;
+    public $Earn_Abso_Coins = true;
 
     public $Ally_Move = null;
     public $Foe_Move = null;
