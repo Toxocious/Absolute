@@ -16,6 +16,13 @@
         $_SESSION['Battle']['Ally']->IncreaseTrainerExp($Trainer_Exp);
 
         $Dialogue .= 'You have gained +<b>' . number_format($Trainer_Exp) . '</b> Trainer Exp.<br />';
+
+        $Check_Level = FetchLevel($_SESSION['Battle']['Ally']->Trainer_Exp, 'Trainer');
+        if ( $_SESSION['Battle']['Ally']->Trainer_Level != $Check_Level )
+        {
+          $_SESSION['Battle']['Ally']->Trainer_Level = $Check_Level;
+          $Dialogue .= "You have reached Trainer Level <b>" . number_format($Check_Level) . "</b>!<br />";
+        }
       }
 
       if ( $this->Earn_Clan_Exp )
