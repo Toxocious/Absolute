@@ -57,6 +57,41 @@
     }
 
     /**
+     * Increase the amount of Trainer Exp the user has.
+     * @param int $Trainer_Exp
+     */
+    public function IncreaseTrainerExp
+    (
+      int $Trainer_Exp
+    )
+    {
+      global $PDO;
+
+      if ( !isset($Trainer_Exp) )
+        return false;
+
+      if ( $Trainer_Exp < 0 )
+        return false;
+
+      try
+      {
+        $Update_Trainer_Exp = $PDO->prepare("
+          UPDATE `users`
+          SET `TrainerExp` = `TrainerExp` + ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Trainer_Exp->execute([ $Trainer_Exp, $this->ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
      * Increases the amount of Money the user has.
      * @param int $Money_Gained
      */
