@@ -31,6 +31,13 @@
         $_SESSION['Battle']['Ally']->Clan->IncreaseExp($Clan_Exp);
 
         $Dialogue .= 'Your clan has gained +<b>' . number_format($Clan_Exp) . '</b> Exp.<br />';
+
+        $Check_Level = FetchLevel($_SESSION['Battle']['Ally']->Clan->Exp, 'Clan');
+        if ( $_SESSION['Battle']['Ally']->Clan->Level != $Check_Level )
+        {
+          $_SESSION['Battle']['Ally']->Clan->Level = $Check_Level;
+          $Dialogue .= "{$_SESSION['Battle']['Ally']->Clan->Name} has reached Clan Level <b>" . number_format($Check_Level) . "</b>!<br />";
+        }
       }
 
       if ( $this->Earn_Money )
