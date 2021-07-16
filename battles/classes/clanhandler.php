@@ -84,6 +84,35 @@
     }
 
     /**
+     * Increase the clan's Clan Points.
+     * @param int $Clan_Points
+     */
+    public function IncreaseClanPoints
+    (
+      int $Clan_Points
+    )
+    {
+      global $PDO;
+
+      try
+      {
+        $Update_Clan_Exp = $PDO->prepare("
+          UPDATE `clans`
+          SET `Clan_Points` = `Clan_Points` + ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Clan_Exp->execute([ $Clan_Points, $this->ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
      * Determine if the user has a given clan upgrade.
      */
     public function HasUpgrade
