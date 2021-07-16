@@ -25,4 +25,20 @@
 
       return $Money;
     }
+
+    /**
+     * Calculate how much Abso Coins the user is awarded.
+     */
+    public function CalcAbsoCoinYield()
+    {
+      $Abso_Coins = $this->Abso_Coins;
+
+      $Abso_Coins += count($_SESSION['Battle']['Foe']->Roster);
+
+      $Clan_Bonus = $_SESSION['Battle']['Ally']->Clan->HasUpgrade(5);
+      if ( $Clan_Bonus )
+        $Abso_Coins += $Clan_Bonus['Current_Level'];
+
+      return $Abso_Coins;
+    }
   }
