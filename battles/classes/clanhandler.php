@@ -78,6 +78,8 @@
         HandleError($e);
       }
 
+      $this->Exp += $Clan_Exp;
+
       return true;
     }
 
