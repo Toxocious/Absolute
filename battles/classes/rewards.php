@@ -35,8 +35,12 @@
         $Check_Level = FetchLevel($_SESSION['Battle']['Ally']->Clan->Exp, 'Clan');
         if ( $_SESSION['Battle']['Ally']->Clan->Level != $Check_Level )
         {
+          $Level_Diff = $Check_Level - $_SESSION['Battle']['Ally']->Clan->Level;
+
           $_SESSION['Battle']['Ally']->Clan->Level = $Check_Level;
           $Dialogue .= "{$_SESSION['Battle']['Ally']->Clan->Name} has reached Clan Level <b>" . number_format($Check_Level) . "</b>!<br />";
+
+          $_SESSION['Battle']['Ally']->Clan->IncreaseClanPoints($Level_Diff);
         }
       }
 
