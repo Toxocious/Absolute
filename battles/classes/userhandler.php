@@ -42,6 +42,8 @@
 
       $this->ID = $User['ID'];
       $this->Username = $User['Username'];
+      $this->Trainer_Level = FetchLevel($User['Trainer_Exp_Raw'], 'Trainer');
+      $this->Trainer_Exp = $User['Trainer_Exp_Raw'];
       $this->Roster_Hash = $User['Roster_Hash'];
       $this->Active = $Roster[0];
       $this->Roster = $Roster;
