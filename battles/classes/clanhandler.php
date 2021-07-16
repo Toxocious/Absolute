@@ -43,4 +43,24 @@
 
       return $this;
     }
+
+    /**
+     * Determine if the user has a given clan upgrade.
+     */
+    public function HasUpgrade
+    (
+      int $Upgrade_ID
+    )
+    {
+      global $Clan_Class;
+
+      if ( !isset($Upgrade_ID) )
+        return false;
+
+      $Upgrade_Check = $Clan_Class->FetchPurchasedUpgrade($this->ID, $Upgrade_ID);
+      if ( !$Upgrade_Check )
+        return false;
+
+      return $Upgrade_Check;
+    }
   }
