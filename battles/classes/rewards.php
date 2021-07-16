@@ -3,6 +3,59 @@
 
   class Rewards extends Battle
   {
+    /**
+     * Process the necessary rewards for the user.
+     */
+    public function ProcessRewards()
+    {
+      $Dialogue = '<br />';
+
+      if ( $this->Earn_Trainer_Exp )
+      {
+        $Trainer_Exp = $this->CalcTrainerExpYield();
+        $_SESSION['Battle']['Ally']->IncreaseTrainerExp($Trainer_Exp);
+
+        $Dialogue .= 'You have gained +<b>' . number_format($Trainer_Exp) . '</b> Trainer Exp.<br />';
+      }
+
+      if ( $this->Earn_Clan_Exp )
+      {
+        $Clan_Exp = $this->CalcClanExpYield();
+        $_SESSION['Battle']['Ally']->Clan->IncreaseExp($Clan_Exp);
+
+        $Dialogue .= 'Your clan has gained +<b>' . number_format($Clan_Exp) . '</b> Exp.<br />';
+      }
+
+      if ( $this->Earn_Money )
+      {
+        $Money_Gain = $this->CalcMoneyYield();
+        $_SESSION['Battle']['Ally']->IncreaseMoney($Money_Gain);
+
+        $Dialogue .= "
+          <div style='display: inline-block; font-weight: bold; margin-top: 5px; width: 50px;'>
+            +" . number_format($Money_Gain) . "
+            <img src='" . DOMAIN_SPRITES . "/Assets/Money.png' style='vertical-align: middle;' />
+          </div>
+        ";
+      }
+
+      if ( $this->Earn_Abso_Coins )
+      {
+        $Abso_Coins_Gain = $this->CalcAbsoCoinYield();
+        $_SESSION['Battle']['Ally']->IncreaseAbsoCoins($Abso_Coins_Gain);
+
+        $Dialogue .= "
+          <div style='display: inline-block; font-weight: bold; margin-top: 5px; width: 50px;'>
+            +" . number_format($Abso_Coins_Gain) . "
+            <img src='" . DOMAIN_SPRITES . "/Assets/Abso_Coins.png' style='vertical-align: middle;' />
+          </div>
+        ";
+      }
+
+      return [
+        'Text' => $Dialogue,
+      ];
+    }
 
     /**
      * Calculate how much money the user is awarded.
