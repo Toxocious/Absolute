@@ -85,7 +85,7 @@
       document.querySelector(`[slot='${Side}_Level']`).innerHTML = Active.Level.toLocaleString();
       document.querySelector(`[slot='${Side}_HP_Bar']`).setAttribute('style', `width: ` + ((Active.HP / Active.Max_HP) * 100) + `%`);
       document.querySelector(`[slot='${Side}_Exp_Bar']`).setAttribute('style', `width: ${Active.Exp_Needed.Percent}%`);
-      document.querySelector(`[slot='${Side}_Exp_Needed']`).innerHTML = Active.Exp_Needed.Exp.toLocaleString();
+      document.querySelector(`[slot='${Side}_Exp_Needed']`).innerHTML = Active.Exp_Needed.Exp.toLocaleString(undefined, {maximumFractionDigits: 0});
 
       if ( Active.Fainted )
       {
