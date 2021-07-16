@@ -161,6 +161,19 @@
       }
     },
 
+    RenderCurrencies: (Money, Abso_Coins) =>
+    {
+      if
+      (
+        typeof Money === undefined ||
+        typeof Abso_Coins === undefined
+      )
+        return false;
+
+        document.getElementById(`user_money`).innerHTML = Money.toLocaleString(undefined, {maximumFractionDigits: 0});
+        document.getElementById(`user_abso_coins`).innerHTML = Abso_Coins.toLocaleString(undefined, {maximumFractionDigits: 0});
+    },
+
     HandleRequest: (Action, Data, Data_Event) =>
     {
       if ( !this.Loading )
@@ -203,6 +216,7 @@
               Battle.RenderMoves(JSON_Data.Ally.Active.Moves);
               Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active);
               Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active);
+              Battle.RenderCurrencies(JSON_Data.Ally.Money, JSON_Data.Ally.Abso_Coins);
 
               document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
               resolve(req.response);
