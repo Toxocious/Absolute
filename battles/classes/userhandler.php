@@ -13,6 +13,9 @@
 
     public $Clan = null;
 
+    public $Money = null;
+    public $Abso_Coins = null;
+
     public function __construct
     (
       int $User_ID,
@@ -42,6 +45,8 @@
       $this->Roster_Hash = $User['Roster_Hash'];
       $this->Active = $Roster[0];
       $this->Roster = $Roster;
+      $this->Money = $User['Money'];
+      $this->Abso_Coins = $User['Abso_Coins'];
 
       $Clan = new ClanHandler($User['Clan']);
       $Clan = $Clan->Initialize();
