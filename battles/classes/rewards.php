@@ -3,15 +3,13 @@
 
   class Rewards extends Battle
   {
-    public $Money = 0;
-    public $Abso_Coins = 0;
 
     /**
      * Calculate how much money the user is awarded.
      */
     public function CalcMoneyYield()
     {
-      $Money = $this->Money;
+      $Money = 0;
 
       foreach ( $_SESSION['Battle']['Foe']->Roster as $Pokemon )
         $Money += $Pokemon->Level;
@@ -31,7 +29,7 @@
      */
     public function CalcAbsoCoinYield()
     {
-      $Abso_Coins = $this->Abso_Coins;
+      $Abso_Coins = 0;
 
       $Abso_Coins += count($_SESSION['Battle']['Foe']->Roster);
 
@@ -40,5 +38,22 @@
         $Abso_Coins += $Clan_Bonus['Current_Level'];
 
       return $Abso_Coins;
+    }
+
+    /**
+     * Calculate how much Trainer Exp the user has earned.
+     */
+    public function CalcTrainerExpYield()
+    {
+      $Trainer_Exp = 0;
+
+      foreach ( $_SESSION['Battle']['Foe']->Roster as $Pokemon )
+        $Trainer_Exp += $Pokemon->Level;
+
+      $Clan_Bonus = $_SESSION['Battle']['Ally']->Clan->HasUpgrade(3);
+      if ( $Clan_Bonus )
+        $Trainer_Exp += $Clan_Bonus['Current_Level'];
+
+      return $Trainer_Exp;
     }
   }
