@@ -236,7 +236,24 @@
           break;
       }
 
-      $Dialogue = "{$Loser->Username} has been defeated.";
+      $Dialogue = "
+        {$Loser->Username} has been defeated.
+        <br />
+      ";
+
+      $Rewards = new \Rewards();
+      if ( $this->Earn_Money )
+      {
+        $Money_Gain = $Rewards->CalcMoneyYield();
+        $_SESSION['Battle']['Ally']->IncreaseMoney($Money_Gain);
+
+        $Dialogue .= "
+          <div style='display: inline-block; font-weight: bold; margin-top: 5px; width: 50px;'>
+            +" . number_format($Money_Gain) . "
+            <img src='" . DOMAIN_SPRITES . "/Assets/Money.png' style='vertical-align: middle;' />
+          </div>
+        ";
+      }
 
       return [
         'Type' => 'Success',
