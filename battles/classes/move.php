@@ -210,7 +210,7 @@
         $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
       }
 
-      $Attacker->Last_Move = $this->Slot;
+      $Attacker->Last_Move = $this->Name;
 
       return [
         'Type' => 'Success',
