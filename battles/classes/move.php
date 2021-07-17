@@ -652,7 +652,7 @@
       if ( $Defender->HasStatus('Substitute') )
       {
         return [
-          'Text' => "It hit {$Defender->Display_Name}'s Substitute!",
+          'Text' => "<br />It hit {$Defender->Display_Name}'s Substitute!",
         ];
       }
 
@@ -673,7 +673,7 @@
         }
 
         return [
-          'Text' => "{$Defender->Display_Name} was protected by it's Baneful Bunker!" .
+          'Text' => "<br />{$Defender->Display_Name} was protected by it's Baneful Bunker!" .
                     (isset($Text) ? $Text : ''),
           'Damage' => 0
         ];
@@ -696,6 +696,7 @@
 
           return [
             'Text' => "
+              <br />
               {$Defender->Display_Name} was protected from the attack!<br />" .
               (isset($Effect_Text) ? $Effect_Text : ''),
           ];
@@ -715,6 +716,7 @@
 
           return [
             'Text' => "
+              <br />
               {$Defender->Display_Name} was protected from the attack!<br />" .
               (isset($Effect_Text) ? $Effect_Text : ''),
           ];
@@ -731,6 +733,7 @@
 
         return [
           'Text' => "
+            <br />
             {$Defender->Display_Name} was protected from the attack!<br />" .
             (isset($Effect_Text) ? $Effect_Text : ''),
         ];
@@ -747,7 +750,7 @@
           {
             $Attacker->DecreaseHP(floor($Attacker->Max_HP / 4));
 
-            $Text .= "{$Attacker->Display_Name} took damage from the Aftermath!<br />";
+            $Text .= "<br />{$Attacker->Display_Name} took damage from the Aftermath!<br />";
           }
         }
       }
@@ -765,7 +768,7 @@
           {
             $Attacker->SetStatus('Infatuated');
 
-            $Text .= "{$Attacker->Display_Name} has become infatuated!<br />";
+            $Text .= "<br />{$Attacker->Display_Name} has become infatuated!<br />";
           }
         }
       }
@@ -790,15 +793,15 @@
               {
                 case 1:
                   $Attacker->SetStatus('Paralysis');
-                  $Text .= "{$Attacker->Display_Name} has been paralyzed by the {$Defender->Display_Name}'s Effect Spore!<br />";
+                  $Text .= "<br />{$Attacker->Display_Name} has been paralyzed by the {$Defender->Display_Name}'s Effect Spore!<br />";
                   break;
                 case 2:
                   $Attacker->SetStatus('Poisoned');
-                  $Text .= "{$Attacker->Display_Name} has been poisoned by the {$Defender->Display_Name}'s Effect Spore!<br />";
+                  $Text .= "<br />{$Attacker->Display_Name} has been poisoned by the {$Defender->Display_Name}'s Effect Spore!<br />";
                   break;
                 case 3:
                   $Attacker->SetStatus('Sleep');
-                  $Text .= "{$Attacker->Display_Name} has been forced asleep by the {$Defender->Display_Name}'s Effect Spore!<br />";
+                  $Text .= "<br />{$Attacker->Display_Name} has been forced asleep by the {$Defender->Display_Name}'s Effect Spore!<br />";
                   break;
               }
             }
@@ -816,7 +819,7 @@
             {
               $Attacker->SetStatus('Burned');
 
-              $Text .= "{$Attacker->Display_Name} was burned!<br />";
+              $Text .= "<br />{$Attacker->Display_Name} was burned!<br />";
             }
           }
         }
@@ -838,7 +841,7 @@
           {
             $Attacker->Stats['Speed']->SetModifier(-1);
 
-            $Text .= "{$Attacker->Display_Name} speed has dropped from the goo!<br />";
+            $Text .= "<br />{$Attacker->Display_Name} speed has dropped from the goo!<br />";
           }
         }
       }
@@ -849,7 +852,7 @@
         {
           $Attacker->DecreaseHP(floor($Attacker->Max_HP / 8));
 
-          $Text .= "{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Ability}!<br />";
+          $Text .= "<br />{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Ability}!<br />";
         }
       }
 
@@ -859,7 +862,7 @@
         {
           $Attacker->SetAbility('Mummy');
 
-          $Text .= "{$Attacker->Display_Name}'s Ability has become Mummy!<br />";
+          $Text .= "<br />{$Attacker->Display_Name}'s Ability has become Mummy!<br />";
         }
       }
 
@@ -869,7 +872,7 @@
         {
           $Defender->SetStatus('Perish Body');
 
-          $Text .= "{$Defender->Display_Name} will perish in 3 turns.<br />";
+          $Text .= "<br />{$Defender->Display_Name} will perish in 3 turns.<br />";
         }
         else
         {
@@ -877,6 +880,7 @@
           $Defender->SetStatus('Perish Body');
 
           $Text .= "
+            <br />
             {$Attacker->Display_Name} will perish in 3 turns.<br />
             {$Defender->Display_Name} will perish in 3 turns.<br />
           ";
@@ -911,7 +915,7 @@
           {
             $Defender->Item = new HeldItem($Attacker->Item->ID);
 
-            $Text .= "{$Defender->Display_Name} stole {$Attacker->Display_Name}'s {$Attacker->Item->Name}!<br />";
+            $Text .= "<br />{$Defender->Display_Name} stole {$Attacker->Display_Name}'s {$Attacker->Item->Name}!<br />";
           }
         }
       }
@@ -926,7 +930,7 @@
             {
               $Attacker->SetStatus('Poisoned');
 
-              $Text .= "{$Attacker->Display_Name} was poisoned!<br />";
+              $Text .= "<br />{$Attacker->Display_Name} was poisoned!<br />";
             }
           }
         }
@@ -942,7 +946,7 @@
             {
               $Attacker->SetStatus('Paralysis');
 
-              $Text .= "{$Attacker->Display_Name} was paralyzed!<br />";
+              $Text .= "<br />{$Attacker->Display_Name} was paralyzed!<br />";
             }
           }
         }
@@ -964,7 +968,7 @@
             $Attacker->Ability = $Defender->Ability;
             $Defender->Ability = $Attacker->Ability;
 
-            $Text .= "{$Attacker->Display_Name} has swapped abilities with {$Defender->Display_Name}!<br />";
+            $Text .= "<br />{$Attacker->Display_Name} has swapped abilities with {$Defender->Display_Name}!<br />";
           }
         }
       }
@@ -975,7 +979,7 @@
         {
           $Attacker->DecreaseHP(floor($Attacker->Max_HP / 6));
 
-          $Text .= "{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
+          $Text .= "<br />{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
         }
       }
     }
