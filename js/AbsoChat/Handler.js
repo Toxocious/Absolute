@@ -58,7 +58,7 @@ const Handler = {
      * The client didn't connect to the chat for one reason or another.
      * Display that Absol is likely offline.
      */
-    if ( typeof Absolute.user.connected === undefined )
+    if ( typeof Absolute.user.connected === 'undefined' )
     {
       Handler.Message = `
         <table style="width: 100%; height: 100%;">
@@ -122,7 +122,7 @@ const Handler = {
        * - Private messages that were only sent to the user.
        */
       if (
-        !Message_Data.Message.Private.isPrivate ||
+        !Message_Data.Message.Private.isPrivate || 
         ( Message_Data.Message.Private.isPrivate && Message_Data.Message.Private.Private_To === Absolute.user.user_id )
       )
       {
