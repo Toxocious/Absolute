@@ -210,7 +210,10 @@
         $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
       }
 
-      $Attacker->Last_Move = $this->Name;
+      $Attacker->Last_Move = [
+        'Name' => $this->Name,
+        'Slot' => $this->Slot,
+      ];
 
       return [
         'Type' => 'Success',
@@ -656,7 +659,7 @@
         ];
       }
 
-      if ( $Defender->Last_Move == 'Baneful Bunker' )
+      if ( $Defender->Last_Move['Name'] == 'Baneful Bunker' )
       {
         if
         (
@@ -679,12 +682,12 @@
         ];
       }
 
-      if ( $Defender->Last_Move == 'Beak Blast')
+      if ( $Defender->Last_Move['Name'] == 'Beak Blast')
         if ( $Defender->HasStatus('Charging') )
           if ( $Attacker->Item->Name != 'Protective Pads' )
             $Attacker->SetStatus('Burn');
 
-      if ( $Defender->Last_Move == "King's Shield" )
+      if ( $Defender->Last_Move['Name'] == "King's Shield" )
       {
         if ( $this->Damage_Type != 'Status' )
         {
@@ -703,7 +706,7 @@
         }
       }
 
-      if ( $Defender->Last_Move == 'Obstruct' )
+      if ( $Defender->Last_Move['Name'] == 'Obstruct' )
       {
         if ( $this->Damage_Type != 'Status' )
         {
@@ -723,7 +726,7 @@
         }
       }
 
-      if ( $Defender->Last_Move == 'Spiky Shield' )
+      if ( $Defender->Last_Move['Name'] == 'Spiky Shield' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {

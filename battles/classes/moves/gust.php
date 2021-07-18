@@ -97,7 +97,7 @@
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       if ( $Defender->HasStatus('Semi-Invulnerability') )
-        if ( in_array($Defender->Last_Move, ['Fly', 'Bounce', 'Sky Drop']) )
+        if ( in_array($Defender->Last_Move['Name'], ['Fly', 'Bounce', 'Sky Drop']) )
           $Damage *= 2;
 
       return [
