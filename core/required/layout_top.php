@@ -223,11 +223,7 @@
       <aside>
         <div class='panel chat' id='AbsoChat'>
           <div class='user_options' id='user_options' style='display: none'></div>
-          <div class='body' id='chatContent'>
-            <div style='margin-top: 150px;'>
-              <div class='spinner' style='left: 42.5%; position: relative;'></div>
-            </div>
-          </div>
+          <div class='body' id='chatContent'></div>
           <?php
             if
             (
