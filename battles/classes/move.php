@@ -461,7 +461,6 @@
         case 'Flying Press':
           if ( $Defender->HasStatus('Minimize') )
             return true;
-
           break;
 
         case 'Thunder':
@@ -471,13 +470,11 @@
 
           if ( $this->Weather == 'Sunlight' )
             $this->Accuracy = 50;
-
           break;
 
         case 'Blizzard':
           if ( $this->Weather == 'Hail' )
             return true;
-
           break;
 
         case 'Dream Eater':
@@ -485,8 +482,11 @@
             return true;
           else
             return false;
-
           break;
+
+        case 'Stomp':
+          if ( $Defender->Evasion > 1  && !$Defender->HasStatus('Semi-Invulnerable') )
+            return true;
       }
 
       if ( $Defender->HasStatus('Bounce') )
