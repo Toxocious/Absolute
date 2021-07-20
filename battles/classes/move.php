@@ -1189,4 +1189,15 @@
     {
       return $Damage_Dealt * ($this->Drain / 100);
     }
+
+    /**
+     * Calculate how much damage is taken from recoil.
+     */
+    public function CalcRecoil
+    (
+      int $Damage_Dealt
+    )
+    {
+      return $Damage_Dealt * ($this->Recoil / 100);
+    }
   }
