@@ -98,6 +98,11 @@
           break;
       }
 
+      $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      if ( $Turn_First_Attacker == $Side )
+        if ( mt_rand(1, 100) <= 30 )
+          $Defender->SetStatus('Flinch');
+
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       if ( $Defender->Evasion > 1 )
