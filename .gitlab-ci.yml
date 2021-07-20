@@ -3,7 +3,7 @@ image: php:7.2
 stages:
   - deploy
 
-before_script: 
+before_script:
   - apt-get update -qq
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
   - eval $(ssh-agent -s)
@@ -14,7 +14,7 @@ before_script:
   - ssh-keyscan 45.79.0.55 >> ~/.ssh/authorized_keys
   - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   - chmod 644 ~/.ssh
-  
+
 stage_deploy:
   only:
     refs:
@@ -27,3 +27,15 @@ stage_deploy:
     #   .json:      package.json & map.json files
     #   .scss/.css: layout system
     - rsync -azhP --no-perms --filter=':- .gitignore' --include='*/' --include='*.'{php,js,css,scss,png,tmx,sh} --exclude='*' ./ gitlab@45.79.0.55:/var/www/html/absoluterpg.com/public_html/
+    # Let's start up Absolute Chat.
+    - echo "Absolute Chat Installation - Started"
+    # CD into Absolute Chat's directory.
+    - cd /var/www/html/absoluterpg.com/public_html/absol
+    # Install packages in case of changes.
+    - npm install
+    # It's probably safe enough to audit and fix non-breaking changes.
+    - npm audit fix
+    # Run Absol via Forever.
+    - forever stop absol.js
+    - forever start -o out.log absol.js
+    - echo "Absolute Chat Installation - Complete"
