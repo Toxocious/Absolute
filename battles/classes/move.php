@@ -299,6 +299,8 @@
               ($Healing > 0 ? "<br />{$Attacker->Display_Name} healed for {$Healing} HP!" : '') .
               ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
               ($Does_Move_Crit ? '<br />It critically hit!' : '') .
+              ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
+              ($this->Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
               ($this->Contact ? $this->HandleContact($Side)['Text'] : '');
 
       return [
