@@ -184,9 +184,19 @@
       $Does_Move_Hit = $this->DoesMoveHit($Side);
       if ( !$Does_Move_Hit )
       {
+        if ( $this->Name == 'Jump Kick' )
+        {
+          $Attacker->DecreaseHP(floor($Attacker->Max_HP / 2));
+
+          $Miss_Dialogue = "
+            {$Attacker->Display_Name} kept going and crashed!
+          ";
+        }
+
         return [
           'Type' => 'Success',
-          'Text' => "{$Attacker->Display_Name} used {$this->Name}, but it missed!",
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}, but it missed!" .
+                    (isset($Miss_Dialogue) ? $Miss_Dialogue : ''),
           'Damage' => 0,
           'Heal' => 0,
         ];
