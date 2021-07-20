@@ -1187,6 +1187,6 @@
       int $Damage_Dealt
     )
     {
-      return 0;
+      return $Damage_Dealt * ($this->Drain / 100);
     }
   }
