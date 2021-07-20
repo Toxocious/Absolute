@@ -32,6 +32,7 @@
     public $Effect_Short = null;
     public $Ailment = null;
     public $Ailment_Chance = null;
+    public $Recoil = null;
     public $Drain = null;
     public $Healing = null;
     public $Max_Hits = null;
@@ -106,6 +107,7 @@
       $this->Effect_Short = $Move_Data['Effect_Short'];
       $this->Ailment = $Move_Data['Ailment'];
       $this->Ailment_Chance = $Move_Data['Ailment_Chance'];
+      $this->Recoil = $Move_Data['Recoil'];
       $this->Drain = $Move_Data['Drain'];
       $this->Healing = $Move_Data['Healing'];
       $this->Max_Hits = $Move_Data['Max_Hits'];
