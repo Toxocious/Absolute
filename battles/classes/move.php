@@ -285,6 +285,12 @@
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       $Healing = 0;
+      if ( $this->Healing > 0 )
+        $Healing = $this->CalcHealing($Damage);
+
+      $Recoil = 0;
+      if ( $this->Recoil > 0 )
+        $Recoil = $this->CalcRecoil($Damage);
 
       $Text = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
               ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
