@@ -91,7 +91,11 @@
           break;
       }
 
-      if ( $Attacker->Level < $Defender->Level )
+      if ( $Attacker->HasStatus('Throat Chop') )
+      {
+        $Effect_Text = "{$Attacker->Display_Name} is afflicted by Throat Chop!";
+      }
+      else if ( $Attacker->Level < $Defender->Level )
       {
         $Effect_Text = 'It had no effect!';
       }
