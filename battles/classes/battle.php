@@ -262,11 +262,14 @@
       $Ally_Active = $_SESSION['Battle']['Ally']->Active;
       $Foe_Active = $_SESSION['Battle']['Foe']->Active;
 
-      if ( !isset($Ally_Active->Moves[$Move]) )
+      $Move_Slot = Purify($Move) - 1;
+
+      if ( !isset($Ally_Active->Moves[$Move_Slot]) )
       {
         return [
           'Type' => 'Error',
-          'Text' => 'There was an error when processing your selected move.'
+          'Text' => 'There was an error when processing your selected move.',
+          'Debug' => $Ally_Active->Moves[$Move_Slot],
         ];
       }
 
@@ -281,8 +284,6 @@
           'Text' => 'Moves may not be used while an active Pok&eacute;mon is fainted.'
         ];
       }
-
-      $Move_Slot = Purify($Move) - 1;
 
       $this->Ally_Move = $Ally_Active->Moves[$Move_Slot];
       $this->Foe_Move = $Foe_Active->FetchRandomMove();
