@@ -16,6 +16,7 @@
     public $Name = null;
     public $Slot = null;
     public $Disabled = null;
+    public $Disabled_For_Turns = null;
 
     public $Accuracy = null;
     public $Power = null;
@@ -1088,6 +1089,20 @@
       }
     }
 
+    /**
+     * Disable the move.
+     */
+    public function Disable
+    (
+      int $Turns
+    )
+    {
+      if ( $this->Disabled )
+        return;
+
+      $this->Disabled = true;
+      $this->Disabled_For_Turns = $Turns;
+    }
     /**
      * Determine if the move gets STAB applied to it.
      */
