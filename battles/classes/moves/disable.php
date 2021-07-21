@@ -101,13 +101,13 @@
       $Last_Move = $Defender->Moves[$Defender->Last_Move['Slot']];
       if ( $Last_Move->Disabled )
       {
-        $Effect_Text = "{$Defender->Display_Name}'s {$Defender->Moves[$Last_Move]->Name} is already disabled!";
+        $Effect_Text = "{$Defender->Display_Name}'s {$Last_Move->Name} is already disabled!";
       }
       else
       {
-        $Defender->Moves[$Last_Move]->Disable(mt_rand(1, 8));
+        $Last_Move->Disable(mt_rand(1, 8));
 
-        $Effect_Text = "{$Defender->Display_Name}'s {$Defender->Moves[$Last_Move]->Name} has been disabled!";
+        $Effect_Text = "{$Defender->Display_Name}'s {$Last_Move->Name} has been disabled!";
       }
 
       return [
