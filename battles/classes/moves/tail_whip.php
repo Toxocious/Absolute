@@ -98,7 +98,7 @@
           break;
       }
 
-      if ( $Defender->Stats['Defense']->Stage >= 6 )
+      if ( $Defender->Stats['Defense']->Stage <= -6 )
       {
         $Effect_Text = "{$Defender->Display_Name}'s Defense can't go any lower!";
       }

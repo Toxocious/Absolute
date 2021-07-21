@@ -98,7 +98,7 @@
           break;
       }
 
-      if ( $Defender->Stats['Accuracy']->Stage >= 6 )
+      if ( $Defender->Stats['Accuracy']->Stage <= -6 )
       {
         $Effect_Text = "{$Defender->Display_Name}'s Accuracy can't go any lower!";
       }
