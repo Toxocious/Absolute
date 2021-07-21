@@ -183,22 +183,29 @@
         ];
       }
 
-      $Does_Move_Hit = $this->DoesMoveHit($Side);
+      if ( class_exists($this->Class_Name) )
+        $Move_Class = new $this->Class_Name($this);
+
+      /**
+       * Use class specific DoesMoveHit() method
+       */
+      if ( isset($Move_Class) )
+        if ( method_exists($Move_Class, 'DoesMoveHit') )
+          $Does_Move_Hit = $Move_Class->DoesMoveHit($Side);
+        else
+          $Does_Move_Hit = $this->DoesMoveHit($Side);
+      else
+        $Does_Move_Hit = $this->DoesMoveHit($Side);
+
+      /**
+       * If the move doesn't hit, return w/ proper dialogue here.
+       */
       if ( !$Does_Move_Hit )
       {
-        if ( $this->Name == 'Jump Kick' )
-        {
-          $Attacker->DecreaseHP(floor($Attacker->Max_HP / 2));
-
-          $Miss_Dialogue = "
-            {$Attacker->Display_Name} kept going and crashed!
-          ";
-        }
-
         return [
           'Type' => 'Success',
           'Text' => "{$Attacker->Display_Name} used {$this->Name}, but it missed!" .
-                    (isset($Miss_Dialogue) ? $Miss_Dialogue : ''),
+                    (isset($Does_Move_Hit['Effect_Text']) ? "<br />{$Does_Move_Hit['Effect_Text']}" : ''),
           'Damage' => 0,
           'Heal' => 0,
         ];
@@ -212,15 +219,10 @@
 
       $STAB = $this->CalculateSTAB($Side);
 
-      if ( class_exists($this->Class_Name) )
-      {
-        $Move_Class = new $this->Class_Name($this);
+      if ( isset($Move_Class) )
         $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
-      }
       else
-      {
         $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
-      }
 
       $Attacker->Last_Move = [
         'Name' => $this->Name,
