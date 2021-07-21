@@ -230,10 +230,25 @@
         'Slot' => $this->Slot,
       ];
 
+      if ( $this->Disabled )
+      {
+        if ( isset($this->Disabled_For_Turns) && $this->Disabled_For_Turns > 0 )
+        {
+          $this->Disabled_For_Turns -= 1;
+        }
+      }
+
+      if ( $this->Disabled_For_Turns == 0 )
+      {
+        $this->Enable();
+        $Disable_Dialogue = "{$Attacker->Display_Name}'s {$this->Name} is re-enabled!";
+      }
+
       return [
         'Type' => 'Success',
         'Text' => $Handle_Move['Text'] .
-                  (isset($Handle_Move['Effect_Text']) && $Handle_Move['Effect_Text'] != '' ? "<br />{$Handle_Move['Effect_Text']}" : ''),
+                  (isset($Handle_Move['Effect_Text']) && $Handle_Move['Effect_Text'] != '' ? "<br />{$Handle_Move['Effect_Text']}" : '') .
+                  (isset($Disable_Dialogue) && $Disable_Dialogue != '' ? "<br />{$Disable_Dialogue}" : ''),
         'Damage' => (isset($Handle_Move['Damage']) && $Handle_Move['Damage'] > 0 ? $Handle_Move['Damage'] : 0),
         'Heal' => (isset($Handle_Move['Healing']) && $Handle_Move['Healing'] > 0 ? $Handle_Move['Healing'] : 0),
       ];
