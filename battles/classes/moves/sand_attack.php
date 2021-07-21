@@ -112,8 +112,8 @@
       }
 
       return [
-        'Text' => "{$Attacker->Display_Name} used {$this->Name}." .
-                  (isset($Effect_Text) ? "<br />{$Effect_Text}" : ''),
+        'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
+        'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => 0,
         'Healing' => 0,
       ];
