@@ -1103,6 +1103,19 @@
       $this->Disabled = true;
       $this->Disabled_For_Turns = $Turns;
     }
+
+    /**
+     * Enable the move.
+     */
+    public function Enable()
+    {
+      if ( !$this->Disabled )
+        return;
+
+      $this->Disabled = false;
+      $this->Disabled_For_Turns = null;
+    }
+
     /**
      * Determine if the move gets STAB applied to it.
      */
