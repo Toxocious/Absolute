@@ -109,7 +109,9 @@
         $Damage *= 2;
 
       return [
-        'Text' => null,
+        'Text' => "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
+                  ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
+                  ($Does_Move_Crit ? '<br />It critically hit!' : ''),
         'Damage' => $Damage,
         'Healing' => 0,
       ];
