@@ -239,7 +239,7 @@
         }
       }
 
-      if ( $this->Disabled_For_Turns == 0 )
+      if ( isset($this->Disabled_For_Turns) && $this->Disabled_For_Turns === 0 )
       {
         $this->Enable();
         $Disable_Dialogue = "{$Attacker->Display_Name}'s {$this->Name} is re-enabled!";
