@@ -98,17 +98,20 @@
           break;
       }
 
-      if ( $Defender->Stats['Accuracy']->Stage <= -6 )
+      if ( !$this->IsFieldEffectActive('Mist', $Side) )
       {
-        $Effect_Text = "{$Defender->Display_Name}'s Accuracy can't go any lower!";
-      }
-      else
-      {
-        $Stages = $this->Accuracy_Boost;
+        if ( $Defender->Stats['Accuracy']->Stage <= -6 )
+        {
+          $Effect_Text = "{$Defender->Display_Name}'s Accuracy can't go any lower!";
+        }
+        else
+        {
+          $Stages = $this->Accuracy_Boost;
 
-        $Defender->Stats['Accuracy']->SetValue($Stages);
+          $Defender->Stats['Accuracy']->SetValue($Stages);
 
-        $Effect_Text = "{$Defender->Display_Name}'s Accuracy has fallen!";
+          $Effect_Text = "{$Defender->Display_Name}'s Accuracy has fallen!";
+        }
       }
 
       return [

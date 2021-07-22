@@ -98,17 +98,20 @@
           break;
       }
 
-      if ( $Defender->Stats['Attack']->Stage <= -6 )
+      if ( !$this->IsFieldEffectActive('Mist', $Side) )
       {
-        $Effect_Text = "{$Defender->Display_Name}'s Attack can't go any lower!";
-      }
-      else
-      {
-        $Stages = $this->Attack_Boost;
+        if ( $Defender->Stats['Attack']->Stage <= -6 )
+        {
+          $Effect_Text = "{$Defender->Display_Name}'s Attack can't go any lower!";
+        }
+        else
+        {
+          $Stages = $this->Attack_Boost;
 
-        $Defender->Stats['Attack']->SetValue($Stages);
+          $Defender->Stats['Attack']->SetValue($Stages);
 
-        $Effect_Text = "{$Defender->Display_Name}'s Attack has fallen!";
+          $Effect_Text = "{$Defender->Display_Name}'s Attack has fallen!";
+        }
       }
 
       return [
