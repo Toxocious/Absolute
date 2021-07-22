@@ -629,6 +629,30 @@
     }
 
     /**
+     * Determine if a given field effect is active.
+     * @param string $Field_Effect
+     * @param string $Side
+     */
+    public function IsFieldEffectActive
+    (
+      string $Field_Effect,
+      string $Side
+    )
+    {
+      foreach ( $this->Field_Effects as $Field )
+      {
+        if
+        (
+          $Field['Name'] == $Field_Effect &&
+          $Field['Side'] == $Side
+        )
+          return true;
+      }
+
+      return false;
+    }
+
+    /**
      * Set the current weather.
      */
     public function SetWeather
