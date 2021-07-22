@@ -97,8 +97,9 @@
 
       if ( mt_rand(1, 10) <= 2 )
       {
-        $Defender->SetStatus($this->Ailment);
-        $Effect_Text = "{$Defender->Display_Name} has been poisoned!";
+        $Set_Status = $Defender->SetStatus($this->Ailment);
+        if ( $Set_Status )
+          $Effect_Text = "{$Defender->Display_Name} has been poisoned!";
       }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);

@@ -98,8 +98,15 @@
           break;
       }
 
-      $Defender->SetStatus($this->Ailment);
-      $Effect_Text = "{$Defender->Display_Name} is now confused!";
+      if ( in_array($Defender->Ability, ['Own Tempo', 'Soundproof']) )
+      {
+        if ( !$Defender->HasStatus('Confusion'))
+        {
+          $Set_Status = $Defender->SetStatus($this->Ailment);
+          if ( $Set_Status )
+            $Effect_Text = "{$Defender->Display_Name} is now confused!";
+        }
+      }
 
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name}.",

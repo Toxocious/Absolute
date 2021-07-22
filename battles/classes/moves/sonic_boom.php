@@ -98,20 +98,10 @@
           break;
       }
 
-      if ( $Defender->Ability == 'Soundproof' )
-      {
-        $Damage = 0;
-        $Effect_Text = "{$Defender->Display_Name} is soundproof!";
-      }
-      else
-      {
-        $Damage = 20;
-      }
-
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
-        'Damage' => $Damage,
+        'Damage' => 20,
         'Healing' => 0,
       ];
     }
