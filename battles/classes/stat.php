@@ -18,9 +18,13 @@
       $this->Stage = 0;
     }
 
+    /**
+     * Set the current value of the stat.
+     * @param int $Stage
+     */
     public function SetValue
     (
-      $Stage = 0
+      int $Stage = 0
     )
     {
       $this->SetStage($Stage);
@@ -29,6 +33,9 @@
       $this->Current_Value *= $Modifier;
     }
 
+    /**
+     * Calculate the modifier of the stat, given it's given stage.
+     */
     public function CalcModifier()
     {
       if ( in_array($this->Stat_Name, ['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed']) )
@@ -43,6 +50,10 @@
           return 3 / (($this->Stage * 1) + 3);
     }
 
+    /**
+     * Set the current stage of the stat.
+     * @param int $Stage
+     */
     public function SetStage
     (
       int $Stage = 0
@@ -54,6 +65,9 @@
         $this->Stage = 6;
     }
 
+    /**
+     * Reset the stat back to it's base properties.
+     */
     public function ResetStat()
     {
       $this->Current_Value = $this->Base_Value;

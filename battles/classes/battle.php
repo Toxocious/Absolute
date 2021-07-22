@@ -128,6 +128,7 @@
 
     /**
      * Sets the battle state up to be continued.
+     * @param string $Postcode
      */
     public function Continue
     (
@@ -177,6 +178,7 @@
 
     /**
      * Restarts the battle.
+     * @param string $Postcode
      */
     public function Restart
     (
@@ -210,6 +212,7 @@
 
     /**
      * Performs the necessary code at the end of a battle.
+     * @param string $Side
      */
     public function EndBattle
     (
@@ -252,16 +255,17 @@
 
     /**
      * Handle the process of attacking the foe's Pokemon.
+     * @param int $Move_Slot
      */
     public function HandleAttack
     (
-      int $Move
+      int $Move_Slot
     )
     {
       $Ally_Active = $_SESSION['Battle']['Ally']->Active;
       $Foe_Active = $_SESSION['Battle']['Foe']->Active;
 
-      $Move_Slot = Purify($Move) - 1;
+      $Move_Slot = Purify($Move_Slot) - 1;
 
       if ( !isset($Ally_Active->Moves[$Move_Slot]) )
       {
@@ -437,6 +441,7 @@
 
     /**
      * Handle the process of switching your active Pokemon.
+     * @param int $Roster_Slot
      *
      * https://bulbapedia.bulbagarden.net/wiki/Recall
      *
@@ -447,13 +452,13 @@
      */
     public function HandleSwitch
     (
-      int $Slot
+      int $Roster_Slot
     )
     {
       $Ally_Active = $_SESSION['Battle']['Ally']->Active;
       $Foe_Active = $_SESSION['Battle']['Foe']->Active;
 
-      $Slot = Purify($Slot) - 1;
+      $Slot = Purify($Roster_Slot) - 1;
       if ( !isset($_SESSION['Battle']['Ally']->Roster[$Slot]) )
       {
         return [
@@ -538,11 +543,13 @@
     /**
      * Determine which Pokemon attacks first.
      * Determined by Move Priority, then Pokemon Speed, and if tied, randomly chosen.
+     * @param object $Ally_Move
+     * @param object $Foe_Move
      */
     public function DetermineFirstAttacker
     (
-      $Ally_Move,
-      $Foe_Move
+      object $Ally_Move,
+      object $Foe_Move
     )
     {
       if ( !isset($Ally_Move) || !isset($Foe_Move) )
@@ -654,6 +661,7 @@
 
     /**
      * Set the current weather.
+     * @param string $Weather
      */
     public function SetWeather
     (

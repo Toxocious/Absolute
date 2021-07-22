@@ -327,6 +327,7 @@
 
     /**
      * Calculate how much experience is earned when a foe faints.
+     * @param int $Exp_Divisor
      */
     public function CalcExp
     (
@@ -360,6 +361,7 @@
 
     /**
      * Increase the Pokemon's current HP.
+     * @param int $Heal
      */
     public function IncreaseHP
     (
@@ -376,6 +378,7 @@
 
     /**
      * Decrease the Pokemon's current HP.
+     * @param int $Damage
      */
     public function DecreaseHP
     (
@@ -420,6 +423,7 @@
 
     /**
      * Set whether or not the Pokemon may attack this turn.
+     * @param bool $Can_Attack
      */
     public function SetCanAttack
     (
@@ -431,6 +435,7 @@
 
     /**
      * Set the Pokemon's Ability.
+     * @param string $Ability
      */
     public function SetAbility
     (
@@ -445,6 +450,8 @@
 
     /**
      * Set a status on the Pokemon.
+     * @param string $Status
+     * @param int $Turns
      */
     public function SetStatus
     (
@@ -480,6 +487,7 @@
 
     /**
      * Remove a statues from the Pokemon.
+     * @param string $Status_Name
      */
     public function RemoveStatus
     (
@@ -494,6 +502,7 @@
 
     /**
      * Determine if the Pokemon has a given status.
+     * @param string $Status
      */
     public function HasStatus
     (
@@ -508,6 +517,7 @@
 
     /**
      * Determine if a Pokemon has one of many given statuses.
+     * @param array $Checking_For_Statuses
      */
     public function HasStatusFromArray
     (
@@ -526,6 +536,7 @@
 
     /**
      * Determine if the Pokemon has a specified typing.
+     * @param array $Typings
      */
     public function HasTyping
     (

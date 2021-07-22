@@ -131,6 +131,7 @@
 
     /**
      * Begin processing an attack.
+     * @param string $Side
      */
     public function ProcessAttack
     (
@@ -256,6 +257,10 @@
 
     /**
      * Generic move handler for moves that do not have, or not require, a stand-alone class.
+     * @param string $Side
+     * @param int $STAB,
+     * @param bool $Does_Move_Crit
+     * @param float $Move_Effectiveness
      */
     public function HandleMove
     (
@@ -332,7 +337,8 @@
     }
 
     /**
-     * Determines whether or not the user can move.
+     * Determine whether or not the user can move.
+     * @param string $Side
      */
     public function CanUserMove
     (
@@ -448,7 +454,8 @@
     }
 
     /**
-     * Determing if the move will hit.
+     * Determine if the move will hit.
+     * @param string $Side
      */
     public function DoesMoveHit
     (
@@ -557,6 +564,7 @@
 
     /**
      * Determine if the move will crit.
+     * @param string $Side
      */
     public function DoesMoveCrit
     (
@@ -648,6 +656,7 @@
 
     /**
      * Determine if the move makes physical contact.
+     * @param string $Side
      */
     public function DoesMoveMakeContact
     (
@@ -671,8 +680,9 @@
     }
 
     /**
-    * Handle contact effects.
-    */
+     * Handle contact effects.
+     * @param string $Side
+     */
     public function HandleContact
     (
       string $Side
@@ -1027,6 +1037,7 @@
 
     /**
      * Determine how effective the move was.
+     * @param object $Used_Against
      */
     public function MoveEffectiveness
     (
@@ -1106,6 +1117,7 @@
 
     /**
      * Disable the move.
+     * @param int $Turns
      */
     public function Disable
     (
@@ -1133,6 +1145,7 @@
 
     /**
      * Determine if the move gets STAB applied to it.
+     * @param string $Side
      */
     public function CalculateSTAB
     (
@@ -1156,13 +1169,17 @@
 
     /**
      * Calculates how much damage the move will do.
+     * @param string $Side
+     * @param int $STAB
+     * @param bool $Crit
+     * @param float $Move_Effectiveness
      */
     public function CalcDamage
     (
-      $Side,
-      $STAB,
-      $Crit,
-      $Move_Effectiveness
+      string $Side,
+      int $STAB,
+      bool $Crit,
+      float $Move_Effectiveness
     )
     {
       if ( !isset($STAB) || !isset($Crit) || !isset($Move_Effectiveness) )
@@ -1236,6 +1253,7 @@
 
     /**
      * Calculates how much healing the move will do.
+     * @param int $Damage_Dealt
      */
     public function CalcHealing
     (
@@ -1247,6 +1265,7 @@
 
     /**
      * Calculate how much damage is taken from recoil.
+     * @param int $Damage_Dealt
      */
     public function CalcRecoil
     (

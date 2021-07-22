@@ -114,6 +114,7 @@
 
     /**
      * Determine if the user has a given clan upgrade.
+     * @param int $Upgrade_ID
      */
     public function HasUpgrade
     (
