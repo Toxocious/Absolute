@@ -32,8 +32,7 @@
     public $Foe_Move = null;
     public $Last_Move = null;
 
-    public $Trick_Room = null;
-    public $Trick_Room_Turns_Left = null;
+    public $Field_Effects = null;
 
     public $Terrain = null;
     public $Terrain_Turns_Left = null;
