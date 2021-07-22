@@ -51,8 +51,8 @@
 
         $Dialogue .= "
           <div style='display: inline-block; font-weight: bold; margin-top: 5px; width: 50px;'>
-            +" . number_format($Money_Gain) . "
             <img src='" . DOMAIN_SPRITES . "/Assets/Money.png' style='vertical-align: middle;' />
+            +" . number_format($Money_Gain) . "
           </div>
         ";
       }
@@ -64,8 +64,8 @@
 
         $Dialogue .= "
           <div style='display: inline-block; font-weight: bold; margin-top: 5px; width: 50px;'>
-            +" . number_format($Abso_Coins_Gain) . "
             <img src='" . DOMAIN_SPRITES . "/Assets/Abso_Coins.png' style='vertical-align: middle;' />
+            +" . number_format($Abso_Coins_Gain) . "
           </div>
         ";
       }
