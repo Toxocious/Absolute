@@ -49,6 +49,9 @@
     if ( isset($_POST['Is_Trusted']) )
       $_SESSION['Battle']['Input']['Is_Trusted'] = Purify($_POST['Is_Trusted']);
 
+    if ( isset($_POST['In_Focus']) )
+      $_SESSION['Battle']['Logging']['In_Focus'] = Purify($_POST['In_Focus']);
+
     $Action = Purify($_POST['Action']);
     $Data = Purify($_POST['Data']);
 

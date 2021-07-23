@@ -22,6 +22,7 @@
     Bag: false,
     Clicks: [],
     ID: null,
+    In_Focus = null,
 
     OnPageLoad: () =>
     {
@@ -183,6 +184,7 @@
 
         const Data_Val = new FormData();
         Data_Val.append('Battle_ID', this.ID);
+        Data_Val.append('In_Focus', this.In_Focus);
 
         if ( Action )
           Data_Val.append('Action', Action);
@@ -231,6 +233,11 @@
       }
     },
   };
+
+  document.addEventListener("visibilitychange", () =>
+  {
+    document.title = document.hidden ? Battle.In_Focus = true : Battle.In_Focus = false;
+  });
 
   window.onload = Battle.OnPageLoad();
 </script>
