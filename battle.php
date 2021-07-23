@@ -22,7 +22,7 @@
     Bag: false,
     Clicks: [],
     ID: null,
-    In_Focus = null,
+    In_Focus: null,
 
     OnPageLoad: () =>
     {
