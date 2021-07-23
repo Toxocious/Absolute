@@ -21,6 +21,9 @@
     public $Primary_Type = null;
     public $Secondary_Type = null;
 
+    public $Height = null;
+    public $Weight = null;
+
     public $Stats = null;
 
     public $IVs = null;
@@ -92,6 +95,8 @@
       $this->Exp_Yield = $Pokemon['Exp_Yield'];
       $this->Owner_Original = $Pokemon['Owner_Original'];
       $this->Owner_Current = $Pokemon['Owner_Current'];
+      $this->Height = $Pokemon['Height'];
+      $this->Weight = $Pokemon['Weight'];
       $this->Stats = [
         'Attack' => new Stat('Attack', $Pokemon['Stats'][1]),
         'Defense' => new Stat('Defense', $Pokemon['Stats'][2]),
