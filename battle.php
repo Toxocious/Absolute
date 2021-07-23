@@ -236,7 +236,7 @@
 
   document.addEventListener("visibilitychange", () =>
   {
-    document.title = document.hidden ? Battle.In_Focus = true : Battle.In_Focus = false;
+    Battle.In_Focus = document.hidden ? false : true;
   });
 
   window.onload = Battle.OnPageLoad();
