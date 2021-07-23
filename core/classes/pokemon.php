@@ -26,7 +26,7 @@
 				$FetchPokemon->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokemon = $FetchPokemon->fetch();
 
-				$FetchPokedex = $PDO->prepare("SELECT `Exp_Yield`, `Type_Primary`, `Type_Secondary`, `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+				$FetchPokedex = $PDO->prepare("SELECT `Exp_Yield`, `Type_Primary`, `Type_Secondary`, `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed`, `Height`, `Weight` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
 				$FetchPokedex->execute([$Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']]);
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokedex = $FetchPokedex->fetch();
@@ -136,6 +136,8 @@
 				'Level_Raw' => $Level,
 				'Experience' => number_format($Experience),
 				'Experience_Raw' => $Experience,
+				'Height' => ($Pokedex['Height'] / 10),
+				'Weight' => ($Pokedex['Weight'] / 10),
 				'Type_Primary' => $Pokedex['Type_Primary'],
 				'Type_Secondary' => $Pokedex['Type_Secondary'],
 				'Ability' => $Pokemon['Ability'],
