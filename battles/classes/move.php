@@ -191,11 +191,12 @@
       /**
        * Use class specific DoesMoveHit() method
        */
-      if ( isset($Move_Class) )
-        if ( method_exists($Move_Class, 'DoesMoveHit') )
-          $Does_Move_Hit = $Move_Class->DoesMoveHit($Side);
-        else
-          $Does_Move_Hit = $this->DoesMoveHit($Side);
+      if
+      (
+        isset($Move_Class) &&
+        method_exists($Move_Class, 'DoesMoveHit')
+      )
+        $Does_Move_Hit = $Move_Class->DoesMoveHit($Side);
       else
         $Does_Move_Hit = $this->DoesMoveHit($Side);
 
