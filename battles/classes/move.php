@@ -46,8 +46,8 @@
     public $HP_Boost = null;
     public $Attack_Boost = null;
     public $Defense_Boost = null;
-    public $SpAttack_Boost = null;
-    public $SpDefense_Boost = null;
+    public $Sp_Attack_Boost = null;
+    public $Sp_Defense_Boost = null;
     public $Speed_Boost = null;
     public $Accuracy_Boost = null;
     public $Evasion_Boost = null;
@@ -120,8 +120,8 @@
       $this->HP_Boost = $Move_Data['HP_Boost'];
       $this->Attack_Boost = $Move_Data['Attack_Boost'];
       $this->Defense_Boost = $Move_Data['Defense_Boost'];
-      $this->SpAttack_Boost = $Move_Data['SpAttack_Boost'];
-      $this->SpDefense_Boost = $Move_Data['SpDefense_Boost'];
+      $this->Sp_Attack_Boost = $Move_Data['Sp_Attack_Boost'];
+      $this->Sp_Defense_Boost = $Move_Data['Sp_Defense_Boost'];
       $this->Speed_Boost = $Move_Data['Speed_Boost'];
       $this->Accuracy_Boost = $Move_Data['Accuracy_Boost'];
       $this->Evasion_Boost = $Move_Data['Evasion_Boost'];
@@ -314,8 +314,11 @@
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       $Healing = 0;
-      if ( $this->Drain > 0 )
-        $Healing = $this->CalcHealing($Damage);
+      if ( $Attacker->HP < $Attacker->Max_HP )
+      {
+        if ( $this->Drain > 0 )
+          $Healing = $this->CalcHealing($Damage);
+      }
 
       $Recoil = 0;
       if ( $this->Recoil > 0 )
@@ -325,11 +328,10 @@
               ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
               "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
               ($this->Total_Hits > 1 ? "<br />It hit {$this->Total_Hits} times!" : '') .
-              ($Healing > 0 ? "<br />{$Attacker->Display_Name} healed for {$Healing} HP!" : '') .
               ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
               ($Does_Move_Crit ? '<br />It critically hit!' : '') .
               ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
-              ($this->Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
+              ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
               ($this->Contact ? $this->HandleContact($Side)['Text'] : '');
 
       return [
@@ -1242,7 +1244,7 @@
           break;
 
         case 'Special':
-          $Damage = $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['SpAttack']->Current_Value / $Defender->Stats['SpDefense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+          $Damage = $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Sp_Attack']->Current_Value / $Defender->Stats['Sp_Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
           break;
 
         default:
@@ -1264,7 +1266,7 @@
       int $Damage_Dealt
     )
     {
-      return $Damage_Dealt * ($this->Drain / 100);
+      return floor($Damage_Dealt * ($this->Drain / 100));
     }
 
     /**
