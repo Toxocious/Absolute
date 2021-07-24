@@ -227,11 +227,6 @@
       else
         $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
-      $Attacker->Last_Move = [
-        'Name' => $this->Name,
-        'Slot' => $this->Slot,
-      ];
-
       if ( $this->Disabled )
       {
         if ( isset($this->Disabled_For_Turns) && $this->Disabled_For_Turns > 0 )
@@ -245,6 +240,13 @@
         $this->Enable();
         $Disable_Dialogue = "{$Attacker->Display_Name}'s {$this->Name} is re-enabled!";
       }
+
+      $Defender->Last_Damage_Taken = isset($Damage) ? $Damage : 0;
+
+      $Attacker->Last_Move = [
+        'Name' => $this->Name,
+        'Slot' => $this->Slot,
+      ];
 
       return [
         'Type' => 'Success',
