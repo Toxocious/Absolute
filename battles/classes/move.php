@@ -246,6 +246,7 @@
       $Attacker->Last_Move = [
         'Name' => $this->Name,
         'Slot' => $this->Slot,
+        'Type' => $this->Damage_Type,
       ];
 
       return [
