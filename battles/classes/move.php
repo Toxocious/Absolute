@@ -314,7 +314,7 @@
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       $Healing = 0;
-      if ( $this->Healing > 0 )
+      if ( $this->Drain > 0 )
         $Healing = $this->CalcHealing($Damage);
 
       $Recoil = 0;
@@ -336,7 +336,7 @@
         'Text' => $Text,
         'Effect_Text' => '',
         'Damage' => $Damage,
-        'Healing' => 0,
+        'Healing' => $Healing,
       ];
     }
 
