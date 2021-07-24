@@ -42,4 +42,32 @@
 
       return $this;
     }
+
+    /**
+     * Deletes an item on use.
+     */
+    public function Consume()
+    {
+      global $PDO;
+
+      if ( $this->Quantity <= 0 )
+        return false;
+
+      try
+      {
+        $Update_Item = $PDO->prepare("
+          UPDATE `items`
+          SET `Quantity` = `Quantity` - 1
+          WHERE `Owner_Current` = ? AND `Item_ID` = ?
+          LIMIT 1
+        ");
+        $Update_Item->execute([ $this->Owner_Current, $this->Item_ID ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
   }
