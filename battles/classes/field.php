@@ -33,6 +33,11 @@
     public function FieldEffects()
     {
       return [
+        'Leech Seed' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => false
+        ],
         'Mist' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
