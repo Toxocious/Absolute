@@ -116,6 +116,12 @@
               'Healing' => 0,
             ];
           }
+          else
+          {
+            $Attacker->Item->Consume();
+
+            $Effect_Text = "{$Attacker->Display_Name} is taking in sunlight!";
+          }
         }
       }
 
