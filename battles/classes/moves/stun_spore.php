@@ -98,9 +98,12 @@
           break;
       }
 
-      $Set_Status = $Defender->SetStatus($this->Ailment);
-      if ( $Set_Status )
-        $Effect_Text = "{$Defender->Display_Name} has been paralyzed!";
+      if ( !$Defender->HasTyping(['Electric']) )
+      {
+        $Set_Status = $Defender->SetStatus($this->Ailment);
+        if ( $Set_Status )
+          $Effect_Text = "{$Defender->Display_Name} has been paralyzed!";
+      }
 
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name}.",

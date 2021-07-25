@@ -95,11 +95,14 @@
           break;
       }
 
-      if ( mt_rand(1, 10) <= 3 )
+      if ( !$Defender->HasTyping(['Electric']) )
       {
-        $Set_Status = $Defender->SetStatus($this->Ailment);
-        if ( $Set_Status )
-          $Effect_Text = "{$Defender->Display_Name} has been paralyzed!";
+        if ( mt_rand(1, 10) === 1 )
+        {
+          $Set_Status = $Defender->SetStatus($this->Ailment);
+          if ( $Set_Status )
+            $Effect_Text = "{$Defender->Display_Name} has been paralyzed!";
+        }
       }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
