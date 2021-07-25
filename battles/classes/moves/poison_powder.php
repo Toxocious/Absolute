@@ -98,9 +98,16 @@
           break;
       }
 
-      $Set_Status = $Defender->SetStatus($this->Ailment);
-      if ( $Set_Status )
-        $Effect_Text = "{$Defender->Display_Name} has been poisoned!";
+      if ( $Defender->Ability == 'Immunity' && $Defender->HasTyping(['Steel']) )
+      {
+        $Effect_Text = 'It had no effect!';
+      }
+      else
+      {
+        $Set_Status = $Defender->SetStatus($this->Ailment);
+        if ( $Set_Status )
+          $Effect_Text = "{$Defender->Display_Name} has been poisoned!";
+      }
 
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name}.",

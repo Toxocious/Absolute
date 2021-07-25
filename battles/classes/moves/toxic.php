@@ -98,9 +98,16 @@
           break;
       }
 
-      $Set_Status = $Defender->SetStatus($this->Ailment);
-      if ( $Set_Status )
-        $Effect_Text = "{$Defender->Display_Name} has been poisoned!";
+      if ( $Defender->Ability == 'Immunity' && $Defender->HasTyping(['Steel']) )
+      {
+        $Effect_Text = 'It had no effect!';
+      }
+      else
+      {
+        $Set_Status = $Defender->SetStatus($this->Ailment);
+        if ( $Set_Status )
+          $Effect_Text = "{$Defender->Display_Name} has been poisoned!";
+      }
 
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
@@ -108,5 +115,55 @@
         'Damage' => 0,
         'Healing' => 0,
       ];
+    }
+
+    /**
+     * Determine if the move will hit the target.
+     * @param string $Side
+     */
+    public function DoesMoveHit
+    (
+      string $Side
+    )
+    {
+      switch ( $Side )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Battle']['Foe']->Active;
+          break;
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Battle']['Ally']->Active;
+          break;
+      }
+
+      if ( $Attacker->HasTyping(['Poison']) )
+        return true;
+
+      if ( $Defender->HasStatus('Semi-Invulnerable') )
+        return false;
+
+      if ( $Defender->HasStatus('Bounce') )
+        return false;
+
+      if ( $Defender->HasStatus('Fly') )
+        return false;
+
+      if ( $Defender->HasStatus('Sky Drop') )
+        return false;
+
+      if ( $Defender->HasStatus('Dive') )
+        return false;
+
+      if ( $Defender->HasStatus('Dig') )
+        return false;
+
+      $Accuracy_Mod = $Attacker->Stats['Accuracy']->Current_Value / $Defender->Stats['Evasion']->Current_Value;
+
+      if ( mt_rand(1, 100) < $this->Accuracy * $Accuracy_Mod )
+        return true;
+
+      return false;
     }
   }
