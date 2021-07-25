@@ -130,6 +130,11 @@
           'Max_Turns' => -1,
           'Volatile' => true,
         ],
+        'Damage Over Time' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => true,
+        ],
         'Embargo' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
