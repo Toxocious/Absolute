@@ -98,11 +98,17 @@
           break;
       }
 
-      if ( !$Defender->HasTyping(['Electric']) )
+      if ( $Defender->HasTyping(['Electric']) )
+      {
+        $Effect_Text = 'It had no effect!';
+      }
+      else
       {
         $Set_Status = $Defender->SetStatus($this->Ailment);
         if ( $Set_Status )
           $Effect_Text = "{$Defender->Display_Name} has been paralyzed!";
+        else
+          $Effect_Text = 'It had no effect!';
       }
 
       return [
