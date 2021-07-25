@@ -98,7 +98,11 @@
           break;
       }
 
-      if ( $Defender->HasTyping(['Electric']) )
+      if
+      (
+        $Defender->HasTyping(['Electric']) ||
+        $Defender->HasStatus('Paralysis')
+      )
       {
         $Effect_Text = 'It had no effect!';
       }

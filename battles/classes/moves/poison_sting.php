@@ -98,7 +98,8 @@
       if
       (
         $Defender->Ability != 'Immunity' &&
-        !$Defender->HasTyping(['Steel'])
+        !$Defender->HasTyping(['Steel']) &&
+        !$Defender->HasStatus('Poison')
       )
       {
         if ( mt_rand(1, 10) <= 3 )

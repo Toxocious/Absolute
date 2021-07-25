@@ -98,7 +98,11 @@
           break;
       }
 
-      if ( $Defender->Ability == 'Immunity' && $Defender->HasTyping(['Steel']) )
+      if
+      (
+        ($Defender->Ability == 'Immunity' && $Defender->HasTyping(['Steel'])) ||
+        $Defender->HasStatus('Poison')
+      )
       {
         $Effect_Text = 'It had no effect!';
       }

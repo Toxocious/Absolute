@@ -98,9 +98,16 @@
           break;
       }
 
-      $Set_Status = $Defender->SetStatus($this->Ailment);
-      if ( $Set_Status )
-        $Effect_Text = "{$Defender->Display_Name} has been put to sleep!";
+      if ( $Defender->HasStatus('Sleep') )
+      {
+        $Effect_Text = 'But it failed!';
+      }
+      else
+      {
+        $Set_Status = $Defender->SetStatus($this->Ailment);
+        if ( $Set_Status )
+          $Effect_Text = "{$Defender->Display_Name} has been put to sleep!";
+      }
 
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name}.",

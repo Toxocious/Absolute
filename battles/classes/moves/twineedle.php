@@ -95,11 +95,19 @@
           break;
       }
 
-      if ( mt_rand(1, 10) <= 2 )
+      if
+      (
+        $Defender->Ability != 'Immunity' &&
+        !$Defender->HasTyping(['Steel']) &&
+        !$Defender->HasStatus('Poison')
+      )
       {
-        $Set_Status = $Defender->SetStatus($this->Ailment);
-        if ( $Set_Status )
-          $Effect_Text = "{$Defender->Display_Name} has been poisoned!";
+        if ( mt_rand(1, 10) <= 2 )
+        {
+          $Set_Status = $Defender->SetStatus($this->Ailment);
+          if ( $Set_Status )
+            $Effect_Text = "{$Defender->Display_Name} has been poisoned!";
+        }
       }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);

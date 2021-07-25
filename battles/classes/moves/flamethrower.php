@@ -95,11 +95,14 @@
           break;
       }
 
-      if ( mt_rand(1, 10) === 1 )
+      if ( !$Defender->HasStatus('Burn') )
       {
-        $Set_Status = $Defender->SetStatus($this->Ailment);
-        if ( $Set_Status )
-          $Effect_Text = "{$Defender->Display_Name} has been burnt!";
+        if ( mt_rand(1, 10) === 1 )
+        {
+          $Set_Status = $Defender->SetStatus($this->Ailment);
+          if ( $Set_Status )
+            $Effect_Text = "{$Defender->Display_Name} has been burnt!";
+        }
       }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);

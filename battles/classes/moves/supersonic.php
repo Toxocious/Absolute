@@ -98,9 +98,9 @@
           break;
       }
 
-      if ( !in_array($Defender->Ability, ['Own Tempo', 'Soundproof']) )
+      if ( !$Defender->HasStatus('Confusion'))
       {
-        if ( !$Defender->HasStatus('Confusion'))
+        if ( !in_array($Defender->Ability, ['Own Tempo', 'Soundproof']) )
         {
           $Set_Status = $Defender->SetStatus($this->Ailment);
           if ( $Set_Status )

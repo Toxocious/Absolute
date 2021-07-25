@@ -95,7 +95,11 @@
           break;
       }
 
-      if ( !$Defender->HasTyping(['Electric']) )
+      if
+      (
+        !$Defender->HasTyping(['Electric']) &&
+        !$Defender->HasStatus('Paralysis')
+      )
       {
         if ( mt_rand(1, 10) <= 3 )
         {
