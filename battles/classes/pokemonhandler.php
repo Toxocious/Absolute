@@ -373,10 +373,10 @@
       int $Heal
     )
     {
-      $this->HP -= $Heal;
+      $this->HP += $Heal;
 
       if ( $this->HP > $this->Max_HP )
-        $this->HP = 0;
+        $this->HP = $this->Max_HP;
 
       return $this->HP;
     }
