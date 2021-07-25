@@ -98,7 +98,12 @@
           break;
       }
 
-      if ( !$this->IsFieldEffectActive('Mist', $Side) )
+
+      if ( $this->IsFieldEffectActive('Mist', $Side) )
+      {
+        $Effect_Text = 'But it failed.';
+      }
+      else
       {
         if ( $Defender->Stats['Attack']->Stage <= -6 )
         {
