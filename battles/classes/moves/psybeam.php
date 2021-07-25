@@ -98,14 +98,11 @@
           break;
       }
 
-      if ( in_array($Defender->Ability, ['Own Tempo', 'Soundproof']) )
+      if ( !$Defender->HasStatus('Confusion'))
       {
-        if ( !$Defender->HasStatus('Confusion'))
-        {
-          $Set_Status = $Defender->SetStatus($this->Ailment);
-          if ( $Set_Status )
-            $Effect_Text = "{$Defender->Display_Name} is now confused!";
-        }
+        $Set_Status = $Defender->SetStatus($this->Ailment);
+        if ( $Set_Status )
+          $Effect_Text = "{$Defender->Display_Name} is now confused!";
       }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
