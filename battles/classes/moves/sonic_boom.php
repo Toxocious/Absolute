@@ -98,10 +98,12 @@
           break;
       }
 
+      $Damage = 20;
+
       return [
-        'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
+        'Text' => "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}.",
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
-        'Damage' => 20,
+        'Damage' => $Damage,
         'Healing' => 0,
       ];
     }
