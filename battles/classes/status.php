@@ -255,7 +255,7 @@
           'Max_Turns' => -1,
           'Volatile' => true
         ],
-        'Trapped' => [
+        'Trap' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
           'Volatile' => true

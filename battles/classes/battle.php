@@ -467,7 +467,7 @@
         ];
       }
 
-      if ( $Ally_Active->HasStatus('Trapped') )
+      if ( $Ally_Active->HasStatus('Trap') )
       {
         return [
           'Type' => 'Error',

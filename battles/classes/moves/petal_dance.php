@@ -106,7 +106,7 @@
 
       $Turn_Count = mt_rand(2, 3);
       $Attacker->SetStatus('Move Locked', $Turn_Count);
-      $Attacker->SetStatus('Trapped', $Turn_Count);
+      $Attacker->SetStatus('Trap', $Turn_Count);
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
