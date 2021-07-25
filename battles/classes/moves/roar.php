@@ -103,9 +103,9 @@
       {
         if ( $Attacker->Item->Name == 'Throat Spray' )
         {
-          $Attacker->Item->Consume();
-
-          $Effect_Text = "{$Attacker->Display_Name} consumed its Throat Spray, and its Special Attack rose!";
+          $Attempt_Consume = $Attacker->Item->Consume();
+          if ( $Attempt_Consume )
+            $Effect_Text = "{$Attacker->Display_Name} consumed its Throat Spray, and its Special Attack rose!";
         }
       }
 

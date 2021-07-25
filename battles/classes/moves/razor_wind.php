@@ -112,9 +112,9 @@
         }
         else
         {
-          $Attacker->Item->Consume();
-
-          $Effect_Text = "{$Attacker->Display_Name} whipped up a whirlwind!";
+          $Attempt_Consume = $Attacker->Item->Consume();
+          if ( $Attempt_Consume )
+            $Effect_Text = "{$Attacker->Display_Name} whipped up a whirlwind!";
         }
       }
 
