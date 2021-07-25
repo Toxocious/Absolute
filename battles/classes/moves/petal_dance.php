@@ -98,15 +98,18 @@
           break;
       }
 
-      foreach ( $Attacker->Moves as $Move )
-      {
-        if ( $Move->ID != $this->ID )
-          $Move->Disable = true;
-      }
-
       $Turn_Count = mt_rand(2, 3);
       $Attacker->SetStatus('Move Locked', $Turn_Count);
       $Attacker->SetStatus('Trap', $Turn_Count);
+
+      foreach ( $Attacker->Moves as $Move )
+      {
+        if ( $Move->ID != $this->ID )
+        {
+          $Move->Disabled = true;
+          $Move->Disabled_For_Turns = $Turn_Count;
+        }
+      }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
