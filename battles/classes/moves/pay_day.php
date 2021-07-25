@@ -29,8 +29,8 @@
     public $HP_Boost = null;
     public $Attack_Boost = null;
     public $Defense_Boost = null;
-    public $SpAttack_Boost = null;
-    public $SpDefense_Boost = null;
+    public $Sp_Attack_Boost = null;
+    public $Sp_Defense_Boost = null;
     public $Speed_Boost = null;
     public $Accuracy_Boost = null;
     public $Evasion_Boost = null;
@@ -68,8 +68,8 @@
       $this->HP_Boost = $Move_Data->HP_Boost;
       $this->Attack_Boost = $Move_Data->Attack_Boost;
       $this->Defense_Boost = $Move_Data->Defense_Boost;
-      $this->SpAttack_Boost = $Move_Data->SpAttack_Boost;
-      $this->SpDefense_Boost = $Move_Data->SpDefense_Boost;
+      $this->Sp_Attack_Boost = $Move_Data->Sp_Attack_Boost;
+      $this->Sp_Defense_Boost = $Move_Data->Sp_Defense_Boost;
       $this->Speed_Boost = $Move_Data->Speed_Boost;
       $this->Accuracy_Boost = $Move_Data->Accuracy_Boost;
       $this->Evasion_Boost = $Move_Data->Evasion_Boost;
