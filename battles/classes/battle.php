@@ -223,7 +223,7 @@
       {
         return [
           'Type' => 'Success',
-          'Text' => "You have been defeated.",
+          'Text' => 'You have been defeated.',
         ];
       }
 
@@ -633,6 +633,31 @@
           return 'Foe';
         }
       }
+    }
+
+    /**
+     * Set a field effect.
+     * @param string $Field_Effect
+     * @param string $Side
+     * @param int $Turns
+     */
+    public function SetFieldEffect
+    (
+      string $Field_Effect,
+      string $Side,
+      int $Turns
+    )
+    {
+      if ( $this->IsFieldEffectActive($Field_Effect, $Side) )
+        return false;
+
+      $this->Field_Effects[''] = [
+        'Name' => $Field_Effect,
+        'Side' => $Side,
+        'Turns' => $Turns
+      ];
+
+      return true;
     }
 
     /**
