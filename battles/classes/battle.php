@@ -671,6 +671,9 @@
       string $Side
     )
     {
+      if ( !isset($this->Field_Effects) )
+        return false;
+
       foreach ( $this->Field_Effects as $Field )
       {
         if
