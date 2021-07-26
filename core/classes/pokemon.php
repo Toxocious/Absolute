@@ -236,6 +236,73 @@
 			];
 		}
 
+    /**
+     * Fetch the current stats of a Pokemon.
+     * @param int $Pokemon_ID
+     * @param int $Pokedex_ID
+     * @param int $Pokedex_Alt_ID
+     */
+    public function FetchCurrentStats
+    (
+      int $Pokemon_ID,
+      int $Pokedex_ID,
+      int $Pokedex_Alt_ID
+    )
+    {
+      global $PDO;
+
+      try
+      {
+        $FetchPokemon = $PDO->prepare("SELECT `Nature`, `Type`, `EVs`, `IVs`, `Experience` FROM `pokemon` WHERE `ID` = ? LIMIT 1");
+        $FetchPokemon->execute([ $Pokemon_ID ]);
+        $FetchPokemon->setFetchMode(PDO::FETCH_ASSOC);
+        $Pokemon = $FetchPokemon->fetch();
+
+        $FetchPokedex = $PDO->prepare("SELECT `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+        $FetchPokedex->execute([ $Pokedex_ID, $Pokedex_Alt_ID ]);
+        $FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
+        $Pokedex = $FetchPokedex->fetch();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError( $e->getMessage() );
+      }
+
+      if ( !isset($Pokemon) )
+        return false;
+
+      switch($Pokemon['Type'])
+      {
+        case 'Normal':
+          $StatBonus = 0;
+          break;
+        case 'Shiny':
+          $StatBonus = 5;
+          break;
+        case 'Sunset':
+          $StatBonus = 10;
+          break;
+        default:
+          $StatBonus = 0;
+          break;
+      }
+
+      $Level = FetchLevel($Pokemon['Experience'], 'Pokemon');
+      $EVs = explode(',', $Pokemon['EVs']);
+      $IVs = explode(',', $Pokemon['IVs']);
+
+      $Stats = [
+        $this->CalcStat('HP', floor($Pokedex['HP'] + $StatBonus), $Level, $IVs[0], $EVs[0], $Pokemon['Nature']),
+        $this->CalcStat('Attack', floor($Pokedex['Attack'] + $StatBonus), $Level, $IVs[1], $EVs[1], $Pokemon['Nature']),
+        $this->CalcStat('Defense', floor($Pokedex['Defense'] + $StatBonus), $Level, $IVs[2], $EVs[2], $Pokemon['Nature']),
+        $this->CalcStat('SpAttack', floor($Pokedex['SpAttack'] + $StatBonus), $Level, $IVs[3], $EVs[3], $Pokemon['Nature']),
+        $this->CalcStat('SpDefense', floor($Pokedex['SpDefense'] + $StatBonus), $Level, $IVs[4], $EVs[4], $Pokemon['Nature']),
+        $this->CalcStat('Speed', floor($Pokedex['Speed'] + $StatBonus), $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
+      ];
+
+      return $Stats;
+    }
+
 		/**
 		 * Move a Pokemon from your box, into your roster, or vice-versa.
 		 */
