@@ -613,11 +613,8 @@
       if ( in_array($Defender->Ability, ['Battle Armor', 'Shell Armor']) )
         return false;
 
-      if ( isset($Defender->Statuses['Lucky Chant']) )
-        return false;
-
       if ( $Attacker->Ability == 'Merciless' )
-        if ( isset($Defender->Statuses['Poisoned']) )
+        if ( $Defender->HasStatus('Poisoned') )
           return true;
 
       if ( $Attacker->Ability == 'Super Luck' )
