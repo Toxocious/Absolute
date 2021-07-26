@@ -617,6 +617,9 @@
         if ( $Defender->HasStatus('Poisoned') )
           return true;
 
+      if ( $Attacker->HasStatus('Focus Energy') )
+        $this->Crit_Chance += 2;
+
       if ( $Attacker->Ability == 'Super Luck' )
         $this->Crit_Chance++;
 
