@@ -540,6 +540,30 @@
     }
 
     /**
+     * Reset all stat's back to their base.
+     */
+    public function ResetStats()
+    {
+      global $Poke_Class;
+
+      $Fetch_Stats = $Poke_Class->FetchCurrentStats($this->Pokemon_ID, $this->Pokedex_ID, $this->Alt_ID);
+      if ( !$Fetch_Stats )
+        return false;
+
+      unset($this->Stats);
+
+      $this->Stats = [
+        'Attack' => new Stat('Attack', $Fetch_Stats['Stats'][1]),
+        'Defense' => new Stat('Defense', $Fetch_Stats['Stats'][2]),
+        'Sp_Attack' => new Stat('Sp_Attack', $Fetch_Stats['Stats'][3]),
+        'Sp_Defense' => new Stat('Sp_Defense', $Fetch_Stats['Stats'][4]),
+        'Speed' => new Stat('Speed', $Fetch_Stats['Stats'][5]),
+        'Accuracy' => new Stat('Accuracy', 100),
+        'Evasion' => new Stat('Evasion', 100),
+      ];
+    }
+
+    /**
      * Determine if the Pokemon has a specified typing.
      * @param array $Typings
      */
