@@ -91,13 +91,17 @@
           break;
       }
 
+      $Turn_Count = 5;
+      if ( $Attacker->Item->Name == 'Light Clay' )
+        $Turn_Count = 8;
+
       if ( $this->IsFieldEffectActive('Light Screen', $Side) )
       {
         $Effect_Text = 'But it failed!';
       }
       else
       {
-        $Set_Field = $this->SetFieldEffect('Light Screen', $Side, 5);
+        $Set_Field = $this->SetFieldEffect('Light Screen', $Side, $Turn_Count);
         if ( $Set_Field )
           $Effect_Text = 'A barrier was placed that reduces damage from Special attacks!';
       }
