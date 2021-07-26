@@ -35,6 +35,8 @@
     public $Accuracy_Boost = null;
     public $Evasion_Boost = null;
 
+    public $Class_Name = null;
+
     public function __construct
     (
       Move $Move_Data

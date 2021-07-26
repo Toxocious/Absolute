@@ -3,6 +3,7 @@
 
   class Flamethrower extends Battle
   {
+    public $Name = null;
     public $Accuracy = null;
     public $Power = null;
     public $Priority = null;
@@ -41,6 +42,8 @@
       Move $Move_Data
     )
     {
+      $this->Name = $Move_Data->Name;
+
       $this->Accuracy = $Move_Data->Accuracy;
       $this->Power = $Move_Data->Power;
       $this->Priority = $Move_Data->Priority;

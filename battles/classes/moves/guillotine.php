@@ -3,6 +3,7 @@
 
   class Guillotine extends Battle
   {
+    public $Name = null;
     public $Accuracy = null;
     public $Power = null;
     public $Priority = null;
@@ -34,11 +35,15 @@
     public $Accuracy_Boost = null;
     public $Evasion_Boost = null;
 
+    public $Class_Name = null;
+
     public function __construct
     (
       Move $Move_Data
     )
     {
+      $this->Name = $Move_Data->Name;
+
       $this->Accuracy = $Move_Data->Accuracy;
       $this->Power = $Move_Data->Power;
       $this->Priority = $Move_Data->Priority;
