@@ -223,9 +223,9 @@
       $STAB = $this->CalculateSTAB($Side);
 
       if ( isset($Move_Class) )
-        $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+        $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
       else
-        $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+        $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
       if ( $this->Disabled )
       {
@@ -264,14 +264,14 @@
      * @param string $Side
      * @param int $STAB,
      * @param bool $Does_Move_Crit
-     * @param float $Move_Effectiveness
+     * @param array $Move_Effectiveness
      */
     public function HandleMove
     (
       string $Side,
       int $STAB,
       bool $Does_Move_Crit,
-      float $Move_Effectiveness
+      array $Move_Effectiveness
     )
     {
       switch ( $Side )
@@ -311,7 +311,7 @@
 
       $Damage = 0;
       for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
-        $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
+        $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
       $Healing = 0;
       if ( $Attacker->HP < $Attacker->Max_HP )
@@ -1178,14 +1178,14 @@
      * @param string $Side
      * @param int $STAB
      * @param bool $Crit
-     * @param float $Move_Effectiveness
+     * @param array $Move_Effectiveness
      */
     public function CalcDamage
     (
       string $Side,
       int $STAB,
       bool $Crit,
-      float $Move_Effectiveness
+      array $Move_Effectiveness
     )
     {
       if ( !isset($STAB) || !isset($Crit) || !isset($Move_Effectiveness) )

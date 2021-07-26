@@ -82,7 +82,7 @@
       string $Side,
       int $STAB,
       bool $Does_Move_Crit,
-      float $Move_Effectiveness
+      array $Move_Effectiveness
     )
     {
       switch ( $Side )

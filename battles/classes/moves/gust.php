@@ -79,7 +79,7 @@
       string $Side,
       int $STAB,
       bool $Does_Move_Crit,
-      float $Move_Effectiveness
+      array $Move_Effectiveness
     )
     {
       switch ( $Side )
@@ -94,7 +94,7 @@
           break;
       }
 
-      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
+      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
       if ( $Defender->HasStatus('Semi-Invulnerability') )
         if ( in_array($Defender->Last_Move['Name'], ['Fly', 'Bounce', 'Sky Drop']) )

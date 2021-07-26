@@ -83,7 +83,7 @@
       string $Side,
       int $STAB,
       bool $Does_Move_Crit,
-      float $Move_Effectiveness
+      array $Move_Effectiveness
     )
     {
       switch ( $Side )
@@ -120,7 +120,7 @@
 
       $Attacker->RemoveStatus('Charging');
 
-      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
+      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
       return [
         'Text' => (isset($Effect_Text) ? $Effect_Text : '') .

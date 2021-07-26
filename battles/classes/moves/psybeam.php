@@ -83,7 +83,7 @@
       string $Side,
       int $STAB,
       bool $Does_Move_Crit,
-      float $Move_Effectiveness
+      array $Move_Effectiveness
     )
     {
       switch ( $Side )
@@ -105,7 +105,7 @@
           $Effect_Text = "{$Defender->Display_Name} is now confused!";
       }
 
-      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
+      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
