@@ -1084,13 +1084,17 @@
 
       $Type_1_Mult = array_search($Used_Against->Primary_Type, $Types);
       if ( !$Type_1_Mult )
-        $Type_1_Mult = 1;
+        $Primary_Mult = 1;
+      else
+        $Primary_Mult = $Type_Chart[$Move_Type][$Type_1_Mult];
 
       $Type_2_Mult = array_search($Used_Against->Secondary_Type, $Types);
       if ( !$Type_2_Mult )
-        $Type_2_Mult = 1;
+        $Secondary_Mult = 1;
+      else
+        $Secondary_Mult = $Type_Chart[$Move_Type][$Type_2_Mult];
 
-      $Effective_Mult = $Type_Chart[$Move_Type][$Type_1_Mult] * $Type_Chart[$Move_Type][$Type_2_Mult];
+      $Effective_Mult = $Primary_Mult * $Secondary_Mult;
 
       switch ( $Effective_Mult )
       {
@@ -1191,7 +1195,7 @@
       string $Side,
       int $STAB,
       bool $Crit,
-      array $Move_Effectiveness
+      float $Move_Effectiveness
     )
     {
       if ( !isset($STAB) || !isset($Crit) || !isset($Move_Effectiveness) )
