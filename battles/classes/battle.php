@@ -651,7 +651,7 @@
       if ( $this->IsFieldEffectActive($Field_Effect, $Side) )
         return false;
 
-      $this->Field_Effects[''] = [
+      $this->Field_Effects[] = [
         'Name' => $Field_Effect,
         'Side' => $Side,
         'Turns' => $Turns
