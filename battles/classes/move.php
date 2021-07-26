@@ -1081,8 +1081,14 @@
       ];
 
       $Move_Type = array_search($this->Move_Type, $Types);
+
       $Type_1_Mult = array_search($Used_Against->Primary_Type, $Types);
+      if ( !$Type_1_Mult )
+        $Type_1_Mult = 1;
+
       $Type_2_Mult = array_search($Used_Against->Secondary_Type, $Types);
+      if ( !$Type_2_Mult )
+        $Type_2_Mult = 1;
 
       $Effective_Mult = $Type_Chart[$Move_Type][$Type_1_Mult] * $Type_Chart[$Move_Type][$Type_2_Mult];
 
