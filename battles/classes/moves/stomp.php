@@ -98,7 +98,11 @@
           break;
       }
 
-      $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      if ( isset($_SESSION['Battle'][$this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      else
+        $Turn_First_Attacker = $Side;
+
       if ( $Turn_First_Attacker == $Side )
         if ( mt_rand(1, 100) <= 30 )
           $Defender->SetStatus('Flinch');
