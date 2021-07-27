@@ -90,6 +90,11 @@
           'Max_Turns' => -1,
           'Volatile' => true
         ],
+        'Bide' => [
+          'Min_Turns' => 2,
+          'Max_Turns' => 2,
+          'Volatile' => true
+        ],
         'Bound' => [
           'Min_Turns' => 4,
           'Max_Turns' => 5,
