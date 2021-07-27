@@ -140,6 +140,7 @@
           SELECT `ID`
           FROM `moves`
           ORDER BY RAND()
+          WHERE `Usable` = 1
           LIMIT 1
         ");
         $Random_Move->execute([ ]);

@@ -88,6 +88,14 @@
         return $this;
       }
 
+      if ( !$Move_Data['Usable'] )
+      {
+        $this->Name = $Move_Data['Name'];
+        $this->Disabled = true;
+
+        return $this;
+      }
+
       $this->ID = $Move_Data['ID'];
       $this->Name = $Move_Data['Name'];
       $this->Slot = $Slot;
@@ -138,6 +146,16 @@
       string $Side
     )
     {
+      if ( !$this->Usable )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'This move is not usable.',
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
       switch ( $Side )
       {
         case 'Ally':
