@@ -93,27 +93,22 @@
           break;
       }
 
-      if
-      (
-        $Attacker->HasStatus('Bide') &&
-        $_SESSION['Battle'][$this->Side]['Bide']['Turns'] == 0
-      )
+      if ( $Attacker->HasStatus('Bide') )
       {
+        if ( $Attacker->Statuses['Bide']->Turns_Left > 0 )
+        {
           $Attacker->RemoveStatus('Bide');
-          $Attacker->EnableMoves();
 
-          $Damage = $_SESSION['Battle'][$this->Side]['Bide']['Damage'] * 2;
+          $Damage = $_SESSION['Battle'][$Side]->Bide['Damage'] * 2;
           $Effect_Text = "It dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}.";
+        }
       }
       else
       {
         $Set_Status = $Attacker->SetStatus('Bide');
         if ( $Set_Status )
         {
-          $Attacker->DisableMoves();
-
-          $_SESSION['Battle'][$Side]['Bide'] = [
-            'Turns' => 2,
+          $_SESSION['Battle'][$Side]->Bide = [
             'Damage' => 0
           ];
 

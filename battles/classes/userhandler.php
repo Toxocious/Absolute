@@ -16,6 +16,8 @@
     public $Money = null;
     public $Abso_Coins = null;
 
+    public $Bide = null;
+
     public function __construct
     (
       int $User_ID,

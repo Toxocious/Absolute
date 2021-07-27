@@ -162,21 +162,14 @@
 
       if ( $this->HasStatus('Bide') )
       {
-        if ( $_SESSION['Battle'][$this->Side]['Bide']['Turns'] > 0 )
+        if ( $this->Statuses['Bide']->Turns_Left > 0 )
         {
-          $_SESSION['Battle'][$this->Side]['Bide']['Turns']--;
-
           return [
             'Type' => 'Success',
-            'Text' => "{$this->Display_Name} is storing energy!"
+            'Text' => "{$this->Display_Name} is storing energy!",
+            'Damage' => 0,
+            'Healing' => 0,
           ];
-        }
-        else
-        {
-          if ( $_SESSION['Battle'][$this->Side]['Bide']['Turns'] == 0 )
-            $this->RemoveStatus('Bide');
-
-          return $this->Moves[$this->Last_Move['Slot']]->ProcessAttack($this->Side);
         }
       }
 
