@@ -160,6 +160,26 @@
         ];
       }
 
+      if ( $this->HasStatus('Bide') )
+      {
+        if ( $_SESSION['Battle'][$this->Side]['Bide']['Turns'] > 0 )
+        {
+          $_SESSION['Battle'][$this->Side]['Bide']['Turns']--;
+
+          return [
+            'Type' => 'Success',
+            'Text' => "{$this->Display_Name} is storing energy!"
+          ];
+        }
+        else
+        {
+          if ( $_SESSION['Battle'][$this->Side]['Bide']['Turns'] == 0 )
+            $this->RemoveStatus('Bide');
+
+          return $this->Moves[$this->Last_Move['Slot']]->ProcessAttack($this->Side);
+        }
+      }
+
       if
       (
         $this->HasStatus('Move Locked') ||
