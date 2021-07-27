@@ -57,8 +57,8 @@
 
     public function __construct
     (
-      $Move,
-      $Slot
+      int $Move,
+      int $Slot
     )
     {
       global $PDO;
