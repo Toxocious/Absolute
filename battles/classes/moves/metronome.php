@@ -119,9 +119,9 @@
       }
 
       return [
-        'Text' => "{$Attacker->Display_Name} used {$this->Name}." .
-                  (isset($Handle_Move['Text']) ? "<br />{$Handle_Move['Text']}" : ''),
-        'Effect_Text' => (isset($Handle_Move['Effect_Text']) ? "<br />{$Handle_Move['Effect_Text']}" : ''),
+        'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                  (isset($Handle_Move['Text']) ? $Handle_Move['Text'] : ''),
+        'Effect_Text' => (isset($Handle_Move['Effect_Text']) ? $Handle_Move['Effect_Text'] : ''),
         'Damage' => (isset($Handle_Move['Damage']) ? $Handle_Move['Damage'] : 0),
         'Healing' => (isset($Handle_Move['Heal']) ? $Handle_Move['Heal'] : 0),
       ];
