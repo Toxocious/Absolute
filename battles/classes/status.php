@@ -44,6 +44,17 @@
     }
 
     /**
+     * Update the status.
+     */
+    public function UpdateStatus()
+    {
+      if ( $this->Turns_Left > 0 )
+        $this->Turns_Left--;
+
+      return $this;
+    }
+
+    /**
      * An array of all statuses, volatile and otherwise.
      */
     public function AllStatuses()
