@@ -5,11 +5,6 @@
   $Fight = $_SESSION['Battle']['Battle_Type'];
   $Battle = new $Fight();
 
-  if ( $_POST['Battle_ID'] != $_SESSION['Battle']['Battle_ID'] )
-  {
-    $_SESSION['Battle']['Logging']['Battle_ID'] = 'Invalid Battle ID';
-  }
-
   $Output = [
     'Time_Started' => $_SESSION['Battle']['Time_Started'],
     'Battle_Type' => $_SESSION['Battle']['Battle_Type'],
@@ -40,6 +35,12 @@
 
     if ( isset($_POST['Is_Trusted']) )
       $_SESSION['Battle']['Logging']['Input']['Is_Trusted'] = Purify($_POST['Is_Trusted']);
+
+    if ( isset($_POST['Battle_ID']) )
+      if ( $_POST['Battle_ID'] != $_SESSION['Battle']['Battle_ID'] )
+        $_SESSION['Battle']['Logging']['Battle_ID'] = 'Invalid Battle ID';
+      else
+        $_SESSION['Battle']['Logging']['Battle_ID'] = 'Valid Battle ID';
 
     if ( isset($_POST['In_Focus']) )
       $_SESSION['Battle']['Logging']['In_Focus'] = Purify($_POST['In_Focus']);
