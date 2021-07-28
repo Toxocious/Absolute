@@ -1,12 +1,4 @@
 <?php
-  if ( !isset($_POST['Battle_ID']) )
-  {
-    $Output['Message'] = [
-      'Type' => 'Error',
-      'Text' => 'Your Battle ID is not set.'
-    ];
-  }
-
   require_once '../../battles/classes/battle.php';
   require_once '../../core/required/session.php';
 
@@ -15,7 +7,7 @@
 
   if ( $_POST['Battle_ID'] != $_SESSION['Battle']['Battle_ID'] )
   {
-    $_SESSION['Battle']['Protection']['Battle_ID'] = 'Invalid Postcode';
+    $_SESSION['Battle']['Logging']['Battle_ID'] = 'Invalid Battle ID';
   }
 
   $Output = [
