@@ -17,6 +17,7 @@
     public $Slot = null;
     public $Disabled = null;
     public $Disabled_For_Turns = null;
+    public $Usable = null;
 
     public $Accuracy = null;
     public $Power = null;
@@ -100,6 +101,7 @@
       $this->Name = $Move_Data['Name'];
       $this->Slot = $Slot;
       $this->Disabled = false;
+      $this->Usable = $Move_Data['Usable'];
 
       $this->Accuracy = $Move_Data['Accuracy'];
       $this->Power = $Move_Data['Power'];
