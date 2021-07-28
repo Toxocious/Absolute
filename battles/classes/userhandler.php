@@ -17,6 +17,7 @@
     public $Abso_Coins = null;
 
     public $Bide = null;
+    public $Field_Effects = null;
 
     public function __construct
     (
@@ -58,6 +59,49 @@
         $this->Clan = $Clan;
 
       return $this;
+    }
+
+    /**
+     * Set a field effect.
+     * @param string $Field_Effect
+     * @param int $Turns
+     */
+    public function SetFieldEffect
+    (
+      string $Field_Effect,
+      int $Turns
+    )
+    {
+      if ( $this->IsFieldEffectActive($Field_Effect) )
+        return false;
+
+      $this->Field_Effects[] = [
+        'Name' => $Field_Effect,
+        'Turns' => $Turns
+      ];
+
+      return true;
+    }
+
+    /**
+     * Determine if a given field effect is active.
+     * @param string $Field_Effect
+     */
+    public function IsFieldEffectActive
+    (
+      string $Field_Effect
+    )
+    {
+      if ( !isset($this->Field_Effects) )
+        return false;
+
+      foreach ( $this->Field_Effects as $Field )
+      {
+        if ( $Field['Name'] == $Field_Effect )
+          return true;
+      }
+
+      return false;
     }
 
     /**

@@ -636,58 +636,6 @@
     }
 
     /**
-     * Set a field effect.
-     * @param string $Field_Effect
-     * @param string $Side
-     * @param int $Turns
-     */
-    public function SetFieldEffect
-    (
-      string $Field_Effect,
-      string $Side,
-      int $Turns
-    )
-    {
-      if ( $this->IsFieldEffectActive($Field_Effect, $Side) )
-        return false;
-
-      $this->Field_Effects[] = [
-        'Name' => $Field_Effect,
-        'Side' => $Side,
-        'Turns' => $Turns
-      ];
-
-      return true;
-    }
-
-    /**
-     * Determine if a given field effect is active.
-     * @param string $Field_Effect
-     * @param string $Side
-     */
-    public function IsFieldEffectActive
-    (
-      string $Field_Effect,
-      string $Side
-    )
-    {
-      if ( !isset($this->Field_Effects) )
-        return false;
-
-      foreach ( $this->Field_Effects as $Field )
-      {
-        if
-        (
-          $Field['Name'] == $Field_Effect &&
-          $Field['Side'] == $Side
-        )
-          return true;
-      }
-
-      return false;
-    }
-
-    /**
      * Set the current weather.
      * @param string $Weather
      */
