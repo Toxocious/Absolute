@@ -99,7 +99,7 @@
         {
           $Attacker->RemoveStatus('Bide');
 
-          $Damage = $_SESSION['Battle'][$Side]->Bide['Damage'] * 2;
+          $Damage = $Attacker->Bide_Damage * 2;
           $Effect_Text = "It dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}.";
         }
       }
@@ -108,9 +108,7 @@
         $Set_Status = $Attacker->SetStatus('Bide');
         if ( $Set_Status )
         {
-          $_SESSION['Battle'][$Side]->Bide = [
-            'Damage' => 0
-          ];
+          $Attacker->Bide_Damage = 0;
 
           $Effect_Text = "{$Attacker->Display_Name} is getting pumped!";
         }
