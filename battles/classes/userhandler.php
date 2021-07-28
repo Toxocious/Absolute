@@ -79,6 +79,8 @@
 
       try
       {
+        $PDO->beginTransaction();
+
         $Update_Trainer_Exp = $PDO->prepare("
           UPDATE `users`
           SET `TrainerExp` = `TrainerExp` + ?
@@ -86,9 +88,12 @@
           LIMIT 1
         ");
         $Update_Trainer_Exp->execute([ $Trainer_Exp, $this->ID ]);
+
+        $PDO->commit();
       }
       catch ( PDOException $e )
       {
+        $PDO->rollback();
         HandleError($e);
       }
 
@@ -116,6 +121,8 @@
 
       try
       {
+        $PDO->beginTransaction();
+
         $Update_Money = $PDO->prepare("
           UPDATE `user_currency`
           SET `Money` = `Money` + ?
@@ -123,9 +130,12 @@
           LIMIT 1
         ");
         $Update_Money->execute([ $Money_Gained, $this->ID ]);
+
+        $PDO->commit();
       }
       catch ( PDOException $e )
       {
+        $PDO->rollback();
         HandleError($e);
       }
 
@@ -151,6 +161,8 @@
 
       try
       {
+        $PDO->beginTransaction();
+
         $Update_Abso_Coins = $PDO->prepare("
           UPDATE `user_currency`
           SET `Abso_Coins` = `Abso_Coins` + ?
@@ -158,9 +170,12 @@
           LIMIT 1
         ");
         $Update_Abso_Coins->execute([ $Abso_Coins_Gained, $this->ID ]);
+
+        $PDO->commit();
       }
       catch ( PDOException $e )
       {
+        $PDO->rollback();
         HandleError($e);
       }
 

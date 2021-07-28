@@ -55,6 +55,8 @@
 
       try
       {
+        $PDO->beginTransaction();
+
         $Update_Item = $PDO->prepare("
           UPDATE `items`
           SET `Quantity` = `Quantity` - 1
@@ -62,9 +64,12 @@
           LIMIT 1
         ");
         $Update_Item->execute([ $this->Owner_Current, $this->Item_ID ]);
+
+        $PDO->commit();
       }
       catch ( PDOException $e )
       {
+        $PDO->rollback();
         HandleError($e);
       }
 

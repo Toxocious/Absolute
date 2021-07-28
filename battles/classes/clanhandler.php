@@ -65,6 +65,8 @@
 
       try
       {
+        $PDO->beginTransaction();
+
         $Update_Clan_Exp = $PDO->prepare("
           UPDATE `clans`
           SET `Experience` = `Experience` + ?
@@ -72,9 +74,12 @@
           LIMIT 1
         ");
         $Update_Clan_Exp->execute([ $Clan_Exp, $this->ID ]);
+
+        $PDO->commit();
       }
       catch ( PDOException $e )
       {
+        $PDO->rollback();
         HandleError($e);
       }
 
@@ -96,6 +101,8 @@
 
       try
       {
+        $PDO->beginTransaction();
+
         $Update_Clan_Exp = $PDO->prepare("
           UPDATE `clans`
           SET `Clan_Points` = `Clan_Points` + ?
@@ -103,9 +110,12 @@
           LIMIT 1
         ");
         $Update_Clan_Exp->execute([ $Clan_Points, $this->ID ]);
+
+        $PDO->commit();
       }
       catch ( PDOException $e )
       {
+        $PDO->rollback();
         HandleError($e);
       }
 

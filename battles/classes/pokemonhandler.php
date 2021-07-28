@@ -310,6 +310,8 @@
 
           try
           {
+            $PDO->beginTransaction();
+
             $Update_Exp = $PDO->prepare("
               UPDATE `pokemon`
               SET `Experience` = `Experience` + ?
@@ -320,9 +322,12 @@
               $Exp,
               $Pokemon->Pokemon_ID
             ]);
+
+            $PDO->commit();
           }
           catch ( PDOException $e )
           {
+            $PDO->rollback();
             HandleError($e);
           }
 
