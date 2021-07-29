@@ -104,7 +104,7 @@
         $Turn_First_Attacker = $Side;
 
       if ( $Turn_First_Attacker == $Side )
-        if ( mt_rand(1, 100) <= 30 )
+        if ( mt_rand(1, 100) <= $this->Effect_Chance )
           $Defender->SetStatus('Flinch');
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);

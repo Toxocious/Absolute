@@ -98,7 +98,7 @@
           break;
       }
 
-      if ( mt_rand(1, 10) === 1 )
+      if ( mt_rand(1, 100) <= $this->Effect_Chance )
       {
         if ( $Defender->Stats['Attack']->Stage <= -6 )
         {

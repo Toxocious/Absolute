@@ -100,7 +100,7 @@
 
       if ( !$Defender->HasStatus('Burn') )
       {
-        if ( mt_rand(1, 10) === 1 )
+        if ( mt_rand(1, 100) <= $this->Effect_Chance )
         {
           $Set_Status = $Defender->SetStatus($this->Ailment);
           if ( $Set_Status )
