@@ -98,16 +98,23 @@
           break;
       }
 
-      $Foes_Last_Move = $Defender->Moves[$Defender->Last_Move['Slot']];
-      if ( isset($Foes_Last_Move) )
+      if ( isset($Defender->Last_Move) )
       {
-        if ( class_exists($Foes_Last_Move->Class_Name) )
-          $Move_Class = new $Foes_Last_Move->Class_Name($Foes_Last_Move);
+        $Foes_Last_Move = $Defender->Moves[$Defender->Last_Move['Slot']];
+        if ( isset($Foes_Last_Move) )
+        {
+          if ( class_exists($Foes_Last_Move->Class_Name) )
+            $Move_Class = new $Foes_Last_Move->Class_Name($Foes_Last_Move);
 
-        if ( isset($Move_Class) )
-          $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+          if ( isset($Move_Class) )
+            $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
+          else
+            $Handle_Move = $Defender->Moves[$Defender->Last_Move['Slot']]->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
+        }
         else
-          $Handle_Move = $Defender->Moves[$Defender->Last_Move['Slot']]->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+        {
+          $Effect_Text = 'But it failed!';
+        }
       }
       else
       {
@@ -115,7 +122,8 @@
       }
 
       return [
-        'Text' => (isset($Handle_Move['Text']) && $Handle_Move['Text'] != '' ? "<br />{$Handle_Move['Text']}" : '') .
+        'Text' => "{$Attacker->Display_Name} used {$this->Name}." .
+                  (isset($Handle_Move['Text']) && $Handle_Move['Text'] != '' ? "<br />{$Handle_Move['Text']}" : '') .
                   (isset($Handle_Move['Effect_Text']) && $Handle_Move['Effect_Text'] != '' ? "<br />{$Handle_Move['Effect_Text']}" : ''),
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => (isset($Handle_Move['Damage']) && $Handle_Move['Damage'] > 0 ? $Handle_Move['Damage'] : 0),
