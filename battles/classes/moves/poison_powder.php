@@ -100,7 +100,8 @@
 
       if
       (
-        ($Defender->Ability == 'Immunity' && $Defender->HasTyping(['Steel'])) ||
+        $Defender->Ability == 'Immunity' ||
+        $Defender->HasTyping(['Steel']) ||
         $Defender->HasStatus('Poison')
       )
       {
