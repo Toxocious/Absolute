@@ -89,32 +89,32 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Battle']['Ally'];
+          $Defender = $_SESSION['Battle']['Foe'];
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Battle']['Foe'];
+          $Defender = $_SESSION['Battle']['Ally'];
           break;
       }
 
-      if ( $this->IsFieldEffectActive('Mist', $Side) )
+      if ( $Defender->IsFieldEffectActive('Mist') )
       {
         $Effect_Text = 'But it failed.';
       }
       else
       {
-        if ( $Defender->Stats['Accuracy']->Stage <= -6 )
+        if ( $Defender->Active->Stats['Accuracy']->Stage <= -6 )
         {
-          $Effect_Text = "{$Defender->Display_Name}'s Accuracy can't go any lower!";
+          $Effect_Text = "{$Defender->Active->Display_Name}'s Accuracy can't go any lower!";
         }
         else
         {
           $Stages = $this->Accuracy_Boost;
 
-          $Defender->Stats['Accuracy']->SetValue($Stages);
+          $Defender->Active->Stats['Accuracy']->SetValue($Stages);
 
-          $Effect_Text = "{$Defender->Display_Name}'s Accuracy has fallen!";
+          $Effect_Text = "{$Defender->Active->Display_Name}'s Accuracy has fallen!";
         }
       }
 

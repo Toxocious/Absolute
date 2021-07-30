@@ -89,32 +89,32 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Battle']['Ally'];
+          $Defender = $_SESSION['Battle']['Foe'];
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Battle']['Foe'];
+          $Defender = $_SESSION['Battle']['Ally'];
           break;
       }
 
-      if ( $this->IsFieldEffectActive('Mist', $Side) )
+      if ( $Defender->IsFieldEffectActive('Mist') )
       {
         $Effect_Text = 'But it failed.';
       }
       else
       {
-        if ( $Defender->Stats['Speed']->Stage <= -6 )
+        if ( $Defender->Active->Stats['Speed']->Stage <= -6 )
         {
-          $Effect_Text = "{$Defender->Display_Name}'s Speed can't go any lower!";
+          $Effect_Text = "{$Defender->Active->Display_Name}'s Speed can't go any lower!";
         }
         else
         {
           $Stages = $this->Speed_Boost;
 
-          $Defender->Stats['Speed']->SetValue($Stages);
+          $Defender->Active->Stats['Speed']->SetValue($Stages);
 
-          $Effect_Text = "{$Defender->Display_Name}'s Speed has fallen!";
+          $Effect_Text = "{$Defender->Active->Display_Name}'s Speed has fallen!";
         }
       }
 
