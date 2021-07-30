@@ -509,7 +509,7 @@
     }
 
     /**
-     * Remove a statues from the Pokemon.
+     * Remove a status from the Pokemon.
      * @param string $Status_Name
      */
     public function RemoveStatus
@@ -519,6 +519,22 @@
     {
       if ( $this->HasStatus($Status_Name) )
         unset($this->Statuses[$Status_Name]);
+
+      return true;
+    }
+
+    /**
+     * Remove a statues from the Pokemon.
+     * @param array $Statuses
+     */
+    public function RemoveStatusFromArray
+    (
+      array $Statuses
+    )
+    {
+      foreach ( $Statuses as $Status )
+        if ( $this->HasStatus($Status->Name) )
+          unset($this->Statuses[$Status->Name]);
 
       return true;
     }
