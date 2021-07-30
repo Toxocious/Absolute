@@ -131,6 +131,11 @@
           'Max_Turns' => 5,
           'Volatile' => true
         ],
+        'Crafty Shield' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => true
+        ],
         'Curse' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
