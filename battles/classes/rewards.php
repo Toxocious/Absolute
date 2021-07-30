@@ -99,8 +99,8 @@
       if ( isset($_SESSION['Battle']['Ally']->Clan) )
       {
         $Clan_Bonus = $_SESSION['Battle']['Ally']->Clan->HasUpgrade(4);
-        if ( $Clan_Bonus )
-          $Money *= floor(100 / $Clan_Bonus['Current_Level']);
+        if ( isset($Clan_Bonus) )
+          $Money += round($Clan_Bonus['Current_Level'] / 100, 2) * $Money;
       }
 
       return $Money;
