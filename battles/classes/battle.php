@@ -127,6 +127,32 @@
     }
 
     /**
+     * Process logic that happens at the end of the turn.
+     *
+     * -. Moves that proc after the turn.
+     *  - https://bulbapedia.bulbagarden.net/wiki/Rage_(move)
+     * 1. Move Lock (Petal Dance, Outrage, etc)
+     *  - If the Petal Dance duration is disrupted (such as by full paralysis or hurting itself due to confusion), it will immediately end.
+     *  - Confuse the user
+     *  - Enable all moves of the user
+     *  - Remove 'Trap' status
+     * 2. Perish Song, etc
+     * 3. Field Effects
+     *  - https://bulbapedia.bulbagarden.net/wiki/Mist_(move)
+     * 4. Burn/Poison/etc Damage Ticks
+     *  - Bind, Wrap, Fire Spin, etc ticks for 1/8 Max HP (1/6 if User Holding Binding Band)
+     *  - Shed Bell can prevent 'Trap' status
+     *  - https://bulbapedia.bulbagarden.net/wiki/Leech_Seed_(move)
+     * 5. Weather Ticks
+     * 6. Process battle status effects
+     *  - Bide, etc
+     */
+    public function ProcessEndOfTurn()
+    {
+
+    }
+
+    /**
      * Sets the battle state up to be continued.
      * @param string $Postcode
      */
