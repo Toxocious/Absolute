@@ -95,6 +95,9 @@
       else
       {
         document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', '');
+
+        if ( Active?.Statuses?.hasOwnProperty('Transformed') )
+          document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: drop-shadow(1px 1px 4px purple)');
       }
 
       for ( let i = 0; i < Roster.length; i++ )
