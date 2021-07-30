@@ -98,7 +98,12 @@
           break;
       }
 
-      if ( $Defender->HasStatus('Sleep') )
+      if
+      (
+        in_array($Defender->Ability, ['Insomnia', 'Overcoat', 'Vital Spirit', 'Sap Sipper', 'Sweet Veil']) ||
+        $Defender->HasStatus('Sleep') ||
+        $Defender->Item->Name == 'Safety Goggles'
+      )
       {
         $Effect_Text = 'But it failed!';
       }
