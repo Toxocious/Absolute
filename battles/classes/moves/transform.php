@@ -100,10 +100,12 @@
 
       if ( $Defender->HasStatus('Crafty Shield') )
       {
+        $Text = "{$Attacker->Display_Name} used {$this->Name}.";
         $Effect_Text = 'But it failed!';
       }
       else
       {
+        $Text = "{$Attacker->Display_Name} used {$this->Name}.";
         $Effect_Text = "{$Attacker->Display_Name} has transformed!";
 
         $Attacker->SetStatus('Transformed');
@@ -123,7 +125,7 @@
       }
 
       return [
-        'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
+        'Text' => (isset($Text) ? $Text : ''),
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => 0,
         'Healing' => 0,
