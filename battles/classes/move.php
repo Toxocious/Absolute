@@ -327,7 +327,14 @@
       if ( $this->Max_Hits == 'None' )
         $this->Max_Hits = 1;
 
-      $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
+      if
+      (
+        $Attacker->Ability == 'Skill Link' &&
+        $this->Max_Hits != 'None'
+      )
+        $this->Total_Hits = 5;
+      else
+        $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
 
       $Damage = 0;
       for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
