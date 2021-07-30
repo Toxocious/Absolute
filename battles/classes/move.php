@@ -205,6 +205,14 @@
         ];
       }
 
+      $Move_Effectiveness = $this->MoveEffectiveness($Defender);
+      if ( $Move_Effectiveness['Mult'] > 0 )
+        $Does_Move_Crit = $this->DoesMoveCrit($Side);
+      else
+        $Does_Move_Crit = false;
+
+      $STAB = $this->CalculateSTAB($Side);
+
       if ( class_exists($this->Class_Name) )
         $Move_Class = new $this->Class_Name($this);
 
@@ -216,7 +224,7 @@
         isset($Move_Class) &&
         method_exists($Move_Class, 'DoesMoveHit')
       )
-        $Does_Move_Hit = $Move_Class->DoesMoveHit($Side);
+        $Does_Move_Hit = $Move_Class->DoesMoveHit($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
       else
         $Does_Move_Hit = $this->DoesMoveHit($Side);
 
@@ -225,6 +233,9 @@
        */
       if ( !$Does_Move_Hit )
       {
+        if ( isset($Does_Move_Hit['Damage']) && $Does_Move_Hit['Damage'] > 0 )
+          $Attacker->DecreaseHP($Does_Move_Hit['Damage']);
+
         return [
           'Type' => 'Success',
           'Text' => "{$Attacker->Display_Name} used {$this->Name}, but it missed!" .
@@ -233,14 +244,6 @@
           'Heal' => 0,
         ];
       }
-
-      $Move_Effectiveness = $this->MoveEffectiveness($Defender);
-      if ( $Move_Effectiveness['Mult'] > 0 )
-        $Does_Move_Crit = $this->DoesMoveCrit($Side);
-      else
-        $Does_Move_Crit = false;
-
-      $STAB = $this->CalculateSTAB($Side);
 
       if ( isset($Move_Class) )
         $Handle_Move = $Move_Class->ProcessMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
