@@ -195,7 +195,10 @@
      */
     public function DoesMoveHit
     (
-      string $Side
+      string $Side,
+      int $STAB,
+      bool $Crit,
+      float $Move_Effectiveness
     )
     {
       switch ( $Side )
@@ -211,19 +214,39 @@
       }
 
       if ( $Defender->HasStatus('Bounce') )
-        return ['Success' => false, 'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!"];
+        return [
+          'Success' => false,
+          'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!",
+          'Damage' => $this->CalcDamage($Side, $STAB, $Crit, $Move_Effectiveness['Mult']) / 2
+        ];
 
       if ( $Defender->HasStatus('Dig') )
-        return ['Success' => false, 'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!"];
+        return [
+          'Success' => false,
+          'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!",
+          'Damage' => $this->CalcDamage($Side, $STAB, $Crit, $Move_Effectiveness['Mult']) / 2
+        ];
 
       if ( $Defender->HasStatus('Dive') )
-        return ['Success' => false, 'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!"];
+        return [
+          'Success' => false,
+          'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!",
+          'Damage' => $this->CalcDamage($Side, $STAB, $Crit, $Move_Effectiveness['Mult']) / 2
+        ];
 
       if ( $Defender->HasStatus('Fly') )
-        return ['Success' => false, 'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!"];
+        return [
+          'Success' => false,
+          'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!",
+          'Damage' => $this->CalcDamage($Side, $STAB, $Crit, $Move_Effectiveness['Mult']) / 2
+        ];
 
       if ( $Defender->HasStatus('Sky Drop') )
-        return ['Success' => false, 'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!"];
+        return [
+          'Success' => false,
+          'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!",
+          'Damage' => $this->CalcDamage($Side, $STAB, $Crit, $Move_Effectiveness['Mult']) / 2
+        ];
 
       if ( $Defender->Evasion > 1  && !$Defender->HasStatus('Semi-Invulnerable') )
         return true;
@@ -233,6 +256,10 @@
       if ( mt_rand(1, 100) < $this->Accuracy * $Accuracy_Mod )
         return true;
 
-      return ['Success' => false, 'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!"];
+      return [
+        'Success' => false,
+        'Effect_Text' => "{$Attacker->Display_Name} kept going and crashed!",
+        'Damage' => $this->CalcDamage($Side, $STAB, $Crit, $Move_Effectiveness['Mult']) / 2
+      ];
     }
   }
