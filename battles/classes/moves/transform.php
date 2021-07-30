@@ -111,8 +111,10 @@
         $Attacker->Display_Name = $Defender->Display_Name;
         $Attacker->Pokedex_ID = $Defender->Pokedex_ID;
         $Attacker->Alt_ID = $Defender->Alt_ID;
+        $Attacker->Ability = $Defender->Ability;
         $Attacker->Gender = $Defender->Gender;
         $Attacker->Stats = $Defender->Stats;
+        $Attacker->Moves = $Defender->Moves;
         $Attacker->EVs = $Defender->EVs;
         $Attacker->IVs = $Defender->IVs;
 
