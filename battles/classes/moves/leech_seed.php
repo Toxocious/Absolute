@@ -89,16 +89,16 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Battle']['Ally'];
+          $Defender = $_SESSION['Battle']['Foe'];
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Battle']['Foe'];
+          $Defender = $_SESSION['Battle']['Ally'];
           break;
       }
 
-      if ( $this->IsFieldEffectActive('Leech Seed', 'Foe') )
+      if ( $Defender->IsFieldEffectActive('Leech Seed') )
       {
         $Effect_Text = 'But it failed.';
       }
@@ -106,11 +106,11 @@
       {
         $Field_Effect = new Field('Foe', 'Leech Seed');
         if ( $Field_Effect )
-          $Effect_Text = "A seed was planted on {$Defender->Display_Name}.";
+          $Effect_Text = "A seed was planted on {$Defender->Active->Display_Name}.";
       }
 
       return [
-        'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
+        'Text' => "{$Attacker->Active->Display_Name} used {$this->Name}.",
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => 0,
         'Healing' => 0,
