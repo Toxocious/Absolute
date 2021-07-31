@@ -106,34 +106,28 @@
       {
         if
         (
-          $Defender->Item &&
-          !$Attacker->Item
+          (isset($Defender->Item) && !isset($Attacker->Item) ) &&
+          $Defender->HasStatus('Substitute') ||
+          $Defender->Ability != 'Sticky Hold' ||
+          $Defender->Ability != 'Multitype' ||
+          ($Attacker->Pokedex_ID != 382 && $Attacker->Item->Name == 'Blue Orb') ||
+          ($Defender->Pokedex_ID != 382 && $Defender->Item->Name == 'Blue Orb') ||
+          ($Attacker->Pokedex_ID != 383 && $Attacker->Item->Name == 'Red Orb') ||
+          ($Defender->Pokedex_ID != 383 && $Defender->Item->Name == 'Red Orb') ||
+          ($Attacker->Pokedex_ID != 487 && $Attacker->Item->Name == 'Griseous Orb') ||
+          ($Defender->Pokedex_ID != 487 && $Defender->Item->Name == 'Griseous Orb') ||
+          ($Attacker->Pokedex_ID != 493 && strpos($Attacker->Item->Name, 'Plate') > -1) ||
+          ($Defender->Pokedex_ID != 493 && strpos($Defender->Item->Name, 'Plate') > -1) ||
+          ($Attacker->Pokedex_ID != 773 && strpos($Attacker->Item->Name, 'Memory') > -1) ||
+          ($Defender->Pokedex_ID != 773 && strpos($Defender->Item->Name, 'Memory') > -1) ||
+          ($Attacker->Pokedex_ID != 649 && strpos($Attacker->Item->Name, 'Drive') > -1) ||
+          ($Defender->Pokedex_ID != 649 && strpos($Defender->Item->Name, 'Drive') > -1)
         )
         {
-          if
-          (
-            $Defender->HasStatus('Substitute') ||
-            $Defender->Ability != 'Sticky Hold' ||
-            $Defender->Ability != 'Multitype' ||
-            ($Attacker->Pokedex_ID != 382 && $Attacker->Item->Name == 'Blue Orb') ||
-            ($Defender->Pokedex_ID != 382 && $Defender->Item->Name == 'Blue Orb') ||
-            ($Attacker->Pokedex_ID != 383 && $Attacker->Item->Name == 'Red Orb') ||
-            ($Defender->Pokedex_ID != 383 && $Defender->Item->Name == 'Red Orb') ||
-            ($Attacker->Pokedex_ID != 487 && $Attacker->Item->Name == 'Griseous Orb') ||
-            ($Defender->Pokedex_ID != 487 && $Defender->Item->Name == 'Griseous Orb') ||
-            ($Attacker->Pokedex_ID != 493 && strpos($Attacker->Item->Name, 'Plate') > -1) ||
-            ($Defender->Pokedex_ID != 493 && strpos($Defender->Item->Name, 'Plate') > -1) ||
-            ($Attacker->Pokedex_ID != 773 && strpos($Attacker->Item->Name, 'Memory') > -1) ||
-            ($Defender->Pokedex_ID != 773 && strpos($Defender->Item->Name, 'Memory') > -1) ||
-            ($Attacker->Pokedex_ID != 649 && strpos($Attacker->Item->Name, 'Drive') > -1) ||
-            ($Defender->Pokedex_ID != 649 && strpos($Defender->Item->Name, 'Drive') > -1)
-          )
-          {
-            $Attacker->Item = new HeldItem($Attacker->Item->ID);
-            unset($Defender->Item);
+          $Attacker->Item = new HeldItem($Attacker->Item->ID);
+          unset($Defender->Item);
 
-            $Effect_Text = "<br />{$Attacker->Display_Name} stole {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
-          }
+          $Effect_Text = "<br />{$Attacker->Display_Name} stole {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
         }
       }
 
