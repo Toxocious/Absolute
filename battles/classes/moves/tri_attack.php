@@ -108,9 +108,31 @@
         else
           $this->Ailment = 'Paralysis';
 
-        $Set_Status = $Defender->SetStatus($this->Ailment);
-        if ( $Set_Status )
-          $Effect_Text = "{$Defender->Display_Name} has been afflicted with {$this->Ailment}!";
+        $Does_Ailment_Pass = false;
+        switch ( $this->Ailment )
+        {
+          case 'Burn':
+            if ( !$Defender->HasTyping(['Fire']) )
+              $Does_Ailment_Pass = true;
+            break;
+
+          case 'Freeze':
+            if ( !$Defender->HasTyping(['Ice']) )
+              $Does_Ailment_Pass = true;
+            break;
+
+          case 'Paralysis':
+            if ( !$Defender->HasTyping(['Electric']) )
+              $Does_Ailment_Pass = true;
+            break;
+        }
+
+        if ( $Does_Ailment_Pass )
+        {
+          $Set_Status = $Defender->SetStatus($this->Ailment);
+          if ( $Set_Status )
+            $Effect_Text = "{$Defender->Display_Name} has been afflicted with {$this->Ailment}!";
+        }
       }
 
 
