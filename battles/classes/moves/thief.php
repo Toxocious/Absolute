@@ -106,7 +106,7 @@
       {
         if
         (
-          (isset($Defender->Item) && !isset($Attacker->Item) ) &&
+          isset($Defender->Item) &&
           $Defender->HasStatus('Substitute') ||
           $Defender->Ability != 'Sticky Hold' ||
           $Defender->Ability != 'Multitype' ||
@@ -127,7 +127,7 @@
           $Attacker->Item = new HeldItem($Attacker->Item->ID);
           unset($Defender->Item);
 
-          $Effect_Text = "<br />{$Attacker->Display_Name} stole {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
+          $Effect_Text = "{$Attacker->Display_Name} stole {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
         }
       }
 
