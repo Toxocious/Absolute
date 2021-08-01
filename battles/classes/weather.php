@@ -3,6 +3,7 @@
   {
     public $Name = null;
     public $Turns_Left = null;
+    public $Dialogue = null;
 
     public function __construct
     (
@@ -15,6 +16,7 @@
 
       $this->Name = $Weather_Name;
       $this->Turns_Left = 5;
+      $this->Dialogue = $Weather_Data['Text'];
     }
 
     /**
