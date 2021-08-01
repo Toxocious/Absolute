@@ -77,10 +77,16 @@
       if ( !isset($Turns) )
         $Turns = -1;
 
-      $this->Field_Effects[] = [
-        'Name' => $Field_Effect,
-        'Turns' => $Turns
-      ];
+      $Field_Construct = new Field(
+        $this->Side,
+        $Field_Effect,
+        $Turns
+      );
+
+      if ( !$Field_Construct )
+        return false;
+
+      $this->Field_Effects[$Field_Construct->Name] = $Field_Construct;
 
       return true;
     }
