@@ -65,6 +65,13 @@
           'Max_Stacks' => 1,
           'Stacks' => 1,
         ],
+        'Light Screen' => [
+          'Min_Turns' => 5,
+          'Max_Turns' => 5,
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
+        ],
         'Mist' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
