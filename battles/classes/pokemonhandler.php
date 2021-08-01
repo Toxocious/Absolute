@@ -549,7 +549,7 @@
     )
     {
       if ( isset($this->Statuses[$Status]) )
-        return true;
+        return $this->Statuses[$Status];
 
       return false;
     }
