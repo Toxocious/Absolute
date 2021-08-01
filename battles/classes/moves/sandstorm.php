@@ -104,6 +104,9 @@
       }
       else
       {
+        if ( isset($this->Weather) )
+          unset($this->Weather);
+
         $Set_Weather = new Weather('Sandstorm');
 
         if ( $Set_Weather )
