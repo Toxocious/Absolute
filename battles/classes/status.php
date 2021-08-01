@@ -176,6 +176,11 @@
           'Max_Turns' => -1,
           'Volatile' => true
         ],
+        'Foresight' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => true
+        ],
         'Heal Block' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
