@@ -105,8 +105,8 @@
 
       foreach ( $this->Field_Effects as $Field )
       {
-        if ( $Field['Name'] == $Field_Effect )
-          return true;
+        if ( $Field->Name == $Field_Effect )
+          return $Field;
       }
 
       return false;
