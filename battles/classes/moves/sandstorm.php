@@ -113,7 +113,7 @@
         {
           $this->Weather[$Set_Weather->Name] = $Set_Weather;
 
-          $Effect_Text = 'A sandstorm brewed!';
+          $Effect_Text = $Set_Weather->Dialogue;
         }
         else
         {
