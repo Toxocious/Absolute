@@ -4,6 +4,7 @@
     public $Name = null;
     public $Side = null;
     public $Turns_Left = null;
+    public $Stacks = null;
 
     public function __construct
     (
@@ -27,9 +28,15 @@
       else
         $Field_Turns = $Field_Turns;
 
+      $Stack_Count = 1;
+
+      if ( $Stack_Count > $Field_Data['Max_Stacks'] )
+        $Stack_Count = $Field_Data['Max_Stacks'];
+
       $this->Name = $Field_Name;
       $this->Side = $Side;
       $this->Turns_Left = $Field_Turns;
+      $this->Stacks = $Stack_Count;
     }
 
     /**
