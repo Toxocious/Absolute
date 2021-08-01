@@ -68,11 +68,14 @@
     public function SetFieldEffect
     (
       string $Field_Effect,
-      int $Turns
+      int $Turns = null
     )
     {
       if ( $this->IsFieldEffectActive($Field_Effect) )
         return false;
+
+      if ( !isset($Turns) )
+        $Turns = -1;
 
       $this->Field_Effects[] = [
         'Name' => $Field_Effect,
