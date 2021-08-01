@@ -40,6 +40,19 @@
     }
 
     /**
+     * Increment the field effect's stack count.
+     */
+    public function AddStack
+    (
+      int $Stacks = 1
+    )
+    {
+      $this->Stacks++;
+
+      return $this;
+    }
+
+    /**
      * All possible field effects.
      */
     public function FieldEffects()
