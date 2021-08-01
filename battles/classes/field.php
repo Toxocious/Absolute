@@ -41,17 +41,30 @@
         'Leech Seed' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => false
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
         ],
         'Mist' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
-          'Volatile' => false
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
+        ],
+        'Spikes' => [
+          'Min_Turns' => 5,
+          'Max_Turns' => 5,
+          'Volatile' => false,
+          'Max_Stacks' => 3,
+          'Stacks' => 1,
         ],
         'Trick Room' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
-          'Volatile' => false
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
         ],
       ];
     }
