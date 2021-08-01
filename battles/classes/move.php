@@ -18,6 +18,7 @@
     public $Disabled = null;
     public $Disabled_For_Turns = null;
     public $Usable = null;
+    public $Consecutive_Hits = null;
 
     public $Accuracy = null;
     public $Power = null;
@@ -102,6 +103,7 @@
       $this->Slot = $Slot;
       $this->Disabled = false;
       $this->Usable = $Move_Data['Usable'];
+      $this->Consecutive_Hits = 0;
 
       $this->Accuracy = $Move_Data['Accuracy'];
       $this->Power = $Move_Data['Power'];
@@ -266,10 +268,13 @@
 
       $Defender->Last_Damage_Taken = isset($Damage) ? $Damage : 0;
 
+      $this->Consecutive_Hits++;
+
       $Attacker->Last_Move = [
         'Name' => $this->Name,
         'Slot' => $this->Slot,
         'Type' => $this->Damage_Type,
+        'Consecutive_Hits' => $this->Consecutive_Hits
       ];
 
       return [
