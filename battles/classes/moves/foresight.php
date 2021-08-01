@@ -93,7 +93,7 @@
           break;
       }
 
-      if ( $Defender->HasStatus('Foresight') )
+      if ( !$Defender->HasStatus('Foresight') )
       {
         $Defender->SetStatus('Foresight');
 
