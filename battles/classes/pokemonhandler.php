@@ -36,6 +36,7 @@
 
     public $Statuses = null;
 
+    public $Happiness = null;
     public $Last_Move = null;
 
     public $Can_Attack = true;
@@ -93,6 +94,7 @@
       $this->Exp = $Pokemon['Experience_Raw'];
       $this->Exp_Needed = FetchExpToNextLevel($Pokemon['Experience_Raw'], 'Pokemon', true);
       $this->Exp_Yield = $Pokemon['Exp_Yield'];
+      $this->Happiness = $Pokemon['Happiness'];
       $this->Owner_Original = $Pokemon['Owner_Original'];
       $this->Owner_Current = $Pokemon['Owner_Current'];
       $this->Height = $Pokemon['Height'];
