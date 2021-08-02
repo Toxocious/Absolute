@@ -131,6 +131,7 @@
      *
      * -. Moves that proc after the turn.
      *  - https://bulbapedia.bulbagarden.net/wiki/Rage_(move)
+     *  - https://bulbapedia.bulbagarden.net/wiki/Rapid_Spin_(move)
      * 1. Move Lock (Petal Dance, Outrage, etc)
      *  - If the Petal Dance duration is disrupted (such as by full paralysis or hurting itself due to confusion), it will immediately end.
      *  - Confuse the user
