@@ -180,14 +180,14 @@
 
     HandleRequest: (Action, Data, Data_Event) =>
     {
-      if ( !this.Loading )
+      if ( !Battle.Loading )
       {
-        this.ID = '<?= $_SESSION['Battle']['Battle_ID']; ?>';
-        this.Loading = true;
+        Battle.ID = '<?= $_SESSION['Battle']['Battle_ID']; ?>';
+        Battle.Loading = true;
 
         const Data_Val = new FormData();
-        Data_Val.append('Battle_ID', this.ID);
-        Data_Val.append('In_Focus', this.In_Focus);
+        Data_Val.append('Battle_ID', Battle.ID);
+        Data_Val.append('In_Focus', Battle.In_Focus);
 
         if ( Action )
           Data_Val.append('Action', Action);
@@ -214,7 +214,7 @@
             let JSON_Data = JSON.parse(req.response);
             console.log(JSON_Data);
 
-            this.Loading = false;
+            Battle.Loading = false;
 
             if ( req.status === 200 )
             {
