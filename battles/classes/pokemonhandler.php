@@ -208,6 +208,8 @@
         ];
       }
 
+      $Previous_Attacker = $_SESSION['Battle'][$this->Side]->Active;
+
       foreach ($_SESSION['Battle'][$this->Side]->Roster as $Roster_Pokemon)
       {
         $Roster_Pokemon->Active = false;
@@ -219,9 +221,13 @@
       $this->Participated = true;
       $_SESSION['Battle'][$this->Side]->Active = $this;
 
+      if ( $Previous_Attacker->Last_Move['Name'] == 'Baton Pass' )
+        $Text = "{$Previous_Attacker->Display_Name} used Baton Pass!<br />";
+
       return [
         'Type' => 'Success',
-        'Text' => "{$this->Display_Name} has been sent into battle!"
+        'Text' => (isset($Text) ? $Text : '') .
+                  "{$this->Display_Name} has been sent into battle!"
       ];
     }
 
