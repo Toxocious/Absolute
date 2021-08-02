@@ -178,7 +178,7 @@
         document.getElementById(`user_abso_coins`).innerHTML = Abso_Coins.toLocaleString(undefined, {maximumFractionDigits: 0});
     },
 
-    HandleRequest: (Action, Data, Data_Event) =>
+    HandleRequest: (Action, Data = null, Data_Event = null) =>
     {
       if ( !Battle.Loading )
       {
