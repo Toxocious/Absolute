@@ -331,6 +331,12 @@
           $Attack_Dialogue .= $Ally_Attack['Text'];
           $Attack_Dialogue .= '<br /><br />';
 
+          if ( $this->Ally_Move->Name == 'Baton Pass' )
+          {
+            $Attack_Dialogue .= 'Please choose a Pokemon to swap into.';
+            break;
+          }
+
           $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
 
           if ( $Foe_Active->HP > 0 )
