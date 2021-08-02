@@ -123,7 +123,7 @@
 
           if ( Side == 'Ally' )
           {
-            document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot}, e);`);
+            document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot}, event);`);
           }
 
           switch (Roster[i].Status)
