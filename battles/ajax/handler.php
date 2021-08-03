@@ -37,10 +37,9 @@
       $_SESSION['Battle']['Logging']['Input']['Is_Trusted'] = Purify($_POST['Is_Trusted']);
 
     if ( isset($_POST['Battle_ID']) )
-      if ( $_POST['Battle_ID'] != $_SESSION['Battle']['Battle_ID'] )
-        $_SESSION['Battle']['Logging']['Battle_ID'] = 'Invalid Battle ID';
-      else
-        $_SESSION['Battle']['Logging']['Battle_ID'] = 'Valid Battle ID';
+      $_SESSION['Battle']['Logging']['Battle_ID'] = Purify($_POST['Battle_ID']);
+    else
+      $_SESSION['Battle']['Logging']['Battle_ID'] = 'Battle ID - Not Sent';
 
     if ( isset($_POST['In_Focus']) )
       $_SESSION['Battle']['Logging']['In_Focus'] = Purify($_POST['In_Focus']);
