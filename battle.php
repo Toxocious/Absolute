@@ -178,6 +178,31 @@
         document.getElementById(`user_abso_coins`).innerHTML = Abso_Coins.toLocaleString(undefined, {maximumFractionDigits: 0});
     },
 
+    RenderFieldEffects: (Side, Field_Effects) =>
+    {
+      if ( typeof Side === undefined )
+        return;
+
+
+      let Render_Text;
+      if ( Field_Effects === null )
+      {
+        Render_Text = 'No Active Field Effects';
+      }
+      else
+      {
+        Render_Text = '';
+        for ( Field_Effect in Field_Effects )
+        {
+          Render_Text += `${Field_Effect}, `
+        }
+
+        Render_Text = Render_Text.substr(Render_Text, Render_Text.length - 2);
+      }
+
+      document.getElementById(`${Side}_Field_Effects`).innerHTML = Render_Text;
+    },
+
     HandleRequest: (Action, Data = null, Data_Event = null) =>
     {
       if ( !Battle.Loading )
@@ -220,7 +245,9 @@
             {
               Battle.RenderMoves(JSON_Data.Ally.Active.Moves);
               Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active);
+              Battle.RenderFieldEffects('Ally', JSON_Data.Ally.Field_Effects);
               Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active);
+              Battle.RenderFieldEffects('Foe', JSON_Data.Foe.Field_Effects);
               Battle.RenderCurrencies(JSON_Data.Ally.Money, JSON_Data.Ally.Abso_Coins);
 
               document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;

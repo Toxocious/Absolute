@@ -103,6 +103,13 @@
                 </div>
               </div>
             </div>
+            <div class='flex' style='flex-basis: 100%; justify-content: center; margin: 5px 10px;'>
+              <div style='flex-basis: 100%;'>
+                <div class='border-gradient'>
+                  <div id='Ally_Field_Effects'>No Active Field Effects</div>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div style='flex-basis: 49%;'>
@@ -183,6 +190,13 @@
                     </tr>
                   </tbody>
                 </table>
+              </div>
+            </div>
+            <div class='flex' style='flex-basis: 100%; justify-content: center; margin: 5px 10px;'>
+              <div style='flex-basis: 100%;'>
+                <div class='border-gradient'>
+                  <div id='Foe_Field_Effects'>No Active Field Effects</div>
+                </div>
               </div>
             </div>
           </div>
