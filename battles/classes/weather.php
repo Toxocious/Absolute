@@ -122,7 +122,7 @@
         'Shadowy Aura' => [
           'Text' => 'A shadowy aura filled the sky!<br />'
         ],
-        'Strong Wings' => [
+        'Strong Winds' => [
           'Text' => 'Mysterious strong winds are protecting Flying-type Pok&eacute;mon!<br />'
         ],
       ];
