@@ -98,17 +98,16 @@
           break;
       }
 
-      if ( $Defender->Stats['Defense']->Stage <= -6 )
+      if ( mt_rand(1, 100) <= $this->Effect_Chance )
       {
-        $Effect_Text = "{$Defender->Display_Name}'s Defense can't go any lower!";
-      }
-      else
-      {
-        $Stages = $this->Defense_Boost;
+        if ( $Defender->Stats['Defense']->Stage > -6 )
+        {
+          $Stages = $this->Defense_Boost;
 
-        $Defender->Stats['Defense']->SetValue($Stages);
+          $Defender->Stats['Defense']->SetValue($Stages);
 
-        $Effect_Text = "{$Defender->Display_Name}'s Defense has fallen!";
+          $Effect_Text = "{$Defender->Display_Name}'s Defense has fallen!";
+        }
       }
 
       $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
