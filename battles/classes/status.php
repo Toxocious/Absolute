@@ -61,6 +61,9 @@
       if ( isset($Status_Data['Min_Stacks']) && isset($Status_Data['Max_Stacks']) )
         $this->Stacks = 1;
 
+      if ( isset($Status_Data['Dialogue']) )
+        $this->Dialogue = $Status_Data['Dialogue'];
+
       $this->Name = $Status_Name;
       $this->Turns_Left = $Status_Turns;
       $this->Volatile = $Status_Data['Volatile'];
@@ -100,32 +103,38 @@
         'Burn' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => false
+          'Volatile' => false,
+          'Dialogue' => 'has been burnt!',
         ],
         'Paralysis' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => false
+          'Volatile' => false,
+          'Dialogue' => 'has been paralyzed!',
         ],
         'Poison' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => false
+          'Volatile' => false,
+          'Dialogue' => 'has been poisoned!',
         ],
         'Badly Poisoned' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => false
+          'Volatile' => false,
+          'Dialogue' => 'has been badly poisoned!',
         ],
         'Freeze' => [
           'Min_Turns' => 1,
           'Max_Turns' => 5,
-          'Volatile' => false
+          'Volatile' => false,
+          'Dialogue' => 'has been frozen!',
         ],
         'Sleep' => [
           'Min_Turns' => 1,
           'Max_Turns' => 3,
-          'Volatile' => false
+          'Volatile' => false,
+          'Dialogue' => 'has been put to sleep!',
         ],
 
         'Aiming' => [
