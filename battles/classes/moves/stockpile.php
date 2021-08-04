@@ -114,93 +114,11 @@
         $Effect_Text = "{$Attacker->Display_Name} has begun stockpiling!";
       }
 
-      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
-
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
-        'Damage' => $Damage,
+        'Damage' => 0,
         'Healing' => 0,
       ];
-    }
-
-    /**
-     * Calculates how much damage the move will do.
-     */
-    public function CalcDamage
-    (
-      $Side,
-      $STAB,
-      $Crit,
-      $Move_Effectiveness
-    )
-    {
-      if ( !isset($STAB) || !isset($Crit) || !isset($Move_Effectiveness) )
-        return -1;
-
-      switch ( $Side )
-      {
-        case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
-          break;
-        case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
-          break;
-      }
-
-      $Crit_Mult = 1;
-      if ( $Crit )
-        if ( $Attacker->Ability == 'Sniper' )
-          $Crit_Mult = 2.25;
-        else
-          $Crit_Mult = 1.5;
-
-      $Weather_Mult = 1;
-      switch ( $this->Weather )
-      {
-        case 'Rain':
-          if ( $this->Move_Type == 'Water' )
-            $Weather_Mult = 1.5;
-          else if ( $this->Move_Type == 'Fire' )
-            $Weather_Mult = 0.5;
-          break;
-
-        case 'Harsh Sunlight':
-          if ( $this->Move_Type == 'Fire' )
-            $Weather_Mult = 1.5;
-          else if ( $this->Move_Type == 'Water' )
-            $Weather_Mult = 0.5;
-          break;
-      }
-
-      $Status_Mult = 1;
-      if ( $Attacker->Ability == 'Guts' )
-        if ( $Attacker->HasStatusFromArray(['Burn', 'Freeze', 'Paralyze', 'Poison', 'Sleep']) )
-          $Status_Mult = 1.5;
-      else
-        if ( $Attacker->HasStatus('Burn') )
-          $Status_Mult = 0.5;
-
-
-      switch ($this->Damage_Type)
-      {
-        case 'Physical':
-          $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Attack']->Current_Value / $Defender->Stats['Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
-          break;
-
-        case 'Special':
-          $Damage = $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Sp_Attack']->Current_Value / $Defender->Stats['Sp_Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
-          break;
-
-        default:
-          $Damage = 0;
-      }
-
-      if ( $Damage < 0 )
-        $Damage = 0;
-
-      return $Damage;
     }
   }
