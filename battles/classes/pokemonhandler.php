@@ -513,7 +513,7 @@
 
       $this->Statuses[$Attempt_Status->Name] = $Attempt_Status;
 
-      return true;
+      return $this->Statuses[$Attempt_Status->Name];
     }
 
     /**
