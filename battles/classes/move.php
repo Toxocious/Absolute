@@ -252,19 +252,7 @@
       else
         $Handle_Move = $this->HandleMove($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
 
-      if ( $this->Disabled )
-      {
-        if ( isset($this->Disabled_For_Turns) && $this->Disabled_For_Turns > 0 )
-        {
-          $this->Disabled_For_Turns -= 1;
-        }
-      }
-
-      if ( isset($this->Disabled_For_Turns) && $this->Disabled_For_Turns === 0 )
-      {
-        $this->Enable();
-        $Disable_Dialogue = "{$Attacker->Display_Name}'s {$this->Name} is re-enabled!";
-      }
+      $this->ProcessMoveDisablement($Attacker);
 
       $Defender->Last_Damage_Taken = isset($Damage) ? $Damage : 0;
 
@@ -1324,5 +1312,34 @@
     )
     {
       return $Damage_Dealt * ($this->Recoil / 100);
+    }
+
+    /**
+     * Process disabled moves.
+     * Enables a move if it's no longer supposed to be disabled.
+     * @param PokemonHandler $Attacker
+     */
+    public function ProcessMoveDisablement
+    (
+      PokemonHandler $Attacker
+    )
+    {
+      $Disable_Dialogue = '';
+
+      if ( $this->Disabled )
+      {
+        if ( isset($this->Disabled_For_Turns) && $this->Disabled_For_Turns > 0 )
+        {
+          $this->Disabled_For_Turns -= 1;
+        }
+      }
+
+      if ( isset($this->Disabled_For_Turns) && $this->Disabled_For_Turns === 0 )
+      {
+        $this->Enable();
+        $Disable_Dialogue .= "{$Attacker->Display_Name}'s {$this->Name} is re-enabled!";
+      }
+
+      return $Disable_Dialogue;
     }
   }
