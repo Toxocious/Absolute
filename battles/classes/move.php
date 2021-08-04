@@ -458,20 +458,29 @@
               $Target->SetStatus('Flinch');
       }
 
-      $Text = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
-              ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
-              "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
-              ($this->Total_Hits > 1 ? "<br />It hit {$this->Total_Hits} times!" : '') .
-              ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
-              ($Does_Move_Crit ? '<br />It critically hit!' : '') .
-              ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
-              ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
-              ($this->Contact ? $this->HandleContact($Side)['Text'] : '') .
-              (isset($Status_Dialogue) ? "<br />{$Target->Display_Name} {$Status_Dialogue}" : '') .
-              (isset($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
+      if ( $Damage <= 0 )
+      {
+        $Dialogue = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
+                    ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
+                    "{$Attacker->Display_Name} used {$this->Name}." .
+                    (isset($Status_Dialogue) ? "<br />{$Target->Display_Name} {$Status_Dialogue}" : '') .
+                    (isset($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
+      }
+      else
+      {
+        $Dialogue = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
+                    ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
+                    "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
+                    ($this->Total_Hits > 1 ? "<br />It hit {$this->Total_Hits} times!" : '') .
+                    ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
+                    ($Does_Move_Crit ? '<br />It critically hit!' : '') .
+                    ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
+                    ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
+                    ($this->Contact ? $this->HandleContact($Side)['Text'] : '');
+      }
 
       return [
-        'Text' => $Text,
+        'Text' => $Dialogue,
         'Effect_Text' => '',
         'Damage' => $Damage,
         'Healing' => $Healing,
