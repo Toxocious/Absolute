@@ -20,7 +20,26 @@
       if ( $Pokemon->HasStatus($Status_Name) )
         return false;
 
-      if ( !$Status_Data['Volatile'] )
+      if ( $Status_Data['Volatile'] )
+      {
+        if ( $Status_Data['Name'] == 'Burn' && $Pokemon->HasTyping(['Fire']) )
+          return false;
+
+        if ( $Status_Data['Name'] == 'Paralysis' && $Pokemon->HasTyping(['Electric']) )
+          return false;
+
+        if ( $Status_Data['Name'] == 'Poison' && $Pokemon->HasTyping(['Poison']) )
+          return false;
+
+        if
+        (
+          strpos($Status_Data['Name'], 'Powder') &&
+          strpos($Status_Data['Name'], 'Spore') &&
+          $Pokemon->HasTyping(['Grass'])
+        )
+          return false;
+      }
+      else
       {
         if ( in_array($Pokemon->Item->Name, ['Flame Orb', 'Toxic Orb']) )
           if ( in_array($Pokemon->Ability, ['Flower Veil']) )
