@@ -146,92 +146,116 @@
         'Aqua Ring' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Bide' => [
           'Min_Turns' => 2,
           'Max_Turns' => 2,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
+        ],
+        'Bind' => [
+          'Min_Turns' => 2,
+          'Max_Turns' => 2,
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Bound' => [
           'Min_Turns' => 4,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Braced' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Center Of Attention' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Charging' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Confusion' => [
           'Min_Turns' => 2,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Crafty Shield' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Curse' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Defense Curl' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Destiny Bond' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
           'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Damage Over Time' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
           'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Embargo' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Encore' => [
           'Min_Turns' => 3,
           'Max_Turns' => 3,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Flinch' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Focus Energy' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Foresight' => [
           'Min_Turns' => 2,
           'Max_Turns' => 2,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Heal Block' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Identified' => [
           'Min_Turns' => -1,
@@ -248,12 +272,13 @@
         'Leech Seed' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
         ],
         'Levitate' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Lock-On' => [
           'Min_Turns' => 1,
@@ -264,52 +289,62 @@
         'Magic Coat' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Mimic' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Minimize' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Move Locked' => [
           'Min_Turns' => 1,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Nightmare' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'No Guard' => [
           'Min_Turns' => 1,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Perish Song' => [
           'Min_Turns' => 3,
           'Max_Turns' => 3,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Protect' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Semi-Invulnerability' => [
           'Min_Turns' => 1,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Stockpile' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
           'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
           'Min_Stacks' => 0,
           'Max_Stacks' => 3,
           'Stacks' => 0
@@ -317,47 +352,56 @@
         'Substitute' => [
           'Min_Turns' => 1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Recharging' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Rooted' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Taunt' => [
           'Min_Turns' => 3,
           'Max_Turns' => 3,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Telekenisis' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Torment' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Transformed' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
         'Trap' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'is being trapped!',
         ],
         'Withdrawing' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'No Dialogue Has Been Set For This Move',
         ],
       ];
     }
