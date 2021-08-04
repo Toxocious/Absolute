@@ -99,31 +99,31 @@
           'Text' => ''
         ],
         'Fog' => [
-          'Text' => 'The fog is deep...<br />',
+          'Text' => 'The fog is deep...',
         ],
         'Hail' => [
-          'Text' => 'It started to hail!<br />'
+          'Text' => 'It started to hail!'
         ],
         'Rain' => [
-          'Text' => 'It started to rain!<br />'
+          'Text' => 'It started to rain!'
         ],
         'Heavy Rain' => [
-          'Text' => 'A heavy rain begain to fall!<br />'
+          'Text' => 'A heavy rain begain to fall!'
         ],
         'Sandstorm' => [
-          'Text' => 'A sandstorm kicked up!<br />'
+          'Text' => 'A sandstorm kicked up!'
         ],
         'Harsh Sunlight' => [
-          'Text' => 'The sunlight turned harsh!<br />'
+          'Text' => 'The sunlight turned harsh!'
         ],
         'Extremely Harsh Sunlight' => [
-          'Text' => 'The sunlight turned extremely harsh!<br />'
+          'Text' => 'The sunlight turned extremely harsh!'
         ],
         'Shadowy Aura' => [
-          'Text' => 'A shadowy aura filled the sky!<br />'
+          'Text' => 'A shadowy aura filled the sky!'
         ],
         'Strong Winds' => [
-          'Text' => 'Mysterious strong winds are protecting Flying-type Pok&eacute;mon!<br />'
+          'Text' => 'Mysterious strong winds are protecting Flying-type Pok&eacute;mon!'
         ],
       ];
     }
