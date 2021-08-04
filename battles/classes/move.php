@@ -304,6 +304,16 @@
           break;
       }
 
+      switch ( $this->Target )
+      {
+        case 'Ally':
+          $Target = $_SESSION['Battle']['Ally']->Active;
+          break;
+        case 'Foe':
+          $Target = $_SESSION['Battle']['Foe']->Active;
+          break;
+      }
+
       if ( $this->Contact )
       {
         $Handle_Contact = $this->HandleContact($Side);
@@ -318,6 +328,11 @@
           ];
         }
       }
+
+      if ( isset($_SESSION['Battle'][$this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      else
+        $Turn_First_Attacker = $Side;
 
       if ( $this->Min_Hits == 'None' )
         $this->Min_Hits = 1;
@@ -340,14 +355,40 @@
 
       $Healing = 0;
       if ( $Attacker->HP < $Attacker->Max_HP )
-      {
         if ( $this->Drain > 0 )
           $Healing = $this->CalcHealing($Damage);
-      }
 
       $Recoil = 0;
       if ( $this->Recoil > 0 )
         $Recoil = $this->CalcRecoil($Damage);
+
+      if ( isset($this->Ailment) )
+      {
+        switch ($this->Ailment)
+        {
+          case 'Flinch':
+            if ( $Turn_First_Attacker == $Side )
+              if ( mt_rand(1, 100) <= $this->Effect_Chance )
+                $Target->SetStatus('Flinch');
+            break;
+
+          default:
+            if ( mt_rand(1, 100) <= $this->Effect_Chance )
+            {
+              $Set_Status = $Target->SetStatus($this->Ailment);
+              if ( $Set_Status )
+                $Status_Dialogue = $Set_Status->Dialogue;
+            }
+            break;
+        }
+      }
+      else
+      {
+        if ( $Attacker->Item->Name == "King's Rock" )
+          if ( $Turn_First_Attacker == $Side )
+            if ( mt_rand(1, 100) <= 10 )
+              $Target->SetStatus('Flinch');
+      }
 
       $Text = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
               ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
@@ -357,7 +398,8 @@
               ($Does_Move_Crit ? '<br />It critically hit!' : '') .
               ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
               ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
-              ($this->Contact ? $this->HandleContact($Side)['Text'] : '');
+              ($this->Contact ? $this->HandleContact($Side)['Text'] : '') .
+              (isset($Status_Dialogue) ? "<br />{$Target->Display_Name} {$Status_Dialogue}" : '');
 
       return [
         'Text' => $Text,
