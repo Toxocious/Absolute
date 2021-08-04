@@ -22,19 +22,19 @@
 
       if ( $Status_Data['Volatile'] )
       {
-        if ( $Status_Data['Name'] == 'Burn' && $Pokemon->HasTyping(['Fire']) )
+        if ( $Status_Name == 'Burn' && $Pokemon->HasTyping(['Fire']) )
           return false;
 
-        if ( $Status_Data['Name'] == 'Paralysis' && $Pokemon->HasTyping(['Electric']) )
+        if ( $Status_Name == 'Paralysis' && $Pokemon->HasTyping(['Electric']) )
           return false;
 
-        if ( $Status_Data['Name'] == 'Poison' && $Pokemon->HasTyping(['Poison']) )
+        if ( $Status_Name == 'Poison' && $Pokemon->HasTyping(['Poison']) )
           return false;
 
         if
         (
-          strpos($Status_Data['Name'], 'Powder') &&
-          strpos($Status_Data['Name'], 'Spore') &&
+          strpos($Status_Name, 'Powder') &&
+          strpos($Status_Name, 'Spore') &&
           $Pokemon->HasTyping(['Grass'])
         )
           return false;
