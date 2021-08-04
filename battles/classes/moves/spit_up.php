@@ -103,18 +103,24 @@
       {
         $this->Power = 100 * $Stockpiling->Stacks;
         $Attacker->RemoveStatus('Stockpile');
+
+        $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+
+        $Text = "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
+                ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
+                ($Does_Move_Crit ? '<br />It critically hit!' : '');
+        $Effect_Text = '';
       }
       else
       {
+        $Text = "{$Attacker->Display_Name} used {$this->Name}.";
         $Effect_Text = 'But it failed!';
       }
 
-      $Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
-
       return [
-        'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
+        'Text' => (isset($Text) ? $Text : ''),
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
-        'Damage' => $Damage,
+        'Damage' => (isset($Damage) ? $Damage : 0),
         'Healing' => 0,
       ];
     }
