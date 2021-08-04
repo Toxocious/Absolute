@@ -19,6 +19,7 @@
     public $Disabled_For_Turns = null;
     public $Usable = null;
     public $Consecutive_Hits = null;
+    public $Target = null;
 
     public $Accuracy = null;
     public $Power = null;
@@ -104,6 +105,7 @@
       $this->Disabled = false;
       $this->Usable = $Move_Data['Usable'];
       $this->Consecutive_Hits = 0;
+      $this->Target = $Move_Data['Target'];
 
       $this->Accuracy = $Move_Data['Accuracy'];
       $this->Power = $Move_Data['Power'];
