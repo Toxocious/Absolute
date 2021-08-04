@@ -343,25 +343,37 @@
       if
       (
         $Attacker->Ability == 'Skill Link' &&
-        $this->Max_Hits != 'None'
+        $this->Max_Hits != 1
       )
         $this->Total_Hits = 5;
       else
         $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
 
+      /**
+       * Calculate how much damage will be done.
+       */
       $Damage = 0;
       for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
+      /**
+       * Calculate how much healing will be done.
+       */
       $Healing = 0;
       if ( $Attacker->HP < $Attacker->Max_HP )
         if ( $this->Drain > 0 )
           $Healing = $this->CalcHealing($Damage);
 
+      /**
+       * Calculate how much recoil will be dealt if applicable.
+       */
       $Recoil = 0;
       if ( $this->Recoil > 0 )
         $Recoil = $this->CalcRecoil($Damage);
 
+      /**
+       * Process rolling and setting ailments if applicable.
+       */
       if ( isset($this->Ailment) )
       {
         switch ($this->Ailment)
