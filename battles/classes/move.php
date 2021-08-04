@@ -444,7 +444,8 @@
             if ( mt_rand(1, 100) <= $this->Effect_Chance )
             {
               $Set_Status = $Target->SetStatus($this->Ailment);
-              if ( $Set_Status )
+              $Status_Props = array_filter(get_object_vars($Set_Status));
+              if ( isset($Set_Status) && !empty($Status_Props) )
                 $Status_Dialogue = $Set_Status->Dialogue;
             }
             break;
@@ -476,7 +477,9 @@
                     ($Does_Move_Crit ? '<br />It critically hit!' : '') .
                     ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
                     ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
-                    ($this->Contact ? $this->HandleContact($Side)['Text'] : '');
+                    ($this->Contact ? $this->HandleContact($Side)['Text'] : '') .
+                    (isset($Status_Dialogue) ? "<br />{$Target->Display_Name} {$Status_Dialogue}" : '') .
+                    (isset($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
       }
 
       return [
