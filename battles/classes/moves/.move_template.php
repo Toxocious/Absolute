@@ -105,8 +105,8 @@
                   ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
                   ($Does_Move_Crit ? '<br />It critically hit!' : ''),
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
-        'Damage' => $Damage,
-        'Healing' => 0,
+        'Damage' => (isset($Damage) ? $Damage : 0),
+        'Healing' => (isset($Healing) ? $Healing : 0),
       ];
     }
 
