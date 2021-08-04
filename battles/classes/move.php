@@ -372,6 +372,62 @@
         $Recoil = $this->CalcRecoil($Damage);
 
       /**
+       * Process stat gaines/losses if applicable.
+       */
+      if ( $this->Stat_Chance > 0 )
+      {
+        if ( mt_rand(1, 100) <= $this->Stat_Chance )
+        {
+          $Effect_Text = '';
+
+          foreach (['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed', 'Accuracy', 'Evasion'] as $Index => $Stat)
+          {
+            $Stat_Boost = $Stat . '_Boost';
+            if ( !isset($this->Stat_Boost) )
+              continue;
+
+            if
+            (
+              $Target == 'Foe' &&
+              $Target->IsFieldEffectActive('Mist') &&
+              $this->Stat_Boost < 0
+            )
+            {
+              $Effect_Text = 'But it failed!';
+
+              break;
+            }
+
+            if
+            (
+              $Target->Stats[$Stat]->Stage < 6 &&
+              $Target->Stats[$Stat]->Stage > -6
+            )
+            {
+              $Stat_Boost = $Stat . '_Boost';
+
+              $Stages = 0;
+              if ( $Target->Ability == 'Simple' )
+                $Stages = $this->$Stat_Boost * 2;
+              else
+                $Stages = $this->$Stat_Boost;
+
+              $Target->Stats[$Stat]->SetValue($Stages);
+
+              $Stat_Name = str_replace('_', 'ecial ', $Stat);
+              if ( $this->Stat_Boost > 0 )
+                $Effect_Text .= "{$Target->Display_Name}'s {$Stat_Name} rose sharply!";
+              else
+                $Effect_Text .= "{$Target->Display_Name}'s {$Stat_Name} harshly dropped!";
+
+              if ( $Index != 4 )
+                $Effect_Text .= '<br />';
+            }
+          }
+        }
+      }
+
+      /**
        * Process rolling and setting ailments if applicable.
        */
       if ( isset($this->Ailment) )
