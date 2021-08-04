@@ -140,7 +140,8 @@
         'Aiming' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'is taking aim!',
         ],
         'Aqua Ring' => [
           'Min_Turns' => -1,
@@ -235,12 +236,14 @@
         'Identified' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'has been identified!',
         ],
         'Infatuation' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'has become infatuated!',
         ],
         'Leech Seed' => [
           'Min_Turns' => -1,
@@ -255,7 +258,8 @@
         'Lock-On' => [
           'Min_Turns' => 1,
           'Max_Turns' => 5,
-          'Volatile' => true
+          'Volatile' => true,
+          'Dialogue' => 'has locked on!',
         ],
         'Magic Coat' => [
           'Min_Turns' => 1,
