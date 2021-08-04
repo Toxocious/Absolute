@@ -4,6 +4,7 @@
     public $Name = null;
     public $Turns_Left = null;
     public $Volatile = null;
+    public $Stacks = null;
 
     public function __construct
     (
@@ -38,6 +39,9 @@
       if ( !isset($Status_Turns) )
         $Status_Turns = mt_rand($Status_Data['Min_Turns'], $Status_Data['Max_Turns']);
 
+      if ( isset($Status_Data['Min_Stacks']) && isset($Status_Data['Max_Stacks']) )
+        $this->Stacks = 1;
+
       $this->Name = $Status_Name;
       $this->Turns_Left = $Status_Turns;
       $this->Volatile = $Status_Data['Volatile'];
@@ -50,6 +54,20 @@
     {
       if ( $this->Turns_Left > 0 )
         $this->Turns_Left--;
+
+      return $this;
+    }
+
+    /**
+     * Increment stack count.
+     */
+    public function IncrementStacks
+    (
+      int $Amount = 1
+    )
+    {
+      if ( isset($this->Stacks) )
+        $this->Stacks++;
 
       return $this;
     }
@@ -255,6 +273,14 @@
           'Min_Turns' => 1,
           'Max_Turns' => 5,
           'Volatile' => true
+        ],
+        'Stockpile' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => true,
+          'Min_Stacks' => 0,
+          'Max_Stacks' => 3,
+          'Stacks' => 0
         ],
         'Substitute' => [
           'Min_Turns' => 1,
