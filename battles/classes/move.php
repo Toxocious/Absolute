@@ -378,7 +378,7 @@
       {
         if ( mt_rand(1, 100) <= $this->Stat_Chance )
         {
-          $Effect_Text = '';
+          $Stat_Change_Text = '';
 
           foreach (['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed', 'Accuracy', 'Evasion'] as $Index => $Stat)
           {
@@ -393,7 +393,7 @@
               $this->Stat_Boost < 0
             )
             {
-              $Effect_Text = 'But it failed!';
+              $Stat_Change_Text = 'But it failed!';
 
               break;
             }
@@ -416,12 +416,12 @@
 
               $Stat_Name = str_replace('_', 'ecial ', $Stat);
               if ( $this->Stat_Boost > 0 )
-                $Effect_Text .= "{$Target->Display_Name}'s {$Stat_Name} rose sharply!";
+                $Stat_Change_Text .= "{$Target->Display_Name}'s {$Stat_Name} rose sharply!";
               else
-                $Effect_Text .= "{$Target->Display_Name}'s {$Stat_Name} harshly dropped!";
+                $Stat_Change_Text .= "{$Target->Display_Name}'s {$Stat_Name} harshly dropped!";
 
               if ( $Index != 4 )
-                $Effect_Text .= '<br />';
+                $Stat_Change_Text .= '<br />';
             }
           }
         }
@@ -467,7 +467,8 @@
               ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
               ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
               ($this->Contact ? $this->HandleContact($Side)['Text'] : '') .
-              (isset($Status_Dialogue) ? "<br />{$Target->Display_Name} {$Status_Dialogue}" : '');
+              (isset($Status_Dialogue) ? "<br />{$Target->Display_Name} {$Status_Dialogue}" : '') .
+              (isset($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
 
       return [
         'Text' => $Text,
