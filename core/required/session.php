@@ -46,7 +46,7 @@
 	header("Pragma: no-cache");
 
 	// Start the session before doing anything else.
-	if ( !isset($_SESSION) )
+	if ( session_status() !== PHP_SESSION_ACTIVE )
 	{
 		session_start();
 	}
