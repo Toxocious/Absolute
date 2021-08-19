@@ -158,10 +158,15 @@
 			{
 				$Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Page`, `Data`, `User_ID`) VALUES ('pageview', ?, ?, ?)");
 				$Update_Activity->execute([ $Current_Page['Name'], $Parse_URL['path'], $User_Data['ID'] ]);
-			}
 
-			$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
-			$Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['ID'] ]);
+				$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
+				$Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['ID'] ]);
+			}
+			else
+			{
+				$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
+				$Update_User->execute([ $Time, 'Unknown', $Playtime, $User_Data['ID'] ]);
+			}
 		}
 		catch ( PDOException $e )
 		{
