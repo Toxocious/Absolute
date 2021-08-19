@@ -37,7 +37,7 @@ const Absolute = {
       /**
        * Start the connection to the server.
        */
-      socket = io('localhost:' + Absolute.port,
+      socket = io('https://www.absoluterpg.com:' + Absolute.port,
       {
         reconnectionDelay: 2000,
         reconnectionAttempts: 30,

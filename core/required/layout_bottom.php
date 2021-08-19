@@ -6,6 +6,7 @@
 					Pok&eacute;mon &copy; 1995 - <?= date('Y'); ?> Nintendo/Creatures Inc./Game Freak Inc, please support the <a href='http://pokemon.com' target='_blank'>official release.</a>
 				</div>
 
+				<!--
 				<div class='social-links'>
 					<a href='https://github.com/toxocious' target='_blank' rel='noopener noreferrer' style='color: rgb(250, 250, 250);'>
 						<svg class='icon' viewBox='0 0 47.999998 48.000002' xmlns='http://www.w3.org/2000/svg'>
@@ -19,6 +20,7 @@
 						</svg>
 					</a>
 				</div>
+				-->
 			</footer>
 		</div>
 		
