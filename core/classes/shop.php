@@ -118,7 +118,7 @@
         HandleError($e);
       }
 
-      if ( !$Shop_Objects )
+      if ( !isset($Shop_Objects) )
         return false;
 
       return $Shop_Objects;
