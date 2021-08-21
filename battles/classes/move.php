@@ -395,14 +395,14 @@
           foreach (['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed', 'Accuracy', 'Evasion'] as $Index => $Stat)
           {
             $Stat_Boost = $Stat . '_Boost';
-            if ( !isset($this->Stat_Boost) )
+            if ( empty($this->$Stat_Boost) )
               continue;
 
             if
             (
               $Target == 'Foe' &&
               $Target->IsFieldEffectActive('Mist') &&
-              $this->Stat_Boost < 0
+              $this->$Stat_Boost < 0
             )
             {
               $Stat_Change_Text = 'But it failed!';
@@ -427,7 +427,7 @@
               $Target->Stats[$Stat]->SetValue($Stages);
 
               $Stat_Name = str_replace('_', 'ecial ', $Stat);
-              if ( $this->Stat_Boost > 0 )
+              if ( $this->$Stat_Boost > 0 )
                 $Stat_Change_Text .= "{$Target->Display_Name}'s {$Stat_Name} rose sharply!";
               else
                 $Stat_Change_Text .= "{$Target->Display_Name}'s {$Stat_Name} harshly dropped!";
