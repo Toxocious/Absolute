@@ -5,6 +5,7 @@
     public $Base_Value = null;
     public $Current_Value = null;
     public $Stage = null;
+    public $Mod = null;
 
     public function __construct
     (
@@ -16,6 +17,7 @@
       $this->Base_Value = $Base_Value;
       $this->Current_Value = $Base_Value;
       $this->Stage = 0;
+      $this->Mod = 1;
     }
 
     /**
@@ -30,6 +32,7 @@
       $this->SetStage($Stage);
       $Modifier = $this->CalcModifier();
 
+      $this->Mod = $Modifier;
       $this->Current_Value *= $Modifier;
     }
 
