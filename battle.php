@@ -95,17 +95,18 @@
 
         if ( Current_Stat.Mod === 1 )
         {
-          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#ff';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#fff';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Entity']`).innerHTML = '';
         }
         else if ( Current_Stat.Mod > 1 )
         {
           document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#00ff00';
-          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.innerHTML += '&utrif;';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Entity']`).innerHTML = '&utrif;';
         }
         else
         {
           document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#ff0000';
-          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.innerHTML += '&dtrif;';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Entity']`).innerHTML = '&dtrif;';
         }
 
       }

@@ -61,24 +61,31 @@
               <div style='flex-basis: 70px; font-size: 12px; width: 70px;'>
                 <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Ally_Attack_Mod'>1 </span> Att
+                  <span slot='Ally_Attack_Entity'></span>
                 </div>
                 <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Ally_Defense_Mod'>1.00</span> Def
+                  <span slot='Ally_Defense_Entity'></span>
                 </div>
                 <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Ally_Sp_Attack_Mod'>1.00</span> SpA
+                  <span slot='Ally_Sp_Attack_Entity'></span>
                 </div>
                 <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Ally_Sp_Defense_Mod'>1.00</span> SpD
+                  <span slot='Ally_Sp_Defense_Entity'></span>
                 </div>
                 <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Ally_Speed_Mod'>1.00</span> Spe
+                  <span slot='Ally_Speed_Entity'></span>
                 </div>
                 <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Ally_Accuracy_Mod'>1.00</span> Acc
+                  <span slot='Ally_Accuracy_Entity'></span>
                 </div>
                 <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Ally_Evasion_Mod'>1.00</span> Eva
+                  <span slot='Ally_Evasion_Entity'></span>
                 </div>
               </div>
 
@@ -222,24 +229,31 @@
               <div style='flex-basis: 70px; font-size: 12px; width: 70px;'>
                 <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Foe_Attack_Mod'>1.00</span> Att
+                  <span slot='Foe_Attack_Entity'></span>
                 </div>
                 <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Foe_Defense_Mod'>1.00</span> Def
+                  <span slot='Foe_Defense_Entity'></span>
                 </div>
                 <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Foe_Sp_Attack_Mod'>1.00</span> SpA
+                  <span slot='Foe_Sp_Attack_Entity'></span>
                 </div>
                 <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Foe_Sp_Defense_Mod'>1.00</span> SpD
+                  <span slot='Foe_Sp_Defense_Entity'></span>
                 </div>
                 <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Foe_Speed_Mod'>1.00</span> Spe
+                  <span slot='Foe_Speed_Entity'></span>
                 </div>
                 <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Foe_Accuracy_Mod'>1.00</span> Acc
+                  <span slot='Foe_Accuracy_Entity'></span>
                 </div>
                 <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
                   x<span slot='Foe_Evasion_Mod'>1.00</span> Eva
+                  <span slot='Foe_Evasion_Entity'></span>
                 </div>
               </div>
             </div>
