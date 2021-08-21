@@ -410,6 +410,8 @@
               break;
             }
 
+            $Stat_Name = str_replace('_', 'ecial ', $Stat);
+
             if
             (
               $Target->Stats[$Stat]->Stage < 6 &&
@@ -426,14 +428,20 @@
 
               $Target->Stats[$Stat]->SetValue($Stages);
 
-              $Stat_Name = str_replace('_', 'ecial ', $Stat);
               if ( $this->$Stat_Boost > 0 )
                 $Stat_Change_Text .= "{$Target->Display_Name}'s {$Stat_Name} rose sharply!";
               else
                 $Stat_Change_Text .= "{$Target->Display_Name}'s {$Stat_Name} harshly dropped!";
 
-              if ( $Index != 4 )
+              if ( $Index > 0 )
                 $Stat_Change_Text .= '<br />';
+            }
+            else
+            {
+              if ( $Target->Stats[$Stat]->Stage >= 6 )
+                $Stat_Change_Text .= "{$Target->Display_Name}'s {$Stat_Name} can't go any higher!";
+              else
+                $Stat_Change_Text .= "{$Target->Display_Name}'s {$Stat_Name} can't go any lower!";
             }
           }
         }
