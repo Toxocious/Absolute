@@ -28,7 +28,13 @@
     public $Current_PP = null;
     public $Damage_Type = null;
     public $Move_Type = null;
+
     public $Contact = null;
+    public $Protect = null;
+    public $Snatch = null;
+    public $Magic_Coat = null;
+    public $Mirror_Move = null;
+    public $Kings_Rock = null;
 
     public $Flinch_Chance = null;
     public $Crit_Chance = null;
@@ -114,7 +120,13 @@
       $this->Current_PP = $Move_Data['PP'];
       $this->Damage_Type = $Move_Data['Damage_Type'];
       $this->Move_Type = $Move_Data['Move_Type'];
+
       $this->Contact = $Move_Data['Contact'];
+      $this->Protect = $Move_Data['Protect'];
+      $this->Snatch = $Move_Data['Snatch'];
+      $this->Magic_Coat = $Move_Data['Magic_Coat'];
+      $this->Mirror_Move = $Move_Data['Mirror_Move'];
+      $this->Kings_Rock = $Move_Data['Kings_Rock'];
 
       $this->Flinch_Chance = $Move_Data['Flinch_Chance'];
       $this->Crit_Chance = $Move_Data['Crit_Chance'];
