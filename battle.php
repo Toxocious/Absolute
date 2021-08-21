@@ -88,6 +88,12 @@
       document.querySelector(`[slot='${Side}_Exp_Bar']`).setAttribute('style', `width: ${Active.Exp_Needed.Percent}%`);
       document.querySelector(`[slot='${Side}_Exp_Needed']`).innerHTML = Active.Exp_Needed.Exp.toLocaleString(undefined, {maximumFractionDigits: 0});
 
+      for ( Active_Stat in Active.Stats )
+      {
+        const Current_Stat = Active.Stats[Active_Stat];
+        document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).innerHTML = Current_Stat.Mod.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2});
+      }
+
       if ( Active.Fainted )
       {
         document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');

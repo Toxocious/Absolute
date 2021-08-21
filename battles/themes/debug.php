@@ -22,7 +22,7 @@
   <div class='head'>Battle</div>
   <div class='body' style='padding: 5px;'>
     <div class='flex' style='justify-content: center;'>
-      <div style='flex-basis: 70%;' id='BattleWindow'>
+      <div style='flex-basis: 86%;' id='BattleWindow'>
         <div class='flex' style='flex-wrap: wrap; justify-content: center;'>
           <div style='flex-basis: 49%;'>
             <div class='flex' style='justify-content: center; flex-basis: 100%;'>
@@ -58,6 +58,30 @@
               </div>
             </div>
             <div class='flex' style='flex-basis: 100%; justify-content: center; margin: 5px 10px;'>
+              <div style='flex-basis: 70px; font-size: 12px; width: 70px;'>
+                <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Ally_Attack_Mod'>1 </span> Att
+                </div>
+                <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Ally_Defense_Mod'>1.00</span> Def
+                </div>
+                <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Ally_Sp_Attack_Mod'>1.00</span> SpA
+                </div>
+                <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Ally_Sp_Defense_Mod'>1.00</span> SpD
+                </div>
+                <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Ally_Speed_Mod'>1.00</span> Spe
+                </div>
+                <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Ally_Accuracy_Mod'>1.00</span> Acc
+                </div>
+                <div style='border-radius: 6px 0px 0px 6px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Ally_Evasion_Mod'>1.00</span> Eva
+                </div>
+              </div>
+
               <div style='flex-basis: 120px; margin-right: 5px; width: 120px;'>
                 <table class='border-gradient' style='width: 120px;'>
                   <tbody>
@@ -70,7 +94,8 @@
                   <tbody>
                     <tr>
                       <td>
-                        <b>Level</b>: <span slot='Ally_Level'>-1</span>
+                        <b>Level</b><br />
+                        <span slot='Ally_Level'>-1</span>
                       </td>
                     </tr>
                   </tbody>
@@ -95,7 +120,8 @@
 
                 <div class='border-gradient' style='width: 158px;'>
                   <div style='font-size: 12px; text-align: center;'>
-                    <b>Level Up</b>: <span slot='Ally_Exp_Needed'>0</span> Exp
+                    <b>Exp To Next Level</b><br />
+                    <span slot='Ally_Exp_Needed'>0</span> Exp
                     <div class='progress-container' style='width: 140px;'>
                       <div class='progress-bar exp' slot='Ally_Exp_Bar' style='width: 100%;'></div>
                     </div>
@@ -165,7 +191,8 @@
 
                 <div class='border-gradient' style='width: 158px;'>
                   <div style='font-size: 12px; text-align: center;'>
-                    <b>Level Up</b>: <span slot='Foe_Exp_Needed'>0</span> Exp
+                    <b>Exp To Next Level</b><br />
+                    <span slot='Foe_Exp_Needed'>0</span> Exp
                     <div class='progress-container' style='width: 140px;'>
                       <div class='progress-bar exp' slot='Foe_Exp_Bar' style='width: 100%;'></div>
                     </div>
@@ -185,11 +212,35 @@
                   <tbody>
                     <tr>
                       <td>
-                        <b>Level</b>: <span slot='Foe_Level'>-1</span>
+                        <b>Level</b><br />
+                        <span slot='Foe_Level'>-1</span>
                       </td>
                     </tr>
                   </tbody>
                 </table>
+              </div>
+              <div style='flex-basis: 70px; font-size: 12px; width: 70px;'>
+                <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Foe_Attack_Mod'>1.00</span> Att
+                </div>
+                <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Foe_Defense_Mod'>1.00</span> Def
+                </div>
+                <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Foe_Sp_Attack_Mod'>1.00</span> SpA
+                </div>
+                <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Foe_Sp_Defense_Mod'>1.00</span> SpD
+                </div>
+                <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Foe_Speed_Mod'>1.00</span> Spe
+                </div>
+                <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Foe_Accuracy_Mod'>1.00</span> Acc
+                </div>
+                <div style='border-radius: 0px 6px 6px 0px; background: var(--color-primary); margin-top: 3px;'>
+                  x<span slot='Foe_Evasion_Mod'>1.00</span> Eva
+                </div>
               </div>
             </div>
             <div class='flex' style='flex-basis: 100%; justify-content: center; margin: 5px 10px;'>
@@ -201,7 +252,7 @@
             </div>
           </div>
 
-          <div style='flex-basis: 96%;'>
+          <div style='flex-basis: 83%;'>
             <input
               move='Move_0'
               type='button'
@@ -228,7 +279,7 @@
             />
           </div>
 
-          <div class='border-gradient' style='flex-basis: 96%; margin-top: 5px;'>
+          <div class='border-gradient' style='flex-basis: 80%; margin-top: 5px;'>
             <div id='BattleDialogue' style='font-size: 12px;'>
               Loading Battle State
             </div>
