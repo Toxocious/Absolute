@@ -92,6 +92,22 @@
       {
         const Current_Stat = Active.Stats[Active_Stat];
         document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).innerHTML = Current_Stat.Mod.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2});
+
+        if ( Current_Stat.Mod === 1 )
+        {
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#ff';
+        }
+        else if ( Current_Stat.Mod > 1 )
+        {
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#00ff00';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.innerHTML += '&utrif;';
+        }
+        else
+        {
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#ff0000';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.innerHTML += '&dtrif;';
+        }
+
       }
 
       if ( Active.Fainted )
