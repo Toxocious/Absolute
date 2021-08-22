@@ -31,6 +31,7 @@
         {
           $Clan_Exp = $this->CalcClanExpYield();
           $_SESSION['Battle']['Ally']->Clan->IncreaseExp($Clan_Exp);
+          $_SESSION['Battle']['Ally']->IncreaseClanExp($Clan_Exp);
 
           $Dialogue .= 'Your clan has gained +<b>' . number_format($Clan_Exp) . '</b> Exp.<br />';
 
