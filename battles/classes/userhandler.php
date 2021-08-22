@@ -235,6 +235,46 @@
     }
 
     /**
+     * Increases the amount of Clan_Exp the user has earned.
+     * @param int $Clan_Exp_Earned
+     */
+    public function IncreaseClanExp
+    (
+      int $Clan_Exp_Earned
+    )
+    {
+      global $PDO;
+
+      if ( !isset($Clan_Exp_Earned) )
+        return false;
+
+      if ( $Clan_Exp_Earned < 0 )
+        return false;
+
+      try
+      {
+        $PDO->beginTransaction();
+
+        $Update_Clan_Exp = $PDO->prepare("
+          UPDATE `users`
+          SET `Clan_Exp` = `Clan_Exp` + ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Clan_Exp->execute([ $Clan_Exp_Earned, $this->ID ]);
+
+        $PDO->commit();
+      }
+      catch ( PDOException $e )
+      {
+        $PDO->rollback();
+        HandleError($e);
+      }
+
+      return true;
+    }
+
+    /**
      * Finds and returns the index of the next non-fainted Pokemon in the roster.
      * Returns false if all are fainted.
      */
