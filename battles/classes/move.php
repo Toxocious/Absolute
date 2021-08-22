@@ -316,6 +316,29 @@
           break;
       }
 
+      if ( isset($_SESSION['Battle'][$this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      else
+        $Turn_First_Attacker = $Side;
+
+      /**
+       * Handle Magic Coat (Move) and Magic Bounce (Ability)
+       */
+      if ( $this->Magic_Coat )
+      {
+        if ( $this->Target == 'Foe' )
+        {
+          if
+          (
+            $Defender->Ability == 'Magic Bounce' ||
+            ( $Turn_First_Attacker == 'Foe' && $Defender->Last_Move['Name'] == 'Magic Coat' )
+          )
+          {
+            $this->Target == 'Ally';
+          }
+        }
+      }
+
       switch ( $this->Target )
       {
         case 'Ally':
@@ -340,11 +363,6 @@
           ];
         }
       }
-
-      if ( isset($_SESSION['Battle'][$this->Turn_ID]['First_Attacker']) )
-        $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
-      else
-        $Turn_First_Attacker = $Side;
 
       if ( $this->Min_Hits == 'None' )
         $this->Min_Hits = 1;
