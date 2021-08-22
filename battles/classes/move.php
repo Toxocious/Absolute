@@ -186,7 +186,7 @@
           break;
       }
 
-      if ( $Defender->HasStatus('Protect') )
+      if ( $Defender->HasStatus('Protect') && !$this->Protect )
       {
         return [
           'Type' => 'Success',
