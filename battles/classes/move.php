@@ -491,10 +491,16 @@
       }
       else
       {
-        if ( $Attacker->Item->Name == "King's Rock" )
-          if ( $Turn_First_Attacker == $Side )
-            if ( mt_rand(1, 100) <= 10 )
-              $Target->SetStatus('Flinch');
+        if
+        (
+          $this->Kings_Rock &&
+          $Attacker->Item->Name == "King's Rock" &&
+          $Turn_First_Attacker == $Side &&
+          mt_rand(1, 100) <= 10
+        )
+        {
+          $Target->SetStatus('Flinch');
+        }
       }
 
       if ( $Damage <= 0 )
