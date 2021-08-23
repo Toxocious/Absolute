@@ -1587,4 +1587,20 @@
 
       return $Disable_Dialogue;
     }
+
+    /**
+     * Check to see if the move has a given flag.
+     * @param string $Flag_Name
+     */
+    public function HasFlag
+    (
+      string $Flag_Name
+    )
+    {
+      foreach ( $this->Flags as $Flag => $Value )
+        if ( $Flag == $Flag_Name )
+          return true;
+
+      return false;
+    }
   }
