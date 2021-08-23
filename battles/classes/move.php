@@ -473,13 +473,23 @@
         switch ($this->Ailment)
         {
           case 'Flinch':
-            if ( $Turn_First_Attacker == $Side )
-              if ( mt_rand(1, 100) <= $this->Effect_Chance )
-                $Target->SetStatus('Flinch');
+            if
+            (
+              $Turn_First_Attacker == $Side &&
+              !$Defender->HasStatus('Substitute') &&
+              mt_rand(1, 100) <= $this->Effect_Chance
+            )
+            {
+              $Target->SetStatus('Flinch');
+            }
             break;
 
           default:
-            if ( mt_rand(1, 100) <= $this->Effect_Chance )
+            if
+            (
+              !$Defender->HasStatus('Substitute') &&
+              mt_rand(1, 100) <= $this->Effect_Chance
+            )
             {
               $Set_Status = $Target->SetStatus($this->Ailment);
               $Status_Props = array_filter(get_object_vars($Set_Status));
@@ -495,6 +505,7 @@
         (
           $this->Kings_Rock &&
           $Attacker->Item->Name == "King's Rock" &&
+          !$Defender->HasStatus('Substitute') &&
           $Turn_First_Attacker == $Side &&
           mt_rand(1, 100) <= 10
         )
