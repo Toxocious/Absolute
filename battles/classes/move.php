@@ -399,7 +399,7 @@
           break;
       }
 
-      if ( $this->Contact )
+      if ( $this->hasFlag('contact') )
       {
         $Handle_Contact = $this->HandleContact($Side);
         if ( isset($Handle_Contact['Damage']) && $Handle_Contact['Damage'] == 0 )
@@ -605,7 +605,7 @@
                     ($Does_Move_Crit ? '<br />It critically hit!' : '') .
                     ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
                     ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
-                    ($this->Contact ? $this->HandleContact($Side)['Text'] : '') .
+                    ($this->hasFlag('contact') ? $this->HandleContact($Side)['Text'] : '') .
                     (isset($Status_Dialogue) ? "<br />{$Target->Display_Name} {$Status_Dialogue}" : '') .
                     (isset($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
       }
@@ -958,7 +958,7 @@
       if ( $Defender->HasStatus('Substitute') )
         return false;
 
-      return $this->Contact;
+      return $this->hasFlag('contact');
     }
 
     /**
