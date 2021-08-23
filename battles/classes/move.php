@@ -236,6 +236,17 @@
         ];
       }
 
+      if ( $Defender->Ability == 'Soundproof' && $this->HasFlag('sound') )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Defender->Display_Name} is Soundproof!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
       if ( $Attacker->HasStatus('Taunt') )
       {
         if ( $this->Damage_Type == 'Status' )
