@@ -485,16 +485,36 @@
             break;
 
           default:
-            if
+            if ( $Defender->HasStatus('Substitute') )
+            {
+              $Status_Dialogue = 'But it failed!';
+            }
+            else if
             (
-              !$Defender->HasStatus('Substitute') &&
-              mt_rand(1, 100) <= $this->Effect_Chance
+              $Target->Ability == 'Overcoat' &&
+              ( strpos($this->Name, 'Powder') || strpos($this->Name, 'Spore') )
             )
             {
-              $Set_Status = $Target->SetStatus($this->Ailment);
-              $Status_Props = array_filter(get_object_vars($Set_Status));
-              if ( isset($Set_Status) && !empty($Status_Props) )
-                $Status_Dialogue = $Set_Status->Dialogue;
+              $Status_Dialogue = 'But it failed!';
+            }
+            else if ( $Target->HasTyping($this->Move_Type) )
+            {
+              $Status_Dialogue = 'But it failed!';
+            }
+            else
+            {
+              $Chance_Chance = mt_rand(1, 100);
+              if ( $Chance_Chance <= $this->Effect_Chance )
+              {
+                $Set_Status = $Target->SetStatus($this->Ailment);
+                $Status_Props = array_filter(get_object_vars($Set_Status));
+                if ( isset($Set_Status) && !empty($Status_Props) )
+                  $Status_Dialogue = $Set_Status->Dialogue;
+              }
+              else
+              {
+                $Status_Dialogue = 'But it failed!';
+              }
             }
             break;
         }
