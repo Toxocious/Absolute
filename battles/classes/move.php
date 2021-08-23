@@ -1514,6 +1514,10 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
+      if ( $Attacker->Ability == 'Strong Jaw' )
+        if ( $this->HasFlag('bite') )
+          $this->Power *= 1.5;
+
       if ( $Attacker->Ability == 'Iron Fist' )
         if ( $this->HasFlag('punch') )
           $this->Power *= 1.2;
