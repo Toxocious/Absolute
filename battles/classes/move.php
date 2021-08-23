@@ -21,6 +21,8 @@
     public $Consecutive_Hits = null;
     public $Target = null;
 
+    public $Flags = null;
+
     public $Accuracy = null;
     public $Power = null;
     public $Priority = null;
@@ -105,6 +107,23 @@
         return $this;
       }
 
+      try
+      {
+        $Fetch_Flags = $PDO->prepare("
+          SELECT `authentic`, `bite`, `bullet`, `charge`, `contact`, `dance`, `defrost`, `distance`, `gravity`, `heal`, `mirror`, `mystery`, `nonsky`, `powder`, `protect`, `pulse`, `punch`, `recharge`, `reflectable`, `snatch`, `sound`
+          FROM `moves_flags`
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Fetch_Flags->execute([ $Move_Data['ID'] ]);
+        $Fetch_Flags->setFetchMode(PDO::FETCH_ASSOC);
+        $Flags = $Fetch_Flags->fetch();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
       $this->ID = $Move_Data['ID'];
       $this->Name = $Move_Data['Name'];
       $this->Slot = $Slot;
@@ -112,6 +131,15 @@
       $this->Usable = $Move_Data['Usable'];
       $this->Consecutive_Hits = 0;
       $this->Target = $Move_Data['Target'];
+
+      if ( !empty($Flags) )
+      {
+        foreach ( $Flags as $Flag => $Value )
+        {
+          if ( $Value )
+            $this->Flags[$Flag] = $Value;
+        }
+      }
 
       $this->Accuracy = $Move_Data['Accuracy'];
       $this->Power = $Move_Data['Power'];
