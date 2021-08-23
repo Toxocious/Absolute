@@ -5,6 +5,8 @@
     public $Turns_Left = null;
     public $Volatile = null;
     public $Stacks = null;
+    public $Max_HP = null;
+    public $HP = null;
 
     public function __construct
     (
@@ -67,6 +69,12 @@
       $this->Name = $Status_Name;
       $this->Turns_Left = $Status_Turns;
       $this->Volatile = $Status_Data['Volatile'];
+
+      if ( $Status_Name == 'Substitute' )
+      {
+        $this->Max_HP = $Pokemon->Max_HP / 4;
+        $this->HP = $Pokemon->Max_HP / 4;
+      }
     }
 
     /**
