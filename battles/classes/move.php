@@ -1427,6 +1427,20 @@
       if ( !isset($STAB) || !isset($Crit) || !isset($Move_Effectiveness) )
         return -1;
 
+      /**
+       * Some moves do a fixed amount of damage no matter what.
+       */
+      switch ($this->Name)
+      {
+        case 'Dragon Breath':
+          return 40;
+          break;
+
+        case 'Sonic Boom':
+          return 20;
+          break;
+      }
+
       switch ( $Side )
       {
         case 'Ally':
