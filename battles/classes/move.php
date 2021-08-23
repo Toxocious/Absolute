@@ -468,10 +468,13 @@
       /**
        * Process rolling and setting ailments if applicable.
        */
-      if ( isset($this->Ailment) )
+      if ( !empty($this->Ailment) )
       {
         switch ($this->Ailment)
         {
+          case 'None':
+            break;
+
           case 'Flinch':
             if
             (
@@ -497,7 +500,7 @@
             {
               $Status_Dialogue = 'But it failed!';
             }
-            else if ( $Target->HasTyping($this->Move_Type) )
+            else if ( $Target->HasTyping([ $this->Move_Type ]) )
             {
               $Status_Dialogue = 'But it failed!';
             }
