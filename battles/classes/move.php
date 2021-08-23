@@ -1514,6 +1514,9 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
+      if ( $Attacker->Ability == 'Iron Fist' )
+        if ( $this->HasFlag('punch') )
+          $this->Power *= 1.2;
 
       switch ($this->Damage_Type)
       {
