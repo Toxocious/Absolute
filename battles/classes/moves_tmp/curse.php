@@ -116,54 +116,48 @@
       }
       else
       {
-        if ( $Attacker->Stats['Speed']->Stage <= -6 )
+        foreach( ['Attack', 'Defense', 'Speed'] as $Index => $Stat )
         {
-          $Effect_Text = "{$Attacker->Display_Name}'s Speed can't go any lower!";
-        }
-        else
-        {
-          $Stages = $this->Speed_Boost;
+          $Stat_Boost = $Stat . '_Boost';
+          $Stages = $this->$Stat_Boost;
 
-          $Attacker->Stats['Speed']->SetValue($Stages);
+          switch ($Stat)
+          {
+            case 'Speed':
+              if ( $Attacker->Stats[$Stat]->Stage <= -6 )
+              {
+                $Effect_Text .= "{$Attacker->Display_Name}'s {$Stat} can't go any lower!";
+              }
+              else
+              {
+                $Attacker->Stats[$Stat]->SetValue($Stages);
+                $Effect_Text .= "{$Attacker->Display_Name}'s {$Stat} has fallen!";
+              }
+              break;
 
-          $Effect_Text = "{$Attacker->Display_Name}'s Speed has fallen!";
-        }
+            default:
+              if ( $Attacker->Stats[$Stat]->Stage >= 6 )
+              {
+                $Effect_Text .= "{$Attacker->Display_Name}'s {$Stat} can't go any lower!";
+              }
+              else
+              {
+                if ( $Attacker->Ability == 'Simple' )
+                  $Stages *= 2;
 
-        if ( $Attacker->Stats['Attack']->Stage >= 6 )
-        {
-          $Effect_Text = "{$Attacker->Display_Name}'s Attack can't go any higher!";
-        }
-        else
-        {
-          $Stages = $this->Attack_Boost;
-          if ( $Attacker->Ability == 'Simple' )
-            $Stages *= 2;
+                $Attacker->Stats[$Stat]->SetValue($Stages);
+                $Effect_Text .= "{$Attacker->Display_Name}'s {$Stat} rose sharply!";
+              }
+              break;
+          }
 
-          $Attacker->Stats['Attack']->SetValue($Stages);
-
-          $Effect_Text = "{$Attacker->Display_Name}'s Attack rose sharply!";
-        }
-
-        if ( $Attacker->Stats['Defense']->Stage >= 6 )
-        {
-          $Effect_Text = "{$Attacker->Display_Name}'s Defense can't go any higher!";
-        }
-        else
-        {
-          $Stages = $this->Defense_Boost;
-          if ( $Attacker->Ability == 'Simple' )
-            $Stages *= 2;
-
-          $Attacker->Stats['Defense']->SetValue($Stages);
-
-          $Effect_Text = "{$Attacker->Display_Name}'s Defense rose sharply!";
+          if ( $Index < 2 )
+            $Effect_Text .= '<br />';
         }
       }
 
       return [
-        'Text' => "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
-                  ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
-                  ($Does_Move_Crit ? '<br />It critically hit!' : ''),
+        'Text' => "{$Attacker->Display_Name} used {$this->Name}.",
         'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => (isset($Damage) ? $Damage : ''),
         'Healing' => 0,
