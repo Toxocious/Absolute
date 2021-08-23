@@ -225,6 +225,17 @@
         ];
       }
 
+      if ( $Defender->Ability == 'Bulletproof' && $this->HasFlag('bullet') )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Defender->Display_Name} is Bulletproof!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
       if ( $Attacker->HasStatus('Taunt') )
       {
         if ( $this->Damage_Type == 'Status' )
