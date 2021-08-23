@@ -1432,7 +1432,7 @@
        */
       switch ($this->Name)
       {
-        case 'Dragon Breath':
+        case 'Dragon Rage':
           return 40;
           break;
 
