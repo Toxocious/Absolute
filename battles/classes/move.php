@@ -653,8 +653,8 @@
       {
         if
         (
-          in_array($this->Name, ['Fusion Flare', 'Flame Wheel', 'Sacred Fire', 'Flare Blitz', 'Scald']) ||
-          $this->Weather == 'Sunlight'
+          $this->HasFlag('defrost') ||
+          $this->Weather == 'Harsh Sunlight'
         )
         {
           $Attacker->RemoveStatus('Freeze');
