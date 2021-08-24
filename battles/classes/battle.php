@@ -667,6 +667,7 @@
         }
       }
     }
+
     /**
      * Sets a global field effect.
      * @param string $Field_Effect
@@ -696,5 +697,26 @@
       $this->Field_Effects[$Set_Field->Name] = $Set_Field;
 
       return true;
+    }
+
+    /**
+     * Determines if a global field effect is active.
+     * @param string $Field_Effect
+     */
+    public function IsFieldEffectActive
+    (
+      string $Field_Effect
+    )
+    {
+      if ( !isset($this->Field_Effects) )
+        return false;
+
+      foreach ( $this->Field_Effects as $Field )
+      {
+        if ( $Field->Name == $Field_Effect )
+          return $Field;
+      }
+
+      return false;
     }
   }
