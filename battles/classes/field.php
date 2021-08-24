@@ -13,7 +13,7 @@
       int $Field_Turns = null
     )
     {
-      if ( !in_array($Side, ['Ally', 'Foe']) )
+      if ( !in_array($Side, ['Ally', 'Foe', 'Global']) )
         return false;
 
       $Field_Data = $this->FieldEffects()[$Field_Name];
