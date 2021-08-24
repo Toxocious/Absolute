@@ -225,6 +225,17 @@
         ];
       }
 
+      if ( $Attacker->HasStatus('Heal Block') && $this->HasFlag('heal') )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Attacker->Display_Name} attack was prevented by its Heal Block!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
       if ( $Defender->Ability == 'Bulletproof' && $this->HasFlag('bullet') )
       {
         return [
