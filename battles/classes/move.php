@@ -211,6 +211,21 @@
         ];
       }
 
+      if
+      (
+        $this->HasFlag('powder') &&
+        ($Defender->HasTyping(['Grass']) || $Defender->Ability == 'Overcoat' || $Defender->Item->Name == 'Safety Goggles')
+      )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "It had no effect!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
       if ( $Attacker->HasStatus('Heal Block') && $this->HasFlag('heal') )
       {
         return [
