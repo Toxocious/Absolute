@@ -386,7 +386,7 @@
       /**
        * Handle Magic Coat (Move) and Magic Bounce (Ability)
        */
-      if ( $this->Magic_Coat )
+      if ( $this->HasFlag('reflectable') )
       {
         if ( $this->Target == 'Foe' )
         {
