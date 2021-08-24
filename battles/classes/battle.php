@@ -667,4 +667,34 @@
         }
       }
     }
+    /**
+     * Sets a global field effect.
+     * @param string $Field_Effect
+     * @param int $Turn_Count
+     */
+    public function SetFieldEffect
+    (
+      string $Field_Effect,
+      int $Turn_Count
+    )
+    {
+      if ( $this->IsFieldEffectActive($Field_Effect) )
+        return false;
+
+      if ( !isset($Turn_Count) )
+        $Turn_Count = -1;
+
+      $Set_Field = new \Field(
+        'Global',
+        $Field_Effect,
+        $Turn_Count
+      );
+
+      if ( !$Set_Field )
+        return false;
+
+      $this->Field_Effects[$Set_Field->Name] = $Set_Field;
+
+      return true;
+    }
   }
