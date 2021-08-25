@@ -670,23 +670,25 @@
 
     /**
      * Sets a global field effect.
+     * @param string Side
      * @param string $Field_Effect
      * @param int $Turn_Count
      */
     public function SetFieldEffect
     (
+      string $Side,
       string $Field_Effect,
       int $Turn_Count
     )
     {
-      if ( $this->IsFieldEffectActive($Field_Effect) )
+      if ( $this->IsFieldEffectActive($Side, $Field_Effect) )
         return false;
 
       if ( !isset($Turn_Count) )
         $Turn_Count = -1;
 
       $Set_Field = new \Field(
-        'Global',
+        $Side,
         $Field_Effect,
         $Turn_Count
       );
@@ -701,10 +703,12 @@
 
     /**
      * Determines if a global field effect is active.
+     * @param string $Side
      * @param string $Field_Effect
      */
     public function IsFieldEffectActive
     (
+      string $Side,
       string $Field_Effect
     )
     {
@@ -713,7 +717,11 @@
 
       foreach ( $this->Field_Effects as $Field )
       {
-        if ( $Field->Name == $Field_Effect )
+        if
+        (
+          $Field->Name == $Field_Effect &&
+          $Field->Side == $Side
+        )
           return $Field;
       }
 
