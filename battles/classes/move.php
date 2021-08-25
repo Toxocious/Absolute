@@ -404,10 +404,12 @@
       switch ( $this->Target )
       {
         case 'Ally':
-          $Target = $_SESSION['Battle']['Ally']->Active;
+          $Target = $_SESSION['Battle']['Ally'];
           break;
         case 'Foe':
-          $Target = $_SESSION['Battle']['Foe']->Active;
+          $Target = $_SESSION['Battle']['Foe'];
+          break;
+        default:
           break;
       }
 
