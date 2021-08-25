@@ -480,12 +480,11 @@
 
             if
             (
-              $Target == 'Foe' &&
-              $Target->IsFieldEffectActive('Mist') &&
-              $this->$Stat_Boost < 0
+              $this->Target == 'Foe' &&
+              $this->IsFieldEffectActive('Foe', 'Mist')
             )
             {
-              $Stat_Change_Text = 'But it failed!';
+              $Stat_Change_Text = 'But it failed due to the Mist!';
 
               break;
             }
