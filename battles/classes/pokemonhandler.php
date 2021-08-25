@@ -582,6 +582,30 @@
     }
 
     /**
+     * Check if a Pokemon is grounded.
+     */
+    public function IsGrounded()
+    {
+      if ( $this->IsFieldEffectActive('Global', 'Gravity') )
+        return true;
+
+      if ( $this->HasStatusFromArray(['Ingrain', 'Smackdown']) )
+        return true;
+
+      if ( $this->HasTyping(['Flying']) && $this->HasStatus('Roost') )
+        return true;
+
+      if ( $this->Item->Name == 'Iron Ball' )
+        return true;
+
+      if ( $this->HasStatusFromArray(['Magnet Rise', 'Telekinesis']) )
+        return false;
+
+      if ( $this->Item->Name == 'Air Baloon' )
+        return false;
+    }
+
+    /**
      * Reset all stat's back to their base.
      */
     public function ResetStats()
