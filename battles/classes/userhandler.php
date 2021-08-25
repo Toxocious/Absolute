@@ -61,58 +61,6 @@
     }
 
     /**
-     * Set a field effect.
-     * @param string $Field_Effect
-     * @param int $Turns
-     */
-    public function SetFieldEffect
-    (
-      string $Field_Effect,
-      int $Turns = null
-    )
-    {
-      if ( $this->IsFieldEffectActive($Field_Effect) )
-        return false;
-
-      if ( !isset($Turns) )
-        $Turns = -1;
-
-      $Field_Construct = new Field(
-        $this->Side,
-        $Field_Effect,
-        $Turns
-      );
-
-      if ( !$Field_Construct )
-        return false;
-
-      $this->Field_Effects[$Field_Construct->Name] = $Field_Construct;
-
-      return true;
-    }
-
-    /**
-     * Determine if a given field effect is active.
-     * @param string $Field_Effect
-     */
-    public function IsFieldEffectActive
-    (
-      string $Field_Effect
-    )
-    {
-      if ( !isset($this->Field_Effects) )
-        return false;
-
-      foreach ( $this->Field_Effects as $Field )
-      {
-        if ( $Field->Name == $Field_Effect )
-          return $Field;
-      }
-
-      return false;
-    }
-
-    /**
      * Increase the amount of Trainer Exp the user has.
      * @param int $Trainer_Exp
      */
