@@ -32,14 +32,6 @@
 
         if ( $Status_Name == 'Poison' && $Pokemon->HasTyping(['Poison']) )
           return false;
-
-        if
-        (
-          strpos($Status_Name, 'Powder') &&
-          strpos($Status_Name, 'Spore') &&
-          $Pokemon->HasTyping(['Grass'])
-        )
-          return false;
       }
       else
       {
