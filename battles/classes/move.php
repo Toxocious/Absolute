@@ -200,92 +200,6 @@
           break;
       }
 
-      if ( $this->HasFlag('charge') )
-      {
-        if ( !$Attacker->HasStatus('Charging') )
-        {
-          $Attacker->SetStatus('Charging');
-
-          return [
-            'Type' => 'Success',
-            'Text' => "{$Attacker->Display_Name} is charging up an attack!",
-            'Damage' => 0,
-            'Heal' => 0,
-          ];
-        }
-      }
-
-      if ( $Defender->HasStatus('Protect') && $this->HasFlag('protect') )
-      {
-        return [
-          'Type' => 'Success',
-          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
-                    "{$Defender->Display_Name} was protected from the attack!",
-          'Damage' => 0,
-          'Heal' => 0,
-        ];
-      }
-
-      if
-      (
-        $this->HasFlag('powder') &&
-        ($Defender->HasTyping(['Grass']) || $Defender->Ability == 'Overcoat' || $Defender->Item->Name == 'Safety Goggles')
-      )
-      {
-        return [
-          'Type' => 'Success',
-          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
-                    "It had no effect!",
-          'Damage' => 0,
-          'Heal' => 0,
-        ];
-      }
-
-      if ( $Attacker->HasStatus('Heal Block') && $this->HasFlag('heal') )
-      {
-        return [
-          'Type' => 'Success',
-          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
-                    "{$Attacker->Display_Name} attack was prevented by its Heal Block!",
-          'Damage' => 0,
-          'Heal' => 0,
-        ];
-      }
-
-      if ( $Defender->Ability == 'Bulletproof' && $this->HasFlag('bullet') )
-      {
-        return [
-          'Type' => 'Success',
-          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
-                    "{$Defender->Display_Name} is Bulletproof!",
-          'Damage' => 0,
-          'Heal' => 0,
-        ];
-      }
-
-      if ( $Defender->Ability == 'Soundproof' && $this->HasFlag('sound') )
-      {
-        return [
-          'Type' => 'Success',
-          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
-                    "{$Defender->Display_Name} is Soundproof!",
-          'Damage' => 0,
-          'Heal' => 0,
-        ];
-      }
-
-      if ( $Attacker->HasStatus('Taunt') )
-      {
-        if ( $this->Damage_Type == 'Status' )
-        {
-          return [
-            'Type' => 'Success',
-            'Text' => "{$Attacker->Display_Name} can't use {$this->Name} due to the Taunt.",
-            'Damage' => 0,
-            'Heal' => 0,
-          ];
-        }
-      }
 
       $Attacker_Can_Move = $this->CanUserMove($Side);
       if ( $Attacker_Can_Move['Type'] == 'Error' )
@@ -426,6 +340,93 @@
           break;
         default:
           break;
+      }
+
+      if ( $this->HasFlag('charge') )
+      {
+        if ( !$Attacker->HasStatus('Charging') )
+        {
+          $Attacker->SetStatus('Charging');
+
+          return [
+            'Type' => 'Success',
+            'Text' => "{$Attacker->Display_Name} is charging up an attack!",
+            'Damage' => 0,
+            'Heal' => 0,
+          ];
+        }
+      }
+
+      if ( $Defender->HasStatus('Protect') && $this->HasFlag('protect') )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Defender->Display_Name} was protected from the attack!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
+      if
+      (
+        $this->HasFlag('powder') &&
+        ($Defender->HasTyping(['Grass']) || $Defender->Ability == 'Overcoat' || $Defender->Item->Name == 'Safety Goggles')
+      )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "It had no effect!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
+      if ( $Attacker->HasStatus('Heal Block') && $this->HasFlag('heal') )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Attacker->Display_Name} attack was prevented by its Heal Block!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
+      if ( $Defender->Ability == 'Bulletproof' && $this->HasFlag('bullet') )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Defender->Display_Name} is Bulletproof!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
+      if ( $Defender->Ability == 'Soundproof' && $this->HasFlag('sound') )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Defender->Display_Name} is Soundproof!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
+      if ( $Attacker->HasStatus('Taunt') )
+      {
+        if ( $this->Damage_Type == 'Status' )
+        {
+          return [
+            'Type' => 'Success',
+            'Text' => "{$Attacker->Display_Name} can't use {$this->Name} due to the Taunt.",
+            'Damage' => 0,
+            'Heal' => 0,
+          ];
+        }
       }
 
       if ( $this->hasFlag('contact') )
