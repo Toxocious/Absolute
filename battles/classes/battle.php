@@ -698,7 +698,7 @@
 
       $this->Field_Effects[$Set_Field->Name] = $Set_Field;
 
-      return true;
+      return $Set_Field;
     }
 
     /**
