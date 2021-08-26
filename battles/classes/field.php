@@ -40,6 +40,17 @@
     }
 
     /**
+     * Decrement the turn count.
+     */
+    public function DecrementTurnCount()
+    {
+      if ( $this->Turns_Left > 0 )
+        $this->Turns_Left--;
+
+      return $this;
+    }
+
+    /**
      * Increment the field effect's stack count.
      */
     public function AddStack
