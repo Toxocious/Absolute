@@ -67,6 +67,7 @@
           'Volatile' => false,
           'Max_Stacks' => 1,
           'Stacks' => 1,
+          'Dialogue' => 'Gravity intensified!',
         ],
         'Leech Seed' => [
           'Min_Turns' => -1,
@@ -74,6 +75,7 @@
           'Volatile' => false,
           'Max_Stacks' => 1,
           'Stacks' => 1,
+          'Dialogue' => 'The foe was seeded!',
         ],
         'Light Screen' => [
           'Min_Turns' => 5,
@@ -81,6 +83,7 @@
           'Volatile' => false,
           'Max_Stacks' => 1,
           'Stacks' => 1,
+          'Dialogue' => 'Light Screen raised your team\'s Special Defense!',
         ],
         'Mist' => [
           'Min_Turns' => 5,
@@ -88,6 +91,7 @@
           'Volatile' => false,
           'Max_Stacks' => 1,
           'Stacks' => 1,
+          'Dialogue' => 'Your team became shrouded in mist!',
         ],
         'Spikes' => [
           'Min_Turns' => 5,
@@ -95,6 +99,7 @@
           'Volatile' => false,
           'Max_Stacks' => 3,
           'Stacks' => 1,
+          'Dialogue' => 'Spikes were scattered all around the feet of the foe\'s team!',
         ],
         'Trick Room' => [
           'Min_Turns' => 5,
@@ -102,6 +107,7 @@
           'Volatile' => false,
           'Max_Stacks' => 1,
           'Stacks' => 1,
+          'Dialogue' => 'The dimensions have been twisted!',
         ],
       ];
     }
