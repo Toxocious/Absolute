@@ -200,6 +200,21 @@
           break;
       }
 
+      if ( $this->HasFlag('charge') )
+      {
+        if ( !$Attacker->HasStatus('Charging') )
+        {
+          $Attacker->SetStatus('Charging');
+
+          return [
+            'Type' => 'Success',
+            'Text' => "{$Attacker->Display_Name} is charging up an attack!",
+            'Damage' => 0,
+            'Heal' => 0,
+          ];
+        }
+      }
+
       if ( $Defender->HasStatus('Protect') && $this->HasFlag('protect') )
       {
         return [
