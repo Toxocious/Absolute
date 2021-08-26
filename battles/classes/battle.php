@@ -147,6 +147,9 @@
      */
     public function ProcessEndOfTurn()
     {
+      /**
+       * Process statuses, etc. for each side's individual active Pokemon.
+       */
       foreach (['Ally', 'Foe'] as $Side)
       {
         $Side = $_SESSION['Battle'][$Side];
@@ -165,6 +168,21 @@
             if ( $Status->Turns_Left > 0 )
               $Status->UpdateStatus();
           }
+        }
+      }
+
+      /**
+       * Process field effects.
+       */
+      if ( !empty($this->Field_Effects) )
+      {
+        foreach ($this->Field_Effects as $Field_Effect)
+        {
+          if ( $Field_Effect->Turns_Left === 0 )
+            unset($this->Field_Effects[$Field_Effect->Name]);
+
+          if ( $Field_Effect->Turns_Left > 0 )
+            $Field_Effect->DecrementTurnCount();
         }
       }
     }
