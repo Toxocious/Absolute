@@ -61,6 +61,13 @@
     public function FieldEffects()
     {
       return [
+        'Gravity' => [
+          'Min_Turns' => 5,
+          'Max_Turns' => 5,
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
+        ],
         'Leech Seed' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
