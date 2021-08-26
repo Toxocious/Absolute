@@ -47,7 +47,10 @@
       int $Stacks = 1
     )
     {
-      $this->Stacks++;
+      if ( !empty($Stacks) )
+        $this->Stacks += $Stacks;
+      else
+        $this->Stacks++;
 
       return $this;
     }
