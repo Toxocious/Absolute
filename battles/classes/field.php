@@ -101,6 +101,14 @@
           'Stacks' => 1,
           'Dialogue' => 'Spikes were scattered all around the feet of the foe\'s team!',
         ],
+        'Toxic Spikes' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => false,
+          'Max_Stacks' => 3,
+          'Stacks' => 1,
+          'Dialogue' => 'Toxic spikes were scattered all around the feet of the foe\'s team!',
+        ],
         'Trick Room' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
