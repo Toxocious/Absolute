@@ -118,10 +118,7 @@
           break;
       }
 
-      /**
-       * If either side's Pokemon has fainted, determine whether or
-       * not the battle should prompt the user to continue or to restart.
-       */
+      $this->ProcessEndOfTurn();
 
       return $this->Turn_Dialogue;
     }
@@ -150,7 +147,26 @@
      */
     public function ProcessEndOfTurn()
     {
+      foreach (['Ally', 'Foe'] as $Side)
+      {
+        $Side = $_SESSION['Battle'][$Side];
+        $Active_Pokemon = $Side->Active;
 
+        if ( !empty($Active_Pokemon->Statuses) )
+        {
+          foreach ($Active_Pokemon->Statuses as $Status)
+          {
+            if ( !$Status->Volatile )
+              continue;
+
+            if ( $Status->Turns_Left === 0 )
+              unset($Active_Pokemon->Statuses[$Status->Name]);
+
+            if ( $Status->Turns_Left > 0 )
+              $Status->UpdateStatus();
+          }
+        }
+      }
     }
 
     /**
