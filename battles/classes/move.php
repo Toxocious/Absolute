@@ -529,9 +529,6 @@
                 $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} rose sharply!";
               else
                 $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} harshly dropped!";
-
-              if ( $Index > 0 )
-                $Stat_Change_Text .= '<br />';
             }
             else
             {
@@ -540,6 +537,9 @@
               else
                 $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} can't go any lower!";
             }
+
+            if ( $Index > 0 )
+              $Stat_Change_Text .= '<br />';
           }
         }
       }
