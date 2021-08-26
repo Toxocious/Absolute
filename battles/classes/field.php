@@ -94,8 +94,8 @@
           'Dialogue' => 'Your team became shrouded in mist!',
         ],
         'Spikes' => [
-          'Min_Turns' => 5,
-          'Max_Turns' => 5,
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
           'Volatile' => false,
           'Max_Stacks' => 3,
           'Stacks' => 1,
