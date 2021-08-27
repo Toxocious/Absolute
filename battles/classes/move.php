@@ -1621,8 +1621,16 @@
           $Damage = 0;
       }
 
-      if ( $Damage < 0 )
+      if ( $Damage > 0 )
+      {
+        if ( $Defender->Ability == 'Heatproof' && $this->Move_Type == 'Fire' )
+          $Damage /= 2;
+
+      }
+      else
+      {
         $Damage = 0;
+      }
 
       return $Damage;
     }
