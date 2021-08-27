@@ -616,7 +616,7 @@
             {
               $Status_Dialogue = 'But it failed!';
             }
-            else
+            else if ( $this->Ailment == 'Freeze' && !empty($this->Weather) && strpos($this->Weather->Name, 'Harsh Sunlight') )
             {
               $Chance_Chance = mt_rand(1, 100);
               if ( $Chance_Chance <= $this->Effect_Chance )
