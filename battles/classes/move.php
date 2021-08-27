@@ -649,6 +649,12 @@
         }
       }
 
+      if ( $Defender->Ability == 'Anger Point' && $Does_Move_Crit )
+      {
+        $Defender->Active->Stats['Attack']->SetStage(6);
+        $Effect_Text = "{$Defender->Display_Name}'s Anger Point maximized its Attack!";
+      }
+
       if ( $Damage <= 0 )
       {
         $Dialogue = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
@@ -674,7 +680,7 @@
 
       return [
         'Text' => $Dialogue,
-        'Effect_Text' => '',
+        'Effect_Text' => $Effect_Text,
         'Damage' => $Damage,
         'Healing' => $Healing,
       ];
