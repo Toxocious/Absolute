@@ -159,8 +159,25 @@
         {
           foreach ($Active_Pokemon->Statuses as $Status)
           {
-            if ( !$Status->Volatile )
-              continue;
+            if ( $Status->Volatile )
+            {
+              switch ( $Status->Name )
+              {
+                case 'Burn':
+                  $Burn_Mult = 1;
+                  if ( $Active_Pokemon->Ability == 'Heatproof' )
+                    $Burn_Mult = 2;
+
+                  $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / (16 * $Burn_Mult));
+                  break;
+
+                case 'Poison':
+                  if ( $Active_Pokemon->Ability == 'Poison Heal' )
+                    $Active_Pokemon->IncreaseHP($Active_Pokemon->Max_HP / 8);
+                  else
+                    $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / 8);
+              }
+            }
 
             if ( $Status->Turns_Left === 0 )
               unset($Active_Pokemon->Statuses[$Status->Name]);
