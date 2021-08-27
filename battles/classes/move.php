@@ -1503,13 +1503,11 @@
       string $Side
     )
     {
-      if
-      (
-        $_SESSION['Battle'][$Side]->Active->Primary_Type == $this->Move_Type ||
-        $_SESSION['Battle'][$Side]->Active->Secondary_Type == $this->Move_Type
-      )
+      $Attacker = $_SESSION['Battle'][$Side]->Active;
+
+      if ( $Attacker->HasTyping([ $this->Move_Type ]) )
       {
-        if ( $_SESSION['Battle'][$Side]->Active->Ability == 'Adaptibility' )
+        if ( $Attacker->Ability == 'Adaptibility' )
           return 2;
 
         return 1.5;
