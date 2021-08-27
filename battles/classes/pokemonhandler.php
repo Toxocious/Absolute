@@ -226,11 +226,36 @@
         $Text = "{$Previous_Attacker->Display_Name} used Baton Pass!<br />";
       }
 
+      $Effect_Text = '';
+
       if ( !empty($this->Weather) )
       {
         if ( $_SESSION['Battle'][$this->Side]->Active->Ability == 'Air Lock' )
         {
-          $Effect_Text = 'The effects of weather disappeared.';
+          $Effect_Text .= 'The effects of weather disappeared.<br />';
+        }
+      }
+
+      if ( $_SESSION['Battle'][$this->Side]->Active->Ability == 'Anticipation' )
+      {
+        switch ($this->Side)
+        {
+          case 'Ally':
+            $Defender = $_SESSION['Battle']['Foe']->Active;
+            break;
+          case 'Foe';
+            $Defender = $_SESSION['Battle']['Ally']->Active;
+            break;
+        }
+
+        foreach ($Defender->Moves as $Move)
+        {
+          if ( $Move->MoveEffectiveness($this) )
+          {
+            $Effect_Text .= "{$this->Display_Name} shuddered.<br />";
+
+            break;
+          }
         }
       }
 
