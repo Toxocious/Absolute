@@ -148,13 +148,16 @@
     public function ProcessEndOfTurn()
     {
       /**
-       * Process statuses, etc. for each side's individual active Pokemon.
+       * Process Weather and Status effects for both side's active Pokemon.
        */
       foreach (['Ally', 'Foe'] as $Side)
       {
         $Side = $_SESSION['Battle'][$Side];
         $Active_Pokemon = $Side->Active;
 
+        /**
+         * Process the Pokemon's active Statuses.
+         */
         if ( !empty($Active_Pokemon->Statuses) )
         {
           foreach ($Active_Pokemon->Statuses as $Status)
@@ -184,6 +187,37 @@
 
             if ( $Status->Turns_Left > 0 )
               $Status->UpdateStatus();
+          }
+        }
+
+        /**
+         * Process active Weather effects.
+         */
+        if ( !empty($this->Weather) )
+        {
+          if
+          (
+            !in_array($Active_Pokemon->Ability, ['Magic Guard', 'Overcoat']) ||
+            $Active_Pokemon->Item->Name != 'Safety Goggles'
+          )
+          {
+            switch ($this->Weather->Name)
+            {
+              case 'Hail':
+                if ( !$Active_Pokemon->HasTyping(['Ice']) )
+                  $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / 16);
+                break;
+
+              case 'Sandstorm':
+                if ( !$Active_Pokemon->HasTyping(['Ground', 'Steel', 'Rock']) )
+                  $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / 16);
+                break;
+
+              case 'Shadowy Aura':
+                if ( !$Active_Pokemon->HasTyping(['Shadow']) )
+                  $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / 16);
+                break;
+            }
           }
         }
       }
