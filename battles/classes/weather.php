@@ -48,6 +48,19 @@
      */
     public function EndWeather()
     {
+      foreach (['Ally', 'Foe'] as $Side)
+      {
+        $Active_Pokemon = $_SESSION['Battle'][$Side]->Active;
+
+        switch ($this->Name)
+        {
+          case 'Sandstorm':
+            if ( $Active_Pokemon->HasTyping(['Rock']) )
+              $Active_Pokemon->Stats['Sp_Defense'] /= 1.5;
+            break;
+        }
+      }
+
       switch ($this->Name)
       {
         case 'Clear Skies':
