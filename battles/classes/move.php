@@ -354,6 +354,24 @@
           ];
         }
       }
+
+      if ( $Attacker->HasStatus('Freeze') )
+      {
+        if ( mt_rand(1, 100) <= 20 )
+        {
+          $Attacker->RemoveStatus('Freeze');
+        }
+        else
+        {
+          return [
+            'Type' => 'Success',
+            'Text' => "{$Attacker->Display_Name} is frozen!",
+            'Damage' => 0,
+            'Heal' => 0,
+          ];
+        }
+      }
+
       if ( $this->HasFlag('charge') )
       {
         if ( !$Attacker->HasStatus('Charging') )
