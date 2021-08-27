@@ -1563,6 +1563,11 @@
           break;
       }
 
+      if ( isset($_SESSION['Battle'][$this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      else
+        $Turn_First_Attacker = $Side;
+
       $Crit_Mult = 1;
       if ( $Crit )
         if ( $Attacker->Ability == 'Sniper' )
@@ -1614,6 +1619,10 @@
       if ( $Attacker->Ability == 'Iron Fist' )
         if ( $this->HasFlag('punch') )
           $this->Power *= 1.2;
+
+      if ( $Turn_First_Attacker != $Side )
+        if ( $Attacker->Ability == 'Analytic' )
+          $this->Power *= 1.3;
 
       switch ($this->Damage_Type)
       {
