@@ -17,6 +17,19 @@
       $this->Name = $Weather_Name;
       $this->Turns_Left = 5;
       $this->Dialogue = $Weather_Data['Text'];
+
+      foreach (['Ally', 'Foe'] as $Side)
+      {
+        $Active_Pokemon = $_SESSION['Battle'][$Side]->Active;
+
+        switch ($this->Name)
+        {
+          case 'Sandstorm':
+            if ( $Active_Pokemon->HasTyping(['Rock']) )
+              $Active_Pokemon->Stats['Sp_Defense'] *= 1.5;
+            break;
+        }
+      }
     }
 
     /**
