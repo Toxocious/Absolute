@@ -222,12 +222,23 @@
       $_SESSION['Battle'][$this->Side]->Active = $this;
 
       if ( $Previous_Attacker->Last_Move['Name'] == 'Baton Pass' )
+      {
         $Text = "{$Previous_Attacker->Display_Name} used Baton Pass!<br />";
+      }
+
+      if ( !empty($this->Weather) )
+      {
+        if ( $_SESSION['Battle'][$this->Side]->Active->Ability == 'Air Lock' )
+        {
+          $Effect_Text = 'The effects of weather disappeared.';
+        }
+      }
 
       return [
         'Type' => 'Success',
         'Text' => (isset($Text) ? $Text : '') .
-                  "{$this->Display_Name} has been sent into battle!"
+                  "{$this->Display_Name} has been sent into battle!" .
+                  (isset($Effect_Text) ? $Effect_Text : '')
       ];
     }
 

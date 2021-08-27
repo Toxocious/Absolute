@@ -1571,21 +1571,28 @@
           $Crit_Mult = 1.5;
 
       $Weather_Mult = 1;
-      switch ( $this->Weather )
+      if
+      (
+        !$Attacker->Ability == 'Air Lock' &&
+        !$Defender->Ability == 'Air Lock'
+      )
       {
-        case 'Rain':
-          if ( $this->Move_Type == 'Water' )
-            $Weather_Mult = 1.5;
-          else if ( $this->Move_Type == 'Fire' )
-            $Weather_Mult = 0.5;
-          break;
+        switch ( $this->Weather )
+        {
+          case 'Rain':
+            if ( $this->Move_Type == 'Water' )
+              $Weather_Mult = 1.5;
+            else if ( $this->Move_Type == 'Fire' )
+              $Weather_Mult = 0.5;
+            break;
 
-        case 'Harsh Sunlight':
-          if ( $this->Move_Type == 'Fire' )
-            $Weather_Mult = 1.5;
-          else if ( $this->Move_Type == 'Water' )
-            $Weather_Mult = 0.5;
-          break;
+          case 'Harsh Sunlight':
+            if ( $this->Move_Type == 'Fire' )
+              $Weather_Mult = 1.5;
+            else if ( $this->Move_Type == 'Water' )
+              $Weather_Mult = 0.5;
+            break;
+        }
       }
 
       $Status_Mult = 1;
