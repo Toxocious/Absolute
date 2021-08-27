@@ -483,11 +483,14 @@
       if
       (
         $Attacker->Ability == 'Skill Link' &&
-        $this->Max_Hits != 1
+        $this->Max_Hits > 1
       )
         $this->Total_Hits = 5;
       else
         $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
+
+      if ( $Attacker->Ability == 'Aerilate' && $this->Move_Type == 'Normal' )
+        $this->Move_Type = 'Flying';
 
       /**
        * Calculate how much damage will be done.
