@@ -342,6 +342,18 @@
           break;
       }
 
+      if ( $Attacker->HasStatus('Paralysis') )
+      {
+        if ( mt_rand(1, 4) === 1 )
+        {
+          return [
+            'Type' => 'Success',
+            'Text' => "{$Attacker->Display_Name} is fully paralyzed!",
+            'Damage' => 0,
+            'Heal' => 0,
+          ];
+        }
+      }
       if ( $this->HasFlag('charge') )
       {
         if ( !$Attacker->HasStatus('Charging') )
