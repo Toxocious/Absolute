@@ -201,11 +201,45 @@
         document.getElementById(`user_abso_coins`).innerHTML = Abso_Coins.toLocaleString(undefined, {maximumFractionDigits: 0});
     },
 
+    RenderWeather: (Weather) =>
+    {
+      const Weather_Element = document.querySelector('[slot="Battle_Weather"]');
+
+      if ( typeof Weather === 'undefined' )
+      {
+        Weather_Element.innerHTML = '';
+        return;
+      }
+
+      let Weather_Name;
+      switch (Weather.Name)
+      {
+        case 'Hail':
+          Weather_Name = 'hail';
+          break;
+
+        case 'Extremely Harsh Sunlight':
+        case 'Harsh Sunlight':
+          Weather_Name = 'harsh_sunlight';
+          break;
+
+        case 'Heavy Rain':
+        case 'Rain':
+          Weather_Name = 'rain';
+          break;
+
+        case 'Sandstorm':
+          Weather_Name = 'sandstorm';
+          break;
+      }
+
+      Weather_Element.innerHTML = `<img src='./images/Assets/weather_${Weather_Name}.png' />`;
+    },
+
     RenderFieldEffects: (Side, Field_Effects) =>
     {
-      if ( typeof Side === undefined )
+      if ( typeof Side === 'undefined' )
         return;
-
 
       let Render_Text;
       if ( Field_Effects === null )
@@ -269,8 +303,11 @@
               Battle.RenderMoves(JSON_Data.Ally.Active.Moves);
               Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active);
               Battle.RenderFieldEffects('Ally', JSON_Data.Ally.Field_Effects);
+
               Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active);
               Battle.RenderFieldEffects('Foe', JSON_Data.Foe.Field_Effects);
+
+              Battle.RenderWeather(JSON_Data.Weather);
               Battle.RenderCurrencies(JSON_Data.Ally.Money, JSON_Data.Ally.Abso_Coins);
 
               document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;

@@ -22,9 +22,9 @@
   <div class='head'>Battle</div>
   <div class='body' style='padding: 5px;'>
     <div class='flex' style='justify-content: center;'>
-      <div style='flex-basis: 86%;' id='BattleWindow'>
+      <div style='flex-basis: 100%;' id='BattleWindow'>
         <div class='flex' style='flex-wrap: wrap; justify-content: center;'>
-          <div style='flex-basis: 49%;'>
+          <div style='flex-basis: 39%;'>
             <div class='flex' style='justify-content: center; flex-basis: 100%;'>
               <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Ally_Slot_0' style='height: 30px; padding: 0px; width: 40px;'>
@@ -145,7 +145,11 @@
             </div>
           </div>
 
-          <div style='flex-basis: 49%;'>
+          <div style='margin-left: 5px; padding-top: 5px;'>
+            <div slot='Battle_Weather' style='height: 30px; width: 40px;'></div>
+          </div>
+
+          <div style='flex-basis: 39%;'>
             <div class='flex' style='justify-content: center;'>
               <div class='border-gradient hover' style='margin-right: 5px;'>
                 <div slot='Foe_Slot_0' style='height: 30px; padding: 0px; width: 40px;'>
@@ -266,7 +270,7 @@
             </div>
           </div>
 
-          <div style='flex-basis: 83%;'>
+          <div style='flex-basis: 75%;'>
             <input
               move='Move_0'
               type='button'
@@ -293,7 +297,7 @@
             />
           </div>
 
-          <div class='border-gradient' style='flex-basis: 80%; margin-top: 5px;'>
+          <div class='border-gradient' style='flex-basis: 70%; margin-top: 5px;'>
             <div id='BattleDialogue' style='font-size: 12px;'>
               Loading Battle State
             </div>
