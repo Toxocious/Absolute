@@ -125,15 +125,6 @@
       $this->Consecutive_Hits = 0;
       $this->Target = $Move_Data['Target'];
 
-      if ( !empty($Flags) )
-      {
-        foreach ( $Flags as $Flag => $Value )
-        {
-          if ( $Value )
-            $this->Flags[$Flag] = $Value;
-        }
-      }
-
       $this->Accuracy = $Move_Data['Accuracy'];
       $this->Power = $Move_Data['Power'];
       $this->Priority = $Move_Data['Priority'];
@@ -167,6 +158,15 @@
       $this->Evasion_Boost = $Move_Data['Evasion_Boost'];
 
       $this->Class_Name = $Move_Data['Class_Name'];
+
+      if ( !empty($Flags) )
+      {
+        foreach ( $Flags as $Flag => $Value )
+        {
+          if ( $Value )
+            $this->Flags[$Flag] = $Value;
+        }
+      }
     }
 
     /**
@@ -211,6 +211,12 @@
           'Heal' => 0,
         ];
       }
+
+      /**
+       * Hidden Power check here, before anything further gets processed.
+       */
+      if ( $this->Name == 'Hidden Power' )
+        $this->Move_Type = $this->DetermineMoveType($Attacker->IVs);
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
       if ( $Move_Effectiveness['Mult'] > 0 )
