@@ -20,7 +20,7 @@
     </div>
 
     <div class='flex'>
-      <table class='border-gradient' style='width: 500px;'>
+      <table class='border-gradient' style='max-height: 184px; width: 500px;'>
         <tbody>
           <tr>
             <td colspan='2' style='width: 50%;'>
@@ -98,8 +98,6 @@
       ResetProcessing(Canvas, Canvas_Context);
     }
 
-    AppendMessage(`<td colspan="4">Processing Image</td>`);
-
     Canvas_Context = Canvas.getContext('2d');
     Canvas_Context.drawImage(Image_Element, 0, 0, 96, 96, 0, 0, 96, 96);
 
@@ -108,7 +106,7 @@
 
     if ( Canvas_Pixels.length < 1 )
     {
-      AppendMessage('<td colspan="4">Failed to process selected image</td>');
+      AppendMessage('<td colspan="4" style="color: red;"><b>Failed to process selected image</b></td>');
       return;
     }
 
@@ -149,7 +147,8 @@
       return 0;
     });
 
-    AppendMessage('<td colspan="4">Finished image processing</td>');
+    document.getElementById('found_colors').innerHTML = '';
+
     AppendMessage(`
       <td><b>Color</b></td>
       <td><b>Hits</b></td>
@@ -188,16 +187,12 @@
         ResetProcessing(Canvas, Canvas_Context);
       }
 
-      AppendMessage('<td colspan="4">A file has been selected.</td>');
-
       if (File_Selector.files && File_Selector.files[0])
       {
-        AppendMessage('<td colspan="4">Initializing new FileReader</td>');
         const reader = new FileReader();
 
         reader.onload = function(e)
         {
-          AppendMessage('<td colspan="4">FileReader has been loaded.</td>');
           Image_Element.setAttribute('src', e.target.result);
           Image_Loaded = true;
         }
