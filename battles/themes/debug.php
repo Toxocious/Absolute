@@ -147,6 +147,13 @@
 
           <div style='margin-left: 5px; padding-top: 5px;'>
             <div slot='Battle_Weather' style='height: 30px; width: 40px;'></div>
+            <div class='flex' style='margin-top: 4px;'>
+              <div class='border-gradient hover'>
+                <div>
+                  <img src='<?= DOMAIN_SPRITES; ?>/Assets/settings.png' />
+                </div>
+              </div>
+            </div>
           </div>
 
           <div style='flex-basis: 39%;'>
