@@ -686,7 +686,7 @@
 
       return [
         'Text' => $Dialogue,
-        'Effect_Text' => $Effect_Text,
+        'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
         'Damage' => $Damage,
         'Healing' => $Healing,
       ];
