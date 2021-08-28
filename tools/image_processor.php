@@ -70,10 +70,6 @@
     if ( typeof Message === 'undefined' || Message == '' )
       return;
 
-    console.log(Message);
-    Message = Message.trim();
-    console.log(Message);
-
     document.getElementById('found_colors').innerHTML += `<tr>${Message}</tr>`;
   }
 
