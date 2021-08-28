@@ -1726,4 +1726,23 @@
 
       return false;
     }
+
+    /**
+     * Given the IVs of the User, determine the move-type.
+     */
+    public function DetermineMoveType
+    (
+      array $IVs
+    )
+    {
+      $Typings = [
+        'Fighting', 'Flying', 'Poison', 'Ground', 'Rock',
+        'Bug', 'Ghost', 'Steel', 'Fire', 'Water',
+        'Grass', 'Electric', 'Psychic', 'Ice', 'Dragon', 'Dark'
+      ];
+
+      $Formula = ($IVs[0] + ($IVs[1] * 2) + ($IVs[3] * 4) + ($IVs[6] * 8) + ($IVs[4] * 16) + ($IVs[5] * 32) * 15) / 63;
+
+      return $Typings[$Formula];
+    }
   }
