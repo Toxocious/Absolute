@@ -1636,6 +1636,23 @@
         if ( $Attacker->Ability == 'Analytic' )
           $this->Power *= 1.3;
 
+      if ( $Defender->Ability == 'Aura Break' )
+      {
+        if ( $Attacker->Ability == 'Dark Aura' && $this->Move_Type == 'Dark' )
+          $this->Power /= 1.33;
+
+        if ( $Attacker->Ability == 'Fairy Aura' && $this->Move_Type == 'Fairy' )
+          $this->Power /= 1.33;
+      }
+      else
+      {
+        if ( $Attacker->Ability == 'Dark Aura' && $this->Move_Type == 'Dark' )
+          $this->Power *= 1.33;
+
+        if ( $Attacker->Ability == 'Fairy Aura' && $this->Move_Type == 'Fairy' )
+          $this->Power *= 1.33;
+      }
+
       switch ($this->Damage_Type)
       {
         case 'Physical':
