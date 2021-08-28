@@ -1,5 +1,5 @@
 			</main>
-			
+
 			<footer>
 				<div class='copyright'>
 					Pok&eacute;mon Absolute &copy; 2018 - <?= date('Y'); ?> Toxocious<br />
@@ -23,7 +23,51 @@
 				-->
 			</footer>
 		</div>
-		
+
+    <?php
+      /**
+       * Include the necessary Absolute Chat scripts.
+       */
+      if ( isset($_SESSION['abso_user']) )
+      {
+    ?>
+      <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/absochat.js'></script>
+      <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/Handler.js'></script>
+      <script type='text/javascript'>
+        (function()
+        {
+          Absolute.user = {
+            user_id: <?= $User_Data['ID']; ?>,
+            postcode: <?= $User_Data['Auth_Code']; ?>,
+          }
+
+          Absolute.Enable();
+
+          const Chat_Input = document.getElementById('chatMessage');
+          Chat_Input.addEventListener('keydown', (event) => {
+            if ( event.keyCode === 13 )
+            {
+              event.preventDefault();
+
+              const Chat_Message = Chat_Input.value.trim();
+              if ( Chat_Message !== '' && Absolute.user.connected )
+              {
+                socket.emit('chat-message',
+                {
+                  user: Absolute.user,
+                  text: Chat_Message
+                });
+
+                Chat_Input.value = '';
+              }
+            }
+          });
+        })();
+      </script>
+    <?php
+      }
+    ?>
+
 		<script type='text/javascript'>
 			$('.cboxElement').colorbox({ iframe: true, innerWidth: 680, innerHeight: 491, maxWidth: 686, maxHeight: 529 });
 		</script>

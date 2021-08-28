@@ -22,49 +22,7 @@
 			{
 				//echo "<script type='text/javascript' src='" . DOMAIN_ROOT . "/js/snowstorm.js'></script>";
       }
-
-      /**
-       * Include the necessary Absolute Chat scripts.
-       */
-      if ( isset($_SESSION['abso_user']) )
-			{
-        echo "
-          <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/AbsoChat/absochat.js'></script>
-          <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/AbsoChat/Handler.js'></script>
-          <script type='text/javascript'>
-            $(function()
-            {
-              Absolute.user = {
-                user_id: " . $User_Data['ID'] . ",
-                postcode: " . $User_Data['Auth_Code'] . ",
-              }
-
-              Absolute.Enable();
-
-              $('#chatMessage').keydown((e) =>
-              {
-                if ( e.keyCode == 13 )
-                {
-                  let text = $('#chatMessage').val().trim();
-                  if ( text != '' && Absolute.user.connected )
-                  {
-                    socket.emit('chat-message',
-                    {
-                      user: Absolute.user,
-                      text: text,
-                    });
-
-                    $('#chatMessage').val('').trigger('input');
-                  }
-
-                  return false;
-                }
-              });
-            });
-          </script>
-        ";
-      }
-		?>
+    ?>
   </head>
 
 	<body>
