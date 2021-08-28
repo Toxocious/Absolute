@@ -313,8 +313,8 @@
           break;
       }
 
-      if ( isset($_SESSION['Battle'][$this->Turn_ID]['First_Attacker']) )
-        $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      if ( isset($_SESSION['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
       else
         $Turn_First_Attacker = $Side;
 
@@ -1575,8 +1575,8 @@
           break;
       }
 
-      if ( isset($_SESSION['Battle'][$this->Turn_ID]['First_Attacker']) )
-        $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      if ( isset($_SESSION['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
       else
         $Turn_First_Attacker = $Side;
 

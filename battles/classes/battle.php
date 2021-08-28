@@ -404,7 +404,7 @@
       $this->Foe_Move = $Foe_Active->FetchRandomMove();
 
       $First_Attacker = $this->DetermineFirstAttacker($this->Ally_Move, $this->Foe_Move);
-      $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'] = $First_Attacker;
+      $_SESSION['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'] = $First_Attacker;
 
       $Attack_Dialogue = '';
 
