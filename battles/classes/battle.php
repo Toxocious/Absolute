@@ -585,7 +585,16 @@
         ];
       }
 
-      if ( $Ally_Active->HasStatus('Trap') )
+      if
+      (
+        $Ally_Active->HasStatus('Trap') ||
+        (
+          $Foe_Active->Ability == 'Arena Trap' &&
+          $Ally_Active->IsGrounded() &&
+          $Ally_Active->Item->Name != 'Shed Bell' &&
+          !in_array($Ally_Active->Last_Move['Name'], ['Baton Pass', 'Flip Turn', 'Parting Shot', 'U-turn', 'Volt Switch'])
+        )
+      )
       {
         return [
           'Type' => 'Error',
