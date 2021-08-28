@@ -70,11 +70,11 @@
     if ( typeof Message === 'undefined' || Message == '' )
       return;
 
-    document.getElementById('found_colors').innerHTML += `
-      <tr>
-        ${Message}
-      </tr>
-    `;
+    console.log(Message);
+    Message = Message.trim();
+    console.log(Message);
+
+    document.getElementById('found_colors').innerHTML += `<tr>${Message}</tr>`;
   }
 
   const HexFromRGBA = (Color) =>
@@ -155,12 +155,10 @@
 
     AppendMessage('<td colspan="4">Finished image processing</td>');
     AppendMessage(`
-      <tr>
-        <td><b>Color</b></td>
-        <td><b>Hits</b></td>
-        <td><b>Hex #</b></td>
-        <td><b>RGBA</b></td>
-      </tr>
+      <td><b>Color</b></td>
+      <td><b>Hits</b></td>
+      <td><b>Hex #</b></td>
+      <td><b>RGBA</b></td>
     `);
 
     for (const Pixel in Pixels )
@@ -168,14 +166,12 @@
       const Color = Pixels[Pixel];
 
       AppendMessage(`
-        <tr>
-          <td>
-            <div style='margin: 0 auto; height: 20px; width: 20px; background: rgba(${Color.r}, ${Color.g}, ${Color.b}, ${Color.a});'></div>
-          </td>
-          <td>${Color.amt}</td>
-          <td>${HexFromRGBA(Color)}</td>
-          <td>${Color.r}, ${Color.g}, ${Color.b}, ${Color.a}</td>
-        </tr>
+        <td>
+          <div style='margin: 0 auto; height: 20px; width: 20px; background: rgba(${Color.r}, ${Color.g}, ${Color.b}, ${Color.a});'></div>
+        </td>
+        <td>${Color.amt}</td>
+        <td>${HexFromRGBA(Color)}</td>
+        <td>${Color.r}, ${Color.g}, ${Color.b}, ${Color.a}</td>
       `);
     }
 
