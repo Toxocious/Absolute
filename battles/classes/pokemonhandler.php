@@ -250,7 +250,14 @@
 
         foreach ($Defender->Moves as $Move)
         {
-          if ( $Move->MoveEffectiveness($this) )
+          if ( $Move->Category == 'Status' )
+            continue;
+
+          if
+          (
+            $Move->Category == 'Ohko' ||
+            $Move->MoveEffectiveness($this)['Mult'] > 1
+          )
           {
             $Effect_Text .= "{$this->Display_Name} shuddered.<br />";
 
