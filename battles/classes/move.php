@@ -597,7 +597,7 @@
             if
             (
               $Turn_First_Attacker == $Side &&
-              !$Defender->HasStatus('Substitute') &&
+              !$Target->Active->HasStatus('Substitute') &&
               mt_rand(1, 100) <= $this->Effect_Chance
             )
             {
@@ -606,7 +606,7 @@
             break;
 
           default:
-            if ( $Defender->HasStatus('Substitute') )
+            if ( $Target->Active->HasStatus('Substitute') )
             {
               $Status_Dialogue = 'But it failed!';
             }

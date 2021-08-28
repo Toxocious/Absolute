@@ -22,7 +22,7 @@
       if ( $Pokemon->HasStatus($Status_Name) )
         return false;
 
-      if ( $Status_Data['Volatile'] )
+      if ( !$Status_Data['Volatile'] )
       {
         if ( $Status_Name == 'Burn' && $Pokemon->HasTyping(['Fire']) )
           return false;
@@ -43,6 +43,9 @@
           return false;
 
         if ( $Pokemon->HasStatus('Safeguard') )
+          return false;
+
+        if ( in_array($Status_Name, ['Encore', 'Heal Block', 'Infatuation', 'Taunt', 'Torment']) && $Pokemon->Ability == 'Aroma Veil' )
           return false;
       }
 
