@@ -821,4 +821,25 @@
 
       return false;
     }
+
+    /**
+     * Set a global weather effect.
+     * @param string $Weather
+     * @param int $Turns
+     */
+    public function SetWeather
+    (
+      string $Weather,
+      $Turns = 5
+    )
+    {
+      $Set_Weather = new \Weather($Weather, $Turns);
+
+      if ( !$Set_Weather )
+        return false;
+
+      $this->Weather = $Set_Weather;
+
+      return $Set_Weather;
+    }
   }
