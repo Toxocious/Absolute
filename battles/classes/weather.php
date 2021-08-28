@@ -7,7 +7,8 @@
 
     public function __construct
     (
-      string $Weather_Name
+      string $Weather_Name,
+      int $Turn_Count = 5
     )
     {
       $Weather_Data = $this->WeatherList()[$Weather_Name];
@@ -15,7 +16,7 @@
         return false;
 
       $this->Name = $Weather_Name;
-      $this->Turns_Left = 5;
+      $this->Turns_Left = $Turn_Count;
       $this->Dialogue = $Weather_Data['Text'];
 
       foreach (['Ally', 'Foe'] as $Side)
@@ -30,6 +31,9 @@
             break;
         }
       }
+
+      $_SESSION['Battle']['Weather'] = $this;
+      return $this;
     }
 
     /**
