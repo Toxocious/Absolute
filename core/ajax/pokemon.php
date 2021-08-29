@@ -11,7 +11,7 @@
 	if ( !$Pokemon )
 	{
 		echo "This Pokemon doesn't exist.";
-		
+
 		return;
 	}
 
@@ -33,15 +33,15 @@
 		<title>Pok&eacute;mon Statistics :: The Pok&eacute;mon Absolute</title>
 		<link href='<?= DOMAIN_SPRITES; ?>/images/Pokemon/Icons/Normal/359-mega.png' rel='shortcut icon'>
 
-		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= ($User_Data['Theme'] ? $User_Data['Theme'] : 'absol'); ?>.css?<?= time(); ?>' />
-		<link type='text/css' rel='stylesheet' href='/themes/css/root.css?<?= time(); ?>' />
-		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css?<?= time(); ?>' />
-		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css?<?= time(); ?>' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= ($User_Data['Theme'] ? $User_Data['Theme'] : 'absol'); ?>.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/root.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css' />
 	</head>
-	
+
 	<body>
 		<div class='flex' style='flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 5px;'>
-			<table class='border-gradient' style='flex-basis: 200px; margin-top: 28px;'>
+			<table class='border-gradient' style='flex-basis: 200px;'>
 				<tbody>
 					<tr>
 						<td colspan='1'>
@@ -50,7 +50,9 @@
 					</tr>
 					<tr>
 						<td colspan='1'>
-							<?= $Pokemon['Display_Name']; ?>
+              <b>
+                <?= $Pokemon['Display_Name']; ?>
+              </b>
 						</td>
 					</tr>
 				</tbody>
@@ -67,37 +69,37 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>HP</td>
+						<td><b>HP</b></td>
 						<td><?= number_format($Pokemon['Stats'][0]); ?></td>
 						<td><?= number_format($Pokemon['IVs'][0]); ?></td>
 						<td><?= number_format($Pokemon['EVs'][0]); ?></td>
 					</tr>
 					<tr>
-						<td>Attack</td>
+						<td><b>Attack</b></td>
 						<td><?= number_format($Pokemon['Stats'][1]); ?></td>
 						<td><?= number_format($Pokemon['IVs'][1]); ?></td>
 						<td><?= number_format($Pokemon['EVs'][1]); ?></td>
 					</tr>
 					<tr>
-						<td>Defense</td>
+						<td><b>Defense</b></td>
 						<td><?= number_format($Pokemon['Stats'][2]); ?></td>
 						<td><?= number_format($Pokemon['IVs'][2]); ?></td>
 						<td><?= number_format($Pokemon['EVs'][2]); ?></td>
 					</tr>
 					<tr>
-						<td>Sp. Attack</td>
+						<td><b>Sp. Attack</b></td>
 						<td><?= number_format($Pokemon['Stats'][3]); ?></td>
 						<td><?= number_format($Pokemon['IVs'][3]); ?></td>
 						<td><?= number_format($Pokemon['EVs'][3]); ?></td>
 					</tr>
 					<tr>
-						<td>Sp. Defense</td>
+						<td><b>Sp. Defense</b></td>
 						<td><?= number_format($Pokemon['Stats'][4]); ?></td>
 						<td><?= number_format($Pokemon['IVs'][4]); ?></td>
 						<td><?= number_format($Pokemon['EVs'][4]); ?></td>
 					</tr>
 					<tr>
-						<td>Speed</td>
+						<td><b>Speed</b></td>
 						<td><?= number_format($Pokemon['Stats'][5]); ?></td>
 						<td><?= number_format($Pokemon['IVs'][5]); ?></td>
 						<td><?= number_format($Pokemon['EVs'][5]); ?></td>
@@ -125,7 +127,7 @@
 						<td><?= $Pokemon['Nature']; ?></td>
 					</tr>
 					<tr>
-						<td><b>Item</b></td>
+						<td><b>Held Item</b></td>
 						<td><?= $Pokemon['Item']; ?></td>
 						<td><b>Trade Interest</b></td>
 						<td><?= $Pokemon['Trade_Interest']; ?></td>
@@ -155,7 +157,7 @@
 				</tbody>
 			</table>
 
-			<table class='border-gradient' style='flex-basis: 100%;'> <!-- width: 460px; -->
+			<table class='border-gradient' style='flex-basis: 100%; margin: 0px 15px; width: 656px;'>
 				<thead>
 					<tr>
 						<th colspan='4'>Moves</th>
@@ -163,12 +165,20 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan='2'><i><?= $Move_1['Name']; ?></i></td>
-						<td colspan='2'><i><?= $Move_2['Name']; ?></i></td>
+						<td colspan='2' style='width: 50%;'>
+              <?= $Move_1['Name']; ?>
+            </td>
+						<td colspan='2' style='width: 50%;'>
+              <?= $Move_2['Name']; ?>
+            </td>
 					</tr>
 					<tr>
-						<td colspan='2'><i><?= $Move_3['Name']; ?></i></td>
-						<td colspan='2'><i><?= $Move_4['Name']; ?></i></td>
+						<td colspan='2' style='width: 50%;'>
+              <?= $Move_3['Name']; ?>
+            </td>
+						<td colspan='2' style='width: 50%;'>
+              <?= $Move_4['Name']; ?>
+            </td>
 					</tr>
 				</tbody>
 			</table>
