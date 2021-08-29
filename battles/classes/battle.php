@@ -152,15 +152,25 @@
        */
       foreach (['Ally', 'Foe'] as $Side)
       {
-        $Side = $_SESSION['Battle'][$Side];
-        $Active_Pokemon = $Side->Active;
+        switch ($Side)
+        {
+          case 'Ally':
+            $Active_Ally = $_SESSION['Battle']['Ally'];
+            $Active_Foe = $_SESSION['Battle']['Foe'];
+            break;
+
+          case 'Foe':
+            $Active_Ally = $_SESSION['Battle']['Foe'];
+            $Active_Foe = $_SESSION['Battle']['Ally'];
+            break;
+        }
 
         /**
          * Process the Pokemon's active Statuses.
          */
-        if ( !empty($Active_Pokemon->Statuses) )
+        if ( !empty($Active_Ally->Active->Statuses) )
         {
-          foreach ($Active_Pokemon->Statuses as $Status)
+          foreach ($Active_Ally->Active->Statuses as $Status)
           {
             if ( $Status->Volatile )
             {
@@ -168,22 +178,22 @@
               {
                 case 'Burn':
                   $Burn_Mult = 1;
-                  if ( $Active_Pokemon->Ability == 'Heatproof' )
+                  if ( $Active_Ally->Active->Ability == 'Heatproof' )
                     $Burn_Mult = 2;
 
-                  $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / (16 * $Burn_Mult));
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
                   break;
 
                 case 'Poison':
-                  if ( $Active_Pokemon->Ability == 'Poison Heal' )
-                    $Active_Pokemon->IncreaseHP($Active_Pokemon->Max_HP / 8);
+                  if ( $Active_Ally->Active->Ability == 'Poison Heal' )
+                    $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
                   else
-                    $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / 8);
+                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
               }
             }
 
             if ( $Status->Turns_Left === 0 )
-              unset($Active_Pokemon->Statuses[$Status->Name]);
+              unset($Active_Ally->Active->Statuses[$Status->Name]);
 
             if ( $Status->Turns_Left > 0 )
               $Status->UpdateStatus();
@@ -197,25 +207,25 @@
         {
           if
           (
-            !in_array($Active_Pokemon->Ability, ['Magic Guard', 'Overcoat']) ||
-            $Active_Pokemon->Item->Name != 'Safety Goggles'
+            !in_array($Active_Ally->Active->Ability, ['Magic Guard', 'Overcoat']) ||
+            $Active_Ally->Active->Item->Name != 'Safety Goggles'
           )
           {
             switch ($this->Weather->Name)
             {
               case 'Hail':
-                if ( !$Active_Pokemon->HasTyping(['Ice']) )
-                  $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / 16);
+                if ( !$Active_Ally->Active->HasTyping(['Ice']) )
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
 
               case 'Sandstorm':
-                if ( !$Active_Pokemon->HasTyping(['Ground', 'Steel', 'Rock']) )
-                  $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / 16);
+                if ( !$Active_Ally->Active->HasTyping(['Ground', 'Steel', 'Rock']) )
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
 
               case 'Shadowy Aura':
-                if ( !$Active_Pokemon->HasTyping(['Shadow']) )
-                  $Active_Pokemon->DecreaseHP($Active_Pokemon->Max_HP / 16);
+                if ( !$Active_Ally->Active->HasTyping(['Shadow']) )
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
             }
           }
