@@ -189,6 +189,11 @@
                     $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
                   else
                     $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                  break;
+
+                case 'Sleep':
+                  if ( $Active_Foe->Active->Ability == 'Bad Dreams' )
+                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
               }
             }
 
