@@ -16,7 +16,8 @@
 		<link type='text/css' rel='stylesheet' href='/themes/css/lib/perfect-scrollbar.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/lib/iframe-lightbox.min.css' />
 
-		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/libraries.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/jquery.min.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/socket-io.min.js'></script>
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/perfect-scrollbar.min.js'></script>
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/iframe-lightbox.min.js'></script>
 		<?php
@@ -25,7 +26,7 @@
 			 */
 			if ( date('m') == 12 )
 			{
-				//echo "<script type='text/javascript' src='" . DOMAIN_ROOT . "/js/snowstorm.js'></script>";
+				//echo "<script type='text/javascript' src='" . DOMAIN_ROOT . "/js/snowstorm.min.js'></script>";
       }
     ?>
   </head>
