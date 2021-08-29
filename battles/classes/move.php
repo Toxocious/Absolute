@@ -1620,21 +1620,20 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
-      if ( $Attacker->Ability == 'Mega Launcher' )
-        if ( $this->HasFlag('pulse') )
-          $this->Power *= 1.5;
+      if ( $Attacker->Ability == 'Battery' && $this->Category == 'Special' )
+        $this->Power *= 1.3;
 
-      if ( $Attacker->Ability == 'Strong Jaw' )
-        if ( $this->HasFlag('bite') )
-          $this->Power *= 1.5;
+      if ( $Attacker->Ability == 'Mega Launcher' && $this->HasFlag('pulse') )
+        $this->Power *= 1.5;
 
-      if ( $Attacker->Ability == 'Iron Fist' )
-        if ( $this->HasFlag('punch') )
-          $this->Power *= 1.2;
+      if ( $Attacker->Ability == 'Strong Jaw' && $this->HasFlag('bite') )
+        $this->Power *= 1.5;
 
-      if ( $Turn_First_Attacker != $Side )
-        if ( $Attacker->Ability == 'Analytic' )
-          $this->Power *= 1.3;
+      if ( $Attacker->Ability == 'Iron Fist' && $this->HasFlag('punch') )
+        $this->Power *= 1.2;
+
+      if ( $Turn_First_Attacker != $Side && $Attacker->Ability == 'Analytic' )
+        $this->Power *= 1.3;
 
       if ( $Defender->Ability == 'Aura Break' )
       {
