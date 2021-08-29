@@ -852,15 +852,15 @@
 			}
 
 			return [
-				"ID" => $Move['id'],
-				"Name" => $Move['name'],
-				"Type" => $Move['type'],
-				"Category" => $Move['category'],
-				"Power" => $Move['power'],
-				"Accuracy" => $Move['accuracy'],
-				"Priority" => $Move['priority'],
-				"PP" => $Move['pp'],
-				"Description" => $Move['desc'],
+				"ID" => $Move['ID'],
+				"Name" => $Move['Name'],
+				"Type" => $Move['Move_Type'],
+				"Category" => $Move['Category'],
+				"Power" => $Move['Power'],
+				"Accuracy" => $Move['Accuracy'],
+				"Priority" => $Move['Priority'],
+				"PP" => $Move['PP'],
+				"Effect_Short" => $Move['Effect_Short'],
 			];
 		}
 
