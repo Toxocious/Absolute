@@ -1,6 +1,6 @@
 <?php
   require_once '../../required/session.php';
-  
+
   /**
    * Update the nickname change.
    */
@@ -67,9 +67,9 @@
         $User_Roster .= "
           <td colspan='1' style='width: calc(100% / 6);'>
             <img
-              class='spricon popup cboxElement'
+              class='popup'
               src='{$Roster_Slot[$i]['Sprite']}'
-              href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'
+              data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'
             />
             <br />
             <b>{$Roster_Slot[$i]['Display_Name']}</b>
@@ -128,7 +128,7 @@
 
     $Roster_Nick_Row = "
       <td colspan='6' style='padding: 10px;'>
-        
+
       </td>
     ";
   }

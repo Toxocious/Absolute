@@ -131,10 +131,10 @@
               ";
 
               break;
-            
+
             case 'Trainer':
               echo $First_Place['Status'];
-              
+
               break;
 
             default:
@@ -194,7 +194,7 @@
             <td colspan='5' style='width: 100px;'>
               <img src='{$Display['Sprite']}' />
             </td>
-            <td colspan='9' style='width: 150px;'" . ($Tab === 'Pokemon' ? " href='" .DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Rank_Val['ID']}' class='popup cboxElement'" : '') . ">
+            <td colspan='9' style='width: 150px;'" . ($Tab === 'Pokemon' ? " data-src='" .DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Rank_Val['ID']}' class='popup'" : '') . ">
                 {$Display['Display_Name']}
                 {$Display['Nickname']}
             </td>
@@ -213,6 +213,12 @@
   </tbody>
 </table>
 
-<script type="text/javascript">
-  $(".cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491, maxWidth: 686, maxHeight: 529 });
+<script type='text/javascript'>
+  [].forEach.call(document.getElementsByClassName("popup"), function(el) {
+    el.lightbox = new IframeLightbox(el, {
+      scrolling: false,
+      rate: 500,
+      touch: false,
+    });
+  });
 </script>

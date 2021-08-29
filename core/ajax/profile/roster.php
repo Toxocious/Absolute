@@ -29,7 +29,7 @@
         {
           $Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Fetch_Roster[$i]['ID']);
 
-          $Popup = "popup cboxElement' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'";
+          $Popup = "popup' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'";
         }
         else
         {
@@ -43,7 +43,7 @@
 
           $Popup = '';
         }
-        
+
         if ( $Roster_Slot[$i]['Item'] != null )
         {
           $Item = "
@@ -84,13 +84,13 @@
                 <img class='{$Popup}' src='{$Roster_Slot[$i]['Sprite']}' />
               </div>
             </div>
-            
+
             <div class='border-gradient' style='margin-bottom: 5px;'>
               <div>
                 <b>{$Roster_Slot[$i]['Display_Name']}</b>
               </div>
             </div>
-            
+
             <div class='border-gradient'>
               <div>
                 <b>Lv.</b> {$Roster_Slot[$i]['Level']}

@@ -54,7 +54,7 @@
 			<div style='flex-basis: 60%;'>
 				<div class='border-gradient hover hw-96px padding-0px' style='margin: 0 auto;'>
 					<div>
-						<img class='popup cboxElement' src='{$Pokemon['Sprite']}' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Pokemon['ID']}' />
+						<img class='popup' src='{$Pokemon['Sprite']}' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Pokemon['ID']}' />
 					</div>
 				</div>
 
@@ -77,7 +77,7 @@
 						{$Pokemon['Experience']}
 					</div>
 				</div>
-				
+
 				<div style='margin: 0 auto; padding-top: 3px; width: fit-content;'>
 					{$Slots}
 				</div>

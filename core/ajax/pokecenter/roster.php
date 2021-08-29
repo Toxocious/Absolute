@@ -86,7 +86,7 @@
           if ( isset($User_Data['Roster'][$Slot]) )
           {
             $Pokemon = $Poke_Class->FetchPokemonData($Roster[$Slot]['ID']);
-  
+
             $Sprites .= "
               <td colspan='3'>
                 <img src='{$Pokemon['Sprite']}' />
@@ -99,9 +99,9 @@
                 {$Pokemon['Experience']}
               </td>
             ";
-  
+
             $Items .= "<img src='{$Pokemon['Item_Icon']}' style='margin-top: 48px;' />";
-  
+
             for ( $x = 1; $x <= 7; ++$x )
             {
               if ( $x == 7 )
@@ -137,9 +137,9 @@
                 <img src='" . DOMAIN_SPRITES . "/Pokemon/Sprites/0.png' />
               </td>
             ";
-  
+
             $Items .= "";
-  
+
             for ( $x = 1; $x <= 7; $x++ )
             {
               $Slots .= "
@@ -149,7 +149,7 @@
               ";
             }
           }
-  
+
           if ( ($Slot + 1) % 3 === 0 )
           {
             echo "
@@ -160,7 +160,7 @@
                 {$Sprites}
               </tr>
             ";
-  
+
             $Items = '';
             $Slots = '';
             $Sprites = '';
@@ -213,7 +213,7 @@
           {$Pagination}
           <div style='height: 172px; padding: 0px 0px 5px;'>
         ";
-        
+
         foreach ( $Box_Pokemon as $Index => $Pokemon )
         {
           $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
@@ -238,8 +238,6 @@
 </div>
 
 <script type='text/javascript'>
-  $("img.popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
-
   var CurrentSearch = [
     0, 0, 0
   ];
@@ -298,6 +296,14 @@
       success: function(data)
       {
         $('#Pokebox').html(data);
+
+        [].forEach.call(document.getElementsByClassName("popup"), function(el) {
+          el.lightbox = new IframeLightbox(el, {
+            scrolling: false,
+            rate: 500,
+            touch: false,
+          });
+        });
       },
       error: function(data)
       {
