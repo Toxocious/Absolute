@@ -12,8 +12,10 @@
 		<link type='text/css' rel='stylesheet' href='/themes/css/root.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/lib/perfect-scrollbar.css' />
 
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/libraries.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/perfect-scrollbar.min.js'></script>
 		<?php
 			/**
 			 * Adds snowstorm.js if the current month is December.

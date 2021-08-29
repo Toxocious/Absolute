@@ -43,6 +43,8 @@
 
           Absolute.Enable();
 
+          const Chat_Element = document.querySelector('#chatContent');
+          const Perfect_Scrollbar = new PerfectScrollbar(Chat_Element);
           const Chat_Input = document.getElementById('chatMessage');
           Chat_Input.addEventListener('keydown', (event) => {
             if ( event.keyCode === 13 )
@@ -59,6 +61,8 @@
                 });
 
                 Chat_Input.value = '';
+
+                Perfect_Scrollbar.update();
               }
             }
           });

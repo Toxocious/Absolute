@@ -558,7 +558,6 @@ aside
     {
       border-radius: var(--border-radius-tl-tr);
       height: 415px;
-      overflow-y: auto;
       padding: 3px;
       text-align: center;
     }
@@ -566,6 +565,14 @@ aside
 
   & > .chat
   {
+    & > .body
+    {
+      height: 415px;
+      max-height: 415px;
+      overflow: hidden;
+      position: relative;
+    }
+
     .message
     {
       font-size: 12px;
