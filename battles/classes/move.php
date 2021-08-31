@@ -506,7 +506,7 @@
       {
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
-        if ( $this->Contact && $Attacker->Ability != 'Mummy' && $Defender->Ability == 'Mummy' )
+        if ( $this->HasFlag('Contact') && $Attacker->Ability != 'Mummy' && $Defender->Ability == 'Mummy' )
         {
           $Attacker->SetAbility('Mummy');
 
