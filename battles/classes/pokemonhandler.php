@@ -309,6 +309,27 @@
 
       if ( $Attacker->NextPokemon() )
       {
+        if ( $Defender->Active->HP > 0 && $Defender->Active->Ability == 'Beast Boost' )
+        {
+          $Best_Stat = [
+            'Name' => 'Attack',
+            'Value' => 0
+          ];
+
+          foreach ( $Defender->Active->Stats as $Stat )
+          {
+            if ( $Stat->Base_Value > $Best_Stat['Value'] )
+            {
+              $Best_Stat['Name'] = $Stat->Stat_Name;
+              $Best_Stat['Value'] = $Stat->Base_Value;
+            }
+          }
+
+          $Defender->Active->Stats[$Best_Stat['Name']]->SetValue(1);
+
+          $Effect_Text = "<br />{$Defender->Active->Display_Name}'s Beast Boost raised its {$Best_Stat['Name']}!";
+        }
+
         $this->GeneratePostcode('Continue');
         $Continue = true;
       }
@@ -321,7 +342,8 @@
       return [
         'Type' => 'Success',
         'Text' => "{$this->Display_Name} has fainted." .
-                  (isset($Dialogue) ? $Dialogue : ''),
+                  (!empty($Dialogue) ? $Dialogue : '') .
+                  (!empty($Effect_Text) ? $Effect_Text : '') ,
         'Continue' => $Continue,
         'Restart' => $Restart,
         'Loser' => $this->Side
