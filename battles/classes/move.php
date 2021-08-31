@@ -563,6 +563,16 @@
             if ( $Stat_Name == 'Defense' && $Target->Active->Ability == 'Big Pecks' && $Attacker->Active->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
               continue;
 
+            if ( $this->$Stat_Boost < 0 && $Target->Active->HasAbility('Competitive') )
+            {
+              if ( $Target->Active->Stats['Sp_Attack']->Stage < 6 )
+              {
+                $Target->Active->Stats['Sp_Attack']->SetValue(2);
+
+                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s Competitive boosted its Attack!";
+              }
+            }
+
             if
             (
               $Target->Active->Stats[$Stat]->Stage < 6 &&
