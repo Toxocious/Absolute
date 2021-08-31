@@ -537,74 +537,7 @@
       /**
        * Process rolling and setting ailments if applicable.
        */
-      if ( !empty($this->Ailment) )
-      {
-        switch ($this->Ailment)
-        {
-          case 'None':
-            break;
-
-          case 'Flinch':
-            if
-            (
-              $Turn_First_Attacker == $Side &&
-              !$Target->Active->HasStatus('Substitute') &&
-              mt_rand(1, 100) <= $this->Effect_Chance
-            )
-            {
-              $Target->Active->SetStatus('Flinch');
-            }
-            break;
-
-          default:
-            if ( $Target->Active->HasStatus('Substitute') )
-            {
-              $Status_Dialogue = 'But it failed!';
-            }
-            else if
-            (
-              $Target->Active->Ability == 'Overcoat' &&
-              ( strpos($this->Name, 'Powder') || strpos($this->Name, 'Spore') )
-            )
-            {
-              $Status_Dialogue = 'But it failed!';
-            }
-            else if ( $Target->Active->HasTyping([ $this->Move_Type ]) )
-            {
-              $Status_Dialogue = 'But it failed!';
-            }
-            else if ( $this->Ailment == 'Freeze' && !empty($this->Weather) && strpos($this->Weather->Name, 'Harsh Sunlight') )
-            {
-              $Chance_Chance = mt_rand(1, 100);
-              if ( $Chance_Chance <= $this->Effect_Chance )
-              {
-                $Set_Status = $Target->Active->SetStatus($this->Ailment);
-                $Status_Props = array_filter(get_object_vars($Set_Status));
-                if ( isset($Set_Status) && !empty($Status_Props) )
-                  $Status_Dialogue = $Set_Status->Dialogue;
-              }
-              else
-              {
-                $Status_Dialogue = 'But it failed!';
-              }
-            }
-            break;
-        }
-      }
-      else
-      {
-        if
-        (
-          $this->Kings_Rock &&
-          $Attacker->Item->Name == "King's Rock" &&
-          !$Defender->HasStatus('Substitute') &&
-          $Turn_First_Attacker == $Side &&
-          mt_rand(1, 100) <= 10
-        )
-        {
-          $Target->Active->SetStatus('Flinch');
-        }
-      }
+      $Ailment_Text = $this->ProcessAilments($Target, $Attacker, $Defender, $Turn_First_Attacker);
 
       if
       (
@@ -625,8 +558,8 @@
         $Dialogue = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
                     ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
                     "{$Attacker->Display_Name} used {$this->Name}." .
-                    (isset($Status_Dialogue) ? "<br />{$Target->Active->Display_Name} {$Status_Dialogue}" : '') .
-                    (isset($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
+                    (!empty($Ailment_Text) ? "<br />{$Target->Active->Display_Name} {$Ailment_Text}" : '') .
+                    (!empty($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
       }
       else
       {
@@ -640,8 +573,8 @@
                     ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
                     ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
                     ($this->hasFlag('contact') ? $this->HandleContact($Side)['Text'] : '') .
-                    (isset($Status_Dialogue) ? "<br />{$Target->Active->Display_Name} {$Status_Dialogue}" : '') .
-                    (isset($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
+                    (!empty($Ailment_Text) ? "<br />{$Target->Active->Display_Name} {$Ailment_Text}" : '') .
+                    (!empty($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
       }
 
       return [
