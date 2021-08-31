@@ -503,7 +503,16 @@
        */
       $Damage = 0;
       for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
+      {
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+
+        if ( $this->Contact && $Attacker->Ability != 'Mummy' && $Defender->Ability == 'Mummy' )
+        {
+          $Attacker->SetAbility('Mummy');
+
+          $Ability_Change_Dialogue = "{$Attacker->Display_Name}'s ability became Mummy!";
+        }
+      }
 
       /**
        * Calculate how much healing will be done.
@@ -677,6 +686,7 @@
                     ($this->Total_Hits > 1 ? "<br />It hit {$this->Total_Hits} times!" : '') .
                     ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
                     ($Does_Move_Crit ? '<br />It critically hit!' : '') .
+                    (!empty($Ability_Change_Dialogue) ? "<br />{$Ability_Change_Dialogue}" : '') .
                     ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
                     ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
                     ($this->hasFlag('contact') ? $this->HandleContact($Side)['Text'] : '') .
