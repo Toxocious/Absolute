@@ -1399,6 +1399,17 @@
       {
         if ( mt_rand(1, 100) <= $this->Stat_Chance )
         {
+          $Total_Stats = 0;
+
+          foreach (['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed', 'Accuracy', 'Evasion'] as $Index => $Stat)
+          {
+            $Stat_Boost = $Stat . '_Boost';
+            if ( empty($this->$Stat_Boost) )
+              continue;
+
+            $Total_Stats++;
+          }
+
           foreach (['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed', 'Accuracy', 'Evasion'] as $Index => $Stat)
           {
             $Stat_Boost = $Stat . '_Boost';
@@ -1469,7 +1480,7 @@
                 $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} can't go any lower!";
             }
 
-            if ( $Index > 0 )
+            if ( $Index > 0 && $Index <= $Total_Stats )
               $Stat_Change_Text .= '<br />';
           }
         }
