@@ -1553,6 +1553,137 @@
     }
 
     /**
+     * Handle move applied stat changes.
+     * @param {UserHandler} $Target
+     * @param {PokemonHandler} $Attacker
+     * @param {PokemonHandler} $Defender
+     * @param {string} $Turn_First_Attacker
+     * @return {$string} $Stat_Change_Text
+     */
+    public function ProcessAilments
+    (
+      UserHandler $Target,
+      PokemonHandler $Attacker,
+      PokemonHandler $Defender,
+      string $Turn_First_Attacker
+    )
+    {
+      $Ailment_Chance = mt_rand(1, 100);
+
+      if ( $this->Effect_Chance == 'None' )
+        $this->Effect_Chance = 100;
+
+      if ( !empty($this->Ailment) )
+      {
+        if ( $Target->Active->HasStatus('Substitute') )
+        {
+          return 'But it failed!';
+        }
+
+        if
+        (
+          $Target->Active->Ability == 'Overcoat' &&
+          ( strpos($this->Name, 'Powder') || strpos($this->Name, 'Spore') )
+        )
+        {
+          return 'But it failed!';
+        }
+
+        switch ($this->Ailment)
+        {
+          case 'None':
+            break;
+
+          case 'Flinch':
+            if ( $Turn_First_Attacker == $Attacker->Side )
+            {
+              if ( $Ailment_Chance <= $this->Effect_Chance )
+              {
+                $Set_Status = $Target->Active->SetStatus($this->Ailment);
+                return;
+              }
+            }
+            break;
+
+          case 'Freeze':
+            if ( !empty($this->Weather) && strpos($this->Weather->Name, 'Harsh Sunlight') )
+              return 'But it failed!';
+
+            if ( $Ailment_Chance <= $this->Effect_Chance )
+            {
+              $Set_Status = $Target->Active->SetStatus($this->Ailment);
+              $Status_Props = array_filter(get_object_vars($Set_Status));
+              if ( isset($Set_Status) && !empty($Status_Props) )
+              {
+                return $Set_Status->Dialogue;
+              }
+            }
+            break;
+
+          case 'Paralysis':
+            if ( $Target->Active->HasTyping([ 'Electric' ]) )
+              return 'But it failed!';
+            break;
+
+          case 'Badly Poison':
+          case 'Poison':
+            if
+            (
+              !$Target->Active->HasTyping([ 'Poison', 'Steel' ]) ||
+              ( $Target->Active->HasTyping([ 'Poison', 'Steel' ]) && $Attacker->Ability == 'Corrosion' && $this->Damage_Type == 'Status' )
+            )
+            {
+              if ( $Ailment_Chance <= $this->Effect_Chance )
+              {
+                $Set_Status = $Target->Active->SetStatus($this->Ailment);
+                $Status_Props = array_filter(get_object_vars($Set_Status));
+                if ( isset($Set_Status) && !empty($Status_Props) )
+                {
+                 return $Set_Status->Dialogue;
+                }
+              }
+            }
+            else
+            {
+              return 'But it failed';
+            }
+            break;
+
+          default:
+            if ( $Ailment_Chance <= $this->Effect_Chance )
+            {
+              $Set_Status = $Target->Active->SetStatus($this->Ailment);
+              $Status_Props = array_filter(get_object_vars($Set_Status));
+              if ( isset($Set_Status) && !empty($Status_Props) )
+              {
+                return $Set_Status->Dialogue;
+              }
+            }
+            else
+            {
+              return 'But it failed!';
+            }
+          break;
+        }
+      }
+      else
+      {
+        if
+        (
+          $this->Kings_Rock &&
+          $Attacker->Item->Name == "King's Rock" &&
+          !$Defender->HasStatus('Substitute') &&
+          $Turn_First_Attacker == $Attacker->Side &&
+          mt_rand(1, 100) <= 10
+        )
+        {
+          $Target->Active->SetStatus('Flinch');
+          return;
+        }
+      }
+    }
+
+    /**
      * Disable the move.
      * @param int $Turns
      */
