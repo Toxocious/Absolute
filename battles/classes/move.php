@@ -547,19 +547,10 @@
        */
       $Ailment_Text = $this->ProcessAilments($Target, $Attacker, $Defender, $Turn_First_Attacker);
 
-      if
-      (
-        $Defender->Ability == 'Color Change' &&
-        !$Defender->HasTyping([ $this->Move_Type ]) &&
-        $Defender->HasStatus("Forest's Curse") && $this->Move_Type != 'Grass' &&
-        $Defender->HasStatus("Trick-or-Treat") && $this->Move_Type != 'Ghost'
-      )
-      {
-        $Defender->Active->Primary_Type = $this->Move_Type;
-        $Defender->Active->Secondary_Type = null;
-
-        $Effect_Text = "{$Defender->Display_Name}'s Color Change made it the {$this->Move_Type}-type!";
-      }
+      /**
+       * Process end of turn ability procs.
+       */
+      $Ability_Effect_Text = $this->ProcessAbilityProcs($Attacker, $Defender, $Damage);
 
       if ( $Damage <= 0 )
       {
@@ -587,7 +578,7 @@
 
       return [
         'Text' => $Dialogue,
-        'Effect_Text' => (isset($Effect_Text) ? $Effect_Text : ''),
+        'Effect_Text' => (isset($Ability_Effect_Text) ? $Ability_Effect_Text : ''),
         'Damage' => $Damage,
         'Healing' => $Healing,
       ];
@@ -1510,7 +1501,7 @@
      * @param {PokemonHandler} $Attacker
      * @param {PokemonHandler} $Defender
      * @param {string} $Turn_First_Attacker
-     * @return {$string} $Stat_Change_Text
+     * @return {$string}
      */
     public function ProcessAilments
     (
@@ -1663,6 +1654,19 @@
         $Defender->Secondary_Type = null;
 
         $Ability_Effect_Text = "{$Defender->Display_Name}'s Color Change made it the {$this->Move_Type}-type!";
+      }
+
+      if
+      (
+        $Defender->Ability == 'Cursed Body' &&
+        !$Defender->HasStatus('Substitute') &&
+        mt_rand(1, 100) <= 30 &&
+        $Damage > 0
+      )
+      {
+        $Attacker->Moves[$Attacker->Last_Move['Slot']]->Disable();
+
+        $Ability_Effect_Text = "{$Attacker->Display_Name}'s was disabled due to {$Defender->Display_Name}'s Cursed Body!";
       }
 
       return $Ability_Effect_Text;
