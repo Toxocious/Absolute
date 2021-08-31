@@ -557,6 +557,9 @@
 
             $Stat_Name = str_replace('_', 'ecial ', $Stat);
 
+            if ( $this->$Stat_Boost < 0 && $Target->Active->HasAbility('Clear Body') && !$Attacker->Active->HasAbility('Mold Breaker') )
+              continue;
+
             if ( $Stat_Name == 'Defense' && $Target->Active->Ability == 'Big Pecks' && $Attacker->Active->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
               continue;
 
@@ -566,8 +569,6 @@
               $Target->Active->Stats[$Stat]->Stage > -6
             )
             {
-              $Stat_Boost = $Stat . '_Boost';
-
               $Stages = 0;
               if ( $Target->Active->Ability == 'Simple' )
                 $Stages = $this->$Stat_Boost * 2;
