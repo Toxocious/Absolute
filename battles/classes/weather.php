@@ -25,6 +25,12 @@
 
         switch ($this->Name)
         {
+          case 'Harsh Sunlight':
+          case 'Extremely Harsh Sunlight':
+            if ( $Active_Pokemon->HasAbility('Chlorophyll') )
+              $Active_Pokemon->Stats['Speed'] *= 2;
+            break;
+
           case 'Sandstorm':
             if ( $Active_Pokemon->HasTyping(['Rock']) )
               $Active_Pokemon->Stats['Sp_Defense'] *= 1.5;
@@ -58,6 +64,12 @@
 
         switch ($this->Name)
         {
+          case 'Harsh Sunlight':
+          case 'Extremely Harsh Sunlight':
+            if ( $Active_Pokemon->HasAbility('Chlorophyll') )
+              $Active_Pokemon->Stats['Speed'] /= 2;
+            break;
+
           case 'Sandstorm':
             if ( $Active_Pokemon->HasTyping(['Rock']) )
               $Active_Pokemon->Stats['Sp_Defense'] /= 1.5;
