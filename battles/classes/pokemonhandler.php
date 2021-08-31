@@ -365,6 +365,12 @@
 
             $Effect_Text .= "{$Defender->Active->Display_Name}'s Beast Boost raised its {$Best_Stat['Name']}!";
             break;
+
+          case 'Chilling Neigh':
+            $Defender->Active->Stats['Attack']->SetValue(1);
+
+            $Effect_Text .= "{$Defender->Active->Display_Name}'s Chilling Neigh raised it's Attack!";
+            break;
         }
       }
 
