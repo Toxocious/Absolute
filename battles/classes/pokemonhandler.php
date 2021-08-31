@@ -309,26 +309,7 @@
 
       if ( $Attacker->NextPokemon() )
       {
-        if ( $Defender->Active->HP > 0 && $Defender->Active->Ability == 'Beast Boost' )
-        {
-          $Best_Stat = [
-            'Name' => 'Attack',
-            'Value' => 0
-          ];
-
-          foreach ( $Defender->Active->Stats as $Stat )
-          {
-            if ( $Stat->Base_Value > $Best_Stat['Value'] )
-            {
-              $Best_Stat['Name'] = $Stat->Stat_Name;
-              $Best_Stat['Value'] = $Stat->Base_Value;
-            }
-          }
-
-          $Defender->Active->Stats[$Best_Stat['Name']]->SetValue(1);
-
-          $Effect_Text = "<br />{$Defender->Active->Display_Name}'s Beast Boost raised its {$Best_Stat['Name']}!";
-        }
+        $Effect_Text = $this->AbilityProcsOnFaint($Attacker, $Defender);
 
         $this->GeneratePostcode('Continue');
         $Continue = true;
@@ -348,6 +329,46 @@
         'Restart' => $Restart,
         'Loser' => $this->Side
       ];
+    }
+
+    /**
+     * Handle abilities that proc when a Pokemon faints.
+     */
+    public function AbilityProcsOnFaint
+    (
+      UserHandler $Attacker,
+      UserHandler $Defender
+    )
+    {
+      $Effect_Text = '<br />';
+
+      if ( $Defender->Active->HP > 0 )
+      {
+        switch ( $Defender->Active->Ability )
+        {
+          case 'Beast Boost':
+            $Best_Stat = [
+              'Name' => 'Attack',
+              'Value' => 0
+            ];
+
+            foreach ( $Defender->Active->Stats as $Stat )
+            {
+              if ( $Stat->Base_Value > $Best_Stat['Value'] )
+              {
+                $Best_Stat['Name'] = $Stat->Stat_Name;
+                $Best_Stat['Value'] = $Stat->Base_Value;
+              }
+            }
+
+            $Defender->Active->Stats[$Best_Stat['Name']]->SetValue(1);
+
+            $Effect_Text .= "{$Defender->Active->Display_Name}'s Beast Boost raised its {$Best_Stat['Name']}!";
+            break;
+        }
+      }
+
+      return $Effect_Text;
     }
 
     /**
