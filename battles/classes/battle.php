@@ -172,7 +172,7 @@
         {
           foreach ($Active_Ally->Active->Statuses as $Status)
           {
-            if ( $Status->Volatile )
+            if ( !$Status->Volatile )
             {
               switch ( $Status->Name )
               {
