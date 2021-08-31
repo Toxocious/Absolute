@@ -949,6 +949,9 @@
         if ( !in_array($this->Name, ['Gust', 'Thunder', 'Twister', 'Sky Uppercut', 'Hurricane', 'Smack Down']) )
           return false;
 
+      if ( $Attacker->Ability == 'Compound Eyes' )
+        $this->Accuracy *= 1.3;
+
       $Accuracy_Mod = $Attacker->Stats['Accuracy']->Current_Value / $Defender->Stats['Evasion']->Current_Value;
 
       if ( mt_rand(1, 100) < $this->Accuracy * $Accuracy_Mod )
