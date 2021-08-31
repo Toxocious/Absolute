@@ -616,7 +616,7 @@
 
       if
       (
-        $Defender->HasAbility == 'Color Change' &&
+        $Defender->Ability == 'Color Change' &&
         !$Defender->HasTyping([ $this->Move_Type ]) &&
         $Defender->HasStatus("Forest's Curse") && $this->Move_Type != 'Grass' &&
         $Defender->HasStatus("Trick-or-Treat") && $this->Move_Type != 'Ghost'
