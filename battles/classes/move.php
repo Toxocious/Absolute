@@ -1473,6 +1473,14 @@
           if ( empty($this->$Stat_Boost) )
             continue;
 
+          if ( $Target->Active->Ability == 'Contrary' )
+          {
+            if ( $this->$Stat_Boost < 0 )
+              $this->$Stat_Boost *= 1;
+            else
+              $this->$Stat_Boost *= -1;
+          }
+
           if
           (
             $this->Target == 'Foe' &&
