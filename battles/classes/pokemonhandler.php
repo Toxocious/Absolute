@@ -235,8 +235,9 @@
 
       if ( !empty($this->Weather) )
       {
-        if ( $_SESSION['Battle'][$this->Side]->Active->Ability == 'Air Lock' )
+        if ( $_SESSION['Battle'][$this->Side]->Active->HasAbility(['Air Lock', 'Cloud Nine']) )
         {
+
           $Effect_Text .= 'The effects of weather disappeared.<br />';
         }
       }
