@@ -533,78 +533,7 @@
        * Process stat gaines/losses if applicable.
        */
       if ( $this->Stat_Chance > 0 )
-      {
-        if ( mt_rand(1, 100) <= $this->Stat_Chance )
-        {
-          $Stat_Change_Text = '';
-
-          foreach (['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed', 'Accuracy', 'Evasion'] as $Index => $Stat)
-          {
-            $Stat_Boost = $Stat . '_Boost';
-            if ( empty($this->$Stat_Boost) )
-              continue;
-
-            if
-            (
-              $this->Target == 'Foe' &&
-              $this->IsFieldEffectActive('Foe', 'Mist')
-            )
-            {
-              $Stat_Change_Text = 'But it failed due to the Mist!';
-
-              break;
-            }
-
-            $Stat_Name = str_replace('_', 'ecial ', $Stat);
-
-            if ( $this->$Stat_Boost < 0 && $Target->Active->HasAbility('Clear Body') && !$Attacker->Active->HasAbility('Mold Breaker') )
-              continue;
-
-            if ( $Stat_Name == 'Defense' && $Target->Active->Ability == 'Big Pecks' && $Attacker->Active->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
-              continue;
-
-            if ( $this->$Stat_Boost < 0 && $Target->Active != $Attacker && $Target->Active->HasAbility('Competitive') )
-            {
-              if ( $Target->Active->Stats['Sp_Attack']->Stage < 6 )
-              {
-                $Target->Active->Stats['Sp_Attack']->SetValue(2);
-
-                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s Competitive boosted its Attack!";
-              }
-            }
-
-            if
-            (
-              $Target->Active->Stats[$Stat]->Stage < 6 &&
-              $Target->Active->Stats[$Stat]->Stage > -6
-            )
-            {
-              $Stages = 0;
-              if ( $Target->Active->Ability == 'Simple' )
-                $Stages = $this->$Stat_Boost * 2;
-              else
-                $Stages = $this->$Stat_Boost;
-
-              $Target->Active->Stats[$Stat]->SetValue($Stages);
-
-              if ( $this->$Stat_Boost > 0 )
-                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} rose sharply!";
-              else
-                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} harshly dropped!";
-            }
-            else
-            {
-              if ( $Target->Active->Stats[$Stat]->Stage >= 6 )
-                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} can't go any higher!";
-              else
-                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} can't go any lower!";
-            }
-
-            if ( $Index > 0 )
-              $Stat_Change_Text .= '<br />';
-          }
-        }
-      }
+        $Stat_Change_Text = $this->ProcessStatChanges($Target, $Attacker);
 
       /**
        * Process rolling and setting ailments if applicable.
@@ -1521,6 +1450,91 @@
             'Text' => 'It was extremely effective.'
           ];
       }
+    }
+
+    /**
+     * Handle move applied stat changes.
+     */
+    public function ProcessStatChanges
+    (
+      UserHandler $Target,
+      UserHandler $Attacker
+    )
+    {
+      $Stat_Change_Text = '';
+
+      if ( mt_rand(1, 100) <= $this->Stat_Chance )
+      {
+        $Stat_Change_Text = '';
+
+        foreach (['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed', 'Accuracy', 'Evasion'] as $Index => $Stat)
+        {
+          $Stat_Boost = $Stat . '_Boost';
+          if ( empty($this->$Stat_Boost) )
+            continue;
+
+          if
+          (
+            $this->Target == 'Foe' &&
+            $this->IsFieldEffectActive('Foe', 'Mist')
+          )
+          {
+            $Stat_Change_Text = 'But it failed due to the Mist!';
+
+            break;
+          }
+
+          $Stat_Name = str_replace('_', 'ecial ', $Stat);
+
+          if ( $this->$Stat_Boost < 0 && $Target->Active->Ability == 'Clear Body' && !$Attacker->Active->Ability == 'Mold Breaker' )
+            continue;
+
+          if ( $Stat_Name == 'Defense' && $Target->Active->Ability == 'Big Pecks' && $Attacker->Active->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+            continue;
+
+          if ( $this->$Stat_Boost < 0 && $Target->Active != $Attacker && $Target->Active->Ability == 'Competitive' )
+          {
+            if ( $Target->Active->Stats['Sp_Attack']->Stage < 6 )
+            {
+              $Target->Active->Stats['Sp_Attack']->SetValue(2);
+
+              $Stat_Change_Text .= "{$Target->Active->Display_Name}'s Competitive boosted its Attack!";
+            }
+          }
+
+          if
+          (
+            $Target->Active->Stats[$Stat]->Stage < 6 &&
+            $Target->Active->Stats[$Stat]->Stage > -6
+          )
+          {
+            $Stages = 0;
+            if ( $Target->Active->Ability == 'Simple' )
+              $Stages = $this->$Stat_Boost * 2;
+            else
+              $Stages = $this->$Stat_Boost;
+
+            $Target->Active->Stats[$Stat]->SetValue($Stages);
+
+            if ( $this->$Stat_Boost > 0 )
+              $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} rose sharply!";
+            else
+              $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} harshly dropped!";
+          }
+          else
+          {
+            if ( $Target->Active->Stats[$Stat]->Stage >= 6 )
+              $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} can't go any higher!";
+            else
+              $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} can't go any lower!";
+          }
+
+          if ( $Index > 0 )
+            $Stat_Change_Text .= '<br />';
+        }
+      }
+
+      return $Stat_Change_Text;
     }
 
     /**
