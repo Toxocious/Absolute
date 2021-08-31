@@ -31,6 +31,7 @@
 
     public $Moves = null;
     public $Ability = null;
+    public $Original_Ability = null;
 
     public $Item = null;
 
@@ -85,6 +86,7 @@
       $this->Display_Name = $Pokemon['Display_Name'];
       $this->Shiny = ($Pokemon['Type'] == 'Shiny' ? true : false);
       $this->Ability = $Pokemon['Ability'];
+      $this->Origina_Ability = $Pokemon['Ability'];
       $this->Gender = $Pokemon['Gender'];
       $this->Level = $Pokemon['Level_Raw'];
       $this->HP = $Pokemon['Stats'][0];
