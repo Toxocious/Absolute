@@ -563,7 +563,7 @@
             if ( $Stat_Name == 'Defense' && $Target->Active->Ability == 'Big Pecks' && $Attacker->Active->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
               continue;
 
-            if ( $this->$Stat_Boost < 0 && $Target->Active->HasAbility('Competitive') )
+            if ( $this->$Stat_Boost < 0 && $Target->Active != $Attacker && $Target->Active->HasAbility('Competitive') )
             {
               if ( $Target->Active->Stats['Sp_Attack']->Stage < 6 )
               {
