@@ -1636,6 +1636,39 @@
     }
 
     /**
+     * Handle move applied stat changes.
+     * @param {PokemonHandler} $Attacker
+     * @param {PokemonHandler} $Defender
+     * @param {int} $Damage
+     * @return {$string} $Ability_Effect_Text
+     */
+    public function ProcessAbilityProcs
+    (
+      PokemonHandler $Attacker,
+      PokemonHandler $Defender,
+      int $Damage = 0
+    )
+    {
+      $Ability_Effect_Text = '';
+
+      if
+      (
+        $Defender->Ability == 'Color Change' &&
+        !$Defender->HasTyping([ $this->Move_Type ]) &&
+        $Defender->HasStatus("Forest's Curse") && $this->Move_Type != 'Grass' &&
+        $Defender->HasStatus("Trick-or-Treat") && $this->Move_Type != 'Ghost'
+      )
+      {
+        $Defender->Primary_Type = $this->Move_Type;
+        $Defender->Secondary_Type = null;
+
+        $Ability_Effect_Text = "{$Defender->Display_Name}'s Color Change made it the {$this->Move_Type}-type!";
+      }
+
+      return $Ability_Effect_Text;
+    }
+
+    /**
      * Disable the move.
      * @param int $Turns
      */
