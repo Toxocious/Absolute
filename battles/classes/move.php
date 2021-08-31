@@ -502,6 +502,7 @@
        * Calculate how much damage will be done.
        */
       $Damage = 0;
+      $Ability_Change_Dialogue = '';
       for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
       {
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
@@ -510,7 +511,14 @@
         {
           $Attacker->SetAbility('Mummy');
 
-          $Ability_Change_Dialogue = "{$Attacker->Display_Name}'s ability became Mummy!";
+          $Ability_Change_Dialogue .= "<br />{$Attacker->Display_Name}'s ability became Mummy!";
+        }
+
+        if ( $Defender->Ability == 'Cotton Down' )
+        {
+          $Attacker->Stats['Speed']->SetValue(-1);
+
+          $Ability_Change_Dialogue .= "<br />{$Defender->Display_Name}'s Cotton Down dropped {$Attacker->Display_Name}'s Speed!";
         }
       }
 
@@ -569,7 +577,7 @@
                     ($this->Total_Hits > 1 ? "<br />It hit {$this->Total_Hits} times!" : '') .
                     ($Move_Effectiveness['Text'] != '' ? "<br />{$Move_Effectiveness['Text']}" : '') .
                     ($Does_Move_Crit ? '<br />It critically hit!' : '') .
-                    (!empty($Ability_Change_Dialogue) ? "<br />{$Ability_Change_Dialogue}" : '') .
+                    (!empty($Ability_Change_Dialogue) ? $Ability_Change_Dialogue : '') .
                     ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
                     ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
                     ($this->hasFlag('contact') ? $this->HandleContact($Side)['Text'] : '') .
