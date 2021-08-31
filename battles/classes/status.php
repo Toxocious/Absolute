@@ -24,6 +24,9 @@
 
       if ( !$Status_Data['Volatile'] )
       {
+        if ( $Pokemon->Ability == 'Comatose' )
+          return false;
+
         if ( $Status_Name == 'Burn' && $Pokemon->HasTyping(['Fire']) )
           return false;
 

@@ -192,7 +192,7 @@
                   break;
 
                 case 'Sleep':
-                  if ( $Active_Foe->Active->Ability == 'Bad Dreams' )
+                  if ( $Active_Foe->Active->Ability == 'Bad Dreams' && $Active_Ally->Active->Ability != 'Comatose' )
                     $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
               }
             }
