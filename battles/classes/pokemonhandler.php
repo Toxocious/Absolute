@@ -535,6 +535,21 @@
     }
 
     /**
+     * Check if the Pokemon has an ability.
+     * @param array $Abilities
+     */
+    public function HasAbility
+    (
+      array $Abilities
+    )
+    {
+      if ( in_array($this->Ability, $Abilities) )
+        return true;
+
+      return false;
+    }
+
+    /**
      * Set the Pokemon's Ability.
      * @param string $Ability
      */
