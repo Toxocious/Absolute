@@ -671,7 +671,22 @@
       if ( $Defender->Ability == 'Anger Point' && $Does_Move_Crit )
       {
         $Defender->Active->Stats['Attack']->SetStage(6);
+
         $Effect_Text = "{$Defender->Display_Name}'s Anger Point maximized its Attack!";
+      }
+
+      if
+      (
+        $Defender->HasAbility('Color Change') &&
+        !$Defender->HasTyping([ $this->Move_Type ]) &&
+        $Defender->HasStatus("Forest's Curse") && $this->Move_Type != 'Grass' &&
+        $Defender->HasStatus("Trick-or-Treat") && $this->Move_Type != 'Ghost'
+      )
+      {
+        $Defender->Active->Primary_Type = $this->Move_Type;
+        $Defender->Active->Secondary_Type = null;
+
+        $Effect_Text = "{$Defender->Display_Name}'s Color Change made it the {$this->Move_Type}-type!";
       }
 
       if ( $Damage <= 0 )
