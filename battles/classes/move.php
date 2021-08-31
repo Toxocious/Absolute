@@ -557,6 +557,9 @@
 
             $Stat_Name = str_replace('_', 'ecial ', $Stat);
 
+            if ( $Stat_Name == 'Defense' && $Target->Active->Ability == 'Big Pecks' && $Attacker->Active->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+              continue;
+
             if
             (
               $Target->Active->Stats[$Stat]->Stage < 6 &&
