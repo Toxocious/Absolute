@@ -452,6 +452,17 @@
         ];
       }
 
+      if ( $Defender->Ability == 'Damp' && in_array($this->Name, ['Self-Destruct', 'Explosion', 'Mind Blown', 'Misty Explosion']) )
+      {
+        return [
+          'Type' => 'Success',
+          'Text' => "{$Attacker->Display_Name} used {$this->Name}.<br />" .
+                    "{$Defender->Display_Name}'s Damp prevented it!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
       if ( $Attacker->HasStatus('Taunt') )
       {
         if ( $this->Damage_Type == 'Status' )
