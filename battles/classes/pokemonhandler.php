@@ -178,8 +178,8 @@
       {
         return $this->Moves[$this->Last_Move['Slot']]->ProcessAttack($this->Side);
       }
-      else
-        return $this->Moves[$Move->Slot]->ProcessAttack($this->Side);
+
+      return $Move->ProcessAttack($this->Side);
     }
 
     /**
