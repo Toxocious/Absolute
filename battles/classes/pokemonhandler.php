@@ -286,6 +286,9 @@
      */
     public function HandleFaint()
     {
+      if ( $this->HP > 0 )
+        return [ 'Text' => "{$this->Display_Name} is still alive!" ];
+
       switch ( $this->Side )
       {
         case 'Ally':
