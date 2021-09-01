@@ -164,24 +164,17 @@
         ];
       }
 
-      if ( $this->HasStatus('Bide') )
+      if ( $this->HasStatus('Bide') && $this->Statuses['Bide']->Turns_Left > 0 )
       {
-        if ( $this->Statuses['Bide']->Turns_Left > 0 )
-        {
-          return [
-            'Type' => 'Success',
-            'Text' => "{$this->Display_Name} is storing energy!",
-            'Damage' => 0,
-            'Healing' => 0,
-          ];
-        }
+        return [
+          'Type' => 'Success',
+          'Text' => "{$this->Display_Name} is storing energy!",
+          'Damage' => 0,
+          'Healing' => 0,
+        ];
       }
 
-      if
-      (
-        $this->HasStatus('Move Locked') ||
-        $this->HasStatus('Charging')
-      )
+      if ( $this->HasStatusFromArray([ 'Move Locked', 'Charging' ]) )
       {
         return $this->Moves[$this->Last_Move['Slot']]->ProcessAttack($this->Side);
       }
