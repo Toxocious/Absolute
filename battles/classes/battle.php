@@ -698,6 +698,31 @@
         {$Dialogue}
       ";
     }
+
+    /**
+     * Render the  Restart button.
+     * @param {string} $Dialogue
+     * @return {string} $Button_Text
+     */
+    public function RenderRestartButton
+    (
+      string $Dialogue
+    )
+    {
+      $this->GeneratePostcode('Restart');
+
+      return "
+        <input
+          type='button'
+          value='Restart Battle'
+          style='font-weight: bold; padding: 5px 0px;'
+          onmousedown='Battle.Restart(\"{$_SESSION['Battle']['Postcodes']['Restart']}\", event);'
+        />
+        <br /><br />
+        {$Dialogue}
+      ";
+    }
+
     /**
      * Generate the necessary postcodes.
      * @param string $Codename
