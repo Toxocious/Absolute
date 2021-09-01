@@ -676,6 +676,29 @@
     }
 
     /**
+     * Render the Continue button.
+     * @param {string} $Dialogue
+     * @return {string} $Button_Text
+     */
+    public function RenderContinueButton
+    (
+      string $Dialogue
+    )
+    {
+      $this->GeneratePostcode('Continue');
+
+      return "
+        <input
+          type='button'
+          value='Continue Battle'
+          style='font-weight: bold; padding: 5px 0px;'
+          onmousedown='Battle.Continue(\"{$_SESSION['Battle']['Postcodes']['Continue']}\", event);'
+        />
+        <br /><br />
+        {$Dialogue}
+      ";
+    }
+    /**
      * Generate the necessary postcodes.
      * @param string $Codename
      */
