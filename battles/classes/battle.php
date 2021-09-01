@@ -448,8 +448,9 @@
       $Foe_Active = $_SESSION['Battle']['Foe']->Active;
 
       $Move_Slot = Purify($Move_Slot) - 1;
+      $Ally_Move = $Ally_Active->Moves[$Move_Slot];
 
-      if ( !isset($Ally_Active->Moves[$Move_Slot]) )
+      if ( empty($Ally_Move) )
       {
         return [
           'Type' => 'Error',
@@ -470,10 +471,19 @@
         ];
       }
 
-      $this->Ally_Move = $Ally_Active->Moves[$Move_Slot];
       $this->Foe_Move = $Foe_Active->FetchRandomMove();
 
-      $First_Attacker = $this->DetermineFirstAttacker($this->Ally_Move, $this->Foe_Move);
+      if ( $Ally_Active->Ability == 'Dancer' && $this->Foe_Move->HasFlag('dance') )
+      {
+        $First_Attacker = 'Foe';
+        $this->Ally_Move = $this->Foe_Move;
+      }
+      else
+      {
+        $this->Ally_Move = $Ally_Move;
+        $First_Attacker = $this->DetermineFirstAttacker($this->Ally_Move, $this->Foe_Move);
+      }
+
       $_SESSION['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'] = $First_Attacker;
 
       $Attack_Dialogue = '';
