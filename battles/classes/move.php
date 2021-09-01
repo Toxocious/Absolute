@@ -304,10 +304,14 @@
       switch ( $Side )
       {
         case 'Ally':
+          $Ally = 'Ally';
+          $Foe = 'Foe';
           $Attacker = $_SESSION['Battle']['Ally']->Active;
           $Defender = $_SESSION['Battle']['Foe']->Active;
           break;
         case 'Foe':
+          $Ally = 'Foe';
+          $Foe = 'Ally';
           $Attacker = $_SESSION['Battle']['Foe']->Active;
           $Defender = $_SESSION['Battle']['Ally']->Active;
           break;
@@ -321,30 +325,25 @@
       /**
        * Handle Magic Coat (Move) and Magic Bounce (Ability)
        */
-      if ( $this->HasFlag('reflectable') )
+      if
+      (
+        $Defender->Ability == 'Magic Bounce' ||
+        ( $Turn_First_Attacker == 'Foe' && $Defender->Last_Move['Name'] == 'Magic Coat' )
+      )
       {
-        if ( $this->Target == 'Foe' )
+        if ( $this->HasFlag('reflectable') && $this->Target == 'Foe' )
         {
-          if
-          (
-            $Defender->Ability == 'Magic Bounce' ||
-            ( $Turn_First_Attacker == 'Foe' && $Defender->Last_Move['Name'] == 'Magic Coat' )
-          )
-          {
-            $this->Target == 'Ally';
-          }
+          $this->Target == 'Ally';
         }
       }
 
       switch ( $this->Target )
       {
         case 'Ally':
-          $Target = $_SESSION['Battle']['Ally'];
+          $Target = $_SESSION['Battle'][$Ally];
           break;
         case 'Foe':
-          $Target = $_SESSION['Battle']['Foe'];
-          break;
-        default:
+          $Target = $_SESSION['Battle'][$Foe];
           break;
       }
 
