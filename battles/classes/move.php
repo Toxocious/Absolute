@@ -557,7 +557,7 @@
         $Dialogue = ($this->CanUserMove($Side)['Type'] == 'Success' ? "{$this->CanUserMove($Side)['Text']}" : '') .
                     ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
                     "{$Attacker->Display_Name} used {$this->Name}." .
-                    (!empty($Ailment_Text) ? "<br />{$Target->Active->Display_Name} {$Ailment_Text}" : '') .
+                    (!empty($Ailment_Text) ? "<br />{$Ailment_Text}" : '') .
                     (!empty($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
       }
       else
@@ -572,7 +572,7 @@
                     ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
                     ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
                     ($this->hasFlag('contact') ? $this->HandleContact($Side)['Text'] : '') .
-                    (!empty($Ailment_Text) ? "<br />{$Target->Active->Display_Name} {$Ailment_Text}" : '') .
+                    (!empty($Ailment_Text) ? "<br />{$Ailment_Text}" : '') .
                     (!empty($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
       }
 

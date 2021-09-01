@@ -20,7 +20,10 @@
         return false;
 
       if ( $Pokemon->HasStatus($Status_Name) )
-        return false;
+      {
+        $this->Dialogue = 'But it failed!';
+        return $this->Dialogue;
+      }
 
       if ( !$Status_Data['Volatile'] )
       {
@@ -62,7 +65,7 @@
         $this->Stacks = 1;
 
       if ( isset($Status_Data['Dialogue']) )
-        $this->Dialogue = $Status_Data['Dialogue'];
+        $this->Dialogue = "{$Pokemon->Display_Name} {$Status_Data['Dialogue']}";
 
       $this->Name = $Status_Name;
       $this->Turns_Left = $Status_Turns;
