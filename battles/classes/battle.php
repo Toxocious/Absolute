@@ -366,6 +366,11 @@
           break;
       }
 
+      foreach ( ['Ally', 'Foe'] as $Side )
+      {
+        $_SESSION['Battle'][$Side]->Active->DisableMoves();
+      }
+
       $Dialogue = "
         {$Loser->Username} has been defeated.
         <br />
