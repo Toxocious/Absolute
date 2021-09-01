@@ -283,8 +283,12 @@
 
     /**
      * Handle what happens when the Pokemon faints.
+     * @param {bool} $Weather_Trigger
      */
-    public function HandleFaint()
+    public function HandleFaint
+    (
+      bool $Weather_Trigger = false
+    )
     {
       if ( $this->HP > 0 )
         return;
@@ -303,10 +307,18 @@
 
       $this->Fainted = true;
 
-      if ( $Defender->Active->HasStatus('Destiny Bond') )
+      if ( !$Weather_Trigger )
       {
-        $Defender->Active->DecreaseHP($Defender->Active->HP);
-        $Dialogue = "<br />{$this->Display_Name} took its foe down with it!";
+        if ( $Defender->Active->HasStatus('Destiny Bond') )
+        {
+          $Defender->Active->DecreaseHP($Defender->Active->HP);
+          $Dialogue = "<br />{$this->Display_Name} took its foe down with it!";
+        }
+      }
+
+      if ( $this->Earn_Pokemon_Exp )
+      {
+        $Exp_Dialogue = $Defender->Active->IncreaseExp();
       }
 
       $Continue = false;
@@ -329,7 +341,8 @@
         'Type' => 'Success',
         'Text' => "{$this->Display_Name} has fainted." .
                   (!empty($Dialogue) ? $Dialogue : '') .
-                  (!empty($Effect_Text) ? $Effect_Text : '') ,
+                  (!empty($Effect_Text) ? $Effect_Text : '') .
+                  (!empty($Exp_Dialogue) ? "<br /><br />{$Exp_Dialogue['Text']}" : ''),
         'Continue' => $Continue,
         'Restart' => $Restart,
         'Loser' => $this->Side

@@ -118,7 +118,17 @@
           break;
       }
 
-      $this->ProcessEndOfTurn();
+      $End_Of_Turn = $this->ProcessEndOfTurn();
+      if ( !empty($End_Of_Turn) )
+      {
+        $this->Turn_Dialogue['Text'] .= $End_Of_Turn['Text'];
+
+        if ( !empty($End_Of_Turn['Continue']) )
+          $this->Turn_Dialogue['Text'] = $this->RenderContinueButton($this->Turn_Dialogue['Text']);
+
+        if ( !empty($End_Of_Turn['Restart']) )
+          $this->Turn_Dialogue['Text'] = $this->RenderRestartButton($this->Turn_Dialogue['Text']);
+      }
 
       return $this->Turn_Dialogue;
     }
@@ -164,6 +174,9 @@
             $Active_Foe = $_SESSION['Battle']['Ally'];
             break;
         }
+
+        if ( $Active_Ally->Active->HP <= 0 )
+          continue;
 
         /**
          * Process the Pokemon's active Statuses.
@@ -232,6 +245,43 @@
                 if ( !$Active_Ally->Active->HasTyping(['Shadow']) )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
+            }
+          }
+        }
+
+        if ( $Active_Ally->Active->HP <= 0 )
+        {
+          $Handle_Faint = $Active_Ally->Active->HandleFaint();
+          if ( !empty($Handle_Faint) )
+          {
+            if ( $Handle_Faint['Continue'] )
+            {
+              $Faint_Dialogue = [
+                'Text' => "
+                  <br /><br />
+                  {$Handle_Faint['Text']}<br />
+                ",
+                'Continue' => true,
+              ];
+
+
+              return $Faint_Dialogue;
+            }
+
+            if ( $Handle_Faint['Restart'] )
+            {
+              $End_Battle = $this->EndBattle($Side);
+
+              $Faint_Dialogue = [
+                'Text' => "
+                  <br /><br />
+                  {$Handle_Faint['Text']}<br />
+                  {$End_Battle['Text']}
+                ",
+                'Restart' => true
+              ];
+
+              return $Faint_Dialogue;
             }
           }
         }
@@ -475,8 +525,6 @@
             $Faint_Data = $Foe_Active->HandleFaint();
 
             $Attack_Dialogue .= $Faint_Data['Text'];
-            $Attack_Dialogue .= '<br /><br />';
-            $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
 
             if ( $Faint_Data['Restart'] )
             {
@@ -509,8 +557,6 @@
               $Faint_Data = $Foe_Active->HandleFaint();
 
               $Attack_Dialogue .= $Faint_Data['Text'];
-              $Attack_Dialogue .= '<br /><br />';
-              $Attack_Dialogue .= $Ally_Active->IncreaseExp()['Text'];
 
               if ( $Faint_Data['Restart'] )
               {
@@ -544,30 +590,12 @@
       {
         if ( $Faint_Data['Continue'] )
         {
-          $Attack_Dialogue = "
-            <input
-              type='button'
-              value='Continue Battle'
-              style='font-weight: bold; padding: 5px 0px;'
-              onmousedown='Battle.Continue(\"{$_SESSION['Battle']['Postcodes']['Continue']}\", event);'
-            />
-            <br /><br />
-            {$Attack_Dialogue}
-          ";
+          $Attack_Dialogue = $this->RenderContinueButton($Attack_Dialogue);
         }
 
         if ( $Faint_Data['Restart'] )
         {
-          $Attack_Dialogue = "
-            <input
-              type='button'
-              value='Restart Battle'
-              style='font-weight: bold; padding: 5px 0px;'
-              onmousedown='Battle.Restart(\"{$_SESSION['Battle']['Postcodes']['Restart']}\", event);'
-            />
-            <br /><br />
-            {$Attack_Dialogue}
-          ";
+          $Attack_Dialogue = $this->RenderRestartButton($Attack_Dialogue);
         }
       }
 
