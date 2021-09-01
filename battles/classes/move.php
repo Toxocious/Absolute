@@ -507,11 +507,31 @@
       {
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
-        if ( $this->HasFlag('Contact') && $Attacker->Ability != 'Mummy' && $Defender->Ability == 'Mummy' )
+        if ( $this->HasFlag('contact') )
         {
-          $Attacker->SetAbility('Mummy');
+          if
+          (
+            $Attacker->Ability != 'Mummy' &&
+            $Defender->Ability == 'Mummy'
+          )
+          {
+            $Attacker->SetAbility('Mummy');
 
-          $Ability_Change_Dialogue .= "<br />{$Attacker->Display_Name}'s ability became Mummy!";
+            $Ability_Change_Dialogue .= "<br />{$Attacker->Display_Name}'s ability became Mummy!";
+          }
+
+          if
+          (
+            $Defender->Ability == 'Cute Charm' &&
+            mt_rand(1, 100) <= 30 &&
+            $Defender->Gender != 'G' &&
+            $Defender->Gender != $Attacker->Gender
+          )
+          {
+            $Set_Status = $Attacker->SetStatus('Infatuation');
+            if ( !empty($Set_Status) )
+              $Ability_Change_Dialogue .= $Set_Status->Dialogue;
+          }
         }
 
         if ( $Defender->Ability == 'Cotton Down' )
