@@ -43,14 +43,14 @@
     {
       if ( in_array($this->Stat_Name, ['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed']) )
         if ( $this->Stage >= 0 )
-          return ($this->Stage + 2) / 2;
+          return (($this->Stage + 2) / 2) * 1;
         else
-          return 2 / (($this->Stage * 1) + 2);
+          return 2 / ($this->Stage * -1 + 2) * 1;
       else
         if ( $this->Stage >= 0 )
-          return ($this->Stage + 3) / 3;
+          return (($this->Stage + 3) / 3) * 1;
         else
-          return 3 / (($this->Stage * 1) + 3);
+          return 2 / ($this->Stage * -1 + 3) * 1;
     }
 
     /**
