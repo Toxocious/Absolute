@@ -219,6 +219,8 @@
       $this->Participated = true;
       $_SESSION['Battle'][$this->Side]->Active = $this;
 
+      $New_Active = $_SESSION['Battle'][$this->Side]->Active;
+
       if ( $Previous_Attacker->Last_Move['Name'] == 'Baton Pass' )
       {
         $Text = "{$Previous_Attacker->Display_Name} used Baton Pass!<br />";
@@ -228,7 +230,7 @@
 
       if ( !empty($this->Weather) )
       {
-        if ( $_SESSION['Battle'][$this->Side]->Active->HasAbility(['Air Lock', 'Cloud Nine']) )
+        if ( $New_Active->HasAbility(['Air Lock', 'Cloud Nine']) )
         {
           unset($this->Weather);
 
@@ -236,7 +238,7 @@
         }
       }
 
-      if ( $_SESSION['Battle'][$this->Side]->Active->Ability == 'Anticipation' )
+      if ( $New_Active->Ability == 'Anticipation' )
       {
         switch ($this->Side)
         {
@@ -264,6 +266,13 @@
             break;
           }
         }
+      }
+
+      if ( $New_Active->Ability == 'Dauntless Shield' )
+      {
+        $New_Active->Stats['Defense']->SetValue(1);
+
+        $Effect_Text = "{$New_Active->Display_Name}'s Dauntless Shield raised its Defense!<br />";
       }
 
       return [
