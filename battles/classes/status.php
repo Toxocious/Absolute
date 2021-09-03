@@ -115,6 +115,12 @@
           'Volatile' => false,
           'Dialogue' => 'has been burnt!',
         ],
+        'Busted' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => false,
+          'Dialogue' => 'disguise served as a decoy!',
+        ],
         'Paralysis' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
