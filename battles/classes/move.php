@@ -589,7 +589,11 @@
       /**
        * Process end of turn ability procs.
        */
-      $Ability_Effect_Text = $this->ProcessAbilityProcs($Attacker, $Defender, $Damage);
+      $Ability_Effect = $this->ProcessAbilityProcs($Attacker, $Defender, $Damage);
+      if ( !empty($Ability_Effect['Damage']) )
+      {
+        $Damage = $Ability_Effect['Damage'];
+      }
 
       if ( $Damage <= 0 )
       {
@@ -617,7 +621,7 @@
 
       return [
         'Text' => $Dialogue,
-        'Effect_Text' => (isset($Ability_Effect_Text) ? $Ability_Effect_Text : ''),
+        'Effect_Text' => (isset($Ability_Effect['Text']) ? $Ability_Effect['Text'] : ''),
         'Damage' => $Damage,
         'Healing' => $Healing,
       ];
@@ -1749,7 +1753,10 @@
           break;
       }
 
-      return $Ability_Effect_Text;
+      return [
+        'Text' => $Ability_Effect_Text,
+        'Damage' => (!empty($Ability_Effect_Damage) ? $Ability_Effect_Damage : null),
+      ];
     }
 
     /**
