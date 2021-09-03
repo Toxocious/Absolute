@@ -295,6 +295,18 @@
             unset($this->Weather);
             $Effect_Text .= 'The effects of weather disappeared.<br />';
           }
+          break;
+
+        case 'Download':
+          if ( $Defender->Stats['Defense']->Current_Value > $Defender->Stats['Sp_Defense']->Current_Value )
+            $Boosted_Stat = 'Attack';
+          else
+            $Boosted_Stat = 'Sp_Attack';
+
+          $Stat_Name = str_replace('_', 'ecial ', $Boosted_Stat);
+          $New_Active->Stats[$Boosted_Stat]->SetValue(1);
+          $Effect_Text .= "{$New_Active->Display_Name}'s Download raised its {$Stat_Name}!<br />";
+          break;
       }
 
       return [
