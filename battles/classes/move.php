@@ -462,6 +462,15 @@
         ];
       }
 
+      if ( $Defender->Ability == 'Dazzling' && $this->Priority > 0 )
+      {
+        return [
+          'Text' => "{$Attacker->Display_Name} can't use {$this->Name}!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
       if ( $Attacker->HasStatus('Taunt') )
       {
         if ( $this->Damage_Type == 'Status' )
