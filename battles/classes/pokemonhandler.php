@@ -203,6 +203,16 @@
         ];
       }
 
+      switch ($this->Side)
+      {
+        case 'Ally':
+          $Defender = $_SESSION['Battle']['Foe']->Active;
+          break;
+        case 'Foe';
+          $Defender = $_SESSION['Battle']['Ally']->Active;
+          break;
+      }
+
       $Previous_Attacker = $_SESSION['Battle'][$this->Side]->Active;
 
       if ( $this->Original_Ability != $this->Ability )
@@ -264,6 +274,17 @@
           $Effect_Text .= "{$New_Active->Display_Name}'s Dauntless Shield raised its Defense!<br />";
           break;
 
+        case 'Delta Stream':
+          if ( isset($this->Weather) )
+            unset($this->Weather);
+
+          $Set_Weather = new Weather('Strong Winds', -1);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
       }
 
       return [
