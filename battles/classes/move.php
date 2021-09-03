@@ -1752,6 +1752,18 @@
             $Ability_Effect_Text .= "{$Defender->Display_Name}'s Defeatist lowered its stats!";
           }
           break;
+
+        case 'Disguise':
+          if ( $Damage > 0 )
+          {
+            $Set_Disguise = $Defender->SetStatus('Busted');
+            if ( !empty($Set_Disguise) )
+            {
+              $Ability_Effect_Text .= "{$Defender->Display_Name}'s {$Set_Disguise['Text']}";
+              $Ability_Effect_Damage = 0;
+            }
+          }
+          break;
       }
 
       return [
