@@ -1917,6 +1917,9 @@
       if ( $Attacker->Ability == 'Blaze' && $Attacker->HP <= $Attacker->Max_HP / 2 && $this->Move_Type == 'Fire' )
         $this->Power *= 1.5;
 
+      if ( $Attacker->Ability == "Dragon's Maw" && $this->Move_Type == 'Dragon' )
+        $this->Power *= 1.5;
+
       if ( $Attacker->Ability == 'Mega Launcher' && $this->HasFlag('pulse') )
         $this->Power *= 1.5;
 
