@@ -410,7 +410,8 @@
         if
         (
           $Pokemon->Participated ||
-          $Pokemon->Item->Name == 'Exp Share'
+          $Pokemon->Item->Name == 'Exp Share' &&
+          !$Pokemon->Fainted
         )
           $Exp_Divisor++;
       }
