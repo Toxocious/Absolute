@@ -258,7 +258,14 @@
             }
           }
           break;
-
+        case 'Air Lock':
+        case 'Cloud Nine':
+          if ( !empty($this->Weather) )
+          {
+            unset($this->Weather);
+            $Effect_Text .= 'The effects of weather disappeared.<br />';
+          }
+          break;
         case 'Dauntless Shield':
           $New_Active->Stats['Defense']->SetValue(1);
           $Effect_Text .= "{$New_Active->Display_Name}'s Dauntless Shield raised its Defense!<br />";
@@ -288,15 +295,6 @@
           }
           break;
 
-        case 'Air Lock':
-        case 'Cloud Nine':
-          if ( !empty($this->Weather) )
-          {
-            unset($this->Weather);
-            $Effect_Text .= 'The effects of weather disappeared.<br />';
-          }
-          break;
-
         case 'Download':
           if ( $Defender->Stats['Defense']->Current_Value > $Defender->Stats['Sp_Defense']->Current_Value )
             $Boosted_Stat = 'Attack';
@@ -306,6 +304,19 @@
           $Stat_Name = str_replace('_', 'ecial ', $Boosted_Stat);
           $New_Active->Stats[$Boosted_Stat]->SetValue(1);
           $Effect_Text .= "{$New_Active->Display_Name}'s Download raised its {$Stat_Name}!<br />";
+          break;
+
+        case 'Drizzle':
+          $Turn_Count = 5;
+          if ( $New_Active->Item->Name == 'Damp Rock' )
+            $Turn_Count = 8;
+
+          $Set_Weather = new Weather('Rain', $Turn_Count);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
           break;
       }
 
