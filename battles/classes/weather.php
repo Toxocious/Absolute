@@ -84,6 +84,11 @@
             'Text' => ''
           ];
 
+        case 'Desolate Land':
+          return [
+            'Text' => 'The land has become desolate!<br />',
+          ];
+
         case 'Fog':
           return [
             'Text' => 'The fog has been blown away!<br />',
