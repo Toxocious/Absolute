@@ -54,7 +54,9 @@
         }
       }
 
+      unset($_SESSION['Battle']['Weather']);
       $_SESSION['Battle']['Weather'] = $this;
+
       return $this;
     }
 
