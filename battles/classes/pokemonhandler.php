@@ -238,16 +238,6 @@
 
       $Effect_Text = '';
 
-      if ( !empty($this->Weather) )
-      {
-        if ( $New_Active->HasAbility(['Air Lock', 'Cloud Nine']) )
-        {
-          unset($this->Weather);
-
-          $Effect_Text .= 'The effects of weather disappeared.<br />';
-        }
-      }
-
       switch ($New_Active->Ability)
       {
         case 'Anticipation':
@@ -285,6 +275,14 @@
             $Effect_Text .= $Set_Weather->Dialogue;
           }
           break;
+
+        case 'Air Lock':
+        case 'Cloud Nine':
+          if ( !empty($this->Weather) )
+          {
+            unset($this->Weather);
+            $Effect_Text .= 'The effects of weather disappeared.<br />';
+          }
       }
 
       return [
