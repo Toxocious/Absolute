@@ -1692,7 +1692,7 @@
         $Defender->Primary_Type = $this->Move_Type;
         $Defender->Secondary_Type = null;
 
-        $Ability_Effect_Text = "{$Defender->Display_Name}'s Color Change made it the {$this->Move_Type}-type!";
+        $Ability_Effect_Text .= "{$Defender->Display_Name}'s Color Change made it the {$this->Move_Type}-type!";
       }
 
       if
@@ -1705,7 +1705,28 @@
       {
         $Attacker->Moves[$Attacker->Last_Move['Slot']]->Disable();
 
-        $Ability_Effect_Text = "{$Attacker->Display_Name}'s was disabled due to {$Defender->Display_Name}'s Cursed Body!";
+        $Ability_Effect_Text .= "{$Attacker->Display_Name}'s was disabled due to {$Defender->Display_Name}'s Cursed Body!";
+      }
+
+      if
+      (
+        $Defender->Ability == 'Defeatist' &&
+        $Defender->HP <= $Defender->Max_HP / 2
+      )
+      {
+        foreach (['Attack', 'Sp_Attack'] as $Stat)
+        {
+          if
+          (
+            $Defender->Stats[$Stat]->Stage < 6 &&
+            $Defender->Stats[$Stat]->Stage > -6
+          )
+          {
+            $Defender->Stats[$Stat]->CurrentValue *= 0.5;
+          }
+        }
+
+        $Ability_Effect_Text .= "{$Defender->Display_Name}'s Defeatist lowered its stats!";
       }
 
       return $Ability_Effect_Text;
