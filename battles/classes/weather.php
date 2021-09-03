@@ -15,6 +15,22 @@
       if ( !isset($Weather_Data) )
         return false;
 
+      if
+      (
+        $Weather_Name == 'Rain' &&
+        !empty($this->Weather) &&
+        in_array($this->Weather->Name, ['Strong Winds', 'Rain', 'Heavy Rain', 'Extremely Harsh Sunlight'])
+      )
+        return false;
+
+      if
+      (
+        $Weather_Name == 'Harsh Sunlight' &&
+        !empty($this->Weather) &&
+        in_array($this->Weather->Name, ['Strong Winds', 'Heavy Rain', 'Harsh Sunlight', 'Extremely Harsh Sunlight'])
+      )
+        return false;
+
       $this->Name = $Weather_Name;
       $this->Turns_Left = $Turn_Count;
       $this->Dialogue = $Weather_Data['Text'];
