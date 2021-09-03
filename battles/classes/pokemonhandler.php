@@ -318,6 +318,19 @@
             $Effect_Text .= $Set_Weather->Dialogue;
           }
           break;
+
+        case 'Drought':
+          $Turn_Count = 5;
+          if ( $New_Active->Item->Name == 'Heat Rock' )
+            $Turn_Count = 8;
+
+          $Set_Weather = new Weather('Harsh Sunlight', $Turn_Count);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
       }
 
       return [
