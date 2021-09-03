@@ -102,7 +102,7 @@
 
         case 'Desolate Land':
           return [
-            'Text' => 'The land has become desolate!<br />',
+            'Text' => 'The land is no longer desolate!<br />',
           ];
 
         case 'Fog':
@@ -160,6 +160,9 @@
       return [
         'Clear Skies' => [
           'Text' => ''
+        ],
+        'Desolate Land' => [
+          'Text' => 'The land has become desolate!',
         ],
         'Fog' => [
           'Text' => 'The fog is deep...',
