@@ -36,7 +36,7 @@
         if ( $Status_Name == 'Paralysis' && $Pokemon->HasTyping(['Electric']) )
           return false;
 
-        if ( $Status_Name == 'Poison' && $Pokemon->HasTyping(['Poison']) )
+        if ( $Status_Name == 'Poison' && $Pokemon->HasTyping(['Poison', 'Steel']) )
           return false;
       }
       else
