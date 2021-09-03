@@ -1481,13 +1481,30 @@
             if ( $Stat_Name == 'Defense' && $Target->Active->Ability == 'Big Pecks' && $Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
               continue;
 
-            if ( $this->$Stat_Boost < 0 && $Target->Active != $Attacker && $Target->Active->Ability == 'Competitive' )
+            if ( $this->$Stat_Boost < 0 && $Target->Active != $Attacker && $Target->Active->HasAbility([ 'Competitive', 'Defiant' ]) )
             {
-              if ( $Target->Active->Stats['Sp_Attack']->Stage < 6 )
+              switch ($Target->Active->Ability)
               {
-                $Target->Active->Stats['Sp_Attack']->SetValue(2);
+                case 'Competitive':
+                  $Boosted_Stat = [
+                    'Stat' => 'Sp_Attack',
+                    'Name' => 'Special Attack'
+                  ];
+                  break;
 
-                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s Competitive boosted its Attack!";
+                case 'Defiant':
+                  $Boosted_Stat =  [
+                    'Stat' => 'Attack',
+                    'Name' => 'Attack'
+                  ];
+                  break;
+              }
+
+              if ( $Target->Active->Stats[$Boosted_Stat['Stat']]->Stage < 6 )
+              {
+                $Target->Active->Stats[$Boosted_Stat['Stat']]->SetValue(2);
+
+                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Target->Active->Ability} boosted its {$Boosted_Stat['Name']}!";
               }
             }
 
