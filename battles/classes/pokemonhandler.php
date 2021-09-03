@@ -318,7 +318,7 @@
         }
       }
 
-      if ( $this->Earn_Pokemon_Exp )
+      if ( $this->Earn_Pokemon_Exp && $this->Side !== 'Ally' )
       {
         $Exp_Dialogue = $Defender->Active->IncreaseExp();
       }
