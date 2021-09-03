@@ -8,6 +8,7 @@
 		<title><?= $Current_Page['Name']; ?> &mdash; The Pok&eacute;mon Absolute</title>
 		<link href='<?= DOMAIN_SPRITES; ?>/Pokemon/Icons/Normal/359-mega.png' rel='shortcut icon'>
 
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <meta name='robots' content='index' />
     <meta name='description' content='The Pok&eacute;mon Absolute is an exciting and free way to enjoy spending your time. We have a vast community of members of all ages and ethnicities who all enjoy Pok&eacute;mon. Sign up now and begin your own adventure as a Pok&eacute;mon trainer!' />
