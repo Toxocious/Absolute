@@ -1552,7 +1552,7 @@
     }
 
     /**
-     * Handle move applied stat changes.
+     * Handle move applied status ailments.
      * @param {UserHandler} $Target
      * @param {PokemonHandler} $Attacker
      * @param {PokemonHandler} $Defender
@@ -1683,7 +1683,7 @@
     }
 
     /**
-     * Handle move applied stat changes.
+     * Handle ability procs at the end of the Pokemon's move.
      * @param {PokemonHandler} $Attacker
      * @param {PokemonHandler} $Defender
      * @param {int} $Damage
