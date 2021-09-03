@@ -238,41 +238,32 @@
         }
       }
 
-      if ( $New_Active->Ability == 'Anticipation' )
+      switch ($New_Active->Ability)
       {
-        switch ($this->Side)
-        {
-          case 'Ally':
-            $Defender = $_SESSION['Battle']['Foe']->Active;
-            break;
-          case 'Foe';
-            $Defender = $_SESSION['Battle']['Ally']->Active;
-            break;
-        }
-
-        foreach ($Defender->Moves as $Move)
-        {
-          if ( $Move->Category == 'Status' )
-            continue;
-
-          if
-          (
-            $Move->Category == 'Ohko' ||
-            $Move->MoveEffectiveness($this)['Mult'] > 1
-          )
+        case 'Anticipation':
+          foreach ($Defender->Moves as $Move)
           {
-            $Effect_Text .= "{$this->Display_Name} shuddered.<br />";
+            if ( $Move->Category == 'Status' )
+              continue;
 
-            break;
+            if
+            (
+              $Move->Category == 'Ohko' ||
+              $Move->MoveEffectiveness($this)['Mult'] > 1
+            )
+            {
+              $Effect_Text .= "{$this->Display_Name} shuddered.<br />";
+
+              break;
+            }
           }
-        }
-      }
+          break;
 
-      if ( $New_Active->Ability == 'Dauntless Shield' )
-      {
-        $New_Active->Stats['Defense']->SetValue(1);
+        case 'Dauntless Shield':
+          $New_Active->Stats['Defense']->SetValue(1);
+          $Effect_Text .= "{$New_Active->Display_Name}'s Dauntless Shield raised its Defense!<br />";
+          break;
 
-        $Effect_Text = "{$New_Active->Display_Name}'s Dauntless Shield raised its Defense!<br />";
       }
 
       return [
