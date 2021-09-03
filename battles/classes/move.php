@@ -601,7 +601,8 @@
                     ($Attacker->HasStatus('Move Locked') ? "{$Attacker->Display_Name} is move locked!<br />" : '') .
                     "{$Attacker->Display_Name} used {$this->Name}." .
                     (!empty($Ailment_Text) ? "<br />{$Ailment_Text}" : '') .
-                    (!empty($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
+                    (!empty($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '') .
+                    (!empty($Ability_Effect['Text']) ? "<br />{$Ability_Effect['Text']}" : '');
       }
       else
       {
