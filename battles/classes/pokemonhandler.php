@@ -276,6 +276,18 @@
           }
           break;
 
+        case 'Desolate Land':
+          if ( isset($this->Weather) )
+            unset($this->Weather);
+
+          $Set_Weather = new Weather('Desolate Land', -1);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
+
         case 'Air Lock':
         case 'Cloud Nine':
           if ( !empty($this->Weather) )
