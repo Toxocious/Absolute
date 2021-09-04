@@ -61,6 +61,9 @@
       if ( !isset($Status_Turns) )
         $Status_Turns = mt_rand($Status_Data['Min_Turns'], $Status_Data['Max_Turns']);
 
+      if ( $Status_Name == 'Sleep' && $Status_Turns > 0 && $Pokemon->Ability == 'Early Bird' )
+        $Status_Turns = floor($Status_Turns / 2);
+
       if ( isset($Status_Data['Min_Stacks']) && isset($Status_Data['Max_Stacks']) )
         $this->Stacks = 1;
 
