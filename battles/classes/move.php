@@ -1456,6 +1456,8 @@
 
             if ( $this->$Stat_Boost < 0 )
             {
+              if ( $Target->Active->Ability->Name == 'Full Metal Body' && $Target->Active != $Attacker )
+                continue;
 
               if ( $Target->Active->Ability->Name == 'Clear Body' && $Attacker->Ability->Name != 'Mold Breaker' )
                 continue;
