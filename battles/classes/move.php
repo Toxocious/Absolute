@@ -2054,6 +2054,9 @@
         if ( $Defender->Ability->Name == 'Filter' && $Move_Effectiveness['Mult'] > 1 )
           $Damage *= 0.75;
 
+        if ( $Defender->Ability->Name == 'Fur Coat' && $this->Damage_Type == 'Physical' )
+          $Damage /= 2;
+
         if ( $Defender->Ability->Name == 'Fluffy' )
         {
           if ( $this->HasFlag('contact') )
