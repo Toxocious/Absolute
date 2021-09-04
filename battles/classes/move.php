@@ -528,11 +528,7 @@
 
         if ( $this->HasFlag('contact') )
         {
-          if
-          (
-            $Attacker->Ability != 'Mummy' &&
-            $Defender->Ability == 'Mummy'
-          )
+          if ( $Attacker->Ability != 'Mummy' && $Defender->Ability == 'Mummy' )
           {
             $Attacker->SetAbility('Mummy');
 
@@ -589,7 +585,7 @@
       /**
        * Process end of turn ability procs.
        */
-      $Ability_Effect = $this->ProcessAbilityProcs($Attacker, $Defender, $Damage);
+      $Ability_Effect = $this->ProcessAbilityProcs($Attacker, $Defender, $Hits, $Damage);
       if ( !empty($Ability_Effect['Damage']) )
       {
         $Damage = $Ability_Effect['Damage'];
@@ -1691,13 +1687,15 @@
      * Handle ability procs at the end of the Pokemon's move.
      * @param {PokemonHandler} $Attacker
      * @param {PokemonHandler} $Defender
+     * @param {int} $Hits
      * @param {int} $Damage
-     * @return {$string} $Ability_Effect_Text
+     * @return {$array} $Ability_Effect
      */
     public function ProcessAbilityProcs
     (
       PokemonHandler $Attacker,
       PokemonHandler $Defender,
+      int $Hits = 1,
       int $Damage = 0
     )
     {
@@ -1770,6 +1768,30 @@
             $Defender->IncreaseHP($Defender->Max_HP / 4);
           if ( $this->Move_Type == 'Fire' )
             $Damage *= 1.25;
+          break;
+        case 'Effect Spore':
+          if ( $this->HasFlag('contact') )
+          {
+            for ( $i = 0; $i < $Hits; $i++ )
+            {
+              $Random_Int = mt_rand(1, 100);
+              if ( $Random_Int <= 9 )
+                $Ailment = 'Poison';
+              else if ( $Random_Int <= 21 )
+                $Ailment = 'Paralysis';
+              else if ( $Random_Int <= 30 )
+                $Ailment = 'Sleep';
+
+              if ( !empty($Ailment) )
+              {
+                $Set_Ailment = $Defender->SetStatus($Ailment);
+                if ( !empty($Set_Ailment) )
+                {
+                  $Ability_Effect_Text .= "{$Attacker->Display_Name} {$Set_Ailment['Text']}";
+                }
+              }
+            }
+          }
           break;
       }
 
