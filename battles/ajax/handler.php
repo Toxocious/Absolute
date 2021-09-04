@@ -76,6 +76,11 @@
     $Output['Weather'] = $_SESSION['Battle']['Weather'];
   }
 
+  if ( !empty($_SESSION['Battle']['Terrain']) )
+  {
+    $Output['Terrain'] = $_SESSION['Battle']['Terrain'];
+  }
+
   $_SESSION['Battle']['Dialogue'] = $Output['Message'];
 
   echo json_encode($Output);
