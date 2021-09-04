@@ -516,15 +516,15 @@
             HandleError($e);
           }
 
-          $this->Exp += $Exp;
-          $this->Exp_Needed = FetchExpToNextLevel($this->Exp, 'Pokemon', true);
+          $Pokemon->Exp += $Exp;
+          $Pokemon->Exp_Needed = FetchExpToNextLevel($Pokemon->Exp, 'Pokemon', true);
 
           $Dialogue['Text'] .= "{$Pokemon->Display_Name} has gained " . number_format($Exp) . " experience.<br />";
 
-          $Check_Level = FetchLevel($this->Exp, 'Pokemon');
-          if ( $this->Level != $Check_Level )
+          $Check_Level = FetchLevel($Pokemon->Exp, 'Pokemon');
+          if ( $Pokemon->Level != $Check_Level )
           {
-            $this->Level = $Check_Level;
+            $Pokemon->Level = $Check_Level;
             $Dialogue['Text'] .= "{$Pokemon->Display_Name} has reached level <b>" . number_format($Check_Level) . "</b>!<br />";
           }
         }
