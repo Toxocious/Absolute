@@ -45,6 +45,12 @@
           case 'Extremely Harsh Sunlight':
             if ( $Active_Pokemon->Ability->Name == 'Chlorophyll' )
               $Active_Pokemon->Stats['Speed'] *= 2;
+
+            if ( $Active_Pokemon->Ability->Name == 'Flower Gift' )
+            {
+              $Active_Pokemon->Stats['Attack'] *= 1.5;
+              $Active_Pokemon->Stats['Sp_Defense'] *= 1.5;
+            }
             break;
 
           case 'Sandstorm':
@@ -86,6 +92,12 @@
           case 'Extremely Harsh Sunlight':
             if ( $Active_Pokemon->Ability->Name == 'Chlorophyll' )
               $Active_Pokemon->Stats['Speed'] /= 2;
+
+            if ( $Active_Pokemon->Ability->Name == 'Flower Gift' )
+            {
+              $Active_Pokemon->Stats['Attack'] /= 1.5;
+              $Active_Pokemon->Stats['Sp_Defense'] /= 1.5;
+            }
             break;
 
           case 'Sandstorm':

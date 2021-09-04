@@ -345,6 +345,21 @@
           break;
       }
 
+      if ( !empty($this->Weather) )
+      {
+        switch ($this->Weather->Name)
+        {
+          case 'Extremely Harsh Sunlight':
+          case 'Harsh Sunlight':
+            if ( $New_Active->Ability->Name == 'Flower Gift' )
+            {
+              $New_Active->Stats['Attack'] *= 1.5;
+              $New_Active->Stats['Sp_Defense'] *= 1.5;
+            }
+            break;
+        }
+      }
+
       return [
         'Type' => 'Success',
         'Text' => (isset($Text) ? $Text : '') .
