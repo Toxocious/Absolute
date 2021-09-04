@@ -2048,6 +2048,15 @@
 
         if ( $Defender->Ability->Name == 'Filter' && $Move_Effectiveness['Mult'] > 1 )
           $Damage *= 0.75;
+
+        if ( $Defender->Ability->Name == 'Fluffy' )
+        {
+          if ( $this->HasFlag('contact') )
+            $Damage /= 2;
+
+          if ( $this->Move_Type == 'Fire' )
+            $Damage *= 2;
+        }
       }
       else
       {
