@@ -378,6 +378,13 @@
             unset($Warning_Move);
           }
           break;
+
+        case 'Frisk':
+          if ( !empty($Defender->Item) )
+          {
+            $Effect_Text .= "{$New_Active->Display_Name} Frisked {$Defender->Display_Name}'s {$Defender->Item->Name}.";
+          }
+          break;
       }
 
       if ( !empty($this->Weather) )
