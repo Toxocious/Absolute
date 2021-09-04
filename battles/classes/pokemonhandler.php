@@ -331,13 +331,25 @@
             $Effect_Text .= $Set_Weather->Dialogue;
           }
           break;
+
+        case 'Electric Surge':
+          if ( $this->Item->Name == 'Terrain Extender' )
+            $Terrain_Turns = 8;
+
+          $Set_Terrain = new Terrain('Electric', !empty($Terrain_Turns) ?: null);
+          if ( !empty($Set_Terrain) )
+          {
+            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
+            $Effect_Text .= $Set_Terrain->Dialogue;
+          }
+          break;
       }
 
       return [
         'Type' => 'Success',
         'Text' => (isset($Text) ? $Text : '') .
                   "{$this->Display_Name} has been sent into battle!" .
-                  (isset($Effect_Text) ? $Effect_Text : '')
+                  (isset($Effect_Text) ? "<br />{$Effect_Text}" : '')
       ];
     }
 
