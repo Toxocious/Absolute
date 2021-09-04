@@ -1793,6 +1793,14 @@
             }
           }
           break;
+        case 'Emergency Exit':
+          $Trainer = $_SESSION['Battle'][$Defender->Side];
+          if ( $Trainer->NextPokemon() && $Defender->HP <= $Defender->Max_HP / 2 )
+          {
+            // How do we handle swapping out mid turn?
+            // Hmm
+          }
+          break;
       }
 
       return [
