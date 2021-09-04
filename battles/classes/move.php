@@ -2005,6 +2005,8 @@
         if ( $Defender->Ability == 'Heatproof' && $this->Move_Type == 'Fire' )
           $Damage /= 2;
 
+        if ( $Defender->Abiilty == 'Filter' && $Move_Effectiveness['Mult'] > 1 )
+          $Damage *= 0.75;
       }
       else
       {
