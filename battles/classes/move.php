@@ -1764,6 +1764,13 @@
             }
           }
           break;
+
+        case 'Dry Skin':
+          if ( $this->Move_Type == 'Water' )
+            $Defender->IncreaseHP($Defender->Max_HP / 4);
+          if ( $this->Move_Type == 'Fire' )
+            $Damage *= 1.25;
+          break;
       }
 
       return [

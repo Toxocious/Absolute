@@ -236,6 +236,18 @@
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
 
+              case 'Extremely Harsh Sunlight':
+              case 'Harsh Sunlight':
+                if ( $Active_Ally->Active->Ability == 'Dry Skin' )
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                break;
+
+              case 'Heavy Rain':
+              case 'Rain':
+                if ( $Active_Ally->Active->Ability == 'Dry Skin' )
+                  $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
+                break;
+
               case 'Sandstorm':
                 if ( !$Active_Ally->Active->HasTyping(['Ground', 'Steel', 'Rock']) )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
