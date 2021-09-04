@@ -85,8 +85,8 @@
       $this->Icon = $Pokemon['Icon'];
       $this->Display_Name = $Pokemon['Display_Name'];
       $this->Shiny = ($Pokemon['Type'] == 'Shiny' ? true : false);
-      $this->Ability = $Pokemon['Ability'];
-      $this->Origina_Ability = $Pokemon['Ability'];
+      $this->Ability = new Ability($Pokemon['Ability']);
+      $this->Original_Ability = new Ability($Pokemon['Ability']);
       $this->Gender = $Pokemon['Gender'];
       $this->Level = $Pokemon['Level_Raw'];
       $this->HP = $Pokemon['Stats'][0];
@@ -238,7 +238,7 @@
 
       $Effect_Text = '';
 
-      switch ($New_Active->Ability)
+      switch ($New_Active->Ability->Name)
       {
         case 'Anticipation':
           foreach ($Defender->Moves as $Move)
@@ -434,7 +434,7 @@
 
       if ( $Defender->Active->HP > 0 )
       {
-        switch ( $Defender->Active->Ability )
+        switch ( $Defender->Active->Ability->Name )
         {
           case 'Beast Boost':
             $Best_Stat = [
@@ -674,13 +674,13 @@
      */
     public function SetAbility
     (
-      string $Ability
+      string $Ability_Name
     )
     {
-      if ( $this->Ability == $Ability )
+      if ( $this->Ability->Name == $Ability_Name )
         return false;
 
-      return $this->Ability = $Ability;
+      return $this->Ability = new Ability($Ability_Name);
     }
 
     /**

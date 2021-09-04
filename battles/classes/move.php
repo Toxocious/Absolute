@@ -327,7 +327,7 @@
        */
       if
       (
-        $Defender->Ability == 'Magic Bounce' ||
+        $Defender->Ability->Name == 'Magic Bounce' ||
         ( $Turn_First_Attacker == 'Foe' && $Defender->Last_Move['Name'] == 'Magic Coat' )
       )
       {
@@ -406,7 +406,7 @@
       if
       (
         $this->HasFlag('powder') &&
-        ($Defender->HasTyping(['Grass']) || $Defender->Ability == 'Overcoat' || $Defender->Item->Name == 'Safety Goggles')
+        ($Defender->HasTyping(['Grass']) || $Defender->Ability->Name == 'Overcoat' || $Defender->Item->Name == 'Safety Goggles')
       )
       {
         return [
@@ -429,7 +429,7 @@
         ];
       }
 
-      if ( $Defender->Ability == 'Bulletproof' && $this->HasFlag('bullet') )
+      if ( $Defender->Ability->Name == 'Bulletproof' && $this->HasFlag('bullet') )
       {
         return [
           'Type' => 'Success',
@@ -440,7 +440,7 @@
         ];
       }
 
-      if ( $Defender->Ability == 'Soundproof' && $this->HasFlag('sound') )
+      if ( $Defender->Ability->Name == 'Soundproof' && $this->HasFlag('sound') )
       {
         return [
           'Type' => 'Success',
@@ -451,7 +451,7 @@
         ];
       }
 
-      if ( $Defender->Ability == 'Damp' && in_array($this->Name, ['Self-Destruct', 'Explosion', 'Mind Blown', 'Misty Explosion']) )
+      if ( $Defender->Ability->Name == 'Damp' && in_array($this->Name, ['Self-Destruct', 'Explosion', 'Mind Blown', 'Misty Explosion']) )
       {
         return [
           'Type' => 'Success',
@@ -462,7 +462,7 @@
         ];
       }
 
-      if ( $Defender->Ability == 'Dazzling' && $this->Priority > 0 )
+      if ( $Defender->Ability->Name == 'Dazzling' && $this->Priority > 0 )
       {
         return [
           'Text' => "{$Attacker->Display_Name} can't use {$this->Name}!",
@@ -507,14 +507,14 @@
 
       if
       (
-        $Attacker->Ability == 'Skill Link' &&
+        $Attacker->Ability->Name == 'Skill Link' &&
         $this->Max_Hits > 1
       )
         $this->Total_Hits = 5;
       else
         $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
 
-      if ( $Attacker->Ability == 'Aerilate' && $this->Move_Type == 'Normal' )
+      if ( $Attacker->Ability->Name == 'Aerilate' && $this->Move_Type == 'Normal' )
         $this->Move_Type = 'Flying';
 
       /**
@@ -821,7 +821,7 @@
         if ( !in_array($this->Name, ['Gust', 'Thunder', 'Twister', 'Sky Uppercut', 'Hurricane', 'Smack Down']) )
           return false;
 
-      if ( $Attacker->Ability == 'Compound Eyes' )
+      if ( $Attacker->Ability->Name == 'Compound Eyes' )
         $this->Accuracy *= 1.3;
 
       $Accuracy_Mod = $Attacker->Stats['Accuracy']->Current_Value / $Defender->Stats['Evasion']->Current_Value;
@@ -874,17 +874,17 @@
       if ( $Defender->HasStatus('Lucky Chant') )
         return false;
 
-      if ( in_array($Defender->Ability, ['Battle Armor', 'Shell Armor']) )
+      if ( in_array($Defender->Ability->Name, ['Battle Armor', 'Shell Armor']) )
         return false;
 
-      if ( $Attacker->Ability == 'Merciless' )
+      if ( $Attacker->Ability->Name == 'Merciless' )
         if ( $Defender->HasStatus('Poisoned') )
           return true;
 
       if ( $Attacker->HasStatus('Focus Energy') )
         $this->Crit_Chance += 2;
 
-      if ( $Attacker->Ability == 'Super Luck' )
+      if ( $Attacker->Ability->Name == 'Super Luck' )
         $this->Crit_Chance++;
 
       switch ( $Attacker->Pokedex_ID )
@@ -950,7 +950,6 @@
     }
 
     /**
-     * Handle contact effects.
      * @param string $Side
      */
     public function HandleContact
@@ -984,7 +983,7 @@
           $Attacker->Item->Name != 'Protective Pads' &&
           (
             !$Attacker->HasTyping(['Poison', 'Steel']) ||
-            $Attacker->Ability != 'Immunity'
+            $Attacker->Ability->Name != 'Immunity'
           )
         )
         {
@@ -1063,9 +1062,9 @@
       $Text = '';
       $Damage_Mod = 1;
 
-      if ( $Defender->Ability == 'Aftermath' )
+      if ( $Defender->Ability->Name == 'Aftermath' )
       {
-        if ( $Attacker->Ability != 'Damp' )
+        if ( $Attacker->Ability->Name != 'Damp' )
         {
           if ( $Attacker->Item->Name != 'Protective Pads' )
           {
@@ -1076,7 +1075,7 @@
         }
       }
 
-      if ( $Defender->Ability == 'Cute Charm' )
+      if ( $Defender->Ability->Name == 'Cute Charm' )
       {
         if
         (
@@ -1094,12 +1093,12 @@
         }
       }
 
-      if ( $Defender->Ability == 'Effect Spore' )
+      if ( $Defender->Ability->Name == 'Effect Spore' )
       {
         if
         (
           !$Attacker->HasTyping(['Grass']) ||
-          $Attacker->Ability != 'Overcoat' ||
+          $Attacker->Ability->Name != 'Overcoat' ||
           $Attacker->Item->Name != 'Safety Goggles' ||
           $Attacker->Item->Name != 'Protective Pads'
         )
@@ -1130,7 +1129,7 @@
         }
       }
 
-      if ( $Defender->Ability == 'Flame Body' )
+      if ( $Defender->Ability->Name == 'Flame Body' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {
@@ -1146,7 +1145,7 @@
         }
       }
 
-      if ( $Defender->Ability == 'Fluffy' )
+      if ( $Defender->Ability->Name == 'Fluffy' )
       {
         $Damage_Mod /= 2;
 
@@ -1154,7 +1153,7 @@
           $Damage_Mod * 2;
       }
 
-      if ( in_array($Defender->Ability, ['Gooey', 'Tangling Hair']) )
+      if ( in_array($Defender->Ability->Name, ['Gooey', 'Tangling Hair']) )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {
@@ -1167,17 +1166,17 @@
         }
       }
 
-      if ( in_array($Defender->Ability, ['Iron Barbs', 'Rough Skin']) )
+      if ( in_array($Defender->Ability->Name, ['Iron Barbs', 'Rough Skin']) )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {
           $Attacker->DecreaseHP(floor($Attacker->Max_HP / 8));
 
-          $Text .= "<br />{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Ability}!<br />";
+          $Text .= "<br />{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Ability->Name}!<br />";
         }
       }
 
-      if ( $Defender->Ability == 'Mummy' )
+      if ( $Defender->Ability->Name == 'Mummy' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {
@@ -1187,7 +1186,7 @@
         }
       }
 
-      if ( $Defender->Ability == 'Perish Body' )
+      if ( $Defender->Ability->Name == 'Perish Body' )
       {
         if ( $Attacker->Item->Name == 'Protective Pads' )
         {
@@ -1208,12 +1207,12 @@
         }
       }
 
-      if ( $Defender->Ability == 'Pickpocket' )
+      if ( $Defender->Ability->Name == 'Pickpocket' )
       {
         if
         (
           $Attacker->Item->Name != 'Protective Pads' ||
-          $Attacker->Ability != 'Sticky Hold' ||
+          $Attacker->Ability->Name != 'Sticky Hold' ||
           ($Attacker->Pokedex_ID != 382 && $Attacker->Item->Name == 'Blue Orb') ||
           ($Defender->Pokedex_ID != 382 && $Defender->Item->Name == 'Blue Orb') ||
           ($Attacker->Pokedex_ID != 383 && $Attacker->Item->Name == 'Red Orb') ||
@@ -1241,7 +1240,7 @@
         }
       }
 
-      if ( $Defender->Ability == 'Poison Point' )
+      if ( $Defender->Ability->Name == 'Poison Point' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {
@@ -1257,7 +1256,7 @@
         }
       }
 
-      if ( $Defender->Ability == 'Static' )
+      if ( $Defender->Ability->Name == 'Static' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {
@@ -1273,21 +1272,21 @@
         }
       }
 
-      if ( $Defender->Ability == 'Wandering Spirit' )
+      if ( $Defender->Ability->Name == 'Wandering Spirit' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {
           if
           (
-            !in_array($Attacker->Ability, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode']) ||
-            !in_array($Defender->Ability, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode'])
+            !in_array($Attacker->Ability->Name, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode']) ||
+            !in_array($Defender->Ability->Name, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode'])
           )
           {
-            $Attacker_Ability = $Attacker->Ability;
-            $Defender_Ability = $Defender->Ability;
+            $Attacker_Ability = $Attacker->Ability->Name;
+            $Defender_Ability = $Defender->Ability->Name;
 
-            $Attacker->Ability = $Defender->Ability;
-            $Defender->Ability = $Attacker->Ability;
+            $Attacker->Ability->Name = $Defender->Ability->Name;
+            $Defender->Ability->Name = $Attacker->Ability->Name;
 
             $Text .= "<br />{$Attacker->Display_Name} has swapped abilities with {$Defender->Display_Name}!<br />";
           }
@@ -1434,7 +1433,7 @@
             if ( empty($this->$Stat_Boost) )
               continue;
 
-            if ( $Target->Active->Ability == 'Contrary' )
+            if ( $Target->Active->Ability->Name == 'Contrary' )
             {
               if ( $this->$Stat_Boost < 0 )
                 $this->$Stat_Boost *= 1;
@@ -1455,15 +1454,15 @@
 
             $Stat_Name = str_replace('_', 'ecial ', $Stat);
 
-            if ( $this->$Stat_Boost < 0 && $Target->Active->Ability == 'Clear Body' && !$Attacker->Ability == 'Mold Breaker' )
+            if ( $this->$Stat_Boost < 0 && $Target->Active->Ability->Name == 'Clear Body' && !$Attacker->Ability->Name == 'Mold Breaker' )
               continue;
 
-            if ( $Stat_Name == 'Defense' && $Target->Active->Ability == 'Big Pecks' && $Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+            if ( $Stat_Name == 'Defense' && $Target->Active->Ability->Name == 'Big Pecks' && $Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
               continue;
 
             if ( $this->$Stat_Boost < 0 && $Target->Active != $Attacker && $Target->Active->HasAbility([ 'Competitive', 'Defiant' ]) )
             {
-              switch ($Target->Active->Ability)
+              switch ($Target->Active->Ability->Name)
               {
                 case 'Competitive':
                   $Boosted_Stat = [
@@ -1484,7 +1483,7 @@
               {
                 $Target->Active->Stats[$Boosted_Stat['Stat']]->SetValue(2);
 
-                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Target->Active->Ability} boosted its {$Boosted_Stat['Name']}!";
+                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Target->Active->Ability->Name} boosted its {$Boosted_Stat['Name']}!";
               }
             }
 
@@ -1495,7 +1494,7 @@
             )
             {
               $Stages = 0;
-              if ( $Target->Active->Ability == 'Simple' )
+              if ( $Target->Active->Ability->Name == 'Simple' )
                 $Stages = $this->$Stat_Boost * 2;
               else
                 $Stages = $this->$Stat_Boost;
@@ -1515,13 +1514,13 @@
                 $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} can't go any lower!";
             }
 
-            if ( $Index > 0 && $Index <= $Total_Stats )
+            if ( $Index > 0 && $Index < $Total_Stats )
               $Stat_Change_Text .= '<br />';
           }
         }
       }
 
-      if ( $Defender->Ability == 'Anger Point' && $Does_Move_Crit )
+      if ( $Defender->Ability->Name == 'Anger Point' && $Does_Move_Crit )
       {
         $Defender->Stats['Attack']->SetStage(6);
 
@@ -1561,7 +1560,7 @@
 
         if
         (
-          $Target->Active->Ability == 'Overcoat' &&
+          $Target->Active->Ability->Name == 'Overcoat' &&
           ( strpos($this->Name, 'Powder') || strpos($this->Name, 'Spore') )
         )
         {
@@ -1609,7 +1608,7 @@
             if
             (
               !$Target->Active->HasTyping([ 'Poison', 'Steel' ]) ||
-              ( $Target->Active->HasTyping([ 'Poison', 'Steel' ]) && $Attacker->Ability == 'Corrosion' && $this->Damage_Type == 'Status' )
+              ( $Target->Active->HasTyping([ 'Poison', 'Steel' ]) && $Attacker->Ability->Name == 'Corrosion' && $this->Damage_Type == 'Status' )
             )
             {
               if ( $Ailment_Chance <= $this->Effect_Chance )
@@ -1684,7 +1683,7 @@
       switch ($Mid_Hit)
       {
         case true:
-          switch ($Defender->Ability)
+          switch ($Defender->Ability->Name)
           {
             case 'Disguise':
               if ( $Damage > 0 )
@@ -1710,7 +1709,7 @@
               break;
 
             case 'Mummy':
-              if ( $this->HasFlag('contact') && $Mid_Hit && !$Attacker->Ability != 'Mummy' )
+              if ( $this->HasFlag('contact') && $Mid_Hit && !$Attacker->Ability->Name != 'Mummy' )
               {
                 $Attacker->SetAbility('Mummy');
                 $Ability_Effect_Text .= "{$Attacker->Display_Name}'s ability became Mummy!";
@@ -1720,7 +1719,7 @@
           break;
 
         case false;
-          switch ($Defender->Ability)
+          switch ($Defender->Ability->Name)
           {
             case 'Color Change':
               if
@@ -1875,7 +1874,7 @@
 
       if ( $Attacker->HasTyping([ $this->Move_Type ]) )
       {
-        if ( $Attacker->Ability == 'Adaptibility' )
+        if ( $Attacker->Ability->Name == 'Adaptibility' )
           return 2;
 
         return 1.5;
@@ -1935,7 +1934,7 @@
 
       $Crit_Mult = 1;
       if ( $Crit )
-        if ( $Attacker->Ability == 'Sniper' )
+        if ( $Attacker->Ability->Name == 'Sniper' )
           $Crit_Mult = 2.25;
         else
           $Crit_Mult = 1.5;
@@ -1943,8 +1942,8 @@
       $Weather_Mult = 1;
       if
       (
-        !$Attacker->Ability == 'Air Lock' &&
-        !$Defender->Ability == 'Air Lock'
+        !$Attacker->Ability->Name == 'Air Lock' &&
+        !$Defender->Ability->Name == 'Air Lock'
       )
       {
         switch ( $this->Weather )
@@ -1966,51 +1965,51 @@
       }
 
       $Status_Mult = 1;
-      if ( $Attacker->Ability == 'Guts' )
+      if ( $Attacker->Ability->Name == 'Guts' )
         if ( $Attacker->HasStatusFromArray(['Burn', 'Freeze', 'Paralyze', 'Poison', 'Sleep']) )
           $Status_Mult = 1.5;
       else
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
-      if ( $Attacker->Ability == 'Battery' && $this->Category == 'Special' )
+      if ( $Attacker->Ability->Name == 'Battery' && $this->Category == 'Special' )
         $this->Power *= 1.3;
 
-      if ( $Attacker->Ability == 'Flare Boost' && $Attacker->HasStatus('Burn') && $this->Category == 'Special' )
+      if ( $Attacker->Ability->Name == 'Flare Boost' && $Attacker->HasStatus('Burn') && $this->Category == 'Special' )
         $this->Power *= 1.5;
 
-      if ( $Attacker->Ability == 'Blaze' && $Attacker->HP <= $Attacker->Max_HP / 2 && $this->Move_Type == 'Fire' )
+      if ( $Attacker->Ability->Name == 'Blaze' && $Attacker->HP <= $Attacker->Max_HP / 2 && $this->Move_Type == 'Fire' )
         $this->Power *= 1.5;
 
-      if ( $Attacker->Ability == "Dragon's Maw" && $this->Move_Type == 'Dragon' )
+      if ( $Attacker->Ability->Name == "Dragon's Maw" && $this->Move_Type == 'Dragon' )
         $this->Power *= 1.5;
 
-      if ( $Attacker->Ability == 'Mega Launcher' && $this->HasFlag('pulse') )
+      if ( $Attacker->Ability->Name == 'Mega Launcher' && $this->HasFlag('pulse') )
         $this->Power *= 1.5;
 
-      if ( $Attacker->Ability == 'Strong Jaw' && $this->HasFlag('bite') )
+      if ( $Attacker->Ability->Name == 'Strong Jaw' && $this->HasFlag('bite') )
         $this->Power *= 1.5;
 
-      if ( $Attacker->Ability == 'Iron Fist' && $this->HasFlag('punch') )
+      if ( $Attacker->Ability->Name == 'Iron Fist' && $this->HasFlag('punch') )
         $this->Power *= 1.2;
 
-      if ( $Turn_First_Attacker != $Side && $Attacker->Ability == 'Analytic' )
+      if ( $Turn_First_Attacker != $Side && $Attacker->Ability->Name == 'Analytic' )
         $this->Power *= 1.3;
 
-      if ( $Defender->Ability == 'Aura Break' )
+      if ( $Defender->Ability->Name == 'Aura Break' )
       {
-        if ( $Attacker->Ability == 'Dark Aura' && $this->Move_Type == 'Dark' )
+        if ( $Attacker->Ability->Name == 'Dark Aura' && $this->Move_Type == 'Dark' )
           $this->Power /= 1.33;
 
-        if ( $Attacker->Ability == 'Fairy Aura' && $this->Move_Type == 'Fairy' )
+        if ( $Attacker->Ability->Name == 'Fairy Aura' && $this->Move_Type == 'Fairy' )
           $this->Power /= 1.33;
       }
       else
       {
-        if ( $Attacker->Ability == 'Dark Aura' && $this->Move_Type == 'Dark' )
+        if ( $Attacker->Ability->Name == 'Dark Aura' && $this->Move_Type == 'Dark' )
           $this->Power *= 1.33;
 
-        if ( $Attacker->Ability == 'Fairy Aura' && $this->Move_Type == 'Fairy' )
+        if ( $Attacker->Ability->Name == 'Fairy Aura' && $this->Move_Type == 'Fairy' )
           $this->Power *= 1.33;
       }
 
@@ -2030,10 +2029,10 @@
 
       if ( $Damage > 0 )
       {
-        if ( $Defender->Ability == 'Heatproof' && $this->Move_Type == 'Fire' )
+        if ( $Defender->Ability->Name == 'Heatproof' && $this->Move_Type == 'Fire' )
           $Damage /= 2;
 
-        if ( $Defender->Ability == 'Filter' && $Move_Effectiveness['Mult'] > 1 )
+        if ( $Defender->Ability->Name == 'Filter' && $Move_Effectiveness['Mult'] > 1 )
           $Damage *= 0.75;
       }
       else

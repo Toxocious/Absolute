@@ -191,21 +191,21 @@
               {
                 case 'Burn':
                   $Burn_Mult = 1;
-                  if ( $Active_Ally->Active->Ability == 'Heatproof' )
+                  if ( $Active_Ally->Active->Ability->Name == 'Heatproof' )
                     $Burn_Mult = 2;
 
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
                   break;
 
                 case 'Poison':
-                  if ( $Active_Ally->Active->Ability == 'Poison Heal' )
+                  if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
                     $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
                   else
                     $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
                   break;
 
                 case 'Sleep':
-                  if ( $Active_Foe->Active->Ability == 'Bad Dreams' && $Active_Ally->Active->Ability != 'Comatose' )
+                  if ( $Active_Foe->Active->Ability->Name == 'Bad Dreams' && $Active_Ally->Active->Ability->Name != 'Comatose' )
                     $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
               }
             }
@@ -225,7 +225,7 @@
         {
           if
           (
-            !in_array($Active_Ally->Active->Ability, ['Magic Guard', 'Overcoat']) ||
+            !in_array($Active_Ally->Active->Ability->Name, ['Magic Guard', 'Overcoat']) ||
             $Active_Ally->Active->Item->Name != 'Safety Goggles'
           )
           {
@@ -238,13 +238,13 @@
 
               case 'Extremely Harsh Sunlight':
               case 'Harsh Sunlight':
-                if ( $Active_Ally->Active->Ability == 'Dry Skin' )
+                if ( $Active_Ally->Active->Ability->Name == 'Dry Skin' )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
                 break;
 
               case 'Heavy Rain':
               case 'Rain':
-                if ( $Active_Ally->Active->Ability == 'Dry Skin' )
+                if ( $Active_Ally->Active->Ability->Name == 'Dry Skin' )
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
                 break;
 
@@ -485,7 +485,7 @@
 
       $this->Foe_Move = $Foe_Active->FetchRandomMove();
 
-      if ( $Ally_Active->Ability == 'Dancer' && $this->Foe_Move->HasFlag('dance') )
+      if ( $Ally_Active->Ability->Name == 'Dancer' && $this->Foe_Move->HasFlag('dance') )
       {
         $First_Attacker = 'Foe';
         $this->Ally_Move = $this->Foe_Move;
@@ -659,7 +659,7 @@
       (
         $Ally_Active->HasStatus('Trap') ||
         (
-          $Foe_Active->Ability == 'Arena Trap' &&
+          $Foe_Active->Ability->Name == 'Arena Trap' &&
           $Ally_Active->IsGrounded() &&
           $Ally_Active->Item->Name != 'Shed Bell' &&
           !in_array($Ally_Active->Last_Move['Name'], ['Baton Pass', 'Flip Turn', 'Parting Shot', 'U-turn', 'Volt Switch'])
@@ -820,7 +820,7 @@
 
       foreach (['Ally', 'Foe'] as $Side)
       {
-        if ( in_array($_SESSION['Battle'][$Side]->Active->Ability, ['Gale Wings', 'Prankster']) )
+        if ( in_array($_SESSION['Battle'][$Side]->Active->Ability->Name, ['Gale Wings', 'Prankster']) )
         {
           if ( $_SESSION['Battle'][$Side]->Active->HP == $_SESSION['Battle'][$Side]->Active->Max_HP )
           {
@@ -835,7 +835,7 @@
           }
         }
 
-        if ( $_SESSION['Battle'][$Side]->Active->Ability == 'Triage' )
+        if ( $_SESSION['Battle'][$Side]->Active->Ability->Name == 'Triage' )
         {
           if
           (

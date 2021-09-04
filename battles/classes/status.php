@@ -27,7 +27,7 @@
 
       if ( !$Status_Data['Volatile'] )
       {
-        if ( $Pokemon->Ability == 'Comatose' )
+        if ( $Pokemon->Ability->Name == 'Comatose' )
           return false;
 
         if ( $Status_Name == 'Burn' && $Pokemon->HasTyping(['Fire']) )
@@ -42,26 +42,26 @@
       else
       {
         if ( in_array($Pokemon->Item->Name, ['Flame Orb', 'Toxic Orb']) )
-          if ( in_array($Pokemon->Ability, ['Flower Veil']) )
+          if ( in_array($Pokemon->Ability->Name, ['Flower Veil']) )
             return false;
 
-        if ( in_array($Pokemon->Ability, ['Leaf Guard', 'Comatose']) )
+        if ( in_array($Pokemon->Ability->Name, ['Leaf Guard', 'Comatose']) )
           return false;
 
         if ( $Pokemon->HasStatus('Safeguard') )
           return false;
 
-        if ( in_array($Status_Name, ['Encore', 'Heal Block', 'Infatuation', 'Taunt', 'Torment']) && $Pokemon->Ability == 'Aroma Veil' )
+        if ( in_array($Status_Name, ['Encore', 'Heal Block', 'Infatuation', 'Taunt', 'Torment']) && $Pokemon->Ability->Name == 'Aroma Veil' )
           return false;
       }
 
-      if ( $Pokemon->Ability == 'Shields Down' )
+      if ( $Pokemon->Ability->Name == 'Shields Down' )
         return false;
 
       if ( !isset($Status_Turns) )
         $Status_Turns = mt_rand($Status_Data['Min_Turns'], $Status_Data['Max_Turns']);
 
-      if ( $Status_Name == 'Sleep' && $Status_Turns > 0 && $Pokemon->Ability == 'Early Bird' )
+      if ( $Status_Name == 'Sleep' && $Status_Turns > 0 && $Pokemon->Ability->Name == 'Early Bird' )
         $Status_Turns = floor($Status_Turns / 2);
 
       if ( isset($Status_Data['Min_Stacks']) && isset($Status_Data['Max_Stacks']) )

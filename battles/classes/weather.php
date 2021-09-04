@@ -43,7 +43,7 @@
         {
           case 'Harsh Sunlight':
           case 'Extremely Harsh Sunlight':
-            if ( $Active_Pokemon->Ability == 'Chlorophyll' )
+            if ( $Active_Pokemon->Ability->Name == 'Chlorophyll' )
               $Active_Pokemon->Stats['Speed'] *= 2;
             break;
 
@@ -84,7 +84,7 @@
         {
           case 'Harsh Sunlight':
           case 'Extremely Harsh Sunlight':
-            if ( $Active_Pokemon->Ability == 'Chlorophyll' )
+            if ( $Active_Pokemon->Ability->Name == 'Chlorophyll' )
               $Active_Pokemon->Stats['Speed'] /= 2;
             break;
 
