@@ -1823,7 +1823,18 @@
                 // Hmm
               }
               break;
-            }
+
+            case 'Flash Fire':
+              if ( $this->Move_Type == 'Fire' )
+              {
+                if ( !$Defender->Ability->Procced )
+                {
+                  $Defender->Ability->Proc();
+                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s Flash Fire absorbed the attack!";
+                }
+              }
+              break;
+          }
           break;
       }
 
@@ -1976,6 +1987,9 @@
         $this->Power *= 1.3;
 
       if ( $Attacker->Ability->Name == 'Flare Boost' && $Attacker->HasStatus('Burn') && $this->Category == 'Special' )
+        $this->Power *= 1.5;
+
+      if ( $Attacker->Ability->Name == 'Flash Fire' && $Attacker->Ability->Procced && $this->Move_Type == 'Fire' )
         $this->Power *= 1.5;
 
       if ( $Attacker->Ability->Name == 'Blaze' && $Attacker->HP <= $Attacker->Max_HP / 2 && $this->Move_Type == 'Fire' )
