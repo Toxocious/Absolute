@@ -518,11 +518,26 @@
         $this->Move_Type = 'Flying';
 
       /**
+       * Ability proc dialogue.
+       */
+      $Ability_Proc_Dialogue = '';
+
+      /**
        * Calculate how much damage will be done.
        */
       $Damage = 0;
       for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
-        $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+      {
+        $Ability_Proc = $this->ProcessAbilityProcs($Attacker, $Defender, true, 1, $Damage);
+        $Ability_Proc_Dialogue .= $Ability_Proc['Text'];
+
+        if ( empty($Ability_Proc['Damage']) )
+          $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+        else if ( $Ability_Proc['Damage'] > 0 )
+          $Damage += $Ability_Proc['Damage'];
+        else
+          $Damage += 0;
+      }
 
       /**
        * Calculate how much healing will be done.
@@ -552,11 +567,8 @@
       /**
        * Process end of turn ability procs.
        */
-      $Ability_Effect = $this->ProcessAbilityProcs($Attacker, $Defender, $Hits, $Damage);
-      if ( !empty($Ability_Effect['Damage']) )
-      {
-        $Damage = $Ability_Effect['Damage'];
-      }
+      $Ability_Effect = $this->ProcessAbilityProcs($Attacker, $Defender, false, $Hits, $Damage);
+      $Ability_Proc_Dialogue .= $Ability_Effect['Text'];
 
       if ( $Damage <= 0 )
       {
@@ -585,7 +597,7 @@
 
       return [
         'Text' => $Dialogue,
-        'Effect_Text' => (isset($Ability_Effect['Text']) ? $Ability_Effect['Text'] : ''),
+        'Effect_Text' => (isset($Ability_Proc_Dialogue) ? $Ability_Proc_Dialogue : ''),
         'Damage' => $Damage,
         'Healing' => $Healing,
       ];
@@ -1662,134 +1674,157 @@
     (
       PokemonHandler $Attacker,
       PokemonHandler $Defender,
+      bool $Mid_Hit = false,
       int $Hits = 1,
       int $Damage = 0
     )
     {
       $Ability_Effect_Text = '';
 
-      switch ($Defender->Ability)
+      switch ($Mid_Hit)
       {
-        case 'Color Change':
-          if
-          (
-            !$Defender->HasTyping([ $this->Move_Type ]) &&
-            $Defender->HasStatus("Forest's Curse") && $this->Move_Type != 'Grass' &&
-            $Defender->HasStatus("Trick-or-Treat") && $this->Move_Type != 'Ghost'
-          )
+        case true:
+          switch ($Defender->Ability)
           {
-            $Defender->Primary_Type = $this->Move_Type;
-            $Defender->Secondary_Type = null;
-
-            $Ability_Effect_Text .= "{$Defender->Display_Name}'s Color Change made it the {$this->Move_Type}-type!";
-          }
-          break;
-
-        case 'Cotton Down':
-          $Attacker->Stats['Speed']->SetValue(-1);
-          $Ability_Effect_Text .= "<br />{$Defender->Display_Name}'s Cotton Down dropped {$Attacker->Display_Name}'s Speed!";
-          break;
-
-        case 'Cursed Body':
-          if
-          (
-            !$Defender->HasStatus('Substitute') &&
-            mt_rand(1, 100) <= 30 &&
-            $Damage > 0
-          )
-          {
-            $Attacker->Moves[$Attacker->Last_Move['Slot']]->Disable();
-
-            $Ability_Effect_Text .= "{$Attacker->Display_Name}'s was disabled due to {$Defender->Display_Name}'s Cursed Body!";
-          }
-          break;
-        case 'Cute Charm':
-          for ( $i = 0; $i <= $Hits; $i++ )
-          {
-            if ( mt_rand(1, 100) <= 30 && $Attacker->Gender != 'G' && $Attacker->Gender != $Defender->Gender )
-            {
-              $Set_Status = $Attacker->SetStatus('Infatuation');
-              if ( !empty($Set_Status) )
-                $Ability_Effect_Text .= $Set_Status->Dialogue;
-            }
-          }
-          break;
-
-        case 'Defeatist':
-          if ( $Defender->HP <= $Defender->Max_HP / 2 )
-          {
-            foreach (['Attack', 'Sp_Attack'] as $Stat)
-            {
-              if
-              (
-                $Defender->Stats[$Stat]->Stage < 6 &&
-                $Defender->Stats[$Stat]->Stage > -6
-              )
+            case 'Disguise':
+              if ( $Damage > 0 )
               {
-                $Defender->Stats[$Stat]->CurrentValue *= 0.5;
+                $Set_Disguise = $Defender->SetStatus('Busted');
+                if ( !empty($Set_Disguise) )
+                {
+                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s {$Set_Disguise['Text']}";
+                  $Ability_Effect_Damage = 0;
+                }
               }
-            }
+              break;
 
-            $Ability_Effect_Text .= "{$Defender->Display_Name}'s Defeatist lowered its stats!";
-          }
-          break;
-
-        case 'Disguise':
-          if ( $Damage > 0 )
-          {
-            $Set_Disguise = $Defender->SetStatus('Busted');
-            if ( !empty($Set_Disguise) )
-            {
-              $Ability_Effect_Text .= "{$Defender->Display_Name}'s {$Set_Disguise['Text']}";
-              $Ability_Effect_Damage = 0;
-            }
-          }
-          break;
-
-        case 'Dry Skin':
-          if ( $this->Move_Type == 'Water' )
-            $Defender->IncreaseHP($Defender->Max_HP / 4);
-          if ( $this->Move_Type == 'Fire' )
-            $Damage *= 1.25;
-          break;
-        case 'Effect Spore':
-          if ( $this->HasFlag('contact') )
-          {
-            for ( $i = 0; $i < $Hits; $i++ )
-            {
-              $Random_Int = mt_rand(1, 100);
-              if ( $Random_Int <= 9 )
-                $Ailment = 'Poison';
-              else if ( $Random_Int <= 21 )
-                $Ailment = 'Paralysis';
-              else if ( $Random_Int <= 30 )
-                $Ailment = 'Sleep';
-
-              if ( !empty($Ailment) )
+            case 'Flame Body':
+              if ( $this->HasFlag('contact') && $Mid_Hit && mt_rand(1, 100) <= 30 )
               {
-                $Set_Ailment = $Defender->SetStatus($Ailment);
+                $Set_Ailment = $Defender->SetStatus('Burn');
                 if ( !empty($Set_Ailment) )
                 {
                   $Ability_Effect_Text .= "{$Attacker->Display_Name} {$Set_Ailment['Text']}";
                 }
               }
+              break;
+
+            case 'Mummy':
+              if ( $this->HasFlag('contact') && $Mid_Hit && !$Attacker->Ability != 'Mummy' )
+              {
+                $Attacker->SetAbility('Mummy');
+                $Ability_Effect_Text .= "{$Attacker->Display_Name}'s ability became Mummy!";
+              }
+              break;
+          }
+          break;
+
+        case false;
+          switch ($Defender->Ability)
+          {
+            case 'Color Change':
+              if
+              (
+                !$Defender->HasTyping([ $this->Move_Type ]) &&
+                $Defender->HasStatus("Forest's Curse") && $this->Move_Type != 'Grass' &&
+                $Defender->HasStatus("Trick-or-Treat") && $this->Move_Type != 'Ghost'
+              )
+              {
+                $Defender->Primary_Type = $this->Move_Type;
+                $Defender->Secondary_Type = null;
+
+                $Ability_Effect_Text .= "{$Defender->Display_Name}'s Color Change made it the {$this->Move_Type}-type!";
+              }
+              break;
+
+            case 'Cotton Down':
+              $Attacker->Stats['Speed']->SetValue(-1);
+              $Ability_Effect_Text .= "<br />{$Defender->Display_Name}'s Cotton Down dropped {$Attacker->Display_Name}'s Speed!";
+              break;
+
+            case 'Cursed Body':
+              if
+              (
+                !$Defender->HasStatus('Substitute') &&
+                mt_rand(1, 100) <= 30 &&
+                $Damage > 0
+              )
+              {
+                $Attacker->Moves[$Attacker->Last_Move['Slot']]->Disable();
+
+                $Ability_Effect_Text .= "{$Attacker->Display_Name}'s was disabled due to {$Defender->Display_Name}'s Cursed Body!";
+              }
+              break;
+            case 'Cute Charm':
+              for ( $i = 0; $i <= $Hits; $i++ )
+              {
+                if ( mt_rand(1, 100) <= 30 && $Attacker->Gender != 'G' && $Attacker->Gender != $Defender->Gender )
+                {
+                  $Set_Status = $Attacker->SetStatus('Infatuation');
+                  if ( !empty($Set_Status) )
+                    $Ability_Effect_Text .= $Set_Status->Dialogue;
+                }
+              }
+              break;
+
+            case 'Defeatist':
+              if ( $Defender->HP <= $Defender->Max_HP / 2 )
+              {
+                foreach (['Attack', 'Sp_Attack'] as $Stat)
+                {
+                  if
+                  (
+                    $Defender->Stats[$Stat]->Stage < 6 &&
+                    $Defender->Stats[$Stat]->Stage > -6
+                  )
+                  {
+                    $Defender->Stats[$Stat]->CurrentValue *= 0.5;
+                  }
+                }
+
+                $Ability_Effect_Text .= "{$Defender->Display_Name}'s Defeatist lowered its stats!";
+              }
+              break;
+
+            case 'Dry Skin':
+              if ( $this->Move_Type == 'Water' )
+                $Defender->IncreaseHP($Defender->Max_HP / 4);
+              if ( $this->Move_Type == 'Fire' )
+                $Damage *= 1.25;
+              break;
+            case 'Effect Spore':
+              if ( $this->HasFlag('contact') )
+              {
+                for ( $i = 0; $i < $Hits; $i++ )
+                {
+                  $Random_Int = mt_rand(1, 100);
+                  if ( $Random_Int <= 9 )
+                    $Ailment = 'Poison';
+                  else if ( $Random_Int <= 21 )
+                    $Ailment = 'Paralysis';
+                  else if ( $Random_Int <= 30 )
+                    $Ailment = 'Sleep';
+
+                  if ( !empty($Ailment) )
+                  {
+                    $Set_Ailment = $Defender->SetStatus($Ailment);
+                    if ( !empty($Set_Ailment) )
+                    {
+                      $Ability_Effect_Text .= "{$Attacker->Display_Name} {$Set_Ailment['Text']}";
+                    }
+                  }
+                }
+              }
+              break;
+            case 'Emergency Exit':
+              $Trainer = $_SESSION['Battle'][$Defender->Side];
+              if ( $Trainer->NextPokemon() && $Defender->HP <= $Defender->Max_HP / 2 )
+              {
+                // How do we handle swapping out mid turn?
+                // Hmm
+              }
+              break;
             }
-          }
-          break;
-        case 'Emergency Exit':
-          $Trainer = $_SESSION['Battle'][$Defender->Side];
-          if ( $Trainer->NextPokemon() && $Defender->HP <= $Defender->Max_HP / 2 )
-          {
-            // How do we handle swapping out mid turn?
-            // Hmm
-          }
-          break;
-        case 'Mummy':
-          if ( $this->HasFlag('contact') && !$Attacker->Ability != 'Mummy' )
-          {
-            $Attacker->SetAbility('Mummy');
-            $Ability_Effect_Text .= "{$Attacker->Display_Name}'s ability became Mummy!";
-          }
           break;
       }
 
