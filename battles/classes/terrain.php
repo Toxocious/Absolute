@@ -3,6 +3,7 @@
   {
     public $Name = null;
     public $Turns_Left = null;
+    public $Dialogue = null;
 
     public function __construct
     (
@@ -21,6 +22,7 @@
 
       $this->Name = $Terrain_Name;
       $this->Turns_Left = $Terrain_Turns;
+      $this->Dialogue = $Terrain_Data['Dialogue'];
 
       unset($_SESSION['Battle']['Terrain']);
       $_SESSION['Battle']['Terrain'] = $this;
