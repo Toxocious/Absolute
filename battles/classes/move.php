@@ -218,6 +218,15 @@
       if ( $this->Name == 'Hidden Power' )
         $this->Move_Type = $this->DetermineMoveType($Attacker->IVs);
 
+      /**
+       * Abilities that change move type, etc. need to happen here.
+       */
+      if ( $Attacker->Ability->Name == 'Galvanize' )
+      {
+        $this->Move_Type = 'Electric';
+        $this->Power *= 1.2;
+      }
+
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
       if ( $Move_Effectiveness['Mult'] > 0 )
         $Does_Move_Crit = $this->DoesMoveCrit($Side);
