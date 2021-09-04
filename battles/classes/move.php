@@ -521,41 +521,8 @@
        * Calculate how much damage will be done.
        */
       $Damage = 0;
-      $Ability_Change_Dialogue = '';
       for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
-      {
         $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
-
-        if ( $this->HasFlag('contact') )
-        {
-          if ( $Attacker->Ability != 'Mummy' && $Defender->Ability == 'Mummy' )
-          {
-            $Attacker->SetAbility('Mummy');
-
-            $Ability_Change_Dialogue .= "<br />{$Attacker->Display_Name}'s ability became Mummy!";
-          }
-
-          if
-          (
-            $Defender->Ability == 'Cute Charm' &&
-            mt_rand(1, 100) <= 30 &&
-            $Defender->Gender != 'G' &&
-            $Defender->Gender != $Attacker->Gender
-          )
-          {
-            $Set_Status = $Attacker->SetStatus('Infatuation');
-            if ( !empty($Set_Status) )
-              $Ability_Change_Dialogue .= $Set_Status->Dialogue;
-          }
-        }
-
-        if ( $Defender->Ability == 'Cotton Down' )
-        {
-          $Attacker->Stats['Speed']->SetValue(-1);
-
-          $Ability_Change_Dialogue .= "<br />{$Defender->Display_Name}'s Cotton Down dropped {$Attacker->Display_Name}'s Speed!";
-        }
-      }
 
       /**
        * Calculate how much healing will be done.
@@ -1718,6 +1685,11 @@
           }
           break;
 
+        case 'Cotton Down':
+          $Attacker->Stats['Speed']->SetValue(-1);
+          $Ability_Effect_Text .= "<br />{$Defender->Display_Name}'s Cotton Down dropped {$Attacker->Display_Name}'s Speed!";
+          break;
+
         case 'Cursed Body':
           if
           (
@@ -1729,6 +1701,17 @@
             $Attacker->Moves[$Attacker->Last_Move['Slot']]->Disable();
 
             $Ability_Effect_Text .= "{$Attacker->Display_Name}'s was disabled due to {$Defender->Display_Name}'s Cursed Body!";
+          }
+          break;
+        case 'Cute Charm':
+          for ( $i = 0; $i <= $Hits; $i++ )
+          {
+            if ( mt_rand(1, 100) <= 30 && $Attacker->Gender != 'G' && $Attacker->Gender != $Defender->Gender )
+            {
+              $Set_Status = $Attacker->SetStatus('Infatuation');
+              if ( !empty($Set_Status) )
+                $Ability_Effect_Text .= $Set_Status->Dialogue;
+            }
           }
           break;
 
@@ -1799,6 +1782,13 @@
           {
             // How do we handle swapping out mid turn?
             // Hmm
+          }
+          break;
+        case 'Mummy':
+          if ( $this->HasFlag('contact') && !$Attacker->Ability != 'Mummy' )
+          {
+            $Attacker->SetAbility('Mummy');
+            $Ability_Effect_Text .= "{$Attacker->Display_Name}'s ability became Mummy!";
           }
           break;
       }
