@@ -1454,36 +1454,39 @@
 
             $Stat_Name = str_replace('_', 'ecial ', $Stat);
 
-            if ( $this->$Stat_Boost < 0 && $Target->Active->Ability->Name == 'Clear Body' && !$Attacker->Ability->Name == 'Mold Breaker' )
-              continue;
-
-            if ( $Stat_Name == 'Defense' && $Target->Active->Ability->Name == 'Big Pecks' && $Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
-              continue;
-
-            if ( $this->$Stat_Boost < 0 && $Target->Active != $Attacker && $Target->Active->HasAbility([ 'Competitive', 'Defiant' ]) )
+            if ( $this->$Stat_Boost < 0 )
             {
-              switch ($Target->Active->Ability->Name)
+
+              if ( $Target->Active->Ability->Name == 'Clear Body' && $Attacker->Ability->Name != 'Mold Breaker' )
+                continue;
+
+              if ( $Target->Active->Ability->Name == 'Big Pecks' && $Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Stat_Name == 'Defense' )
+                continue;
+
+              if ( $Target->Active->HasAbility([ 'Competitive', 'Defiant' ]) && $Target->Active != $Attacker )
               {
-                case 'Competitive':
-                  $Boosted_Stat = [
-                    'Stat' => 'Sp_Attack',
-                    'Name' => 'Special Attack'
-                  ];
-                  break;
+                switch ($Target->Active->Ability->Name)
+                {
+                  case 'Competitive':
+                    $Boosted_Stat = [
+                      'Stat' => 'Sp_Attack',
+                      'Name' => 'Special Attack'
+                    ];
+                    break;
 
-                case 'Defiant':
-                  $Boosted_Stat =  [
-                    'Stat' => 'Attack',
-                    'Name' => 'Attack'
-                  ];
-                  break;
-              }
+                  case 'Defiant':
+                    $Boosted_Stat =  [
+                      'Stat' => 'Attack',
+                      'Name' => 'Attack'
+                    ];
+                    break;
+                }
 
-              if ( $Target->Active->Stats[$Boosted_Stat['Stat']]->Stage < 6 )
-              {
-                $Target->Active->Stats[$Boosted_Stat['Stat']]->SetValue(2);
-
-                $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Target->Active->Ability->Name} boosted its {$Boosted_Stat['Name']}!";
+                if ( $Target->Active->Stats[$Boosted_Stat['Stat']]->Stage < 6 )
+                {
+                  $Target->Active->Stats[$Boosted_Stat['Stat']]->SetValue(2);
+                  $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Target->Active->Ability->Name} boosted its {$Boosted_Stat['Name']}!";
+                }
               }
             }
 
