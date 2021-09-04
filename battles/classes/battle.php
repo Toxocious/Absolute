@@ -259,6 +259,8 @@
                 break;
             }
           }
+
+          $this->Weather->TickWeather();
         }
 
         if ( $Active_Ally->Active->HP <= 0 )
