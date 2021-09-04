@@ -1976,6 +1976,9 @@
       if ( $Attacker->Ability == 'Battery' && $this->Category == 'Special' )
         $this->Power *= 1.3;
 
+      if ( $Attacker->Ability == 'Flare Boost' && $Attacker->HasStatus('Burn') && $this->Category == 'Special' )
+        $this->Power *= 1.5;
+
       if ( $Attacker->Ability == 'Blaze' && $Attacker->HP <= $Attacker->Max_HP / 2 && $this->Move_Type == 'Fire' )
         $this->Power *= 1.5;
 
