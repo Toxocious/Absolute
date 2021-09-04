@@ -343,6 +343,41 @@
             $Effect_Text .= $Set_Terrain->Dialogue;
           }
           break;
+
+        case 'Forewarn':
+          $Warning_Move = null;
+          foreach ($Defender->Moves as $Move)
+          {
+            if ( empty($Warning_Move) )
+            {
+              $Warning_Move = $Move;
+              continue;
+            }
+
+            $Base_Power = 0;
+            if ( $Move->Power != 'None' )
+              $Base_Power = $Move->Power;
+            if ( $Move->Category == 'Ohko' )
+              $Base_Power = 150;
+            else if ( in_array($Move->Name, ['Counter', 'Metalburst', 'Mirror Coat']) )
+              $Base_Power = 120;
+            else if ( $Move->Category == 'Status' )
+              $Base_Power = 80;
+            else if ( in_array($Move->Name, ['Stored Power', 'Power Trip']) )
+              $Base_Power = 20;
+            else
+              $Base_Power = 80;
+
+            if ( $Base_Power > $Warning_Move->Power )
+              $Warning_Move = $Move;
+          }
+
+          if ( !empty($Warning_Move) )
+          {
+            $Effect_Text .= "{$New_Active->Display_Name}'s Forewarn makes it wary of {$Defender->Display_Name}'s {$Warning_Move->Name}!";
+            unset($Warning_Move);
+          }
+          break;
       }
 
       if ( !empty($this->Weather) )
