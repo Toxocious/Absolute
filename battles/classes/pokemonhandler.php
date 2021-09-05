@@ -421,6 +421,11 @@
           $New_Active->Stats['Attack']->Current_Value *= 2;
           $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Huge Power!";
           break;
+
+        case 'Hustle':
+          $New_Active->Stats['Attack']->Current_Value *= 1.5;
+          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Hustle!";
+          break;
       }
 
       if ( !empty($this->Weather) )

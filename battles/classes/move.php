@@ -833,6 +833,9 @@
       if ( $Attacker->Ability->Name == 'Compound Eyes' )
         $this->Accuracy *= 1.3;
 
+      if ( $Attacker->Ability->Name == 'Hustle' && $this->Damage_Type == 'Physical' )
+        $this->Accuracy *= 0.8;
+
       $Accuracy_Mod = $Attacker->Stats['Accuracy']->Current_Value / $Defender->Stats['Evasion']->Current_Value;
 
       if ( mt_rand(1, 100) < $this->Accuracy * $Accuracy_Mod )
