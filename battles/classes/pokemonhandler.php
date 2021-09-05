@@ -412,6 +412,10 @@
             $Effect_Text .= $Set_Terrain->Dialogue;
           }
           break;
+
+        case 'Heavy Metal':
+          $this->Weight *= 2;
+          break;
       }
 
       if ( !empty($this->Weather) )
