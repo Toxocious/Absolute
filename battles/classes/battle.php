@@ -192,7 +192,9 @@
             switch ($this->Weather->Name)
             {
               case 'Hail':
-                if ( !$Active_Ally->Active->HasTyping(['Ice']) || $Active_Ally->Active->Ability->Name == 'Ice Body' )
+                if ( $Active_Ally->Active->Ability->Name == 'Ice Body' )
+                  $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 16);
+                else
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
 
