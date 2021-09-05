@@ -385,6 +385,11 @@
             $Effect_Text .= "{$New_Active->Display_Name} Frisked {$Defender->Display_Name}'s {$Defender->Item->Name}.";
           }
           break;
+
+        case 'Gorrila Tactics':
+          $New_Active->Stats['Attack']->Current_Value *= 1.5;
+          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Gorilla Tactics!";
+          break;
       }
 
       if ( !empty($this->Weather) )
