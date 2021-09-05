@@ -453,6 +453,11 @@
             $Effect_Text .= "{$New_Active->Display_Name}'s Intimidate cuts {$Defender->Display_Name}'s Attack!";
           }
           break;
+
+        case 'Intrepid Sword':
+          $New_Active->Stats['Attack']->SetValue(1);
+          $Effect_Text .= "{$New_Active->Display_Name}'s Intrepid Sword raised its Attack!<br />";
+          break;
       }
 
       if ( !empty($this->Weather) )
