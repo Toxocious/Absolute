@@ -1598,6 +1598,9 @@
             {
               if ( $Ailment_Chance <= $this->Effect_Chance )
               {
+                if ( $Target->Active->Ability->Name == 'Inner Focus' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+                  return "{$Target->Active->Ability->Name} won't flinch because of its Inner Focus!";
+
                 $Set_Status = $Target->Active->SetStatus($this->Ailment);
                 return;
               }
