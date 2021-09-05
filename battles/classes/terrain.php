@@ -42,6 +42,27 @@
     }
 
     /**
+     * End the current terrain.
+     */
+    public function EndTerrain()
+    {
+      foreach (['Ally', 'Foe'] as $Side)
+      {
+        $Active_Pokemon = $_SESSION['Battle'][$Side]->Active;
+
+        switch ($this->Name)
+        {
+          case 'Grassy':
+            if ( $Active_Pokemon->Ability->Name == 'Grassy Pelt' )
+            {
+              $Active_Pokemon->Stats['Defense']->Current_Value /= 1.5;
+            }
+            break;
+        }
+      }
+    }
+
+    /**
      * All possible types of terrain.
      */
     public function TerrainList()
