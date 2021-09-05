@@ -400,6 +400,18 @@
             }
           }
           break;
+
+        case 'Grassy Surge':
+          if ( $this->Item->Name == 'Terrain Extender' )
+            $Terrain_Turns = 8;
+
+          $Set_Terrain = new Terrain('Grassy', !empty($Terrain_Turns) ?: null);
+          if ( !empty($Set_Terrain) )
+          {
+            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
+            $Effect_Text .= $Set_Terrain->Dialogue;
+          }
+          break;
       }
 
       if ( !empty($this->Weather) )
