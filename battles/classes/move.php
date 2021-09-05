@@ -1480,6 +1480,8 @@
 
               if ( $Target->Active->Ability->Name == 'Big Pecks' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Stat_Name == 'Defense' )
                 continue;
+
+              if ( $Target->Active->Ability->Name == 'Keen Eye' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Target->Active != $Attacker && $Stat_Name == 'Evasion' )
                 continue;
 
               if ( $Target->Active->HasAbility([ 'Competitive', 'Defiant' ]) && $Target->Active != $Attacker )
