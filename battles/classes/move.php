@@ -1582,6 +1582,14 @@
           return 'But it failed!';
         }
 
+        if ( $Target->Active->Ability->Name == 'Leaf Guard' )
+        {
+          if ( !empty($this->Weather) && in_array($this->Weather->Name, ['Extremely Harsh Sunlight', 'Harsh Sunlight']) )
+          {
+            return 'But it failed!';
+          }
+        }
+
         if
         (
           $Target->Active->Ability->Name == 'Overcoat' &&
