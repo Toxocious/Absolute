@@ -20,6 +20,21 @@
       else
         $Terrain_Turns = $Terrain_Turns;
 
+      foreach (['Ally', 'Foe'] as $Side)
+      {
+        $Active_Pokemon = $_SESSION['Battle'][$Side]->Active;
+
+        switch ($this->Name)
+        {
+          case 'Grassy':
+            if ( $Active_Pokemon->Ability->Name == 'Grassy Pelt' )
+            {
+              $Active_Pokemon->Stats['Defense']->Current_Value *= 1.5;
+            }
+            break;
+        }
+      }
+
       $this->Name = $Terrain_Name;
       $this->Turns_Left = $Terrain_Turns;
       $this->Dialogue = $Terrain_Data['Dialogue'];
