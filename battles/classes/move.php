@@ -1652,6 +1652,29 @@
             }
             break;
 
+          case 'Sleep':
+            if ( !$Target->Active->Ability->Name == 'Insomnia' )
+            {
+              if ( $Ailment_Chance <= $this->Effect_Chance )
+              {
+                $Set_Status = $Target->Active->SetStatus($this->Ailment);
+                $Status_Props = array_filter(get_object_vars($Set_Status));
+                if ( isset($Set_Status) && !empty($Status_Props) )
+                {
+                  return $Set_Status->Dialogue;
+                }
+              }
+              else
+              {
+                return 'But it failed!';
+              }
+            }
+            else
+            {
+              return 'But it failed!';
+            }
+            break;
+
           default:
             if ( $Ailment_Chance <= $this->Effect_Chance )
             {
