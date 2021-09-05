@@ -426,6 +426,13 @@
           $New_Active->Stats['Attack']->Current_Value *= 1.5;
           $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Hustle!";
           break;
+
+        case 'Immunity':
+          if ( $New_Active->HasStatusFromArray(['Badly Poisoned', 'Poison']) )
+          {
+            $New_Active->RemoveStatusFromArray(['Badly Poisoned', 'Poison']);
+          }
+          break;
       }
 
       if ( !empty($this->Weather) )

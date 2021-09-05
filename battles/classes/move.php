@@ -1628,7 +1628,8 @@
             if
             (
               !$Target->Active->HasTyping([ 'Poison', 'Steel' ]) ||
-              ( $Target->Active->HasTyping([ 'Poison', 'Steel' ]) && $Attacker->Ability->Name == 'Corrosion' && $this->Damage_Type == 'Status' )
+              ( $Target->Active->HasTyping([ 'Poison', 'Steel' ]) && $Attacker->Ability->Name == 'Corrosion' && $this->Damage_Type == 'Status' ) ||
+              $Target->Active->Ability->Name == 'Immunity'
             )
             {
               if ( $Ailment_Chance <= $this->Effect_Chance )
