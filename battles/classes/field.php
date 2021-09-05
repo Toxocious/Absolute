@@ -112,6 +112,14 @@
           'Stacks' => 1,
           'Dialogue' => 'Your team became shrouded in mist!',
         ],
+        'Reflect' => [
+          'Min_Turns' => 5,
+          'Max_Turns' => 5,
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
+          'Dialogue' => 'Light Screen raised your team\'s Defense!',
+        ],
         'Spikes' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
