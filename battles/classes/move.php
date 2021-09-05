@@ -1712,7 +1712,7 @@
               break;
 
             case 'Flame Body':
-              if ( $this->HasFlag('contact') && $Mid_Hit && mt_rand(1, 100) <= 30 )
+              if ( $this->HasFlag('contact') && mt_rand(1, 100) <= 30 )
               {
                 $Set_Ailment = $Defender->SetStatus('Burn');
                 if ( !empty($Set_Ailment) )
@@ -1722,8 +1722,20 @@
               }
               break;
 
+            case 'Gooey':
+              if ( $this->HasFlag('contact') )
+              {
+                $Attacker_Speed = $Attacker->Stats['Speed'];
+                if ( $Attacker_Speed->Stage > -6 )
+                {
+                  $Attacker_Speed->SetValue(-1);
+                  $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Speed was dropped by {$Defender->Display_Name}'s Gooey!";
+                }
+              }
+              break;
+
             case 'Mummy':
-              if ( $this->HasFlag('contact') && $Mid_Hit && !$Attacker->Ability->Name != 'Mummy' )
+              if ( $this->HasFlag('contact') && !$Attacker->Ability->Name != 'Mummy' )
               {
                 $Attacker->SetAbility('Mummy');
                 $Ability_Effect_Text .= "{$Attacker->Display_Name}'s ability became Mummy!";
