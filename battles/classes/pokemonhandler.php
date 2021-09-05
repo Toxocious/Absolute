@@ -390,6 +390,16 @@
           $New_Active->Stats['Attack']->Current_Value *= 1.5;
           $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Gorilla Tactics!";
           break;
+
+        case 'Grassy Pelt':
+          if ( !empty($this->Terrain) )
+          {
+            if ( $this->Terrain->Name == 'Grassy' )
+            {
+              $New_Active->Stats['Defense']->Current_Value *= 1.5;
+            }
+          }
+          break;
       }
 
       if ( !empty($this->Weather) )
