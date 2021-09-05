@@ -416,6 +416,11 @@
         case 'Heavy Metal':
           $this->Weight *= 2;
           break;
+
+        case 'Huge Power':
+          $New_Active->Stats['Attack']->Current_Value *= 2;
+          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Huge Power!";
+          break;
       }
 
       if ( !empty($this->Weather) )
