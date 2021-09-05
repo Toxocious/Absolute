@@ -179,46 +179,6 @@
           continue;
 
         /**
-         * Process the Pokemon's active Statuses.
-         */
-        if ( !empty($Active_Ally->Active->Statuses) )
-        {
-          foreach ($Active_Ally->Active->Statuses as $Status)
-          {
-            if ( !$Status->Volatile )
-            {
-              switch ( $Status->Name )
-              {
-                case 'Burn':
-                  $Burn_Mult = 1;
-                  if ( $Active_Ally->Active->Ability->Name == 'Heatproof' )
-                    $Burn_Mult = 2;
-
-                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
-                  break;
-
-                case 'Poison':
-                  if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
-                    $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
-                  else
-                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
-                  break;
-
-                case 'Sleep':
-                  if ( $Active_Foe->Active->Ability->Name == 'Bad Dreams' && $Active_Ally->Active->Ability->Name != 'Comatose' )
-                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
-              }
-            }
-
-            if ( $Status->Turns_Left === 0 )
-              unset($Active_Ally->Active->Statuses[$Status->Name]);
-
-            if ( $Status->Turns_Left > 0 )
-              $Status->UpdateStatus();
-          }
-        }
-
-        /**
          * Process active Weather effects.
          */
         if ( !empty($this->Weather) )
@@ -261,6 +221,46 @@
           }
 
           $this->Weather->TickWeather();
+        }
+
+        /**
+         * Process the Pokemon's active Statuses.
+         */
+        if ( !empty($Active_Ally->Active->Statuses) )
+        {
+          foreach ($Active_Ally->Active->Statuses as $Status)
+          {
+            if ( !$Status->Volatile )
+            {
+              switch ( $Status->Name )
+              {
+                case 'Burn':
+                  $Burn_Mult = 1;
+                  if ( $Active_Ally->Active->Ability->Name == 'Heatproof' )
+                    $Burn_Mult = 2;
+
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
+                  break;
+
+                case 'Poison':
+                  if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
+                    $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
+                  else
+                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                  break;
+
+                case 'Sleep':
+                  if ( $Active_Foe->Active->Ability->Name == 'Bad Dreams' && $Active_Ally->Active->Ability->Name != 'Comatose' )
+                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+              }
+            }
+
+            if ( $Status->Turns_Left === 0 )
+              unset($Active_Ally->Active->Statuses[$Status->Name]);
+
+            if ( $Status->Turns_Left > 0 )
+              $Status->UpdateStatus();
+          }
         }
 
         if ( $Active_Ally->Active->HP <= 0 )
