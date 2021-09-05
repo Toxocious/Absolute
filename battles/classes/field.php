@@ -72,6 +72,14 @@
     public function FieldEffects()
     {
       return [
+        'Aurora Veil' => [
+          'Min_Turns' => 5,
+          'Max_Turns' => 5,
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
+          'Dialogue' => 'Aurora Veil raised your team\'s defenses!',
+        ],
         'Gravity' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
