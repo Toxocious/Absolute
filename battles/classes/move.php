@@ -2126,6 +2126,9 @@
           if ( $this->Move_Type == 'Fire' )
             $Damage *= 2;
         }
+
+        if ( $Damage > $Defender->HP )
+          $Damage = $Defender->HP;
       }
       else
       {
