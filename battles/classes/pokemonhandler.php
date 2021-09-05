@@ -774,7 +774,7 @@
       array $Abilities
     )
     {
-      if ( in_array($this->Ability, $Abilities) )
+      if ( in_array($this->Ability->Name, $Abilities) )
         return true;
 
       return false;
