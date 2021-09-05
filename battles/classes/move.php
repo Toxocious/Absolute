@@ -1456,7 +1456,8 @@
             if
             (
               $this->Target == 'Foe' &&
-              $this->IsFieldEffectActive('Foe', 'Mist')
+              $this->IsFieldEffectActive('Foe', 'Mist') &&
+              $Attacker->Ability->Name != 'Infiltrator'
             )
             {
               $Stat_Change_Text .= 'But it failed due to the Mist!';
@@ -1972,10 +1973,12 @@
         case 'Ally':
           $Attacker = $_SESSION['Battle']['Ally']->Active;
           $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Foe = 'Foe';
           break;
         case 'Foe':
           $Attacker = $_SESSION['Battle']['Foe']->Active;
           $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Foe = 'Ally';
           break;
       }
 
@@ -2068,14 +2071,33 @@
           $this->Power *= 1.33;
       }
 
+      $Physical_Damage_Mult = 1.0;
+      $Special_Damage_Mult = 1.0;
+      if ( $Attacker->Ability->Name != 'Infiltrator' )
+      {
+        if ( $this->IsFieldEffectActive($Foe, 'Aurora Veil') )
+        {
+          $Physical_Damage_Mult = 0.5;
+          $Special_Damage_Mult = 0.5;
+        }
+        else if ( $this->IsFieldEffectActive($Foe, 'Reflect') )
+        {
+          $Physical_Damage_Mult = 0.5;
+        }
+        else if ( $this->IsFieldEffectActive($Foe, 'Light Screen') )
+        {
+          $Special_Damage_Mult = 0.5;
+        }
+      }
+
       switch ($this->Damage_Type)
       {
         case 'Physical':
-          $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Attack']->Current_Value / $Defender->Stats['Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+          $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Attack']->Current_Value / $Defender->Stats['Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * $Physical_Damage_Mult * $Special_Damage_Mult * 1);
           break;
 
         case 'Special':
-          $Damage = $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Sp_Attack']->Current_Value / $Defender->Stats['Sp_Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * 1);
+          $Damage = $Damage = floor(((2 * $Attacker->Level / 5 + 2) * $this->Power * $Attacker->Stats['Sp_Attack']->Current_Value / $Defender->Stats['Sp_Defense']->Current_Value / 50 + 2) * 1 * $Weather_Mult * $Crit_Mult * (mt_rand(185, 200) / 200) * $STAB * $Move_Effectiveness * $Status_Mult * $Physical_Damage_Mult * $Special_Damage_Mult * 1);
           break;
 
         default:
