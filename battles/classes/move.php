@@ -2092,6 +2092,9 @@
         if ( $Defender->Ability->Name == 'Fur Coat' && $this->Damage_Type == 'Physical' )
           $Damage /= 2;
 
+        if ( $Defender->Ability->Name == 'Ice Scales' && $this->Damage_Type == 'Special' )
+          $Damage /= 2;
+
         if ( $Defender->Ability->Name == 'Fluffy' )
         {
           if ( $this->HasFlag('contact') )
