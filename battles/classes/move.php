@@ -1768,6 +1768,14 @@
               }
               break;
 
+            case 'Iron Barbs':
+              if ( $this->HasFlag('contact') )
+              {
+                $Attacker->DecreaseHP($Attacker->Max_HP / 8);
+                $Ability_Effect_Text .= "{$Attacker->Display_Name} took damage from {$Defender->Display_Name}'s Iron Barbs!<br />";
+              }
+              break;
+
             case 'Mummy':
               if ( $this->HasFlag('contact') && !$Attacker->Ability->Name != 'Mummy' )
               {
