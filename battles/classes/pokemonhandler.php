@@ -464,7 +464,8 @@
      */
     public function HandleFaint
     (
-      bool $Weather_Trigger = false
+      bool $Weather_Trigger = false,
+      int $Damage = 0
     )
     {
       if ( $this->HP > 0 )
@@ -483,13 +484,20 @@
       }
 
       $this->Fainted = true;
+      $Effect_Text = '';
+
+      if ( $Attacker->Active->Ability->Name == 'Innards Out' )
+      {
+        $Defender->Active->DecreaseHP($Damage);
+        $Effect_Text .= "<br />{$Defender->Active->Display_Name} took damage from {$Attacker->Active->Display_Name}'s Innards Out!";
+      }
 
       if ( !$Weather_Trigger )
       {
         if ( $Defender->Active->HasStatus('Destiny Bond') )
         {
           $Defender->Active->DecreaseHP($Defender->Active->HP);
-          $Dialogue = "<br />{$this->Display_Name} took its foe down with it!";
+          $Effect_Text .= "<br />{$this->Display_Name} took its foe down with it!";
         }
       }
 
@@ -503,7 +511,7 @@
 
       if ( $Attacker->NextPokemon() )
       {
-        $Effect_Text = $this->AbilityProcsOnFaint($Attacker, $Defender);
+        $Effect_Text .= $this->AbilityProcsOnFaint($Attacker, $Defender);
 
         $this->GeneratePostcode('Continue');
         $Continue = true;
@@ -517,7 +525,6 @@
       return [
         'Type' => 'Success',
         'Text' => "{$this->Display_Name} has fainted." .
-                  (!empty($Dialogue) ? $Dialogue : '') .
                   (!empty($Effect_Text) ? $Effect_Text : '') .
                   (!empty($Exp_Dialogue) ? "<br /><br />{$Exp_Dialogue['Text']}" : ''),
         'Continue' => $Continue,

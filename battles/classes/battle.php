@@ -541,7 +541,7 @@
             {
               $Ally_Active->DisableMoves();
 
-              $Faint_Data = $Ally_Active->HandleFaint();
+              $Faint_Data = $Ally_Active->HandleFaint(false, $Foe_Attack['Damage']);
 
               $Attack_Dialogue .= '<br /><br />';
               $Attack_Dialogue .= $Faint_Data['Text'];
@@ -557,7 +557,7 @@
           {
             $Ally_Active->DisableMoves();
 
-            $Faint_Data = $Foe_Active->HandleFaint();
+            $Faint_Data = $Foe_Active->HandleFaint(false, $Ally_Attack['Damage']);
 
             $Attack_Dialogue .= $Faint_Data['Text'];
 
@@ -589,7 +589,7 @@
             {
               $Ally_Active->DisableMoves();
 
-              $Faint_Data = $Foe_Active->HandleFaint();
+              $Faint_Data = $Foe_Active->HandleFaint(false, $Ally_Attack['Damage']);
 
               $Attack_Dialogue .= $Faint_Data['Text'];
 
@@ -604,7 +604,7 @@
           {
             $Ally_Active->DisableMoves();
 
-            $Faint_Data = $Ally_Active->HandleFaint();
+            $Faint_Data = $Ally_Active->HandleFaint(false, $Foe_Attack['Damage']);
 
             $Attack_Dialogue .= '<br /><br />';
             $Attack_Dialogue .= $Faint_Data['Text'];
