@@ -1776,6 +1776,14 @@
               }
               break;
 
+            case 'Justified':
+              if ( $this->Move_Type == 'Dark' )
+              {
+                $Defender->Stats['Attack']->SetValue(1);
+                $Ability_Effect_Text .="{$Defender->Display_Name}'s Justified raised its Attack!<br />";
+              }
+              break;
+
             case 'Mummy':
               if ( $this->HasFlag('contact') && !$Attacker->Ability->Name != 'Mummy' )
               {
