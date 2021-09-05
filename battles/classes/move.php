@@ -1860,6 +1860,14 @@
                 }
               }
               break;
+
+            case 'Grim Neigh':
+              if ( $Defender->HP <= 0 && $Attacker->Stats['Sp_Attack']->Stage < 6 )
+              {
+                $Attacker->Stats['Sp_Attack']->SetValue(1);
+                $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Grim Neight boosted its Special Attack!";
+              }
+              break;
           }
           break;
       }
