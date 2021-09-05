@@ -1475,10 +1475,11 @@
               if ( $Target->Active->Ability->Name == 'Clear Body' && $Attacker->Ability->Name != 'Mold Breaker' )
                 continue;
 
-              if ( $Target->Active->Ability->Name == 'Hyper Cutter' && $Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Stat_Name == 'Attack' )
+              if ( $Target->Active->Ability->Name == 'Hyper Cutter' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Stat_Name == 'Attack' )
                 continue;
 
-              if ( $Target->Active->Ability->Name == 'Big Pecks' && $Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Stat_Name == 'Defense' )
+              if ( $Target->Active->Ability->Name == 'Big Pecks' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Stat_Name == 'Defense' )
+                continue;
                 continue;
 
               if ( $Target->Active->HasAbility([ 'Competitive', 'Defiant' ]) && $Target->Active != $Attacker )
