@@ -1636,20 +1636,10 @@
             }
             break;
 
+
           case 'Freeze':
             if ( !empty($this->Weather) && strpos($this->Weather->Name, 'Harsh Sunlight') )
               return 'But it failed!';
-
-            if ( $Ailment_Chance <= $this->Effect_Chance )
-            {
-              $Set_Status = $Target->Active->SetStatus($this->Ailment);
-              $Status_Props = array_filter(get_object_vars($Set_Status));
-              if ( isset($Set_Status) && !empty($Status_Props) )
-              {
-                return $Set_Status->Dialogue;
-              }
-            }
-            break;
 
           case 'Paralysis':
             if ( $Target->Active->Ability->Name == 'Limber' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
@@ -1657,55 +1647,24 @@
 
             if ( $Target->Active->HasTyping([ 'Electric' ]) )
               return 'But it failed!';
-            break;
 
           case 'Badly Poison':
           case 'Poison':
             if
             (
-              !$Target->Active->HasTyping([ 'Poison', 'Steel' ]) ||
-              ( $Target->Active->HasTyping([ 'Poison', 'Steel' ]) && $Attacker->Ability->Name == 'Corrosion' && $this->Damage_Type == 'Status' ) ||
-              $Target->Active->Ability->Name == 'Immunity'
+              $Target->Active->HasTyping([ 'Poison', 'Steel' ]) ||
+              ( $Target->Active->HasTyping([ 'Poison', 'Steel' ]) && $Attacker->Ability->Name != 'Corrosion' && $this->Damage_Type != 'Status' ) ||
+              $Target->Active->Ability->Name != 'Immunity'
             )
             {
-              if ( $Ailment_Chance <= $this->Effect_Chance )
-              {
-                $Set_Status = $Target->Active->SetStatus($this->Ailment);
-                $Status_Props = array_filter(get_object_vars($Set_Status));
-                if ( isset($Set_Status) && !empty($Status_Props) )
-                {
-                 return $Set_Status->Dialogue;
-                }
-              }
+              return 'But it failed!';
             }
-            else
-            {
-              return 'But it failed';
-            }
-            break;
 
           case 'Sleep':
             if ( !$Target->Active->Ability->Name == 'Insomnia' )
             {
-              if ( $Ailment_Chance <= $this->Effect_Chance )
-              {
-                $Set_Status = $Target->Active->SetStatus($this->Ailment);
-                $Status_Props = array_filter(get_object_vars($Set_Status));
-                if ( isset($Set_Status) && !empty($Status_Props) )
-                {
-                  return $Set_Status->Dialogue;
-                }
-              }
-              else
-              {
-                return 'But it failed!';
-              }
-            }
-            else
-            {
               return 'But it failed!';
             }
-            break;
 
           default:
             if ( $Ailment_Chance <= $this->Effect_Chance )
