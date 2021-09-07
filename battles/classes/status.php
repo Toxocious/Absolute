@@ -61,6 +61,12 @@
       if ( $Pokemon->Ability->Name == 'Shields Down' )
         return false;
 
+      if ( $Pokemon->Ability->Name == 'Marvel Scale' && !$Pokemon->Ability->Procced )
+      {
+        $Pokemon->Ability->SetProcStatus(true);
+        $Pokemon->Stats['Defense']->Current_Value *= 1.5;
+      }
+
       if ( !isset($Status_Turns) )
         $Status_Turns = mt_rand($Status_Data['Min_Turns'], $Status_Data['Max_Turns']);
 
