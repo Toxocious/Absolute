@@ -183,7 +183,7 @@
          */
         if ( !empty($this->Terrain) )
         {
-          $this->Terrain->DecrementTurnCount();
+          $this->Terrain->TickTerrain();
 
           if ( $this->Terrain->Turns_Left === 0 )
             $this->Terrain->EndTerrain();
@@ -363,7 +363,7 @@
             unset($this->Field_Effects[$Field_Effect->Name]);
 
           if ( $Field_Effect->Turns_Left > 0 )
-            $Field_Effect->DecrementTurnCount();
+            $Field_Effect->TickField();
         }
       }
     }

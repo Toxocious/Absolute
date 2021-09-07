@@ -42,7 +42,7 @@
     /**
      * Decrement the turn count.
      */
-    public function DecrementTurnCount()
+    public function TickField()
     {
       if ( $this->Turns_Left > 0 )
         $this->Turns_Left--;
