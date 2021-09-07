@@ -462,6 +462,10 @@
           $New_Active->Stats['Attack']->SetValue(1);
           $Effect_Text .= "{$New_Active->Display_Name}'s Intrepid Sword raised its Attack!<br />";
           break;
+
+        case 'Light Metal':
+          $this->Weight /= 2;
+          break;
       }
 
       if ( !empty($this->Weather) )
