@@ -1796,8 +1796,11 @@
             case 'Justified':
               if ( $this->Move_Type == 'Dark' )
               {
-                $Defender->Stats['Attack']->SetValue(1);
-                $Ability_Effect_Text .="{$Defender->Display_Name}'s Justified raised its Attack!<br />";
+                if ( $Defender->Stats['Attack']->Stage < 6 )
+                {
+                  $Defender->Stats['Attack']->SetValue(1);
+                  $Ability_Effect_Text .="{$Defender->Display_Name}'s Justified raised its Attack!<br />";
+                }
               }
               break;
 
