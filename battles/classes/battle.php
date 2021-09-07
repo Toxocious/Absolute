@@ -314,6 +314,9 @@
           }
         }
 
+        /**
+         * Check the HP again, after weather and status ticks occur.
+         */
         if ( $Active_Ally->Active->HP <= 0 )
         {
           $Handle_Faint = $Active_Ally->Active->HandleFaint();
@@ -349,6 +352,40 @@
               return $Faint_Dialogue;
             }
           }
+        }
+
+        /**
+         * Process ability procs.
+         */
+        switch ($Active_Ally->Active->Ability->Name)
+        {
+          case 'Moody':
+            $Stats = ['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed'];
+
+            $Minus_Stats = [];
+            $Plus_Stats = [];
+            foreach ($Stats as $Index => $Stat)
+            {
+              if ( $Active_Ally->Active->Stats[$Stat]->Stage < 6 )
+                $Plus_Stats[] = $Stat;
+
+              if ( $Active_Ally->Active->Stats[$Stat]->Stage > -6 )
+                $Minus_Stats[] = $Stat;
+            }
+
+            if ( count($Plus_Stats) > 0 )
+            {
+              $Increase_Stat = $Plus_Stats[mt_rand(0, count($Plus_Stats))];
+              $Active_Ally->Active->Stats[$Increase_Stat]->SetValue(1);
+            }
+
+            $Reduce_Stat = $Minus_Stats[mt_rand(0, count($Minus_Stats))];
+            if ( count($Reduce_Stat) > 0 )
+            {
+              $Decrease_Stat = $Reduce_Stat[mt_rand(0, count($Reduce_Stat))];
+              $Active_Ally->Active->Stats[$Decrease_Stat]->SetValue(-1);
+            }
+            break;
         }
       }
 
