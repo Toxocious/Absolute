@@ -1136,6 +1136,18 @@
     }
 
     /**
+     * Reset the Pokemon's typings.
+     */
+    public function ResetTyping()
+    {
+      if ( $this->Primary_Type != $this->Primary_Type_Original )
+        $this->Primary_Type = $this->Primary_Type_Original;
+
+      if ( $this->Secondary_Type != $this->Secondary_Type_Original )
+        $this->Secondary_Type = $this->Secondary_Type_Original;
+    }
+
+    /**
      * Determine how effective a given move type would be against the Pokemon.
      * @param {string} $Move_Type
      */
