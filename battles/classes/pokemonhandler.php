@@ -466,6 +466,11 @@
         case 'Light Metal':
           $this->Weight /= 2;
           break;
+
+        case 'Limber':
+          if ( $New_Active->HasStatus('Paralysis') )
+            unset($New_Active->Statuses['Paralysis']);
+          break;
       }
 
       if ( !empty($this->Weather) )

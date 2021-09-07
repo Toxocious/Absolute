@@ -1640,6 +1640,9 @@
             break;
 
           case 'Paralysis':
+            if ( $Target->Active->Ability->Name == 'Limber' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+              return 'But it failed!';
+
             if ( $Target->Active->HasTyping([ 'Electric' ]) )
               return 'But it failed!';
             break;

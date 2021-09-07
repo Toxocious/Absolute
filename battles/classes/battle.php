@@ -253,6 +253,11 @@
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
                   break;
 
+                case 'Paralysis':
+                  if ( $Active_Ally->Active->Ability->Name == 'Limber' )
+                    unset($Active_Ally->Active->Statuses[$Status->Name]);
+                  break;
+
                 case 'Poison':
                   if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
                     $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
