@@ -516,6 +516,18 @@
             $New_Active->DecreaseHP($New_Active->Max_HP * $Spikes_Stacks / 24);
           }
         }
+
+        if ( $this->IsFieldEffectActive($this->Side, 'Steel Spikes') )
+        {
+          if
+          (
+            $New_Active->Item->Name != 'Heavy Duty Boots'
+          )
+          {
+            $Effectiveness = $New_Active->CheckMoveWeakness('Steel');
+            $New_Active->DecreaseHP($New_Active->Max_HP * pow(2, $Effectiveness) / 8);
+          }
+        }
       }
       return [
         'Type' => 'Success',
