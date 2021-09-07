@@ -136,6 +136,14 @@
           'Stacks' => 1,
           'Dialogue' => 'Spikes were scattered all around the feet of the foe\'s team!',
         ],
+        'Steel Spikes' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
+          'Dialogue' => 'Steel Spikes were scattered all around the feet of the foe\'s team!',
+        ],
         'Toxic Spikes' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
