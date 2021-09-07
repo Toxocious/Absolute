@@ -246,6 +246,27 @@
           if ( $this->HasFlag('contact') )
             $this->SetFlag('contact', false);
           break;
+
+        case 'Mimicry':
+          if ( !empty($this->Terrain) )
+          {
+            switch ($this->Terrain->Name)
+            {
+              case 'Electric':
+                $Attacker->SetTyping('Primary', 'Electric', true);
+                break;
+              case 'Grassy':
+                $Attacker->SetTyping('Primary', 'Grass', true);
+                break;
+              case 'Misty':
+                $Attacker->SetTyping('Primary', 'Fairy', true);
+                break;
+              case 'Psychic':
+                $Attacker->SetTyping('Primary', 'Psychic', true);
+                break;
+            }
+          }
+          break;
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);

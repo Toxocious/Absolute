@@ -74,6 +74,11 @@
             }
             break;
         }
+
+        if ( $Active_Pokemon->Ability->Name == 'Mimicry' )
+        {
+          $Active_Pokemon->ResetTyping();
+        }
       }
     }
 
