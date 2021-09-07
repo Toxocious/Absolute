@@ -236,6 +236,11 @@
         case 'Libero':
           $Attacker->SetTyping('Primary', $this->Move_Type, true);
           break;
+
+        case 'Liquid Voice':
+          if ( $this->HasFlag('sound') )
+            $this->Move_Type = 'Water';
+          break;
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
