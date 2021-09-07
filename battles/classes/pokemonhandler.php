@@ -540,7 +540,29 @@
             $New_Active->Stats['Speed']->SetValue(-1);
           }
         }
+
+        if ( $this->IsFieldEffectActive($this->Side, 'Toxic Spikes') )
+        {
+          $Toxic_Spikes_Field_Data = $this->GetFieldEffectData($this->Side, 'Toxic Spikes');
+          $Toxic_Spikes_Stacks = $Toxic_Spikes_Field_Data['Stacks'];
+
+          if
+          (
+            $New_Active->IsGrounded() &&
+            !$New_Active->HasTyping([ 'Poison', 'Steel' ]) &&
+            $New_Active->Item->Name != 'Heavy Duty Boots'
+          )
+          {
+            if ( $Toxic_Spikes_Stacks['Stacks'] > 1 )
+              $New_Active->SetStatus('Badly Poisoned');
+            else
+              $New_Active->SetStatus('Poisoned');
+
+            $Effect_Text .= "<br />{$New_Active->Display_Name} was poisoned from the Toxic Spikes.";
+          }
+        }
       }
+
       return [
         'Type' => 'Success',
         'Text' => (isset($Text) ? $Text : '') .
