@@ -1636,6 +1636,9 @@
             }
             break;
 
+          case 'Burn':
+            if ( $Target->Active->Ability->Name == 'Magma Armor' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+              return 'But it failed!';
 
           case 'Freeze':
             if ( !empty($this->Weather) && strpos($this->Weather->Name, 'Harsh Sunlight') )

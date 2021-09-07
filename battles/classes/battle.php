@@ -244,6 +244,9 @@
             switch ( $Status->Name )
             {
               case 'Burn':
+                if ( $Active_Ally->Active->Ability->Name == 'Magma Armor' )
+                  unset($Active_Ally->Active->Statuses[$Status->Name]);
+
                 $Burn_Mult = 1;
                 if ( $Active_Ally->Active->Ability->Name == 'Heatproof' )
                   $Burn_Mult = 2;

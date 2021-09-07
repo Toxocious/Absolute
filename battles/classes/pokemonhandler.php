@@ -471,6 +471,11 @@
           if ( $New_Active->HasStatus('Paralysis') )
             unset($New_Active->Statuses['Paralysis']);
           break;
+
+        case 'Magma Armor':
+          if ( $New_Active->HasStatus('Burn') )
+            unset($New_Active->Statuses['Burn']);
+          break;
       }
 
       if ( !empty($this->Weather) )
