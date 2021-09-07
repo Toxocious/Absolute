@@ -194,7 +194,7 @@
               case 'Hail':
                 if ( $Active_Ally->Active->Ability->Name == 'Ice Body' )
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 16);
-                else if ( !$Active_Ally->Active->HasTyping([ 'Ice' ]) )
+                else if ( !$Active_Ally->Active->HasTyping([ 'Ice' ]) && $Active_Ally->Active->Ability->Name != 'Magic Guard' )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
 
@@ -220,12 +220,12 @@
                 break;
 
               case 'Sandstorm':
-                if ( !$Active_Ally->Active->HasTyping(['Ground', 'Steel', 'Rock']) )
+                if ( !$Active_Ally->Active->HasTyping(['Ground', 'Steel', 'Rock']) && $Active_Ally->Active->Ability->Name != 'Magic Guard' )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
 
               case 'Shadowy Aura':
-                if ( !$Active_Ally->Active->HasTyping(['Shadow']) )
+                if ( !$Active_Ally->Active->HasTyping(['Shadow']) && $Active_Ally->Active->Ability->Name != 'Magic Guard' )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
             }
@@ -248,7 +248,8 @@
                 if ( $Active_Ally->Active->Ability->Name == 'Heatproof' )
                   $Burn_Mult = 2;
 
-                $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
+                if ( $Active_Ally->Active->Ability->Name !== 'Magic Guard' )
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
                 break;
 
               case 'Paralysis':
@@ -259,7 +260,7 @@
               case 'Poison':
                 if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
-                else
+                else if ( $Active_Ally->Active->Ability->Name != 'Magic Guard' )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
                 break;
 
@@ -272,7 +273,12 @@
                 if ( $Active_Ally->Active->Ability == 'Liquid Ooze' )
                   $Active_Foe->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
                 else
+                {
+                  if ( $Active_Ally->Active->Ability->Name != 'Magic Guard' )
+                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+
                   $Active_Foe->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
+                }
                 break;
             }
 
@@ -901,6 +907,28 @@
           return 'Foe';
         }
       }
+    }
+
+    /**
+     * Get the information of a currently set field effect.
+     * @param {string} $Side
+     * @param {string} $Field_Effect
+     * @return {object} $Field_Data
+     */
+    public function GetFieldEffectData
+    (
+      string $Side,
+      string $Field_Effect
+    )
+    {
+      if ( !isset($this->Field_Effects) )
+        return false;
+
+      $Field_Effect_Is_Active = $this->IsFieldEffectActive($Side, $Field_Effect);
+      if ( !$Field_Effect_Is_Active )
+        return false;
+
+      return $Field_Effect_Is_Active;
     }
 
     /**

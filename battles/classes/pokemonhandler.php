@@ -494,6 +494,7 @@
         {
           if
           (
+            $New_Active->Ability->Name != 'Magic Guard' &&
             $New_Active->Item->Name != 'Heavy Duty Boots'
           )
           {
@@ -510,6 +511,7 @@
           if
           (
             $New_Active->IsGrounded() &&
+            $New_Active->Ability->Name != 'Magic Guard' &&
             $New_Active->Item->Name != 'Heavy Duty Boots'
           )
           {
@@ -521,6 +523,7 @@
         {
           if
           (
+            $New_Active->Ability->Name != 'Magic Guard' &&
             $New_Active->Item->Name != 'Heavy Duty Boots'
           )
           {
@@ -534,6 +537,7 @@
           if
           (
             $New_Active->IsGrounded() &&
+            $New_Active->Ability->Name != 'Magic Guard' &&
             $New_Active->Item->Name != 'Heavy Duty Boots'
           )
           {
@@ -550,6 +554,7 @@
           (
             $New_Active->IsGrounded() &&
             !$New_Active->HasTyping([ 'Poison', 'Steel' ]) &&
+            $New_Active->Ability->Name != 'Magic Guard' &&
             $New_Active->Item->Name != 'Heavy Duty Boots'
           )
           {
