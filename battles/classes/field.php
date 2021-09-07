@@ -112,6 +112,14 @@
           'Stacks' => 1,
           'Dialogue' => 'Your team became shrouded in mist!',
         ],
+        'Pointed Stones' => [
+          'Min_Turns' => -1,
+          'Max_Turns' => -1,
+          'Volatile' => false,
+          'Max_Stacks' => 1,
+          'Stacks' => 1,
+          'Dialogue' => 'Pointed stones were set around the foe\'s field!',
+        ],
         'Reflect' => [
           'Min_Turns' => 5,
           'Max_Turns' => 5,
