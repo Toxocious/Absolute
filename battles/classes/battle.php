@@ -179,6 +179,17 @@
           continue;
 
         /**
+         * Process active terrain effects.
+         */
+        if ( !empty($this->Terrain) )
+        {
+          $this->Terrain->DecrementTurnCount();
+
+          if ( $this->Terrain->Turns_Left === 0 )
+            $this->Terrain->EndTerrain();
+        }
+
+        /**
          * Process active Weather effects.
          */
         if ( !empty($this->Weather) )
