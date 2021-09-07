@@ -19,7 +19,9 @@
     public $Max_HP = null;
 
     public $Primary_Type = null;
+    public $Primary_Type_Original = null;
     public $Secondary_Type = null;
+    public $Secondary_Type_Original = null;
 
     public $Height = null;
     public $Weight = null;
@@ -92,7 +94,9 @@
       $this->HP = $Pokemon['Stats'][0];
       $this->Max_HP = $Pokemon['Stats'][0];
       $this->Primary_Type = $Pokemon['Type_Primary'];
+      $this->Primary_Type_Original = $Pokemon['Type_Primary'];
       $this->Secondary_Type = $Pokemon['Type_Secondary'];
+      $this->Secondary_Type_Original = $Pokemon['Type_Secondary'];
       $this->Exp = $Pokemon['Experience_Raw'];
       $this->Exp_Needed = FetchExpToNextLevel($Pokemon['Experience_Raw'], 'Pokemon', true);
       $this->Exp_Yield = $Pokemon['Exp_Yield'];
