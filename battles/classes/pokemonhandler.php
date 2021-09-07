@@ -501,6 +501,21 @@
             $New_Active->DecreaseHP($New_Active->Max_HP * pow(2, $Effectiveness) / 8);
           }
         }
+
+        if ( $this->IsFieldEffectActive($this->Side, 'Spikes') )
+        {
+          $Spikes_Field_Data = $this->GetFieldEffectData($this->Side, 'Spikes');
+          $Spikes_Stacks = $Spikes_Field_Data['Stacks'];
+
+          if
+          (
+            $New_Active->IsGrounded() &&
+            $New_Active->Item->Name != 'Heavy Duty Boots'
+          )
+          {
+            $New_Active->DecreaseHP($New_Active->Max_HP * $Spikes_Stacks / 24);
+          }
+        }
       }
       return [
         'Type' => 'Success',
