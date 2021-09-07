@@ -221,10 +221,16 @@
       /**
        * Abilities that change move type, etc. need to happen here.
        */
-      if ( $Attacker->Ability->Name == 'Galvanize' )
+      switch ( $Attacker->Ability->Name )
       {
-        $this->Move_Type = 'Electric';
-        $this->Power *= 1.2;
+        case 'Galvanize':
+          $this->Move_Type = 'Electric';
+          $this->Power *= 1.2;
+          break;
+
+        case 'Libero':
+          $Attacker->SetTyping('Primary', $this->Move_Type, true);
+          break;
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
