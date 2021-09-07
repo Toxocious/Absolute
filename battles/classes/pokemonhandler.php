@@ -488,6 +488,20 @@
         }
       }
 
+      if ( !empty($this->Field_Effects) )
+      {
+        if ( $this->IsFieldEffectActive($this->Side, 'Pointed Stones') )
+        {
+          if
+          (
+            $New_Active->Item->Name != 'Heavy Duty Boots'
+          )
+          {
+            $Effectiveness = $New_Active->CheckMoveWeakness('Rock');
+            $New_Active->DecreaseHP($New_Active->Max_HP * pow(2, $Effectiveness) / 8);
+          }
+        }
+      }
       return [
         'Type' => 'Success',
         'Text' => (isset($Text) ? $Text : '') .
