@@ -528,6 +528,18 @@
             $New_Active->DecreaseHP($New_Active->Max_HP * pow(2, $Effectiveness) / 8);
           }
         }
+
+        if ( $this->IsFieldEffectActive($this->Side, 'Sticky Web') )
+        {
+          if
+          (
+            $New_Active->IsGrounded() &&
+            $New_Active->Item->Name != 'Heavy Duty Boots'
+          )
+          {
+            $New_Active->Stats['Speed']->SetValue(-1);
+          }
+        }
       }
       return [
         'Type' => 'Success',
