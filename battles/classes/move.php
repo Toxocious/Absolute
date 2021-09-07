@@ -2302,6 +2302,26 @@
     }
 
     /**
+     * Set the value of a given flag.
+     * @param {string} $Flag
+     * @param {bool} $Value
+     * @return {bool}
+     */
+    public function SetFlag
+    (
+      string $Flag,
+      bool $Value
+    )
+    {
+      if ( !in_array($Flag, ['authentic', 'bite', 'bullet', 'charge', 'contact', 'dance', 'defrost', 'distance', 'gravity', 'heal', 'mirror', 'mystery', 'nonsky', 'powder', 'protect', 'pulse', 'punch', 'recharge', 'reflectable', 'snatch', 'sound']) )
+        return false;
+
+      $this->Flags[$Flag] = $Value;
+
+      return true;
+    }
+
+    /**
      * Given the IVs of the User, determine the move-type.
      */
     public function DetermineMoveType
