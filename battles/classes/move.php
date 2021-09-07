@@ -241,6 +241,11 @@
           if ( $this->HasFlag('sound') )
             $this->Move_Type = 'Water';
           break;
+
+        case 'Long Reach':
+          if ( $this->HasFlag('contact') )
+            $this->SetFlag('contact', false);
+          break;
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
