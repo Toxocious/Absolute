@@ -1820,6 +1820,15 @@
               }
               break;
 
+            case 'Liquid Ooze':
+              if ( !empty($this->Drain) && $this->Drain > 0 && $Damage > 0 )
+              {
+                $Attacker->DecreaseHP($Damage);
+                $Ability_Effect_Text .= "{$Attacker->Display_Name} took damage from the Liquid Ooze!";
+                $Ability_Effect_Damage = 0;
+              }
+              break;
+
             case 'Mummy':
               if ( $this->HasFlag('contact') && !$Attacker->Ability->Name != 'Mummy' )
               {

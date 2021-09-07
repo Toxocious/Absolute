@@ -266,6 +266,14 @@
               case 'Sleep':
                 if ( $Active_Foe->Active->Ability->Name == 'Bad Dreams' && $Active_Ally->Active->Ability->Name != 'Comatose' )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                break;
+
+              case 'Leech Seed':
+                if ( $Active_Ally->Active->Ability == 'Liquid Ooze' )
+                  $Active_Foe->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                else
+                  $Active_Foe->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
+                break;
             }
 
             if ( $Status->Turns_Left === 0 )
