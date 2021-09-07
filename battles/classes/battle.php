@@ -241,34 +241,31 @@
         {
           foreach ($Active_Ally->Active->Statuses as $Status)
           {
-            if ( !$Status->Volatile )
+            switch ( $Status->Name )
             {
-              switch ( $Status->Name )
-              {
-                case 'Burn':
-                  $Burn_Mult = 1;
-                  if ( $Active_Ally->Active->Ability->Name == 'Heatproof' )
-                    $Burn_Mult = 2;
+              case 'Burn':
+                $Burn_Mult = 1;
+                if ( $Active_Ally->Active->Ability->Name == 'Heatproof' )
+                  $Burn_Mult = 2;
 
-                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
-                  break;
+                $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
+                break;
 
-                case 'Paralysis':
-                  if ( $Active_Ally->Active->Ability->Name == 'Limber' )
-                    unset($Active_Ally->Active->Statuses[$Status->Name]);
-                  break;
+              case 'Paralysis':
+                if ( $Active_Ally->Active->Ability->Name == 'Limber' )
+                  unset($Active_Ally->Active->Statuses[$Status->Name]);
+                break;
 
-                case 'Poison':
-                  if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
-                    $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
-                  else
-                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
-                  break;
+              case 'Poison':
+                if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
+                  $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
+                else
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                break;
 
-                case 'Sleep':
-                  if ( $Active_Foe->Active->Ability->Name == 'Bad Dreams' && $Active_Ally->Active->Ability->Name != 'Comatose' )
-                    $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
-              }
+              case 'Sleep':
+                if ( $Active_Foe->Active->Ability->Name == 'Bad Dreams' && $Active_Ally->Active->Ability->Name != 'Comatose' )
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
             }
 
             if ( $Status->Turns_Left === 0 )
