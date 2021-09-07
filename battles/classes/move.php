@@ -223,6 +223,11 @@
        */
       switch ( $Attacker->Ability->Name )
       {
+        case 'Aerilate':
+          if ( $this->Move_Type == 'Normal' )
+            $this->Move_Type = 'Flying';
+          break;
+
         case 'Galvanize':
           $this->Move_Type = 'Electric';
           $this->Power *= 1.2;
@@ -528,9 +533,6 @@
         $this->Total_Hits = 5;
       else
         $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
-
-      if ( $Attacker->Ability->Name == 'Aerilate' && $this->Move_Type == 'Normal' )
-        $this->Move_Type = 'Flying';
 
       /**
        * Ability proc dialogue.
