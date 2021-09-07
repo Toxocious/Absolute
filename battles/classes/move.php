@@ -1924,7 +1924,7 @@
               {
                 if ( !$Defender->Ability->Procced )
                 {
-                  $Defender->Ability->Proc();
+                  $Defender->Ability->SetProcStatus(true);
                   $Ability_Effect_Text .= "{$Defender->Display_Name}'s Flash Fire absorbed the attack!";
                 }
               }
