@@ -1801,6 +1801,19 @@
               }
               break;
 
+            case 'Lightning Rod':
+              if ( $this->Move_Type == 'Electric' )
+              {
+                if ( $Defender->Stats['Sp_Attack']->Stage < 6 )
+                {
+                  $Defender->Stats['Sp_Attack']->SetValue(1);
+                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s Lightning Rod boosted its Special Attack!<br />";
+                }
+
+                $Ability_Effect_Damage = 0;
+              }
+              break;
+
             case 'Mummy':
               if ( $this->HasFlag('contact') && !$Attacker->Ability->Name != 'Mummy' )
               {
