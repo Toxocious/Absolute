@@ -243,6 +243,8 @@
           }
 
           $this->Weather->TickWeather();
+          if ( $this->Weather->Turns_Left == 0 )
+            $this->Weather->EndWeather();
         }
 
         /**
