@@ -16,8 +16,11 @@
     /**
      * Once an ability has procced, it (sometimes) won't activate again.
      */
-    public function Proc()
+    public function SetProcStatus
+    (
+      bool $Value
+    )
     {
-      $this->Procced = true;
+      $this->Procced = $Value;
     }
   }
