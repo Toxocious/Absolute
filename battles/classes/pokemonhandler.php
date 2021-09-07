@@ -991,4 +991,53 @@
 
       return false;
     }
+
+    /**
+     * Set the Pokemon's current Typing.
+     * @param {string} $Primary_Or_Secondary
+     * @param {string} $Typing
+     * @param {bool} $Unset_Secondary_Typing
+     * @return {bool}
+     */
+    public function SetTyping
+    (
+      string $Primary_Or_Secondary,
+      string $Typing,
+      bool $Null_Secondary_Typing = false
+    )
+    {
+      $Valid_Types = [
+        'Fighting', 'Flying', 'Poison', 'Ground', 'Rock',
+        'Bug', 'Ghost', 'Steel', 'Fire', 'Water',
+        'Grass', 'Electric', 'Psychic', 'Ice', 'Dragon', 'Dark'
+      ];
+
+      if ( !in_array($Typing, $Valid_Types) )
+        return false;
+
+      if ( !in_array($Primary_Or_Secondary, ['Primary', 'Secondary']) )
+        return false;
+
+      switch ( $Primary_Or_Secondary )
+      {
+        case 'Primary':
+          if ( $this->Primary_Type == $Typing )
+            return false;
+
+          $this->Primary_Type = $Typing;
+          break;
+
+        case 'Secondary':
+          if ( $this->Secondary_Type == $Typing )
+            return false;
+
+          $this->Secondary_Type = $Typing;
+          break;
+      }
+
+      if ( $Null_Secondary_Typing && $this->Secondary_Type !== null )
+        $this->Secondary_Type = null;
+
+      return true;
+    }
   }
