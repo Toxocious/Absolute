@@ -1523,6 +1523,14 @@
               if ( $Target->Active->Ability->Name == 'Keen Eye' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Target->Active != $Attacker && $Stat_Name == 'Evasion' )
                 continue;
 
+              if ( $Target->Active->Ability->Name == 'Mirror Armor' )
+              {
+                if ( $Target->Active == $Attacker )
+                  $Target->Active = $Defender;
+                else
+                  $Target->Active = $Attacker;
+              }
+
               if ( $Target->Active->HasAbility([ 'Competitive', 'Defiant' ]) && $Target->Active != $Attacker )
               {
                 switch ($Target->Active->Ability->Name)

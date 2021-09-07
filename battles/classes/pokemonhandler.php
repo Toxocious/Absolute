@@ -453,8 +453,12 @@
               $Effect_Text .= "{$Defender->Display_Name} consumed it's Adrenaline Orb and gained Speed!<br />";
             }
 
-            $Defender->Stats['Attack']->SetValue(-1);
-            $Effect_Text .= "{$New_Active->Display_Name}'s Intimidate cuts {$Defender->Display_Name}'s Attack!";
+            $Target = $Defender;
+            if ( $Defender->Ability->Name == 'Mirror Armor')
+              $Target = $New_Active;
+
+            $Target->Stats['Attack']->SetValue(-1);
+            $Effect_Text .= "{$New_Active->Display_Name}'s Intimidate cuts {$Target->Display_Name}'s Attack!";
           }
           break;
 
