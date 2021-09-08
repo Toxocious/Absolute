@@ -939,8 +939,9 @@
         }
       }
 
-      if ( $Move_Data['Ally']['Priority'] == 0 && $Move_Data['Foe']['Priority'] == 0 )
+      if ( $Move_Data['Ally']['Priority'] == $Move_Data['Foe']['Priority'] )
       {
+
         if ( $Ally->Stats['Speed']->Current_Value > $Foe->Stats['Speed']->Current_Value )
           return 'Ally';
         else if ( $Ally->Stats['Speed']->Current_Value < $Foe->Stats['Speed']->Current_Value )
@@ -948,25 +949,13 @@
         else
           return mt_rand(1, 2) === 1 ? 'Ally' : 'Foe';
       }
+      else if ( $Move_Data['Ally']['Priority'] > $Move_Data['Foe']['Priority'] )
+      {
+        return 'Ally';
+      }
       else
       {
-        if ( $Move_Data['Ally']['Priority'] == $Move_Data['Foe']['Priority'] )
-        {
-          if ( $Ally->Stats['Speed']->Current_Value > $Foe->Stats['Speed']->Current_Value )
-            return 'Ally';
-          else if ( $Ally->Stats['Speed']->Current_Value < $Foe->Stats['Speed']->Current_Value )
-            return 'Foe';
-          else
-            return mt_rand(1, 2) === 1 ? 'Ally' : 'Foe';
-        }
-        else if ( $Move_Data['Ally']['Priority'] > $Move_Data['Foe']['Priority'] )
-        {
-          return 'Ally';
-        }
-        else
-        {
-          return 'Foe';
-        }
+        return 'Foe';
       }
     }
 
