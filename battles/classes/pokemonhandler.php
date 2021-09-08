@@ -219,10 +219,16 @@
 
       $Previous_Attacker = $_SESSION['Battle'][$this->Side]->Active;
 
-      if ( $this->Ability == 'Natural Cure' )
+      switch ($this->Ability)
       {
-        if ( !empty($this->Statuses) )
-          $this->Statuses = null;
+        case 'Natural Cure':
+          if ( !empty($this->Statuses) )
+            $this->Statuses = null;
+          break;
+
+        case 'Pure Power':
+          $this->Stats['Attack']->Current_Value /= 2;
+          break;
       }
 
       if ( $this->Original_Ability != $this->Ability )
@@ -526,6 +532,10 @@
             $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
             $Effect_Text .= $Set_Terrain->Dialogue;
           }
+          break;
+
+        case 'Pure Power':
+          $New_Active->Stats['Attack']->Current_Value *= 2;
           break;
       }
 
