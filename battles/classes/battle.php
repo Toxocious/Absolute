@@ -220,6 +220,9 @@
                 if ( $Active_Ally->Active->Ability->Name == 'Dry Skin' )
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
 
+                if ( $Active_Ally->Active->Ability->Name == 'Rain Dish' )
+                  $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 16);
+
                 if ( $Active_Ally->Active->Ability->Name == 'Hydration' )
                 {
                   foreach ($Active_Ally->Active->Statuses as $Status)
