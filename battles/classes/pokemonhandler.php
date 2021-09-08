@@ -625,6 +625,15 @@
       $this->Fainted = true;
       $Effect_Text = '';
 
+      if ( $Defender->Active->Ability == 'Moxie' )
+      {
+        if ( $Defender->Active->Stats['Attack']->Stage < 6 )
+        {
+          $Defender->Active->Stats['Attack']->SetValue(1);
+          $Effect_Text .= "<br />{$Defender->Active->Display_Name}'s Attack rose due to its Moxie!";
+        }
+      }
+
       if ( $Attacker->Active->Ability->Name == 'Innards Out' )
       {
         $Defender->Active->DecreaseHP($Damage);
