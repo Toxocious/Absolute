@@ -1880,6 +1880,17 @@
                 }
               }
               break;
+
+            case 'Poison Touch':
+              if ( $this->HasFlag('contact') && mt_rand(1, 100) <= 30 )
+              {
+                $Set_Ailment = $Defender->SetStatus('Poison');
+                if ( !empty($Set_Ailment) )
+                {
+                  $Ability_Effect_Text .= "{$Defender->Display_Name} {$Set_Ailment['Text']}";
+                }
+              }
+              break;
           }
           break;
 
