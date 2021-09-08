@@ -2230,6 +2230,9 @@
             $Damage *= 2;
         }
 
+        if ( $Attacker->Ability == 'Neuroforce' && $Move_Effectiveness['Mult'] > 1 )
+          $Damage *= 1.25;
+
         if ( $Defender->Ability->Name == 'Multiscale' && $Defender->HP === $Defender->Max_HP )
           $Damage /= 2;
 
