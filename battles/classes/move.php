@@ -2196,6 +2196,9 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
+      if ( $Attacker->Ability->Name == 'Punk Rock' && $this->HasFlag('sound') )
+        $this->Power *= 1.3;
+
       if ( $Attacker->Ability->Name == 'Battery' && $this->Category == 'Special' )
         $this->Power *= 1.3;
 
@@ -2288,6 +2291,9 @@
           $Damage /= 2;
 
         if ( $Defender->Ability->Name == 'Ice Scales' && $this->Damage_Type == 'Special' )
+          $Damage /= 2;
+
+        if ( $Defender->Ability->Name == 'Punk Rock' && $this->HasFlag('sound') )
           $Damage /= 2;
 
         if ( $Defender->Ability->Name == 'Fluffy' )
