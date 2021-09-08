@@ -1749,7 +1749,8 @@
      * Handle ability procs at the end of the Pokemon's move.
      * @param {PokemonHandler} $Attacker
      * @param {PokemonHandler} $Defender
-     * @param {int} $Hits
+     * @param {int} $Hit
+     * @param {int} $Total_Hits
      * @param {int} $Damage
      * @return {$array} $Ability_Effect
      */
@@ -1758,7 +1759,8 @@
       PokemonHandler $Attacker,
       PokemonHandler $Defender,
       bool $Mid_Hit = false,
-      int $Hits = 1,
+      int $Hit = 1,
+      int $Total_Hits = 1,
       int $Damage = 0
     )
     {
@@ -1892,7 +1894,7 @@
               }
               break;
             case 'Cute Charm':
-              for ( $i = 0; $i <= $Hits; $i++ )
+              for ( $i = 0; $i <= $Total_Hits; $i++ )
               {
                 if ( mt_rand(1, 100) <= 30 && $Attacker->Gender != 'G' && $Attacker->Gender != $Defender->Gender )
                 {
@@ -1931,7 +1933,7 @@
             case 'Effect Spore':
               if ( $this->HasFlag('contact') )
               {
-                for ( $i = 0; $i < $Hits; $i++ )
+                for ( $i = 0; $i < $Total_Hits; $i++ )
                 {
                   $Random_Int = mt_rand(1, 100);
                   if ( $Random_Int <= 9 )
