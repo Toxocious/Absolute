@@ -272,6 +272,14 @@
           $this->Move_Type = 'Normal';
           $this->Power *= 1.2;
           break;
+
+        case 'Pixilate':
+          if ( $this->Move_Type == 'Normal' )
+          {
+            $this->Move_Type = 'Fairy';
+            $this->Power *= 1.2;
+          }
+          break;
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
