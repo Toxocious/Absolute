@@ -587,9 +587,9 @@
        * Calculate how much damage will be done.
        */
       $Damage = 0;
-      for ( $Hits = 0; $Hits < $this->Total_Hits; $Hits++ )
+      for ( $Hit = 0; $Hit < $this->Total_Hits; $Hit++ )
       {
-        $Ability_Proc = $this->ProcessAbilityProcs($Attacker, $Defender, true, 1, $Damage);
+        $Ability_Proc = $this->ProcessAbilityProcs($Attacker, $Defender, true, $Hit, $this->Total_Hits, $Damage);
         $Ability_Proc_Dialogue .= $Ability_Proc['Text'];
 
         if ( empty($Ability_Proc['Damage']) )
@@ -628,7 +628,7 @@
       /**
        * Process end of turn ability procs.
        */
-      $Ability_Effect = $this->ProcessAbilityProcs($Attacker, $Defender, false, $Hits, $Damage);
+      $Ability_Effect = $this->ProcessAbilityProcs($Attacker, $Defender, false, 1, 1, $Damage);
       $Ability_Proc_Dialogue .= $Ability_Effect['Text'];
 
       if ( $Damage <= 0 )
@@ -1852,6 +1852,13 @@
               {
                 $Attacker->SetAbility('Mummy');
                 $Ability_Effect_Text .= "{$Attacker->Display_Name}'s ability became Mummy!";
+              }
+              break;
+
+            case 'Parental Bond':
+              if ( $this->Total_Hits === 2 && $this->Hit === 2 )
+              {
+                $Damage *= 0.25;
               }
               break;
           }
