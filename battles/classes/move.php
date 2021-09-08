@@ -2150,6 +2150,9 @@
       if ( $Attacker->Ability->Name == "Dragon's Maw" && $this->Move_Type == 'Dragon' )
         $this->Power *= 1.5;
 
+      if ( $Attacker->Ability->Name == 'Overgrow' && $this->Move_Type == 'Grass' )
+        $this->Power *= 1.5;
+
       if ( $Attacker->Ability->Name == 'Mega Launcher' && $this->HasFlag('pulse') )
         $this->Power *= 1.5;
 
