@@ -561,14 +561,22 @@
       if ( $this->Max_Hits == 'None' )
         $this->Max_Hits = 1;
 
-      if
-      (
-        $Attacker->Ability->Name == 'Skill Link' &&
-        $this->Max_Hits > 1
-      )
-        $this->Total_Hits = 5;
-      else
-        $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
+      switch ( $Attacker->Ability->Name )
+      {
+        case 'Parental Bond':
+          if ( $this->Max_Hits === 1 )
+            $this->Total_Hits = 2;
+          break;
+
+        case 'Skill Link':
+          if ( $this->Max_Hits > 1 )
+            $this->Total_Hits = 5;
+          break;
+
+        default:
+          $this->Total_Hits = mt_rand($this->Min_Hits, $this->Max_Hits);
+          break;
+      }
 
       /**
        * Ability proc dialogue.
