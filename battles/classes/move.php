@@ -2001,6 +2001,16 @@
                 $Damage = 0;
               }
               break;
+
+            case 'Pickpocket':
+              if ( !empty($Attacker->Item) && empty($Defender->Item) && $Attacker->Ability != 'Sticky Hold' )
+              {
+                $Ability_Effect_Text .= "{$Defender->Display_Name} Pickpocketed {$Attacker->Display_Name}'s {$Attacker->Item->Name}!";
+
+                $Defender->Item = $Attacker->Item;
+                unset($Attacker->Item);
+              }
+              break;
           }
           break;
       }
