@@ -2216,6 +2216,9 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
+      if ( $Attacker->Ability->Name == 'Reckless' && $this->Recoil > 0 )
+        $this->Power *- 1.2;
+
       if ( $Attacker->Ability->Name == 'Punk Rock' && $this->HasFlag('sound') )
         $this->Power *= 1.3;
 
