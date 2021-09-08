@@ -267,6 +267,11 @@
             }
           }
           break;
+
+        case 'Normalize':
+          $this->Move_Type = 'Normal';
+          $this->Power *= 1.2;
+          break;
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
