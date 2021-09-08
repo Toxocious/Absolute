@@ -2230,6 +2230,9 @@
             $Damage *= 2;
         }
 
+        if ( $Defender->Ability->Name == 'Multiscale' && $Defender->HP === $Defender->Max_HP )
+          $Damage /= 2;
+
         if ( $Damage > $Defender->HP )
           $Damage = $Defender->HP;
       }
