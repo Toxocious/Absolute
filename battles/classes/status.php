@@ -59,6 +59,9 @@
 
         if ( $Pokemon->Ability->Name == 'Oblivious' && $Status_Name == 'Infatuation' )
           return false;
+
+        if ( $Pokemon->Ability->Name == 'Own Tempo' && $Status_Name == 'Confusion' )
+          return false;
       }
 
       if ( $Pokemon->Ability->Name == 'Shields Down' )
