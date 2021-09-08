@@ -56,6 +56,9 @@
 
         if ( in_array($Status_Name, ['Encore', 'Heal Block', 'Infatuation', 'Taunt', 'Torment']) && $Pokemon->Ability->Name == 'Aroma Veil' )
           return false;
+
+        if ( $Pokemon->Ability->Name == 'Oblivious' && $Status_Name == 'Infatuation' )
+          return false;
       }
 
       if ( $Pokemon->Ability->Name == 'Shields Down' )
