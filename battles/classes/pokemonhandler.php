@@ -498,6 +498,14 @@
             $Effect_Text .= $Set_Terrain->Dialogue;
           }
           break;
+
+        case 'Pastel Veil':
+          if ( $New_Active->HasStatus('Poison') )
+            unset($New_Active->Statuses['Poison']);
+
+          if ( $New_Active->HasStatus('Badly Poisoned') )
+            unset($New_Active->Statuses['Badly Poisoned']);
+          break;
       }
 
       if ( !empty($this->Weather) )

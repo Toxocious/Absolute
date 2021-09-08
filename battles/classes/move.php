@@ -1699,7 +1699,7 @@
             (
               $Target->Active->HasTyping([ 'Poison', 'Steel' ]) ||
               ( $Target->Active->HasTyping([ 'Poison', 'Steel' ]) && $Attacker->Ability->Name != 'Corrosion' && $this->Damage_Type != 'Status' ) ||
-              $Target->Active->Ability->Name != 'Immunity'
+              $Target->Active->HasAbility(['Immunity', 'Pastel Veil'])
             )
             {
               return 'But it failed!';
