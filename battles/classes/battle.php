@@ -941,6 +941,11 @@
 
       if ( $Move_Data['Ally']['Priority'] == $Move_Data['Foe']['Priority'] )
       {
+        if ( $Ally->Ability->Name == 'Quick Draw' && mt_rand(1, 100) <= 30 )
+          return 'Ally';
+
+        if ( $Foe->Ability->Name == 'Quick Draw' && mt_rand(1, 100) <= 30 )
+          return 'Foe';
 
         if ( $Ally->Stats['Speed']->Current_Value > $Foe->Stats['Speed']->Current_Value )
           return 'Ally';
