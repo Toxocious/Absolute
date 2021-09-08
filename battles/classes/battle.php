@@ -312,6 +312,12 @@
             $Active_Ally->Active->Ability->SetProcStatus(false);
             $Active_Ally->Active->Stats['Defense']->Current_Value /= 1.5;
           }
+
+          if ( $Active_Ally->Active->Ability->Name == 'Quick Feet' && $Active_Ally->Active->Ability->Procced )
+          {
+            $Active_Ally->Active->Ability->SetProcStatus(false);
+            $Active_Ally->Active->Stats['Speed']->Current_Value /= 1.5;
+          }
         }
 
         /**
