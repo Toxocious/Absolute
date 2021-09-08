@@ -506,6 +506,15 @@
           if ( $New_Active->HasStatus('Badly Poisoned') )
             unset($New_Active->Statuses['Badly Poisoned']);
           break;
+
+        case 'Primordial Sea':
+          $Set_Weather = new Weather('Heavy Rain', -1);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
       }
 
       if ( !empty($this->Weather) )
