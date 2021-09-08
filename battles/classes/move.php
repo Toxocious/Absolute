@@ -200,6 +200,15 @@
           break;
       }
 
+      if ( $Defender->Ability->Name == 'Queenly Majesty' && $this->Priority > 0 )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} can't use {$this->Name}!",
+          'Damage' => 0,
+          'Heal' => 0
+        ];
+      }
 
       $Attacker_Can_Move = $this->CanUserMove($Side);
       if ( $Attacker_Can_Move['Type'] == 'Error' )
