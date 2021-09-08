@@ -219,6 +219,12 @@
 
       $Previous_Attacker = $_SESSION['Battle'][$this->Side]->Active;
 
+      if ( $this->Ability == 'Natural Cure' )
+      {
+        if ( !empty($this->Statuses) )
+          $this->Statuses = null;
+      }
+
       if ( $this->Original_Ability != $this->Ability )
         $this->Ability == $this->Original_Ability;
 
