@@ -1904,6 +1904,17 @@
                 }
               }
               break;
+
+            case 'Rattled':
+              if ( in_array($this->Move_Type, ['Bug', 'Dark', 'Ghost']) && $Damage > 0 )
+              {
+                if ( $Defender->Stats['Speed']->Stage < 6 )
+                {
+                  $Defender->Stats['Speed']->SetValue(1);
+                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s Rattled boosted its Special Attack!<br />";
+                }
+              }
+              break;
           }
           break;
 
