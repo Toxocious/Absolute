@@ -280,6 +280,10 @@
             $this->Power *= 1.2;
           }
           break;
+
+        case 'Protean':
+          $Attacker->SetTyping('Primary', $this->Move_Type, true);
+          break;
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
