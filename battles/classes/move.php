@@ -1966,6 +1966,19 @@
                 $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Grim Neight boosted its Special Attack!";
               }
               break;
+
+            case 'Motor Drive':
+              if ( $this->Move_Type == 'Electric' )
+              {
+                if ( $Defender->Stats['Speed']->Stage < 6 )
+                {
+                  $Defender->Stats['Speed']->SetValue(1);
+                  $Ability_Effect_Text .= "{$Defender->Display_Name} absorbed the attack and gained Speed due to its Motor Drive!";
+                }
+
+                $Damage = 0;
+              }
+              break;
           }
           break;
       }
