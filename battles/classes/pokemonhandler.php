@@ -553,6 +553,21 @@
             $Effect_Text .= $Set_Weather->Dialogue;
           }
           break;
+
+        case 'Screen Cleaner':
+          foreach (['Ally', 'Foe'] as $Field_Side)
+          {
+            foreach (['Aurora Veil', 'Light Screen', 'Reflect'] as $Field_Effect)
+            {
+              if ( $this->IsFieldEffectActive($Field_Side, $Field_Effect) )
+              {
+                $this->RemoveFieldEffect($Field_Side, $Field_Effect);
+              }
+            }
+          }
+
+          $Effect_Text .= 'All damage reducing field effects were removed!';
+          break;
       }
 
       if ( !empty($this->Weather) )
