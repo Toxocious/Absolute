@@ -2224,6 +2224,9 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
+      $Physical_Damage_Mult = 1.0;
+      $Special_Damage_Mult = 1.0;
+
       switch ( $Attacker->Ability->Name )
       {
         case 'Analytic':
@@ -2285,11 +2288,6 @@
           else if ( $this->IsFieldEffectActive($Foe, 'Light Screen') )
           {
             $Special_Damage_Mult = 0.5;
-          }
-          else
-          {
-            $Physical_Damage_Mult = 1.0;
-            $Special_Damage_Mult = 1.0;
           }
           break;
 
