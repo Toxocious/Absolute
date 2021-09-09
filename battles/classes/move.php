@@ -2323,6 +2323,16 @@
           if ( $this->Recoil > 0 )
             $this->Power *= 1.2;
           break;
+
+        case 'Rivalry':
+          if ( $Attacker->Gender != 'G' && $Defender->Gender != 'G' )
+          {
+            if ( $Attacker->Gender == $Defender->Gender )
+              $this->Power *= 1.25;
+            else
+              $this->Power *= 0.75;
+          }
+          break;
       }
 
       switch ($this->Damage_Type)
