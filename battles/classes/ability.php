@@ -1,8 +1,9 @@
 <?php
   class Ability
   {
-    public $Name = null;
-    public $Procced = null;
+    public $Name;
+    public $Procced;
+    public $Suppressed;
 
     public function __construct
     (
@@ -11,6 +12,7 @@
     {
       $this->Name = $Ability_Name;
       $this->Procced = false;
+      $this->Suppressed = false;
     }
 
     /**
