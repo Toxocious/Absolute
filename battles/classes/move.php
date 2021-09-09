@@ -914,6 +914,9 @@
       if ( $Attacker->Ability->Name == 'Compound Eyes' )
         $this->Accuracy *= 1.3;
 
+      if ( $Defender->Ability->Name == 'Sand Veil' && !empty($this->Weather) && $this->Weather->Name == 'Sandstorm' )
+        $this->Accuracy *= 0.8;
+
       if ( $Attacker->Ability->Name == 'Hustle' && $this->Damage_Type == 'Physical' )
         $this->Accuracy *= 0.8;
 

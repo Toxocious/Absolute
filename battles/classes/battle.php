@@ -234,7 +234,7 @@
                 break;
 
               case 'Sandstorm':
-                if ( !$Active_Ally->Active->HasTyping(['Ground', 'Steel', 'Rock']) && !$Active_Ally->Active->HasAbility(['Magic Guard', 'Sand Force', 'Sand Rush']) )
+                if ( !$Active_Ally->Active->HasTyping(['Ground', 'Steel', 'Rock']) && !$Active_Ally->Active->HasAbility(['Magic Guard', 'Sand Force', 'Sand Rush', 'Sand Veil']) )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
 
