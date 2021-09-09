@@ -754,15 +754,34 @@
         ];
       }
 
+      if ( $Ally_Active->HasStatus('Trap') )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Ally_Active->Display_Name} is trapped and may not switch out!"
+        ];
+      }
+
       if
       (
-        $Ally_Active->HasStatus('Trap') ||
-        (
-          $Foe_Active->Ability->Name == 'Arena Trap' &&
-          $Ally_Active->IsGrounded() &&
-          $Ally_Active->Item->Name != 'Shed Bell' &&
-          !in_array($Ally_Active->Last_Move['Name'], ['Baton Pass', 'Flip Turn', 'Parting Shot', 'U-turn', 'Volt Switch'])
-        )
+        $Foe_Active->Ability->Name == 'Shadow Tag' &&
+        $Ally_Active->Item->Name != 'Shed Bell' &&
+        !$Ally_Active->HasTyping(['Ghost']) &&
+        !in_array($Ally_Active->Last_Move['Name'], ['Baton Pass', 'Flip Turn', 'Parting Shot', 'U-turn', 'Volt Switch'])
+      )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Ally_Active->Display_Name} is trapped and may not switch out!"
+        ];
+      }
+
+      if
+      (
+        $Foe_Active->Ability->Name == 'Arena Trap' &&
+        $Ally_Active->IsGrounded() &&
+        $Ally_Active->Item->Name != 'Shed Bell' &&
+        !in_array($Ally_Active->Last_Move['Name'], ['Baton Pass', 'Flip Turn', 'Parting Shot', 'U-turn', 'Volt Switch'])
       )
       {
         return [
