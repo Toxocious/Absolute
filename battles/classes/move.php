@@ -1706,6 +1706,12 @@
           return 'But it failed!';
         }
 
+        if ( $Attacker->Ability->Name == 'Serene Grace' && $this->Damage_Type != 'Status' )
+        {
+          $Flinch_Chance = 20;
+          $this->Effect_Chance *= 2;
+        }
+
         switch ($this->Ailment)
         {
           case 'None':
@@ -1783,7 +1789,7 @@
           $Attacker->Item->Name == "King's Rock" &&
           !$Defender->HasStatus('Substitute') &&
           $Turn_First_Attacker == $Attacker->Side &&
-          mt_rand(1, 100) <= 10
+          mt_rand(1, 100) <= !empty($Flinch_Chance) ?: 10
         )
         {
           $Target->Active->SetStatus('Flinch');
