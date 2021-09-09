@@ -56,6 +56,9 @@
           case 'Sandstorm':
             if ( $Active_Pokemon->HasTyping(['Rock']) )
               $Active_Pokemon->Stats['Sp_Defense']->Current_Value *= 1.5;
+
+            if ( $Active_Pokemon->Ability->Name == 'Sand Rush' )
+              $Active_Pokemon->Stats['Speed']->Current_Value *= 2;
             break;
         }
       }
@@ -103,6 +106,9 @@
           case 'Sandstorm':
             if ( $Active_Pokemon->HasTyping(['Rock']) )
               $Active_Pokemon->Stats['Sp_Defense']->Current_Value /= 1.5;
+
+            if ( $Active_Pokemon->Ability->Name == 'Sand Rush' )
+              $Active_Pokemon->Stats['Speed']->Current_Value /= 2;
             break;
         }
       }
