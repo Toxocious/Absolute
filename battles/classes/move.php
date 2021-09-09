@@ -2224,8 +2224,22 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
+
       $Physical_Damage_Mult = 1.0;
       $Special_Damage_Mult = 1.0;
+      if ( $this->IsFieldEffectActive($Foe, 'Aurora Veil') )
+      {
+        $Physical_Damage_Mult = 0.5;
+        $Special_Damage_Mult = 0.5;
+      }
+      else if ( $this->IsFieldEffectActive($Foe, 'Reflect') )
+      {
+        $Physical_Damage_Mult = 0.5;
+      }
+      else if ( $this->IsFieldEffectActive($Foe, 'Light Screen') )
+      {
+        $Special_Damage_Mult = 0.5;
+      }
 
       switch ( $Attacker->Ability->Name )
       {
@@ -2276,19 +2290,8 @@
           break;
 
         case 'Infiltrator':
-          if ( $this->IsFieldEffectActive($Foe, 'Aurora Veil') )
-          {
-            $Physical_Damage_Mult = 0.5;
-            $Special_Damage_Mult = 0.5;
-          }
-          else if ( $this->IsFieldEffectActive($Foe, 'Reflect') )
-          {
-            $Physical_Damage_Mult = 0.5;
-          }
-          else if ( $this->IsFieldEffectActive($Foe, 'Light Screen') )
-          {
-            $Special_Damage_Mult = 0.5;
-          }
+          $Physical_Damage_Mult = 1.0;
+          $Special_Damage_Mult = 1.0;
           break;
 
         case 'Iron Fist':
