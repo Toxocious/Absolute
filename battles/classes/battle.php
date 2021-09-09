@@ -1029,6 +1029,30 @@
     }
 
     /**
+     * Remove the desired field effect.
+     * @param {string} $Side
+     * @param {string} $Field_Effect
+     * @return {bool}
+     */
+    public function RemoveFieldEffect
+    (
+      string $Side,
+      string $Field_Effect
+    )
+    {
+      if ( !isset($this->Field_Effects) )
+        return false;
+
+      $Field_Effect_Is_Active = $this->IsFieldEffectActive($Side, $Field_Effect);
+      if ( !$Field_Effect_Is_Active )
+        return false;
+
+      unset($this->Field_Effects[$Field_Effect]);
+
+      return true;
+    }
+
+    /**
      * Determines if a global field effect is active.
      * @param string $Side
      * @param string $Field_Effect
