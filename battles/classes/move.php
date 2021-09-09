@@ -641,7 +641,7 @@
        * Calculate how much recoil will be dealt if applicable.
        */
       $Recoil = 0;
-      if ( $this->Recoil > 0 )
+      if ( $this->Recoil > 0 && $Attacker->Ability->Name != 'Rock Head' )
         $Recoil = $this->CalcRecoil($Damage);
 
       /**
