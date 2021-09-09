@@ -1411,6 +1411,18 @@
       PokemonHandler $Used_Against
     )
     {
+      if
+      (
+        $Used_By->Ability->Name == 'Scrappy' &&
+        $Used_Against->HasTyping(['Ghost']) &&
+        in_array($this->Move_Type, ['Fighting', 'Normal'])
+      )
+      {
+        return [
+          'Mult' => 1,
+          'Text' => ''
+        ];
+      }
 
       $Types = [
         'Normal', 'Fire', 'Water', 'Electric',
