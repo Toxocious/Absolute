@@ -2333,6 +2333,14 @@
               $this->Power *= 0.75;
           }
           break;
+
+        case 'Sand Force':
+          if ( !empty($this->Weather) && $this->Weather->Name == 'Sandstorm' )
+          {
+            if ( in_array($this->Move_Type, ['Ground', 'Rock', 'Steel']) )
+              $this->Power *= 1.3;
+          }
+          break;
       }
 
       switch ($this->Damage_Type)
