@@ -618,15 +618,15 @@
       $Damage = 0;
       for ( $Hit = 0; $Hit < $this->Total_Hits; $Hit++ )
       {
-        $Ability_Proc = $this->ProcessAbilityProcs($Attacker, $Defender, true, $Hit, $this->Total_Hits, $Damage);
+        $Initial_Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
+
+        $Ability_Proc = $this->ProcessAbilityProcs($Attacker, $Defender, true, $Hit, $this->Total_Hits, $Initial_Damage);
         $Ability_Proc_Dialogue .= $Ability_Proc['Text'];
 
-        if ( empty($Ability_Proc['Damage']) )
-          $Damage += $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
-        else if ( $Ability_Proc['Damage'] > 0 )
-          $Damage += $Ability_Proc['Damage'];
+        if ( !empty($Ability_Proc['Damage']) )
+          $Damage = $Ability_Proc['Damage'];
         else
-          $Damage += 0;
+          $Damage = $Initial_Damage;
       }
 
       /**
