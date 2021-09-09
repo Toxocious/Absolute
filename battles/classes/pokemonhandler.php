@@ -541,6 +541,18 @@
         case 'Pure Power':
           $New_Active->Stats['Attack']->Current_Value *= 2;
           break;
+
+        case 'Sand Stream':
+          if ( $this->Item->Name == 'Smooth Rock' )
+            $Turn_Count = 8;
+
+          $Set_Weather = new Weather('Sandstorm', !empty($Turn_Count) ?: 5);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
       }
 
       if ( !empty($this->Weather) )
