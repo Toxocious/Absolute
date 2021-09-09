@@ -2073,6 +2073,21 @@
                 unset($Attacker->Item);
               }
               break;
+
+            case 'Sand Spit':
+              if ( empty($this->Weather) || (!empty($this->Weather) && $this->Weather->Name) )
+              {
+                if ( $Defender->Item->Name == 'Smooth Rock' )
+                  $Turn_Count = 8;
+
+                $Set_Weather = new Weather('Rain', !empty($Turn_Count) ?: 5);
+                if ( $Set_Weather )
+                {
+                  $this->Weather[$Set_Weather->Name] = $Set_Weather;
+                  $Ability_Effect_Text .= $Set_Weather->Dialogue;
+                }
+              }
+              break;
           }
           break;
       }
