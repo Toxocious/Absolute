@@ -229,6 +229,10 @@
         case 'Pure Power':
           $this->Stats['Attack']->Current_Value /= 2;
           break;
+
+        case 'Regenerator':
+          $this->IncreaseHP($this->Max_HP / 3);
+          break;
       }
 
       if ( $this->Original_Ability != $this->Ability )
