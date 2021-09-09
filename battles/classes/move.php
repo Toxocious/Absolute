@@ -303,7 +303,7 @@
           break;
       }
 
-      $Move_Effectiveness = $this->MoveEffectiveness($Defender);
+      $Move_Effectiveness = $this->MoveEffectiveness($Attacker, $Defender);
       if ( $Move_Effectiveness['Mult'] > 0 )
         $Does_Move_Crit = $this->DoesMoveCrit($Side);
       else
@@ -1402,13 +1402,16 @@
 
     /**
      * Determine how effective the move was.
-     * @param object $Used_Against
+     * @param {PokemonHandler} $Used_By
+     * @param {PokemonHandler} $Used_Against
      */
     public function MoveEffectiveness
     (
-      object $Used_Against
+      PokemonHandler $Used_By,
+      PokemonHandler $Used_Against
     )
     {
+
       $Types = [
         'Normal', 'Fire', 'Water', 'Electric',
         'Grass', 'Ice', 'Fighting', 'Poison',

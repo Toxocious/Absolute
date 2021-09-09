@@ -269,7 +269,7 @@
             if
             (
               $Move->Category == 'Ohko' ||
-              $Move->MoveEffectiveness($this)['Mult'] > 1
+              $Move->MoveEffectiveness($New_Active, $Defender)['Mult'] > 1
             )
             {
               $Effect_Text .= "{$this->Display_Name} shuddered.<br />";
