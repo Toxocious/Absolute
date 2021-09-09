@@ -293,6 +293,14 @@
         case 'Protean':
           $Attacker->SetTyping('Primary', $this->Move_Type, true);
           break;
+
+        case 'Refrigerate':
+          if ( $this->Move_Type == 'Normal' )
+          {
+            $this->Move_Type = 'Ice';
+            $this->Power *= 1.2;
+          }
+          break;
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Defender);
