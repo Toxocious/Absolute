@@ -44,18 +44,18 @@
           case 'Harsh Sunlight':
           case 'Extremely Harsh Sunlight':
             if ( $Active_Pokemon->Ability->Name == 'Chlorophyll' )
-              $Active_Pokemon->Stats['Speed'] *= 2;
+              $Active_Pokemon->Stats['Speed']->Current_Value *= 2;
 
             if ( $Active_Pokemon->Ability->Name == 'Flower Gift' )
             {
-              $Active_Pokemon->Stats['Attack'] *= 1.5;
-              $Active_Pokemon->Stats['Sp_Defense'] *= 1.5;
+              $Active_Pokemon->Stats['Attack']->Current_Value *= 1.5;
+              $Active_Pokemon->Stats['Sp_Defense']->Current_Value *= 1.5;
             }
             break;
 
           case 'Sandstorm':
             if ( $Active_Pokemon->HasTyping(['Rock']) )
-              $Active_Pokemon->Stats['Sp_Defense'] *= 1.5;
+              $Active_Pokemon->Stats['Sp_Defense']->Current_Value *= 1.5;
             break;
         }
       }
@@ -91,18 +91,18 @@
           case 'Harsh Sunlight':
           case 'Extremely Harsh Sunlight':
             if ( $Active_Pokemon->Ability->Name == 'Chlorophyll' )
-              $Active_Pokemon->Stats['Speed'] /= 2;
+              $Active_Pokemon->Stats['Speed']->Current_Value /= 2;
 
             if ( $Active_Pokemon->Ability->Name == 'Flower Gift' )
             {
-              $Active_Pokemon->Stats['Attack'] /= 1.5;
-              $Active_Pokemon->Stats['Sp_Defense'] /= 1.5;
+              $Active_Pokemon->Stats['Attack']->Current_Value /= 1.5;
+              $Active_Pokemon->Stats['Sp_Defense']->Current_Value /= 1.5;
             }
             break;
 
           case 'Sandstorm':
             if ( $Active_Pokemon->HasTyping(['Rock']) )
-              $Active_Pokemon->Stats['Sp_Defense'] /= 1.5;
+              $Active_Pokemon->Stats['Sp_Defense']->Current_Value /= 1.5;
             break;
         }
       }
