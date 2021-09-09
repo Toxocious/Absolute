@@ -2216,76 +2216,104 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
-      if ( $Attacker->Ability->Name == 'Reckless' && $this->Recoil > 0 )
-        $this->Power *- 1.2;
-
-      if ( $Attacker->Ability->Name == 'Punk Rock' && $this->HasFlag('sound') )
-        $this->Power *= 1.3;
-
-      if ( $Attacker->Ability->Name == 'Battery' && $this->Category == 'Special' )
-        $this->Power *= 1.3;
-
-      if ( $Attacker->Ability->Name == 'Flare Boost' && $Attacker->HasStatus('Burn') && $this->Category == 'Special' )
-        $this->Power *= 1.5;
-
-      if ( $Attacker->Ability->Name == 'Flash Fire' && $Attacker->Ability->Procced && $this->Move_Type == 'Fire' )
-        $this->Power *= 1.5;
-
-      if ( $Attacker->Ability->Name == 'Blaze' && $Attacker->HP <= $Attacker->Max_HP / 2 && $this->Move_Type == 'Fire' )
-        $this->Power *= 1.5;
-
-      if ( $Attacker->Ability->Name == "Dragon's Maw" && $this->Move_Type == 'Dragon' )
-        $this->Power *= 1.5;
-
-      if ( $Attacker->Ability->Name == 'Overgrow' && $this->Move_Type == 'Grass' )
-        $this->Power *= 1.5;
-
-      if ( $Attacker->Ability->Name == 'Mega Launcher' && $this->HasFlag('pulse') )
-        $this->Power *= 1.5;
-
-      if ( $Attacker->Ability->Name == 'Strong Jaw' && $this->HasFlag('bite') )
-        $this->Power *= 1.5;
-
-      if ( $Attacker->Ability->Name == 'Iron Fist' && $this->HasFlag('punch') )
-        $this->Power *= 1.2;
-
-      if ( $Turn_First_Attacker != $Side && $Attacker->Ability->Name == 'Analytic' )
-        $this->Power *= 1.3;
-
-      if ( $Defender->Ability->Name == 'Aura Break' )
+      switch ( $Attacker->Ability->Name )
       {
-        if ( $Attacker->Ability->Name == 'Dark Aura' && $this->Move_Type == 'Dark' )
-          $this->Power /= 1.33;
+        case 'Analytic':
+          if ( $Turn_First_Attacker != $Side )
+            $this->Power *= 1.3;
+          break;
 
-        if ( $Attacker->Ability->Name == 'Fairy Aura' && $this->Move_Type == 'Fairy' )
-          $this->Power /= 1.33;
-      }
-      else
-      {
-        if ( $Attacker->Ability->Name == 'Dark Aura' && $this->Move_Type == 'Dark' )
-          $this->Power *= 1.33;
+        case 'Battery':
+          if ( $this->Damage_Type == 'Special' )
+            $this->Power *= 1.3;
+          break;
 
-        if ( $Attacker->Ability->Name == 'Fairy Aura' && $this->Move_Type == 'Fairy' )
-          $this->Power *= 1.33;
-      }
+        case 'Blaze':
+          if ( $Attacker->HP <= $Attacker->Max_HP / 2 && $this->Move_Type == 'Fire' )
+            $this->Power *= 1.5;
+          break;
 
-      $Physical_Damage_Mult = 1.0;
-      $Special_Damage_Mult = 1.0;
-      if ( $Attacker->Ability->Name != 'Infiltrator' )
-      {
-        if ( $this->IsFieldEffectActive($Foe, 'Aurora Veil') )
-        {
-          $Physical_Damage_Mult = 0.5;
-          $Special_Damage_Mult = 0.5;
-        }
-        else if ( $this->IsFieldEffectActive($Foe, 'Reflect') )
-        {
-          $Physical_Damage_Mult = 0.5;
-        }
-        else if ( $this->IsFieldEffectActive($Foe, 'Light Screen') )
-        {
-          $Special_Damage_Mult = 0.5;
-        }
+        case 'Dark Aura':
+          if ( $this->Move_Type == 'Dark' )
+            if ( $Defender->Ability->Name == 'Aura Break' )
+              $this->Power /= 1.33;
+            else
+              $this->Power *= 1.33;
+          break;
+
+        case "Dragon's Maw":
+          if ( $this->Move_Type == 'Dragon' )
+            $this->Power *= 1.5;
+          break;
+
+        case 'Fairy Aura':
+          if ( $this->Move_Type == 'Dark' )
+            if ( $Defender->Ability->Name == 'Aura Break' )
+              $this->Power /= 1.33;
+            else
+              $this->Power *= 1.33;
+          break;
+
+        case 'Flare Boost':
+          if ( $Attacker->HasStatus('Burn') && $this->Damage_Type == 'Special' )
+            $this->Power *= 1.5;
+          break;
+
+        case 'Flash Fire':
+          if ( $Attacker->Ability->Procced && $this->Move_Type == 'Fire' )
+            $this->Power *= 1.5;
+          break;
+
+        case 'Infiltrator':
+          if ( $this->IsFieldEffectActive($Foe, 'Aurora Veil') )
+          {
+            $Physical_Damage_Mult = 0.5;
+            $Special_Damage_Mult = 0.5;
+          }
+          else if ( $this->IsFieldEffectActive($Foe, 'Reflect') )
+          {
+            $Physical_Damage_Mult = 0.5;
+          }
+          else if ( $this->IsFieldEffectActive($Foe, 'Light Screen') )
+          {
+            $Special_Damage_Mult = 0.5;
+          }
+          else
+          {
+            $Physical_Damage_Mult = 1.0;
+            $Special_Damage_Mult = 1.0;
+          }
+          break;
+
+        case 'Iron Fist':
+          if ( $this->HasFlag('punch') )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Mega Launcher':
+          if ( $this->HasFlag('pulse') )
+            $this->Power *= 1.5;
+          break;
+
+        case 'Overgrow':
+          if ( $this->Move_Type == 'Grass' )
+            $this->Power *= 1.5;
+          break;
+
+        case 'Punk Rock':
+          if ( $this->HasFlag('sound') )
+            $this->Power *= 1.3;
+          break;
+
+        case 'Strong Jaw':
+          if ( $this->HasFlag('bite') )
+            $this->Power *= 1.5;
+          break;
+
+        case 'Reckless':
+          if ( $this->Recoil > 0 )
+            $this->Power *= 1.2;
+          break;
       }
 
       switch ($this->Damage_Type)
