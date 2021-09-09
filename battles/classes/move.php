@@ -2050,7 +2050,7 @@
               if ( $Defender->HP <= 0 && $Attacker->Stats['Sp_Attack']->Stage < 6 )
               {
                 $Attacker->Stats['Sp_Attack']->SetValue(1);
-                $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Grim Neight boosted its Special Attack!";
+                $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Grim Neigh boosted its Special Attack!";
               }
               break;
 
@@ -2089,6 +2089,19 @@
                   $this->Weather[$Set_Weather->Name] = $Set_Weather;
                   $Ability_Effect_Text .= $Set_Weather->Dialogue;
                 }
+              }
+              break;
+
+            case 'Sap Sipper':
+              if ( $this->Move_Type == 'Grass' )
+              {
+                if ( $Attacker->Stats['Attack']->Stage < 6 )
+                {
+                  $Attacker->Stats['Attack']->SetValue(1);
+                  $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Sap Sipper boosted its Attack!";
+                }
+
+                $Ability_Effect_Damage = 0;
               }
               break;
           }
