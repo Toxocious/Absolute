@@ -26,6 +26,13 @@
 
         switch ($this->Name)
         {
+          case 'Electric':
+            if ( $Active_Pokemon->Ability->Name == 'Surge Surfer' )
+            {
+              $Active_Pokemon->Stats['Speed']->Current_Value *= 2;
+            }
+            break;
+
           case 'Grassy':
             if ( $Active_Pokemon->Ability->Name == 'Grassy Pelt' )
             {
@@ -67,6 +74,13 @@
 
         switch ($this->Name)
         {
+          case 'Electric':
+            if ( $Active_Pokemon->Ability->Name == 'Surge Surfer' )
+            {
+              $Active_Pokemon->Stats['Speed']->Current_Value /= 2;
+            }
+            break;
+
           case 'Grassy':
             if ( $Active_Pokemon->Ability->Name == 'Grassy Pelt' )
             {
