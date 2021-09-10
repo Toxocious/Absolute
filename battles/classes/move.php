@@ -2420,6 +2420,11 @@
               $this->Power *= 1.3;
           }
           break;
+
+        case 'Steelworker':
+          if ( $this->Move_Type == 'Steel' )
+            $this->Power *= 1.5;
+          break;
       }
 
       switch ($this->Damage_Type)
