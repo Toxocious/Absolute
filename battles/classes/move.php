@@ -1949,8 +1949,16 @@
                 if ( $Defender->Stats['Speed']->Stage < 6 )
                 {
                   $Defender->Stats['Speed']->SetValue(1);
-                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s Rattled boosted its Special Attack!<br />";
+                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s Rattled boosted its Speed!<br />";
                 }
+              }
+              break;
+
+            case 'Stamina':
+              if ( $Defender->Stats['Defense']->Stage < 6 )
+              {
+                $Defender->Stats['Defense']->SetValue(1);
+                $Ability_Effect_Text .= "{$Defender->Display_Name}'s Rattled boosted its Defense!<br />";
               }
               break;
           }
