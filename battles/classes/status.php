@@ -39,7 +39,7 @@
         if ( $Status_Name == 'Poison' && $Pokemon->HasTyping(['Poison', 'Steel']) )
           return false;
 
-        if ( $Status_Name == 'Sleep' && $Pokemon->Ability->Name == 'Insomnia' )
+        if ( $Status_Name == 'Sleep' && $Pokemon->HasAbility(['Insomnia', 'Sweet Veil']) )
           return false;
       }
       else
