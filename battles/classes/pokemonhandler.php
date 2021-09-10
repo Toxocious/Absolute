@@ -599,6 +599,12 @@
               $New_Active->Stats['Sp_Defense'] *= 1.5;
             }
             break;
+
+          case 'Rain':
+          case 'Heavy Rain':
+            if ( $New_Active->Ability->Name == 'Swift Swim' )
+              $New_Active->Stats['Speed']->Current_Value *= 2;
+            break;
         }
       }
 

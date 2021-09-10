@@ -61,6 +61,12 @@
               $Active_Pokemon->Stats['Sp_Attack']->Current_Value *= 1.5;
             break;
 
+          case 'Rain':
+          case 'Heavy Rain':
+            if ( $Active_Pokemon->Ability->Name == 'Swift Swim' )
+              $Active_Pokemon->Stats['Speed']->Current_Value *= 2;
+            break;
+
           case 'Sandstorm':
             if ( $Active_Pokemon->HasTyping(['Rock']) )
               $Active_Pokemon->Stats['Sp_Defense']->Current_Value *= 1.5;
@@ -117,6 +123,12 @@
 
             if ( $Active_Pokemon->Ability->Name == 'Solar Power' )
               $Active_Pokemon->Stats['Sp_Attack']->Current_Value /= 1.5;
+            break;
+
+          case 'Rain':
+          case 'Heavy Rain':
+            if ( $Active_Pokemon->Ability->Name == 'Swift Swim' )
+              $Active_Pokemon->Stats['Speed']->Current_Value /= 2;
             break;
 
           case 'Sandstorm':
