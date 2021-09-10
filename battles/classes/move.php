@@ -776,7 +776,7 @@
 
       if ( $Attacker->HasStatus('Flinch') )
       {
-        if ( $Attacker->Ability->Name == 'Steadfast' )
+        if ( $Attacker->Ability->Name == 'Steadfast' && $Attacker->Stats['Speed']->Stage < 6 )
         {
           $Attacker->Stats['Speed']->SetValue(1);
           $Ability_Text = "{$Attacker->Display_Name}'s Steadfast increased its Speed!<br />";
