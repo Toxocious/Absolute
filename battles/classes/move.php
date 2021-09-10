@@ -776,9 +776,16 @@
 
       if ( $Attacker->HasStatus('Flinch') )
       {
+        if ( $Attacker->Ability->Name == 'Steadfast' )
+        {
+          $Attacker->Stats['Speed']->SetValue(1);
+          $Ability_Text = "{$Attacker->Display_Name}'s Steadfast increased its Speed!<br />";
+        }
+
         return [
           'Type' => 'Error',
-          'Text' => "{$Attacker->Display_Name} was flinched.<br />",
+          'Text' => "{$Attacker->Display_Name} was flinched.<br />" .
+                    (!empty($Ability_Text) ? $Ability_Text : ''),
         ];
       }
 
