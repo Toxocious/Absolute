@@ -2433,6 +2433,11 @@
           if ( $this->Move_Type == 'Steel' )
             $this->Power *= 1.5;
           break;
+
+        case 'Swarm':
+          if ( $this->Move_Type == 'Bug' && $Attacker->HP <= $Attacker->Max_HP / 2 )
+            $this->Power *= 1.5;
+          break;
       }
 
       switch ($this->Damage_Type)
