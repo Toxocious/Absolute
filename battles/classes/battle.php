@@ -212,7 +212,7 @@
 
               case 'Extremely Harsh Sunlight':
               case 'Harsh Sunlight':
-                if ( $Active_Ally->Active->Ability->Name == 'Dry Skin' )
+                if ( $Active_Ally->Active->HasAbility([ 'Dry Skin', 'Solar Power' ]) )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
                 break;
 

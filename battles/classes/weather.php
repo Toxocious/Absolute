@@ -56,6 +56,9 @@
               $Active_Pokemon->Stats['Attack']->Current_Value *= 1.5;
               $Active_Pokemon->Stats['Sp_Defense']->Current_Value *= 1.5;
             }
+
+            if ( $Active_Pokemon->Ability->Name == 'Solar Power' )
+              $Active_Pokemon->Stats['Sp_Attack']->Current_Value *= 1.5;
             break;
 
           case 'Sandstorm':
@@ -111,6 +114,9 @@
               $Active_Pokemon->Stats['Attack']->Current_Value /= 1.5;
               $Active_Pokemon->Stats['Sp_Defense']->Current_Value /= 1.5;
             }
+
+            if ( $Active_Pokemon->Ability->Name == 'Solar Power' )
+              $Active_Pokemon->Stats['Sp_Attack']->Current_Value /= 1.5;
             break;
 
           case 'Sandstorm':
