@@ -1963,6 +1963,14 @@
                 }
               }
               break;
+
+            case 'Sturdy':
+              if ( $Defender->HP == $Defender->Max_HP && $Damage >= $Defender->HP )
+              {
+                $Damage = $Defender->HP - 1;
+                $Ability_Effect_Text .= "{$Defender->Display_Name}'s Sturdy!<br />";
+              }
+              break;
           }
           break;
 
