@@ -206,7 +206,7 @@
               case 'Hail':
                 if ( $Active_Ally->Active->Ability->Name == 'Ice Body' )
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 16);
-                else if ( !$Active_Ally->Active->HasTyping([ 'Ice' ]) && $Active_Ally->Active->Ability->Name != 'Magic Guard' )
+                else if ( !$Active_Ally->Active->HasTyping([ 'Ice' ]) && !$Active_Ally->Active->HasAbility(['Magic Guard', 'Snow Cloak']) )
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
                 break;
 
