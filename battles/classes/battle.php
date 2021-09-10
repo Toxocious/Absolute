@@ -121,7 +121,8 @@
       $End_Of_Turn = $this->ProcessEndOfTurn();
       if ( !empty($End_Of_Turn) )
       {
-        $this->Turn_Dialogue['Text'] .= $End_Of_Turn['Text'];
+        if ( !empty($End_Of_Turn['Text']) )
+          $this->Turn_Dialogue['Text'] .= $End_Of_Turn['Text'];
 
         if ( !empty($End_Of_Turn['Continue']) )
           $this->Turn_Dialogue['Text'] = $this->RenderContinueButton($this->Turn_Dialogue['Text']);
@@ -251,6 +252,60 @@
         }
 
         /**
+         * Process ability procs.
+         */
+        switch ($Active_Ally->Active->Ability->Name)
+        {
+          case 'Moody':
+            $Stats = ['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed'];
+
+            $Minus_Stats = [];
+            $Plus_Stats = [];
+            foreach ($Stats as $Index => $Stat)
+            {
+              if ( $Active_Ally->Active->Stats[$Stat]->Stage < 6 )
+                $Plus_Stats[] = $Stat;
+
+              if ( $Active_Ally->Active->Stats[$Stat]->Stage > -6 )
+                $Minus_Stats[] = $Stat;
+            }
+
+            if ( count($Plus_Stats) > 0 )
+            {
+              $Increase_Stat = $Plus_Stats[mt_rand(0, count($Plus_Stats))];
+              $Active_Ally->Active->Stats[$Increase_Stat]->SetValue(1);
+            }
+
+            $Reduce_Stat = $Minus_Stats[mt_rand(0, count($Minus_Stats))];
+            if ( count($Reduce_Stat) > 0 )
+            {
+              $Decrease_Stat = $Reduce_Stat[mt_rand(0, count($Reduce_Stat))];
+              $Active_Ally->Active->Stats[$Decrease_Stat]->SetValue(-1);
+            }
+            break;
+
+          case 'Shed Skin':
+            if ( !empty($Active_Ally->Active->Statuses) )
+            {
+              foreach ($Active_Ally->Active->Statuses as $Status)
+              {
+                if ( $Active_Ally->Ability->Procced )
+                  break;
+
+                if ( $Status->Volatile )
+                  continue;
+
+                if ( mt_rand(1, 100) <= 30 )
+                {
+                  $Active_Ally->Ability->SetProcStatus(true);
+                  unset($Active_Ally->Active->Statuses[$Status->Name]);
+                }
+              }
+            }
+            break;
+        }
+
+        /**
          * Process the Pokemon's active Statuses.
          */
         if ( !empty($Active_Ally->Active->Statuses) )
@@ -361,40 +416,6 @@
               return $Faint_Dialogue;
             }
           }
-        }
-
-        /**
-         * Process ability procs.
-         */
-        switch ($Active_Ally->Active->Ability->Name)
-        {
-          case 'Moody':
-            $Stats = ['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed'];
-
-            $Minus_Stats = [];
-            $Plus_Stats = [];
-            foreach ($Stats as $Index => $Stat)
-            {
-              if ( $Active_Ally->Active->Stats[$Stat]->Stage < 6 )
-                $Plus_Stats[] = $Stat;
-
-              if ( $Active_Ally->Active->Stats[$Stat]->Stage > -6 )
-                $Minus_Stats[] = $Stat;
-            }
-
-            if ( count($Plus_Stats) > 0 )
-            {
-              $Increase_Stat = $Plus_Stats[mt_rand(0, count($Plus_Stats))];
-              $Active_Ally->Active->Stats[$Increase_Stat]->SetValue(1);
-            }
-
-            $Reduce_Stat = $Minus_Stats[mt_rand(0, count($Minus_Stats))];
-            if ( count($Reduce_Stat) > 0 )
-            {
-              $Decrease_Stat = $Reduce_Stat[mt_rand(0, count($Reduce_Stat))];
-              $Active_Ally->Active->Stats[$Decrease_Stat]->SetValue(-1);
-            }
-            break;
         }
       }
 
