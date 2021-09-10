@@ -41,6 +41,11 @@
 
         switch ($this->Name)
         {
+          case 'Hail':
+            if ( $Active_Pokemon->Ability->Name == 'Slush Rush' )
+              $Active_Pokemon->Stats['Speed']->Current_Value *= 2;
+            break;
+
           case 'Harsh Sunlight':
           case 'Extremely Harsh Sunlight':
             if ( $Active_Pokemon->Ability->Name == 'Chlorophyll' )
@@ -91,6 +96,11 @@
 
         switch ($this->Name)
         {
+          case 'Hail':
+            if ( $Active_Pokemon->Ability->Name == 'Slush Rush' )
+              $Active_Pokemon->Stats['Speed']->Current_Value /= 2;
+            break;
+
           case 'Harsh Sunlight':
           case 'Extremely Harsh Sunlight':
             if ( $Active_Pokemon->Ability->Name == 'Chlorophyll' )

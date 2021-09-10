@@ -574,6 +574,11 @@
       {
         switch ($this->Weather->Name)
         {
+          case 'Hail':
+            if ( $New_Active->Ability->Name == 'Slush Rush' )
+              $New_Active->Stats['Speed']->Current_Value *= 2;
+            break;
+
           case 'Extremely Harsh Sunlight':
           case 'Harsh Sunlight':
             if ( $New_Active->Ability->Name == 'Flower Gift' )
