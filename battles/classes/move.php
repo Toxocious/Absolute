@@ -2141,6 +2141,17 @@
                 $Ability_Effect_Damage = 0;
               }
               break;
+
+            case 'Steam Engine':
+              if ( in_array($this->Move_Type, ['Fire', 'Water']) )
+              {
+                if ( $Defender->Stats['Speed']->Stage < 6 )
+                {
+                  $Defender->Stats['Speed']->SetValue(1);
+                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s Steam Engine boosted its Speed!";
+                }
+              }
+              break;
           }
           break;
       }
