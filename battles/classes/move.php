@@ -2441,8 +2441,11 @@
             $Damage *= 2;
         }
 
-        if ( $Attacker->HasAbility(['Neuroforce', 'Prism Armor']) && $Move_Effectiveness['Mult'] > 1 )
+        if ( $Attacker->HasAbility(['Neuroforce']) && $Move_Effectiveness['Mult'] > 1 )
           $Damage *= 1.25;
+
+        if ( $Attacker->HasAbility(['Prism Armor', 'Solid Rock']) && $Move_Effectiveness['Mult'] > 1 )
+          $Damage *= 0.75;
 
         if ( $Defender->HasAbility(['Multiscale', 'Shadow Shield']) && $Defender->HP === $Defender->Max_HP )
           $Damage /= 2;
