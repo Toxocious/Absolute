@@ -568,6 +568,18 @@
 
           $Effect_Text .= 'All damage reducing field effects were removed!';
           break;
+
+        case 'Snow Warning':
+          if ( $this->Item->Name == 'Icy Rock' )
+            $Turn_Count = 8;
+
+          $Set_Weather = new Weather('Hail', !empty($Turn_Count) ?: 5);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
       }
 
       if ( !empty($this->Weather) )
