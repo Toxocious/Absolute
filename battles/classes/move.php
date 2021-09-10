@@ -1783,7 +1783,7 @@
         if
         (
           $this->Kings_Rock &&
-          $Attacker->Item->Name == "King's Rock" &&
+          ($Attacker->Item->Name == "King's Rock" || $Attacker->Ability->Name == 'Stench') &&
           !$Defender->HasStatus('Substitute') &&
           $Turn_First_Attacker == $Attacker->Side &&
           mt_rand(1, 100) <= !empty($Flinch_Chance) ?: 10
