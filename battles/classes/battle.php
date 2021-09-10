@@ -303,6 +303,13 @@
               }
             }
             break;
+
+          case 'Speed Boost':
+            if ( $Active_Ally->Active->Stats['Speed']->Stage < 6 )
+            {
+              $Active_Ally->Active->Stats['Speed']->SetValue(1);
+            }
+            break;
         }
 
         /**
