@@ -1677,13 +1677,13 @@
       string $Turn_First_Attacker
     )
     {
-      $Ailment_Chance = mt_rand(1, 100);
-
-      if ( $this->Effect_Chance == 'None' )
-        $this->Effect_Chance = 100;
-
       if ( !empty($this->Ailment) )
       {
+        $Ailment_Chance = mt_rand(1, 100);
+
+        if ( $this->Effect_Chance == 'None' )
+          $this->Effect_Chance = 100;
+
         if ( $Target->Active->HasStatus('Substitute') )
         {
           return 'But it failed!';
@@ -1705,6 +1705,9 @@
         {
           return 'But it failed!';
         }
+
+        if ( $Target->Active->Ability->Name == 'Shield Dust' && $this->Damage_Type != 'Status' )
+          return;
 
         if ( $Attacker->Ability->Name == 'Serene Grace' && $this->Damage_Type != 'Status' )
         {
