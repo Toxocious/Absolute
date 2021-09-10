@@ -2132,10 +2132,10 @@
             case 'Sap Sipper':
               if ( $this->Move_Type == 'Grass' )
               {
-                if ( $Attacker->Stats['Attack']->Stage < 6 )
+                if ( $Defender->Stats['Attack']->Stage < 6 )
                 {
-                  $Attacker->Stats['Attack']->SetValue(1);
-                  $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Sap Sipper boosted its Attack!";
+                  $Defender->Stats['Attack']->SetValue(1);
+                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s Sap Sipper boosted its Attack!";
                 }
 
                 $Ability_Effect_Damage = 0;
