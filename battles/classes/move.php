@@ -1355,22 +1355,6 @@
         }
       }
 
-      if ( $Defender->Ability->Name == 'Static' )
-      {
-        if ( $Attacker->Item->Name != 'Protective Pads' )
-        {
-          for ( $i = 0; $i < $this->Total_Hits; $i++ )
-          {
-            if ( mt_rand(1, 10) <= 3 )
-            {
-              $Attacker->SetStatus('Paralysis');
-
-              $Text .= "<br />{$Attacker->Display_Name} was paralyzed!<br />";
-            }
-          }
-        }
-      }
-
       if ( $Defender->Ability->Name == 'Wandering Spirit' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
@@ -1959,6 +1943,17 @@
               {
                 $Defender->Stats['Defense']->SetValue(1);
                 $Ability_Effect_Text .= "{$Defender->Display_Name}'s Rattled boosted its Defense!<br />";
+              }
+              break;
+
+            case 'Static':
+              if ( $Attacker->Item->Name != 'Protective Pads' )
+              {
+                if ( mt_rand(1, 100) <= 30 )
+                {
+                  $Attacker->SetStatus('Paralysis');
+                  $Ability_Effect_Text .= "{$Attacker->Display_Name} was paralyzed!<br />";
+                }
               }
               break;
           }
