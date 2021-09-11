@@ -369,11 +369,7 @@
                 break;
             }
 
-            if ( $Status->Turns_Left === 0 )
-              unset($Active_Ally->Active->Statuses[$Status->Name]);
-
-            if ( $Status->Turns_Left > 0 )
-              $Status->UpdateStatus();
+            $Active_Ally->Active->UpdateStatus($Status->Name);
           }
         }
         else

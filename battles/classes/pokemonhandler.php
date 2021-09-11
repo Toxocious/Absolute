@@ -1126,6 +1126,31 @@
     }
 
     /**
+     * Update the desired status of the Pokemon.
+     */
+    public function UpdateStatus
+    (
+      string $Status_Name
+    )
+    {
+      $Status_Data = $this->HasStatus($Status_Name);
+      if ( empty($Status_Data) )
+        return false;
+
+      if ( $Status_Data->Turns_Left > 0 )
+        $Status_Data->DecrementTurnCount();
+
+      if ( !empty($Status_Data->Stacks) )
+        $Status_Data->IncrementStacks();
+
+      if ( $Status_Data->Turns_Left === 0 )
+        unset($this->Statuses[$Status_Name]);
+
+      if ( !empty($this->Statuses[$Status_Name]) )
+        $this->Statuses[$Status_Name] = $Status_Data;
+    }
+
+    /**
      * Remove a status from the Pokemon.
      * @param string $Status_Name
      */

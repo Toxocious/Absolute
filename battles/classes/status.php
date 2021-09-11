@@ -5,8 +5,6 @@
     public $Turns_Left = null;
     public $Volatile = null;
     public $Stacks = null;
-    public $Max_HP = null;
-    public $HP = null;
 
     public function __construct
     (
@@ -59,13 +57,10 @@
     /**
      * Update the status.
      */
-    public function UpdateStatus()
+    public function DecrementTurnCount()
     {
       if ( $this->Turns_Left > 0 )
         $this->Turns_Left--;
-
-      if ( !empty($this->Stacks) && $this->Stacks < $this->Max_Stacks )
-        $this->Stacks++;
 
       return $this;
     }
@@ -78,8 +73,8 @@
       int $Amount = 1
     )
     {
-      if ( isset($this->Stacks) )
-        $this->Stacks++;
+      if ( !empty($this->Stacks) )
+        $this->Stacks += $Amount;
 
       return $this;
     }
@@ -117,8 +112,8 @@
         'Badly Poisoned' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
-          'Min_Stacks' => 0,
-          'Max_Stacks' => 14,
+          'Min_Stacks' => 1,
+          'Max_Stacks' => 15,
           'Stacks' => 0,
           'Volatile' => false,
           'Dialogue' => 'has been badly poisoned!',
