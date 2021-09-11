@@ -236,28 +236,28 @@
       Weather_Element.innerHTML = `<img src='./images/Assets/weather_${Weather_Name}.png' />`;
     },
 
-    RenderFieldEffects: (Side, Field_Effects) =>
+    RenderFieldEffects: (Field_Effects) =>
     {
-      if ( typeof Side === 'undefined' )
-        return;
-
-      let Render_Text;
+      let Render_Data;
       if ( Field_Effects === null )
       {
-        Render_Text = 'No Active Field Effects';
+        document.getElementById('Ally_Field_Effects').innerText = 'No Active Field Effects';
+        document.getElementById('Foe_Field_Effects').innerText = 'No Active Field Effects';
       }
       else
       {
-        Render_Text = '';
-        for ( Field_Effect in Field_Effects )
+        for ( Field_Side in Field_Effects )
         {
-          Render_Text += `${Field_Effect}, `
+          document.getElementById(`${Field_Side}_Field_Effects`).innerText = '';
+
+          const Processing_Side = Field_Effects[Field_Side];
+          Processing_Side.forEach((Index) => {
+            document.getElementById(`${Field_Side}_Field_Effects`).innerHTML += `
+              <img alt='${Index.Name} Icon' src='./images/Assets/Battle/${Index.Name}.png' style='height: 20px; width: 40px;' />
+            `;
+          });
         }
-
-        Render_Text = Render_Text.substr(Render_Text, Render_Text.length - 2);
       }
-
-      document.getElementById(`${Side}_Field_Effects`).innerHTML = Render_Text;
     },
 
     HandleRequest: (Action, Data = null, Data_Event = null) =>
@@ -302,12 +302,10 @@
             {
               Battle.RenderMoves(JSON_Data.Ally.Active.Moves);
               Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active);
-              Battle.RenderFieldEffects('Ally', JSON_Data.Ally.Field_Effects);
-
               Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active);
-              Battle.RenderFieldEffects('Foe', JSON_Data.Foe.Field_Effects);
 
               Battle.RenderWeather(JSON_Data.Weather);
+              Battle.RenderFieldEffects(JSON_Data.Field_Effects);
               Battle.RenderCurrencies(JSON_Data.Ally.Money, JSON_Data.Ally.Abso_Coins);
 
               document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
