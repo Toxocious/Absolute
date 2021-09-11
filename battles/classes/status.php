@@ -16,56 +16,6 @@
     )
     {
       $Status_Data = $this->AllStatuses()[$Status_Name];
-      if ( !isset($Status_Data) )
-        return false;
-
-      if ( $Pokemon->HasStatus($Status_Name) )
-      {
-        $this->Dialogue = 'But it failed!';
-        return $this->Dialogue;
-      }
-
-      if ( !$Status_Data['Volatile'] )
-      {
-        if ( $Pokemon->Ability->Name == 'Comatose' )
-          return false;
-
-        if ( $Status_Name == 'Burn' && $Pokemon->HasTyping(['Fire']) )
-          return false;
-
-        if ( $Status_Name == 'Paralysis' && $Pokemon->HasTyping(['Electric']) )
-          return false;
-
-        if ( $Status_Name == 'Poison' && $Pokemon->HasTyping(['Poison', 'Steel']) )
-          return false;
-
-        if ( $Status_Name == 'Sleep' && $Pokemon->HasAbility(['Insomnia', 'Sweet Veil']) )
-          return false;
-      }
-      else
-      {
-        if ( in_array($Pokemon->Item->Name, ['Flame Orb', 'Toxic Orb']) )
-          if ( in_array($Pokemon->Ability->Name, ['Flower Veil']) )
-            return false;
-
-        if ( in_array($Pokemon->Ability->Name, ['Leaf Guard', 'Comatose']) )
-          return false;
-
-        if ( $Pokemon->HasStatus('Safeguard') )
-          return false;
-
-        if ( in_array($Status_Name, ['Encore', 'Heal Block', 'Infatuation', 'Taunt', 'Torment']) && $Pokemon->Ability->Name == 'Aroma Veil' )
-          return false;
-
-        if ( $Pokemon->Ability->Name == 'Oblivious' && $Status_Name == 'Infatuation' )
-          return false;
-
-        if ( $Pokemon->Ability->Name == 'Own Tempo' && $Status_Name == 'Confusion' )
-          return false;
-      }
-
-      if ( $Pokemon->Ability->Name == 'Shields Down' )
-        return false;
 
       if ( $Pokemon->Ability->Name == 'Marvel Scale' && !$Pokemon->Ability->Procced )
       {
@@ -86,7 +36,11 @@
         $Status_Turns = floor($Status_Turns / 2);
 
       if ( isset($Status_Data['Min_Stacks']) && isset($Status_Data['Max_Stacks']) )
-        $this->Stacks = 1;
+      {
+        $this->Stacks = $Status_Data['Min_Stacks'];
+        $this->Min_Stacks = $Status_Data['Min_Stacks'];
+        $this->Max_Stacks = $Status_Data['Max_Stacks'];
+      }
 
       if ( isset($Status_Data['Dialogue']) )
         $this->Dialogue = "{$Pokemon->Display_Name} {$Status_Data['Dialogue']}";
@@ -110,6 +64,9 @@
       if ( $this->Turns_Left > 0 )
         $this->Turns_Left--;
 
+      if ( !empty($this->Stacks) && $this->Stacks < $this->Max_Stacks )
+        $this->Stacks++;
+
       return $this;
     }
 
@@ -130,7 +87,7 @@
     /**
      * An array of all statuses, volatile and otherwise.
      */
-    public function AllStatuses()
+    public static function AllStatuses()
     {
       return [
         'Burn' => [
@@ -160,6 +117,9 @@
         'Badly Poisoned' => [
           'Min_Turns' => -1,
           'Max_Turns' => -1,
+          'Min_Stacks' => 0,
+          'Max_Stacks' => 14,
+          'Stacks' => 0,
           'Volatile' => false,
           'Dialogue' => 'has been badly poisoned!',
         ],

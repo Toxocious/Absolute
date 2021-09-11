@@ -338,11 +338,17 @@
                   unset($Active_Ally->Active->Statuses[$Status->Name]);
                 break;
 
+              case 'Badly Poisoned':
               case 'Poison':
+                if ( $Status->Name == 'Badly Poisoned' )
+                  $Tick_Damage = ($Active_Ally->Active->Max_HP / 16) * $Status->Stacks;
+                else
+                  $Tick_Damage = $Active_Ally->Active->Max_HP / 8;
+
                 if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
                 else if ( $Active_Ally->Active->Ability->Name != 'Magic Guard' )
-                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                  $Active_Ally->Active->DecreaseHP($Tick_Damage);
                 break;
 
               case 'Sleep':

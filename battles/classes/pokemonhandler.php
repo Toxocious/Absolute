@@ -1065,14 +1065,60 @@
        *  condition will be kept, even if the Pokémon gains a new type or Ability that would normally prevent it.
        */
 
+      $Status_Data = Status::AllStatuses()[$Status];
+      if ( empty($Status_Data) )
+        return false;
+
+      if ( $this->HasStatus($Status) )
+        return false;
+
+      if ( $this->Ability->Name == 'Shields Down' )
+        return false;
+
+      if ( !$Status_Data['Volatile'] )
+      {
+        if ( $this->Ability->Name == 'Comatose' )
+          return false;
+
+        if ( $Status == 'Burn' && $this->HasTyping(['Fire']) )
+          return false;
+
+        if ( $Status == 'Paralysis' && $this->HasTyping(['Electric']) )
+          return false;
+
+        if ( $Status == 'Poison' && $this->HasTyping(['Poison', 'Steel']) )
+          return false;
+
+        if ( $Status == 'Sleep' && $this->HasAbility(['Insomnia', 'Sweet Veil']) )
+          return false;
+      }
+      else
+      {
+        if ( in_array($this->Item->Name, ['Flame Orb', 'Toxic Orb']) )
+          if ( in_array($this->Ability->Name, ['Flower Veil']) )
+            return false;
+
+        if ( in_array($this->Ability->Name, ['Leaf Guard', 'Comatose']) )
+          return false;
+
+        if ( $this->HasStatus('Safeguard') )
+          return false;
+
+        if ( in_array($Status, ['Encore', 'Heal Block', 'Infatuation', 'Taunt', 'Torment']) && $this->Ability->Name == 'Aroma Veil' )
+          return false;
+
+        if ( $this->Ability->Name == 'Oblivious' && $Status == 'Infatuation' )
+          return false;
+
+        if ( $this->Ability->Name == 'Own Tempo' && $Status == 'Confusion' )
+          return false;
+      }
+
       $Attempt_Status = new Status(
         $this,
         $Status,
         $Turns
       );
-
-      if ( !$Attempt_Status )
-        return false;
 
       $this->Statuses[$Attempt_Status->Name] = $Attempt_Status;
 
