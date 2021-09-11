@@ -441,15 +441,22 @@
       /**
        * Process field effects.
        */
-      if ( !empty($this->Field_Effects) )
+      if ( !empty($_SESSION['Battle']['Field_Effects']) )
       {
-        foreach ($this->Field_Effects as $Field_Effect)
+        foreach ( $_SESSION['Battle']['Field_Effects'] as $Field_Side => $Field_Effects )
         {
-          if ( $Field_Effect->Turns_Left === 0 )
-            unset($this->Field_Effects[$Field_Effect->Name]);
-
-          if ( $Field_Effect->Turns_Left > 0 )
+          foreach ( $Field_Effects as $Index => $Field_Effect )
+          {
             $Field_Effect->TickField();
+
+            if ( $Field_Effect->Turns_Left == 0 )
+            {
+              unset($Field_Effect);
+            }
+          }
+
+          if ( empty($_SESSION['Battle']['Field_Effects'][$Field_Side]) )
+            unset($_SESSION['Battle']['Field_Effects'][$Field_Side]);
         }
       }
     }
