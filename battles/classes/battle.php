@@ -1060,17 +1060,11 @@
       if ( $this->IsFieldEffectActive($Side, $Field_Effect) )
         return false;
 
-      if ( !isset($Turn_Count) )
-        $Turn_Count = -1;
-
       $Set_Field = new \Field(
         $Side,
         $Field_Effect,
-        $Turn_Count
+        !empty($Turn_Count) ?: 1
       );
-
-      if ( !$Set_Field )
-        return false;
 
       $this->Field_Effects[$Set_Field->Name] = $Set_Field;
       $_SESSION['Battle']['Field_Effects'][$Set_Field->Name] = $this->Field_Effects[$Set_Field->Name];
