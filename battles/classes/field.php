@@ -20,11 +20,11 @@
       if ( !isset($Field_Data) )
         return false;
 
-      if ( !isset($Field_Turns) )
+      if ( empty($Field_Turns) )
         if ( $Field_Data['Min_Turns'] > -1 && $Field_Data['Max_Turns'] > -1 )
-          $Field_Turns = -1;
-        else
           $Field_Turns = mt_rand($Field_Data['Min_Turns'], $Field_Data['Max_Turns']);
+        else
+          $Field_Turns = -1;
       else
         $Field_Turns = $Field_Turns;
 

@@ -1064,7 +1064,7 @@
     (
       string $Side,
       string $Field_Effect,
-      int $Turn_Count
+      int $Turn_Count = null
     )
     {
       if ( $this->IsFieldEffectActive($Side, $Field_Effect) )
@@ -1073,7 +1073,7 @@
       $Set_Field = new \Field(
         $Side,
         $Field_Effect,
-        !empty($Turn_Count) ?: 1
+        !empty($Turn_Count) ?: null
       );
 
       $this->Field_Effects[$Side][] = $Set_Field;
