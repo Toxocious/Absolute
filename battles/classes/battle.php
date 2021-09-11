@@ -193,7 +193,7 @@
         /**
          * Process active Weather effects.
          */
-        if ( !empty($this->Weather) )
+        if ( !empty($_SESSION['Battle']['Weather']) )
         {
           if
           (
@@ -201,7 +201,7 @@
             $Active_Ally->Active->Item->Name != 'Safety Goggles'
           )
           {
-            switch ($this->Weather->Name)
+            switch ($_SESSION['Battle']['Weather']->Name)
             {
               case 'Hail':
                 if ( $Active_Ally->Active->Ability->Name == 'Ice Body' )
@@ -245,10 +245,6 @@
                 break;
             }
           }
-
-          $this->Weather->TickWeather();
-          if ( $this->Weather->Turns_Left == 0 )
-            $this->Weather->EndWeather();
         }
 
         /**
@@ -425,6 +421,20 @@
               return $Faint_Dialogue;
             }
           }
+        }
+      }
+
+      /**
+       * Decrement Weather turn count, and end the weather if necessary.
+       */
+      if ( !empty($_SESSION['Battle']['Weather']) )
+      {
+        $_SESSION['Battle']['Weather']->TickWeather();
+
+        if ( $_SESSION['Battle']['Weather']->Turns_Left == 0 )
+        {
+          $_SESSION['Battle']['Weather']->EndWeather();
+          unset($_SESSION['Battle']['Weather']);
         }
       }
 
