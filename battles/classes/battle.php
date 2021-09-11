@@ -1117,17 +1117,17 @@
       string $Field_Effect
     )
     {
-      if ( !isset($this->Field_Effects) )
+      if ( empty($_SESSION['Battle']['Field_Effects']) )
         return false;
 
-      foreach ( $this->Field_Effects as $Field )
+      foreach ( $_SESSION['Battle']['Field_Effects'] as $Current_Side => $Active_Fields )
       {
-        if
-        (
-          $Field->Name == $Field_Effect &&
-          $Field->Side == $Side
-        )
-          return $Field;
+        if ( $Side != $Current_Side )
+          continue;
+
+        foreach ( $Active_Fields as $Current_Field )
+          if ( $Current_Field->Name == $Field_Effect )
+            return $Current_Field;
       }
 
       return false;
