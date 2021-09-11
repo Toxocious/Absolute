@@ -1076,8 +1076,8 @@
         !empty($Turn_Count) ?: 1
       );
 
-      $this->Field_Effects[$Set_Field->Name] = $Set_Field;
-      $_SESSION['Battle']['Field_Effects'][$Set_Field->Name] = $this->Field_Effects[$Set_Field->Name];
+      $this->Field_Effects[$Side][] = $Set_Field;
+      $_SESSION['Battle']['Field_Effects'][$Side][] = $Set_Field;
 
       return $Set_Field;
     }
