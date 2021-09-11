@@ -1144,12 +1144,35 @@
       $Turns = 5
     )
     {
-      $Set_Weather = new \Weather($Weather, $Turns);
-
-      if ( !$Set_Weather )
+      if ( !empty($_SESSION['Battle']['Weather']) && $_SESSION['Battle']['Weather']->Name == $Weather )
         return false;
 
+      $Weather_Data = \Weather::WeatherList()[$Weather];
+      if ( empty($Weather_Data) )
+        return false;
+
+      if ( !empty($_SESSION['Battle']['Weather']) )
+      {
+        switch ( $Weather )
+        {
+          case 'Harsh Sunlight':
+            if ( in_array($_SESSION['Battle']['Weather']->Name, ['Strong Winds', 'Heavy Rain', 'Harsh Sunlight', 'Extremely Harsh Sunlight']) )
+              return false;
+
+            break;
+
+          case 'Rain':
+            if ( in_array($_SESSION['Battle']['Weather']->Name, ['Strong Winds', 'Rain', 'Heavy Rain', 'Extremely Harsh Sunlight']) )
+              return false;
+
+            break;
+        }
+      }
+
+      $Set_Weather = new \Weather($Weather, $Turns);
+
       $this->Weather = $Set_Weather;
+      $_SESSION['Battle']['Weather'] = $this->Weather;
 
       return $Set_Weather;
     }
