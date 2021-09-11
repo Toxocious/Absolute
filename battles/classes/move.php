@@ -1715,16 +1715,13 @@
             break;
 
           case 'Flinch':
-            if ( $Turn_First_Attacker == $Attacker->Side )
+            if ( $Turn_First_Attacker == $Attacker->Side && $Ailment_Chance <= $this->Effect_Chance )
             {
-              if ( $Ailment_Chance <= $this->Effect_Chance )
-              {
-                if ( $Target->Active->Ability->Name == 'Inner Focus' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
-                  return "{$Target->Active->Ability->Name} won't flinch because of its Inner Focus!";
+              if ( $Target->Active->Ability->Name == 'Inner Focus' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+                return "{$Target->Active->Ability->Name} won't flinch because of its Inner Focus!";
 
-                $Set_Status = $Target->Active->SetStatus($this->Ailment);
-                return;
-              }
+              $Set_Status = $Target->Active->SetStatus($this->Ailment);
+              return;
             }
             break;
 
@@ -1743,7 +1740,7 @@
             if ( $Target->Active->HasTyping([ 'Electric' ]) )
               return 'But it failed!';
 
-          case 'Badly Poison':
+          case 'Badly Poisoned':
           case 'Poison':
             if
             (
@@ -1756,7 +1753,7 @@
             }
 
           case 'Sleep':
-            if ( !$Target->Active->HasAbility(['Insomnia', 'Sweet Veil']) )
+            if ( $Target->Active->HasAbility(['Insomnia', 'Sweet Veil']) )
             {
               return 'But it failed!';
             }
@@ -1765,10 +1762,23 @@
             if ( $Ailment_Chance <= $this->Effect_Chance )
             {
               $Set_Status = $Target->Active->SetStatus($this->Ailment);
-              $Status_Props = array_filter(get_object_vars($Set_Status));
-              if ( isset($Set_Status) && !empty($Status_Props) )
+              if ( !empty($Set_Status) )
               {
-                return $Set_Status->Dialogue;
+                $Status_Dialogue = $Set_Status->Dialogue;
+                if ( $Target->Active->Ability == 'Synchronize' && $Target->Active != $Attacker && !$Attacker->HasStatus($this->Ailment) )
+                {
+                  $Sync_Status = $Attacker->SetStatus($this->Ailment);
+                  if ( !empty($Sync_Status) )
+                  {
+                    $Status_Dialogue .= $Sync_Status->Dialogue;
+                  }
+                }
+
+                return $Status_Dialogue;
+              }
+              else
+              {
+                return 'But it failed!';
               }
             }
             else
