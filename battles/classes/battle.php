@@ -1077,6 +1077,7 @@
         return false;
 
       $this->Field_Effects[$Set_Field->Name] = $Set_Field;
+      $_SESSION['Battle']['Field_Effects'][$Set_Field->Name] = $this->Field_Effects[$Set_Field->Name];
 
       return $Set_Field;
     }

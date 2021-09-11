@@ -76,6 +76,11 @@
     $Output['Weather'] = $_SESSION['Battle']['Weather'];
   }
 
+  if ( !empty($_SESSION['Battle']['Field_Effects']) )
+  {
+    $Output['Field_Effects'] = $_SESSION['Battle']['Field_Effects'];
+  }
+
   if ( !empty($_SESSION['Battle']['Terrain']) )
   {
     $Output['Terrain'] = $_SESSION['Battle']['Terrain'];
