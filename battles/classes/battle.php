@@ -180,17 +180,6 @@
           continue;
 
         /**
-         * Process active terrain effects.
-         */
-        if ( !empty($this->Terrain) )
-        {
-          $this->Terrain->TickTerrain();
-
-          if ( $this->Terrain->Turns_Left === 0 )
-            $this->Terrain->EndTerrain();
-        }
-
-        /**
          * Process active Weather effects.
          */
         if ( !empty($_SESSION['Battle']['Weather']) )
@@ -422,6 +411,17 @@
             }
           }
         }
+      }
+
+      /**
+       * Process active terrain effects.
+       */
+      if ( !empty($_SESSION['Battle']['Terrain']->Terrain) )
+      {
+        $_SESSION['Battle']['Terrain']->Terrain->TickTerrain();
+
+        if ( $_SESSION['Battle']['Terrain']->Terrain->Turns_Left === 0 )
+          $_SESSION['Battle']['Terrain']->Terrain->EndTerrain();
       }
 
       /**
