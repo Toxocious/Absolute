@@ -1,20 +1,44 @@
 image: php:7.2
 
 stages:
+  - compile
   - deploy
 
 before_script:
+  ## Quick clean and update. (-qq is silent and auto 'yes')
   - apt-get clean
   - apt-get update -qq
+  ## Install ssh-agent if it's not already installed.
   - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  ## Run the ssh-agent.
   - eval $(ssh-agent -s)
-  - apt-get -y install rsync
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-  - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-  - ssh-keyscan 45.79.0.55 >> ~/.ssh/authorized_keys
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  - chmod 644 ~/.ssh
+  ## Add our SSH key.
+  - ssh-add <(echo "$ABSOLUTE_PRIVATE_KEY")
+  ## Create the SSH directory and give it the proper perms.
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  ## Scan the keys of our server.
+  - ssh-keyscan absoluterpg.com >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+  ## SSH into the server.
+  - echo "SSH into absolute@absoluterpg.com"
+  - ssh absolute@absoluterpg.com
+
+compile:
+  only:
+    refs:
+      - master
+  stage: compile
+  script:
+    ## Install Node.JS 12.x
+    - curl -sL https://deb.nodesource.com/setup_12.x | bash -
+    - apt install -y nodejs
+    - echo "-- Compiling SCSS to CSS --"
+    - npm i npm@latest -g
+    - npm i -g yarn
+    - yarn global add node-sass
+    - node-sass themes/sass -o themes/css --style compressed
+    - echo "-- Finished Compiling --"
 
 stage_deploy:
   only:
@@ -22,27 +46,15 @@ stage_deploy:
       - master
   stage: deploy
   script:
-    - echo "Syncing files to the server"
+    ## Install rsync.
+    - apt-get -y install rsync
+    - echo "Deploying from the $CI_COMMIT_BRANCH branch with a hash of $CI_COMMIT_SHA"
+    - echo "Syncing files to the server."
     # Sync specific file formats from the repository to the server.
     #   .php:       most of what the game is coded in
     #   .js:        node scripts and/or included js files
     #   .json:      package.json & map.json files
-    #   .scss/.css: layout system
-    - rsync -azhP --no-perms --filter=':- .gitignore' --include='*/' --include='*.'{php,js,css,scss,png,tmx,sh} --exclude='*' ./ gitlab@45.79.0.55:/var/www/html/absoluterpg.com/public_html/
-    # Let's start up Absolute Chat.
-    - echo "Installing and Starting Absolute Chat"
-    # CD into Absolute Chat's directory.
-    - cd /var/www/html/absoluterpg.com/public_html/absol
-    # Install packages in case of changes.
-    - npm install
-    # It's probably safe enough to audit and fix non-breaking changes.
-    - npm audit fix
-    # Run Absol via Forever.
-    # - forever stop absol.js
-    - forever start -o out.log absol.js
-    - echo "Absolute Chat Installation - Complete"
-    - echo "Compiling SCSS into CSS"
-    - cd ../
-    - sass --update themes/sass:themes/css
-    - echo "CSS Compilation - Complete"
+    #   .scss:      layout system
+    #   .tmx:       map system files
+    - rsync -azhP --delete --filter=':- .gitignore' --include='*/' --include='*.'{php,js,scss,png,tmx} --exclude='*' ./ absolute@absoluterpg.com:/var/www/html/absoluterpg.com/public_html/
     - echo "Deployment has completed."
