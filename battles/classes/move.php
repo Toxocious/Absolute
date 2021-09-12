@@ -1748,7 +1748,7 @@
             break;
 
           case 'Burn':
-            if ( $Target->Active->HasAbility(['Magma Armor', 'Water Bubble']) && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+            if ( $Target->Active->HasAbility(['Magma Armor', 'Water Bubble', 'Water Veil']) && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
               return 'But it failed!';
 
           case 'Freeze':

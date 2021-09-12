@@ -304,6 +304,7 @@
             break;
 
           case 'Water Bubble':
+          case 'Water Veil':
             if ( $Active_Ally->Active->HasStatus('Burn') )
               unset($Active_Ally->Active->Statuses['Burn']);
             break;
