@@ -2474,6 +2474,11 @@
           if ( $this->HasFlag('contact') )
             $this->Power *= 1.3;
           break;
+
+        case 'Toxic Boost':
+          if ( $Attacker->HasStatusFromArray(['Badly Poisoned', 'Poisoned']) && $this->Damage_Type == 'Physical' )
+            $this->Power *= 1.5;
+          break;
       }
 
       switch ($this->Damage_Type)
