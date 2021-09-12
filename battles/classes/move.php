@@ -949,6 +949,9 @@
       if ( $Defender->Ability->Name == 'Tangled Feet' && $Defender->HasStatus('Confusion') )
         $this->Accuracy *= 0.5;
 
+      if ( $Attacker->Ability->Name == 'Victory Star' )
+        $this->Accuracy *= 1.1;
+
       $Accuracy_Mod = $Attacker->Stats['Accuracy']->Current_Value / $Defender->Stats['Evasion']->Current_Value;
 
       if ( mt_rand(1, 100) < $this->Accuracy * $Accuracy_Mod )
