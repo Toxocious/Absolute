@@ -1397,8 +1397,8 @@
             $Attacker_Ability = $Attacker->Ability->Name;
             $Defender_Ability = $Defender->Ability->Name;
 
-            $Attacker->Ability->Name = $Defender->Ability->Name;
-            $Defender->Ability->Name = $Attacker->Ability->Name;
+            $Attacker->Ability->Name = $Defender_Ability;
+            $Defender->Ability->Name = $Attacker_Ability;
 
             $Text .= "<br />{$Attacker->Display_Name} has swapped abilities with {$Defender->Display_Name}!<br />";
           }
