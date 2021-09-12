@@ -1775,7 +1775,7 @@
             }
 
           case 'Sleep':
-            if ( $Target->Active->HasAbility(['Insomnia', 'Sweet Veil']) )
+            if ( $Target->Active->HasAbility(['Insomnia', 'Sweet Veil', 'Vital Spirit']) )
             {
               return 'But it failed!';
             }
