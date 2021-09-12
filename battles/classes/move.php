@@ -2509,6 +2509,9 @@
             $Damage *= 2;
         }
 
+        if ( $Attacker->HasAbility(['Tinted Lens']) && $Move_Effectiveness['Mult'] < 1 )
+          $Damage *= 2;
+
         if ( $Attacker->HasAbility(['Neuroforce']) && $Move_Effectiveness['Mult'] > 1 )
           $Damage *= 1.25;
 
