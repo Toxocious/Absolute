@@ -2469,6 +2469,11 @@
           if ( $this->Move_Type == 'Water' && $Attacker->HP <= $Attacker->Max_HP / 2 )
             $this->Power *= 1.5;
           break;
+
+        case 'Tough Claws':
+          if ( $this->HasFlag('contact') )
+            $this->Power *= 1.3;
+          break;
       }
 
       switch ($this->Damage_Type)
