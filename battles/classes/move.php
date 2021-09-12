@@ -939,6 +939,9 @@
         if ( !in_array($this->Name, ['Gust', 'Thunder', 'Twister', 'Sky Uppercut', 'Hurricane', 'Smack Down']) )
           return false;
 
+      if ( $Defender->Ability->Name == 'Wonder Skin' && $this->Damage_Type == 'Status' )
+        $this->Accuracy = 50;
+
       if ( $Attacker->Ability->Name == 'Compound Eyes' )
         $this->Accuracy *= 1.3;
 
