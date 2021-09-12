@@ -2201,6 +2201,14 @@
               }
               break;
 
+            case 'Volt Absorb':
+              if ( $Defender->HP < $Defender->Max_HP && $this->Move_Type == 'Electric' )
+              {
+                $Defender->IncreaseHP($Defender->Max_HP / 4);
+                $Ability_Effect_Damage = 0;
+              }
+              break;
+
             case 'Water Absorb':
               if ( $Defender->HP < $Defender->Max_HP && $this->Move_Type == 'Water' )
               {
