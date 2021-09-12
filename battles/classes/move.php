@@ -489,7 +489,11 @@
         }
       }
 
-      if ( $Defender->HasStatus('Protect') && $this->HasFlag('protect') )
+      if
+      (
+        $Defender->HasStatus('Protect') && $this->HasFlag('protect') &&
+        ($Attacker->Ability->Name != 'Unseen Fist' && !$this->HasFlag('contact'))
+      )
       {
         return [
           'Type' => 'Success',
