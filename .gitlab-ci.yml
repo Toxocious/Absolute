@@ -1,6 +1,8 @@
 image: php:7.2
 
 stages:
+  - build
+  - test
   - deploy
 
 before_script:
@@ -22,6 +24,7 @@ stage_deploy:
       - master
   stage: deploy
   script:
+    - echo "Deployment has started."
     - echo "Syncing files to the server"
     # Sync specific file formats from the repository to the server.
     #   .php:       most of what the game is coded in
@@ -29,11 +32,12 @@ stage_deploy:
     #   .json:      package.json & map.json files
     #   .scss/.css: layout system
     - rsync -azhP --no-perms --filter=':- .gitignore' --include='*/' --include='*.'{php,js,css,scss,png,tmx,sh} --exclude='*' ./ gitlab@45.79.0.55:/var/www/html/absoluterpg.com/public_html/
-    - cd ~/
+    # SSH into absolute user and cd into the public_html dir.
+    - ssh absolute@absoluterpg.com "cd /var/www/html/absoluterpg.com/public_html/ && echo '$ABSOLUTE_USER_PASS'"
     # Let's start up Absolute Chat.
     - echo "Installing and Starting Absolute Chat"
     # CD into Absolute Chat's directory.
-    - cd /var/www/html/absoluterpg.com/public_html/absol
+    - cd absol
     # Install packages in case of changes.
     - npm install
     # It's probably safe enough to audit and fix non-breaking changes.
@@ -42,9 +46,8 @@ stage_deploy:
     # - forever stop absol.js
     - forever start -o out.log absol.js
     - echo "Absolute Chat Installation - Complete"
-    # Compile SCSS into CSS.
-    - cd ../
     - echo "Compiling SCSS into CSS"
+    - cd ../
     - sass --update themes/sass:themes/css
     - echo "CSS Compilation - Complete"
     - echo "Deployment has completed."
