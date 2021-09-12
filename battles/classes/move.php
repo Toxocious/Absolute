@@ -2464,6 +2464,11 @@
           if ( $this->Power <= 60 )
             $this->Power *= 1.5;
           break;
+
+        case 'Torrent':
+          if ( $this->Move_Type == 'Water' && $Attacker->HP <= $Attacker->Max_HP / 2 )
+            $this->Power *= 1.5;
+          break;
       }
 
       switch ($this->Damage_Type)
