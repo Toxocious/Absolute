@@ -2497,6 +2497,9 @@
         if ( $Defender->Ability->Name == 'Punk Rock' && $this->HasFlag('sound') )
           $Damage /= 2;
 
+        if ( $Defender->Ability->Name == 'Thick Fat' && in_array($this->Move_Type, ['Fire', 'Ice']) )
+          $Damage /= 2;
+
         if ( $Defender->Ability->Name == 'Fluffy' )
         {
           if ( $this->HasFlag('contact') )
