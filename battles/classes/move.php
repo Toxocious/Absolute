@@ -2200,6 +2200,14 @@
                 }
               }
               break;
+
+            case 'Water Absorb':
+              if ( $Defender->HP < $Defender->Max_HP && $this->Move_Type == 'Water' )
+              {
+                $Defender->IncreaseHP($Defender->Max_HP / 4);
+                $Ability_Effect_Damage = 0;
+              }
+              break;
           }
           break;
       }
