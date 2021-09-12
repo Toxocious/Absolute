@@ -1587,7 +1587,7 @@
               if ( $Target->Active->Ability->Name == 'Full Metal Body' && $Target->Active != $Attacker )
                 continue;
 
-              if ( $Target->Active->Ability->Name == 'Clear Body' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+              if ( $Target->Active->HasAbility(['Clear Body', 'White Smoke']) && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
                 continue;
 
               if ( $Target->Active->Ability->Name == 'Hyper Cutter' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) && $Stat_Name == 'Attack' )
