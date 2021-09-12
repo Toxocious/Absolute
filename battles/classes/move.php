@@ -2479,6 +2479,11 @@
           if ( $Attacker->HasStatusFromArray(['Badly Poisoned', 'Poisoned']) && $this->Damage_Type == 'Physical' )
             $this->Power *= 1.5;
           break;
+
+        case 'Transistor':
+          if ( $this->Move_Type == 'Electric' )
+            $this->Power *= 1.5;
+          break;
       }
 
       switch ($this->Damage_Type)
