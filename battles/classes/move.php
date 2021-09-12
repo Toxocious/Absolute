@@ -2019,6 +2019,22 @@
                 $Ability_Effect_Text .= "{$Defender->Display_Name}'s Defense rose from its Water Compaction!<br />";
               }
               break;
+
+            case 'Weak Armor':
+              if ( $this->Damage_Type == 'Physical' )
+              {
+                foreach (['Defense', 'Speed'] as $Stat)
+                {
+                  if ( $Stat == 'Defense' )
+                    $Stat_Mod = -1;
+                  else
+                    $Stat_Mod = 2;
+
+                  if ( $Attacker->Stats[$Stat]->Stage > -6 && $Attacker->Stats[$Stat]->Stage < 6 )
+                    $Attacker->Stats[$Stat]->SetValue($Stat_Mod);
+                }
+              }
+              break;
           }
           break;
 
