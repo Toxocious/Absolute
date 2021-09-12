@@ -2011,6 +2011,14 @@
                 $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Speed dropped from {$Defender->Display_Name}'s Tangling Hair!<br />";
               }
               break;
+
+            case 'Water Compaction':
+              if ( $this->Move_Type == 'Water' && $Defender->Stats['Defense']->Stage < 6 )
+              {
+                $Defender->Stats['Defense']->SetValue(2);
+                $Ability_Effect_Text .= "{$Defender->Display_Name}'s Defense rose from its Water Compaction!<br />";
+              }
+              break;
           }
           break;
 
