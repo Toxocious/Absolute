@@ -1,53 +1,13 @@
 image: php:7.2
 
 stages:
-  - build
-  - test
   - deploy
-
-before_script:
-  - apt-get clean
-  - apt-get update -qq
-  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
-  - eval $(ssh-agent -s)
-  - apt-get -y install rsync
-  - ssh-add <(echo "$SSH_PRIVATE_KEY")
-  - mkdir -p ~/.ssh && chmod 700 ~/.ssh
-  - echo -e "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa && chmod 600 ~/.ssh/id_rsa
-  - ssh-keyscan 45.79.0.55 >> ~/.ssh/authorized_keys
-  - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-  - chmod 644 ~/.ssh
 
 stage_deploy:
   only:
     refs:
-      - master
+      - ci-cd-pipeline-config-test
   stage: deploy
   script:
-    - echo "Deployment has started."
-    - echo "Syncing files to the server"
-    # Sync specific file formats from the repository to the server.
-    #   .php:       most of what the game is coded in
-    #   .js:        node scripts and/or included js files
-    #   .json:      package.json & map.json files
-    #   .scss/.css: layout system
-    - rsync -azhP --no-perms --filter=':- .gitignore' --include='*/' --include='*.'{php,js,css,scss,png,tmx,sh} --exclude='*' ./ gitlab@45.79.0.55:/var/www/html/absoluterpg.com/public_html/
-    # SSH into absolute user and cd into the public_html dir.
-    - ssh absolute@absoluterpg.com "cd /var/www/html/absoluterpg.com/public_html/ && echo '$ABSOLUTE_USER_PASS'"
-    # Let's start up Absolute Chat.
-    - echo "Installing and Starting Absolute Chat"
-    # CD into Absolute Chat's directory.
-    - cd absol
-    # Install packages in case of changes.
-    - npm install
-    # It's probably safe enough to audit and fix non-breaking changes.
-    - npm audit fix
-    # Run Absol via Forever.
-    # - forever stop absol.js
-    - forever start -o out.log absol.js
-    - echo "Absolute Chat Installation - Complete"
-    - echo "Compiling SCSS into CSS"
-    - cd ../
-    - sass --update themes/sass:themes/css
-    - echo "CSS Compilation - Complete"
-    - echo "Deployment has completed."
+    - echo "Hello, $GITLAB_USER_LOGIN"
+    - echo "Deploying from the $CI_COMMIT_BRANCH branch with a hash of $CI_COMMIT_SHA"
