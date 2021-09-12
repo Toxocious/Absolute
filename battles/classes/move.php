@@ -1984,6 +1984,14 @@
                 $Ability_Effect_Text .= "{$Defender->Display_Name}'s Sturdy!<br />";
               }
               break;
+
+            case 'Tangling Hair':
+              if ( $Attacker->Stats['Speed']->Stage > -6 )
+              {
+                $Attacker->Stats['Speed']->SetValue(-1);
+                $Ability_Effect_Text .= "{$Attacker->Display_Name}'s Speed dropped from {$Defender->Display_Name}'s Tangling Hair!<br />";
+              }
+              break;
           }
           break;
 
