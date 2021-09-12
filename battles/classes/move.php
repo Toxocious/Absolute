@@ -336,7 +336,7 @@
       )
         $Does_Move_Hit = $Move_Class->DoesMoveHit($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness);
       else
-        $Does_Move_Hit = $this->DoesMoveHit($Side);
+        $Does_Move_Hit = $this->DoesMoveHit($Side, $Move_Effectiveness['Mult']);
 
       /**
        * If the move doesn't hit, return w/ proper dialogue here.
@@ -836,10 +836,12 @@
     /**
      * Determine if the move will hit.
      * @param string $Side
+     * @param int $Move_Effectiveness
      */
     public function DoesMoveHit
     (
-      string $Side
+      string $Side,
+      int $Move_Effectiveness
     )
     {
       if ( $this->Accuracy === 0 )
@@ -859,6 +861,9 @@
           $Defender = $_SESSION['Battle']['Ally']->Active;
           break;
       }
+
+      if ( $Defender->Ability == 'Wonder Guard' && $Move_Effectiveness < 2 )
+        return false;
 
       if ( $this->Effect_Short == 'Causes a one-hit KO.' )
         if ( $Attacker->Level < $Defender->Level )
