@@ -200,6 +200,18 @@
           break;
       }
 
+      if ( $Attacker->Ability->Name == 'Truant' && $Attacker->Ability->Procced )
+      {
+        $Attacker->Ability->SetProcStatus(false);
+
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} is loafing around.",
+          'Damage' => 0,
+          'Heal' => 0
+        ];
+      }
+
       if ( $Defender->Ability->Name == 'Queenly Majesty' && $this->Priority > 0 )
       {
         return [

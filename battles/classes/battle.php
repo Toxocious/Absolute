@@ -295,6 +295,13 @@
               $Active_Ally->Active->Stats['Speed']->SetValue(1);
             }
             break;
+
+          case 'Truant':
+            if ( $Active_Ally->Active->Ability->Procced )
+              $Active_Ally->Active->Ability->SetProcStatus(false);
+            else
+              $Active_Ally->Active->Ability->SetProcStatus(true);
+            break;
         }
 
         /**
