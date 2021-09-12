@@ -302,6 +302,11 @@
             else
               $Active_Ally->Active->Ability->SetProcStatus(true);
             break;
+
+          case 'Water Bubble':
+            if ( $Active_Ally->Active->HasStatus('Burn') )
+              unset($Active_Ally->Active->Statuses['Burn']);
+            break;
         }
 
         /**

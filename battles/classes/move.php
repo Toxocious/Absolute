@@ -1748,7 +1748,7 @@
             break;
 
           case 'Burn':
-            if ( $Target->Active->Ability->Name == 'Magma Armor' && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
+            if ( $Target->Active->HasAbility(['Magma Armor', 'Water Bubble']) && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
               return 'But it failed!';
 
           case 'Freeze':
@@ -2519,6 +2519,11 @@
           if ( $this->Move_Type == 'Electric' )
             $this->Power *= 1.5;
           break;
+
+        case 'Water Bubble':
+          if ( $this->Move_Type == 'Water' )
+            $this->Power *= 2;
+          break;
       }
 
       switch ($this->Damage_Type)
@@ -2537,7 +2542,7 @@
 
       if ( $Damage > 0 )
       {
-        if ( $Defender->Ability->Name == 'Heatproof' && $this->Move_Type == 'Fire' )
+        if ( $Defender->HasAbility(['Heatproof', 'Water Bubble']) && $this->Move_Type == 'Fire' )
           $Damage /= 2;
 
         if ( $Defender->Ability->Name == 'Filter' && $Move_Effectiveness['Mult'] > 1 )
