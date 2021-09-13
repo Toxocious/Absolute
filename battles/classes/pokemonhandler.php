@@ -1053,6 +1053,18 @@
       int $Turns = null
     )
     {
+      switch ( $this->Side )
+      {
+        case 'Ally':
+          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Battle']['Foe']->Active;
+          break;
+        case 'Foe':
+          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Battle']['Ally']->Active;
+          break;
+      }
+
       /**
        * A Pokémon cannot gain non-volatile status conditions when it is affected by
        *  Safeguard, Leaf Guard, Flower Veil, Shields Down, or Comatose.
@@ -1080,13 +1092,13 @@
         if ( $this->Ability->Name == 'Comatose' )
           return false;
 
-        if ( $Status == 'Burn' && $this->HasTyping(['Fire']) )
+        if ( $Status == 'Burn' && $this->HasTyping(['Fire']) && !$this->HasItem('Flame Orb') )
           return false;
 
         if ( $Status == 'Paralysis' && $this->HasTyping(['Electric']) )
           return false;
 
-        if ( $Status == 'Poison' && $this->HasTyping(['Poison', 'Steel']) )
+        if ( $Status == 'Poison' && $this->HasTyping(['Poison', 'Steel']) && $Attacker->Ability->Name != 'Corrosion' && !$this->HasItem('Toxic Orb') )
           return false;
 
         if ( $Status == 'Sleep' && $this->HasAbility(['Insomnia', 'Sweet Veil']) )
