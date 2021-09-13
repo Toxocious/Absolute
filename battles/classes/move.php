@@ -2047,6 +2047,19 @@
         case false;
           switch ($Defender->Ability->Name)
           {
+            case 'Berserk':
+              if ( $Defender->Stats['Sp_Attack']->Stage < 6 )
+              {
+                if ( $Defender->HP <= $Defender->Max_HP / 2 && !$Defender->Ability->Procced )
+                {
+                  $Defender->Ability->SetProcStatus(true);
+
+                  $Defender->Stats['Sp_Attack']->SetValue(1);
+                  $Ability_Effect_Text .= "{$Defender->Display_Name}'s Berserk rose its Special Attack!";
+                }
+              }
+              break;
+
             case 'Color Change':
               if
               (
