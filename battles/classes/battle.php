@@ -1029,6 +1029,13 @@
 
       if ( $Move_Data['Ally']['Priority'] == $Move_Data['Foe']['Priority'] )
       {
+        if ( $Ally->Ability->Name == 'Stall' && $Foe->Ability->Name == 'Stall')
+          return mt_rand(1, 2) === 1 ? 'Ally' : 'Foe';
+        else if ( $Ally->Ability->Name == 'Stall' && $Foe->Ability->Name != 'Stall' )
+          return 'Foe';
+        else if ( $Ally->Ability->Name != 'Stall' && $Foe->Ability->Name == 'Stall' )
+          return 'Ally';
+
         if ( $Ally->Ability->Name == 'Quick Draw' && mt_rand(1, 100) <= 30 )
           return 'Ally';
 
