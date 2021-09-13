@@ -31,7 +31,7 @@
 
     Attack: (Move, event) =>
     {
-      if ( typeof Move === undefined )
+      if ( typeof Move === 'undefined' )
         return;
 
       event = event || window.event;
@@ -41,7 +41,7 @@
 
     Continue: (Postcode, event) =>
     {
-      if ( typeof Postcode === undefined )
+      if ( typeof Postcode === 'undefined' )
         return false;
 
       event = event || window.event;
@@ -51,7 +51,7 @@
 
     Restart: (Postcode, event) =>
     {
-      if ( typeof Postcode === undefined )
+      if ( typeof Postcode === 'undefined' )
         return false;
 
       event = event || window.event;
@@ -61,7 +61,7 @@
 
     SwitchPokemon: (Slot, event) =>
     {
-      if ( typeof Slot === undefined )
+      if ( typeof Slot === 'undefined' )
         return false;
 
       event = event || window.event;
@@ -73,9 +73,9 @@
     {
       if
       (
-        typeof Side === undefined ||
-        typeof Roster === undefined ||
-        typeof Active === undefined
+        typeof Side === 'undefined' ||
+        typeof Roster === 'undefined' ||
+        typeof Active === 'undefined'
       )
         return;
 
@@ -176,7 +176,7 @@
 
     RenderMoves: (Moves) =>
     {
-      if ( typeof Moves === undefined )
+      if ( typeof Moves === 'undefined' )
         return false;
 
       for ( let i = 0; i < Moves.length; i++ )
@@ -192,8 +192,8 @@
     {
       if
       (
-        typeof Money === undefined ||
-        typeof Abso_Coins === undefined
+        typeof Money === 'undefined' ||
+        typeof Abso_Coins === 'undefined'
       )
         return false;
 
