@@ -2063,8 +2063,11 @@
               break;
 
             case 'Cotton Down':
-              $Attacker->Stats['Speed']->SetValue(-1);
-              $Ability_Effect_Text .= "<br />{$Defender->Display_Name}'s Cotton Down dropped {$Attacker->Display_Name}'s Speed!";
+              if ( $Attacker->Stats['Speed']->Stage > -6 )
+              {
+                $Attacker->Stats['Speed']->SetValue(-1);
+                $Ability_Effect_Text .= "<br />{$Defender->Display_Name}'s Cotton Down dropped {$Attacker->Display_Name}'s Speed!";
+              }
               break;
 
             case 'Cursed Body':
