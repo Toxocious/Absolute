@@ -2268,6 +2268,19 @@
               }
               break;
           }
+
+          switch ($Attacker->Ability->Name)
+          {
+            case 'Magician':
+              if ( empty($Attacker->Item) && !empty($Defender->Item) && !$Defender->HasAbility(['Sticky Hold']) )
+              {
+                $Ability_Effect_Text .= "{$Attacker->Display_Name} magically stole {$Defender->Display_Name}'s {$Defender->Item->Name}!";
+
+                $Attacker->Item = $Defender->Item;
+                unset($Defender->Item);
+              }
+              break;
+          }
           break;
       }
 
