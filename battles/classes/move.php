@@ -1198,19 +1198,6 @@
       $Text = '';
       $Damage_Mod = 1;
 
-      if ( $Defender->Ability->Name == 'Aftermath' )
-      {
-        if ( $Attacker->Ability->Name != 'Damp' )
-        {
-          if ( $Attacker->Item->Name != 'Protective Pads' )
-          {
-            $Attacker->DecreaseHP(floor($Attacker->Max_HP / 4));
-
-            $Text .= "<br />{$Attacker->Display_Name} took damage from the Aftermath!<br />";
-          }
-        }
-      }
-
       if ( $Defender->Ability->Name == 'Cute Charm' )
       {
         if
@@ -1861,6 +1848,17 @@
         case true:
           switch ($Defender->Ability->Name)
           {
+            case 'Aftermath':
+              if ( $Attacker->Ability->Name != 'Damp' && $Attacker->Item->Name != 'Protective Pads' )
+              {
+                if ( $Defender->HP <= 0 )
+                {
+                  $Attacker->DecreaseHP($Attacker->Max_HP / 4);
+                  $Ability_Effect_Text .= "{$Attacker->Display_Name}'s took damage from the Aftermath!<br />";
+                }
+              }
+              break;
+
             case 'Disguise':
               if ( $Damage > 0 )
               {
