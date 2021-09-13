@@ -1331,6 +1331,24 @@
     }
 
     /**
+     * Determine if the Pokemon has a specified typing.
+     * @param string $Item_Name
+     */
+    public function HasItem
+    (
+      string $Item_Name
+    )
+    {
+      if ( empty($this->Item) )
+        return false;
+
+      if ( $this->Item->Name == $Item_Name )
+        return true;
+
+      return false;
+    }
+
+    /**
      * Reset the Pokemon's typings.
      */
     public function ResetTyping()
