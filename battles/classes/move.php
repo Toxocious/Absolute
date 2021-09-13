@@ -2095,8 +2095,10 @@
               break;
 
             case 'Defeatist':
-              if ( $Defender->HP <= $Defender->Max_HP / 2 )
+              if ( $Defender->HP <= $Defender->Max_HP / 2 && !$Defender->Ability->Procced )
               {
+                $Defender->Ability->SetProcStatus(true);
+
                 foreach (['Attack', 'Sp_Attack'] as $Stat)
                 {
                   if
