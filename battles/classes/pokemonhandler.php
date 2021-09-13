@@ -1397,6 +1397,19 @@
       if ( $this->Alt_ID != $Pokemon->Alt_ID )
         $this->Alt_ID = $Pokemon->Alt_ID;
     }
+
+    /**
+     * Revert a copied Pokemon back to its original form.
+     */
+    public function RevertCopy()
+    {
+      if ( $this->Pokedex_ID != $this->Pokedex_ID_Original )
+        $this->Pokedex_ID = $this->Pokedex_ID_Original;
+
+      if ( $this->Alt_ID != $this->Alt_ID_Original )
+        $this->Alt_ID = $this->Alt_ID_Original;
+    }
+
     /**
      * Reset the Pokemon's typings.
      */
