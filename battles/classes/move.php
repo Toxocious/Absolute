@@ -1894,6 +1894,16 @@
               }
               break;
 
+            case 'Illusion':
+              if ( !$Defender->Ability->Procced )
+              {
+                $Defender->Ability->SetProcStatus(true);
+                $Defender->RevertCopy();
+
+                $Ability_Effect_Text .= "{$Defender->Display_Name}'s Illusion broke!";
+              }
+              break;
+
             case 'Iron Barbs':
               if ( $this->HasFlag('contact') )
               {

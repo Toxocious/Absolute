@@ -218,9 +218,11 @@
         switch ($this->Side)
         {
           case 'Ally':
+            $Attacker = $_SESSION['Battle']['Ally']->Active;
             $Defender = $_SESSION['Battle']['Foe']->Active;
             break;
           case 'Foe';
+            $Attacker = $_SESSION['Battle']['Ally']->Active;
             $Defender = $_SESSION['Battle']['Ally']->Active;
             break;
         }
@@ -454,6 +456,15 @@
         case 'Hustle':
           $New_Active->Stats['Attack']->Current_Value *= 1.5;
           $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Hustle!";
+          break;
+
+        case 'Illusion':
+          if ( count($Attacker->Roster) > 1 )
+          {
+            $Random_Ally = $_SESSION['Battle'][$this->Side]->Roster[mt_rand(0, count($Attacker->Roster))];
+
+            $this->CopyPokemon($Random_Ally);
+          }
           break;
 
         case 'Immunity':
