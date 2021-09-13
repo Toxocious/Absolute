@@ -2201,12 +2201,15 @@
               break;
 
             case 'Pickpocket':
-              if ( !empty($Attacker->Item) && empty($Defender->Item) && $Attacker->Ability != 'Sticky Hold' )
+              if ( !empty($Attacker->Item) && empty($Defender->Item) )
               {
-                $Ability_Effect_Text .= "{$Defender->Display_Name} Pickpocketed {$Attacker->Display_Name}'s {$Attacker->Item->Name}!";
+                if ( $Attacker->Ability != 'Sticky Hold' || ($Attacker->Ability == 'Sticky Hold' && $Defender->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) ) )
+                {
+                  $Ability_Effect_Text .= "{$Defender->Display_Name} Pickpocketed {$Attacker->Display_Name}'s {$Attacker->Item->Name}!";
 
-                $Defender->Item = $Attacker->Item;
-                unset($Attacker->Item);
+                  $Defender->Item = $Attacker->Item;
+                  unset($Attacker->Item);
+                }
               }
               break;
 
