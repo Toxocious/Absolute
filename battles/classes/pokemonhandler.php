@@ -82,7 +82,9 @@
         return false;
 
       $this->Pokedex_ID = $Pokemon['Pokedex_ID'];
+      $this->Pokedex_ID_Original = $Pokemon['Pokedex_ID'];
       $this->Alt_ID = $Pokemon['Alt_ID'];
+      $this->Alt_ID_Original = $Pokemon['Alt_ID'];
       $this->Sprite = $Pokemon['Sprite'];
       $this->Icon = $Pokemon['Icon'];
       $this->Display_Name = $Pokemon['Display_Name'];
