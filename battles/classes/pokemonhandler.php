@@ -1382,6 +1382,22 @@
     }
 
     /**
+     * Copy the specified Pokemon's Pokedex ID and Alt ID.
+     * Used in cases such as Transform (Move), Imposter (Ability), and Illusion (Ability).
+     * @param {PokemonHandler} $Pokemon
+     */
+    public function CopyPokemon
+    (
+      PokemonHandler $Pokemon
+    )
+    {
+      if ( $this->Pokedex_ID != $Pokemon->Pokedex_ID )
+        $this->Pokedex_ID = $Pokemon->Pokedex_ID;
+
+      if ( $this->Alt_ID != $Pokemon->Alt_ID )
+        $this->Alt_ID = $Pokemon->Alt_ID;
+    }
+    /**
      * Reset the Pokemon's typings.
      */
     public function ResetTyping()
