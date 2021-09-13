@@ -190,73 +190,80 @@
 
     /**
      * Switch into the desired Pokemon.
+     * @param {bool} $Trace_Proc
      */
-    public function SwitchInto()
+    public function SwitchInto
+    (
+      bool $Trace_Proc = false
+    )
     {
-      if ( $this->Active )
+      if ( !$Trace_Proc )
       {
-        return [
-          'Type' => 'Error',
-          'Text' => 'The Pok&eacute;mon you\'re switching into is already active!'
-        ];
+        if ( $this->Active )
+        {
+          return [
+            'Type' => 'Error',
+            'Text' => 'The Pok&eacute;mon you\'re switching into is already active!'
+          ];
+        }
+
+        if ( $this->HP == 0 )
+        {
+          return [
+            'Type' => 'Error',
+            'Text' => 'The Pok&eacute;mon that you\'re switching into is fainted.',
+          ];
+        }
+
+        switch ($this->Side)
+        {
+          case 'Ally':
+            $Defender = $_SESSION['Battle']['Foe']->Active;
+            break;
+          case 'Foe';
+            $Defender = $_SESSION['Battle']['Ally']->Active;
+            break;
+        }
+
+        $Previous_Attacker = $_SESSION['Battle'][$this->Side]->Active;
+
+        switch ($this->Ability)
+        {
+          case 'Natural Cure':
+            if ( !empty($this->Statuses) )
+              $this->Statuses = null;
+            break;
+
+          case 'Pure Power':
+            $this->Stats['Attack']->Current_Value /= 2;
+            break;
+
+          case 'Regenerator':
+            $this->IncreaseHP($this->Max_HP / 3);
+            break;
+        }
+
+        if ( $this->Original_Ability != $this->Ability )
+          $this->Ability == $this->Original_Ability;
+
+        foreach ($_SESSION['Battle'][$this->Side]->Roster as $Roster_Pokemon)
+        {
+          $Roster_Pokemon->Active = false;
+
+          if ( $Roster_Pokemon->Pokemon_ID == $this->Pokemon_ID )
+            $Roster_Pokemon->Active = true;
+        }
+
+        if ( $Previous_Attacker->Last_Move['Name'] == 'Baton Pass' )
+        {
+          $Text = "{$Previous_Attacker->Display_Name} used Baton Pass!<br />";
+        }
+
+        $this->Participated = true;
+        $_SESSION['Battle'][$this->Side]->Active = $this;
       }
-
-      if ( $this->HP == 0 )
-      {
-        return [
-          'Type' => 'Error',
-          'Text' => 'The Pok&eacute;mon that you\'re switching into is fainted.',
-        ];
-      }
-
-      switch ($this->Side)
-      {
-        case 'Ally':
-          $Defender = $_SESSION['Battle']['Foe']->Active;
-          break;
-        case 'Foe';
-          $Defender = $_SESSION['Battle']['Ally']->Active;
-          break;
-      }
-
-      $Previous_Attacker = $_SESSION['Battle'][$this->Side]->Active;
-
-      switch ($this->Ability)
-      {
-        case 'Natural Cure':
-          if ( !empty($this->Statuses) )
-            $this->Statuses = null;
-          break;
-
-        case 'Pure Power':
-          $this->Stats['Attack']->Current_Value /= 2;
-          break;
-
-        case 'Regenerator':
-          $this->IncreaseHP($this->Max_HP / 3);
-          break;
-      }
-
-      if ( $this->Original_Ability != $this->Ability )
-        $this->Ability == $this->Original_Ability;
-
-      foreach ($_SESSION['Battle'][$this->Side]->Roster as $Roster_Pokemon)
-      {
-        $Roster_Pokemon->Active = false;
-
-        if ( $Roster_Pokemon->Pokemon_ID == $this->Pokemon_ID )
-          $Roster_Pokemon->Active = true;
-      }
-
-      $this->Participated = true;
-      $_SESSION['Battle'][$this->Side]->Active = $this;
 
       $New_Active = $_SESSION['Battle'][$this->Side]->Active;
-
-      if ( $Previous_Attacker->Last_Move['Name'] == 'Baton Pass' )
-      {
-        $Text = "{$Previous_Attacker->Display_Name} used Baton Pass!<br />";
-      }
 
       $Effect_Text = '';
 
@@ -582,110 +589,122 @@
             $Effect_Text .= $Set_Weather->Dialogue;
           }
           break;
+
+        case 'Trace':
+          if ( !in_array($Defender->Ability->Name, ['Disguise', 'Flower Gift', 'Gulp Missle', 'Hunger Switch', 'Ice Face', 'Illusion', 'Imposter', 'Neutralizing Gas', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Trace', 'Zen Mode']) )
+          {
+            $this->SetAbility($Defender->Ability->Name);
+
+            $Effect_Text .= "{$this->Display_Name} has traced {$Defender->Display_Name}'s {$this->Ability->Name}!";
+            $Effect_Text .= $this->SwitchInto(true)['Text'];
+          }
       }
 
-      if ( !empty($this->Weather) )
+      if ( !$Trace_Proc )
       {
-        switch ($this->Weather->Name)
+        if ( !empty($this->Weather) )
         {
-          case 'Hail':
-            if ( $New_Active->Ability->Name == 'Slush Rush' )
-              $New_Active->Stats['Speed']->Current_Value *= 2;
-            break;
+          switch ($this->Weather->Name)
+          {
+            case 'Hail':
+              if ( $New_Active->Ability->Name == 'Slush Rush' )
+                $New_Active->Stats['Speed']->Current_Value *= 2;
+              break;
 
-          case 'Extremely Harsh Sunlight':
-          case 'Harsh Sunlight':
-            if ( $New_Active->Ability->Name == 'Flower Gift' )
+            case 'Extremely Harsh Sunlight':
+            case 'Harsh Sunlight':
+              if ( $New_Active->Ability->Name == 'Flower Gift' )
+              {
+                $New_Active->Stats['Attack'] *= 1.5;
+                $New_Active->Stats['Sp_Defense'] *= 1.5;
+              }
+              break;
+
+            case 'Rain':
+            case 'Heavy Rain':
+              if ( $New_Active->Ability->Name == 'Swift Swim' )
+                $New_Active->Stats['Speed']->Current_Value *= 2;
+              break;
+          }
+        }
+
+        if ( !empty($this->Field_Effects) )
+        {
+          if ( $this->IsFieldEffectActive($this->Side, 'Pointed Stones') )
+          {
+            if
+            (
+              $New_Active->Ability->Name != 'Magic Guard' &&
+              $New_Active->Item->Name != 'Heavy Duty Boots'
+            )
             {
-              $New_Active->Stats['Attack'] *= 1.5;
-              $New_Active->Stats['Sp_Defense'] *= 1.5;
+              $Effectiveness = $New_Active->CheckMoveWeakness('Rock');
+              $New_Active->DecreaseHP($New_Active->Max_HP * pow(2, $Effectiveness) / 8);
             }
-            break;
-
-          case 'Rain':
-          case 'Heavy Rain':
-            if ( $New_Active->Ability->Name == 'Swift Swim' )
-              $New_Active->Stats['Speed']->Current_Value *= 2;
-            break;
-        }
-      }
-
-      if ( !empty($this->Field_Effects) )
-      {
-        if ( $this->IsFieldEffectActive($this->Side, 'Pointed Stones') )
-        {
-          if
-          (
-            $New_Active->Ability->Name != 'Magic Guard' &&
-            $New_Active->Item->Name != 'Heavy Duty Boots'
-          )
-          {
-            $Effectiveness = $New_Active->CheckMoveWeakness('Rock');
-            $New_Active->DecreaseHP($New_Active->Max_HP * pow(2, $Effectiveness) / 8);
           }
-        }
 
-        if ( $this->IsFieldEffectActive($this->Side, 'Spikes') )
-        {
-          $Spikes_Field_Data = $this->GetFieldEffectData($this->Side, 'Spikes');
-          $Spikes_Stacks = $Spikes_Field_Data['Stacks'];
-
-          if
-          (
-            $New_Active->IsGrounded() &&
-            $New_Active->Ability->Name != 'Magic Guard' &&
-            $New_Active->Item->Name != 'Heavy Duty Boots'
-          )
+          if ( $this->IsFieldEffectActive($this->Side, 'Spikes') )
           {
-            $New_Active->DecreaseHP($New_Active->Max_HP * $Spikes_Stacks / 24);
+            $Spikes_Field_Data = $this->GetFieldEffectData($this->Side, 'Spikes');
+            $Spikes_Stacks = $Spikes_Field_Data['Stacks'];
+
+            if
+            (
+              $New_Active->IsGrounded() &&
+              $New_Active->Ability->Name != 'Magic Guard' &&
+              $New_Active->Item->Name != 'Heavy Duty Boots'
+            )
+            {
+              $New_Active->DecreaseHP($New_Active->Max_HP * $Spikes_Stacks / 24);
+            }
           }
-        }
 
-        if ( $this->IsFieldEffectActive($this->Side, 'Steel Spikes') )
-        {
-          if
-          (
-            $New_Active->Ability->Name != 'Magic Guard' &&
-            $New_Active->Item->Name != 'Heavy Duty Boots'
-          )
+          if ( $this->IsFieldEffectActive($this->Side, 'Steel Spikes') )
           {
-            $Effectiveness = $New_Active->CheckMoveWeakness('Steel');
-            $New_Active->DecreaseHP($New_Active->Max_HP * pow(2, $Effectiveness) / 8);
+            if
+            (
+              $New_Active->Ability->Name != 'Magic Guard' &&
+              $New_Active->Item->Name != 'Heavy Duty Boots'
+            )
+            {
+              $Effectiveness = $New_Active->CheckMoveWeakness('Steel');
+              $New_Active->DecreaseHP($New_Active->Max_HP * pow(2, $Effectiveness) / 8);
+            }
           }
-        }
 
-        if ( $this->IsFieldEffectActive($this->Side, 'Sticky Web') )
-        {
-          if
-          (
-            $New_Active->IsGrounded() &&
-            $New_Active->Ability->Name != 'Magic Guard' &&
-            $New_Active->Item->Name != 'Heavy Duty Boots'
-          )
+          if ( $this->IsFieldEffectActive($this->Side, 'Sticky Web') )
           {
-            $New_Active->Stats['Speed']->SetValue(-1);
+            if
+            (
+              $New_Active->IsGrounded() &&
+              $New_Active->Ability->Name != 'Magic Guard' &&
+              $New_Active->Item->Name != 'Heavy Duty Boots'
+            )
+            {
+              $New_Active->Stats['Speed']->SetValue(-1);
+            }
           }
-        }
 
-        if ( $this->IsFieldEffectActive($this->Side, 'Toxic Spikes') )
-        {
-          $Toxic_Spikes_Field_Data = $this->GetFieldEffectData($this->Side, 'Toxic Spikes');
-          $Toxic_Spikes_Stacks = $Toxic_Spikes_Field_Data['Stacks'];
-
-          if
-          (
-            $New_Active->IsGrounded() &&
-            !$New_Active->HasTyping([ 'Poison', 'Steel' ]) &&
-            $New_Active->Ability->Name != 'Magic Guard' &&
-            $New_Active->Item->Name != 'Heavy Duty Boots'
-          )
+          if ( $this->IsFieldEffectActive($this->Side, 'Toxic Spikes') )
           {
-            if ( $Toxic_Spikes_Stacks['Stacks'] > 1 )
-              $New_Active->SetStatus('Badly Poisoned');
-            else
-              $New_Active->SetStatus('Poisoned');
+            $Toxic_Spikes_Field_Data = $this->GetFieldEffectData($this->Side, 'Toxic Spikes');
+            $Toxic_Spikes_Stacks = $Toxic_Spikes_Field_Data['Stacks'];
 
-            $Effect_Text .= "<br />{$New_Active->Display_Name} was poisoned from the Toxic Spikes.";
+            if
+            (
+              $New_Active->IsGrounded() &&
+              !$New_Active->HasTyping([ 'Poison', 'Steel' ]) &&
+              $New_Active->Ability->Name != 'Magic Guard' &&
+              $New_Active->Item->Name != 'Heavy Duty Boots'
+            )
+            {
+              if ( $Toxic_Spikes_Stacks['Stacks'] > 1 )
+                $New_Active->SetStatus('Badly Poisoned');
+              else
+                $New_Active->SetStatus('Poisoned');
+
+              $Effect_Text .= "<br />{$New_Active->Display_Name} was poisoned from the Toxic Spikes.";
+            }
           }
         }
       }
@@ -693,7 +712,7 @@
       return [
         'Type' => 'Success',
         'Text' => (isset($Text) ? $Text : '') .
-                  "{$this->Display_Name} has been sent into battle!" .
+                  (isset($Trace_Proc) && !$Trace_Proc ? "{$this->Display_Name} has been sent into battle!" : "$this->Display_Name} Traced {$Defender->Display_Name}'s {$this->Ability->Name}!") .
                   (isset($Effect_Text) ? "<br />{$Effect_Text}" : '')
       ];
     }
