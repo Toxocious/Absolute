@@ -95,6 +95,7 @@
       $this->Ability = new Ability($Pokemon['Ability']);
       $this->Original_Ability = new Ability($Pokemon['Ability']);
       $this->Gender = $Pokemon['Gender'];
+      $this->Gender_Original = $Pokemon['Gender'];
       $this->Level = $Pokemon['Level_Raw'];
       $this->HP = $Pokemon['Stats'][0];
       $this->Max_HP = $Pokemon['Stats'][0];
@@ -122,6 +123,12 @@
       $this->IVs = $Pokemon['IVs'];
       $this->EVs = $Pokemon['EVs'];
       $this->Moves = [
+        new Move($Pokemon['Move_1'], 0),
+        new Move($Pokemon['Move_2'], 1),
+        new Move($Pokemon['Move_3'], 2),
+        new Move($Pokemon['Move_4'], 3),
+      ];
+      $this->Moves_Original = [
         new Move($Pokemon['Move_1'], 0),
         new Move($Pokemon['Move_2'], 1),
         new Move($Pokemon['Move_3'], 2),
