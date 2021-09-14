@@ -286,6 +286,7 @@
       }
 
       $New_Active = $_SESSION['Battle'][$this->Side]->Active;
+      $this->RevertCopy();
 
       $Effect_Text = '';
       $Effect_Text .= $this->AbilityProcsOnEntry($this, $Defender);
