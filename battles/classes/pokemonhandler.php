@@ -86,8 +86,11 @@
       $this->Alt_ID = $Pokemon['Alt_ID'];
       $this->Alt_ID_Original = $Pokemon['Alt_ID'];
       $this->Sprite = $Pokemon['Sprite'];
+      $this->Sprite_Original = $Pokemon['Sprite'];
       $this->Icon = $Pokemon['Icon'];
+      $this->Icon_Original = $Pokemon['Icon'];
       $this->Display_Name = $Pokemon['Display_Name'];
+      $this->Display_Name_Original = $Pokemon['Display_Name'];
       $this->Shiny = ($Pokemon['Type'] == 'Shiny' ? true : false);
       $this->Ability = new Ability($Pokemon['Ability']);
       $this->Original_Ability = new Ability($Pokemon['Ability']);
