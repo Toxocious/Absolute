@@ -1501,6 +1501,21 @@
 
       if ( $this->Display_Name != $this->Display_Name_Original )
         $this->Display_Name = $this->Display_Name_Original;
+
+      if ( $this->Ability != $this->Ability_Original )
+        $this->Ability = $this->Ability_Original;
+
+      if ( $this->Moves != $this->Moves_Original )
+        $this->Moves = $this->Moves_Original;
+
+      if ( $this->Stats != $this->Stats_Original )
+        $this->Stats = $this->Stats_Original;
+
+      if ( $this->Weight != $this->Weight_Original )
+        $this->Weight = $this->Weight_Original;
+
+      if ( $this->Gender != $this->Gender_Original )
+        $this->Gender = $this->Gender_Original;
     }
 
     /**
