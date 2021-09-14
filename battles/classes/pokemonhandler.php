@@ -1438,7 +1438,12 @@
      */
     public function CopyPokemon
     (
-      PokemonHandler $Pokemon
+      PokemonHandler $Pokemon,
+      bool $Copy_Ability = false,
+      bool $Copy_Moves = false,
+      bool $Copy_Stats = false,
+      bool $Copy_Weight = false,
+      bool $Copy_Gender = false
     )
     {
       if ( $this->Pokedex_ID != $Pokemon->Pokedex_ID )
