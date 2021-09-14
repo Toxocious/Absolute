@@ -866,6 +866,7 @@
         return false;
 
       if ( $this->Effect_Short == 'Causes a one-hit KO.' )
+      {
         if ( $Attacker->Level < $Defender->Level )
           return false;
         else if ( $Attacker->Stats['Speed']->Current_Value < $Defender->Stats['Speed']->Current_Value )
@@ -885,6 +886,7 @@
 
           return mt_rand(1, ($Attacker->Level - $Defender->Level + $Level_Diff)) === 1;
         }
+      }
 
       switch ($this->Name)
       {
@@ -1895,7 +1897,7 @@
               break;
 
             case 'Illusion':
-              if ( !$Defender->Ability->Procced )
+              if ( !$Defender->Ability->Procced && $Damage > 0 )
               {
                 $Defender->Ability->SetProcStatus(true);
                 $Defender->RevertCopy();
