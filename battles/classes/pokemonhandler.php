@@ -271,348 +271,7 @@
       $New_Active = $_SESSION['Battle'][$this->Side]->Active;
 
       $Effect_Text = '';
-
-      switch ($New_Active->Ability->Name)
-      {
-        case 'Anticipation':
-          foreach ($Defender->Moves as $Move)
-          {
-            if ( $Move->Category == 'Status' )
-              continue;
-
-            if
-            (
-              $Move->Category == 'Ohko' ||
-              $Move->MoveEffectiveness($New_Active, $Defender)['Mult'] > 1
-            )
-            {
-              $Effect_Text .= "{$this->Display_Name} shuddered.<br />";
-
-              break;
-            }
-          }
-          break;
-        case 'Air Lock':
-        case 'Cloud Nine':
-          if ( !empty($this->Weather) )
-          {
-            unset($this->Weather);
-            $Effect_Text .= 'The effects of weather disappeared.<br />';
-          }
-          break;
-        case 'Dauntless Shield':
-          $New_Active->Stats['Defense']->SetValue(1);
-          $Effect_Text .= "{$New_Active->Display_Name}'s Dauntless Shield raised its Defense!<br />";
-          break;
-
-        case 'Delta Stream':
-          if ( isset($this->Weather) )
-            unset($this->Weather);
-
-          $Set_Weather = new Weather('Strong Winds', -1);
-          if ( $Set_Weather )
-          {
-            $this->Weather[$Set_Weather->Name] = $Set_Weather;
-            $Effect_Text .= $Set_Weather->Dialogue;
-          }
-          break;
-
-        case 'Desolate Land':
-          if ( isset($this->Weather) )
-            unset($this->Weather);
-
-          $Set_Weather = new Weather('Desolate Land', -1);
-          if ( $Set_Weather )
-          {
-            $this->Weather[$Set_Weather->Name] = $Set_Weather;
-            $Effect_Text .= $Set_Weather->Dialogue;
-          }
-          break;
-
-        case 'Download':
-          if ( $Defender->Stats['Defense']->Current_Value > $Defender->Stats['Sp_Defense']->Current_Value )
-            $Boosted_Stat = 'Attack';
-          else
-            $Boosted_Stat = 'Sp_Attack';
-
-          $Stat_Name = str_replace('_', 'ecial ', $Boosted_Stat);
-          $New_Active->Stats[$Boosted_Stat]->SetValue(1);
-          $Effect_Text .= "{$New_Active->Display_Name}'s Download raised its {$Stat_Name}!<br />";
-          break;
-
-        case 'Drizzle':
-          $Turn_Count = 5;
-          if ( $New_Active->Item->Name == 'Damp Rock' )
-            $Turn_Count = 8;
-
-          $Set_Weather = new Weather('Rain', $Turn_Count);
-          if ( $Set_Weather )
-          {
-            $this->Weather[$Set_Weather->Name] = $Set_Weather;
-            $Effect_Text .= $Set_Weather->Dialogue;
-          }
-          break;
-
-        case 'Drought':
-          $Turn_Count = 5;
-          if ( $New_Active->Item->Name == 'Heat Rock' )
-            $Turn_Count = 8;
-
-          $Set_Weather = new Weather('Harsh Sunlight', $Turn_Count);
-          if ( $Set_Weather )
-          {
-            $this->Weather[$Set_Weather->Name] = $Set_Weather;
-            $Effect_Text .= $Set_Weather->Dialogue;
-          }
-          break;
-
-        case 'Electric Surge':
-          if ( $this->Item->Name == 'Terrain Extender' )
-            $Terrain_Turns = 8;
-
-          $Set_Terrain = new Terrain('Electric', !empty($Terrain_Turns) ?: null);
-          if ( !empty($Set_Terrain) )
-          {
-            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
-            $Effect_Text .= $Set_Terrain->Dialogue;
-          }
-          break;
-
-        case 'Forewarn':
-          $Warning_Move = null;
-          foreach ($Defender->Moves as $Move)
-          {
-            if ( empty($Warning_Move) )
-            {
-              $Warning_Move = $Move;
-              continue;
-            }
-
-            $Base_Power = 0;
-            if ( $Move->Power != 'None' )
-              $Base_Power = $Move->Power;
-            if ( $Move->Category == 'Ohko' )
-              $Base_Power = 150;
-            else if ( in_array($Move->Name, ['Counter', 'Metalburst', 'Mirror Coat']) )
-              $Base_Power = 120;
-            else if ( $Move->Category == 'Status' )
-              $Base_Power = 80;
-            else if ( in_array($Move->Name, ['Stored Power', 'Power Trip']) )
-              $Base_Power = 20;
-            else
-              $Base_Power = 80;
-
-            if ( $Base_Power > $Warning_Move->Power )
-              $Warning_Move = $Move;
-          }
-
-          if ( !empty($Warning_Move) )
-          {
-            $Effect_Text .= "{$New_Active->Display_Name}'s Forewarn makes it wary of {$Defender->Display_Name}'s {$Warning_Move->Name}!";
-            unset($Warning_Move);
-          }
-          break;
-
-        case 'Frisk':
-          if ( !empty($Defender->Item) )
-          {
-            $Effect_Text .= "{$New_Active->Display_Name} Frisked {$Defender->Display_Name}'s {$Defender->Item->Name}.";
-          }
-          break;
-
-        case 'Gorrila Tactics':
-          $New_Active->Stats['Attack']->Current_Value *= 1.5;
-          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Gorilla Tactics!";
-          break;
-
-        case 'Grassy Pelt':
-          if ( !empty($this->Terrain) )
-          {
-            if ( $this->Terrain->Name == 'Grassy' )
-            {
-              $New_Active->Stats['Defense']->Current_Value *= 1.5;
-            }
-          }
-          break;
-
-        case 'Grassy Surge':
-          if ( $this->Item->Name == 'Terrain Extender' )
-            $Terrain_Turns = 8;
-
-          $Set_Terrain = new Terrain('Grassy', !empty($Terrain_Turns) ?: null);
-          if ( !empty($Set_Terrain) )
-          {
-            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
-            $Effect_Text .= $Set_Terrain->Dialogue;
-          }
-          break;
-
-        case 'Heavy Metal':
-          $this->Weight *= 2;
-          break;
-
-        case 'Huge Power':
-          $New_Active->Stats['Attack']->Current_Value *= 2;
-          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Huge Power!";
-          break;
-
-        case 'Hustle':
-          $New_Active->Stats['Attack']->Current_Value *= 1.5;
-          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Hustle!";
-          break;
-
-        case 'Illusion':
-          if ( count($Attacker->Roster) > 1 )
-          {
-            $Random_Ally = $_SESSION['Battle'][$this->Side]->Roster[mt_rand(0, count($Attacker->Roster))];
-
-            $this->CopyPokemon($Random_Ally);
-          }
-          break;
-
-        case 'Immunity':
-          if ( $New_Active->HasStatusFromArray(['Badly Poisoned', 'Poison']) )
-          {
-            $New_Active->RemoveStatusFromArray(['Badly Poisoned', 'Poison']);
-          }
-          break;
-
-        case 'Intimidate':
-          if ( !$Defender->HasAbility([ 'Clear Body', 'Focus', 'Full Metal Body', 'Hyper Cutter', 'Oblivious', 'Own Tempo', 'Scrappy', 'White Smoke' ]) && !$Defender->HasStatus('Substitute') )
-          {
-            if ( $Defender->Ability->Name == 'Rattled' )
-            {
-              $Defender->Stats['Speed']->SetValue(1);
-              $Effect_Text .= "{$Defender->Display_Name} gained Speed from being Rattled due to {$New_Active->Display_Name}'s Intimidate!<br />";
-            }
-
-            if ( $Defender->Item->Name == 'Adrenaline Orb' )
-            {
-              $Defender->Stats['Speed']->SetValue(1);
-              $Effect_Text .= "{$Defender->Display_Name} consumed it's Adrenaline Orb and gained Speed!<br />";
-            }
-
-            $Target = $Defender;
-            if ( $Defender->Ability->Name == 'Mirror Armor')
-              $Target = $New_Active;
-
-            $Target->Stats['Attack']->SetValue(-1);
-            $Effect_Text .= "{$New_Active->Display_Name}'s Intimidate cuts {$Target->Display_Name}'s Attack!";
-          }
-          break;
-
-        case 'Intrepid Sword':
-          $New_Active->Stats['Attack']->SetValue(1);
-          $Effect_Text .= "{$New_Active->Display_Name}'s Intrepid Sword raised its Attack!<br />";
-          break;
-
-        case 'Light Metal':
-          $this->Weight /= 2;
-          break;
-
-        case 'Limber':
-          if ( $New_Active->HasStatus('Paralysis') )
-            unset($New_Active->Statuses['Paralysis']);
-          break;
-
-        case 'Magma Armor':
-          if ( $New_Active->HasStatus('Burn') )
-            unset($New_Active->Statuses['Burn']);
-          break;
-
-        case 'Misty Surge':
-          if ( $this->Item->Name == 'Terrain Extender' )
-            $Terrain_Turns = 8;
-
-          $Set_Terrain = new Terrain('Misty', !empty($Terrain_Turns) ?: null);
-          if ( !empty($Set_Terrain) )
-          {
-            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
-            $Effect_Text .= $Set_Terrain->Dialogue;
-          }
-          break;
-
-        case 'Pastel Veil':
-          if ( $New_Active->HasStatus('Poison') )
-            unset($New_Active->Statuses['Poison']);
-
-          if ( $New_Active->HasStatus('Badly Poisoned') )
-            unset($New_Active->Statuses['Badly Poisoned']);
-          break;
-
-        case 'Primordial Sea':
-          $Set_Weather = new Weather('Heavy Rain', -1);
-          if ( $Set_Weather )
-          {
-            $this->Weather[$Set_Weather->Name] = $Set_Weather;
-            $Effect_Text .= $Set_Weather->Dialogue;
-          }
-          break;
-
-        case 'Psychic Surge':
-          if ( $this->Item->Name == 'Terrain Extender' )
-            $Terrain_Turns = 8;
-
-          $Set_Terrain = new Terrain('Psychic', !empty($Terrain_Turns) ?: null);
-          if ( !empty($Set_Terrain) )
-          {
-            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
-            $Effect_Text .= $Set_Terrain->Dialogue;
-          }
-          break;
-
-        case 'Pure Power':
-          $New_Active->Stats['Attack']->Current_Value *= 2;
-          break;
-
-        case 'Sand Stream':
-          if ( $this->Item->Name == 'Smooth Rock' )
-            $Turn_Count = 8;
-
-          $Set_Weather = new Weather('Sandstorm', !empty($Turn_Count) ?: 5);
-          if ( $Set_Weather )
-          {
-            $this->Weather[$Set_Weather->Name] = $Set_Weather;
-            $Effect_Text .= $Set_Weather->Dialogue;
-          }
-          break;
-
-        case 'Screen Cleaner':
-          foreach (['Ally', 'Foe'] as $Field_Side)
-          {
-            foreach (['Aurora Veil', 'Light Screen', 'Reflect'] as $Field_Effect)
-            {
-              if ( $this->IsFieldEffectActive($Field_Side, $Field_Effect) )
-              {
-                $this->RemoveFieldEffect($Field_Side, $Field_Effect);
-              }
-            }
-          }
-
-          $Effect_Text .= 'All damage reducing field effects were removed!';
-          break;
-
-        case 'Snow Warning':
-          if ( $this->Item->Name == 'Icy Rock' )
-            $Turn_Count = 8;
-
-          $Set_Weather = new Weather('Hail', !empty($Turn_Count) ?: 5);
-          if ( $Set_Weather )
-          {
-            $this->Weather[$Set_Weather->Name] = $Set_Weather;
-            $Effect_Text .= $Set_Weather->Dialogue;
-          }
-          break;
-
-        case 'Trace':
-          if ( !in_array($Defender->Ability->Name, ['Disguise', 'Flower Gift', 'Gulp Missle', 'Hunger Switch', 'Ice Face', 'Illusion', 'Imposter', 'Neutralizing Gas', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Trace', 'Zen Mode']) )
-          {
-            $this->SetAbility($Defender->Ability->Name);
-
-            $Effect_Text .= "{$this->Display_Name} has traced {$Defender->Display_Name}'s {$this->Ability->Name}!";
-            $Effect_Text .= $this->SwitchInto(true)['Text'];
-          }
-      }
+      $Effect_Text .= $this->AbilityProcsOnEntry($this, $Defender)['Text'];
 
       if ( !$Trace_Proc )
       {
@@ -817,6 +476,8 @@
 
     /**
      * Handle abilities that proc when a Pokemon faints.
+     * @param {UserHandler} $Attacker
+     * @param {UserHandler} $Defender
      */
     public function AbilityProcsOnFaint
     (
@@ -859,6 +520,374 @@
       }
 
       return $Effect_Text;
+    }
+
+    /**
+     * Handle abilities that proc when a Pokemon enters battle.
+     * @param {PokemonHandler} $Attacker
+     * @param {PokemonHandler} $Defender
+     */
+    public function AbilityProcsOnEntry
+    (
+      PokemonHandler $Attacker,
+      PokemonHandler $Defender
+    )
+    {
+      $Effect_Text = '';
+
+      $New_Active = $this;
+
+      $Attacker_Owner = $_SESSION['Battle'][$Attacker->Side];
+      $Defender_Owner = $_SESSION['Battle'][$Defender->Side];
+
+      switch ($New_Active->Ability->Name)
+      {
+        case 'Anticipation':
+          foreach ($Defender->Moves as $Move)
+          {
+            if ( $Move->Category == 'Status' )
+              continue;
+
+            if
+            (
+              $Move->Category == 'Ohko' ||
+              $Move->MoveEffectiveness($New_Active, $Defender)['Mult'] > 1
+            )
+            {
+              $Effect_Text .= "{$this->Display_Name} shuddered.<br />";
+
+              break;
+            }
+          }
+          break;
+        case 'Air Lock':
+        case 'Cloud Nine':
+          if ( !empty($this->Weather) )
+          {
+            unset($this->Weather);
+            $Effect_Text .= 'The effects of weather disappeared.<br />';
+          }
+          break;
+        case 'Dauntless Shield':
+          $New_Active->Stats['Defense']->SetValue(1);
+          $Effect_Text .= "{$New_Active->Display_Name}'s Dauntless Shield raised its Defense!<br />";
+          break;
+
+        case 'Delta Stream':
+          if ( isset($this->Weather) )
+            unset($this->Weather);
+
+          $Set_Weather = new Weather('Strong Winds', -1);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
+
+        case 'Desolate Land':
+          if ( isset($this->Weather) )
+            unset($this->Weather);
+
+          $Set_Weather = new Weather('Desolate Land', -1);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
+
+        case 'Download':
+          if ( $Defender->Stats['Defense']->Current_Value > $Defender->Stats['Sp_Defense']->Current_Value )
+            $Boosted_Stat = 'Attack';
+          else
+            $Boosted_Stat = 'Sp_Attack';
+
+          $Stat_Name = str_replace('_', 'ecial ', $Boosted_Stat);
+          $New_Active->Stats[$Boosted_Stat]->SetValue(1);
+          $Effect_Text .= "{$New_Active->Display_Name}'s Download raised its {$Stat_Name}!<br />";
+          break;
+
+        case 'Drizzle':
+          $Turn_Count = 5;
+          if ( $New_Active->Item->Name == 'Damp Rock' )
+            $Turn_Count = 8;
+
+          $Set_Weather = new Weather('Rain', $Turn_Count);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
+
+        case 'Drought':
+          $Turn_Count = 5;
+          if ( $New_Active->Item->Name == 'Heat Rock' )
+            $Turn_Count = 8;
+
+          $Set_Weather = new Weather('Harsh Sunlight', $Turn_Count);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
+
+        case 'Electric Surge':
+          if ( $this->Item->Name == 'Terrain Extender' )
+            $Terrain_Turns = 8;
+
+          $Set_Terrain = new Terrain('Electric', !empty($Terrain_Turns) ?: null);
+          if ( !empty($Set_Terrain) )
+          {
+            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
+            $Effect_Text .= $Set_Terrain->Dialogue;
+          }
+          break;
+
+        case 'Forewarn':
+          $Warning_Move = null;
+          foreach ($Defender->Moves as $Move)
+          {
+            if ( empty($Warning_Move) )
+            {
+              $Warning_Move = $Move;
+              continue;
+            }
+
+            $Base_Power = 0;
+            if ( $Move->Power != 'None' )
+              $Base_Power = $Move->Power;
+            if ( $Move->Category == 'Ohko' )
+              $Base_Power = 150;
+            else if ( in_array($Move->Name, ['Counter', 'Metalburst', 'Mirror Coat']) )
+              $Base_Power = 120;
+            else if ( $Move->Category == 'Status' )
+              $Base_Power = 80;
+            else if ( in_array($Move->Name, ['Stored Power', 'Power Trip']) )
+              $Base_Power = 20;
+            else
+              $Base_Power = 80;
+
+            if ( $Base_Power > $Warning_Move->Power )
+              $Warning_Move = $Move;
+          }
+
+          if ( !empty($Warning_Move) )
+          {
+            $Effect_Text .= "{$New_Active->Display_Name}'s Forewarn makes it wary of {$Defender->Display_Name}'s {$Warning_Move->Name}!";
+            unset($Warning_Move);
+          }
+          break;
+
+        case 'Frisk':
+          if ( !empty($Defender->Item) )
+          {
+            $Effect_Text .= "{$New_Active->Display_Name} Frisked {$Defender->Display_Name}'s {$Defender->Item->Name}.";
+          }
+          break;
+
+        case 'Gorrila Tactics':
+          $New_Active->Stats['Attack']->Current_Value *= 1.5;
+          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Gorilla Tactics!";
+          break;
+
+        case 'Grassy Pelt':
+          if ( !empty($this->Terrain) )
+          {
+            if ( $this->Terrain->Name == 'Grassy' )
+            {
+              $New_Active->Stats['Defense']->Current_Value *= 1.5;
+            }
+          }
+          break;
+
+        case 'Grassy Surge':
+          if ( $this->Item->Name == 'Terrain Extender' )
+            $Terrain_Turns = 8;
+
+          $Set_Terrain = new Terrain('Grassy', !empty($Terrain_Turns) ?: null);
+          if ( !empty($Set_Terrain) )
+          {
+            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
+            $Effect_Text .= $Set_Terrain->Dialogue;
+          }
+          break;
+
+        case 'Heavy Metal':
+          $this->Weight *= 2;
+          break;
+
+        case 'Huge Power':
+          $New_Active->Stats['Attack']->Current_Value *= 2;
+          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Huge Power!";
+          break;
+
+        case 'Hustle':
+          $New_Active->Stats['Attack']->Current_Value *= 1.5;
+          $Effect_Text .= "{$New_Active->Display_Name}'s Attack was boosted by its Hustle!";
+          break;
+
+        case 'Illusion':
+          $Attacker_Roster_Slots = count($Attacker_Owner->Roster);
+          for ( $i = $Attacker_Roster_Slots - 1; $i >= $this->Slot; $i-- )
+          {
+            $Checking_Ally = $_SESSION['Battle'][$this->Side]->Roster[$i];
+            if ( !$Checking_Ally->Fainted )
+            {
+              $this->CopyPokemon($Checking_Ally);
+              break;
+            }
+          }
+          break;
+
+        case 'Immunity':
+          if ( $New_Active->HasStatusFromArray(['Badly Poisoned', 'Poison']) )
+          {
+            $New_Active->RemoveStatusFromArray(['Badly Poisoned', 'Poison']);
+          }
+          break;
+
+        case 'Intimidate':
+          if ( !$Defender->HasAbility([ 'Clear Body', 'Focus', 'Full Metal Body', 'Hyper Cutter', 'Oblivious', 'Own Tempo', 'Scrappy', 'White Smoke' ]) && !$Defender->HasStatus('Substitute') )
+          {
+            if ( $Defender->Ability->Name == 'Rattled' )
+            {
+              $Defender->Stats['Speed']->SetValue(1);
+              $Effect_Text .= "{$Defender->Display_Name} gained Speed from being Rattled due to {$New_Active->Display_Name}'s Intimidate!<br />";
+            }
+
+            if ( $Defender->Item->Name == 'Adrenaline Orb' )
+            {
+              $Defender->Stats['Speed']->SetValue(1);
+              $Effect_Text .= "{$Defender->Display_Name} consumed it's Adrenaline Orb and gained Speed!<br />";
+            }
+
+            $Target = $Defender;
+            if ( $Defender->Ability->Name == 'Mirror Armor')
+              $Target = $New_Active;
+
+            $Target->Stats['Attack']->SetValue(-1);
+            $Effect_Text .= "{$New_Active->Display_Name}'s Intimidate cuts {$Target->Display_Name}'s Attack!";
+          }
+          break;
+
+        case 'Intrepid Sword':
+          $New_Active->Stats['Attack']->SetValue(1);
+          $Effect_Text .= "{$New_Active->Display_Name}'s Intrepid Sword raised its Attack!<br />";
+          break;
+
+        case 'Light Metal':
+          $this->Weight /= 2;
+          break;
+
+        case 'Limber':
+          if ( $New_Active->HasStatus('Paralysis') )
+            unset($New_Active->Statuses['Paralysis']);
+          break;
+
+        case 'Magma Armor':
+          if ( $New_Active->HasStatus('Burn') )
+            unset($New_Active->Statuses['Burn']);
+          break;
+
+        case 'Misty Surge':
+          if ( $this->Item->Name == 'Terrain Extender' )
+            $Terrain_Turns = 8;
+
+          $Set_Terrain = new Terrain('Misty', !empty($Terrain_Turns) ?: null);
+          if ( !empty($Set_Terrain) )
+          {
+            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
+            $Effect_Text .= $Set_Terrain->Dialogue;
+          }
+          break;
+
+        case 'Pastel Veil':
+          if ( $New_Active->HasStatus('Poison') )
+            unset($New_Active->Statuses['Poison']);
+
+          if ( $New_Active->HasStatus('Badly Poisoned') )
+            unset($New_Active->Statuses['Badly Poisoned']);
+          break;
+
+        case 'Primordial Sea':
+          $Set_Weather = new Weather('Heavy Rain', -1);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
+
+        case 'Psychic Surge':
+          if ( $this->Item->Name == 'Terrain Extender' )
+            $Terrain_Turns = 8;
+
+          $Set_Terrain = new Terrain('Psychic', !empty($Terrain_Turns) ?: null);
+          if ( !empty($Set_Terrain) )
+          {
+            $this->Terrain[$Set_Terrain->Name] = $Set_Terrain;
+            $Effect_Text .= $Set_Terrain->Dialogue;
+          }
+          break;
+
+        case 'Pure Power':
+          $New_Active->Stats['Attack']->Current_Value *= 2;
+          break;
+
+        case 'Sand Stream':
+          if ( $this->Item->Name == 'Smooth Rock' )
+            $Turn_Count = 8;
+
+          $Set_Weather = new Weather('Sandstorm', !empty($Turn_Count) ?: 5);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
+
+        case 'Screen Cleaner':
+          foreach (['Ally', 'Foe'] as $Field_Side)
+          {
+            foreach (['Aurora Veil', 'Light Screen', 'Reflect'] as $Field_Effect)
+            {
+              if ( $this->IsFieldEffectActive($Field_Side, $Field_Effect) )
+              {
+                $this->RemoveFieldEffect($Field_Side, $Field_Effect);
+              }
+            }
+          }
+
+          $Effect_Text .= 'All damage reducing field effects were removed!';
+          break;
+
+        case 'Snow Warning':
+          if ( $this->Item->Name == 'Icy Rock' )
+            $Turn_Count = 8;
+
+          $Set_Weather = new Weather('Hail', !empty($Turn_Count) ?: 5);
+          if ( $Set_Weather )
+          {
+            $this->Weather[$Set_Weather->Name] = $Set_Weather;
+            $Effect_Text .= $Set_Weather->Dialogue;
+          }
+          break;
+
+        case 'Trace':
+          if ( !in_array($Defender->Ability->Name, ['Disguise', 'Flower Gift', 'Gulp Missle', 'Hunger Switch', 'Ice Face', 'Illusion', 'Imposter', 'Neutralizing Gas', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Trace', 'Zen Mode']) )
+          {
+            $this->SetAbility($Defender->Ability->Name);
+
+            $Effect_Text .= "{$this->Display_Name} has traced {$Defender->Display_Name}'s {$this->Ability->Name}!";
+            $Effect_Text .= $this->SwitchInto(true)['Text'];
+          }
+      }
+
+      if ( $Effect_Text != '' )
+        return $Effect_Text;
     }
 
     /**
