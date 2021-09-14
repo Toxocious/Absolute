@@ -1410,6 +1410,15 @@
 
       if ( $this->Alt_ID != $Pokemon->Alt_ID )
         $this->Alt_ID = $Pokemon->Alt_ID;
+
+      if ( $this->Sprite != $Pokemon->Sprite )
+        $this->Sprite = $Pokemon->Sprite;
+
+      if ( $this->Icon != $Pokemon->Icon )
+        $this->Icon = $Pokemon->Icon;
+
+      if ( $this->Display_Name != $Pokemon->Display_Name )
+        $this->Display_Name = $Pokemon->Display_Name;
     }
 
     /**
@@ -1422,6 +1431,15 @@
 
       if ( $this->Alt_ID != $this->Alt_ID_Original )
         $this->Alt_ID = $this->Alt_ID_Original;
+
+      if ( $this->Sprite != $this->Sprite_Original )
+        $this->Sprite = $this->Sprite_Original;
+
+      if ( $this->Icon != $this->Icon_Original )
+        $this->Icon = $this->Icon_Original;
+
+      if ( $this->Display_Name != $this->Display_Name_Original )
+        $this->Display_Name = $this->Display_Name_Original;
     }
 
     /**
