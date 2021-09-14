@@ -1460,6 +1460,26 @@
 
       if ( $this->Display_Name != $Pokemon->Display_Name )
         $this->Display_Name = $Pokemon->Display_Name;
+
+      if ( $Copy_Ability )
+        if ( $this->Ability != $Pokemon->Ability )
+          $this->Ability = $Pokemon->Ability;
+
+      if ( $Copy_Moves )
+        if ( $this->Moves != $Pokemon->Moves )
+          $this->Moves = $Pokemon->Moves;
+
+      if ( $Copy_Stats )
+        if ( $this->Stats != $Pokemon->Stats )
+          $this->Stats = $Pokemon->Stats;
+
+      if ( $Copy_Weight )
+        if ( $this->Weight != $Pokemon->Weight )
+          $this->Weight = $Pokemon->Weight;
+
+      if ( $Copy_Gender )
+        if ( $this->Gender != $Pokemon->Gender )
+          $this->Gender = $Pokemon->Gender;
     }
 
     /**
