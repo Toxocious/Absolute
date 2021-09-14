@@ -766,6 +766,19 @@
           }
           break;
 
+        case 'Imposter':
+          if
+          (
+            ($Defender->HasAbility(['Illusion']) && !$Defender->Ability->Procced) ||
+            !$Defender->HasStatusFromArray(['Substitute', 'Transformed'])
+          )
+          {
+            $Effect_Text .= "{$this->Display_Name}'s Imposter transformed it into {$Defender->Display_Name}!";
+
+            $this->CopyPokemon($Defender, true, true, true, true, true);
+          }
+          break;
+
         case 'Intimidate':
           if ( !$Defender->HasAbility([ 'Clear Body', 'Focus', 'Full Metal Body', 'Hyper Cutter', 'Oblivious', 'Own Tempo', 'Scrappy', 'White Smoke' ]) && !$Defender->HasStatus('Substitute') )
           {
