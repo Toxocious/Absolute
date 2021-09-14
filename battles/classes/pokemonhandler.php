@@ -121,6 +121,15 @@
         'Accuracy' => new Stat('Accuracy', 100),
         'Evasion' => new Stat('Evasion', 100),
       ];
+      $this->Stats_Original = [
+        'Attack' => new Stat('Attack', $Pokemon['Stats'][1]),
+        'Defense' => new Stat('Defense', $Pokemon['Stats'][2]),
+        'Sp_Attack' => new Stat('Sp_Attack', $Pokemon['Stats'][3]),
+        'Sp_Defense' => new Stat('Sp_Defense', $Pokemon['Stats'][4]),
+        'Speed' => new Stat('Speed', $Pokemon['Stats'][5]),
+        'Accuracy' => new Stat('Accuracy', 100),
+        'Evasion' => new Stat('Evasion', 100),
+      ];
       $this->IVs = $Pokemon['IVs'];
       $this->EVs = $Pokemon['EVs'];
       $this->Moves = [
