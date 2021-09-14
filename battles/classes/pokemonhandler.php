@@ -278,7 +278,7 @@
       $New_Active = $_SESSION['Battle'][$this->Side]->Active;
 
       $Effect_Text = '';
-      $Effect_Text .= $this->AbilityProcsOnEntry($this, $Defender)['Text'];
+      $Effect_Text .= $this->AbilityProcsOnEntry($this, $Defender);
 
       if ( !$Trace_Proc )
       {
