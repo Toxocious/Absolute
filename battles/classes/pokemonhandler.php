@@ -33,7 +33,7 @@
 
     public $Moves = null;
     public $Ability = null;
-    public $Original_Ability = null;
+    public $Ability_Original = null;
 
     public $Item = null;
 
@@ -93,7 +93,7 @@
       $this->Display_Name_Original = $Pokemon['Display_Name'];
       $this->Shiny = ($Pokemon['Type'] == 'Shiny' ? true : false);
       $this->Ability = new Ability($Pokemon['Ability']);
-      $this->Original_Ability = new Ability($Pokemon['Ability']);
+      $this->Ability_Original = new Ability($Pokemon['Ability']);
       $this->Gender = $Pokemon['Gender'];
       $this->Gender_Original = $Pokemon['Gender'];
       $this->Level = $Pokemon['Level_Raw'];
@@ -111,6 +111,7 @@
       $this->Owner_Current = $Pokemon['Owner_Current'];
       $this->Height = $Pokemon['Height'];
       $this->Weight = $Pokemon['Weight'];
+      $this->Weight_Original = $Pokemon['Weight'];
       $this->Stats = [
         'Attack' => new Stat('Attack', $Pokemon['Stats'][1]),
         'Defense' => new Stat('Defense', $Pokemon['Stats'][2]),
@@ -255,8 +256,8 @@
             break;
         }
 
-        if ( $this->Original_Ability != $this->Ability )
-          $this->Ability == $this->Original_Ability;
+        if ( $this->Ability_Original != $this->Ability )
+          $this->Ability == $this->Ability_Original;
 
         foreach ($_SESSION['Battle'][$this->Side]->Roster as $Roster_Pokemon)
         {
