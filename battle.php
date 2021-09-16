@@ -308,12 +308,20 @@
               Battle.RenderFieldEffects(JSON_Data.Field_Effects);
               Battle.RenderCurrencies(JSON_Data.Ally.Money, JSON_Data.Ally.Abso_Coins);
 
-              document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
+              if ( JSON_Data.Message.Type == 'Success' )
+                document.getElementById('BattleDialogue').innerHTML = `<div class='error' style='margin: 0 auto;'>${JSON_Data.Message.Text}</div>`;
+              else
+                document.getElementById('BattleDialogue').innerHTML = `<div class='error' style='margin: 0 auto;'>${JSON_Data.Message.Text}</div>`;
+
               resolve(req.response);
             }
             else
             {
-              document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
+              if ( JSON_Data.Message.Type == 'Success' )
+                document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
+              else
+                document.getElementById('BattleDialogue').innerHTML = `<div class='error' style='margin: 0 auto;'>${JSON_Data.Message.Text}</div>`;
+
               reject(Error(req.statusText))
             }
           };
