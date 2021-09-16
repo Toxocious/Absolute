@@ -6,7 +6,7 @@
    */
   try
   {
-    $Fetch_Moves = $PDO->prepare("SELECT * FROM `moves` WHERE `programmed` = 1");
+    $Fetch_Moves = $PDO->prepare("SELECT * FROM `moves` WHERE `usable` = 1");
     $Fetch_Moves->execute([]);
     $Fetch_Moves->setFetchMode(PDO::FETCH_ASSOC);
     $Move_List = $Fetch_Moves->fetchAll();
@@ -86,7 +86,7 @@
       ";
       foreach ( $Move_List as $Key => $Value )
       {
-        $Move_Dropdown .= "<option value='{$Value['id']}'>{$Value['name']}</i>";
+        $Move_Dropdown .= "<option value='{$Value['ID']}'>{$Value['Name']}</i>";
       }
       $Move_Dropdown .= "
         </select>
@@ -117,7 +117,7 @@
           '3' => $Poke_Class->FetchMoveData($Pokemon['Move_3']),
           '4' => $Poke_Class->FetchMoveData($Pokemon['Move_4']),
         ];
-  
+
         $Moves_Echo .= "
           <td colspan='3' style='width: calc(100% / 6);'>
             <img src='{$Pokemon['Sprite']}' /><br />
@@ -142,7 +142,7 @@
       else
       {
         $Pokemon['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
-  
+
         $Moves_Echo .= "
           <td colspan='6' style='width: calc(100% / 3);'>
             <img src='{$Pokemon['Sprite']}' /><br />
@@ -150,7 +150,7 @@
           </td>
         ";
       }
-  
+
       if ( ($i + 1) % 3 === 0 )
       {
         $Pokemon_Row .= "
@@ -158,7 +158,7 @@
             {$Moves_Echo}
           </tr>
         ";
-  
+
         $Sprites = '';
         $Moves_Echo = '';
       }
@@ -186,7 +186,7 @@
       <?= $Pokemon_Row; ?>
     </tbody>
   </table>
-  
+
   <script type='text/javascript'>
     let isChanging = false;
 
