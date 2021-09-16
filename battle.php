@@ -309,7 +309,7 @@
               Battle.RenderCurrencies(JSON_Data.Ally.Money, JSON_Data.Ally.Abso_Coins);
 
               if ( JSON_Data.Message.Type == 'Success' )
-                document.getElementById('BattleDialogue').innerHTML = `<div class='error' style='margin: 0 auto;'>${JSON_Data.Message.Text}</div>`;
+                document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
               else
                 document.getElementById('BattleDialogue').innerHTML = `<div class='error' style='margin: 0 auto;'>${JSON_Data.Message.Text}</div>`;
 
