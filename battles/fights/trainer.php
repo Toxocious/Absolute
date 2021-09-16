@@ -56,6 +56,42 @@
       $_SESSION['Battle']['Ally'] = $this->Ally;
       $_SESSION['Battle']['Foe'] = $this->Foe;
 
+      $Creation_Dialogue = '';
+      foreach(['Ally', 'Foe'] as $Side)
+      {
+        if ( $Side === 'Ally' )
+        {
+          $Attacker = $this->Ally->Active;
+          $Defender = $this->Foe->Active;
+        }
+        else
+        {
+          $Attacker = $this->Foe->Active;
+          $Defender = $this->Ally->Active;
+        }
+
+        $Creation_Dialogue .= "<br /><br />{$this->$Side->Username} sent out {$Attacker->Display_Name}!";
+        $Ability_Proc_Text = $Attacker->AbilityProcsOnEntry($Attacker, $Defender);
+
+        if ( !empty($Ability_Proc_Text) )
+          $Creation_Dialogue .= "<br />{$Ability_Proc_Text}";
+      }
+
+      if ( $Creation_Dialogue == '' )
+      {
+        $_SESSION['Battle']['Dialogue'] = [
+          'Type' => 'Success',
+          'Text' => 'The battle has begun.',
+        ];
+      }
+      else
+      {
+        $_SESSION['Battle']['Dialogue'] = [
+          'Type' => 'Success',
+          'Text' => 'The battle has begun' . $Creation_Dialogue,
+        ];
+      }
+
       return true;
     }
   }

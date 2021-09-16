@@ -53,7 +53,7 @@
   }
   else
   {
-    if ( isset($_SESSION['Battle']['Dialogue']) )
+    if ( !empty($_SESSION['Battle']['Dialogue']) )
     {
       $Output['Message'] = $_SESSION['Battle']['Dialogue'];
     }
@@ -63,27 +63,6 @@
         'Type' => 'Success',
         'Text' => 'The battle has begun.'
       ];
-
-      foreach(['Ally', 'Foe'] as $Side)
-      {
-        if ( $Side === 'Ally' )
-        {
-          $Ally = 'Ally';
-          $Foe = 'Foe';
-        }
-        else
-        {
-          $Ally = 'Foe';
-          $Foe = 'Ally';
-        }
-
-        $Attacker = $_SESSION['Battle'][$Ally]->Active;
-        $Defender = $_SESSION['Battle'][$Foe]->Active;
-
-        $Ability_Proc_Text = $Attacker->AbilityProcsOnEntry($Attacker, $Defender);
-        if ( !empty($Ability_Proc_Text) )
-          $Output['Message']['Text'] .= "<br /><br />{$Ability_Proc_Text}";
-      }
     }
   }
 
