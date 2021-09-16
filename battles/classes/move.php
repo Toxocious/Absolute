@@ -1811,7 +1811,7 @@
       {
         if
         (
-          $this->Kings_Rock &&
+          $this->HasFlag('Kings_Rock') &&
           ($Attacker->Item->Name == "King's Rock" || $Attacker->Ability->Name == 'Stench') &&
           !$Defender->HasStatus('Substitute') &&
           $Turn_First_Attacker == $Attacker->Side &&
