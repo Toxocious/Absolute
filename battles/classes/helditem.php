@@ -57,6 +57,7 @@
       $this->Owner_Current = $Item_Data['Owner_Current'];
       $this->Uses_Left = -1;
 
+      $this->Can_Take_Item = $Item_Dex_Data['Can_Take_Item'];
       $this->Natural_Gift_Power = $Item_Dex_Data['Natural_Gift_Power'];
       $this->Natural_Gift_Type = $Item_Dex_Data['Natural_Gift_Type'];
       $this->Fling_Power = $Item_Dex_Data['Fling_Power'];
@@ -68,6 +69,7 @@
       $this->Speed_Boost = $Item_Dex_Data['Speed_Boost'];
       $this->Accuracy_Boost = $Item_Dex_Data['Accuracy_Boost'];
       $this->Evasion_Boost = $Item_Dex_Data['Evasion_Boost'];
+
       return $this;
     }
 
