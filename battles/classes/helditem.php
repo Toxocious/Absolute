@@ -61,7 +61,7 @@
       $this->Natural_Gift_Power = $Item_Dex_Data['Natural_Gift_Power'];
       $this->Natural_Gift_Type = $Item_Dex_Data['Natural_Gift_Type'];
       $this->Fling_Power = $Item_Dex_Data['Fling_Power'];
-      $this->Mega_Evolvs = $Item_Dex_Data['Mega_Evolves'];
+      $this->Mega_Evolves = $Item_Dex_Data['Mega_Evolves'];
       $this->Attack_Boost = $Item_Dex_Data['Attack_Boost'];
       $this->Defense_Boost = $Item_Dex_Data['Defense_Boost'];
       $this->Sp_Attack_Boost = $Item_Dex_Data['Sp_Attack_Boost'];
