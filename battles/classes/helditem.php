@@ -74,6 +74,31 @@
     }
 
     /**
+     * Process the attempt to take an item (usually via Snatch, Pickpocket, etc.)
+     * @param {PokemonHandler} $Holder
+     * @param {PokemonHandler} $Taker
+     */
+    public function TakeItem
+    (
+      PokemonHandler $Holder,
+      PokemonHandler $Taker
+    )
+    {
+      if ( !$this->Can_Take_Item )
+        return false;
+
+      if ( $this->Forme_Change )
+        if ( $Taker->Pokedex_ID == $this->Forme_Change && $Taker->Alt_ID == 0 )
+          return true;
+
+      if ( $this->Mega_Evolves )
+        if ( $Taker->Pokedex_ID == $this->Mega_Evolves && $Taker->Alt_ID == 0 )
+          return true;
+
+      return false;
+    }
+
+    /**
      * Deletes an item on use.
      */
     public function Consume()
