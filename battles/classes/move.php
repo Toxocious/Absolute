@@ -1046,9 +1046,6 @@
           break;
       }
 
-      if ( $Attacker->Item->Name == 'Scope Lens' )
-        $this->Crit_Chance++;
-
       switch ( $this->Crit_Chance )
       {
         case 0:
