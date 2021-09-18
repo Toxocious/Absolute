@@ -702,6 +702,7 @@
       {
         $Initial_Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
+        $Item_Proc = $this->ProcessItemProcs($Attacker, $Defender, $Damage);
         $Ability_Proc = $this->ProcessAbilityProcs($Attacker, $Defender, true, $Hit, $this->Total_Hits, $Initial_Damage);
         $Ability_Proc_Dialogue .= $Ability_Proc['Text'];
 
@@ -2363,6 +2364,40 @@
         'Text' => $Ability_Effect_Text,
         'Damage' => (!empty($Ability_Effect_Damage) ? $Ability_Effect_Damage : null),
       ];
+    }
+
+    /**
+     * Handle item procs.
+     * @param {PokemonHAndler} $Attacker
+     * @param {PokemonHandler} $Defender
+     * @param {int} $Damage
+     */
+    public function ProcessItemProcs
+    (
+      PokemonHandler $Attacker,
+      PokemonHandler $Defender,
+      int $Damage = 0
+    )
+    {
+      $Item_Proc_Text = '';
+
+      if ( !empty($Defender->Item) )
+      {
+        switch ( $Defender->Item )
+        {
+
+        }
+      }
+
+      if ( !empty($Attacker->Item) )
+      {
+        switch ( $Attacker->Item )
+        {
+ 
+        }
+      }
+
+      return $Item_Proc_Text;
     }
 
     /**
