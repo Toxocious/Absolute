@@ -2440,7 +2440,6 @@
         if ( $Attacker->HasStatus('Burn') )
           $Status_Mult = 0.5;
 
-
       $Physical_Damage_Mult = 1.0;
       $Special_Damage_Mult = 1.0;
       if ( $this->IsFieldEffectActive($Foe, 'Aurora Veil') )
@@ -2455,6 +2454,153 @@
       else if ( $this->IsFieldEffectActive($Foe, 'Light Screen') )
       {
         $Special_Damage_Mult = 0.5;
+      }
+
+      switch ($Attacker->Item->Name)
+      {
+        case 'Bug Gem':
+          if ( $this->Move_Type == 'Bug' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Dark Gem':
+          if ( $this->Move_Type == 'Dark' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Dragon Gem':
+          if ( $this->Move_Type == 'Dragon' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Electric Gem':
+          if ( $this->Move_Type == 'Electric' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Fairy Gem':
+          if ( $this->Move_Type == 'Fairy' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Fighting Gem':
+          if ( $this->Move_Type == 'Fighting' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Fire Gem':
+          if ( $this->Move_Type == 'Fire' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Flying Gem':
+          if ( $this->Move_Type == 'Flying' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Ghost Gem':
+          if ( $this->Move_Type == 'Ghost' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Grass Gem':
+          if ( $this->Move_Type == 'Grass' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Ground Gem':
+          if ( $this->Move_Type == 'Ground' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Ice Gem':
+          if ( $this->Move_Type == 'Ice' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Normal Gem':
+          if ( $this->Move_Type == 'Normal' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Poison Gem':
+          if ( $this->Move_Type == 'Poison' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Psychic Gem':
+          if ( $this->Move_Type == 'Psychic' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Rock Gem':
+          if ( $this->Move_Type == 'Rock' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Steel Gem':
+          if ( $this->Move_Type == 'Steel' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
+
+        case 'Water Gem':
+          if ( $this->Move_Type == 'Water' )
+          {
+            $this->Power *= 1.3;
+            $Attacker->Item->Consume();
+          }
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
