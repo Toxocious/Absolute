@@ -1342,7 +1342,7 @@
       if ( $this->HasStatusFromArray(['Magnet Rise', 'Telekinesis']) )
         return false;
 
-      if ( $this->Item->Name == 'Air Baloon' )
+      if ( $this->Item->Name == 'Air Balloon' )
         return false;
     }
 
