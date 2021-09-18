@@ -2385,7 +2385,19 @@
       {
         switch ( $Defender->Item )
         {
+          case 'Absorb Bulb':
+            if ( $this->Move_Type == 'Water' && $Defender->Stats['Sp_Attack']->Stage < 6 && $Defender->Stats['Sp_Attack'] > -6 )
+            {
+              if ( $Defender->Ability->Name == 'Contrary' )
+                $Defender->Stats['Sp_Attack']->SetValue(-1);
+              else
+                $Defender->Stats['Sp_Attack']->SetValue(1);
 
+              $Defender->Item->Consume();
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} absorbed the hit with its Absorb Bulb, and modified its Special Attack!";
+            }
+            break;
         }
       }
 
@@ -2393,7 +2405,7 @@
       {
         switch ( $Attacker->Item )
         {
- 
+
         }
       }
 
