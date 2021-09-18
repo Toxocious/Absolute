@@ -835,6 +835,46 @@
           }
           break;
 
+        case 'Multitype':
+          if ( !empty($Attacker->Item) && $this->Name == 'Judgement' )
+          {
+            if ( $Attacker->Item->Name == 'Draco Plate' )
+              $this->SetTyping('Primary', 'Dragon', true);
+            else if ( $Attacker->Item->Name == 'Dread Plate' )
+              $this->SetTyping('Primary', 'Earth', true);
+            else if ( $Attacker->Item->Name == 'Earth Plate' )
+              $this->SetTyping('Primary', 'Ground', true);
+            else if ( $Attacker->Item->Name == 'Fist Plate' )
+              $this->SetTyping('Primary', 'Fighting', true);
+            else if ( $Attacker->Item->Name == 'Flame Plate' )
+              $this->SetTyping('Primary', 'Fire', true);
+            else if ( $Attacker->Item->Name == 'Icicle Plate' )
+              $this->SetTyping('Primary', 'Ice', true);
+            else if ( $Attacker->Item->Name == 'Insect Plate' )
+              $this->SetTyping('Primary', 'Bug', true);
+            else if ( $Attacker->Item->Name == 'Iron Plate' )
+              $this->SetTyping('Primary', 'Steel', true);
+            else if ( $Attacker->Item->Name == 'Meadow Plate' )
+              $this->SetTyping('Primary', 'Grass', true);
+            else if ( $Attacker->Item->Name == 'Mind Plate' )
+              $this->SetTyping('Primary', 'Psychic', true);
+            else if ( $Attacker->Item->Name == 'Pixie Plate' )
+              $this->SetTyping('Primary', 'Fairy', true);
+            else if ( $Attacker->Item->Name == 'Sky Plate' )
+              $this->SetTyping('Primary', 'Flying', true);
+            else if ( $Attacker->Item->Name == 'Splash Plate' )
+              $this->SetTyping('Primary', 'Water', true);
+            else if ( $Attacker->Item->Name == 'Spooky Plate' )
+              $this->SetTyping('Primary', 'Ghost', true);
+            else if ( $Attacker->Item->Name == 'Stone Plate' )
+              $this->SetTyping('Primary', 'Rock', true);
+            else if ( $Attacker->Item->Name == 'Toxic Plate' )
+              $this->SetTyping('Primary', 'Poison', true);
+            else if ( $Attacker->Item->Name == 'Zap Plate' )
+              $this->SetTyping('Primary', 'Electric', true);
+          }
+          break;
+
         case 'Pastel Veil':
           if ( $New_Active->HasStatus('Poison') )
             unset($New_Active->Statuses['Poison']);

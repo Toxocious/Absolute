@@ -288,7 +288,6 @@
             }
           }
           break;
-
         case 'Normalize':
           $this->Move_Type = 'Normal';
           $this->Power *= 1.2;
@@ -313,6 +312,73 @@
             $this->Power *= 1.2;
           }
           break;
+      }
+
+      /**
+       * Items that change move type need to happen here.
+       */
+      if ( !empty($Attacker->Item) )
+      {
+        if ( $this->Name == 'Judgement' )
+        {
+          switch ($Attacker->Item->Name)
+          {
+            case 'Draco Plate':
+              $this->Move_Type == 'Dragon';
+              break;
+            case 'Dread Plate':
+              $this->Move_Type == 'Earth';
+              break;
+            case 'Earth Plate':
+              $this->Move_Type == 'Ground';
+              break;
+            case 'Fist Plate':
+              $this->Move_Type == 'Fighting';
+              break;
+            case 'Flame Plate':
+              $this->Move_Type == 'Fire';
+              break;
+            case 'Icicle Plate':
+              $this->Move_Type == 'Ice';
+              break;
+            case 'Insect Plate':
+              $this->Move_Type == 'Bug';
+              break;
+            case 'Iron Plate':
+              $this->Move_Type == 'Steel';
+              break;
+            case 'Meadow Plate':
+              $this->Move_Type == 'Grass';
+              break;
+            case 'Mind Plate':
+              $this->Move_Type == 'Psychic';
+              break;
+            case 'Pixie Plate':
+              $this->Move_Type == 'Fairy';
+              break;
+            case 'Sky Plate':
+              $this->Move_Type == 'Flying';
+              break;
+            case 'Splash Plate':
+              $this->Move_Type == 'Water';
+              break;
+            case 'Spooky Plate':
+              $this->Move_Type == 'Ghost';
+              break;
+            case 'Stone Plate':
+              $this->Move_Type == 'Rock';
+              break;
+            case 'Toxic Plate':
+              $this->Move_Type == 'Poison';
+              break;
+            case 'Zap Plate':
+              $this->Move_Type == 'Electric';
+              break;
+            default:
+              $this->Move_Type = 'Normal';
+              break;
+          }
+        }
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Attacker, $Defender);
@@ -2600,6 +2666,91 @@
             $this->Power *= 1.3;
             $Attacker->Item->Consume();
           }
+          break;
+
+        case 'Draco Plate':
+          if ( $this->Move_Type == 'Dragon' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Dread Plate':
+          if ( $this->Move_Type == 'Earth' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Earth Plate':
+          if ( $this->Move_Type == 'Ground' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Fist Plate':
+          if ( $this->Move_Type == 'Fighting' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Flame Plate':
+          if ( $this->Move_Type == 'Fire' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Icicle Plate':
+          if ( $this->Move_Type == 'Ice' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Insect Plate':
+          if ( $this->Move_Type == 'Bug' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Iron Plate':
+          if ( $this->Move_Type == 'Steel' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Meadow Plate':
+          if ( $this->Move_Type == 'Grass' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Mind Plate':
+          if ( $this->Move_Type == 'Psychic' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Pixie Plate':
+          if ( $this->Move_Type == 'Fairy' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Sky Plate':
+          if ( $this->Move_Type == 'Flying' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Splash Plate':
+          if ( $this->Move_Type == 'Water' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Spooky Plate':
+          if ( $this->Move_Type == 'Ghost' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Stone Plate':
+          if ( $this->Move_Type == 'Rock' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Toxic Plate':
+          if ( $this->Move_Type == 'Poison' )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Zap Plate':
+          if ( $this->Move_Type == 'Electric' )
+            $this->Power *= 1.2;
           break;
       }
 
