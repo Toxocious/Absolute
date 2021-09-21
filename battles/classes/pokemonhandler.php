@@ -783,13 +783,13 @@
         case 'Intimidate':
           if ( !$Defender->HasAbility([ 'Clear Body', 'Focus', 'Full Metal Body', 'Hyper Cutter', 'Oblivious', 'Own Tempo', 'Scrappy', 'White Smoke' ]) && !$Defender->HasStatus('Substitute') )
           {
-            if ( $Defender->Ability->Name == 'Rattled' )
+            if ( $Defender->Ability->Name == 'Rattled' && $Defender->Stats['Speed']->Current_Value < 6 )
             {
               $Defender->Stats['Speed']->SetValue(1);
               $Effect_Text .= "{$Defender->Display_Name} gained Speed from being Rattled due to {$New_Active->Display_Name}'s Intimidate!<br />";
             }
 
-            if ( $Defender->Item->Name == 'Adrenaline Orb' )
+            if ( $Defender->Item->Name == 'Adrenaline Orb' && $Defender->Stats['Speed']->Current_Value < 6 )
             {
               $Defender->Stats['Speed']->SetValue(1);
               $Effect_Text .= "{$Defender->Display_Name} consumed it's Adrenaline Orb and gained Speed!<br />";
@@ -799,7 +799,9 @@
             if ( $Defender->Ability->Name == 'Mirror Armor')
               $Target = $New_Active;
 
-            $Target->Stats['Attack']->SetValue(-1);
+            if ( $Target->Stats['Attack']->Current_Value > -6 )
+              $Target->Stats['Attack']->SetValue(-1);
+
             $Effect_Text .= "{$New_Active->Display_Name}'s Intimidate cuts {$Target->Display_Name}'s Attack!";
           }
           break;
