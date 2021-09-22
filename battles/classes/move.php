@@ -1264,208 +1264,6 @@
       $Text = '';
       $Damage_Mod = 1;
 
-      if ( $Defender->Ability->Name == 'Cute Charm' )
-      {
-        if
-        (
-          $Attacker->Gender != 'Genderless' &&
-          $Defender->Gender != 'Genderless' &&
-          $Attacker->Gender != $Defender->Gender
-        )
-        {
-          if ( $Attacker->Item->Name != 'Protective Pads' )
-          {
-            $Attacker->SetStatus('Infatuated');
-
-            $Text .= "<br />{$Attacker->Display_Name} has become infatuated!<br />";
-          }
-        }
-      }
-
-      if ( $Defender->Ability->Name == 'Effect Spore' )
-      {
-        if
-        (
-          !$Attacker->HasTyping(['Grass']) ||
-          $Attacker->Ability->Name != 'Overcoat' ||
-          $Attacker->Item->Name != 'Safety Goggles' ||
-          $Attacker->Item->Name != 'Protective Pads'
-        )
-        {
-          for ( $i = 0; $i < $this->Total_Hits; $i++ )
-          {
-            if ( mt_rand(1, 10) === 1 )
-            {
-              $Affliction_Odds = mt_rand(1, 3);
-
-              switch ($Affliction_Odds)
-              {
-                case 1:
-                  $Attacker->SetStatus('Paralysis');
-                  $Text .= "<br />{$Attacker->Display_Name} has been paralyzed by the {$Defender->Display_Name}'s Effect Spore!<br />";
-                  break;
-                case 2:
-                  $Attacker->SetStatus('Poisoned');
-                  $Text .= "<br />{$Attacker->Display_Name} has been poisoned by the {$Defender->Display_Name}'s Effect Spore!<br />";
-                  break;
-                case 3:
-                  $Attacker->SetStatus('Sleep');
-                  $Text .= "<br />{$Attacker->Display_Name} has been forced asleep by the {$Defender->Display_Name}'s Effect Spore!<br />";
-                  break;
-              }
-            }
-          }
-        }
-      }
-
-      if ( $Defender->Ability->Name == 'Flame Body' )
-      {
-        if ( $Attacker->Item->Name != 'Protective Pads' )
-        {
-          for ( $i = 0; $i < $this->Total_Hits; $i++ )
-          {
-            if ( mt_rand(1, 10) <= 3 )
-            {
-              $Attacker->SetStatus('Burned');
-
-              $Text .= "<br />{$Attacker->Display_Name} was burned!<br />";
-            }
-          }
-        }
-      }
-
-      if ( $Defender->Ability->Name == 'Fluffy' )
-      {
-        $Damage_Mod /= 2;
-
-        if ( $this->Move_Type == 'Fire' )
-          $Damage_Mod * 2;
-      }
-
-      if ( in_array($Defender->Ability->Name, ['Gooey', 'Tangling Hair']) )
-      {
-        if ( $Attacker->Item->Name != 'Protective Pads' )
-        {
-          for ( $i = 0; $i < $this->Total_Hits; $i++ )
-          {
-            $Attacker->Stats['Speed']->SetModifier(-1);
-
-            $Text .= "<br />{$Attacker->Display_Name} speed has dropped from the goo!<br />";
-          }
-        }
-      }
-
-      if ( in_array($Defender->Ability->Name, ['Iron Barbs', 'Rough Skin']) )
-      {
-        if ( $Attacker->Item->Name != 'Protective Pads' )
-        {
-          $Attacker->DecreaseHP(floor($Attacker->Max_HP / 8));
-
-          $Text .= "<br />{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Ability->Name}!<br />";
-        }
-      }
-
-      if ( $Defender->Ability->Name == 'Mummy' )
-      {
-        if ( $Attacker->Item->Name != 'Protective Pads' )
-        {
-          $Attacker->SetAbility('Mummy');
-
-          $Text .= "<br />{$Attacker->Display_Name}'s Ability has become Mummy!<br />";
-        }
-      }
-
-      if ( $Defender->Ability->Name == 'Perish Body' )
-      {
-        if ( $Attacker->Item->Name == 'Protective Pads' )
-        {
-          $Defender->SetStatus('Perish Body');
-
-          $Text .= "<br />{$Defender->Display_Name} will perish in 3 turns.<br />";
-        }
-        else
-        {
-          $Attacker->SetStatus('Perish Body');
-          $Defender->SetStatus('Perish Body');
-
-          $Text .= "
-            <br />
-            {$Attacker->Display_Name} will perish in 3 turns.<br />
-            {$Defender->Display_Name} will perish in 3 turns.<br />
-          ";
-        }
-      }
-
-      if ( $Defender->Ability->Name == 'Pickpocket' )
-      {
-        if
-        (
-          $Attacker->Item->Name != 'Protective Pads' ||
-          $Attacker->Ability->Name != 'Sticky Hold' ||
-          ($Attacker->Pokedex_ID != 382 && $Attacker->Item->Name == 'Blue Orb') ||
-          ($Defender->Pokedex_ID != 382 && $Defender->Item->Name == 'Blue Orb') ||
-          ($Attacker->Pokedex_ID != 383 && $Attacker->Item->Name == 'Red Orb') ||
-          ($Defender->Pokedex_ID != 383 && $Defender->Item->Name == 'Red Orb') ||
-          ($Attacker->Pokedex_ID != 487 && $Attacker->Item->Name == 'Griseous Orb') ||
-          ($Defender->Pokedex_ID != 487 && $Defender->Item->Name == 'Griseous Orb') ||
-          ($Attacker->Pokedex_ID != 493 && strpos($Attacker->Item->Name, 'Plate') > -1) ||
-          ($Defender->Pokedex_ID != 493 && strpos($Defender->Item->Name, 'Plate') > -1) ||
-          ($Attacker->Pokedex_ID != 773 && strpos($Attacker->Item->Name, 'Memory') > -1) ||
-          ($Defender->Pokedex_ID != 773 && strpos($Defender->Item->Name, 'Memory') > -1) ||
-          ($Attacker->Pokedex_ID != 649 && strpos($Attacker->Item->Name, 'Drive') > -1) ||
-          ($Defender->Pokedex_ID != 649 && strpos($Defender->Item->Name, 'Drive') > -1)
-        )
-        {
-          if
-          (
-            !$Defender->Item &&
-            $Attacker->Item
-          )
-          {
-            $Defender->Item = new HeldItem($Attacker->Item->ID);
-
-            $Text .= "<br />{$Defender->Display_Name} stole {$Attacker->Display_Name}'s {$Attacker->Item->Name}!<br />";
-          }
-        }
-      }
-
-      if ( $Defender->Ability->Name == 'Poison Point' )
-      {
-        if ( $Attacker->Item->Name != 'Protective Pads' )
-        {
-          for ( $i = 0; $i < $this->Total_Hits; $i++ )
-          {
-            if ( mt_rand(1, 10) <= 3 )
-            {
-              $Attacker->SetStatus('Poisoned');
-
-              $Text .= "<br />{$Attacker->Display_Name} was poisoned!<br />";
-            }
-          }
-        }
-      }
-
-      if ( $Defender->Ability->Name == 'Wandering Spirit' )
-      {
-        if ( $Attacker->Item->Name != 'Protective Pads' )
-        {
-          if
-          (
-            !in_array($Attacker->Ability->Name, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode']) ||
-            !in_array($Defender->Ability->Name, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode'])
-          )
-          {
-            $Attacker_Ability = $Attacker->Ability->Name;
-            $Defender_Ability = $Defender->Ability->Name;
-
-            $Attacker->Ability->Name = $Defender_Ability;
-            $Defender->Ability->Name = $Attacker_Ability;
-
-            $Text .= "<br />{$Attacker->Display_Name} has swapped abilities with {$Defender->Display_Name}!<br />";
-          }
-        }
-      }
-
       if ( $Defender->Item->Name == 'Rocky Helmet' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
@@ -1971,6 +1769,7 @@
               break;
 
             case 'Iron Barbs':
+            case 'Rough Skin':
               if ( $this->HasFlag('contact') )
               {
                 $Attacker->DecreaseHP($Attacker->Max_HP / 8);
@@ -2276,6 +2075,20 @@
               }
               break;
 
+            case 'Perish Body':
+              if ( $Attacker->Ability->Name != 'Long Reach' && $Attacker->Item->Name != 'Protective Pads' && !$Attacker->HasStatus('Perish Body') )
+              {
+                $Attacker->SetStatus('Perish Body');
+                $Defender->SetStatus('Perish Body');
+
+                $Ability_Effect_Text .= "
+                  <br />
+                  {$Attacker->Display_Name} will perish in 3 turns.<br />
+                  {$Defender->Display_Name} will perish in 3 turns.<br />
+                ";
+              }
+              break;
+
             case 'Pickpocket':
               if ( !empty($Attacker->Item) && empty($Defender->Item) )
               {
@@ -2333,6 +2146,22 @@
               {
                 $Defender->IncreaseHP($Defender->Max_HP / 4);
                 $Ability_Effect_Damage = 0;
+              }
+              break;
+
+            case 'Wandering Spirit':
+              if ( $this->HasFlag('contact') )
+              {
+                if ( !in_array($Defender->Ability->Name, ['Disguise', 'Flower Gift', 'Gulp Missile', 'Ice Face', 'Illusion', 'Imposter', 'Receiver', 'RKS System', 'Schooling', 'Stance Change', 'Wonder Guard', 'Zen Mode']) )
+                {
+                  $Attacker_Ability = $Attacker->Ability->Name;
+                  $Defender_Ability = $Defender->Ability->Name;
+
+                  $Attacker->Ability->Name = $Defender_Ability;
+                  $Defender->Ability->Name = $Attacker_Ability;
+
+                  $Ability_Effect_Text .= "<br />{$Attacker->Display_Name} has swapped abilities with {$Defender->Display_Name}!<br />";
+                }
               }
               break;
 
