@@ -1260,19 +1260,6 @@
             (isset($Effect_Text) ? $Effect_Text : ''),
         ];
       }
-
-      $Text = '';
-      $Damage_Mod = 1;
-
-      if ( $Defender->Item->Name == 'Rocky Helmet' )
-      {
-        if ( $Attacker->Item->Name != 'Protective Pads' )
-        {
-          $Attacker->DecreaseHP(floor($Attacker->Max_HP / 6));
-
-          $Text .= "<br />{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
-        }
-      }
     }
 
     /**
@@ -2225,6 +2212,15 @@
               $Defender->Item->Consume();
 
               $Item_Proc_Text .= "{$Defender->Display_Name} absorbed the hit with its Absorb Bulb, and modified its Special Attack!";
+            }
+            break;
+
+          case 'Rocky Helmet':
+            if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
+            {
+              $Attacker->DecreaseHP(floor($Attacker->Max_HP / 6));
+
+              $Item_Proc_Text .= "{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
             }
             break;
         }
