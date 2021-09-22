@@ -1775,6 +1775,13 @@
               }
               break;
 
+            case 'Levitate':
+              if ( $this->Move_Type == 'Ground' )
+              {
+                $Ability_Effect_Damage = 0;
+              }
+              break;
+
             case 'Lightning Rod':
               if ( $this->Move_Type == 'Electric' )
               {
