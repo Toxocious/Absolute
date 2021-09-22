@@ -1008,6 +1008,9 @@
         if ( !in_array($this->Name, ['Gust', 'Thunder', 'Twister', 'Sky Uppercut', 'Hurricane', 'Smack Down']) )
           return false;
 
+      if ( $Defender->Ability->Name == 'Levitate' && !$Defender->IsGrounded() && $this->Move_Type == 'Ground' )
+        return false;
+
       if ( $Defender->Ability->Name == 'Wonder Skin' && $this->Damage_Type == 'Status' )
         $this->Accuracy = 50;
 
@@ -1772,13 +1775,6 @@
                   $Defender->Stats['Attack']->SetValue(1);
                   $Ability_Effect_Text .="{$Defender->Display_Name}'s Justified raised its Attack!<br />";
                 }
-              }
-              break;
-
-            case 'Levitate':
-              if ( $this->Move_Type == 'Ground' )
-              {
-                $Ability_Effect_Damage = 0;
               }
               break;
 
