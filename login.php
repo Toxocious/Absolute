@@ -1,21 +1,31 @@
 <?php
 	require_once 'core/required/layout_top.php';
 
-	if ( isset($_SESSION['abso_user']) )
-	{
-		echo "
+  /**
+   * The user is already logged in; don't process login logic.
+   */
+  if
+  (
+    session_status() === PHP_SESSION_ACTIVE &&
+    !empty($_SESSION['abso_user'])
+  )
+  {
+    echo "
 			<div class='panel content'>
 				<div class='head'>Login</div>
-				<div class='body'>
+				<div class='body' style='padding: 5px;'>
 					You're already logged in to Absolute.
 				</div>
 			</div>
 		";
-		
-		require_once 'core/required/layout_bottom.php';
-		exit();
-	}
 
+		require_once 'core/required/layout_bottom.php';
+		exit;
+  }
+
+  /**
+   * The user is attempting to log in.
+   */
 	if ( isset($_POST['username']) && isset($_POST['password']) )
 	{
 		$Username = $Purify->Cleanse($_POST['username']);
@@ -34,26 +44,40 @@
 			HandleError( $e->getMessage() );
 		}
 
-		if ( !isset($User_Info['Username']) )
-		{
-			$Oops = "<div class='description' style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>The account that you tried logging into doesn't exist.</div>";
-		}
-		else
-		{
-			$Pass_Salt = '5rrx4YP64TIuxqclMLaV1elGheNxJJRggMxzQjv5gQeFl84NFgXvR3NxcHuOc31SSZBTzUFEt0mYQ4Oo';
-			$Pass_Hash = hash_hmac('sha512', $Password.$User_Info['Password_Salt'], $Pass_Salt);
-			
-			if ( $User_Info['Password'] != $Pass_Hash )
-			{
-				$Oops = "<div class='description' style='border: 2px solid #7f0000; background: #190000; margin-bottom: 3px; width: 70%;'>You've entered an incorrect username or password.<br />Please try again.</div>";
-			}
+    if ( empty($User_Info) )
+    {
+      $Login_Message = [
+        'Type' => 'error',
+        'Text' => "An account with the ID or Username <b>{$Username}</b> does not exist."
+      ];
+    }
+    else
+    {
+      $Salt = '5rrx4YP64TIuxqclMLaV1elGheNxJJRggMxzQjv5gQeFl84NFgXvR3NxcHuOc31SSZBTzUFEt0mYQ4Oo';
+      $Hashed_Password = hash_hmac('sha512', $Password . $User_Info['Password_Salt'], $Salt);
 
-			if ( !isset($Oops) )
-			{
-				$_SESSION['abso_user'] = $User_Info['ID'];
-      	header("Location: news.php");
-			}
-		}
+      if ( $User_Info['Password'] != $Hashed_Password )
+      {
+        $Login_Message = [
+          'Type' => 'error',
+          'Text' => "You have entered an incorrect password."
+        ];
+      }
+    }
+
+    if ( empty($Login_Message) )
+    {
+      $Login_Message = [
+        'Type' => 'success',
+        'Text' => "
+          Welcome, {$Username}.<br />
+          Please wait while you are being signed in.<br /><br />
+          <a href='" . DOMAIN_ROOT . "/news.php'>Click here if you are not redirected in a few seconds.</a>
+        "
+      ];
+
+      $_SESSION['abso_user'] = $User_Info['ID'];
+    }
 	}
 ?>
 
@@ -67,12 +91,20 @@
 			<div><a href='discord.php' style='display: block;'>Discord</a></div>
 		</div>
 
-		<?= ( isset($Oops) ) ? $Oops : ''; ?>
-
-		<div class='description' style='background: #334364; margin-bottom: 3px; width: 70%;'>
+		<div class='description' style='background: #334364; margin-bottom: 5px; width: 70%;'>
 			Fill in the form below if you wish to login to Absolute.
 		</div>
-		<br />
+
+    <?php
+      if ( !empty($Login_Message) )
+      {
+        echo "
+          <div class='{$Login_Message['Type']}'>
+            {$Login_Message['Text']}
+          </div>
+        ";
+      }
+    ?>
 
 		<div class='description' style='background: #334364; width: 50%;'>
 			<form method="POST">
@@ -90,4 +122,15 @@
 </div>
 
 <?php
+  if ( !empty($Login_Message) && $Login_Message['Type'] == 'success' )
+  {
+    echo "
+      <script type='text/javascript'>
+        setTimeout(() => {
+          window.location.pathname = 'news.php';
+        }, 3000);
+      </script>
+    ";
+  }
+
 	require_once 'core/required/layout_bottom.php';

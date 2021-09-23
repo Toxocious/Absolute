@@ -121,24 +121,15 @@
 		session_destroy();
 		unset($_SESSION);
 		header("Location: login.php");
+    exit;
 	}
 
   /**
 	 * If the user is currently in a session, run the following code at the start of every page load.
 	 */
-	$is_User_Data_Fetched = false;
 	if ( isset($_SESSION['abso_user']) )
 	{
-		// $Fetch_User = $PDO->prepare("SELECT * FROM `users` INNER JOIN `user_currency` ON `users`.`id`=`user_currency`.`User_ID` WHERE `id` = ? LIMIT 1");
-		// $Fetch_User->execute([ $_SESSION['abso_user'] ]);
-		// $Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
-		// $User_Data = $Fetch_User->fetch();
-
-		if ( !$is_User_Data_Fetched )
-		{
-			$is_User_Data_Fetched = true;
-			$User_Data = $User_Class->FetchUserData($_SESSION['abso_user']);
-		}
+    $User_Data = $User_Class->FetchUserData($_SESSION['abso_user']);
 
 		if ( !isset($_SESSION['Playtime']) )
 		{
@@ -148,8 +139,6 @@
 		$Playtime = $Time - $_SESSION['Playtime'];
 		$Playtime = $Playtime > 20 ? 20 : $Playtime;
 		$_SESSION['Playtime'] = $Time;
-
-		//$User_Data['Playtime'] += $Playtime;
 
 		try
 		{
