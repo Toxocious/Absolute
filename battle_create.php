@@ -4,9 +4,9 @@
 
 	if
 	(
-		!$User_Data ||
-		!$User_Data['Roster'] ||
-		$User_Data['Banned_RPG']
+		empty($User_Data) ||
+		empty($User_Data['Roster']) ||
+		$User_Data['RPG_Ban']
 	)
 	{
 		header('Location: /index.php');
@@ -15,8 +15,8 @@
 
 	if
 	(
-		!isset($_GET['Battle_Type']) ||
-		!isset($_GET['Foe'])
+		empty($_GET['Battle_Type']) ||
+		empty($_GET['Foe'])
 	)
 	{
 		header('Location: /battle_search.php');

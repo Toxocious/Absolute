@@ -67,7 +67,7 @@
 
     if ( empty($Login_Message) )
     {
-      $_SESSION['abso_user'] = $User_Info['id'];
+      $_SESSION['abso_user'] = $User_Info['ID'];
       header('Location: /news.php');
       exit;
     }
