@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once 'core/required/session.php';
 
   /**
    * The user is already logged in; don't process login logic.
@@ -34,7 +34,7 @@
 
 		try
 		{
-			$Query_User = $PDO->prepare("SELECT * FROM `users` WHERE `Username` = ? or `id` = ? LIMIT 1");
+			$Query_User = $PDO->prepare("SELECT `id`, `Password`, `Password_Salt` FROM `users` WHERE `Username` = ? or `id` = ? LIMIT 1");
 			$Query_User->execute([ $Username, $Username ]);
 			$Query_User->setFetchMode(PDO::FETCH_ASSOC);
 			$User_Info = $Query_User->fetch();
@@ -48,7 +48,7 @@
     {
       $Login_Message = [
         'Type' => 'error',
-        'Text' => "An account with the ID or Username <b>{$Username}</b> does not exist."
+        'Text' => "An account with that ID or Username does not exist."
       ];
     }
     else
@@ -67,23 +67,18 @@
 
     if ( empty($Login_Message) )
     {
-      $Login_Message = [
-        'Type' => 'success',
-        'Text' => "
-          Welcome, {$Username}.<br />
-          Please wait while you are being signed in.<br /><br />
-          <a href='" . DOMAIN_ROOT . "/news.php'>Click here if you are not redirected in a few seconds.</a>
-        "
-      ];
-
-      $_SESSION['abso_user'] = $User_Info['ID'];
+      $_SESSION['abso_user'] = $User_Info['id'];
+      header('Location: /news.php');
+      exit;
     }
 	}
+
+  require_once 'core/required/layout_top.php';
 ?>
 
 <div class='panel content' style='margin: 5px; width: calc(100% - 14px);'>
 	<div class='head'>Login</div>
-	<div class='body pokecenter'>
+	<div class='body'>
 		<div class='nav'>
 			<div><a href='index.php' style='display: block;'>Home</a></div>
 			<div><a href='login.php' style='display: block;'>Login</a></div>
@@ -122,15 +117,4 @@
 </div>
 
 <?php
-  if ( !empty($Login_Message) && $Login_Message['Type'] == 'success' )
-  {
-    echo "
-      <script type='text/javascript'>
-        setTimeout(() => {
-          window.location.pathname = 'news.php';
-        }, 3000);
-      </script>
-    ";
-  }
-
 	require_once 'core/required/layout_bottom.php';
