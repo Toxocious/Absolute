@@ -34,7 +34,7 @@ const CONFIG = {
   PREFIX: '~',
   LOGFILE: './chatlog.txt',
   SERVER: {
-    SERVER_PORT: 1337,
+    SERVER_PORT: 8080,
     MESSAGE_PORT: 9001,
     SSL: {
       // Localhost XAMPP SSL Cert

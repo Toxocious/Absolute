@@ -1,7 +1,7 @@
 let socket;
 
 const Absolute = {
-  port: 1337,
+  port: 8080,
   active: false,
   user: {},
   messages: {},
