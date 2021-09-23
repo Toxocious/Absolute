@@ -1,13 +1,60 @@
 image: php:7.2
 
 stages:
+  - compile
   - deploy
+
+before_script:
+  ## Quick clean and update. (-qq is silent and auto 'yes')
+  - apt-get clean
+  - apt-get update -qq
+  ## Install ssh-agent if it's not already installed.
+  - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+  ## Run the ssh-agent.
+  - eval $(ssh-agent -s)
+  ## Add our SSH key.
+  - ssh-add <(echo "$ABSOLUTE_PRIVATE_KEY")
+  ## Create the SSH directory and give it the proper perms.
+  - mkdir -p ~/.ssh
+  - chmod 700 ~/.ssh
+  ## Scan the keys of our server.
+  - ssh-keyscan absoluterpg.com >> ~/.ssh/known_hosts
+  - chmod 644 ~/.ssh/known_hosts
+  ## SSH into the server.
+  - echo "SSH into absolute@absoluterpg.com"
+  - ssh absolute@absoluterpg.com
+
+compile:
+  only:
+    refs:
+      - master
+  stage: compile
+  script:
+    ## Install Node.JS 12.x
+    - curl -sL https://deb.nodesource.com/setup_12.x | bash -
+    - apt install -y nodejs
+    - echo "-- Compiling SCSS to CSS --"
+    - npm i npm@latest -g
+    - npm i -g yarn
+    - yarn global add node-sass
+    - node-sass themes/sass -o themes/css --style compressed
+    - echo "-- Finished Compiling --"
 
 stage_deploy:
   only:
     refs:
-      - ci-cd-pipeline-config-test
+      - master
   stage: deploy
   script:
-    - echo "Hello, $GITLAB_USER_LOGIN"
+    ## Install rsync.
+    - apt-get -y install rsync
     - echo "Deploying from the $CI_COMMIT_BRANCH branch with a hash of $CI_COMMIT_SHA"
+    - echo "Syncing files to the server."
+    # Sync specific file formats from the repository to the server.
+    #   .php:       most of what the game is coded in
+    #   .js:        node scripts and/or included js files
+    #   .json:      package.json & map.json files
+    #   .scss:      layout system
+    #   .tmx:       map system files
+    - rsync -azhP --filter=':- .gitignore' --include='*/' --include='*.'{php,js,scss,png,tmx} --exclude='*' ./ absolute@absoluterpg.com:/var/www/html/absoluterpg.com/public_html/
+    - echo "Deployment has completed."

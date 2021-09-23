@@ -28,7 +28,7 @@
     ";
   }
 
-  if ( $Added_User_Data['ID'] === $User_Data['id'] )
+  if ( $Added_User_Data['ID'] === $User_Data['ID'] )
   {
     $Error = true;
 
@@ -71,7 +71,7 @@
 
   foreach ( $_SESSION['direct_message']['users'] as $Key => $Included_User )
   {
-    if ( $Included_User['User_ID'] == $User_Data['id'] )
+    if ( $Included_User['User_ID'] == $User_Data['ID'] )
       continue;
       
     $Included_User_Name = $User_Class->DisplayUserName($Included_User['User_ID']);

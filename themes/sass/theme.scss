@@ -22,16 +22,6 @@ hr
   }
 }
 
-input
-{
-  &[type='text']
-  {
-    background: var(--color-secondary);
-    border-color: var(--color-black);
-    color: var(--color-white);
-  }
-}
-
 textarea
 {
   background: var(--color-secondary);
@@ -50,6 +40,111 @@ a:hover
   color: var(--color-white);
 }
 
+input
+{
+  &[type='text']
+  {
+    background: var(--color-secondary);
+    border-color: var(--color-black);
+    color: var(--color-white);
+  }
+
+  &[type='button']
+  {
+    text-shadow: 1px 1px 2px rgb(0 0 0 / 50%);
+
+    &.Normal
+    {
+      background: #aa9;
+    }
+
+    &.Fire
+    {
+      background: #f42;
+    }
+
+    &.Water
+    {
+      background: #39f;
+    }
+
+    &.Electric
+    {
+      background: #fc3;
+    }
+
+    &.Grass
+    {
+      background: #7c5;
+    }
+
+    &.Ice
+    {
+      background: #6cf;
+    }
+
+    &.Fighting
+    {
+      background: #b54;
+    }
+
+    &.Poison
+    {
+      background: #a59;
+    }
+
+    &.Ground
+    {
+      background: #db5;
+    }
+
+    &.Flying
+    {
+      background: #89f;
+    }
+
+    &.Psychic
+    {
+      background: #f59;
+    }
+
+    &.Bug
+    {
+      background: #ab2;
+    }
+
+    &.Rock
+    {
+      background: #ba6;
+    }
+
+    &.Ghost
+    {
+      background: #66b;
+    }
+
+    &.Dragon
+    {
+      background: #76e;
+    }
+
+    &.Dark
+    {
+      background: #754;
+    }
+
+    &.Steel
+    {
+      background: #aab;
+    }
+
+    &.Fairy
+    {
+      background: #e9e;
+    }
+  }
+}
+
 input[type='button'],
 input[type='submit'],
 button
@@ -57,7 +152,7 @@ button
   background: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
   border-color: var(--border-color-secondary);
   color: var(--color-white);
-  
+
   &.disabled,
   &:disabled
   {
@@ -115,6 +210,25 @@ div
     background: var(--bg-warning);
     border-color: var(--border-color-warning);
     color: var(--color-warning);
+  }
+
+  .progress-container
+  {
+    background: var(--color-sexary);
+    border: 1px solid var(--color-black);
+
+    .progress-bar
+    {
+      &.hp
+      {
+        background: var(--border-color-success);
+      }
+
+      &.exp
+      {
+        background: var(--color-primary);
+      }
+    }
   }
 }
 
@@ -372,7 +486,7 @@ aside
   & > #cboxWrapper
   {
     color: #fff;
-    
+
     #cboxContent
     {
       background: #000;
@@ -425,7 +539,7 @@ footer
       clip-rule: 'evenodd';
       fill: var(--color-primary);
       fill-rule: 'evenodd';
-      
+
       &:hover
       {
         fill: var(--color-white);

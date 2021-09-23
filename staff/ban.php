@@ -1,6 +1,6 @@
 <?php	
-	require '../core/required/session.php';
-	require '../core/functions/staff.php';
+	require_once '../core/required/session.php';
+	require_once '../core/functions/staff.php';
 
 	/**
 	 * Fetch the user's data in preparation for a ban.
@@ -46,7 +46,7 @@
 			$Ban_Query->execute([ $Unbanned_On.','.$Reason , $User_ID ]);
 
 			$Ban_Log = $PDO->prepare("INSERT INTO `bans` (`User_ID`, `Banned_By`, `Ban_Type`, `Banned_On`, `Ban_Length`, `Ban_Reason`) VALUES (?, ?, ?, ?, ?, ?)");
-			$Ban_Log->execute([ $User_ID, $User_Data['id'], 'RPG', $Time_Cur, $Unbanned_On, $Reason ]);
+			$Ban_Log->execute([ $User_ID, $User_Data['ID'], 'RPG', $Time_Cur, $Unbanned_On, $Reason ]);
 		}
 		catch ( PDOException $e )
 		{

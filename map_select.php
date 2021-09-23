@@ -4,7 +4,7 @@
 	 */
 	if ( isset($_POST['Explore']) )
 	{
-		require 'core/required/session.php';
+		require_once 'core/required/session.php';
 
 		unset($_SESSION['Maps']);
 
@@ -35,7 +35,7 @@
 		exit;
 	}
 
-	require 'core/required/layout_top.php';
+	require_once 'core/required/layout_top.php';
 
 	/**
 	 * Fetch all available maps.
@@ -97,4 +97,4 @@
 </style>
 
 <?php
-	require 'core/required/layout_bottom.php';
+	require_once 'core/required/layout_bottom.php';

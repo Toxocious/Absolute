@@ -45,7 +45,7 @@
     return;
   }
 
-  if ( $Fetched_User['ID'] == $User_Data['id'] )
+  if ( $Fetched_User['ID'] == $User_Data['ID'] )
   {
     $Kick_Button = '';
 

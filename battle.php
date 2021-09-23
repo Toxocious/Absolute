@@ -1,291 +1,339 @@
 <?php
-	require 'core/required/layout_top.php';
-	require 'battles/battle.php';
+  require_once 'core/required/session.php';
 
-	if ( !isset($_SESSION['Battle']) )
-	{
-		$Error = "
-			<div class='error'>
-				A battle has not yet been created.
-			</div>
-		";
-	}
-	else
-	{
-		$Fight = $_SESSION['Battle']['Status']['Battle_Fight'];
-		$Battle = new $Fight();
-	}
+  switch ($User_Data['Battle_Theme'])
+  {
+    case 'Default':
+      require_once 'battles/themes/default.php';
+      break;
+    case 'Debug':
+      require_once 'battles/themes/debug.php';
+      break;
+    default:
+      require_once 'battles/themes/default.php';
+      break;
+  }
 ?>
 
-<div class='panel content'>
-	<div class='head'>Battle</div>
-	<div class='body' id='BattleWindow'>
-		<?= ( isset($Error) ? $Error : '' ); ?>
-
-		<div style='margin: 0 auto; width: 75%;'>
-			<div>
-				<!-- Your Pokemon -->
-				<div style='float: left; width: 45%;'>
-					<!-- roster -->
-					<div class='roster'>
-						<div class="slot" id='A_1' style='display: none;'></div>
-						<div class="slot" id='A_2' style='display: none;'></div>
-						<div class="slot" id='A_3' style='display: none;'></div>
-						<div class="slot" id='A_4' style='display: none;'></div>
-						<div class="slot" id='A_5' style='display: none;'></div>
-						<div class="slot" id='A_6' style='display: none;'></div>
-					</div>
-					<!-- roster -->
-
-					<!-- active -->
-					<div class='active'>
-						<div class='sprite'>
-							<img id='A_A' />
-						</div>
-						<div class='name'>
-							<div>
-								<div id='A_A_Name'></div>
-								<div style='font-size: 12px; text-align: left;'>
-									HP: (<span id='A_A_HP_Cur'></span>/<span id='A_A_HP_Max'></span>)
-								</div>
-								<div class='hp_bar'>
-									<span id='A_A_HP'></span>
-								</div>
-								<div style='font-size: 12px; text-align: left;'>
-									Level: <span id='A_A_Level'></span>
-								</div>
-								<div class='exp_bar'>
-									<span id='A_A_EXP'></span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- active -->
-				</div>
-				<!-- Your Pokemon -->
-
-				<!-- Battle Options/Bag -->
-				<div class='battle_options'>
-					<div style='padding-top: 6px;'>
-						<img src='<?= DOMAIN_ROOT; ?>/images/Assets/options.png' style='height: 50px; width: 50px;' />
-					</div>
-				</div>
-				<!-- Battle Options/Bag -->
-
-				<!-- Enemy Pokemon -->
-				<div style='float: left; width: 45%;'>
-					<!-- roster -->
-					<div class='roster'>
-						<div class="slot" id='D_1' style='display: none;'></div>
-						<div class="slot" id='D_2' style='display: none;'></div>
-						<div class="slot" id='D_3' style='display: none;'></div>
-						<div class="slot" id='D_4' style='display: none;'></div>
-						<div class="slot" id='D_5' style='display: none;'></div>
-						<div class="slot" id='D_6' style='display: none;'></div>
-					</div>
-					<!-- roster -->
-
-					<!-- active -->
-					<div class='active'>
-						<div class='sprite'>
-							<img id='D_A' />
-						</div>
-						<div class='name'>
-							<div>
-								<div id='D_A_Name'></div>
-								<div style='font-size: 12px; text-align: left;'>
-									HP: (<span id='D_A_HP_Cur'></span>/<span id='D_A_HP_Max'></span>)
-								</div>
-								<div class='hp_bar'>
-									<span id='D_A_HP'></span>
-								</div>
-								<div style='font-size: 12px; text-align: left;'>
-									Level: <span id='D_A_Level'></span>
-								</div>
-								<div class='exp_bar'>
-									<span id='D_A_EXP'></span>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<!-- Enemy Pokemon -->
-			</div>
-
-			<br /><br />
-			<br /><br />
-			<br /><br />
-
-			<!-- Moves -->
-			<div class='battle_moves'>
-				<input id='Move_1' style='padding: 5px; width: 150px;' type='button' />
-				<input id='Move_2' style='padding: 5px; width: 150px;' type='button' />
-				<input id='Move_3' style='padding: 5px; width: 150px;' type='button' />
-				<input id='Move_4' style='padding: 5px; width: 150px;' type='button' />
-			</div>
-			<!-- Moves -->
-
-			<div id='BattleStatus'></div>
-		</div>
-	</div>
-</div>
-
 <script type='text/javascript'>
-	$(function()
-	{
-		Battle.Loading();
+  const Battle = {
+    Loading: false,
+    Ended: false,
+    Bag: false,
+    Clicks: [],
+    ID: null,
+    In_Focus: null,
 
-		$.ajax({
-			type: 'POST',
-			url: 'battles/handler.php',
-			data: { bid: '<?= $_SESSION['Battle']['Status']['Battle_ID'] ?>' },
-			success: function(JSON)
-			{
-				Battle.Render(JSON);
-			},
-			error: function(JSON)
-			{
-				Battle.Render(JSON);
-			}
-		});
-	});
+    OnPageLoad: () =>
+    {
+      Battle.HandleRequest(null, null, null);
+    },
 
-	/**
-	 * Battle Functions
-	 */
-	Battle = {};
-	Battle.Clicks = 0;
+    Attack: (Move, event) =>
+    {
+      if ( typeof Move === 'undefined' )
+        return;
 
-	$(document).on('click', function()
-	{
-		Battle.Clicks++;
-	});
+      event = event || window.event;
 
-	Battle.Loading = function()
-	{
-		$('#BattleStatus').html("<div style='padding: 10px;'><div class='spinner' style='left: 48.5%; position: relative;'></div></div>");
-	}
+      Battle.HandleRequest('Attack', Move, event);
+    },
 
-	Battle.Render = function(JSON)
-	{
-		console.log(JSON);
-		var Pokemon;
-		var Prefix;
+    Continue: (Postcode, event) =>
+    {
+      if ( typeof Postcode === 'undefined' )
+        return false;
 
-		/**
-		 * Render both user's rosters.
-		 */
-		for ( let i = 0; i < 2; i++ )
-		{
-			switch ( i )
-			{
-				case 0:
-					Pokemon = JSON.Attacker.Active;
-					Prefix = "A_";
-					break;
-				case 1:
-					Pokemon = JSON.Defender.Active;
-					Prefix = "D_";
-					break;
-			}
+      event = event || window.event;
 
-			if ( Pokemon != undefined )
-			{
-				$('#' + Prefix + 'A').attr( 'src', Pokemon['Sprite'] );
-				$('#' + Prefix + 'A_Name').html( `<b>${Pokemon['Name']}</b>` );
-				$('#' + Prefix + 'A_Level').html( Pokemon['Level'] );
-				$('#' + Prefix + 'A_HP_Cur').html( Pokemon['HP']['Current'] );
-				$('#' + Prefix + 'A_HP_Max').html( Pokemon['HP']['Max'] );
+      Battle.HandleRequest('Continue', Postcode, event);
+    },
 
-				$('#' + Prefix + 'A_HP').attr('title', Pokemon['HP']['Current'] + '/' + Pokemon['HP']['Max']).animate({ 'width': ((Pokemon['HP']['Current'] * 124) / Pokemon['HP']['Max']) + 'px' }, 200);
-				$('#' + Prefix + 'A_EXP').attr('title', Pokemon['Exp']['Current'] + '/' + Pokemon['Exp']['Needed']).animate({ 'width': (Pokemon['Exp']['Current'] / Pokemon['Exp']['Needed']) * 124 + 'px' }, 200);
-			}
+    Restart: (Postcode, event) =>
+    {
+      if ( typeof Postcode === 'undefined' )
+        return false;
 
-			for ( let o = 0; o <= 5; o++ )
-			{
-				if ( Prefix == 'A_' )
-				{
-					var Roster_Pokemon = JSON.Attacker[o];
-				}
+      event = event || window.event;
 
-				if ( Prefix == 'D_' )
-				{
-					var Roster_Pokemon = JSON.Defender[o];
-				}
+      Battle.HandleRequest('Restart', Postcode, event);
+    },
 
-				if ( Roster_Pokemon != undefined )
-				{
-					$('#' + Prefix + ( o + 1 )).html( `<div><img src='${Roster_Pokemon['Icon']}' /></div>` ).css({ 'display':'block' });
-				}
-			}
-		}
+    SwitchPokemon: (Slot, event) =>
+    {
+      if ( typeof Slot === 'undefined' )
+        return false;
 
-		/**
-		 * Render the user's moves.
-		 */
-		$('#Move_1').attr('value', JSON.Attacker.Active.Moves.Move_1.Move_Name).attr('Postcode', JSON.Attacker.Active.Moves.Move_1.Postcode);
-		$('#Move_2').attr('value', JSON.Attacker.Active.Moves.Move_2.Move_Name).attr('Postcode', JSON.Attacker.Active.Moves.Move_2.Postcode);
-		$('#Move_3').attr('value', JSON.Attacker.Active.Moves.Move_3.Move_Name).attr('Postcode', JSON.Attacker.Active.Moves.Move_3.Postcode);
-		$('#Move_4').attr('value', JSON.Attacker.Active.Moves.Move_4.Move_Name).attr('Postcode', JSON.Attacker.Active.Moves.Move_4.Postcode);
+      event = event || window.event;
 
-		//Battle.Render_Inputs();
+      Battle.HandleRequest('Switch', Slot, event);
+    },
 
-		/**
-		 * Render the battle dialogue.
-		 */
-		$('#BattleStatus').html(JSON.Battle.Text);
-	}
+    RenderRoster: (Side, Roster, Active) =>
+    {
+      if
+      (
+        typeof Side === 'undefined' ||
+        typeof Roster === 'undefined' ||
+        typeof Active === 'undefined'
+      )
+        return;
 
-	$('.battle_moves input').on('pointerdown', function(e)
-	{
-		Battle.Move( $(this).attr('Postcode'), e );
-		return false;
-	});
+      document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('src', Active.Sprite);
+      document.querySelector(`[slot='${Side}_Name']`).innerHTML = Active.Display_Name;
+      document.querySelector(`[slot='${Side}_HP']`).innerHTML = Active.HP.toLocaleString();
+      document.querySelector(`[slot='${Side}_Max_HP']`).innerHTML = Active.Max_HP.toLocaleString();
+      document.querySelector(`[slot='${Side}_Level']`).innerHTML = Active.Level.toLocaleString();
+      document.querySelector(`[slot='${Side}_HP_Bar']`).setAttribute('style', `width: ` + ((Active.HP / Active.Max_HP) * 100) + `%`);
+      document.querySelector(`[slot='${Side}_Exp_Bar']`).setAttribute('style', `width: ${Active.Exp_Needed.Percent}%`);
+      document.querySelector(`[slot='${Side}_Exp_Needed']`).innerHTML = Active.Exp_Needed.Exp.toLocaleString(undefined, {maximumFractionDigits: 0});
 
-	/**
-	 * Render the user's moves.
-	 */
-	Battle.Render_Inputs = function(JSON)
-	{
-		
-	}
+      for ( Active_Stat in Active.Stats )
+      {
+        const Current_Stat = Active.Stats[Active_Stat];
+        document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).innerHTML = Current_Stat.Mod.toLocaleString(undefined, {maximumFractionDigits: 2, minimumFractionDigits: 2});
 
-	/**
-	 * Handle attacking.
-	 */
-	Battle.Move = function(move, e)
-	{
-		let Element = {
-			'PostCode': $(e.target).attr('postcode'),
-			'Position': $(e.target).position(),
-			'Width'		: parseInt( $(e.target).css('width') ),
-			'Height'	: parseInt( $(e.target).css('height' ) ),
-		};
+        if ( Current_Stat.Mod === 1 )
+        {
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#fff';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Entity']`).innerHTML = '';
+        }
+        else if ( Current_Stat.Mod > 1 )
+        {
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#00ff00';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Entity']`).innerHTML = '&utrif;';
+        }
+        else
+        {
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Mod']`).parentNode.style.color = '#ff0000';
+          document.querySelector(`[slot='${Side}_${Active_Stat}_Entity']`).innerHTML = '&dtrif;';
+        }
 
-		$.ajax({
-			type: 'POST',
-			url: 'battles/handler.php',
-			data: {
-				Battle_ID: '<?= $_SESSION['Battle']['Status']['Battle_ID'] ?>',
-				Element: Element,
-				Clicks: Battle.Clicks,
-				Move: move,
-				x: e.pageX,
-				y: e.pageY,
-			},
-			success: function(JSON)
-			{
-				Battle.Render(JSON);
-				Battle.Clicks = 0;
-			},
-			error: function(JSON)
-			{
-				Battle.Render(JSON);
-				Battle.Clicks = 0;
-			}
-		});
-	}
+      }
+
+      if ( Active.Fainted )
+      {
+        document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: grayscale(100%);');
+      }
+      else
+      {
+        document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', '');
+
+        if ( Active?.Statuses?.hasOwnProperty('Transformed') )
+          document.querySelector(`[slot='${Side}_Active'] > img`).setAttribute('style', 'filter: drop-shadow(1px 1px 4px purple)');
+      }
+
+      for ( let i = 0; i < Roster.length; i++ )
+      {
+        document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('src', Roster[i].Icon);
+
+        if ( Roster[i].Active )
+        {
+          document.querySelector(`[slot='${Side}_Slot_${i}']`).closest('div[class]').style.boxShadow = 'inset 0 0 4px 2px red';
+        }
+        else
+        {
+          document.querySelector(`[slot='${Side}_Slot_${i}']`).closest('div[class]').style.boxShadow = '';
+        }
+
+        if ( Roster[i].Fainted )
+        {
+          document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('style', 'background: #444; filter: grayscale(100%);');
+        }
+        else
+        {
+          document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('style', '');
+
+          if ( Side == 'Ally' )
+          {
+            document.querySelector(`[slot='${Side}_Slot_${i}']`).setAttribute('onclick', `Battle.SwitchPokemon(${Roster[i].Slot}, event);`);
+          }
+
+          switch (Roster[i].Status)
+          {
+            case 'BadlyPoisoned':
+            case 'Poisoned':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(117, 80, 155, 0.7)';
+              break;
+            case 'Burned':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(208, 78, 27, 0.7)';
+              break;
+            case 'Frozen':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(27, 184, 208, 0.7)';
+              break;
+            case 'Paralyzed':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(208, 190, 27, 0.7)';
+              break;
+            case 'Sleep':
+              document.querySelector(`[slot='${Side}_Slot_${i}']`).style.boxShadow = 'inset 0 0 4px 2px rgba(127, 125, 108, 0.7)';
+              break;
+            default:
+              break;
+          }
+        }
+      }
+    },
+
+    RenderMoves: (Moves) =>
+    {
+      if ( typeof Moves === 'undefined' )
+        return false;
+
+      for ( let i = 0; i < Moves.length; i++ )
+      {
+        document.querySelector(`[move='Move_${i}']`).setAttribute('onmousedown', `Battle.Attack(${i + 1}, event)`);
+        document.querySelector(`[move='Move_${i}']`).setAttribute('class', Moves[i].Move_Type);
+        document.querySelector(`[move='Move_${i}']`).value = Moves[i].Name;
+        document.querySelector(`[move='Move_${i}']`).disabled = Moves[i].Disabled;
+      }
+    },
+
+    RenderCurrencies: (Money, Abso_Coins) =>
+    {
+      if
+      (
+        typeof Money === 'undefined' ||
+        typeof Abso_Coins === 'undefined'
+      )
+        return false;
+
+        document.getElementById(`user_money`).innerHTML = Money.toLocaleString(undefined, {maximumFractionDigits: 0});
+        document.getElementById(`user_abso_coins`).innerHTML = Abso_Coins.toLocaleString(undefined, {maximumFractionDigits: 0});
+    },
+
+    RenderWeather: (Weather) =>
+    {
+      const Weather_Element = document.querySelector('[slot="Battle_Weather"]');
+
+      if ( typeof Weather === 'undefined' )
+      {
+        Weather_Element.innerHTML = '';
+        return;
+      }
+
+      let Weather_Name;
+      switch (Weather.Name)
+      {
+        case 'Hail':
+          Weather_Name = 'hail';
+          break;
+
+        case 'Extremely Harsh Sunlight':
+        case 'Harsh Sunlight':
+          Weather_Name = 'harsh_sunlight';
+          break;
+
+        case 'Heavy Rain':
+        case 'Rain':
+          Weather_Name = 'rain';
+          break;
+
+        case 'Sandstorm':
+          Weather_Name = 'sandstorm';
+          break;
+      }
+
+      Weather_Element.innerHTML = `<img src='./images/Assets/weather_${Weather_Name}.png' />`;
+    },
+
+    RenderFieldEffects: (Field_Effects) =>
+    {
+      let Render_Data;
+      if ( Field_Effects === null )
+      {
+        document.getElementById('Ally_Field_Effects').innerText = 'No Active Field Effects';
+        document.getElementById('Foe_Field_Effects').innerText = 'No Active Field Effects';
+      }
+      else
+      {
+        for ( Field_Side in Field_Effects )
+        {
+          document.getElementById(`${Field_Side}_Field_Effects`).innerText = '';
+
+          const Processing_Side = Field_Effects[Field_Side];
+          Processing_Side.forEach((Index) => {
+            document.getElementById(`${Field_Side}_Field_Effects`).innerHTML += `
+              <img alt='${Index.Name} Icon' src='./images/Assets/Battle/${Index.Name}.png' style='height: 20px; width: 40px;' />
+            `;
+          });
+        }
+      }
+    },
+
+    HandleRequest: (Action, Data = null, Data_Event = null) =>
+    {
+      if ( !Battle.Loading )
+      {
+        Battle.ID = '<?= $_SESSION['Battle']['Battle_ID']; ?>';
+        Battle.Loading = true;
+
+        const Data_Val = new FormData();
+        Data_Val.append('Battle_ID', Battle.ID);
+        Data_Val.append('In_Focus', Battle.In_Focus);
+
+        if ( Action )
+          Data_Val.append('Action', Action);
+
+        if ( Data )
+          Data_Val.append('Data', Data);
+
+        if ( Data_Event )
+        {
+          Data_Val.append('Is_Trusted', Data_Event.isTrusted);
+          Data_Val.append('Client_X', Data_Event.clientX);
+          Data_Val.append('Client_Y', Data_Event.clientY);
+          Data_Val.append('Input_Type', Data_Event.type);
+        }
+
+        return new Promise((resolve, reject) =>
+        {
+          const req = new XMLHttpRequest();
+          req.open('POST', `<?= DOMAIN_ROOT; ?>/battles/ajax/handler.php`);
+          req.send(Data_Val);
+          req.onerror = (error) => reject(Error(`Network Error: ${error}`));
+          req.onload = () =>
+          {
+            let JSON_Data = JSON.parse(req.response);
+            console.log(JSON_Data);
+
+            Battle.Loading = false;
+
+            if ( req.status === 200 )
+            {
+              Battle.RenderMoves(JSON_Data.Ally.Active.Moves);
+              Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active);
+              Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active);
+
+              Battle.RenderWeather(JSON_Data.Weather);
+              Battle.RenderFieldEffects(JSON_Data.Field_Effects);
+              Battle.RenderCurrencies(JSON_Data.Ally.Money, JSON_Data.Ally.Abso_Coins);
+
+              if ( JSON_Data.Message.Type == 'Success' )
+                document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
+              else
+                document.getElementById('BattleDialogue').innerHTML = `<div class='error' style='margin: 0 auto;'>${JSON_Data.Message.Text}</div>`;
+
+              resolve(req.response);
+            }
+            else
+            {
+              if ( JSON_Data.Message.Type == 'Success' )
+                document.getElementById('BattleDialogue').innerHTML = JSON_Data.Message.Text;
+              else
+                document.getElementById('BattleDialogue').innerHTML = `<div class='error' style='margin: 0 auto;'>${JSON_Data.Message.Text}</div>`;
+
+              reject(Error(req.statusText))
+            }
+          };
+        });
+      }
+    },
+  };
+
+  document.addEventListener("visibilitychange", () =>
+  {
+    Battle.In_Focus = document.hidden ? false : true;
+  });
+
+  window.onload = Battle.OnPageLoad();
 </script>
-
-<?php
-	require 'core/required/layout_bottom.php';

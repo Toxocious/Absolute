@@ -1,6 +1,6 @@
 <?php
-	require '../core/required/session.php';
-	require '../core/functions/staff.php';
+	require_once '../core/required/session.php';
+	require_once '../core/functions/staff.php';
 ?>
 
 <div class='head'>Boost Manager</div>

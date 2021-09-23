@@ -1,5 +1,5 @@
 <?php
-	require 'core/required/layout_top.php';
+	require_once 'core/required/layout_top.php';
 
 	if ( isset($_SESSION['abso_user']) )
 	{
@@ -12,7 +12,7 @@
 			</div>
 		";
 
-		require 'core/required/layout_bottom.php';
+		require_once 'core/required/layout_bottom.php';
 
 		return;
 	}
@@ -373,5 +373,5 @@
 
 <?php
 	}
-	require 'core/required/layout_bottom.php';
+	require_once 'core/required/layout_bottom.php';
 ?>

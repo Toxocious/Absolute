@@ -1,5 +1,5 @@
 <?php
-	require 'core/required/layout_top.php';
+	require_once 'core/required/layout_top.php';
 ?>
 
 <div class='panel content'>
@@ -20,12 +20,12 @@
 			<tbody>
 				<tr>
 					<td colspan='7' style='min-width: 350px;'>
-						<a href='javascript:void(0);' onclick='Update_Box(1, <?= $User_Data["id"]; ?>, "Normal");'>
+						<a href='javascript:void(0);' onclick="Update_Box(1, <?= $User_Data['ID']; ?>, 'Normal');">
 							<b style='font-size: 14px;'>Normal</b>
 						</a>
 					</td>
 					<td colspan='7' style='min-width: 350px;'>
-						<a href='javascript:void(0);' onclick='Update_Box(1, <?= $User_Data["id"]; ?>, "Shiny");'>
+						<a href='javascript:void(0);' onclick="Update_Box(1, <?= $User_Data['ID']; ?>, 'Shiny');">
 							<b style='font-size: 14px;'>Shiny</b>
 						</a>
 					</td>
@@ -79,5 +79,5 @@
 </script>
 
 <?php
-	require 'core/required/layout_bottom.php';
+	require_once 'core/required/layout_bottom.php';
 ?>

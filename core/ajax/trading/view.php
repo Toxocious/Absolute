@@ -1,5 +1,5 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	if ( !isset($_POST['Trade_ID']) )
 	{
@@ -17,7 +17,7 @@
 	try
 	{
 		$Trade_Query = $PDO->prepare("SELECT * FROM `trades` WHERE `ID` = ? AND (`Sender` = ? OR `Recipient` = ?)");
-		$Trade_Query->execute([ $Trade_ID, $User_Data['id'], $User_Data['id'] ]);
+		$Trade_Query->execute([ $Trade_ID, $User_Data['ID'], $User_Data['ID'] ]);
 		$Trade_Query->setFetchMode(PDO::FETCH_ASSOC);
 		$Trade = $Trade_Query->fetch();
 	}
@@ -72,7 +72,7 @@
 	<?php
 		if ( $Trade['Status'] == 'Pending' )
 		{
-			if ( $Trade['Sender'] != $User_Data['id'] )
+			if ( $Trade['Sender'] != $User_Data['ID'] )
 			{
 				echo "
 					<div>

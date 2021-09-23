@@ -26,8 +26,8 @@
 				$FetchPokemon->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokemon = $FetchPokemon->fetch();
 
-				$FetchPokedex = $PDO->prepare("SELECT `Type_Primary`, `Type_Secondary`, `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
-				$FetchPokedex->execute([$Pokemon['ID'], $Pokemon['Alt_ID']]);
+				$FetchPokedex = $PDO->prepare("SELECT `Exp_Yield`, `Type_Primary`, `Type_Secondary`, `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed`, `Height`, `Weight` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+				$FetchPokedex->execute([$Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']]);
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokedex = $FetchPokedex->fetch();
 
@@ -55,7 +55,7 @@
 			{
 				return false;
 			}
-			
+
 			switch($Pokemon['Gender'])
 			{
 				case 'Female':
@@ -71,7 +71,7 @@
 				case '(?)':
 					$Gender = '(?)'; $GenderShort = '(?)';
 					break;
-				default: 
+				default:
 					$Gender = "(?)"; $GenderShort = "(?)";
 					break;
 			}
@@ -87,7 +87,7 @@
 				case 'Sunset':
 					$StatBonus = 10;
 					break;
-				default: 
+				default:
 					$StatBonus = 0;
 					break;
 			}
@@ -97,32 +97,19 @@
 			$Level = FetchLevel($Pokemon['Experience'], 'Pokemon');
 			$Experience = $Pokemon['Experience'];
 
-			$BaseStats = [
-				round($Pokedex['HP'] + $StatBonus),
-				round($Pokedex['Attack'] + $StatBonus),
-				round($Pokedex['Defense'] + $StatBonus),
-				round($Pokedex['SpAttack'] + $StatBonus),
-				round($Pokedex['SpDefense'] + $StatBonus),
-				round($Pokedex['Speed'] + $StatBonus),
+			$Stats = [
+				$this->CalcStat('HP', floor($Pokedex['HP'] + $StatBonus), $Level, $IVs[0], $EVs[0], $Pokemon['Nature']),
+				$this->CalcStat('Attack', floor($Pokedex['Attack'] + $StatBonus), $Level, $IVs[1], $EVs[1], $Pokemon['Nature']),
+				$this->CalcStat('Defense', floor($Pokedex['Defense'] + $StatBonus), $Level, $IVs[2], $EVs[2], $Pokemon['Nature']),
+				$this->CalcStat('SpAttack', floor($Pokedex['SpAttack'] + $StatBonus), $Level, $IVs[3], $EVs[3], $Pokemon['Nature']),
+				$this->CalcStat('SpDefense', floor($Pokedex['SpDefense'] + $StatBonus), $Level, $IVs[4], $EVs[4], $Pokemon['Nature']),
+				$this->CalcStat('Speed', floor($Pokedex['Speed'] + $StatBonus), $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
 			];
 
-			$Stats = [
-				$this->CalcStats("HP", $BaseStats[0], $Level, $IVs[0], $EVs[0], $Pokemon['Nature']),
-				$this->CalcStats("Attack", $BaseStats[1], $Level, $IVs[1], $EVs[1], $Pokemon['Nature']),
-				$this->CalcStats("Defense", $BaseStats[2], $Level, $IVs[2], $EVs[2], $Pokemon['Nature']),
-				$this->CalcStats("SpAtk", $BaseStats[3], $Level, $IVs[3], $EVs[3], $Pokemon['Nature']),
-				$this->CalcStats("SpDef", $BaseStats[4], $Level, $IVs[4], $EVs[4], $Pokemon['Nature']),
-				$this->CalcStats("Speed", $BaseStats[5], $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
-			];
-			
 			if ( $Pokemon['Type'] !== 'Normal' )
-			{
 				$Display_Name = $Pokemon['Type'] . $Pokemon['Name'];
-			}
 			else
-			{
 				$Display_Name = $Pokemon['Name'];
-			}
 
 			if ( $Pokemon['Forme'] )
 				$Display_Name .= " {$Pokemon['Forme']}";
@@ -130,48 +117,51 @@
 			$Poke_Images = $this->FetchImages($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon['Type']);
 
 			return [
-				"ID" => $Pokemon['ID'],
-				"Pokedex_ID" => $Pokemon['Pokedex_ID'],
-				"Alt_ID" => $Pokemon['Alt_ID'],
-				"Nickname" => $Pokemon['Nickname'],
-				"Display_Name" => $Display_Name,
-				"Name" => $Pokemon['Name'],
-				"Type" => $Pokemon['Type'],
-				"Location" => $Pokemon['Location'],
-				"Slot" => $Pokemon['Slot'],
-				"Item" => $Item['Item_Name'],
-				"Item_ID" => $Item['Item_ID'],
-				"Item_Icon" => DOMAIN_SPRITES . "/Items/" . $Item['Item_Name'] . ".png",
-				"Gender" => $Gender,
-				"GenderShort" => $GenderShort,
-				"Gender_Icon" => DOMAIN_SPRITES . "/Assets/" . $Gender . ".svg",
-				"Level" => number_format($Level),
-				"Level_Raw" => $Level,
-				"Experience" => number_format($Experience),
-				"Experience_Raw" => $Experience,
-				"Type_Primary" => $Pokedex['Type_Primary'],
-				"Type_Secondary" => $Pokedex['Type_Secondary'],
-				"Nature" => $Pokemon['Nature'],
-				"BaseStats" => $BaseStats,
-      	"Stats" => $Stats,
-				"IVs" => $IVs,
-				"EVs" => $EVs,
-				"Move_1" => $Pokemon['Move_1'],
-				"Move_2" => $Pokemon['Move_2'],
-				"Move_3" => $Pokemon['Move_3'],
-				"Move_4" => $Pokemon['Move_4'],
-				"Happiness" => $Pokemon['Happiness'],
-				"Owner_Current" => $Pokemon['Owner_Current'],
-				"Owner_Current_Username" => $Current_Owner['Username'],
-				"Owner_Original" => $Pokemon['Owner_Original'],
-				"Owner_Original_Username" => $Original_Owner['Username'],
-				"Trade_Interest" => $Pokemon['Trade_Interest'],
-				"Challenge_Status" => $Pokemon['Challenge_Status'],
-				"Biography" => $Pokemon['Biography'],
-				"Creation_Date" => date("M j, Y (g:i A)", $Pokemon['Creation_Date']),
-				"Creation_Location" => $Pokemon['Creation_Location'],
-				"Sprite" => $Poke_Images['Sprite'],
-				"Icon" => $Poke_Images['Icon'],
+				'ID' => $Pokemon['ID'],
+				'Pokedex_ID' => $Pokemon['Pokedex_ID'],
+				'Alt_ID' => $Pokemon['Alt_ID'],
+				'Nickname' => $Pokemon['Nickname'],
+				'Display_Name' => $Display_Name,
+				'Name' => $Pokemon['Name'],
+				'Type' => $Pokemon['Type'],
+				'Location' => $Pokemon['Location'],
+				'Slot' => $Pokemon['Slot'],
+				'Item' => (!empty($Item) ? $Item['Item_Name'] : null),
+				'Item_ID' => (!empty($Item) ? $Item['Item_ID'] : null),
+				'Item_Icon' => (!empty($Item) ? DOMAIN_SPRITES . '/Items/' . $Item['Item_Name'] . '.png' : null),
+				'Gender' => $Gender,
+				'GenderShort' => $GenderShort,
+				'Gender_Icon' => DOMAIN_SPRITES . '/Assets/' . $Gender . '.svg',
+				'Level' => number_format($Level),
+				'Level_Raw' => $Level,
+				'Experience' => number_format($Experience),
+				'Experience_Raw' => $Experience,
+				'Height' => ($Pokedex['Height'] / 10),
+				'Weight' => ($Pokedex['Weight'] / 10),
+				'Type_Primary' => $Pokedex['Type_Primary'],
+				'Type_Secondary' => $Pokedex['Type_Secondary'],
+				'Ability' => $Pokemon['Ability'],
+				'Nature' => $Pokemon['Nature'],
+      	'Stats' => $Stats,
+				'IVs' => $IVs,
+				'EVs' => $EVs,
+				'Move_1' => $Pokemon['Move_1'],
+				'Move_2' => $Pokemon['Move_2'],
+				'Move_3' => $Pokemon['Move_3'],
+				'Move_4' => $Pokemon['Move_4'],
+				'Happiness' => $Pokemon['Happiness'],
+        'Exp_Yield' => $Pokedex['Exp_Yield'],
+				'Owner_Current' => $Pokemon['Owner_Current'],
+				'Owner_Current_Username' => $Current_Owner['Username'],
+				'Owner_Original' => $Pokemon['Owner_Original'],
+				'Owner_Original_Username' => $Original_Owner['Username'],
+				'Trade_Interest' => $Pokemon['Trade_Interest'],
+				'Challenge_Status' => $Pokemon['Challenge_Status'],
+				'Biography' => $Pokemon['Biography'],
+				'Creation_Date' => date('M j, Y (g:i A)', $Pokemon['Creation_Date']),
+				'Creation_Location' => $Pokemon['Creation_Location'],
+				'Sprite' => $Poke_Images['Sprite'],
+				'Icon' => $Poke_Images['Icon'],
 			];
 		}
 
@@ -246,6 +236,73 @@
 			];
 		}
 
+    /**
+     * Fetch the current stats of a Pokemon.
+     * @param int $Pokemon_ID
+     * @param int $Pokedex_ID
+     * @param int $Pokedex_Alt_ID
+     */
+    public function FetchCurrentStats
+    (
+      int $Pokemon_ID,
+      int $Pokedex_ID,
+      int $Pokedex_Alt_ID
+    )
+    {
+      global $PDO;
+
+      try
+      {
+        $FetchPokemon = $PDO->prepare("SELECT `Nature`, `Type`, `EVs`, `IVs`, `Experience` FROM `pokemon` WHERE `ID` = ? LIMIT 1");
+        $FetchPokemon->execute([ $Pokemon_ID ]);
+        $FetchPokemon->setFetchMode(PDO::FETCH_ASSOC);
+        $Pokemon = $FetchPokemon->fetch();
+
+        $FetchPokedex = $PDO->prepare("SELECT `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+        $FetchPokedex->execute([ $Pokedex_ID, $Pokedex_Alt_ID ]);
+        $FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
+        $Pokedex = $FetchPokedex->fetch();
+      }
+      catch ( PDOException $e )
+      {
+        HandleError( $e->getMessage() );
+      }
+
+      if ( !isset($Pokemon) )
+        return false;
+
+      switch($Pokemon['Type'])
+      {
+        case 'Normal':
+          $StatBonus = 0;
+          break;
+        case 'Shiny':
+          $StatBonus = 5;
+          break;
+        case 'Sunset':
+          $StatBonus = 10;
+          break;
+        default:
+          $StatBonus = 0;
+          break;
+      }
+
+      $Level = FetchLevel($Pokemon['Experience'], 'Pokemon');
+      $EVs = explode(',', $Pokemon['EVs']);
+      $IVs = explode(',', $Pokemon['IVs']);
+
+      $Stats = [
+        $this->CalcStat('HP', floor($Pokedex['HP'] + $StatBonus), $Level, $IVs[0], $EVs[0], $Pokemon['Nature']),
+        $this->CalcStat('Attack', floor($Pokedex['Attack'] + $StatBonus), $Level, $IVs[1], $EVs[1], $Pokemon['Nature']),
+        $this->CalcStat('Defense', floor($Pokedex['Defense'] + $StatBonus), $Level, $IVs[2], $EVs[2], $Pokemon['Nature']),
+        $this->CalcStat('SpAttack', floor($Pokedex['SpAttack'] + $StatBonus), $Level, $IVs[3], $EVs[3], $Pokemon['Nature']),
+        $this->CalcStat('SpDefense', floor($Pokedex['SpDefense'] + $StatBonus), $Level, $IVs[4], $EVs[4], $Pokemon['Nature']),
+        $this->CalcStat('Speed', floor($Pokedex['Speed'] + $StatBonus), $Level, $IVs[5], $EVs[5], $Pokemon['Nature']),
+      ];
+
+      return $Stats;
+    }
+
 		/**
 		 * Move a Pokemon from your box, into your roster, or vice-versa.
 		 */
@@ -280,7 +337,7 @@
 				];
 			}
 
-			if ( $Poke_Data['Owner_Current'] !== $User_Data['id'] )
+			if ( $Poke_Data['Owner_Current'] !== $User_Data['ID'] )
 			{
 				return [
 					'Message' => 'The Pok&eacute;mon that you are trying to move doesn\'t belong to you.',
@@ -291,7 +348,7 @@
 			try
 			{
 				$Roster_Fetch = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6 ORDER BY `Slot` ASC LIMIT 6");
-				$Roster_Fetch->execute([ $User_Data['id'] ]);
+				$Roster_Fetch->execute([ $User_Data['ID'] ]);
 				$Roster_Fetch->setFetchMode(PDO::FETCH_ASSOC);
 				$Roster = $Roster_Fetch->fetchAll();
 			}
@@ -329,7 +386,7 @@
 					{
 						$Roster_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Roster', `Slot` = ? WHERE `ID` = ? LIMIT 1");
       			$Roster_Move->execute([ $Slot, $Poke_Data['ID'] ]);
-						
+
         		$Roster_Remove = $PDO->prepare("UPDATE `pokemon` SET `Location` = ?, `Slot` = ? WHERE `ID` = ? LIMIT 1");
         		$Roster_Remove->execute([ $Poke_Data['Location'], $Poke_Data['Slot'], $Roster[$Slot - 1]['ID'] ]);
 					}
@@ -376,7 +433,7 @@
 
 			$Pokemon = $this->FetchPokemonData($Pokemon_ID);
 
-			if ( $Pokemon['Owner_Current'] !== $User_Data['id'] )
+			if ( $Pokemon['Owner_Current'] !== $User_Data['ID'] )
 			{
 				return [
 					'Type' => 'error',
@@ -411,11 +468,27 @@
 		/**
 		 * Spawn a Pokemon into the game.
 		 */
-		public function CreatePokemon($Pokedex_ID, $Alt_ID, $Level = 5, $Type = "Normal", $Gender = null, $Obtained_At = "Unknown", $Location, $Slot, $Owner, $Nature = null, $IVs = null, $EVs = null)
+		public function CreatePokemon
+		(
+			$Pokedex_ID,
+			$Alt_ID,
+			$Level = 5,
+			$Type = "Normal",
+			$Gender = null,
+			$Obtained_At = "Unknown",
+			$Location,
+			$Slot,
+			$Owner,
+			$Nature = null,
+			$IVs = null,
+			$EVs = null
+		)
 		{
 			global $PDO;
 
 			$Pokemon = $this->FetchPokedexData($Pokedex_ID, $Alt_ID, $Type);
+			if ( !$Pokemon )
+				return false;
 
 			/**
 			 * Check the variable inputs.
@@ -443,10 +516,12 @@
 			else
 				$Display_Name = $Pokemon['Name'];
 
-			if ( $Gender == null )
-			{
+			if ( !$Gender )
 				$Gender = $this->GenerateGender($Pokemon['ID']);
-			}
+
+			$Ability = $this->GenerateAbility($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID']);
+			if ( !$Ability )
+				$Ability = null;
 
 			try
 			{
@@ -466,7 +541,7 @@
 				{
 					$Slots_Used[$Party['Slot']] = 1;
 				}
-	
+
 				if ( $Slots_Used[1] == 0 )
 				{
 					$Location = "Roster";
@@ -510,7 +585,6 @@
 			{
 				$IVs = mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31);
 			}
-			$IVTotal = array_sum(explode(',', $IVs));
 
 			if ( $EVs == null )
 			{
@@ -540,33 +614,39 @@
 					`EVs`,
 					`Nature`,
 					`Creation_Date`,
-					`Creation_Location`
-				) 
+					`Creation_Location`,
+					`Ability`
+				)
 				VALUES
-				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 			");
-			$Pokemon_Create->execute([ $Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'], $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender, $IVs, $EVs, $Nature, time(), $Obtained_At ]);
+			$Pokemon_Create->execute([
+				$Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'],
+				$Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender,
+				$IVs, $EVs, $Nature, time(), $Obtained_At, $Ability
+			]);
 			$Poke_DB_ID = $PDO->lastInsertId();
 
 			// Have to wait until the Pokemon has been created to fetch it's icon and sprite.
 			$Poke_Images = $this->FetchImages($Pokedex_ID, $Alt_ID, $Type);
 
 			return [
-				"Name" => $Pokemon['Name'],
-				"Forme" => $Pokemon['Forme'],
+				'Name' => $Pokemon['Name'],
+				'Forme' => $Pokemon['Forme'],
 				'Display_Name' => $Display_Name,
-				"Exp" => $Experience,
-				"Gender" => $Gender,
-				"Location" => $Location,
-				"Slot" => $Slot,
-				"PokeID" => $Poke_DB_ID,
-				"Stats" => $Pokemon['Base_Stats'],
-				"IVs" => explode(',', $IVs),
-				"EVs" => explode(',', $EVs),
-				"Nature" => $Nature,
-				"Sprite" => $Poke_Images['Sprite'],
-				"Icon" => $Poke_Images['Icon'],
-			];	
+				'Exp' => $Experience,
+				'Gender' => $Gender,
+				'Location' => $Location,
+				'Slot' => $Slot,
+				'PokeID' => $Poke_DB_ID,
+				'Stats' => $Pokemon['Base_Stats'],
+				'IVs' => explode(',', $IVs),
+				'EVs' => explode(',', $EVs),
+				'Nature' => $Nature,
+				'Ability' => $Ability,
+				'Sprite' => $Poke_Images['Sprite'],
+				'Icon' => $Poke_Images['Icon'],
+			];
 		}
 
 		/**
@@ -580,12 +660,12 @@
 			{
 				if ( $DB_ID )
 				{
-					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `id` = ? LIMIT 1");
+					$FetchPokedex = $PDO->prepare("SELECT `Female`, `Male`, `Genderless` FROM `pokedex` WHERE `id` = ? LIMIT 1");
 					$FetchPokedex->execute([ $DB_ID ]);
 				}
 				else
 				{
-					$FetchPokedex = $PDO->prepare("SELECT * FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
+					$FetchPokedex = $PDO->prepare("SELECT `Female`, `Male`, `Genderless` FROM `pokedex` WHERE `Pokedex_ID` = ? AND `Alt_ID` = ? LIMIT 1");
 					$FetchPokedex->execute([ $Pokedex_ID, $Alt_ID ]);
 				}
 
@@ -608,6 +688,37 @@
 			$Gender = $Weighter->get();
 
 			return $Gender;
+		}
+
+		/**
+		 * Generate an ability for the specified Pokemon.
+		 * @param int $Pokedex_ID
+		 * @param int $Alt_ID
+		 */
+		public function GenerateAbility
+		(
+			int $Pokedex_ID,
+			int $Alt_ID
+		)
+		{
+			$Abilities = $this->FetchAbilities($Pokedex_ID, $Alt_ID);
+			if ( !$Abilities )
+				return false;
+
+			if ( $Abilities['Hidden_Ability'] && mt_rand(1, 50) == 1 )
+				return $Abilities['Hidden_Ability'];
+			else
+			{
+				if ( !$Abilities['Ability_2'] )
+					return $Abilities['Ability_1'];
+				else
+				{
+					if ( mt_rand(1, 2) == 1 )
+						return $Abilities['Ability_1'];
+					else
+						return $Abilities['Ability_2'];
+				}
+			}
 		}
 
 		/**
@@ -647,6 +758,81 @@
 		}
 
 		/**
+		 * Fetch the available abilities of a Pokemon.
+		 * @param int $Pokedex_ID
+		 * @param int $Alt_ID
+		 */
+		public function FetchAbilities
+		(
+			int $Pokedex_ID,
+			int $Alt_ID
+		)
+		{
+			global $PDO;
+
+			try
+			{
+				$Fetch_Abilities = $PDO->prepare("
+					SELECT `Ability_1`, `Ability_2`, `Hidden_Ability`
+					FROM `pokedex`
+					WHERE `Pokedex_ID` = ? AND `Alt_ID` = ?
+					LIMIT 1
+				");
+				$Fetch_Abilities->execute([ $Pokedex_ID, $Alt_ID ]);
+				$Fetch_Abilities->setFetchMode(PDO::FETCH_ASSOC);
+				$Abilities = $Fetch_Abilities->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+
+			if ( !$Abilities )
+				return false;
+
+			return $Abilities;
+		}
+
+		/**
+		 * Fetch the base stats of a Pokemon.
+		 * @param int $Pokedex_ID
+		 * @param int $Alt_ID
+		 */
+		public function FetchBaseStats
+		(
+			int $Pokedex_ID,
+			int $Alt_ID
+		)
+		{
+			global $PDO;
+
+			if ( !$Pokedex_ID || !$Alt_ID )
+				return false;
+
+			try
+			{
+				$Fetch_Stats = $PDO->prepare("
+					SELECT `HP`, `Attack`, `Defense`, `SpAttack`, `SpDefense`, `Speed`
+					FROM `pokedex`
+					WHERE `Pokedex_ID` = ? AND `Alt_ID` = ?
+					LIMIT 1
+				");
+				$Fetch_Stats->execute([ $Pokedex_ID, $Alt_ID ]);
+				$Fetch_Stats->setFetchMode(PDO::FETCH_ASSOC);
+				$Stats = $Fetch_Stats->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+
+			if ( !$Stats )
+				return false;
+
+			return $Stats;
+		}
+
+		/**
 		 * Fetch the data of a given move via it's `moves` DB ID.
 		 */
 		public function FetchMoveData($Move_ID)
@@ -666,15 +852,15 @@
 			}
 
 			return [
-				"ID" => $Move['id'],
-				"Name" => $Move['name'],
-				"Type" => $Move['type'],
-				"Category" => $Move['category'],
-				"Power" => $Move['power'],
-				"Accuracy" => $Move['accuracy'],
-				"Priority" => $Move['priority'],
-				"PP" => $Move['pp'],
-				"Description" => $Move['desc'],
+				"ID" => $Move['ID'],
+				"Name" => $Move['Name'],
+				"Type" => $Move['Move_Type'],
+				"Category" => $Move['Category'],
+				"Power" => $Move['Power'],
+				"Accuracy" => $Move['Accuracy'],
+				"Priority" => $Move['Priority'],
+				"PP" => $Move['PP'],
+				"Effect_Short" => $Move['Effect_Short'],
 			];
 		}
 
@@ -778,59 +964,55 @@
 		 * Calculate the stats of a Pokemon depending on it's EV's, IV's, and Nature.
 		 * Makes use of the official stat formulas found on Bulbapedia: https://bulbapedia.bulbagarden.net/wiki/Statistic
 		 */
-		public function CalcStats($Stat, $BaseStat, $Level, $IVs, $EVs, $Nature)
+		public function CalcStat
+		(
+			string $Stat_Name,
+			int $Base_Stat,
+			int $Level,
+			int $IV,
+			int $EV,
+			string $Nature
+		)
 		{
-			$Fetch_Nature = array_search($Nature, $this->Natures());
-			$Nature_Mult = 1;
+			if
+			(
+				!isset($Stat_Name) ||
+				!isset($Base_Stat) ||
+				!isset($Level) ||
+				!isset($IV) ||
+				!isset($EV) ||
+				!isset($Nature)
+			)
+				return -1;
 
-			if ($Fetch_Nature >= 0 && $Fetch_Nature <= 3 && $Stat == 'Attack')
+			if ( $Level < 1 )
+				$Level = 1;
+
+			if ( $IV > 31 )
+				$IV = 31;
+
+			if ( $EV > 252 )
+				$EV = 252;
+
+			if ( $Stat_Name == 'HP' )
 			{
-				$Nature_Mult = 1.1;
-			}	
-			if ($Fetch_Nature >= 4 && $Fetch_Nature <= 7 && $Stat == 'Defense')
-			{
-				$Nature_Mult = 1.1;
-			}
-			if ($Fetch_Nature >= 8 && $Fetch_Nature <= 11 && $Stat == 'SpAtk')
-			{
-				$Nature_Mult = 1.1;
-			}
-			if ($Fetch_Nature >= 12 && $Fetch_Nature <= 15 && $Stat == 'SpDef')
-			{
-				$Nature_Mult = 1.1;
-			}
-			if ($Fetch_Nature >= 16 && $Fetch_Nature <= 19 && $Stat == 'Speed')
-			{
-				$Nature_Mult = 1.1;
-			}
-			if (($Fetch_Nature == 4 || $Fetch_Nature == 8 || $Fetch_Nature == 12 || $Fetch_Nature == 16) && $Stat == 'Attack')
-			{
-				$Nature_Mult = 0.9;
-			}
-			if (($Fetch_Nature == 0 || $Fetch_Nature == 9 || $Fetch_Nature == 13 || $Fetch_Nature == 17) && $Stat == 'Defense')
-			{
-				$Nature_Mult = 0.9;
-			}
-			if (($Fetch_Nature == 1 || $Fetch_Nature == 5 || $Fetch_Nature == 14 || $Fetch_Nature == 18) && $Stat == 'SpAtk')
-			{
-				$Nature_Mult = 0.9;
-			}
-			if (($Fetch_Nature == 2 || $Fetch_Nature == 6 || $Fetch_Nature == 10 || $Fetch_Nature == 19) && $Stat == 'SpDef')
-			{
-				$Nature_Mult = 0.9;
-			}
-			if (($Fetch_Nature == 3 || $Fetch_Nature == 7 || $Fetch_Nature == 11 || $Fetch_Nature == 15) && $Stat == 'Speed')
-			{
-				$Nature_Mult = 0.9;
-			}
-			
-			if ($Stat == 'HP')
-			{
-				return floor( ( ( ( 2 * $BaseStat + $IVs + ( $EVs / 4 ) ) * $Level ) / 100 ) + $Level + 10 );
+				if ( $Base_Stat == 1 )
+					return 1;
+
+				return floor((((2 * $Base_Stat + $IV + ($EV / 4)) * $Level) / 100) + $Level + 10);
 			}
 			else
 			{
-				return floor( ( ( ( $IVs + 2 * $BaseStat + ( $EVs / 4 ) ) * $Level / 100 ) + 5) * $Nature_Mult );
+				$Nature_Data = $this->Natures()[$Nature];
+
+				if ( $Nature_Data['Plus'] == $Stat_Name )
+					$Nature_Bonus = 1.1;
+				else if ( $Nature_Data['Minus'] == $Stat_Name )
+					$Nature_Bonus = 0.9;
+				else
+					$Nature_Bonus = 1;
+
+				return floor(((((2 * $Base_Stat + $IV + ($EV / 4)) * $Level) / 100) + 5) * $Nature_Bonus);
 			}
 		}
 
@@ -840,31 +1022,111 @@
 		public function Natures()
 		{
 			return [
-				'Lonely',		// +Attack / -Defense
-				'Adamant',	// +Attack / -Special Attack
-				'Naughty',	// +Attack / -Special Defense
-				'Brave',		// +Attack / -Speed
-				'Bold',  		// +Defense / -Attack
-				'Impish',		// +Defense / -Special Attack
-				'Lax',   		// +Defense / -Special Defense
-				'Relaxed',	// +Defense / -Speed
-				'Modest',		// +Special Attack / -Attack
-				'Mild',   	// +Special Attack / -Defense
-				'Rash',   	// +Special Attack / -Special Defense
-				'Quiet',  	// +Special Attack / -Speed
-				'Calm',   	// +Special Defense / -Attack
-				'Gentle', 	// +Special Defense / -Defense
-				'Careful',	// +Special Defense / -Special Attack
-				'Sassy',  	// +Special Defense / -Speed
-				'Timid',  	// +Speed / -Attack
-				'Hasty',  	// +Speed / -Defense
-				'Jolly',  	// +Speed / -Special Attack
-				'Naive',  	// +Speed / -Special Defense
-				'Bashful',	// Neutral
-				'Docile',		// Neutral
-				'Hardy', 		// Neutral
-				'Quirky',		// Neutral
-				'Serious',	// Neutral
+				'Adamant' => [
+					'Plus' => 'Attack',
+					'Minus' => 'SpAttack'
+				],
+				'Brave' => [
+					'Plus' => 'Attack',
+					'Minus' => 'Speed'
+				],
+				'Lonely' => [
+					'Plus' => 'Attack',
+					'Minus' => 'Defense'
+				],
+				'Naughty' => [
+					'Plus' => 'Attack',
+					'Minus' => 'SpDefense'
+				],
+
+				'Bold' => [
+					'Plus' => 'Defense',
+					'Minus' => 'Attack'
+				],
+				'Impish' => [
+					'Plus' => 'Defense',
+					'Minus' => 'SpAttack'
+				],
+				'Lax' => [
+					'Plus' => 'Defense',
+					'Minus' => 'SpDefense'
+				],
+				'Relaxed' => [
+					'Plus' => 'Defense',
+					'Minus' => 'Speed'
+				],
+
+				'Modest' => [
+					'Plus' => 'SpAttack',
+					'Minus' => 'Attack'
+				],
+				'Mild' => [
+					'Plus' => 'SpAttack',
+					'Minus' => 'Defense'
+				],
+				'Quiet' => [
+					'Plus' => 'SpAttack',
+					'Minus' => 'SpDefense'
+				],
+				'Rash' => [
+					'Plus' => 'SpAttack',
+					'Minus' => 'Speed'
+				],
+
+				'Calm' => [
+					'Plus' => 'SpDefense',
+					'Minus' => 'Attack'
+				],
+				'Careful' => [
+					'Plus' => 'SpDefense',
+					'Minus' => 'SpAttack'
+				],
+				'Gentle' => [
+					'Plus' => 'SpDefense',
+					'Minus' => 'Defense'
+				],
+				'Sassy' => [
+					'Plus' => 'SpDefense',
+					'Minus' => 'Speed'
+				],
+
+				'Hasty' => [
+					'Plus' => 'Speed',
+					'Minus' => 'Defense'
+				],
+				'Jolly' => [
+					'Plus' => 'Speed',
+					'Minus' => 'SpAttack'
+				],
+				'Naive' => [
+					'Plus' => 'Speed',
+					'Minus' => 'SpDefense'
+				],
+				'Timid' => [
+					'Plus' => 'Speed',
+					'Minus' => 'Attack'
+				],
+
+				'Bashful' => [
+					'Plus' => null,
+					'Minus' => null
+				],
+				'Docile' => [
+					'Plus' => null,
+					'Minus' => null
+				],
+				'Hardy' => [
+					'Plus' => null,
+					'Minus' => null
+				],
+				'Quirky' => [
+					'Plus' => null,
+					'Minus' => null
+				],
+				'Serious' => [
+					'Plus' => null,
+					'Minus' => null
+				],
 			];
 		}
 	}

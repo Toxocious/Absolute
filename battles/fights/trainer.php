@@ -1,140 +1,97 @@
 <?php
-	Class Trainer Extends Fight
-	{
-		public $Battle_Fight = 'Trainer';
-		public $Level_Limit = -1;
+  use BattleHandler\Battle;
 
-		/**
-		 * Start the battle.
-		 */
-		public function Start()
-		{
-			unset($_SESSION['Battle']);
+  class Trainer extends Battle
+  {
+    public $Earn_Exp = true;
+    public $Earn_Money = true;
+    public $Earn_AbsoCoins = true;
+    public $Earn_ClanExp = true;
 
-			return 'Success';
-		}
+    public $Roster_Limit = 6;
+    public $Level_Limit = null;
+    public $Items_Allowed = true;
+    public $Switch_Allowed = true;
 
-		/**
-		 * Create the defender's roster.
-		 */
-		public function Create_Roster_Defender($User_ID)
-		{
-			global $PDO;
-			global $Level_Limit;
-			
-			try
-			{
-				$Fetch_Defender = $PDO->prepare("SELECT `id`, `RPG_Ban`, `Username` FROM `users` WHERE `id` = ? LIMIT 1");
-				$Fetch_Defender->execute([ $User_ID ]);
-				$Fetch_Defender->setFetchMode(PDO::FETCH_ASSOC);
-				$Defender = $Fetch_Defender->fetch();
-			}
-			catch ( PDOException $e )
-			{
-				HandleError( $e->getMessage() );
-			}
+    public function __construct()
+    {
+      $this->Started = true;
+    }
 
-			if ( !isset($Defender) )
-			{
-				return "The user that you're trying to battle doesn't exist.";
-			}
-			else if ( $Defender['RPG_Ban'] != 0 )
-			{
-				return "The user that you're trying to battle is banned.";
-			}
+    public function CreateBattle
+    (
+      int $Ally_ID,
+      int $Foe_ID
+    )
+    {
+      global $User_Class;
 
-			try
-			{
-				$D_Roster = $PDO->prepare("SELECT `ID`, `Slot` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` LIMIT 6");
-				$D_Roster->execute([ $Defender['id'] ]);
-				$D_Roster->setFetchMode(PDO::FETCH_ASSOC);
-			}
-			catch ( PDOException $e )
-			{
-				HandleError( $e->getMessage() );
-			}
+      if
+      (
+        !$User_Class->FetchUserData($Ally_ID) ||
+        !$User_Class->FetchUserData($Foe_ID)
+      )
+        return false;
 
-			$_SESSION['Battle']['Defender'] = [
-				'User_ID'		=> $Defender['id'],
-				'Username'	=> $Defender['Username'],
-			];
+      $Ally = new UserHandler($Ally_ID, 'Ally');
+      $this->Ally = $Ally->Initialize();
+      if ( !$this->Ally )
+        return false;
 
-			$Total_Pokemon = 0;
-			foreach ( $D_Roster as $Key => $Value )
-			{
-				if ( $Key > $this->Roster_Limit )
-				{
-					return 'Error';
-				}
-				else
-				{
-					$Total_Pokemon++;
+      $Foe = new UserHandler($Foe_ID, 'Foe');
+      $this->Foe = $Foe->Initialize();
+      if ( !$this->Foe )
+        return false;
 
-					if ( $Key == 0 )
-					{
-						$_SESSION['Battle']['Defender']['Active'] = $this->Create_Pokemon($Value['ID']);
-						$_SESSION['Battle']['Defender']['Slot_0'] = $this->Create_Pokemon($Value['ID']);
+      $this->Battle_Type = 'Trainer';
+      $this->Battle_ID = bin2hex(random_bytes(10));
+      $this->Time_Started = time();
+      $this->Started = true;
 
-						if ( $_SESSION['Battle']['Defender']['Active']['Level'] > $this->Level_Limit  )
-						{
-							$_SESSION['Battle']['Defender']['Active']['Cur_HP'] = 0;
-						}
+      $_SESSION['Battle']['Battle_ID'] = $this->Battle_ID;
+      $_SESSION['Battle']['Battle_Type'] = $this->Battle_Type;
+      $_SESSION['Battle']['Time_Started'] = $this->Time_Started;
+      $_SESSION['Battle']['Started'] = $this->Started;
+      $_SESSION['Battle']['Turn_ID'] = $this->Turn_ID;
+      $_SESSION['Battle']['Ally'] = $this->Ally;
+      $_SESSION['Battle']['Foe'] = $this->Foe;
 
-						if ( $_SESSION['Battle']['Defender']['Slot_0']['Level'] > $this->Level_Limit  )
-						{
-							$_SESSION['Battle']['Defender']['Slot_0']['Cur_HP'] = 0;
-						}
-					}
-					else
-					{
-						$_SESSION['Battle']['Defender']['Slot_' . $Key] = $this->Create_Pokemon($Value['ID']);
+      $Creation_Dialogue = '';
+      foreach(['Ally', 'Foe'] as $Side)
+      {
+        if ( $Side === 'Ally' )
+        {
+          $Attacker = $this->Ally->Active;
+          $Defender = $this->Foe->Active;
+        }
+        else
+        {
+          $Attacker = $this->Foe->Active;
+          $Defender = $this->Ally->Active;
+        }
 
-						if ( $_SESSION['Battle']['Defender']['Slot_' . $Key]['Level'] > $this->Level_Limit )
-						{
-							$_SESSION['Battle']['Defender']['Slot_' . $Key]['Cur_HP'] = 0;
-						}
-					}
-				}
-			}
+        $Creation_Dialogue .= "<br /><br />{$this->$Side->Username} sent out {$Attacker->Display_Name}!";
+        $Ability_Proc_Text = $Attacker->AbilityProcsOnEntry($Attacker, $Defender);
 
-			$_SESSION['Battle']['Defender']['Total_Pokemon'] = $Total_Pokemon;
+        if ( !empty($Ability_Proc_Text) )
+          $Creation_Dialogue .= "<br />{$Ability_Proc_Text}";
+      }
 
-			if ( $_SESSION['Battle']['Defender']['Total_Pokemon'] <= 0 )
-			{
-				return 'Error';
-			}
+      if ( $Creation_Dialogue == '' )
+      {
+        $_SESSION['Battle']['Dialogue'] = [
+          'Type' => 'Success',
+          'Text' => 'The battle has begun.',
+        ];
+      }
+      else
+      {
+        $_SESSION['Battle']['Dialogue'] = [
+          'Type' => 'Success',
+          'Text' => 'The battle has begun' . $Creation_Dialogue,
+        ];
+      }
 
-			return 'Success';
-		}
-
-		/**
-		 * What happens when you win the battle.
-		 */
-		public function Battle_Win()
-		{
-			$_SESSION['Battle']['Status']['Restart']['Code'] = RandSalt(21);
-			$_SESSION['Battle']['Status']['Restart']['Type'] = $_SESSION['Battle']['Status']['Battle_Fight'];
-			$_SESSION['Battle']['Status']['Restart']['ID' ] = $_SESSION['Battle']['Status']['Battle_ID'];
-
-			if ( $_SESSION['Battle']['Defender']['Total_Pokemon'] == 6 )
-			{
-				//$User_Class->Update_Stat( $this->User_Data['id'], 'Battles_Completed', 1 );
-
-				$this->Dialogue("<b>DEBUG :: You have beaten a trainer that has a full roster.</b>");
-			}
-
-			$this->Create_Button('Restart');
-		}
-
-		/**
-		 * What happens when you lose the battle.
-		 */
-		public function Battle_Lose()
-		{
-			$_SESSION['Battle']['Status']['Restart']['Code'] = RandSalt(21);
-			$_SESSION['Battle']['Status']['Restart']['Type'] = $_SESSION['Battle']['Status']['Battle_Fight'];
-			$_SESSION['Battle']['Status']['Restart']['ID' ] = $_SESSION['Battle']['Status']['Battle_ID'];
-
-			$this->Create_Button('Restart');
-		}
-	}
+      return true;
+    }
+  }

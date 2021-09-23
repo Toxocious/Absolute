@@ -1,7 +1,7 @@
 <?php
 	# If the variable is set.
 	if ( isset($_POST['id']) ) {
-		require 'core/required/db.php';
+		require_once 'core/required/db.php';
 		
 		# Display the most recent news post.
 		if ( $_POST['id'] === '1' ) {

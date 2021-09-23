@@ -1,5 +1,5 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	/**
 	 * Update the trade interest status of the chosen Pokemon.
@@ -63,7 +63,7 @@
 	{
 		$Page = isset($_POST['Page']) ? $Purify->Cleanse($_POST['Page']) : 1;
 		$Type = isset($_POST['Type']) ? $Purify->Cleanse($_POST['Type']) : 'Normal';
-		$User_ID = $User_Data['id'];
+		$User_ID = $User_Data['ID'];
 
 		$Display_Limit = 50;
 		

@@ -46,7 +46,7 @@
 	header("Pragma: no-cache");
 
 	// Start the session before doing anything else.
-	if ( !isset($_SESSION) )
+	if ( session_status() !== PHP_SESSION_ACTIVE )
 	{
 		session_start();
 	}
@@ -56,7 +56,7 @@
 	{
 		$Dir_Root = realpath($_SERVER["DOCUMENT_ROOT"]);
 	}
-	
+
 	// Require all necessary classes.
 	require_once $Dir_Root . '/core/classes/constants.php';
 	$Constants = new Constants();
@@ -98,7 +98,7 @@
 	    $_SERVER['REMOTE_ADDR'] = $IP_List[0]; // The first proxy in the list is the client IP.
 	  }
 	}
-	
+
 	/**
 	 * Get page data.
 	 */
@@ -123,43 +123,50 @@
 		unset($_SESSION);
 		header("Location: login.php");
 	}
-  
+
   /**
 	 * If the user is currently in a session, run the following code at the start of every page load.
 	 */
+	$is_User_Data_Fetched = false;
 	if ( isset($_SESSION['abso_user']) )
 	{
-		$Fetch_User = $PDO->prepare("SELECT * FROM `users` INNER JOIN `user_currency` ON `users`.`id`=`user_currency`.`User_ID` WHERE `id` = ? LIMIT 1");
-		$Fetch_User->execute([ $_SESSION['abso_user'] ]);
-		$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
-		$User_Data = $Fetch_User->fetch();
+		// $Fetch_User = $PDO->prepare("SELECT * FROM `users` INNER JOIN `user_currency` ON `users`.`id`=`user_currency`.`User_ID` WHERE `id` = ? LIMIT 1");
+		// $Fetch_User->execute([ $_SESSION['abso_user'] ]);
+		// $Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
+		// $User_Data = $Fetch_User->fetch();
+
+		if ( !$is_User_Data_Fetched )
+		{
+			$is_User_Data_Fetched = true;
+			$User_Data = $User_Class->FetchUserData($_SESSION['abso_user']);
+		}
 
 		if ( !isset($_SESSION['Playtime']) )
 		{
 			$_SESSION['Playtime'] = $Time;
 		}
-		
+
 		$Playtime = $Time - $_SESSION['Playtime'];
 		$Playtime = $Playtime > 20 ? 20 : $Playtime;
 		$_SESSION['Playtime'] = $Time;
+
+		//$User_Data['Playtime'] += $Playtime;
 
 		try
 		{
 			if ( $Current_Page )
 			{
 				$Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Page`, `Data`, `User_ID`) VALUES ('pageview', ?, ?, ?)");
-				$Update_Activity->execute([ $Current_Page['Name'], $Parse_URL['path'], $User_Data['id'] ]);
+				$Update_Activity->execute([ $Current_Page['Name'], $Parse_URL['path'], $User_Data['ID'] ]);
+
+				$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
+				$Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['ID'] ]);
 			}
-
-			$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
-			$Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['id'] ]);
-
-			$Fetch_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-			$Fetch_Roster->execute([ $User_Data['id'] ]);
-			$Fetch_Roster->setFetchMode(PDO::FETCH_ASSOC);
-			$Roster = $Fetch_Roster->fetchAll();
-			
-			$User_Data['Playtime'] += $Playtime;
+			else
+			{
+				$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
+				$Update_User->execute([ $Time, 'Unknown', $Playtime, $User_Data['ID'] ]);
+			}
 		}
 		catch ( PDOException $e )
 		{
@@ -173,3 +180,12 @@
 		$Current_Page['Maintenance'] = 'no';
 		$Current_Page['Logged_In'] = 'no';
 	}
+
+  if
+  (
+    $Current_Page['Logged_In'] === 'yes' &&
+    !isset($_SESSION['abso_user'])
+  )
+  {
+    include_once $Dir_Root . '/index.php';
+  }

@@ -1,20 +1,23 @@
 <?php
-	/**
-	 * Define core variables.
-	 * - Game Database
-	 * - Database Username
-	 * - Database Password
-	 * - Salt String
-	 */
-	define("GAME_DATABASE", "absolute");
-	define("GAME_DATABASE_USER", "absolute");
-	define("GAME_DATABASE_PASS", 'qwerty');
-	define("GAME_DEFAULT_SALT", "5rrx4YP64TIuxqclMLaV1elGheNxJJRggMxzQjv5gQeFl84NFgXvR3NxcHuOc31SSZBTzUFEt0mYQ4Oo");
+  if ( isset($_ENV['DATABASE_TABLE']) )
+    define('DATABASE_TABLE', $_ENV['DATABASE_TABLE']);
+  else
+    define('DATABASE_TABLE', 'absolute');
+
+  if ( isset($_ENV['DATABASE_USER']) )
+    define('DATABASE_USER', $_ENV['DATABASE_USER']);
+  else
+    define('DATABASE_USER', 'absolute');
+
+  if ( isset($_ENV['DATABASE_PASSWORD']) )
+    define('DATABASE_PASSWORD', $_ENV['DATABASE_PASSWORD']);
+  else
+    define('DATABASE_PASSWORD', 'qwerty');
 
 	/**
 	 * Function that allows us to connect to the database.
 	 */
-	function DatabaseConnect($DB = GAME_DATABASE, $User = GAME_DATABASE_USER, $Pass = GAME_DATABASE_PASS)
+	function DatabaseConnect()
 	{
 		$Host = 'localhost';
 		$Char_Set = 'utf8mb4';
@@ -27,12 +30,12 @@
 
 		try
 		{
-			$PDO = new PDO("mysql:host=$Host; dbname=$DB; charset=$Char_Set; ", $User, $Pass);
+			$PDO = new PDO("mysql:host={$Host}; dbname=" . DATABASE_TABLE . "; charset={$Char_Set};", DATABASE_USER, DATABASE_PASSWORD, $PDO_Attributes);
 		}
 		catch (PDOException $e)
 		{
 			$FetchDate = date("Y-m-d H:i:s");
-			
+
 			echo "
 				<div>
 					<b>[{$FetchDate}]</b><br />
@@ -45,7 +48,7 @@
 			HandleError( $e->getMessage() );
 			exit();
 		}
-	
+
 		return $PDO;
 	}
 	$PDO = DatabaseConnect();
@@ -60,7 +63,7 @@
 
 		if ( !$Message )
 			$Message = 'No error message was set.';
-		
+
 		file_put_contents('misc/logs/php_logs.txt', "[" . $FetchDate . "] Error: " . $Message.PHP_EOL, FILE_APPEND | LOCK_EX);
 	}
 
@@ -72,7 +75,7 @@
 	{
 		if ( !$Input )
 			return false;
-		
+
 		$Input_Type = gettype($Input);
 		$Input_As_Text = $Input;
 
@@ -132,12 +135,12 @@
         </div>
       ";
 
-      require 'core/required/layout_bottom.php';
+      require_once 'core/required/layout_bottom.php';
 
       exit();
     }
   }
-	
+
 	/**
 	 * Performs a check to see if the current date is between two dates.
 	 */
@@ -155,7 +158,7 @@
 		{
 			return true;
 		}
-		
+
 		return false;
 	}
 

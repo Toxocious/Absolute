@@ -23,7 +23,7 @@
       global $PDO;
 
       if ( !$User_ID )
-        $User_ID = $this->User['id'];
+        $User_ID = $this->User['ID'];
       
       try
       {
@@ -244,7 +244,8 @@
     /**
      * Fetch the ID of the last direct message group.
      */
-    public function FetchGroupID()
+    public function FetchGroupID
+    ()
     {
       global $PDO;
 
@@ -359,7 +360,7 @@
         return false;
 
       $Unread_Messages = 1;
-      if ( $User_Data['id'] === $User_ID )
+      if ( $User_Data['ID'] === $User_ID )
         $Unread_Messages = 0;
 
       try

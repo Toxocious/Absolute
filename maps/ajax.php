@@ -1,5 +1,5 @@
 <?php
-	require '../core/required/session.php';
+	require_once '../core/required/session.php';
 
 	/**
 	 * Auto load the necessary PHP classes.

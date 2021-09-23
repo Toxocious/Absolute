@@ -118,7 +118,7 @@
         HandleError($e);
       }
 
-      if ( !$Shop_Objects )
+      if ( !isset($Shop_Objects) )
         return false;
 
       return $Shop_Objects;
@@ -268,7 +268,7 @@
           $Shop_Data['Name'],
           null,
           null,
-          $User_Data['id']
+          $User_Data['ID']
         );
 
         if ( !$Spawn_Pokemon )
@@ -277,7 +277,7 @@
         $this->ReduceRemaining($Object['ID'], $Object_Type);
 
         foreach ( $Price_Array[0] as $Currency => $Amount )
-          $User_Class->RemoveCurrency($User_Data['id'], $Currency, $Amount);
+          $User_Class->RemoveCurrency($User_Data['ID'], $Currency, $Amount);
 
         return [
           'Display_Name' => $Spawn_Pokemon['Display_Name'],
@@ -293,14 +293,14 @@
       }
       else
       {
-        $Spawn_Item = $Item_Class->SpawnItem($User_Data['id'], $Object['ID'], 1);
+        $Spawn_Item = $Item_Class->SpawnItem($User_Data['ID'], $Object['ID'], 1);
         if ( !$Spawn_Item )
           return false;
 
         $this->ReduceRemaining($Object['ID'], $Object_Type);
 
         foreach ( $Price_Array[0] as $Currency => $Amount )
-          $User_Class->RemoveCurrency($User_Data['id'], $Currency, $Amount);
+          $User_Class->RemoveCurrency($User_Data['ID'], $Currency, $Amount);
 
         return true;
       }

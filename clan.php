@@ -35,7 +35,7 @@
 
 		try
 		{
-			$Member_Query = $PDO->prepare("SELECT `id` FROM `users` WHERE `Clan` = ? ORDER BY `Clan_Exp` DESC");
+			$Member_Query = $PDO->prepare("SELECT `ID` FROM `users` WHERE `Clan` = ? ORDER BY `Clan_Exp` DESC");
 			$Member_Query->execute([ $Clan_Data['ID'] ]);
 			$Member_Query->setFetchMode(PDO::FETCH_ASSOC);
 			$Members = $Member_Query->fetchAll();
@@ -254,12 +254,12 @@
 						<?php
 							foreach ( $Members as $Index => $Member )
 							{
-								$Member = $User_Class->FetchUserData($Member['id']);
+								$Member = $User_Class->FetchUserData($Member['ID']);
 								
 								echo "
 									<tr>
 										<td>
-											<a href='" . DOMAIN_ROOT . "/profiles.php?id={$Member['ID']}'>
+											<a href='" . DOMAIN_ROOT . "/profile.php?id={$Member['ID']}'>
 												<b class='" . strtolower($Member['Clan_Rank']) . "'>
 													{$Member['Username']}
 												</b>

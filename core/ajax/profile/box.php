@@ -1,5 +1,5 @@
 <?php
-  require '../../required/session.php';
+  require_once '../../required/session.php';
 
   if ( isset($_GET['User_ID']) )
   {
@@ -91,7 +91,7 @@
           echo "</tr><tr>";
 
         echo "
-          <td colspan='7' class='popup cboxElement' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Poke_Data['ID']}' style='width: 171px;'>
+          <td colspan='7' class='popup' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Poke_Data['ID']}' style='width: 171px;'>
             <div style='float: left;'>
               <img src='{$Poke_Data['Icon']}' />
             </div>
@@ -117,8 +117,6 @@
 </tbody>
 
 <script type='text/javascript'>
-  $(".popup.cboxElement").colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
-
   let CurrentSearch = [
     0, 0, 0
   ];

@@ -57,7 +57,7 @@
           else
           {
             // (int $User_ID, int $Clan_ID, string $Currency, int $Quantity)
-            $Donation = $Clan_Class->DonateCurrency($User_Data['id'], $Clan_Data['ID'], $Currency_Data['Value'], $Currency_Amount);
+            $Donation = $Clan_Class->DonateCurrency($User_Data['ID'], $Clan_Data['ID'], $Currency_Data['Value'], $Currency_Amount);
 
             if ( $Donation )
             {

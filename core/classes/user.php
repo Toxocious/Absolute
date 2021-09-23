@@ -26,7 +26,14 @@
 
 			try
 			{
-				$Fetch_User = $PDO->prepare("SELECT * FROM `users` INNER JOIN `user_currency` ON `users`.`id`=`user_currency`.`User_ID` WHERE `id` = ?");
+				$Fetch_User = $PDO->prepare("
+					SELECT *
+					FROM `users`
+					INNER JOIN `user_currency`
+					ON `users`.`ID` = `user_currency`.`ID`
+					WHERE `users`.`ID` = ?
+					LIMIT 1
+				");
 				$Fetch_User->execute([ $User_Query ]);
 				$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 				$User = $Fetch_User->fetch();
@@ -35,6 +42,13 @@
 			{
 				HandleError( $e->getMessage() );
 			}
+
+			if ( !$User )
+				return false;
+
+			$Roster = $this->FetchRoster($User['ID']);
+			if ( !$Roster )
+				$Roster = null;
 
 			if ( !isset($User) || !$User )
 				return false;
@@ -49,21 +63,22 @@
 			else
 				$Banned_Chat = false;
 
-				if ( $User['Playtime'] == 0 )
-					$Playtime = "None";
-				elseif ( $User['Playtime'] <= 59 )
-					$Playtime = $User['Playtime']." Second(s)";
-				elseif ( $User['Playtime'] >= 60 && $User['Playtime'] <= 3599 )
-					$Playtime = floor($User['Playtime'] / 60)." Minute(s)";
-				elseif ( $User['Playtime'] >= 3600 && $User['Playtime'] <= 86399 )
-					$Playtime = round($User['Playtime'] / 3600, 1)." Hour(s)";
-				else
-					$Playtime = round($User['Playtime'] / 86400, 2)." Day(s)";
+			if ( $User['Playtime'] == 0 )
+				$Playtime = "None";
+			elseif ( $User['Playtime'] <= 59 )
+				$Playtime = $User['Playtime']." Second(s)";
+			elseif ( $User['Playtime'] >= 60 && $User['Playtime'] <= 3599 )
+				$Playtime = floor($User['Playtime'] / 60)." Minute(s)";
+			elseif ( $User['Playtime'] >= 3600 && $User['Playtime'] <= 86399 )
+				$Playtime = round($User['Playtime'] / 3600, 1)." Hour(s)";
+			else
+				$Playtime = round($User['Playtime'] / 86400, 2)." Day(s)";
 
 			return [
-				'ID' => (int) $User['id'],
+				'ID' => $User['ID'],
 				'Username' => $User['Username'],
-				'Roster' => $User['Roster'],
+				'Roster' => $Roster,
+				'Roster_Hash' => $User['Roster'],
 				'Avatar' => DOMAIN_SPRITES . $User['Avatar'],
 				'Banned_RPG' => $Banned_RPG,
 				'Banned_Chat' => $Banned_Chat,
@@ -88,7 +103,54 @@
 				'Date_Registered' => $User['Date_Registered'],
 				'Last_Page' => $User['Last_Page'],
 				'Playtime' => $Playtime,
+				'Auth_Code' => $User['Auth_Code'],
+				'Theme' => $User['Theme'],
+				'Battle_Theme' => $User['Battle_Theme'],
 			];
+		}
+
+		/**
+		 * Fetch a given user's roster.
+		 * @param int $User_ID
+		 */
+		public function FetchRoster
+		(
+			int $User_ID
+		)
+		{
+			global $PDO;
+
+			if ( !$User_ID )
+				return false;
+
+			try
+			{
+				$User_Check = $PDO->prepare("SELECT `ID` FROM `users` WHERE `ID` = ? LIMIT 1");
+				$User_Check->execute([ $User_ID ]);
+				$User_Check->setFetchMode(PDO::FETCH_ASSOC);
+				$User = $User_Check->fetch();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+
+			if ( !$User )
+				return false;
+
+			try
+			{
+				$Fetch_Roster = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
+				$Fetch_Roster->execute([ $User_ID ]);
+				$Fetch_Roster->setFetchMode(PDO::FETCH_ASSOC);
+				$Roster = $Fetch_Roster->fetchAll();
+			}
+			catch ( PDOException $e )
+			{
+				HandleError($e);
+			}
+
+			return $Roster;
 		}
 
 		/**
@@ -122,9 +184,9 @@
 		 */
 		public function FetchMasteries($User_ID)
 		{
-			
+
 		}
-		
+
 		/**
 		 * Displays the user rank where applicable (staff page, profiles, etc).
 		 */

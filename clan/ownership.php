@@ -58,7 +58,7 @@
           {
             if ( $Member_Data['Clan_Rank'] == 'Moderator' )
             {
-              $Demote_Self = $Clan_Class->UpdateRank($Clan_Data['ID'], $User_Data['id'], 'Moderator');
+              $Demote_Self = $Clan_Class->UpdateRank($Clan_Data['ID'], $User_Data['ID'], 'Moderator');
               if ( $Demote_Self )
               {
                 $Promote_User = $Clan_Class->UpdateRank($Clan_Data['ID'], $Member_Data['ID'], 'Administrator');
@@ -158,7 +158,7 @@
 
                 if
                 (
-                  $User_Data['id'] == $Member['ID'] ||
+                  $User_Data['ID'] == $Member['ID'] ||
                   $Member['Clan_Rank'] != 'Moderator'
                 )
                   continue;

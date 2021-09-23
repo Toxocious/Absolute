@@ -1,5 +1,5 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	if ( isset($_SESSION['Trade']) )
 	{
@@ -160,7 +160,7 @@
 	try
 	{
 		$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Recipient`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Recipient` = ?) AND `Status` = ?");
-		$Pending_Query->execute([ $User_Data['id'], $User_Data['id'], 'Pending' ]);
+		$Pending_Query->execute([ $User_Data['ID'], $User_Data['ID'], 'Pending' ]);
 		$Pending_Query->setFetchMode(PDO::FETCH_ASSOC);
 		$Pending_Trades = $Pending_Query->fetchAll();
 	}

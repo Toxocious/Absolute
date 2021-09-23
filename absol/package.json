@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "express": "^4.16.3",
+    "forever": "^4.0.1",
     "html-entities": "^1.2.1",
     "mysql": "^2.14.1",
     "mysql2": "^2.1.0",

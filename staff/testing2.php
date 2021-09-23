@@ -1,6 +1,6 @@
 <?php
-	require '../core/required/layout_top.php';
-	
+	require_once '../core/required/layout_top.php';
+
 	checkUserPower($User_Data['Power'], 7);
 ?>
 
@@ -97,7 +97,7 @@
           foreach ( $Pokedex as $Index => $Poke_Data )
           {
             $Pokemon = $PokeClass->FetchPokedexData($Poke_Data['id']);
-            
+
             echo "
               <div class='halign' data-id='{$Pokemon['ID']}'>
                 <div class='valign'>
@@ -131,7 +131,7 @@
             else if ( $pokemon_fetch['ID'] <= 649 && $pokemon_fetch['ID'] >= 494 ) $Slot_Gen = 'Generation 5';
             else if ( $pokemon_fetch['ID'] <= 721 && $pokemon_fetch['ID'] >= 650 ) $Slot_Gen = 'Generation 6';
             else $Slot_Gen = 'Generation 7';
-            
+
             if ( strpos($pokemon_fetch['Name'], '(Mega)') )
             {
               $Slot_Gen = 'Mega';
@@ -142,7 +142,7 @@
             {
               $Slot_pID = $pokemon_fetch['ID'];
             }
-                      
+
             echo "
               <div class='halign' data-id='{$pokemon_fetch['ID']}'>
                 <div class='valign'>
@@ -152,7 +152,7 @@
               echo "<img src='images/Icons/1 - Normal/{$Slot_Gen}/{$Slot_pID}.png' onclick='selectPokemon({$Slot_pID});' />";
             else
               echo "<img src='images/Icons/5 - Special/unknown.png' onclick='selectPokemon({$Slot_pID});' />";
-            
+
             echo "
                 </div>
               </div>
@@ -390,14 +390,12 @@
         </div>
       </div>
     </div>
-	</div>	
+	</div>
 </div>
 
 <script type='text/javascript'>
 	$(document).ready(function ()
 	{
-    $('.popup.cboxElement').colorbox({ iframe: true, innerWidth: 680, innerHeight: 491 });
-
     $( '.list' ).on( 'mousewheel DOMMouseScroll', function ( e ) {
       var e0 = e.originalEvent,
           delta = e0.wheelDelta || -e0.detail;
@@ -438,13 +436,13 @@
       $(this).attr('checked', 'unchecked');
     }
   });
-	
+
 	$("input[id^='iv']").change(function()
 	{
 		if ( parseInt(this.value) > 31 )
 		{
         this.value = 31;
-     } 
+     }
 	});
 
 	$("input[id^='ev']").change(function()
@@ -452,7 +450,7 @@
 		if ( parseInt(this.value) > 255 )
 		{
         this.value = 255;
-     } 
+     }
 	});
 
   function selectPokemon(id)
@@ -466,15 +464,31 @@
       success: function(data)
       {
         $('#pokemonSpawner').html(data);
+
+        [].forEach.call(document.getElementsByClassName("popup"), function(el) {
+          el.lightbox = new IframeLightbox(el, {
+            scrolling: false,
+            rate: 500,
+            touch: false,
+          });
+        });
       },
       error: function(data)
       {
         $('#pokemonSpawner').html(data);
+
+        [].forEach.call(document.getElementsByClassName("popup"), function(el) {
+          el.lightbox = new IframeLightbox(el, {
+            scrolling: false,
+            rate: 500,
+            touch: false,
+          });
+        });
       }
     });
   }
 </script>
 
 <?php
-  require '../core/required/layout_bottom.php';
+  require_once '../core/required/layout_bottom.php';
 ?>

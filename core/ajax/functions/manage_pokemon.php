@@ -1,12 +1,12 @@
 <?php
-	require '../../required/session.php';
+	require_once '../../required/session.php';
 
 	if ( isset($_SESSION['abso_user']) )
 	{
 		try
 		{
 			$Roster_Fetch = $PDO->prepare("SELECT `ID`, `Slot` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-			$Roster_Fetch->execute([$User_Data['id']]);
+			$Roster_Fetch->execute([$User_Data['ID']]);
 			$Roster_Fetch->setFetchMode(PDO::FETCH_ASSOC);
 			$Roster = $Roster_Fetch->fetchAll();
 		}
@@ -30,10 +30,10 @@
 			try
 			{
 				$Fetch_Roster = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-				$Fetch_Roster->execute([$User_Data['id']]);
+				$Fetch_Roster->execute([$User_Data['ID']]);
 				$Fetch_Roster->setFetchMode(PDO::FETCH_ASSOC);
 				$Roster_Pokemon = $Fetch_Roster->fetchAll();
-				
+
 				$Roster = '';
 				foreach ( $Roster_Pokemon as $Key => $Value )
 				{
@@ -41,7 +41,7 @@
 				}
 
 				$User_Roster_Update = $PDO->prepare("UPDATE `users` SET `Roster` = ? WHERE `id` = ? LIMIT 1");
-				$User_Roster_Update->execute([ $Roster, $User_Data['id'] ]);
+				$User_Roster_Update->execute([ $Roster, $User_Data['ID'] ]);
 			}
 			catch( PDOException $e )
 			{
@@ -170,7 +170,7 @@
 				$Begin = 1;
 
 			$Query = "SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Box'";
-			$Inputs = [$User_Data['id']];
+			$Inputs = [$User_Data['ID']];
 
 			if ( $Filter_Type != '0' )
 			{
@@ -196,11 +196,11 @@
 			}
 
 			$Query .= " ORDER BY `Pokedex_ID`, `ID` ASC";
-			
+
 			try
 			{
 				$Box_Query = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Slot` = 7 ORDER BY `Pokedex_ID` ASC LIMIT 35");
-				$Box_Query->execute([ $User_Data['id'] ]);
+				$Box_Query->execute([ $User_Data['ID'] ]);
 				$Box_Query->setFetchMode(PDO::FETCH_ASSOC);
 				$Box_Pokemon = $Box_Query->fetchAll();
 			}
@@ -227,13 +227,13 @@
       }
       else
       {
-        $Pagination = Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['id'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
+        $Pagination = Pagi(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $User_Data['ID'], $Inputs, $Page, 'onclick="updateBox(\'' . $Page . '\'); return false;"', 35);
 
         echo "
           {$Pagination}
           <div style='height: 172px; padding: 0px 0px 5px;'>
         ";
-        
+
         foreach ( $Box_Pokemon as $Index => $Pokemon )
         {
           $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
@@ -244,7 +244,7 @@
           </div>
         ";
 			}
-			
+
 			echo "
 				  </div>
 				</div>
@@ -274,7 +274,7 @@
 					<div class='head'><div>{$Pokemon['Display_Name']}</div><div style='float: right; margin-top: -21px;'>(#".number_format($Pokemon['ID']).")</div></div>
 					<div class='body' style='padding: 5px;'>
 						<div style='float: left;'>
-							<img class='cboxElement popup' src='{$Pokemon['Sprite']}' href='core/ajax/pokemon.php?id={$Pokemon['ID']}' />
+							<img class='popup' src='{$Pokemon['Sprite']}' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Pokemon['ID']}' />
 						</div>
 						<div style='text-align: left;'>
 							<div style='text-align: center;'><b>{$Pokemon['Display_Name']}</b></div>
@@ -303,7 +303,7 @@
 					if ( isset($Roster[$i]['ID']) )
 					{
 						$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
-				
+
 						if ( $Roster_Slot[$i]['Item'] != null )
 						{
 							$Item = "<img src='{$Roster_Slot[$i]['Item_Icon']}' style='margin-top: 48px;' />";
@@ -341,7 +341,7 @@
 								";
 							}
 						}
-									
+
 						echo "
 							<div class='roster_slot full'>
 								<div class='slots'>
@@ -354,7 +354,7 @@
 								</div>
 
 								<div style='float: left; margin-left: -30px; padding: 3px;'>
-									<img class='spricon popup cboxElement' src='{$Roster_Slot[$i]['Sprite']}' href='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
+									<img class='popup' src='{$Roster_Slot[$i]['Sprite']}' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}' />
 								</div>
 
 								<div class='info_cont' style='float: right; width: 189px;'>
@@ -375,7 +375,7 @@
 						$Roster_Slot[$i]['Display_Name'] = 'Empty';
 						$Roster_Slot[$i]['Level'] = '0';
 						$Roster_Slot[$i]['Experience'] = '0';
-				
+
 						echo "
 							<div class='roster_slot full' style='height: 132px; padding: 0px;'>
 								<div style='float: left; padding: 18px 3px 3px;'>

@@ -19,12 +19,12 @@ for ( const FILE of FUNCTIONS )
 /**
  * Fetch all of our command files, and set them dynamically.
  */
-const COMMANDLIST = new Set();
+const COMMANDLIST = new Map();
 const COMMANDS = FS.readdirSync('./commands').filter(file => file.endsWith('.js'));
 for ( const FILE of COMMANDS )
 {
   COMMAND = require( PATH.resolve(`./commands/${FILE}`) );
-  COMMANDLIST.add([COMMAND.name, COMMAND]);
+  COMMANDLIST.set(COMMAND.name + '.js', COMMAND);
 }
 
 /**
@@ -34,7 +34,7 @@ const CONFIG = {
   PREFIX: '~',
   LOGFILE: './chatlog.txt',
   SERVER: {
-    SERVER_PORT: 3001,
+    SERVER_PORT: 1337,
     MESSAGE_PORT: 9001,
     SSL: {
       // Localhost XAMPP SSL Cert
@@ -161,6 +161,7 @@ ABSOLUTE.on('connection', function(socket)
            */
           User_Data.Username = Fetched_User[0].Username;
           User_Data.Rank = Fetched_User[0].Rank;
+          User_Data.Power = Fetched_User[0].Power;
           User_Data.Avatar = Fetched_User[0].Avatar;
           User_Data.Chat_Ban = Fetched_User[0].Chat_Ban;
           User_Data.Chat_Ban_Data = Fetched_User[0].Chat_Ban_Data;
@@ -208,12 +209,36 @@ ABSOLUTE.on('connection', function(socket)
              */
             const ARGS = data.text.slice(CONFIG.PREFIX.length).split(' ');
             const COMMAND_NAME = ARGS.shift().toLowerCase() + '.js';
+            const COMMAND_DATA = COMMANDLIST.get(COMMAND_NAME);
 
             /**
              * Determine if the command exists or not, and process it.
              */
-            if ( COMMANDS.includes(COMMAND_NAME) ) 
+            if ( COMMAND_DATA != undefined )
             {
+              if
+              (
+                COMMAND_DATA.power_level &&
+                COMMAND_DATA.power_level > User_Data.Power
+              )
+              {
+                return socket.emit("chat-message",
+                  MESSAGEHANDLER.AddMessage(
+                    {
+                      user_id: 3,
+                      username: 'Absol',
+                      rank: 'bot',
+                      avatar: `/Avatars/Custom/3.png`,
+                    },
+                    'You do not have the power level required to use this command.',
+                    {
+                      isPrivate: true,
+                      Private_To: User_Data.ID,
+                    }
+                  )
+                );
+              }
+
               /**
               * Execute the command and return it's response.
               * @param array
@@ -223,7 +248,7 @@ ABSOLUTE.on('connection', function(socket)
               *  message: STRING,
               * }
               */
-              const COMMAND_RESPONSE = COMMAND.execute(
+              const COMMAND_RESPONSE = COMMAND_DATA.execute(
                 {
                   ID: User_Data.ID,
                   Rank: User_Data.Rank
