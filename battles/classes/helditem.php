@@ -17,39 +17,24 @@
       try
       {
         $Fetch_Item = $PDO->prepare("
-          SELECT `id`, `Item_ID`, `Item_Name`, `Owner_Current`, `Quantity`
+          SELECT *
           FROM `items`
-          WHERE `Item_ID` = ?
+          INNER JOIN `item_dex`
+          ON `items`.`Item_ID` = `item_dex`.`Item_ID`
+          WHERE `items`.`Item_ID` = ?
           LIMIT 1
         ");
-        $Fetch_Item->execute([ $Item_ID ]);
+        $Fetch_Item->execute([ 16 ]);
         $Fetch_Item->setFetchMode(PDO::FETCH_ASSOC);
         $Item_Data = $Fetch_Item->fetch();
       }
       catch ( PDOException $e )
       {
-        HandleError($e);
+        HandleError( $e );
       }
 
-      if ( !$Item_Data )
+      if ( empty($Item_Data) )
         return false;
-
-      try
-      {
-        $Fetch_Item_Data = $PDO->prepare("
-          SELECT `Natural_Gift_Power`, `Natural_Gift_Type`, `Fling_Power`, `Mega_Evolves`, `Attack_Boost`, `Defense_Boost`, `Sp_Attack_Boost`, `Sp_Defense_Boost`, `Speed_Boost`, `Accuracy_Boost`, `Evasion_Boost`
-          FROM `item_dex`
-          WHERE `Item_ID` = ?
-          LIMIT 1
-        ");
-        $Fetch_Item_Data->execute([ $Item_ID ]);
-        $Fetch_Item_Data->setFetchMode(PDO::FETCH_ASSOC);
-        $Item_Dex_Data = $Fetch_Item_Data->fetch();
-      }
-      catch ( PDOException $e )
-      {
-        HandleError($e);
-      }
 
       $this->ID = $Item_Data['id'];
       $this->Item_ID = $Item_Data['Item_ID'];
@@ -57,18 +42,18 @@
       $this->Owner_Current = $Item_Data['Owner_Current'];
       $this->Uses_Left = -1;
 
-      $this->Can_Take_Item = $Item_Dex_Data['Can_Take_Item'];
-      $this->Natural_Gift_Power = $Item_Dex_Data['Natural_Gift_Power'];
-      $this->Natural_Gift_Type = $Item_Dex_Data['Natural_Gift_Type'];
-      $this->Fling_Power = $Item_Dex_Data['Fling_Power'];
-      $this->Mega_Evolves = $Item_Dex_Data['Mega_Evolves'];
-      $this->Attack_Boost = $Item_Dex_Data['Attack_Boost'];
-      $this->Defense_Boost = $Item_Dex_Data['Defense_Boost'];
-      $this->Sp_Attack_Boost = $Item_Dex_Data['Sp_Attack_Boost'];
-      $this->Sp_Defense_Boost = $Item_Dex_Data['Sp_Defense_Boost'];
-      $this->Speed_Boost = $Item_Dex_Data['Speed_Boost'];
-      $this->Accuracy_Boost = $Item_Dex_Data['Accuracy_Boost'];
-      $this->Evasion_Boost = $Item_Dex_Data['Evasion_Boost'];
+      $this->Can_Take_Item = $Item_Data['Can_Take_Item'];
+      $this->Natural_Gift_Power = $Item_Data['Natural_Gift_Power'];
+      $this->Natural_Gift_Type = $Item_Data['Natural_Gift_Type'];
+      $this->Fling_Power = $Item_Data['Fling_Power'];
+      $this->Mega_Evolves = $Item_Data['Mega_Evolves'];
+      $this->Attack_Boost = $Item_Data['Attack_Boost'];
+      $this->Defense_Boost = $Item_Data['Defense_Boost'];
+      $this->Sp_Attack_Boost = $Item_Data['Sp_Attack_Boost'];
+      $this->Sp_Defense_Boost = $Item_Data['Sp_Defense_Boost'];
+      $this->Speed_Boost = $Item_Data['Speed_Boost'];
+      $this->Accuracy_Boost = $Item_Data['Accuracy_Boost'];
+      $this->Evasion_Boost = $Item_Data['Evasion_Boost'];
 
       return $this;
     }
