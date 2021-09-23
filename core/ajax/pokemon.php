@@ -31,9 +31,9 @@
 <html>
 	<head>
 		<title>Pok&eacute;mon Statistics :: The Pok&eacute;mon Absolute</title>
-		<link href='<?= DOMAIN_SPRITES; ?>/images/Pokemon/Icons/Normal/359-mega.png' rel='shortcut icon'>
+		<link href='<?= DOMAIN_SPRITES; ?>/Pokemon/Icons/Normal/359-mega.png' rel='shortcut icon'>
 
-		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= ($User_Data['Theme'] ? $User_Data['Theme'] : 'absol'); ?>.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= (isset($User_Data['Theme']) ? $User_Data['Theme'] : 'absol'); ?>.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/root.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css' />
