@@ -544,8 +544,8 @@
 
       unset($_SESSION['Battle']);
 
-      $Battle = new $Fight();
-      $Restart = $Battle->CreateBattle($Ally_ID, $Foe_ID);
+      $Battle = new $Fight($Ally_ID, $Foe_ID);
+      $Restart = $Battle->CreateBattle();
 
       if ( !$Restart )
         $Dialogue = 'An error occurred while restarting your battle.';
