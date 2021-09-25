@@ -1,7 +1,27 @@
 <?php
+  require_once 'battles/classes/battle.php';
+
+  require_once 'battles/fights/trainer.php';
+
+  require_once 'battles/classes/ability.php';
+  require_once 'battles/classes/clanhandler.php';
+  require_once 'battles/classes/dialogue.php';
+  require_once 'battles/classes/field.php';
+  require_once 'battles/classes/helditem.php';
+  require_once 'battles/classes/log.php';
+  require_once 'battles/classes/move.php';
+  require_once 'battles/classes/options.php';
+  require_once 'battles/classes/pokemonhandler.php';
+  require_once 'battles/classes/rewards.php';
+  require_once 'battles/classes/roster.php';
+  require_once 'battles/classes/stat.php';
+  require_once 'battles/classes/status.php';
+  require_once 'battles/classes/terrain.php';
+  require_once 'battles/classes/useitem.php';
+  require_once 'battles/classes/userhandler.php';
+  require_once 'battles/classes/weather.php';
+
 	require_once 'core/required/session.php';
-	require_once 'battles/classes/battle.php';
-	require_once 'battles/fights/trainer.php';
 
 	if
 	(
@@ -10,9 +30,6 @@
 		$User_Data['RPG_Ban']
 	)
 	{
-    echo 'User is banned';
-    exit;
-
 		header('Location: /index.php');
 		exit;
 	}
@@ -23,9 +40,6 @@
 		empty($_GET['Foe'])
 	)
 	{
-    echo 'Invalid Battle Type Or Foe';
-    exit;
-
 		header('Location: /battle_search.php');
 		exit;
 	}
