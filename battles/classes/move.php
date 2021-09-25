@@ -6,8 +6,8 @@
     $Moves_Directory = dirname(__DIR__, 1);
     $Class = strtolower($Class);
 
-    if (file_exists($Moves_Directory . "\\classes\\moves\\{$Class}.php"))
-      require_once $Moves_Directory . "\\classes\\moves\\{$Class}.php";
+    if (file_exists($Moves_Directory . "/classes/moves/{$Class}.php"))
+      require_once $Moves_Directory . "/classes/moves/{$Class}.php";
   });
 
   class Move extends Battle
