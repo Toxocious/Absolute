@@ -1,7 +1,7 @@
 <?php
   require_once 'core/required/layout_top.php';
 
-  if ( !isset($_SESSION['Battle']) )
+  if ( empty($_SESSION['Battle']) )
   {
     echo "
       <div class='panel content'>
@@ -14,7 +14,8 @@
       </div>
     ";
 
-    return;
+    require_once 'core/required/layout_bottom.php';
+    exit;
   }
 ?>
 
