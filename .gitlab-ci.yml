@@ -32,14 +32,8 @@ compile:
       when: always
   stage: compile
   script:
-    ## Install Node.JS 12.x
-    - curl -sL https://deb.nodesource.com/setup_12.x | bash -
-    - apt install -y nodejs
-    - echo "-- Compiling SCSS to CSS --"
-    - npm i npm@latest -g
-    - npm i -g yarn
-    - yarn global add node-sass
-    - node-sass themes/sass -o themes/css --style compressed
+    - echo "-- Compiling Stylesheets --"
+    - sass themes/sass:themes/css --style compressed
     - echo "-- Finished Compiling --"
 
 stage_deploy:
