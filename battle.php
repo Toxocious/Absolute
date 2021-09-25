@@ -1,6 +1,25 @@
 <?php
   require_once 'core/required/session.php';
 
+  if ( empty($_SESSION['Battle']) )
+  {
+    require_once 'core/required/layout_top.php';
+
+    echo "
+      <div class='panel content'>
+        <div class='head'>Battle</div>
+        <div class='body' style='padding: 5px;'>
+          <div class='error' style='margin: 5px auto 5px;'>
+            A battle has not yet been created.
+          </div>
+        </div>
+      </div>
+    ";
+
+    require_once 'core/required/layout_bottom.php';
+    exit;
+  }
+
   switch ($User_Data['Battle_Theme'])
   {
     case 'Default':

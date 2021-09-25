@@ -1,6 +1,18 @@
 <?php
+  // error_reporting(-1);
+  // ini_set('display_errors', 'On');
+
   require_once '../../battles/classes/battle.php';
+  require_once '../../battles/fights/trainer.php';
   require_once '../../core/required/session.php';
+
+  if ( empty($_SESSION['Battle']) )
+  {
+    $Output['Message'] = 'You do not have a valid Battle session.';
+    $_SESSION['Battle']['Dialogue'] = $Output['Message'];
+
+    echo json_encode($Output);
+  }
 
   $Fight = $_SESSION['Battle']['Battle_Type'];
 

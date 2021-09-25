@@ -1,5 +1,7 @@
 <?php
-  class UserHandler
+  use BattleHandler\Battle;
+
+  class UserHandler extends Battle
   {
     public $ID = null;
     public $Username = null;
