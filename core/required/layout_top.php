@@ -127,7 +127,7 @@
          */
         if ( isset($User_Data) )
         {
-          if ( !$User_Data['Banned_RPG'] )
+          if ( !$User_Data['RPG_Ban'] )
           {
             if ( strpos($Parse_URL['path'], '/staff/') !== false && $User_Data['Power'] !== 1 )
             {
@@ -201,8 +201,8 @@
           <?php
             if
             (
-              !$User_Data['Banned_RPG'] &&
-              !$User_Data['Banned_Chat']
+              !$User_Data['RPG_Ban'] &&
+              !$User_Data['Chat_Ban']
             )
             {
           ?>
@@ -222,7 +222,7 @@
           /**
            * Content to display if the user is not currently banned.
            */
-          if ( $User_Data['Banned_RPG'] == 0 )
+          if ( !$User_Data['RPG_Ban'] )
           {
             /**
              * If the user doesn't have any Pokemon in their roster, display a warning message.

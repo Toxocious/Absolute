@@ -53,12 +53,12 @@
 			if ( !isset($User) || !$User )
 				return false;
 
-			if ( $User['RPG_Ban'] == 'yes' )
+			if ( $User['RPG_Ban'] )
 				$Banned_RPG = true;
 			else
 				$Banned_RPG = false;
 
-			if ( $User['Chat_Ban'] == 'yes' )
+			if ( $User['Chat_Ban'] )
 				$Banned_Chat = true;
 			else
 				$Banned_Chat = false;
@@ -80,8 +80,8 @@
 				'Roster' => $Roster,
 				'Roster_Hash' => $User['Roster'],
 				'Avatar' => DOMAIN_SPRITES . $User['Avatar'],
-				'Banned_RPG' => $Banned_RPG,
-				'Banned_Chat' => $Banned_Chat,
+				'RPG_Ban' => $Banned_RPG,
+				'Chat_Ban' => $Banned_Chat,
 				'Money' => $User['Money'],
         'Abso_Coins' => $User['Abso_Coins'],
         'Trainer_Level' => number_format(FetchLevel($User['TrainerExp'], 'Trainer')),

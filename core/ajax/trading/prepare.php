@@ -27,7 +27,7 @@
 
 		return;
 	}
-	else if ( $Recipient['Banned_RPG'] )
+	else if ( $Recipient['RPG_Ban'] )
 	{
 		echo "<div class='error'>The user that you're attempting to trade with is currently banned.</div>";
 
@@ -147,7 +147,7 @@
 					if ( $Total_Rendered <= 35 )
 					{
 						$Total_Rendered++;
-						
+
 						for ( $Total_Rendered; $Total_Rendered <= 35; $Total_Rendered++ )
 						{
 							echo "
@@ -268,7 +268,7 @@
 					if ( $Total_Rendered <= 35 )
 					{
 						$Total_Rendered++;
-						
+
 						for ( $Total_Rendered; $Total_Rendered <= 35; $Total_Rendered++ )
 						{
 							echo "
