@@ -152,12 +152,3 @@
 		$Current_Page['Maintenance'] = 'no';
 		$Current_Page['Logged_In'] = 'no';
 	}
-
-  if
-  (
-    $Current_Page['Logged_In'] === 'yes' &&
-    !isset($_SESSION['abso_user'])
-  )
-  {
-    include_once $Dir_Root . '/index.php';
-  }
