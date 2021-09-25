@@ -25,9 +25,11 @@ before_script:
   - ssh absolute@absoluterpg.com
 
 compile:
-  only:
-    refs:
-      - master
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes:
+        - themes/sass
+      when: always
   stage: compile
   script:
     ## Install Node.JS 12.x
@@ -41,9 +43,8 @@ compile:
     - echo "-- Finished Compiling --"
 
 stage_deploy:
-  only:
-    refs:
-      - master
+  rules:
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
   stage: deploy
   script:
     ## Install rsync.
