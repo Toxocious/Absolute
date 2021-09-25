@@ -1,9 +1,21 @@
 <?php
-  // error_reporting(-1);
-  // ini_set('display_errors', 'On');
+  error_reporting(-1);
+  ini_set('display_errors', 'On');
 
-  require_once '../../battles/classes/battle.php';
-  require_once '../../battles/fights/trainer.php';
+  require_once '../classes/battle.php';
+
+  spl_autoload_register(function($Class)
+  {
+    $Battle_Directory = dirname(__DIR__, 1);
+    $Class = strtolower($Class);
+
+    if (file_exists($Battle_Directory . "/classes/{$Class}.php"))
+      require_once $Battle_Directory . "/classes/{$Class}.php";
+
+    if (file_exists($Battle_Directory . "/fights/{$Class}.php"))
+      require_once $Battle_Directory . "/fights/{$Class}.php";
+  });
+
   require_once '../../core/required/session.php';
 
   if ( empty($_SESSION['Battle']) )
