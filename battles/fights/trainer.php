@@ -13,32 +13,38 @@
     public $Items_Allowed = true;
     public $Switch_Allowed = true;
 
-    public function __construct()
-    {
-      $this->Started = true;
-    }
+    public $Ally_ID;
+    public $Foe_ID;
 
-    public function CreateBattle
+    public function __construct
     (
       int $Ally_ID,
       int $Foe_ID
     )
     {
+      $this->Ally_ID = $Ally_ID;
+      $this->Foe_ID = $Foe_ID;
+
+      $this->Started = true;
+    }
+
+    public function CreateBattle()
+    {
       global $User_Class;
 
       if
       (
-        !$User_Class->FetchUserData($Ally_ID) ||
-        !$User_Class->FetchUserData($Foe_ID)
+        !$User_Class->FetchUserData($this->Ally_ID) ||
+        !$User_Class->FetchUserData($this->Foe_ID)
       )
         return false;
 
-      $Ally = new UserHandler($Ally_ID, 'Ally');
+      $Ally = new UserHandler($this->Ally_ID, 'Ally');
       $this->Ally = $Ally->Initialize();
       if ( !$this->Ally )
         return false;
 
-      $Foe = new UserHandler($Foe_ID, 'Foe');
+      $Foe = new UserHandler($this->Foe_ID, 'Foe');
       $this->Foe = $Foe->Initialize();
       if ( !$this->Foe )
         return false;
@@ -52,9 +58,11 @@
       $_SESSION['Battle']['Battle_Type'] = $this->Battle_Type;
       $_SESSION['Battle']['Time_Started'] = $this->Time_Started;
       $_SESSION['Battle']['Started'] = $this->Started;
-      $_SESSION['Battle']['Turn_ID'] = $this->Turn_ID;
+      $_SESSION['Battle']['Turn_ID'] = 1;
       $_SESSION['Battle']['Ally'] = $this->Ally;
+      $_SESSION['Battle']['Ally_ID'] = $this->Ally_ID;
       $_SESSION['Battle']['Foe'] = $this->Foe;
+      $_SESSION['Battle']['Foe_ID'] = $this->Foe_ID;
 
       $Creation_Dialogue = '';
       foreach(['Ally', 'Foe'] as $Side)

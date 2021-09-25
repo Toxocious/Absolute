@@ -1,6 +1,7 @@
 <?php
 	require_once 'core/required/session.php';
 	require_once 'battles/classes/battle.php';
+	require_once 'battles/fights/trainer.php';
 
 	if
 	(
@@ -9,8 +10,11 @@
 		$User_Data['RPG_Ban']
 	)
 	{
+    echo 'User is banned';
+    exit;
+
 		header('Location: /index.php');
-		return;
+		exit;
 	}
 
 	if
@@ -19,38 +23,44 @@
 		empty($_GET['Foe'])
 	)
 	{
+    echo 'Invalid Battle Type Or Foe';
+    exit;
+
 		header('Location: /battle_search.php');
-		return;
+		exit;
 	}
 
   unset($_SESSION['Battle']);
 
 	$Battle_Type = strtolower(Purify($_GET['Battle_Type']));
-	$Foe = strtolower(Purify($_GET['Foe']));
+	$Foe = Purify($_GET['Foe']);
 
 	$_SESSION['Battle']['Battle_Type'] = $Battle_Type;
 
 	switch ($Battle_Type)
 	{
 		case 'trainer':
-			$Battle = new Trainer();
+      $Foe = (int) $Foe;
+			$Battle = new Trainer($User_Data['ID'], $Foe);
 			break;
+
 		default:
-			$Battle = new Trainer();
+      $Foe = (int) $Foe;
+			$Battle = new Trainer($User_Data['ID'], $Foe);
 			break;
 	}
 
-	$Create_Battle = $Battle->CreateBattle($User_Data['ID'], $Foe);
+	$Create_Battle = $Battle->CreateBattle();
 
 	if ( $Create_Battle )
 	{
 		header('Location: /battle.php');
-		return;
+		exit;
 	}
 	else
 	{
 		unset($_SESSION['Battle']);
 		header("Location: /battle_search.php");
 
-		return;
+		exit;
 	}

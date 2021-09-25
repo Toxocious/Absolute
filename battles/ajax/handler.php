@@ -3,7 +3,19 @@
   require_once '../../core/required/session.php';
 
   $Fight = $_SESSION['Battle']['Battle_Type'];
-  $Battle = new $Fight();
+
+  switch ($Fight)
+  {
+    case 'trainer':
+      $Foe = $_SESSION['Battle']['Foe_ID'];
+      $Battle = new Trainer($User_Data['ID'], $Foe);
+      break;
+
+    default:
+      $Foe = $_SESSION['Battle']['Foe_ID'];
+      $Battle = new Trainer($User_Data['ID'], $Foe);
+      break;
+  }
 
   $Output = [
     'Time_Started' => $_SESSION['Battle']['Time_Started'],
