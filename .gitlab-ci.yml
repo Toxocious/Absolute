@@ -1,8 +1,8 @@
 image: php:7.2
 
 stages:
-  - compile
   - deploy
+  - compile
 
 before_script:
   ## Quick clean and update. (-qq is silent and auto 'yes')
