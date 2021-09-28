@@ -527,6 +527,9 @@
         'Consecutive_Hits' => $this->Consecutive_Hits
       ];
 
+      if ( in_array($Attacker->Item->Name, ['Choice Band', 'Choice Scarf', 'Choice Specs']) )
+        $Attacker->SetStatus('Move Locked');
+
       return [
         'Type' => 'Success',
         'Text' => $Handle_Move['Text'] .
