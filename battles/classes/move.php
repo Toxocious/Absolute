@@ -233,6 +233,17 @@
         ];
       }
 
+      if ( $Attacker->Item->Name == 'Assault Vest' && $this->Damage_Type == 'Status' && $this->Name != 'Me First' )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => "{$Attacker->Display_Name} can't use Status moves due to its Assault Vest!",
+          'Damage' => 0,
+          'Heal' => 0,
+        ];
+      }
+
+
       /**
        * Hidden Power check here, before anything further gets processed.
        */
