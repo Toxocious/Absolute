@@ -354,6 +354,13 @@
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
                 break;
 
+              case 'Bind':
+                if ( $Active_Foe->Active->Item->Name == 'Binding Band' )
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 6);
+                else
+                  $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                break;
+
               case 'Leech Seed':
                 if ( $Active_Ally->Active->Ability == 'Liquid Ooze' )
                   $Active_Foe->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
