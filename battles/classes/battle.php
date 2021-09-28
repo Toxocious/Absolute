@@ -311,6 +311,23 @@
         }
 
         /**
+         * Procees held item procs.
+         */
+        if ( !empty($Active_Ally->Active->Item) )
+        {
+          switch ( $Active_Ally->Active->Item->Name )
+          {
+            case 'Black Sludge':
+              if ( $Active_Ally->Active->HasTyping(['Poison']) )
+                $Active_Ally->Active->IncreaseHP(floor($Active_Ally->Active->Max_HP / 16));
+              else
+                if ( $Active_Ally->Active->Ability->Name != 'Magic Guard' )
+                  $Active_Ally->Active->DecreaseHP(floor($Active_Ally->Active->Max_HP / 8));
+              break;
+          }
+        }
+
+        /**
          * Process the Pokemon's active Statuses.
          */
         if ( !empty($Active_Ally->Active->Statuses) )
