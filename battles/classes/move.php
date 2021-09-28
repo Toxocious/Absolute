@@ -448,6 +448,25 @@
               break;
           }
         }
+
+        if ( $this->Name == 'Techno Blast' )
+        {
+          switch ( $Attacker->Item->Name )
+          {
+            case 'Burn Drive':
+              $this->Move_Type = 'Fire';
+              break;
+            case 'Chill Drive':
+              $this->Move_Type = 'Ice';
+              break;
+            case 'Douse Drive':
+              $this->Move_Type = 'Water';
+              break;
+            case 'Shock Drive':
+              $this->Move_Type = 'Electric';
+              break;
+          }
+        }
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Attacker, $Defender);
