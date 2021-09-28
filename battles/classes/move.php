@@ -390,6 +390,64 @@
               break;
           }
         }
+
+        if ( $this->Name == 'Multi-Attack' )
+        {
+          switch ( $Attacker->Item->Name )
+          {
+            case 'Bug Memory':
+              $this->Move_Type = 'Bug';
+              break;
+            case 'Dark Memory':
+              $this->Move_Type = 'Dark';
+              break;
+            case 'Dragon Memory':
+              $this->Move_Type = 'Dragon';
+              break;
+            case 'Electric Memory':
+              $this->Move_Type = 'Electric';
+              break;
+            case 'Fairy Memory':
+              $this->Move_Type = 'Fairy';
+              break;
+            case 'Fighting Memory':
+              $this->Move_Type = 'Fighting';
+              break;
+            case 'Fire Memory':
+              $this->Move_Type = 'Fire';
+              break;
+            case 'Flying Memory':
+              $this->Move_Type = 'Flying';
+              break;
+            case 'Ghost Memory':
+              $this->Move_Type = 'Ghost';
+              break;
+            case 'Grass Memory':
+              $this->Move_Type = 'Grass';
+              break;
+            case 'Ground Memory':
+              $this->Move_Type = 'Ground';
+              break;
+            case 'Ice Memory':
+              $this->Move_Type = 'Ice';
+              break;
+            case 'Poison Memory':
+              $this->Move_Type = 'Poison';
+              break;
+            case 'Psychic Memory':
+              $this->Move_Type = 'Psychic';
+              break;
+            case 'Rock Memory':
+              $this->Move_Type = 'Rock';
+              break;
+            case 'Steel Memory':
+              $this->Move_Type = 'Steel';
+              break;
+            case 'Water Memory':
+              $this->Move_Type = 'Water';
+              break;
+          }
+        }
       }
 
       $Move_Effectiveness = $this->MoveEffectiveness($Attacker, $Defender);
