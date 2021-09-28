@@ -964,6 +964,21 @@
     }
 
     /**
+     * Handle items that need to proc on entry, such as Assault Vest.
+     */
+    public function ItemProcsOnEntry()
+    {
+      $Item_Text_On_Entry = '';
+
+      switch ( $this->Item->Name )
+      {
+        
+      }
+
+      return $Item_Text_On_Entry;
+    }
+
+    /**
      * Increase the Pokemon's current Exp.
      */
     public function IncreaseExp()
