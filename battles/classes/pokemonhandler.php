@@ -975,6 +975,16 @@
         case 'Assault Vest':
           $this->Stats['Sp_Defense']->Current_Value *= 1.5;
           break;
+
+        case 'Berserk Gene':
+          if ( $this->Stats['Attack']->Stage < 6 && !$this->HasStatus('Confusion') )
+          {
+            $this->Stats['Attack']->SetValue(2);
+            $this->SetStatus('Confusion');
+
+            $Item_Text_On_Entry .= "{$this->Display_Name} raised its Attack and became Confused by consuming its Berserk Gene!";
+          }
+          break;
       }
 
       return $Item_Text_On_Entry;
