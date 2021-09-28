@@ -290,6 +290,7 @@
 
       $Effect_Text = '';
       $Effect_Text .= $this->AbilityProcsOnEntry($this, $Defender);
+      $Effect_Text .= $this->ItemProcsOnEntry($this);
 
       if ( !$Trace_Proc )
       {
