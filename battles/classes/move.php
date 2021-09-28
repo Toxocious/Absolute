@@ -1022,11 +1022,11 @@
       if ( $Defender->Ability->Name == 'Levitate' && !$Defender->IsGrounded() && $this->Move_Type == 'Ground' )
         return false;
 
-      if ( $Defender->Item->Name == 'Bright Powder' )
-        $this->Accuracy *= 0.9;
-
       if ( $Defender->Ability->Name == 'Wonder Skin' && $this->Damage_Type == 'Status' )
         $this->Accuracy = 50;
+
+      if ( $Defender->Item->Name == 'Bright Powder' )
+        $this->Accuracy *= 0.9;
 
       if ( $Attacker->Ability->Name == 'Compound Eyes' )
         $this->Accuracy *= 1.3;
