@@ -969,7 +969,7 @@
      */
     public function ItemProcsOnEntry()
     {
-      $Item_Text_On_Entry = '';
+      $Item_Text_On_Entry = '<br />';
 
       switch ( $this->Item->Name )
       {
@@ -985,6 +985,18 @@
 
             $Item_Text_On_Entry .= "{$this->Display_Name} raised its Attack and became Confused by consuming its Berserk Gene!";
           }
+          break;
+
+        case 'Choice Band':
+          $this->Stats['Attack']->Current_Value *= 1.5;
+          break;
+
+        case 'Choice Scarf':
+          $this->Stats['Speed']->Current_Value *= 1.5;
+          break;
+
+        case 'Choice Specs':
+          $this->Stats['Sp_Attack']->Current_Value *= 1.5;
           break;
       }
 
