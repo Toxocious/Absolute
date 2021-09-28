@@ -2312,6 +2312,20 @@
             }
             break;
 
+          case 'Cell Battery':
+            if ( $this->Move_Type == 'Electric' && $Defender->Stats['Attack']->Stage < 6 && $Defender->Stats['Attack'] > -6 )
+            {
+              if ( $Defender->Ability->Name == 'Contrary' )
+                $Defender->Stats['Attack']->SetValue(-1);
+              else
+                $Defender->Stats['Attack']->SetValue(1);
+
+              $Defender->Item->Consume();
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} absorbed the hit with its Absorb Bulb, and modified its Attack!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
