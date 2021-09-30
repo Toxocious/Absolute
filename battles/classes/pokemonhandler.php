@@ -1003,6 +1003,11 @@
           if ( $this->Pokedex_ID == 366 )
             $this->Stats['Sp_Defense']->Current_Value *= 2;
           break;
+
+        case 'Deep Sea Tooth':
+          if ( $this->Pokedex_ID == 366 )
+            $this->Stats['Sp_Attack']->Current_Value *= 2;
+          break;
       }
 
       return $Item_Text_On_Entry;
