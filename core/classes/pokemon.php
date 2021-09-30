@@ -31,6 +31,11 @@
 				$FetchPokedex->setFetchMode(PDO::FETCH_ASSOC);
 				$Pokedex = $FetchPokedex->fetch();
 
+        $Fetch_Evos = $PDO->prepare("SELECT COUNT(*) FROM `evolution_data` WHERE `poke_id` = ? AND `alt_id` = ? LIMIT 1");
+        $Fetch_Evos->execute([ $Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'] ]);
+        $Fetch_Evos->setFetchMode(PDO::FETCH_ASSOC);
+        $Can_Evolve = $Fetch_Evos->fetch();
+
 				$FetchItem = $PDO->prepare("SELECT `Item_ID`, `Item_Name` FROM `item_dex` WHERE `Item_ID` = ? LIMIT 1");
 				$FetchItem->execute([$Pokemon['Item']]);
 				$FetchItem->setFetchMode(PDO::FETCH_ASSOC);
@@ -151,6 +156,7 @@
 				'Move_4' => $Pokemon['Move_4'],
 				'Happiness' => $Pokemon['Happiness'],
         'Exp_Yield' => $Pokedex['Exp_Yield'],
+        'Can_Evolve' => ($Can_Evolve === 0 ? false : true),
 				'Owner_Current' => $Pokemon['Owner_Current'],
 				'Owner_Current_Username' => $Current_Owner['Username'],
 				'Owner_Original' => $Pokemon['Owner_Original'],
