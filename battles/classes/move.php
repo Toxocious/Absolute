@@ -1690,6 +1690,27 @@
             }
             break;
 
+          case 'Infatuation':
+            if ( $Ailment_Chance <= $this->Effect_Chance )
+            {
+              $Set_Status = $Target->Active->SetStatus($this->Ailment);
+              if ( !empty($Set_Status) )
+              {
+                $Status_Dialogue = $Set_Status->Dialogue;
+                if ( $Target->Active->HasItem('Destiny Knot') && !$Attacker->HasStatus($this->Ailment) )
+                {
+                  $Sync_Status = $Attacker->SetStatus($this->Ailment);
+                  if ( !empty($Sync_Status) )
+                  {
+                    $Status_Dialogue .= $Sync_Status->Dialogue;
+                  }
+                }
+
+                return $Status_Dialogue;
+              }
+            }
+            break;
+
           case 'Burn':
             if ( $Target->Active->HasAbility(['Magma Armor', 'Water Bubble', 'Water Veil']) && !$Attacker->HasAbility(['Mold Breaker', 'Teravolt', 'Turboblaze']) )
               return 'But it failed!';
