@@ -2768,6 +2768,11 @@
           if ( $this->Move_Type == 'Electric' )
             $this->Power *= 1.2;
           break;
+
+        case 'Expert Belt':
+          if ( $Move_Effectiveness['Mult'] > 1 )
+            $this->Power *= 1.2;
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
