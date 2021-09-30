@@ -2348,6 +2348,17 @@
             }
             break;
 
+          case 'Enigma Berry':
+            if ( $Move_Effectiveness > 1 )
+            {
+              $Defender->IncreaseHP(floor($Defender->Max_HP / 4));
+
+              $Defender->Item->Consume();
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} consumed its Enigma Berry and restored HP!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
