@@ -793,7 +793,7 @@
       {
         $Initial_Damage = $this->CalcDamage($Side, $STAB, $Does_Move_Crit, $Move_Effectiveness['Mult']);
 
-        $Item_Proc = $this->ProcessItemProcs($Attacker, $Defender, $Damage);
+        $Item_Proc = $this->ProcessItemProcs($Attacker, $Defender, $Move_Effectiveness['Mult'], $Damage);
         $Ability_Proc = $this->ProcessAbilityProcs($Attacker, $Defender, true, $Hit, $this->Total_Hits, $Initial_Damage);
         $Ability_Proc_Dialogue .= $Ability_Proc['Text'];
 
@@ -2310,6 +2310,7 @@
     (
       PokemonHandler $Attacker,
       PokemonHandler $Defender,
+      float $Move_Effectiveness = 1,
       int $Damage = 0
     )
     {
