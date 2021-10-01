@@ -2425,6 +2425,16 @@
             }
             break;
 
+          case 'Chesto Berry':
+            if ( $Defender->HasStatus('Sleep') )
+            {
+              $Defender->Item->Consume();
+              $Defender->RemoveStatus('Sleep');
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Aspear Berry and awoke from its slumber!";
+            }
+            break;
+
           case 'Enigma Berry':
             if ( $Move_Effectiveness > 1 )
             {
