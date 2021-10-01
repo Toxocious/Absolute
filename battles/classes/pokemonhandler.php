@@ -1034,6 +1034,11 @@
           if ( $this->Pokedex_ID === 132 && $this->Pokedex_ID_Original === 132 )
             $this->Stats['Defense']->Current_Value *= 2;
           break;
+
+        case 'Quick Powder':
+          if ( $this->Pokedex_ID === 132 && $this->Pokedex_ID_Original === 132 )
+            $this->Stats['Speed']->Current_Value *= 2;
+          break;
       }
 
       return $Item_Text_On_Entry;
