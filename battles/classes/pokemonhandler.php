@@ -1556,6 +1556,22 @@
     }
 
     /**
+     * Check if the Pokemon has a specified nature.
+     * @param {array} $Natures
+     * @return {bool}
+     */
+    public function HasNature
+    (
+      array $Natures
+    )
+    {
+      if ( in_array($this->Nature, $Natures) )
+        return true;
+
+      return false;
+    }
+
+    /**
      * Copy the specified Pokemon's Pokedex ID and Alt ID.
      * Used in cases such as Transform (Move), Imposter (Ability), and Illusion (Ability).
      * @param {PokemonHandler} $Pokemon
