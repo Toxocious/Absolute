@@ -2493,6 +2493,25 @@
             }
             break;
 
+          case 'Luminous Moss':
+            if
+            (
+              $this->Move_Type == 'Water' &&
+              $Defender->Stats['Sp_Defense']->Stage < 6 &&
+              $Defender->Stats['Sp_Defense']->Stage > -6
+            )
+            {
+              $Defender->Item->Consume();
+
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Sp_Defense']->SetValue(-1);
+              else
+                $Defender->Stats['Sp_Defense']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name}'s Luminous Moss modified its Special Defense!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
