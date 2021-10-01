@@ -2387,6 +2387,20 @@
             }
             break;
 
+          case 'Berry Juice':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 2 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 2
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->IncreaseHP(20);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} drank its Berry Juice and regained 20 HP!";
+            }
+            break;
+
           case 'Cell Battery':
             if ( $this->Move_Type == 'Electric' && $Defender->Stats['Attack']->Stage < 6 && $Defender->Stats['Attack'] > -6 )
             {
