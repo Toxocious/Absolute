@@ -1082,6 +1082,12 @@
         if ( $Foe->Ability->Name == 'Quick Draw' && mt_rand(1, 100) <= 30 )
           return 'Foe';
 
+        if ( $Ally->HasItem('Full Incense') )
+          return 'Foe';
+
+        if ( $Foe->HasItem('Full Incense') )
+          return 'Ally';
+
         if ( $Ally->Stats['Speed']->Current_Value > $Foe->Stats['Speed']->Current_Value )
           return 'Ally';
         else if ( $Ally->Stats['Speed']->Current_Value < $Foe->Stats['Speed']->Current_Value )
