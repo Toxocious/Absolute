@@ -2678,6 +2678,20 @@
             }
             break;
 
+          case 'Pecha Berry':
+            foreach ( ['Badly Poisoned', 'Poison'] as $Status_Effect )
+            {
+              if ( $Defender->HasStatus($Status_Effect) )
+              {
+                $Defender->Item->Consume();
+                $Defender->RemoveStatus($Status_Effect);
+
+                $Item_Proc_Text .= "{$Defender->Display_Name} ate its Pecha Berry and was healed of its {$Status_Effect}!";
+                break;
+              }
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
