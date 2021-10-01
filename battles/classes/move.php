@@ -2377,6 +2377,15 @@
             }
             break;
 
+          case 'Focus Band':
+            if ( $Defender->HP - $Damage <= 0 && mt_rand(1, 100) <= 10 )
+            {
+              $Defender->HP = 1;
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} hung on due to its Focus Band!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
