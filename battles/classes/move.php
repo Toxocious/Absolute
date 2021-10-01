@@ -2702,6 +2702,26 @@
             }
             break;
 
+          case 'Petaya Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4 &&
+              $Defender->Stats['Sp_Attack']->Stage < 6 &&
+              $Defender->Stats['Sp_Attack']->Stage > -6
+            )
+            {
+              $Defender->Item->Consume();
+
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Sp_Attack']->SetValue(-1);
+              else
+                $Defender->Stats['Sp_Attack']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Ganlon Berry and raised its Special Attack!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
