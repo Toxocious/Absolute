@@ -2722,6 +2722,16 @@
             }
             break;
 
+          case 'Rawst Berry':
+            if ( $Defender->HasStatus('Burn') )
+            {
+              $Defender->Item->Consume();
+              $Defender->RemoveStatus('Burn');
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Aspear Berry and was cured of its Burn!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
