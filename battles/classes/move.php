@@ -2457,6 +2457,13 @@
             }
             break;
 
+          case 'Lansat Berry':
+            $Defender->Item->Consume();
+            $Defender->Critical_Hit_Boost += 2;
+
+            $Item_Proc_Text .= "{$Defender->Display_Name} ate its Lansat Berry and boosted its Critical Hit Ratio!";
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
