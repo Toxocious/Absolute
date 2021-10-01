@@ -94,7 +94,7 @@
       if ( isset($_SESSION['Battle']['Pay_Day']) )
         $Money += $_SESSION['Battle']['Pay_Day'];
 
-      if ( $_SESSION['Battle']['Ally']->Active->Item->Name == 'Amulet Coin' )
+      if ( $_SESSION['Battle']['Ally']->Active->HasItem(['Amulet Coin', 'Luck Incense']) )
         $Money *= 2;
 
       if ( isset($_SESSION['Battle']['Ally']->Clan) )
