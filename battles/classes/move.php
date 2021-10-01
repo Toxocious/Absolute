@@ -2430,6 +2430,16 @@
             }
             break;
 
+          case 'Jacoba Berry':
+            if ( $this->Damage_Type == 'Physical' )
+            {
+              $Defender->Item->Consume();
+              $Attacker->DecreaseHP(floor($Attacker->Max_HP / 8));
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Jacoba Berry and made {$Attacker->Display_Name} take damage!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
