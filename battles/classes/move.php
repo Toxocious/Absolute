@@ -2395,6 +2395,22 @@
             }
             break;
 
+          case 'Ganlon Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4 &&
+              $Defender->Stats['Defense']->Stage < 6
+            )
+            {
+              $Defender->Stats['Defense']->SetValue(1);
+
+              $Defender->Item->Consume();
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Ganlon Berry and raised its Defense!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
