@@ -2360,7 +2360,7 @@
             break;
 
           case 'Figy Berry':
-            if ( $Defender->HP - $Damage <= $Defender->Max_HP )
+            if ( $Defender->HP >= $Defender->Max_HP / 2 && $Defender->HP - $Damage <= $Defender->Max_HP )
             {
               $Defender->IncreaseHP($Defender->Max_HP / 8);
 
