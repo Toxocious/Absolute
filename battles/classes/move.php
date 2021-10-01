@@ -2526,6 +2526,27 @@
             }
             break;
 
+          case 'Mago Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->IncreaseHP(floor($Defender->Max_HP / 3));
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Mago Berry and regained HP!";
+
+              if ( $Defender->HasNature(['Brave', 'Quiet', 'Relaxed', 'Sassy']) )
+              {
+                $Set_Confusion = $Defender->SetStatus('Confusion');
+                if ( !empty($Set_Confusion) )
+                  $Item_Proc_Text .= "<br />{$Set_Confusion['Dialogue']}";
+              }
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
