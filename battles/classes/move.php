@@ -2692,6 +2692,16 @@
             }
             break;
 
+          case 'Persim Berry':
+            if ( $Defender->HasStatus('Confusion') )
+            {
+              $Defender->Item->Consume();
+              $Defender->RemoveStatus('Confusion');
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Aspear Berry and was cured of its Confusion!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
