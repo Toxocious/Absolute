@@ -2464,6 +2464,21 @@
             $Item_Proc_Text .= "{$Defender->Display_Name} ate its Lansat Berry and boosted its Critical Hit Ratio!";
             break;
 
+          case 'Liechi Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4 &&
+              $Defender->Stats['Attack']->Stage < 6
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->Stats['Attack']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Kee Berry and raised its Attack!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
