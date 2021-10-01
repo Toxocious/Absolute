@@ -3082,6 +3082,12 @@
         case 'Life Orb':
           $this->Power *= 1.3;
           break;
+
+        case 'Metronome':
+          $Damage_Mod = [ 4096, 4915, 5734, 6553, 7372, 8192 ];
+          $Damage_Boost = $Damage_Mod[$Attacker->Last_Move['Consecutive_Hits']] / 4096;
+          $this->Power *= round($Damage_Boost);
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
