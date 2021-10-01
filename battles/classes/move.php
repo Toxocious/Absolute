@@ -2479,6 +2479,20 @@
             }
             break;
 
+          case 'Lum Berry':
+            foreach ( ['Burn', 'Freeze', 'Paralysis', 'Badly Poisoned', 'Poisoned', 'Sleep', 'Confusion'] as $Non_Volatile_Status )
+            {
+              if ( $Defender->HasStatus($Non_Volatile_Status) )
+              {
+                $Defender->Item->Consume();
+                $Defender->RemoveStatus($Non_Volatile_Status);
+
+                $Item_Proc_Text .= "{$Defender->Display_Name} ate its Lum Berry and was cured of its {$Non_Volatile_Status}!";
+                break;
+              }
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
