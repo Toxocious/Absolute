@@ -2364,9 +2364,8 @@
           case 'Figy Berry':
             if ( $Defender->HP >= $Defender->Max_HP / 2 && $Defender->HP - $Damage <= $Defender->Max_HP )
             {
-              $Defender->IncreaseHP($Defender->Max_HP / 8);
-
               $Defender->Item->Consume();
+              $Defender->IncreaseHP($Defender->Max_HP / 8);
 
               $Item_Proc_Text .= "{$Defender->Display_Name} ate its Figy Berry and regained HP!";
 
@@ -2402,11 +2401,16 @@
             (
               $Defender->HP >= $Defender->Max_HP / 4 &&
               $Defender->HP - $Damage <= $Defender->Max_HP / 4 &&
-              $Defender->Stats['Defense']->Stage < 6
+              $Defender->Stats['Defense']->Stage < 6 &&
+              $Defender->Stats['Defense']->Stage > -6
             )
             {
               $Defender->Item->Consume();
-              $Defender->Stats['Defense']->SetValue(1);
+
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Defense']->SetValue(-1);
+              else
+                $Defender->Stats['Defense']->SetValue(1);
 
               $Item_Proc_Text .= "{$Defender->Display_Name} ate its Ganlon Berry and raised its Defense!";
             }
@@ -2447,13 +2451,18 @@
             if
             (
               $this->Damage_Type == 'Physical' &&
-              $Defender->Stats['Defense']->Stage < 6
+              $Defender->Stats['Defense']->Stage < 6 &&
+              $Defender->Stats['Defense']->Stage > -6
             )
             {
               $Defender->Item->Consume();
-              $Defender->Stats['Defense']->SetValue(1);
 
-              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Kee Berry and raised its Defense!";
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Defense']->SetValue(-1);
+              else
+                $Defender->Stats['Defense']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Kee Berry and modified its Defense!";
             }
             break;
 
@@ -2469,13 +2478,18 @@
             (
               $Defender->HP >= $Defender->Max_HP / 4 &&
               $Defender->HP - $Damage <= $Defender->Max_HP / 4 &&
-              $Defender->Stats['Attack']->Stage < 6
+              $Defender->Stats['Attack']->Stage < 6 &&
+              $Defender->Stats['Attack']->Stage > -6
             )
             {
               $Defender->Item->Consume();
-              $Defender->Stats['Attack']->SetValue(1);
 
-              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Kee Berry and raised its Attack!";
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Attack']->SetValue(-1);
+              else
+                $Defender->Stats['Attack']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Kee Berry and modified its Attack!";
             }
             break;
 
