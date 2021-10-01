@@ -312,6 +312,7 @@
 
         /**
          * Procees held item procs.
+         * These items proc before any status ailments do.
          */
         if ( !empty($Active_Ally->Active->Item) )
         {
@@ -406,6 +407,21 @@
           {
             $Active_Ally->Active->Ability->SetProcStatus(false);
             $Active_Ally->Active->Stats['Speed']->Current_Value /= 1.5;
+          }
+        }
+
+        /**
+         * Procees held item procs.
+         * These items explicitly proc AFTER any status ailments.
+         */
+        if ( !empty($Active_Ally->Active->Item) )
+        {
+          switch ( $Active_Ally->Active->Item->Name )
+          {
+            case 'Flame Orb':
+              if ( !$Active_Ally->Active->HasStatus('Burn') )
+                $Active_Ally->Active->SetStatus('Burn');
+              break;
           }
         }
 
