@@ -2321,7 +2321,7 @@
 
       if ( !empty($Defender->Item) )
       {
-        switch ( $Defender->Item )
+        switch ( $Defender->Item->Name )
         {
           case 'Absorb Bulb':
             if ( $this->Move_Type == 'Water' && $Defender->Stats['Sp_Attack']->Stage < 6 && $Defender->Stats['Sp_Attack'] > -6 )
@@ -2560,7 +2560,7 @@
 
       if ( !empty($Attacker->Item) )
       {
-        switch ( $Attacker->Item )
+        switch ( $Attacker->Item->Name )
         {
 
         }
