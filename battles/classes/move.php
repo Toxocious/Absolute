@@ -2323,12 +2323,12 @@
           case 'Absorb Bulb':
             if ( $this->Move_Type == 'Water' && $Defender->Stats['Sp_Attack']->Stage < 6 && $Defender->Stats['Sp_Attack'] > -6 )
             {
+              $Defender->Item->Consume();
+
               if ( $Defender->Ability->Name == 'Contrary' )
                 $Defender->Stats['Sp_Attack']->SetValue(-1);
               else
                 $Defender->Stats['Sp_Attack']->SetValue(1);
-
-              $Defender->Item->Consume();
 
               $Item_Proc_Text .= "{$Defender->Display_Name} absorbed the hit with its Absorb Bulb, and modified its Special Attack!";
             }
@@ -2337,12 +2337,12 @@
           case 'Cell Battery':
             if ( $this->Move_Type == 'Electric' && $Defender->Stats['Attack']->Stage < 6 && $Defender->Stats['Attack'] > -6 )
             {
+              $Defender->Item->Consume();
+
               if ( $Defender->Ability->Name == 'Contrary' )
                 $Defender->Stats['Attack']->SetValue(-1);
               else
                 $Defender->Stats['Attack']->SetValue(1);
-
-              $Defender->Item->Consume();
 
               $Item_Proc_Text .= "{$Defender->Display_Name} absorbed the hit with its Absorb Bulb, and modified its Attack!";
             }
@@ -2351,9 +2351,8 @@
           case 'Enigma Berry':
             if ( $Move_Effectiveness > 1 )
             {
-              $Defender->IncreaseHP(floor($Defender->Max_HP / 4));
-
               $Defender->Item->Consume();
+              $Defender->IncreaseHP(floor($Defender->Max_HP / 4));
 
               $Item_Proc_Text .= "{$Defender->Display_Name} consumed its Enigma Berry and restored HP!";
             }
@@ -2403,11 +2402,31 @@
               $Defender->Stats['Defense']->Stage < 6
             )
             {
+              $Defender->Item->Consume();
               $Defender->Stats['Defense']->SetValue(1);
 
-              $Defender->Item->Consume();
-
               $Item_Proc_Text .= "{$Defender->Display_Name} ate its Ganlon Berry and raised its Defense!";
+            }
+            break;
+
+          case 'Iapapa Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->IncreaseHP(floor($Defender->Max_HP / 3));
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Iapapa Berry and regained HP!";
+
+              if ( $Defender->HasNature(['Gentle', 'Hasty', 'Lonely', 'Mild']) )
+              {
+                $Set_Confusion = $Defender->SetStatus('Confusion');
+                if ( !empty($Set_Confusion) )
+                  $Item_Proc_Text .= "<br />{$Set_Confusion['Dialogue']}";
+              }
             }
             break;
 
