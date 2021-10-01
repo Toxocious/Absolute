@@ -2359,6 +2359,24 @@
             }
             break;
 
+          case 'Figy Berry':
+            if ( $Defender->HP - $Damage <= $Defender->Max_HP )
+            {
+              $Defender->IncreaseHP($Defender->Max_HP / 8);
+
+              $Defender->Item->Consume();
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Figy Berry and regained HP!";
+
+              if ( $Defender->HasNature(['Bold', 'Calm', 'Modest', 'Timid']) )
+              {
+                $Set_Confusion = $Defender->SetStatus('Confusion');
+                if ( !empty($Set_Confusion) )
+                  $Item_Proc_Text .= "<br />{$Set_Confusion['Dialogue']}";
+              }
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
