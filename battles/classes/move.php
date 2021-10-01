@@ -2337,6 +2337,25 @@
             }
             break;
 
+          case 'Apricot Berry':
+            if
+            (
+              $this->Move_Type == 'Water' &&
+              $Defender->Stats['Sp_Attack']->Stage < 6 &&
+              $Defender->Stats['Sp_Attack']->Stage > -6
+            )
+            {
+              $Defender->Item->Consume();
+
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Sp_Attack']->SetValue(-1);
+              else
+                $Defender->Stats['Sp_Attack']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name}'s ate its Maranga Berry and modified its Special Attack!";
+            }
+            break;
+
           case 'Cell Battery':
             if ( $this->Move_Type == 'Electric' && $Defender->Stats['Attack']->Stage < 6 && $Defender->Stats['Attack'] > -6 )
             {
