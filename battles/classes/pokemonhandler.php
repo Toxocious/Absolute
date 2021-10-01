@@ -1016,6 +1016,10 @@
             $this->Stats['Sp_Defense']->Current_Value *= 1.5;
           }
           break;
+
+        case 'Float Stone':
+          $this->Weight *= 0.5;
+          break;
       }
 
       return $Item_Text_On_Entry;
