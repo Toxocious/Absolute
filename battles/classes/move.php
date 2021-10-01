@@ -2664,6 +2664,20 @@
             }
             break;
 
+          case 'Oran Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 2 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 2
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->IncreaseHP(10);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} drank its Berry Juice and regained 10 HP!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
