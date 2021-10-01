@@ -2547,6 +2547,25 @@
             }
             break;
 
+          case 'Maranga Berry':
+            if
+            (
+              $this->Damage_Type == 'Special' &&
+              $Defender->Stats['Sp_Defense']->Stage < 6 &&
+              $Defender->Stats['Sp_Defense']->Stage > -6
+            )
+            {
+              $Defender->Item->Consume();
+
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Sp_Defense']->SetValue(-1);
+              else
+                $Defender->Stats['Sp_Defense']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name}'s ate its Maranga Berry and modified its Special Defense!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
