@@ -422,6 +422,10 @@
               if ( !$Active_Ally->Active->HasStatus('Burn') )
                 $Active_Ally->Active->SetStatus('Burn');
               break;
+
+            case 'Leftovers':
+              $Active_Ally->Active->IncreaseHP(floor($Active_Ally->Active->Max_HP / 16));
+              break;
           }
         }
 
