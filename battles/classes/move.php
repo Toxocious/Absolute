@@ -2415,6 +2415,16 @@
             }
             break;
 
+          case 'Cheri Berry':
+            if ( $Defender->HasStatus('Paralysis') )
+            {
+              $Defender->Item->Consume();
+              $Defender->RemoveStatus('Paralysis');
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Aspear Berry and was cured of its Paralysis!";
+            }
+            break;
+
           case 'Enigma Berry':
             if ( $Move_Effectiveness > 1 )
             {
