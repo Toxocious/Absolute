@@ -2356,6 +2356,27 @@
             }
             break;
 
+          case 'Aguav Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->IncreaseHP(floor($Defender->Max_HP / 3));
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Mago Berry and regained HP!";
+
+              if ( $Defender->HasNature(['Lax', 'Naive', 'Naughty', 'Rash']) )
+              {
+                $Set_Confusion = $Defender->SetStatus('Confusion');
+                if ( !empty($Set_Confusion) )
+                  $Item_Proc_Text .= "<br />{$Set_Confusion['Dialogue']}";
+              }
+            }
+            break;
+
           case 'Cell Battery':
             if ( $this->Move_Type == 'Electric' && $Defender->Stats['Attack']->Stage < 6 && $Defender->Stats['Attack'] > -6 )
             {
