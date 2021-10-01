@@ -2386,6 +2386,15 @@
             }
             break;
 
+          case 'Focus Sash':
+            if ( $Defender->HP == $Defender->Max_HP && $Defender->HP - $Damage <= 0 )
+            {
+              $Defender->HP = 1;
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} hung on due to its Focus Sash!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
