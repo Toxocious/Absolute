@@ -2440,6 +2440,20 @@
             }
             break;
 
+          case 'Kee Berry':
+            if
+            (
+              $this->Damage_Type == 'Physical' &&
+              $Defender->Stats['Defense']->Stage < 6
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->Stats['Defense']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Kee Berry and raised its Defense!";
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
