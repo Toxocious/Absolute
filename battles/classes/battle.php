@@ -426,6 +426,10 @@
             case 'Leftovers':
               $Active_Ally->Active->IncreaseHP(floor($Active_Ally->Active->Max_HP / 16));
               break;
+
+            case 'Life Orb':
+              $Active_Ally->Active->DecreaeHP(floor($Active_Ally->Active->Max_HP / 10));
+              break;
           }
         }
 

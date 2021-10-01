@@ -2893,6 +2893,10 @@
           if ( $Move_Effectiveness['Mult'] > 1 )
             $this->Power *= 1.2;
           break;
+
+        case 'Life Orb':
+          $this->Power *= 1.3;
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
