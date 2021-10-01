@@ -1105,7 +1105,7 @@
       if ( $Defender->Ability->Name == 'Wonder Skin' && $this->Damage_Type == 'Status' )
         $this->Accuracy = 50;
 
-      if ( $Defender->Item->Name == 'Bright Powder' )
+      if ( $Defender->HasItem(['Bright Powder', 'Lax Incense']) )
         $this->Accuracy *= 0.9;
 
       if ( $Attacker->Ability->Name == 'Compound Eyes' )
