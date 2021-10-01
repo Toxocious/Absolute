@@ -3088,6 +3088,11 @@
           $Damage_Boost = $Damage_Mod[$Attacker->Last_Move['Consecutive_Hits']] / 4096;
           $this->Power *= round($Damage_Boost);
           break;
+
+        case 'Muscle Band':
+          if ( $this->Damage_Type == 'Physical' )
+            $this->Power *= 1.1;
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
