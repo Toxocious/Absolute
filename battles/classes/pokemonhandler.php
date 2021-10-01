@@ -1021,6 +1021,14 @@
         case 'Float Stone':
           $this->Weight *= 0.5;
           break;
+
+        case 'Light Ball':
+          if ( $this->Pokedex_ID === 25 )
+          {
+            $this->Stats['Attack']->Current_Value *= 2;
+            $this->Stats['Sp_Attack']->Current_Value *= 2;
+          }
+          break;
       }
 
       return $Item_Text_On_Entry;
