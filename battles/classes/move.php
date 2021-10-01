@@ -1700,7 +1700,7 @@
               if ( !empty($Set_Status) )
               {
                 $Status_Dialogue = $Set_Status->Dialogue;
-                if ( $Target->Active->HasItem('Destiny Knot') && !$Attacker->HasStatus($this->Ailment) )
+                if ( $Target->Active->HasItem(['Destiny Knot']) && !$Attacker->HasStatus($this->Ailment) )
                 {
                   $Sync_Status = $Attacker->SetStatus($this->Ailment);
                   if ( !empty($Sync_Status) )

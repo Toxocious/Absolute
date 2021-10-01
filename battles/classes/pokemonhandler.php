@@ -1292,13 +1292,13 @@
         if ( $this->Ability->Name == 'Comatose' )
           return false;
 
-        if ( $Status == 'Burn' && $this->HasTyping(['Fire']) && !$this->HasItem('Flame Orb') )
+        if ( $Status == 'Burn' && $this->HasTyping(['Fire']) && !$this->HasItem(['Flame Orb']) )
           return false;
 
         if ( $Status == 'Paralysis' && $this->HasTyping(['Electric']) )
           return false;
 
-        if ( $Status == 'Poison' && $this->HasTyping(['Poison', 'Steel']) && $Attacker->Ability->Name != 'Corrosion' && !$this->HasItem('Toxic Orb') )
+        if ( $Status == 'Poison' && $this->HasTyping(['Poison', 'Steel']) && $Attacker->Ability->Name != 'Corrosion' && !$this->HasItem(['Toxic Orb']) )
           return false;
 
         if ( $Status == 'Sleep' && $this->HasAbility(['Insomnia', 'Sweet Veil']) )
@@ -1544,17 +1544,17 @@
 
     /**
      * Determine if the Pokemon has a specified typing.
-     * @param string $Item_Name
+     * @param {array} $List_Of_Items
      */
     public function HasItem
     (
-      string $Item_Name
+      array $List_Of_Items
     )
     {
       if ( empty($this->Item) )
         return false;
 
-      if ( $this->Item->Name == $Item_Name )
+      if ( in_array($this->Item->Name, $List_Of_Items) )
         return true;
 
       return false;
