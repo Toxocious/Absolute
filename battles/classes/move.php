@@ -3093,6 +3093,11 @@
           if ( $this->Damage_Type == 'Physical' )
             $this->Power *= 1.1;
           break;
+
+        case 'Odd Incense':
+          if ( $this->Move_Type == 'Psychic' )
+            $this->Power *= 1.2;
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
