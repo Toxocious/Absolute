@@ -2650,6 +2650,20 @@
             }
             break;
 
+          case 'Mental Herb':
+            foreach ( ['Disable', 'Encore', 'Heal Block', 'Infatuation', 'Taunt'] as $Status_Effect )
+            {
+              if ( $Defender->HasStatus($Status_Effect) )
+              {
+                $Defender->Item->Consume();
+                $Defender->RemoveStatus($Status_Effect);
+
+                $Item_Proc_Text .= "{$Defender->Display_Name} consumed its Mental Herb and cured its {$Status_Effect}.";
+                break;
+              }
+            }
+            break;
+
           case 'Rocky Helmet':
             if ( $this->HasFlag('contact') && $Attacker->Item->Name != 'Protective Pads' )
             {
