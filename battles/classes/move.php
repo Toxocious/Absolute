@@ -1210,6 +1210,9 @@
           break;
       }
 
+      if ( $Attacker->Critical_Hit_Boost > 0 )
+        $this->Crit_Chance += $Attacker->Critical_Hit_Boost;
+
       switch ( $this->Crit_Chance )
       {
         case 0:
