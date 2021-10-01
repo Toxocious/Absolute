@@ -2377,6 +2377,16 @@
             }
             break;
 
+          case 'Aspear Berry':
+            if ( $Defender->HasStatus('Freeze') )
+            {
+              $Defender->Item->Consume();
+              $Defender->RemoveStatus('Freeze');
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Aspear Berry and thawed out!";
+            }
+            break;
+
           case 'Cell Battery':
             if ( $this->Move_Type == 'Electric' && $Defender->Stats['Attack']->Stage < 6 && $Defender->Stats['Attack'] > -6 )
             {
