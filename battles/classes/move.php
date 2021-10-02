@@ -2783,6 +2783,26 @@
               $Item_Proc_Text .= "{$Defender->Display_Name} ate its Sitrus Berry and regained HP!";
             }
             break;
+
+          case 'Snowball':
+            if
+            (
+              $this->Move_Type == 'Ice' &&
+              $Damage > 0 &&
+              $Defender->Stats['Attack']->Stage < 6 &&
+              $Defender->Stats['Attack']->Stage > -6
+            )
+            {
+              $Defender->Item->Consume();
+
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Attack']->SetValue(-1);
+              else
+                $Defender->Stats['Attack']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name}'s Snowball modified its Attack!";
+            }
+            break;
         }
       }
 
