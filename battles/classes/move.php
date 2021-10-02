@@ -2865,6 +2865,27 @@
               }
             }
             break;
+
+          case 'Wiki Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->IncreaseHP(floor($Defender->Max_HP / 3));
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Wiki Berry and regained HP!";
+
+              if ( $Defender->HasNature(['Adamant', 'Careful', 'Impish', 'Jolly']) )
+              {
+                $Set_Confusion = $Defender->SetStatus('Confusion');
+                if ( !empty($Set_Confusion) )
+                  $Item_Proc_Text .= "<br />{$Set_Confusion['Dialogue']}";
+              }
+            }
+            break;
         }
       }
 
