@@ -2803,6 +2803,33 @@
               $Item_Proc_Text .= "{$Defender->Display_Name}'s Snowball modified its Attack!";
             }
             break;
+
+          case 'Starf Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4
+            )
+            {
+              $Stats = ['Attack', 'Defense', 'Sp_Attack', 'Sp_Defense', 'Speed'];
+              $Random_Stat = $Stats[mt_rand(0, count($Stats) - 1)];
+              $Stat_Name = str_replace('_', 'ecial ', $Random_Stat);
+
+              if
+              (
+                $Defender->Stats[$Random_Stat]->Stage < 6 &&
+                $Defender->Stats[$Random_Stat]->Stage > -6
+              )
+              {
+                if ( $Defender->HasAbility(['Contrary']) )
+                  $Defender->Stats[$Random_Stat]->SetValue(-1);
+                else
+                  $Defender->Stats[$Random_Stat]->SetValue(1);
+
+                $Item_Proc_Text .= "{$Defender->Display_Name} ate its Starf Berry and modified its {$Stat_Name}!";
+              }
+            }
+            break;
         }
       }
 
