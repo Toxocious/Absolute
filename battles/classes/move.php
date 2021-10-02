@@ -3165,6 +3165,11 @@
           if ( $this->Move_Type == 'Psychic' )
             $this->Power *= 1.2;
           break;
+
+        case 'Rock Incense':
+          if ( $this->Move_Type == 'Rock' )
+            $this->Power *= 1.2;
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
