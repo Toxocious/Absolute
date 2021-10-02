@@ -3205,6 +3205,11 @@
           if ( $this->Move_Type == 'Grass' )
             $this->Power *= 1.2;
           break;
+
+        case 'Sea Incense':
+          if ( $this->Move_Type == 'Water' )
+            $this->Power *= 1.2;
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
