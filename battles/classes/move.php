@@ -1020,6 +1020,11 @@
           break;
       }
 
+      if ( isset($_SESSION['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
+      else
+        $Turn_First_Attacker = $Side;
+
       if ( $Defender->Ability == 'Wonder Guard' && $Move_Effectiveness < 2 )
         return false;
 
@@ -1110,6 +1115,9 @@
 
       if ( $Defender->HasItem(['Bright Powder', 'Lax Incense']) )
         $this->Accuracy *= 0.9;
+
+      if ( $Attacker->HasItem(['Zoom Lens']) && $Turn_First_Attacker != $Side )
+        $this->Accuracy *= 1.2;
 
       if ( $Attacker->Ability->Name == 'Compound Eyes' )
         $this->Accuracy *= 1.3;
