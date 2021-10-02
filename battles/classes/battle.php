@@ -435,6 +435,11 @@
               if ( !$Active_Ally->Active->HasAbility(['Magic Guard']) )
                 $Active_Ally->Active->DecreaeHP(floor($Active_Ally->Active->Max_HP / 8));
               break;
+
+            case 'Toxic Orb':
+              if ( !$Active_Ally->Active->HasStatus('Badly Poisoned') )
+                $Active_Ally->Active->SetStatus('Badly Poisoned');
+              break;
           }
         }
 
