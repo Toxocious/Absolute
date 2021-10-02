@@ -1044,6 +1044,10 @@
           if ( in_array($this->Pokedex_ID, [104, 105]) )
             $this->Stats['Attack']->Current_Value *= 2;
           break;
+
+        case 'Wide Lens':
+          $this->Stats['Accuracy']->Current_Value *= 1.1;
+          break;
       }
 
       return $Item_Text_On_Entry;
