@@ -2769,6 +2769,20 @@
               $Item_Proc_Text .= "{$Defender->Display_Name} ate its Salac Berry and raised its Speed!";
             }
             break;
+
+          case 'Sitrus Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 2 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 2
+            )
+            {
+              $Defender->Item->Consume();
+              $Defender->IncreaseHP(floor($Defender->Max_HP / 4));
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Sitrus Berry and regained HP!";
+            }
+            break;
         }
       }
 
