@@ -1099,6 +1099,9 @@
         if ( !in_array($this->Name, ['Gust', 'Thunder', 'Twister', 'Sky Uppercut', 'Hurricane', 'Smack Down']) )
           return false;
 
+      if ( $Defender->HasItem(['Ring Target']) && (!$Defender->HasTyping(['Grass']) && !$this->HasFlag('powder')) )
+        return true;
+
       if ( $Defender->Ability->Name == 'Levitate' && !$Defender->IsGrounded() && $this->Move_Type == 'Ground' )
         return false;
 
@@ -1659,11 +1662,7 @@
           }
         }
 
-        if
-        (
-          $Target->Active->Ability->Name == 'Overcoat' &&
-          ( strpos($this->Name, 'Powder') || strpos($this->Name, 'Spore') )
-        )
+        if ( $Target->Active->Ability->Name == 'Overcoat' && $this->HasFlag('powder') )
         {
           return 'But it failed!';
         }
