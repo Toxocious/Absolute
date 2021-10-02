@@ -2845,7 +2845,24 @@
       {
         switch ( $Attacker->Item->Name )
         {
+          case 'Throat Spray':
+            if
+            (
+              $this->HasFlag('sound') &&
+              $Attacker->Stats['Sp_Attack']->Stage < 6 &&
+              $Attacker->Stats['Sp_Attack']->Stage > -6
+            )
+            {
+              $Attacker->Item->Consume();
 
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Sp_Attack']->SetValue(-1);
+              else
+                $Defender->Stats['Sp_Attack']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Attacker->Display_Name} Throat Spray modified its Special Attack!";
+            }
+            break;
         }
       }
 
