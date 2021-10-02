@@ -2827,6 +2827,8 @@
                 $Defender->Stats[$Random_Stat]->Stage > -6
               )
               {
+                $Defender->Item->Consume();
+
                 if ( $Defender->HasAbility(['Contrary']) )
                   $Defender->Stats[$Random_Stat]->SetValue(-1);
                 else
