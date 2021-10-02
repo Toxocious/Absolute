@@ -2739,6 +2739,17 @@
               $Item_Proc_Text .= "{$Attacker->Display_Name} hurt itself on {$Defender->Display_Name}'s {$Defender->Item->Name}!<br />";
             }
             break;
+
+          case 'Rowap Berry':
+            if ( $this->Damage_Type == 'Special' )
+            {
+              $Defender->Item->Consume();
+              $Attacker->DecreaseHP(floor($Attacker->Max_HP / 8));
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Rowap Berry and made {$Attacker->Display_Name} take damage!";
+            }
+            break;
+            break;
         }
       }
 
