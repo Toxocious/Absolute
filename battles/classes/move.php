@@ -2749,6 +2749,25 @@
               $Item_Proc_Text .= "{$Defender->Display_Name} ate its Rowap Berry and made {$Attacker->Display_Name} take damage!";
             }
             break;
+
+          case 'Salac Berry':
+            if
+            (
+              $Defender->HP >= $Defender->Max_HP / 4 &&
+              $Defender->HP - $Damage <= $Defender->Max_HP / 4 &&
+              $Defender->Stats['Speed']->Stage < 6 &&
+              $Defender->Stats['Speed']->Stage > -6
+            )
+            {
+              $Defender->Item->Consume();
+
+              if ( $Defender->HasAbility(['Contrary']) )
+                $Defender->Stats['Speed']->SetValue(-1);
+              else
+                $Defender->Stats['Speed']->SetValue(1);
+
+              $Item_Proc_Text .= "{$Defender->Display_Name} ate its Salac Berry and raised its Speed!";
+            }
             break;
         }
       }
