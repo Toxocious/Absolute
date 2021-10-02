@@ -1363,6 +1363,12 @@
             (isset($Effect_Text) ? $Effect_Text : ''),
         ];
       }
+
+      if ( $Defender->HasItem(['Sticky Barb']) && empty($Attacker->Item) )
+      {
+        $Attacker->Item = $Defender->Item;
+        $Defender->Item = null;
+      }
     }
 
     /**

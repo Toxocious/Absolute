@@ -430,6 +430,11 @@
             case 'Life Orb':
               $Active_Ally->Active->DecreaeHP(floor($Active_Ally->Active->Max_HP / 10));
               break;
+
+            case 'Sticky Barb':
+              if ( !$Active_Ally->Active->HasAbility(['Magic Guard']) )
+                $Active_Ally->Active->DecreaeHP(floor($Active_Ally->Active->Max_HP / 8));
+              break;
           }
         }
 
