@@ -3293,6 +3293,7 @@
           break;
 
         case 'Sea Incense':
+        case 'Wave Incense':
           if ( $this->Move_Type == 'Water' )
             $this->Power *= 1.2;
           break;
