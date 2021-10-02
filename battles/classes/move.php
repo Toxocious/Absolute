@@ -2838,6 +2838,33 @@
               }
             }
             break;
+
+          case 'Weakness Policy':
+            if ( $Move_Effectiveness > 1 )
+            {
+              if
+              (
+                $Defender->Stats['Attack']->Stage < 6 && $Defender->Stats['Attack']->Stage > -6 &&
+                $Defender->Stats['Sp_Attack']->Stage < 6 && $Defender->Stats['Sp_Attack']->Stage > -6
+              )
+              {
+                $Defender->Item->Consume();
+
+                if ( $Defender->HasAbility(['Contrary']) )
+                {
+                  $Defender->Stats['Attack']->SetValue(-2);
+                  $Defender->Stats['Sp_Attack']->SetValue(-2);
+                }
+                else
+                {
+                  $Defender->Stats['Attack']->SetValue(2);
+                  $Defender->Stats['Sp_Attack']->SetValue(2);
+                }
+
+                $Item_Proc_Text .= "{$Defender->Display_Name}'s Weakness Policy modified its Attack and Special Attack!";
+              }
+            }
+            break;
         }
       }
 
