@@ -1039,6 +1039,11 @@
           if ( $this->Pokedex_ID === 132 && $this->Pokedex_ID_Original === 132 )
             $this->Stats['Speed']->Current_Value *= 2;
           break;
+
+        case 'Thuck Club':
+          if ( in_array($this->Pokedex_ID, [104, 105]) )
+            $this->Stats['Attack']->Current_Value *= 2;
+          break;
       }
 
       return $Item_Text_On_Entry;
