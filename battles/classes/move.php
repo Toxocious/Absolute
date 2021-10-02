@@ -3345,6 +3345,11 @@
           if ( $this->Move_Type == 'Water' )
             $this->Power *= 1.2;
           break;
+
+        case 'Wise Glasses':
+          if ( $this->Damage_Type == 'Special' )
+            $this->Power *= 1.1;
+          break;
       }
 
       switch ( $Attacker->Ability->Name )
