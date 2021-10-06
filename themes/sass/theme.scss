@@ -276,6 +276,8 @@ div
  */
 nav
 {
+  border-color: var(--border-color);
+
   & > .button
   {
     background: var(--color-quadternary);
