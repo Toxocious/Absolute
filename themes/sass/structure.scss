@@ -975,135 +975,143 @@ footer
   }
 
   /**
- * Custom Panel Styling
- */
-.panel
-{
-  border-radius: var(--border-radius);
-  padding: 2px;
-
-  & > div:last-child
+   * Main content block
+   */
+  main
   {
-    border-radius: var(--border-radius-bl-br);
+    width: calc(100% - 60px);
   }
 
-  & > div:not(.head):not(:last-child)
+  /**
+  * Custom Panel Styling
+  */
+  .panel
   {
-    border-bottom: 2px solid;
-  }
+    border-radius: var(--border-radius);
+    padding: 2px;
 
-  &.m-center
-  {
-    margin: var(--margin-center);
-  }
-
-  &.content
-  {
-    float: left;
-    margin: 5px;
-    width: calc(100% - 5px);
-
-    & > .body
+    & > div:last-child
     {
-      text-align: center;
-
-      &.padding-5px
-      {
-        padding: var(--padding-5px);
-      }
-    }
-  }
-
-  & > .head
-  {
-    border-radius: var(--border-radius-tl-tr);
-    font-weight: bold;
-    padding: var(--padding-3px);
-    text-align: center;
-  }
-
-  & > .body
-  {
-    &:last-child
-    {
-      border-radius: var(--border-radius);
+      border-radius: var(--border-radius-bl-br);
     }
 
-    & > .description
-    {
-      border: 2px solid;
-      border-radius: var(--border-radius);
-      margin: 0 auto 5px;
-      padding: 5px;
-      text-align: center;
-      width: 80%;
-    }
-
-    & > .nav
-    {
-      height: 29px;
-      margin-bottom: 8px;
-
-      & > div
-      {
-        border: 2px solid;
-        border-top: none;
-        border-radius: var(--border-radius-bl-br);
-        float: left;
-        margin-left: 15px;
-        min-width: 120px;
-        text-align: center;
-        transition: background 150ms;
-
-        & > a
-        {
-          display: block;
-          padding: var(--padding-3px);
-        }
-      }
-    }
-
-    & > .pagi
+    & > div:not(.head):not(:last-child)
     {
       border-bottom: 2px solid;
-      height: 30px;
+    }
 
-      & > div
+    &.m-center
+    {
+      margin: var(--margin-center);
+    }
+
+    &.content
+    {
+      float: left;
+      margin: 5px;
+      width: calc(100% - 5px);
+
+      & > .body
       {
-        float: left;
-        height: auto;
+        text-align: center;
 
-        &:not(:last-child)
+        &.padding-5px
         {
-          border-right: 1px solid;
-        }
-
-        & > *
-        {
-          display: block;
           padding: var(--padding-5px);
         }
       }
     }
-  }
 
-  & > .foot
-  {
-    & > form
+    & > .head
     {
-      margin: 0px;
+      border-radius: var(--border-radius-tl-tr);
+      font-weight: bold;
+      padding: var(--padding-3px);
+      text-align: center;
+    }
 
-      & > input
+    & > .body
+    {
+      &:last-child
       {
-        border: none;
-        border-radius: var(--border-radius-bl-br);
-        height: 26px;
-        margin-bottom: 0px;
-        padding: 0px;
+        border-radius: var(--border-radius);
+      }
+
+      & > .description
+      {
+        border: 2px solid;
+        border-radius: var(--border-radius);
+        margin: 0 auto 5px;
+        padding: 5px;
         text-align: center;
-        width: 186px;
+        width: 80%;
+      }
+
+      & > .nav
+      {
+        height: 29px;
+        margin-bottom: 8px;
+
+        & > div
+        {
+          border: 2px solid;
+          border-top: none;
+          border-radius: var(--border-radius-bl-br);
+          float: left;
+          margin-left: 15px;
+          min-width: 120px;
+          text-align: center;
+          transition: background 150ms;
+
+          & > a
+          {
+            display: block;
+            padding: var(--padding-3px);
+          }
+        }
+      }
+
+      & > .pagi
+      {
+        border-bottom: 2px solid;
+        height: 30px;
+
+        & > div
+        {
+          float: left;
+          height: auto;
+
+          &:not(:last-child)
+          {
+            border-right: 1px solid;
+          }
+
+          & > *
+          {
+            display: block;
+            padding: var(--padding-5px);
+          }
+        }
+      }
+    }
+
+    & > .foot
+    {
+      & > form
+      {
+        margin: 0px;
+
+        & > input
+        {
+          border: none;
+          border-radius: var(--border-radius-bl-br);
+          height: 26px;
+          margin-bottom: 0px;
+          padding: 0px;
+          text-align: center;
+          width: 186px;
+        }
       }
     }
   }
-}
 }
