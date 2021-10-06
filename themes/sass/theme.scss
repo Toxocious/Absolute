@@ -470,50 +470,6 @@ aside
 }
 
 /**
- * Colorbox Modal
- */
-#cboxOverlay
-{
-  background: #111;
-  color: #fff
-}
-
-#colorbox
-{
-  border-color: var(--border-color);
-  color: #fff;
-
-  & > #cboxWrapper
-  {
-    color: #fff;
-
-    #cboxContent
-    {
-      background: #000;
-      border-color: var(--color-primary);
-      color: #fff;
-
-      #cboxLoadingOverlay
-      {
-        background: #000;
-      }
-
-      #cboxLoadedContent
-      {
-        background: #000;
-        color: #fff;
-
-        .cboxIframe
-        {
-          background: #111;
-          color: #fff;
-        }
-      }
-    }
-  }
-}
-
-/**
  * Table
  */
 table
