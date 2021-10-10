@@ -1112,6 +1112,18 @@
         if ( $Foe->HasItem(['Full Incense', 'Lagging Tail']) )
           return 'Ally';
 
+        if ( $Ally->HasItem(['Custap Berry']) && $Ally->HP <= $Ally->Max_HP / 4 )
+        {
+          $Ally->Item->Consume();
+          return 'Ally';
+        }
+
+        if ( $Foe->HasItem(['Custap Berry']) && $Foe->HP <= $Foe->Max_HP / 4 )
+        {
+          $Foe->Item->Consume();
+          return 'Foe';
+        }
+
         if ( $Ally->Stats['Speed']->Current_Value > $Foe->Stats['Speed']->Current_Value )
           return 'Ally';
         else if ( $Ally->Stats['Speed']->Current_Value < $Foe->Stats['Speed']->Current_Value )
