@@ -239,7 +239,7 @@
 
         case 'Extremely Harsh Sunlight':
         case 'Harsh Sunlight':
-          Weather_Name = 'harsh_sunlight';
+          Weather_Name = 'sun';
           break;
 
         case 'Heavy Rain':
@@ -248,11 +248,11 @@
           break;
 
         case 'Sandstorm':
-          Weather_Name = 'sandstorm';
+          Weather_Name = 'sands';
           break;
       }
 
-      Weather_Element.innerHTML = `<img src='./images/Assets/weather_${Weather_Name}.png' />`;
+      Weather_Element.innerHTML = `<img src='./images/Battle/weather_${Weather_Name}.png' />`;
     },
 
     RenderFieldEffects: (Field_Effects) =>
@@ -270,9 +270,12 @@
           document.getElementById(`${Field_Side}_Field_Effects`).innerText = '';
 
           const Processing_Side = Field_Effects[Field_Side];
-          Processing_Side.forEach((Index) => {
+          Processing_Side.forEach((Index) =>
+          {
+            const Field_Name = Index.Name;
+
             document.getElementById(`${Field_Side}_Field_Effects`).innerHTML += `
-              <img alt='${Index.Name} Icon' src='./images/Assets/Battle/${Index.Name}.png' style='height: 20px; width: 40px;' />
+              <img alt='${Index.Name} Icon' src='./images/Battle/${Field_Name}.png' style='height: 24px; width: 40px;' />
             `;
           });
         }
