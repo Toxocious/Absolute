@@ -262,7 +262,6 @@
 
         case 'Galvanize':
           $this->Move_Type = 'Electric';
-          $this->Power *= 1.2;
           break;
 
         case 'Libero':
@@ -299,17 +298,14 @@
             }
           }
           break;
+
         case 'Normalize':
           $this->Move_Type = 'Normal';
-          $this->Power *= 1.2;
           break;
 
         case 'Pixilate':
           if ( $this->Move_Type == 'Normal' )
-          {
             $this->Move_Type = 'Fairy';
-            $this->Power *= 1.2;
-          }
           break;
 
         case 'Protean':
@@ -318,10 +314,7 @@
 
         case 'Refrigerate':
           if ( $this->Move_Type == 'Normal' )
-          {
             $this->Move_Type = 'Ice';
-            $this->Power *= 1.2;
-          }
           break;
       }
 
@@ -3408,6 +3401,11 @@
             $this->Power *= 1.5;
           break;
 
+        case 'Galvanize':
+          if ( $this->Move_Type == 'Electric' )
+            $this->Power *= 1.2;
+          break;
+
         case 'Infiltrator':
           $Physical_Damage_Mult = 1.0;
           $Special_Damage_Mult = 1.0;
@@ -3423,9 +3421,19 @@
             $this->Power *= 1.5;
           break;
 
+        case 'Normalize':
+          if ( $this->Move_Type == 'Normal' )
+            $this->Power *= 1.2;
+          break;
+
         case 'Overgrow':
           if ( $this->Move_Type == 'Grass' )
             $this->Power *= 1.5;
+          break;
+
+        case 'Pixilate':
+          if ( $this->Move_Type == 'Fairy' )
+            $this->Power *= 1.2;
           break;
 
         case 'Punk Rock':
@@ -3440,6 +3448,11 @@
 
         case 'Reckless':
           if ( $this->Recoil > 0 )
+            $this->Power *= 1.2;
+          break;
+
+        case 'Refrigerate':
+          if ( $this->Move_Type == 'Ice' )
             $this->Power *= 1.2;
           break;
 
