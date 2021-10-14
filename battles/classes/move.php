@@ -626,16 +626,93 @@
 
       if ( $this->HasFlag('charge') )
       {
+        switch ( $this->Name )
+        {
+          case 'Bounce':
+            $Charge_Dialogue = "{$Attacker->Display_Name} bounced into the air!";
+            break;
+
+          case 'Dig':
+            $Charge_Dialogue = "{$Attacker->Display_Name} dug underground!";
+            break;
+
+          case 'Dive':
+            $Charge_Dialogue = "{$Attacker->Display_Name} dove underwater!";
+            break;
+
+          case 'Fly':
+            $Charge_Dialogue = "{$Attacker->Display_Name} flew up into the air!";
+            break;
+
+          case 'Freeze Shock':
+            $Charge_Dialogue = "{$Attacker->Display_Name} is charging up a ball of electrically-charged ice!";
+            break;
+
+          case 'Geomancy':
+            $Charge_Dialogue = "{$Attacker->Display_Name} is charging up energy!";
+            break;
+
+          case 'Ice Burn':
+            $Charge_Dialogue = "{$Attacker->Display_Name} is creating a special aura!";
+            break;
+
+          case 'Meteor Beam':
+            $Charge_Dialogue = "{$Attacker->Display_Name} is gathering the powers of space!";
+            break;
+
+          case 'Phantom Force':
+          case 'Shadow Force':
+            $Charge_Dialogue = "{$Attacker->Display_Name} has vanished!";
+            break;
+
+          case 'Razor Wind':
+            $Charge_Dialogue = "{$Attacker->Display_Name} whipped up a whirlwind!";
+            break;
+
+          case 'Skull Bash':
+            $Charge_Dialogue = "{$Attacker->Display_Name} lowered its head!";
+            break;
+
+          case 'Sky Attack':
+            $Charge_Dialogue = "{$Attacker->Display_Name} became cloaked in a harsh light!";
+            break;
+
+          case 'Sky Drop':
+            $Charge_Dialogue = "{$Attacker->Display_Name} grabbed {$Defender->Display_Name} and flew into the air!";
+            break;
+
+          case 'Solar Beam':
+            $Charge_Dialogue = "{$Attacker->Display_Name} has taken in sunlight!";
+            break;
+
+          case 'Solar Blade':
+            $Charge_Dialogue = "{$Attacker->Display_Name} is charging up sunlight!";
+            break;
+
+          default:
+            $Charge_Dialogue = "{$Attacker->Display_Name} is charging up an attack!";
+            break;
+        }
+
         if ( !$Attacker->HasStatus('Charging') )
         {
-          $Attacker->SetStatus('Charging');
+          if ( $Attacker->HasItem(['Power Herb']) )
+          {
+            $Attacker->Item->Consume();
 
-          return [
-            'Type' => 'Success',
-            'Text' => "{$Attacker->Display_Name} is charging up an attack!",
-            'Damage' => 0,
-            'Heal' => 0,
-          ];
+            $Charge_Dialogue .= "<br />{$Attacker->Display_Name} consumed its Power Herb!<br />";
+          }
+          else
+          {
+            $Attacker->SetStatus('Charging');
+
+            return [
+              'Type' => 'Success',
+              'Text' => $Charge_Dialogue,
+              'Damage' => 0,
+              'Heal' => 0,
+            ];
+          }
         }
       }
 
