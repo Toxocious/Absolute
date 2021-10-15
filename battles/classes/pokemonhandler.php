@@ -1271,6 +1271,7 @@
 
     /**
      * Set a status on the Pokemon.
+     *
      * @param string $Status
      * @param int $Turns
      */
@@ -1280,30 +1281,6 @@
       int $Turns = null
     )
     {
-      switch ( $this->Side )
-      {
-        case 'Ally':
-          $Defender = $_SESSION['Battle']['Ally']->Active;
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          break;
-        case 'Foe':
-          $Defender = $_SESSION['Battle']['Foe']->Active;
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          break;
-      }
-
-      /**
-       * A Pokémon cannot gain non-volatile status conditions when it is affected by
-       *  Safeguard, Leaf Guard, Flower Veil, Shields Down, or Comatose.
-       *
-       * A Pokémon will cure its status condition when affected by
-       *  Refresh, Heal Bell, Aromatherapy, Psycho Shift, Jungle Healing, G-Max Sweetness,
-       *  Natural Cure, Shed Skin, Hydration, or Lum Berry.
-       *
-       * If a Pokémon under a status condition (such as a poisoned Cascoon) evolves, the
-       *  condition will be kept, even if the Pokémon gains a new type or Ability that would normally prevent it.
-       */
-
       $Status_Data = Status::AllStatuses()[$Status];
       if ( empty($Status_Data) )
         return false;
@@ -1325,7 +1302,7 @@
         if ( $Status == 'Paralysis' && $this->HasTyping(['Electric']) )
           return false;
 
-        if ( $Status == 'Poison' && $this->HasTyping(['Poison', 'Steel']) && $Attacker->Ability->Name != 'Corrosion' && !$this->HasItem(['Toxic Orb']) )
+        if ( $Status == 'Poison' && $this->HasTyping(['Poison', 'Steel']) && $this->Ability->Name != 'Corrosion' && !$this->HasItem(['Toxic Orb']) )
           return false;
 
         if ( $Status == 'Sleep' && $this->HasAbility(['Insomnia', 'Sweet Veil']) )
