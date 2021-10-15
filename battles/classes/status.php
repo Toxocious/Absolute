@@ -13,7 +13,7 @@
       int $Status_Turns = null
     )
     {
-      $Status_Data = $this->AllStatuses()[$Status_Name];
+      $Status_Data = self::AllStatuses()[$Status_Name];
 
       if ( $Pokemon->Ability->Name == 'Marvel Scale' && !$Pokemon->Ability->Procced )
       {
@@ -52,6 +52,8 @@
         $this->Max_HP = $Pokemon->Max_HP / 4;
         $this->HP = $Pokemon->Max_HP / 4;
       }
+
+      return $this;
     }
 
     /**
