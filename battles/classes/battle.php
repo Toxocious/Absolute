@@ -392,7 +392,8 @@
                 break;
             }
 
-            $Active_Ally->Active->UpdateStatus($Status->Name);
+            if ( $Status->Name != 'Charging' )
+              $Active_Ally->Active->UpdateStatus($Status->Name);
           }
         }
         else

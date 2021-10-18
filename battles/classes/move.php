@@ -714,6 +714,10 @@
             ];
           }
         }
+        else
+        {
+          $Attacker->RemoveStatus('Charging');
+        }
       }
 
       if
