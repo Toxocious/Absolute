@@ -1004,7 +1004,7 @@
       foreach ($Bag_Items as $Item)
       {
         $Bag_Dialogue .= "
-          <div class='border-gradient'>
+          <div class='border-gradient hover'>
             <div style='padding: 5px 5px 0px;'>
               <img
                 alt='{$Item['Item_Name']}'
