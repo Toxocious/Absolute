@@ -77,7 +77,7 @@
       (
         !isset($Action) ||
         !isset($Data) ||
-        !in_array($Action, ['Switch', 'Attack', 'Continue', 'Restart', 'UseItem', 'Flee'])
+        !in_array($Action, ['Switch', 'Attack', 'Continue', 'Restart', 'Bag', 'UseItem', 'Flee'])
       )
       {
         return [
@@ -108,6 +108,13 @@
 
         case 'Restart':
           $this->Turn_Dialogue = $this->Restart($Data);
+          break;
+
+        case 'Bag':
+          return [
+            'Type' => 'Success',
+            'Text' => $this->DisplayBag()
+          ];
           break;
 
         default:
@@ -960,6 +967,50 @@
         'Type' => 'Success',
         'Text' => $Switch_Dialogue,
       ];
+    }
+
+    /**
+     * Render the user's bag.
+     *
+     * @return {string} $Bag_Dialogue
+     */
+    public function DisplayBag()
+    {
+      global $PDO;
+
+      try
+      {
+        $Fetch_Items = $PDO->prepare("
+          SELECT *
+          FROM `items`
+          WHERE `Owner_Current` = ? AND `Quantity` > 0
+        ");
+        $Fetch_Items->execute([ $_SESSION['Battle']['Ally']->ID ]);
+        $Fetch_Items->setFetchMode(\PDO::FETCH_ASSOC);
+        $Bag_Items = $Fetch_Items->fetchAll();
+      }
+      catch ( \PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( empty($Bag_Items) )
+        return 'Your bag is empty.';
+
+      $Bag_Dialogue = "<div class='description'>Select the item that you wish to use.</div>";
+      foreach ($Bag_Items as $Item)
+      {
+        $Bag_Dialogue .= "
+          <img
+            alt='{$Item['Item_Name']}'
+            style='height: 32px; width: 32px;'
+            onclick='Battle.UseItem({$Item['Item_ID']}, event);'
+            src='" . DOMAIN_SPRITES . "/Items/{$Item['Item_Name']}.png'
+          />
+        ";
+      }
+
+      return $Bag_Dialogue;
     }
 
     /**

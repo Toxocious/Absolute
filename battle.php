@@ -88,6 +88,13 @@
       Battle.HandleRequest('Switch', Slot, event);
     },
 
+    OpenBag: (event) =>
+    {
+      event = event || window.event;
+
+      Battle.HandleRequest('Bag', event);
+    },
+
     RenderRoster: (Side, Roster, Active) =>
     {
       if

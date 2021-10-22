@@ -148,10 +148,17 @@
 
           <div style='margin-left: 5px; padding-top: 5px;'>
             <div slot='Battle_Weather' style='height: 30px; width: 40px;'></div>
-            <div class='flex' style='margin-top: 4px;'>
+            <div class='flex' style='flex-direction: column; margin-top: 4px;'>
               <div class='border-gradient hover'>
-                <div>
+                <div style='padding: 5px 5px 0px;'>
                   <img src='<?= DOMAIN_SPRITES; ?>/Assets/settings.png' />
+                </div>
+              </div>
+              <br />
+
+              <div class='border-gradient hover' onclick='Battle.OpenBag(event);'>
+                <div style='padding: 5px 5px 0px;'>
+                  <img src='<?= DOMAIN_SPRITES; ?>/Assets/bag_general.png' />
                 </div>
               </div>
             </div>
