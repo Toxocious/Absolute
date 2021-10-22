@@ -1010,7 +1010,7 @@
                 alt='{$Item['Item_Name']}'
                 tooltip='{$Item['Item_Name']}'
                 style='height: 30px; width: 30px;'
-                onclick='Battle.UseItem({$Item['Item_ID']}, event);'
+                onclick='Battle.UseItem({$Item['id']}, event);'
                 src='" . DOMAIN_SPRITES . "/Items/{$Item['Item_Name']}.png'
               />
             </div>
