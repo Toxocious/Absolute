@@ -997,18 +997,27 @@
       if ( empty($Bag_Items) )
         return 'Your bag is empty.';
 
-      $Bag_Dialogue = "<div class='description'>Select the item that you wish to use.</div>";
+      $Bag_Dialogue = "
+        <div class='description'>Select the item that you wish to use.</div>
+        <div class='flex' style='gap: 5px; justify-content: center;'>
+      ";
       foreach ($Bag_Items as $Item)
       {
         $Bag_Dialogue .= "
-          <img
-            alt='{$Item['Item_Name']}'
-            style='height: 32px; width: 32px;'
-            onclick='Battle.UseItem({$Item['Item_ID']}, event);'
-            src='" . DOMAIN_SPRITES . "/Items/{$Item['Item_Name']}.png'
-          />
+          <div class='border-gradient'>
+            <div style='padding: 5px 5px 0px;'>
+              <img
+                alt='{$Item['Item_Name']}'
+                tooltip='{$Item['Item_Name']}'
+                style='height: 30px; width: 30px;'
+                onclick='Battle.UseItem({$Item['Item_ID']}, event);'
+                src='" . DOMAIN_SPRITES . "/Items/{$Item['Item_Name']}.png'
+              />
+            </div>
+          </div>
         ";
       }
+      $Bag_Dialogue .= "</div>";
 
       return $Bag_Dialogue;
     }
