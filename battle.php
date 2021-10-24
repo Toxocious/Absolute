@@ -88,6 +88,16 @@
       Battle.HandleRequest('Switch', Slot, event);
     },
 
+    UseItem: (Item, event) =>
+    {
+      if ( typeof Item === 'undefined' )
+        return false;
+
+      event = event || window.event;
+
+      Battle.HandleRequest('UseItem', Item, event);
+    },
+
     OpenBag: (event) =>
     {
       event = event || window.event;

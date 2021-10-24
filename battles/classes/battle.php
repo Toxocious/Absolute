@@ -110,6 +110,12 @@
           $this->Turn_Dialogue = $this->Restart($Data);
           break;
 
+        case 'UseItem':
+          return [
+            'Type' => 'Success',
+            'Text' => $this->UseItem($Data),
+          ];
+
         case 'Bag':
           return [
             'Type' => 'Success',
@@ -1020,6 +1026,52 @@
       $Bag_Dialogue .= "</div>";
 
       return $Bag_Dialogue;
+    }
+
+    /**
+     * Use the selected item.
+     *
+     * @param {int} $Item_ID
+     * @return {string} $Use_Dialogue
+     */
+    public function UseItem
+    (
+      int $Item_ID
+    )
+    {
+      global $PDO;
+
+      if ( empty($Item_ID) )
+        return 'An invalid item was selected';
+
+      try
+      {
+        $Fetch_Item = $PDO->prepare("
+          SELECT *
+          FROM `items`
+          WHERE `id` = ? AND `Owner_Current` = ?
+          LIMIT 1
+        ");
+        $Fetch_Item->execute([ $Item_ID, $_SESSION['Battle']['Ally']->ID ]);
+        $Fetch_Item->setFetchMode(\PDO::FETCH_ASSOC);
+        $Item = $Fetch_Item->fetch();
+      }
+      catch ( \PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( empty($Item) )
+        return 'An invalid item was selected.';
+
+      if ( $Item['Quantity'] < 1 )
+        return 'You do not have enough of this item.';
+
+      switch ( $Item['Item_Name'] )
+      {
+        default:
+          return "You have used a(n) {$Item['Item_Name']}.";
+      }
     }
 
     /**
