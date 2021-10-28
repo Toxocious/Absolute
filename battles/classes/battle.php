@@ -1093,7 +1093,7 @@
       if ( $Item['Quantity'] < 1 )
         return 'You do not have enough of this item.';
 
-      $Attacker_Owner = $_SESSION['Battle']['Ally'];
+      $Item_Target = $_SESSION['Battle']['Ally']->Roster[$Roster_Slot];
 
       $Use_Item_Dialogue = '';
 
@@ -1103,18 +1103,18 @@
       switch ( $Item['Item_Name'] )
       {
         case 'Dire Hit':
-          $Attacker_Owner->Active->Critical_Hit_Boost += 1;
-          $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name}'s Critical Hit ratio was boosted!";
+          $Item_Target->Critical_Hit_Boost += 1;
+          $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s Critical Hit ratio was boosted!";
           break;
 
         case 'Dire Hit 2':
-          $Attacker_Owner->Active->Critical_Hit_Boost += 2;
-          $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name}'s Critical Hit ratio was boosted!";
+          $Item_Target->Critical_Hit_Boost += 2;
+          $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s Critical Hit ratio was boosted!";
           break;
 
         case 'Dire Hit 3':
-          $Attacker_Owner->Active->Critical_Hit_Boost += 3;
-          $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name}'s Critical Hit ratio was boosted!";
+          $Item_Target->Critical_Hit_Boost += 3;
+          $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s Critical Hit ratio was boosted!";
           break;
 
         case 'Guard Spec':
@@ -1130,10 +1130,12 @@
        */
       if ( !empty($Status) )
       {
-        $Set_Status = $Attacker_Owner->Active->SetStatus($Status);
+        $Set_Status = $Item_Target->Active->SetStatus($Status);
         if ( !empty($Set_Status) )
-          $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name} {$Set_Status['Dialogue']}<br />";
+          $Use_Item_Dialogue .= "{$Item_Target->Active->Display_Name} {$Set_Status['Dialogue']}<br />";
       }
+
+      return $Use_Item_Dialogue;
     }
 
     /**
