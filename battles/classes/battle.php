@@ -1126,6 +1126,18 @@
           $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s stats have been reset!";
           break;
 
+        case 'Roto Boost':
+          $Stats = [
+            ['Name' => 'Attack', 'Stages' => 1],
+            ['Name' => 'Defense', 'Stages' => 1],
+            ['Name' => 'Sp_Attack', 'Stages' => 1],
+            ['Name' => 'Sp_Defense', 'Stages' => 1],
+            ['Name' => 'Speed', 'Stages' => 1],
+            ['Name' => 'Accuracy', 'Stages' => 1],
+            ['Name' => 'Evasion', 'Stages' => 1],
+          ];
+          break;
+
         default:
           return "{$Item['Item_Name']} is not currently supported in the battle system.";
       }
