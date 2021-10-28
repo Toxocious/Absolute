@@ -1121,6 +1121,11 @@
           $Status = 'Guard Spec';
           break;
 
+        case 'Reset Urge':
+          $Item_Target->ResetStats();
+          $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s stats have been reset!";
+          break;
+
         default:
           return "{$Item['Item_Name']} is not currently supported in the battle system.";
       }
