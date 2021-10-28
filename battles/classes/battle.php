@@ -1067,10 +1067,42 @@
       if ( $Item['Quantity'] < 1 )
         return 'You do not have enough of this item.';
 
+      $Attacker_Owner = $_SESSION['Battle']['Ally'];
+
+      $Use_Item_Dialogue = '';
+
+      /**
+       * Fetch all item effects.
+       */
       switch ( $Item['Item_Name'] )
       {
+        case 'Dire Hit':
+          $Attacker_Owner->Active->Critical_Hit_Boost += 1;
+          $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name}'s Critical Hit ratio was boosted!";
+          break;
+
+        case 'Dire Hit 2':
+          $Attacker_Owner->Active->Critical_Hit_Boost += 2;
+          $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name}'s Critical Hit ratio was boosted!";
+          break;
+
+        case 'Dire Hit 3':
+          $Attacker_Owner->Active->Critical_Hit_Boost += 3;
+          $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name}'s Critical Hit ratio was boosted!";
+          break;
+
         default:
-          return "You have used a(n) {$Item['Item_Name']}.";
+          return "{$Item['Item_Name']} is not currently supported in the battle system.";
+      }
+
+      /**
+       * Process all item effects.
+       */
+      if ( !empty($Status) )
+      {
+        $Set_Status = $Attacker_Owner->Active->SetStatus($Status);
+        if ( !empty($Set_Status) )
+          $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name} {$Set_Status['Dialogue']}<br />";
       }
     }
 
