@@ -1117,6 +1117,10 @@
           $Use_Item_Dialogue .= "{$Attacker_Owner->Active->Display_Name}'s Critical Hit ratio was boosted!";
           break;
 
+        case 'Guard Spec':
+          $Status = 'Guard Spec';
+          break;
+
         default:
           return "{$Item['Item_Name']} is not currently supported in the battle system.";
       }

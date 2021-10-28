@@ -1621,6 +1621,9 @@
 
             if ( $this->$Stat_Boost < 0 )
             {
+              if ( $Target->Active->HasStatus('Guard Spec') )
+                continue;
+
               if ( $Target->Active->Ability->Name == 'Full Metal Body' && $Target->Active != $Attacker )
                 continue;
 

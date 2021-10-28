@@ -133,6 +133,13 @@
           'Dialogue' => 'has been put to sleep!',
         ],
 
+        'Guard Spec' => [
+          'Min_Turns' => 5,
+          'Max_Turns' => 5,
+          'Volatile' => true,
+          'Dialogue' => 'stats can not be reduced!',
+        ],
+
         'Aiming' => [
           'Min_Turns' => 1,
           'Max_Turns' => 1,
