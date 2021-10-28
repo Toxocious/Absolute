@@ -88,14 +88,14 @@
       Battle.HandleRequest('Switch', Slot, event);
     },
 
-    UseItem: (Item, event) =>
+    UseItem: (Item, Slot, event) =>
     {
-      if ( typeof Item === 'undefined' )
+      if ( typeof Item === 'undefined' || typeof Slot === 'undefined' )
         return false;
 
       event = event || window.event;
 
-      Battle.HandleRequest('UseItem', Item, event);
+      Battle.HandleRequest('UseItem', {Item: Item, Slot: Slot}, event);
     },
 
     OpenBag: (event) =>
@@ -314,7 +314,9 @@
           Data_Val.append('Action', Action);
 
         if ( Data )
-          Data_Val.append('Data', Data);
+        {
+          Data_Val.append('Data', JSON.stringify(Data));
+        }
 
         if ( Data_Event )
         {

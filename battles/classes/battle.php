@@ -89,6 +89,8 @@
       $_SESSION['Battle']['Turn_ID']++;
       $this->Turn_ID = $_SESSION['Battle']['Turn_ID'];
 
+      $Data = json_decode($Data);
+
       /**
        * Process the requested action.
        */
@@ -113,7 +115,7 @@
         case 'UseItem':
           return [
             'Type' => 'Success',
-            'Text' => $this->UseItem($Data),
+            'Text' => $this->UseItem($Data->Item, $Data->Slot),
           ];
 
         case 'Bag':
@@ -1004,7 +1006,7 @@
         return 'Your bag is empty.';
 
       $Bag_Dialogue = "
-        <div class='description'>Select the item that you wish to use.</div>
+        <div class='description'>Select the item that you wish to use, and the Pok&eacute;mon you wish to use it on.</div>
         <div class='flex' style='gap: 5px; justify-content: center;'>
       ";
       foreach ($Bag_Items as $Item)
@@ -1016,14 +1018,33 @@
                 alt='{$Item['Item_Name']}'
                 tooltip='{$Item['Item_Name']}'
                 style='height: 30px; width: 30px;'
-                onclick='Battle.UseItem({$Item['id']}, event);'
+                onclick='Battle.UseItem({$Item['id']}, document.getElementById(\"use_item_on\").value, event);'
                 src='" . DOMAIN_SPRITES . "/Items/{$Item['Item_Name']}.png'
               />
             </div>
           </div>
         ";
       }
-      $Bag_Dialogue .= "</div>";
+      $Bag_Dialogue .= "
+        </div>
+
+        <br />
+        <div>
+          <select name='use_item_on' id='use_item_on'>
+      ";
+
+      foreach ($_SESSION['Battle']['Ally']->Roster as $Pokemon)
+      {
+        $Bag_Dialogue .= "
+          <option value='{$Pokemon->Slot}'>{$Pokemon->Display_Name} (Slot: {$Pokemon->Slot})</option>
+        ";
+      }
+
+      $Bag_Dialogue .= "
+          </select>
+          <br />
+        </div>
+      ";
 
       return $Bag_Dialogue;
     }
@@ -1031,18 +1052,23 @@
     /**
      * Use the selected item.
      *
-     * @param {int} $Item_ID
+     * @param {} $Item_ID
+     * @param {} $Roster_Slot
      * @return {string} $Use_Dialogue
      */
     public function UseItem
     (
-      int $Item_ID
+      $Item_ID,
+      $Roster_Slot
     )
     {
       global $PDO;
 
+      if ( !in_array($Roster_Slot, ['1', '2', '3', '4', '5', '6']) || empty($_SESSION['Battle']['Ally']->Roster[$Roster_Slot]) )
+        return 'An invalid roster slot was selected.';
+
       if ( empty($Item_ID) )
-        return 'An invalid item was selected';
+        return 'An invalid item was selected.';
 
       try
       {
