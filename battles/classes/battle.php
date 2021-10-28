@@ -1140,6 +1140,27 @@
           $Use_Item_Dialogue .= "{$Item_Target->Active->Display_Name} {$Set_Status['Dialogue']}<br />";
       }
 
+      /**
+       * Process all stat changes.
+       */
+      if ( !empty($Stats) )
+      {
+        $Active_Pokemon = $_SESSION['Battle']['Ally']->Active;
+
+        foreach ($Stats as $Stat)
+        {
+          if
+          (
+            $Active_Pokemon->Stats[$Stat['Name']]->Stage < 6 &&
+            $Active_Pokemon->Stats[$Stat['Name']]->Stage > -6
+          )
+          {
+            if ( $Active_Pokemon->Ability->Name == 'Contrary' )
+              $Active_Pokemon->Stats[$Stat['Name']]->SetValue($Stat['Stages']);
+          }
+        }
+      }
+
       return $Use_Item_Dialogue;
     }
 
