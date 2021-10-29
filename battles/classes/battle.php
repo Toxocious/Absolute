@@ -1149,6 +1149,30 @@
           }
           break;
 
+        case 'X Accuracy':
+          $Stats = [
+            ['Name' => 'Accuracy', 'Stages' => 1],
+          ];
+          break;
+
+        case 'X Accuracy 2':
+          $Stats = [
+            ['Name' => 'Accuracy', 'Stages' => 2],
+          ];
+          break;
+
+        case 'X Accuracy 3':
+          $Stats = [
+            ['Name' => 'Accuracy', 'Stages' => 3],
+          ];
+          break;
+
+        case 'X Accuracy 6':
+          $Stats = [
+            ['Name' => 'Accuracy', 'Stages' => 6],
+          ];
+          break;
+
         default:
           return "{$Item['Item_Name']} is not currently supported in the battle system.";
       }
