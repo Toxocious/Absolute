@@ -1197,6 +1197,30 @@
           ];
           break;
 
+        case 'X Defense':
+          $Stats = [
+            ['Name' => 'Defense', 'Stages' => 1],
+          ];
+          break;
+
+        case 'X Defense 2':
+          $Stats = [
+            ['Name' => 'Defense', 'Stages' => 2],
+          ];
+          break;
+
+        case 'X Defense 3':
+          $Stats = [
+            ['Name' => 'Defense', 'Stages' => 3],
+          ];
+          break;
+
+        case 'X Defense 6':
+          $Stats = [
+            ['Name' => 'Defense', 'Stages' => 6],
+          ];
+          break;
+
         default:
           return "{$Item['Item_Name']} is not currently supported in the battle system.";
       }
