@@ -1189,6 +1189,8 @@
           )
           {
             if ( $Active_Pokemon->Ability->Name == 'Contrary' )
+              $Active_Pokemon->Stats[$Stat['Name']]->SetValue($Stat['Stages'] * -1);
+            else
               $Active_Pokemon->Stats[$Stat['Name']]->SetValue($Stat['Stages']);
           }
         }
