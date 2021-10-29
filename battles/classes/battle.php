@@ -1145,6 +1145,22 @@
       }
 
       /**
+       * Process HP changes.
+       */
+      if ( !empty($HP_Changes) )
+      {
+        foreach ( $HP_Changes as $HP_Change )
+        {
+          if ( $HP_Change['Target']->HasStatus('Heal Block') )
+            continue;
+
+          $HP_Change['Target']->HP += $HP_Change['Amount'];
+
+          $Use_Item_Dialogue .= "{$HP_Change['Target']->Display_Name} restored " . number_format($HP_Change['Amount']) . " HP!<br />";
+        }
+      }
+
+      /**
        * Process all item effects.
        */
       if ( !empty($Status) )
