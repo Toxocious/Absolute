@@ -1140,6 +1140,15 @@
           ];
           break;
 
+        case 'Roto HP Restore':
+          if ( $Item_Target->HP < $Item_Target->Max_HP )
+          {
+            $HP_Change = [
+              ['Target' => $Item_Target->Slot, 'Amount' => $Item_Target->Max_HP - $Item_Target->HP]
+            ];
+          }
+          break;
+
         default:
           return "{$Item['Item_Name']} is not currently supported in the battle system.";
       }
