@@ -1320,7 +1320,7 @@
           if ( $HP_Change['Target']->HasStatus('Heal Block') )
             continue;
 
-          $HP_Change['Target']->HP += $HP_Change['Amount'];
+          $HP_Change['Target']->IncreaseHP($HP_Change['Amount']);
 
           $Use_Item_Dialogue .= "{$HP_Change['Target']->Display_Name} restored " . number_format($HP_Change['Amount']) . " HP!<br />";
         }
