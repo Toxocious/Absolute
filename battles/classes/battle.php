@@ -1118,7 +1118,9 @@
           break;
 
         case 'Guard Spec':
-          $Status = 'Guard Spec';
+          $Status = [
+            ['Name' => 'Guard Spec', 'Type' => 'Set'],
+          ];
           break;
 
         case 'Reset Urge':
@@ -1147,9 +1149,28 @@
        */
       if ( !empty($Status) )
       {
-        $Set_Status = $Item_Target->Active->SetStatus($Status);
-        if ( !empty($Set_Status) )
-          $Use_Item_Dialogue .= "{$Item_Target->Active->Display_Name} {$Set_Status['Dialogue']}<br />";
+        foreach ( $Status as $Current_Status )
+        {
+          switch ( $Status['Type'] )
+          {
+            case 'Cure':
+              if ( $Item_Target->Active->HasStatus($Current_Status['Name']) )
+              {
+                $Item_Target->Active->RemoveStatus($Current_Status['Name']);
+                $Use_Item_Dialogue .= "{$Item_Target->Active} was cured of its {$Current_Status['Name']}!<br />";
+              }
+              break;
+
+            case 'Set':
+                $Set_Status = $Item_Target->Active->SetStatus($Current_Status['Name']);
+                if ( !empty($Set_Status) )
+                  $Use_Item_Dialogue .= "{$Item_Target->Active->Display_Name} {$Set_Status['Dialogue']}<br />";
+              break;
+
+            default:
+              return "Invalid status type selected when using the {$Item['Item_Name']} use item.";
+          }
+        }
       }
 
       /**
