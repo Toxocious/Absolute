@@ -1242,6 +1242,15 @@
           }
           break;
 
+        case 'Oran Berry':
+          if ( $Item_Target->HP < $Item_Target->Max_HP )
+          {
+            $HP_Change = [
+              ['Target' => $Item_Target->Slot, 'Amount' => 10]
+            ];
+          }
+          break;
+
         case 'Paralyze Heal':
           $Status = [
             ['Name' => 'Paralysis', 'Type' => 'Cure'],
