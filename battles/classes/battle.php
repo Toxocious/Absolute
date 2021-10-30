@@ -1269,6 +1269,16 @@
           }
           break;
 
+        case 'Sacred Ash':
+          foreach ( $_SESSION['Battle']['Ally']->Roster as $Current_Pokemon )
+          {
+            if ( !$Current_Pokemon->Fainted )
+              continue;
+
+            $Current_Pokemon->Revive($Item_Target->Max_HP);
+          }
+          break;
+
         case 'Dire Hit':
           $Item_Target->Critical_Hit_Boost += 1;
           $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s Critical Hit ratio was boosted!";
