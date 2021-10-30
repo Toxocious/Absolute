@@ -1124,6 +1124,22 @@
           }
           break;
 
+        case 'Big Malasada':
+        case 'Casteliacone':
+        case 'Full Heal':
+        case 'Heal Powder':
+        case 'Lava Cookie':
+        case 'Old Gateau':
+          $Status = [
+            ['Name' => 'Poison', 'Type' => 'Cure'],
+            ['Name' => 'Badly Poisoned', 'Type' => 'Cure'],
+            ['Name' => 'Sleep', 'Type' => 'Cure'],
+            ['Name' => 'Paralysis', 'Type' => 'Cure'],
+            ['Name' => 'Burn', 'Type' => 'Cure'],
+            ['Name' => 'Freeze', 'Type' => 'Cure'],
+          ];
+          break;
+
         case 'Dire Hit':
           $Item_Target->Critical_Hit_Boost += 1;
           $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s Critical Hit ratio was boosted!";
