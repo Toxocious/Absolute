@@ -1255,6 +1255,13 @@
           }
           break;
 
+        case 'Revival Herb':
+          if ( $Item_Target->Fainted )
+          {
+            $Item_Target->Revive($Item_Target->Max_HP);
+          }
+          break;
+
         case 'Dire Hit':
           $Item_Target->Critical_Hit_Boost += 1;
           $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s Critical Hit ratio was boosted!";
