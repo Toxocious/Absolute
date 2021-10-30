@@ -1054,6 +1054,18 @@
     }
 
     /**
+     * Revive the Pokemon.
+     */
+    public function Revive()
+    {
+      if ( !$this->Fainted )
+        return false;
+
+      $this->Fainted = false;
+      $this->HP = $this->Max_HP;
+    }
+
+    /**
      * Increase the Pokemon's current Exp.
      */
     public function IncreaseExp()
