@@ -1701,7 +1701,7 @@
                 $Stat_Change_Text .= "{$Target->Active->Display_Name}'s {$Stat_Name} can't go any lower!";
             }
 
-            if ( $Index > 0 && $Index < $Total_Stats )
+            if ( $Index < $Total_Stats )
               $Stat_Change_Text .= '<br />';
           }
         }
