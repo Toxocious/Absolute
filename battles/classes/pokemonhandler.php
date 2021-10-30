@@ -1055,14 +1055,21 @@
 
     /**
      * Revive the Pokemon.
+     *
+     * @param {int} $HP_Amount
      */
-    public function Revive()
+    public function Revive
+    (
+      int $HP_Amount
+    )
     {
       if ( !$this->Fainted )
         return false;
 
       $this->Fainted = false;
       $this->HP = $this->Max_HP;
+
+      return $this;
     }
 
     /**
