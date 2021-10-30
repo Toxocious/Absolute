@@ -1227,7 +1227,9 @@
         case 'Max Revive':
           if ( $Item_Target->Fainted )
           {
-            $Item_Target->Revive($Item_Target->Max_HP);
+            $Revives = [
+              ['Target' => $Item_Target, 'Amount' => $Item_Target->Max_HP]
+            ];
           }
           break;
 
@@ -1259,24 +1261,31 @@
         case 'Revival Herb':
           if ( $Item_Target->Fainted )
           {
-            $Item_Target->Revive($Item_Target->Max_HP);
+            $Revives = [
+              ['Target' => $Item_Target, 'Amount' => $Item_Target->Max_HP]
+            ];
           }
           break;
 
         case 'Revive':
           if ( $Item_Target->Fainted )
           {
-            $Item_Target->Revive($Item_Target->Max_HP * 0.5);
+            $Revives = [
+              ['Target' => $Item_Target, 'Amount' => $Item_Target->Max_HP * 0.5]
+            ];
           }
           break;
 
         case 'Sacred Ash':
+          $Revives = [];
           foreach ( $_SESSION['Battle']['Ally']->Roster as $Current_Pokemon )
           {
             if ( !$Current_Pokemon->Fainted )
               continue;
 
-            $Current_Pokemon->Revive($Item_Target->Max_HP);
+            $Revives[] = [
+              ['Target' => $Current_Pokemon, 'Amount' => $Current_Pokemon->Max_HP]
+            ];
           }
           break;
 
@@ -1486,6 +1495,20 @@
       }
 
       /**
+       * Process Pokemon resurrections.
+       */
+      if ( !empty($Revives) )
+      {
+        foreach ( $Revives as $Revive )
+        {
+          if ( !$Revive['Target']->Fainted )
+            continue;
+
+          $Revive['Target']->Revive($Revive['Amount']);
+        }
+      }
+
+      /**
        * Process HP changes.
        */
       if ( !empty($HP_Changes) )
@@ -1502,7 +1525,7 @@
       }
 
       /**
-       * Process all item effects.
+       * Process all status changes.
        */
       if ( !empty($Status) )
       {
