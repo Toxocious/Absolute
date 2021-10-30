@@ -1298,6 +1298,15 @@
           }
           break;
 
+        case 'Sitrus Berry':
+          if ( $Item_Target->HP < $Item_Target->Max_HP )
+          {
+            $HP_Change = [
+              ['Target' => $Item_Target->Slot, 'Amount' => $Item_Target->Max_HP * 0.25]
+            ];
+          }
+          break;
+
         case 'Soda Pop':
         case 'Super Potion':
           if ( $Item_Target->HP < $Item_Target->Max_HP )
