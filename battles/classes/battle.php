@@ -1206,6 +1206,15 @@
           ];
           break;
 
+        case 'Lemonade':
+          if ( $Item_Target->HP < $Item_Target->Max_HP )
+          {
+            $HP_Change = [
+              ['Target' => $Item_Target->Slot, 'Amount' => 80]
+            ];
+          }
+          break;
+
         case 'Dire Hit':
           $Item_Target->Critical_Hit_Boost += 1;
           $Use_Item_Dialogue .= "{$Item_Target->Display_Name}'s Critical Hit ratio was boosted!";
