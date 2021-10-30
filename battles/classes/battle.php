@@ -1247,6 +1247,7 @@
           break;
 
         case 'Potion':
+        case 'Sweet Heart':
           if ( $Item_Target->HP < $Item_Target->Max_HP )
           {
             $HP_Change = [
