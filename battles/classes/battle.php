@@ -1505,6 +1505,8 @@
             continue;
 
           $Revive['Target']->Revive($Revive['Amount']);
+
+          $Use_Item_Dialogue .= "{$Revive['Target']->Display_Name} hsa been revived!<br />";
         }
       }
 
