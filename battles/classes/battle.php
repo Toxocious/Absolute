@@ -861,6 +861,42 @@
     }
 
     /**
+     * Perform the logic behind an attack.
+     *
+     * @param {string} $Attacker
+     */
+    public function PerformAttack
+    (
+      string $Attacker
+    )
+    {
+      switch ( $Attacker )
+      {
+        case 'Ally':
+          $Attacker = $_SESSION['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Battle']['Foe']->Active;
+          break;
+
+        case 'Foe':
+          $Attacker = $_SESSION['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Battle']['Ally']->Active;
+          break;
+      }
+
+      if ( $Attacker->HP > 0 && $Defender->HP > 0 )
+      {
+        $Ally_Attack = $Attacker->Attack($this->Ally_Move);
+
+        $Attack_Dialogue = $Ally_Attack['Text'];
+
+        $Defender->DecreaseHP($Ally_Attack['Damage']);
+
+        return $Attack_Dialogue;
+      }
+
+      return '';
+    }
+    /**
      * Handle the process of switching your active Pokemon.
      * @param int $Roster_Slot
      *
