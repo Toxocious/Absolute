@@ -139,10 +139,10 @@
         if ( !empty($End_Of_Turn['Text']) )
           $this->Turn_Dialogue['Text'] .= $End_Of_Turn['Text'];
 
-        if ( !empty($End_Of_Turn['Continue']) )
+        if ( !empty($End_Of_Turn['Continue']) && $End_Of_Turn['Continue'] )
           $this->Turn_Dialogue['Text'] = $this->RenderContinueButton($this->Turn_Dialogue['Text']);
 
-        if ( !empty($End_Of_Turn['Restart']) )
+        if ( !empty($End_Of_Turn['Restart']) && $End_Of_Turn['Restart'] )
           $this->Turn_Dialogue['Text'] = $this->RenderRestartButton($this->Turn_Dialogue['Text']);
       }
 
@@ -173,6 +173,8 @@
      */
     public function ProcessEndOfTurn()
     {
+      $End_Of_Turn = '<br /><br />';
+
       /**
        * Process Weather and Status effects for both side's active Pokemon.
        */
@@ -209,43 +211,67 @@
             {
               case 'Hail':
                 if ( $Active_Ally->Active->Ability->Name == 'Ice Body' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} restored HP because of the Hail!<br />";
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 16);
+                }
                 else if ( !$Active_Ally->Active->HasTyping([ 'Ice' ]) && !$Active_Ally->Active->HasAbility(['Magic Guard', 'Snow Cloak']) )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from the Hail!<br />";
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
+                }
                 break;
 
               case 'Extremely Harsh Sunlight':
               case 'Harsh Sunlight':
                 if ( $Active_Ally->Active->HasAbility([ 'Dry Skin', 'Solar Power' ]) )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from the sunlight!<br />";
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                }
                 break;
 
               case 'Heavy Rain':
               case 'Rain':
                 if ( $Active_Ally->Active->Ability->Name == 'Dry Skin' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} restored HP because of the Rain!<br />";
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
+                }
 
                 if ( $Active_Ally->Active->Ability->Name == 'Rain Dish' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name}'s restored HP because of the Rain! <br />";
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 16);
+                }
 
                 if ( $Active_Ally->Active->Ability->Name == 'Hydration' )
                 {
                   foreach ($Active_Ally->Active->Statuses as $Status)
                   {
                     if ( !$Status->Volatile )
+                    {
+                      $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} Hydration cured its {$Status->Name}!<br />";
                       unset($Active_Ally->Active->Statuses[$Status->Name]);
+                    }
                   }
                 }
                 break;
 
               case 'Sandstorm':
                 if ( !$Active_Ally->Active->HasTyping(['Ground', 'Steel', 'Rock']) && !$Active_Ally->Active->HasAbility(['Magic Guard', 'Sand Force', 'Sand Rush', 'Sand Veil']) )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from the Sandstorm!<br />";
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
+                }
                 break;
 
               case 'Shadowy Aura':
                 if ( !$Active_Ally->Active->HasTyping(['Shadow']) && $Active_Ally->Active->Ability->Name != 'Magic Guard' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from the Shadowy Aura!<br />";
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 16);
+                }
                 break;
             }
           }
@@ -274,6 +300,8 @@
             {
               $Increase_Stat = $Plus_Stats[mt_rand(0, count($Plus_Stats))];
               $Active_Ally->Active->Stats[$Increase_Stat]->SetValue(1);
+
+              $End_Of_Turn .= "{$Active_Ally->Active->Display_Name}'s Moody increased its {$Increase_Stat}!<br />";
             }
 
             $Reduce_Stat = $Minus_Stats[mt_rand(0, count($Minus_Stats))];
@@ -281,6 +309,8 @@
             {
               $Decrease_Stat = $Reduce_Stat[mt_rand(0, count($Reduce_Stat))];
               $Active_Ally->Active->Stats[$Decrease_Stat]->SetValue(-1);
+
+              $End_Of_Turn .= "{$Active_Ally->Active->Display_Name}'s Moody decreased its {$Increase_Stat}!<br />";
             }
             break;
 
@@ -297,6 +327,8 @@
 
                 if ( mt_rand(1, 100) <= 30 )
                 {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name}'s Shed Skin cured its {$Status->Name}!<br />";
+
                   $Active_Ally->Ability->SetProcStatus(true);
                   unset($Active_Ally->Active->Statuses[$Status->Name]);
                 }
@@ -307,6 +339,8 @@
           case 'Speed Boost':
             if ( $Active_Ally->Active->Stats['Speed']->Stage < 6 )
             {
+              $End_Of_Turn .= "{$Active_Ally->Active->Display_Name}'s Speed Boost increased its Speed!<br />";
+
               $Active_Ally->Active->Stats['Speed']->SetValue(1);
             }
             break;
@@ -315,13 +349,19 @@
             if ( $Active_Ally->Active->Ability->Procced )
               $Active_Ally->Active->Ability->SetProcStatus(false);
             else
+            {
+              $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} is loafing around.<br />";
               $Active_Ally->Active->Ability->SetProcStatus(true);
+            }
             break;
 
           case 'Water Bubble':
           case 'Water Veil':
             if ( $Active_Ally->Active->HasStatus('Burn') )
+            {
+              $End_Of_Turn .= "{$Active_Ally->Active->Display_Name}'s {$Active_Ally->Active->Ability->Name} cured its Burn!<br />";
               unset($Active_Ally->Active->Statuses['Burn']);
+            }
             break;
         }
 
@@ -335,10 +375,18 @@
           {
             case 'Black Sludge':
               if ( $Active_Ally->Active->HasTyping(['Poison']) )
+              {
+                $End_Of_Turn .= "{$Active_Ally->Active->Display_Name}'s restored its HP due to its Black Sludge!<br />";
                 $Active_Ally->Active->IncreaseHP(floor($Active_Ally->Active->Max_HP / 16));
+              }
               else
+              {
                 if ( $Active_Ally->Active->Ability->Name != 'Magic Guard' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from its Black Sludge!<br />";
                   $Active_Ally->Active->DecreaseHP(floor($Active_Ally->Active->Max_HP / 8));
+                }
+              }
               break;
           }
         }
@@ -354,19 +402,28 @@
             {
               case 'Burn':
                 if ( $Active_Ally->Active->Ability->Name == 'Magma Armor' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} cured its Burn with its Magma Armor!<br />";
                   unset($Active_Ally->Active->Statuses[$Status->Name]);
+                }
 
                 $Burn_Mult = 1;
                 if ( $Active_Ally->Active->Ability->Name == 'Heatproof' )
                   $Burn_Mult = 2;
 
                 if ( $Active_Ally->Active->Ability->Name !== 'Magic Guard' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from its Burn!<br />";
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / (16 * $Burn_Mult));
+                }
                 break;
 
               case 'Paralysis':
                 if ( $Active_Ally->Active->Ability->Name == 'Limber' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name}'s Limber cured its Paralysis!<br />";
                   unset($Active_Ally->Active->Statuses[$Status->Name]);
+                }
                 break;
 
               case 'Badly Poisoned':
@@ -377,14 +434,23 @@
                   $Tick_Damage = $Active_Ally->Active->Max_HP / 8;
 
                 if ( $Active_Ally->Active->Ability->Name == 'Poison Heal' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} restored HP due to its Poison Heal!<br />";
                   $Active_Ally->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
+                }
                 else if ( $Active_Ally->Active->Ability->Name != 'Magic Guard' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from its Poison!<br />";
                   $Active_Ally->Active->DecreaseHP($Tick_Damage);
+                }
                 break;
 
               case 'Sleep':
                 if ( $Active_Foe->Active->Ability->Name == 'Bad Dreams' && $Active_Ally->Active->Ability->Name != 'Comatose' )
+                {
+                  $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage in its Sleep!<br />";
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                }
                 break;
 
               case 'Bind':
@@ -392,17 +458,26 @@
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 6);
                 else
                   $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+
+                $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from being bound!<br />";
                 break;
 
               case 'Leech Seed':
+                $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} is seeded!<br />";
                 if ( $Active_Ally->Active->Ability == 'Liquid Ooze' )
+                {
+                  $End_Of_Turn .= "{$Active_Foe->Active->Display_Name}'s Liquid Ooze made it take damage!<br />";
                   $Active_Foe->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                }
                 else
                 {
                   if ( $Active_Ally->Active->Ability->Name != 'Magic Guard' )
+                  {
                     $Active_Ally->Active->DecreaseHP($Active_Ally->Active->Max_HP / 8);
+                  }
 
                   $Active_Foe->Active->IncreaseHP($Active_Ally->Active->Max_HP / 8);
+                  $End_Of_Turn .= "{$Active_Foe->Active->Display_Name} regained HP from the Leech Seed!<br />";
                 }
                 break;
             }
@@ -436,25 +511,40 @@
           {
             case 'Flame Orb':
               if ( !$Active_Ally->Active->HasStatus('Burn') )
+              {
+                $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} became burned due to its Flame Orb!<br />";
                 $Active_Ally->Active->SetStatus('Burn');
+              }
               break;
 
             case 'Leftovers':
-              $Active_Ally->Active->IncreaseHP(floor($Active_Ally->Active->Max_HP / 16));
+              {
+                $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} restored HP due to its Leftovers!<br />";
+                $Active_Ally->Active->IncreaseHP(floor($Active_Ally->Active->Max_HP / 16));
+              }
               break;
 
             case 'Life Orb':
-              $Active_Ally->Active->DecreaeHP(floor($Active_Ally->Active->Max_HP / 10));
+              {
+                $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from its Life Orb!<br />";
+                $Active_Ally->Active->DecreaeHP(floor($Active_Ally->Active->Max_HP / 10));
+              }
               break;
 
             case 'Sticky Barb':
               if ( !$Active_Ally->Active->HasAbility(['Magic Guard']) )
+              {
+                $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} took damage from its Sticky Barb!<br />";
                 $Active_Ally->Active->DecreaeHP(floor($Active_Ally->Active->Max_HP / 8));
+              }
               break;
 
             case 'Toxic Orb':
               if ( !$Active_Ally->Active->HasStatus('Badly Poisoned') )
+              {
+                $End_Of_Turn .= "{$Active_Ally->Active->Display_Name} became poisoned due to its Toxic Orb!<br />";
                 $Active_Ally->Active->SetStatus('Badly Poisoned');
+              }
               break;
           }
         }
@@ -464,39 +554,9 @@
          */
         if ( $Active_Ally->Active->HP <= 0 )
         {
-          $Handle_Faint = $Active_Ally->Active->HandleFaint();
-          if ( !empty($Handle_Faint) )
-          {
-            if ( $Handle_Faint['Continue'] )
-            {
-              $Faint_Dialogue = [
-                'Text' => "
-                  <br /><br />
-                  {$Handle_Faint['Text']}<br />
-                ",
-                'Continue' => true,
-              ];
-
-
-              return $Faint_Dialogue;
-            }
-
-            if ( $Handle_Faint['Restart'] )
-            {
-              $End_Battle = $this->EndBattle($Side);
-
-              $Faint_Dialogue = [
-                'Text' => "
-                  <br /><br />
-                  {$Handle_Faint['Text']}<br />
-                  {$End_Battle['Text']}
-                ",
-                'Restart' => true
-              ];
-
-              return $Faint_Dialogue;
-            }
-          }
+          $Process_Fainted_Pokemon = $this->ProcessFaintedPokemon(0, 0, true);
+          if ( $Process_Fainted_Pokemon['Dialogue'] != '' )
+            $End_Of_Turn .= $Process_Fainted_Pokemon['Dialogue'] . '<br />';
         }
       }
 
@@ -546,6 +606,14 @@
             unset($_SESSION['Battle']['Field_Effects'][$Field_Side]);
         }
       }
+
+      $End_Of_Turn = rtrim($End_Of_Turn, "<br />");
+
+      return [
+        'Text' => $End_Of_Turn,
+        'Continue' => !empty($Process_Fainted_Pokemon['Continue']) ? $Process_Fainted_Pokemon['Continue'] : false,
+        'Restart' => !empty($Process_Fainted_Pokemon['Restart']) ? $Process_Fainted_Pokemon['Restart'] : false,
+      ];
     }
 
     /**
@@ -813,10 +881,16 @@
 
         $Defender->DecreaseHP($Ally_Attack['Damage']);
 
-        return $Attack_Dialogue;
+        return [
+          'Damage' => $Ally_Attack['Damage'],
+          'Dialogue' => $Attack_Dialogue,
+        ];
       }
 
-      return '';
+      return [
+        'Damage' => null,
+        'Dialogue' => '',
+      ];
     }
 
     /**

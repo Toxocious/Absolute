@@ -485,7 +485,7 @@
         'Type' => 'Success',
         'Text' => "{$this->Display_Name} has fainted." .
                   (!empty($Effect_Text) ? $Effect_Text : '') .
-                  (!empty($Exp_Dialogue) ? "<br /><br />{$Exp_Dialogue['Text']}" : ''),
+                  (!empty($Exp_Dialogue) ? "<br />{$Exp_Dialogue['Text']}" : ''),
         'Continue' => $Continue,
         'Restart' => $Restart,
         'Loser' => $this->Side
