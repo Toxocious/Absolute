@@ -736,122 +736,44 @@
       switch ( $First_Attacker )
       {
         case 'Ally':
-          $Ally_Attack = $Ally_Active->Attack($this->Ally_Move);
-
-          $Attack_Dialogue .= $Ally_Attack['Text'];
-          $Attack_Dialogue .= '<br /><br />';
-
           if ( $this->Ally_Move->Name == 'Baton Pass' )
           {
-            $Attack_Dialogue .= 'Please choose a Pokemon to swap into.';
+            $Attack_Dialogue .= 'Please choose a Pok&eacute;mon to swap into.';
             break;
           }
 
-          $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
+          $Ally_Attack = $this->PerformAttack('Ally');
+          $Attack_Dialogue .= $Ally_Attack['Dialogue'];
 
-          if ( $Foe_Active->HP > 0 )
-          {
-            $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+          $Attack_Dialogue .= '<br /><br />';
 
-            $Attack_Dialogue .= $Foe_Attack['Text'];
-
-            $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
-
-            if ( $Ally_Active->HP <= 0 )
-            {
-              $Ally_Active->DisableMoves();
-
-              $Faint_Data = $Ally_Active->HandleFaint(false, $Foe_Attack['Damage']);
-
-              $Attack_Dialogue .= '<br /><br />';
-              $Attack_Dialogue .= $Faint_Data['Text'];
-
-              if ( $Faint_Data['Restart'] )
-              {
-                $End_Battle = $this->EndBattle('Ally');
-                $Attack_Dialogue .= "<br />{$End_Battle['Text']}";
-              }
-            }
-          }
-          else
-          {
-            $Ally_Active->DisableMoves();
-
-            $Faint_Data = $Foe_Active->HandleFaint(false, $Ally_Attack['Damage']);
-
-            $Attack_Dialogue .= $Faint_Data['Text'];
-
-            if ( $Faint_Data['Restart'] )
-            {
-              $End_Battle = $this->EndBattle('Foe');
-              $Attack_Dialogue .= "<br />{$End_Battle['Text']}";
-            }
-          }
+          // Check for foe's switch-out ability/held item here, before performing attack
+          $Foe_Attack = $this->PerformAttack('Foe');
+          $Attack_Dialogue .= $Foe_Attack['Dialogue'];
           break;
 
         case 'Foe':
-          $Foe_Attack = $Foe_Active->Attack($this->Foe_Move);
+          $Foe_Attack = $this->PerformAttack('Foe');
+          $Attack_Dialogue .= $Foe_Attack['Dialogue'];
 
-          $Attack_Dialogue .= $Foe_Attack['Text'];
           $Attack_Dialogue .= '<br /><br />';
 
-          $Ally_Active->DecreaseHP($Foe_Attack['Damage']);
-
-          if ( $Ally_Active->HP > 0 )
-          {
-            $Ally_Attack = $Ally_Active->Attack($this->Ally_Move);
-
-            $Attack_Dialogue .= $Ally_Attack['Text'];
-
-            $Foe_Active->DecreaseHP($Ally_Attack['Damage']);
-
-            if ( $Foe_Active->HP <= 0 )
-            {
-              $Ally_Active->DisableMoves();
-
-              $Faint_Data = $Foe_Active->HandleFaint(false, $Ally_Attack['Damage']);
-
-              $Attack_Dialogue .= $Faint_Data['Text'];
-
-              if ( $Faint_Data['Restart'] )
-              {
-                $End_Battle = $this->EndBattle('Foe');
-                $Attack_Dialogue .= "<br />{$End_Battle['Text']}";
-              }
-            }
-          }
-          else
-          {
-            $Ally_Active->DisableMoves();
-
-            $Faint_Data = $Ally_Active->HandleFaint(false, $Foe_Attack['Damage']);
-
-            $Attack_Dialogue .= '<br /><br />';
-            $Attack_Dialogue .= $Faint_Data['Text'];
-
-            if ( $Faint_Data['Restart'] )
-            {
-              $End_Battle = $this->EndBattle('Ally');
-              $Attack_Dialogue .= "<br />{$End_Battle['Text']}";
-            }
-          }
+          // Check for ally's switch-out ability/held item here, before performing attack
+          $Ally_Attack = $this->PerformAttack('Ally');
+          $Attack_Dialogue .= $Ally_Attack['Dialogue'];
           break;
       }
 
-      /**
-       * Render the 'Continue Battle' or 'Restart Battle' button if applicable.
-       */
-      if ( isset($Faint_Data) )
-      {
-        if ( $Faint_Data['Continue'] )
-        {
-          $Attack_Dialogue = $this->RenderContinueButton($Attack_Dialogue);
-        }
+      $Process_Fainted_Pokemon = $this->ProcessFaintedPokemon($Ally_Attack['Damage'], $Foe_Attack['Damage']);
+      $Attack_Dialogue .= $Process_Fainted_Pokemon['Dialogue'];
 
-        if ( $Faint_Data['Restart'] )
-        {
-          $Attack_Dialogue = $this->RenderRestartButton($Attack_Dialogue);
-        }
+      if ( !empty($Process_Fainted_Pokemon['Continue']) )
+      {
+        $Attack_Dialogue = $this->RenderContinueButton($Attack_Dialogue);
+      }
+      else if ( !empty($Process_Fainted_Pokemon['Restart']) )
+      {
+        $Attack_Dialogue = $this->RenderRestartButton($Attack_Dialogue);
       }
 
       return [
