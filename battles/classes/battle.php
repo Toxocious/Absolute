@@ -896,6 +896,79 @@
 
       return '';
     }
+
+    /**
+     * Check for and handle Pokemon that have fainted.
+     *
+     * @param {int} $Ally_Damage_Dealt
+     * @param {int} $Foe_Damage_Dealt
+     */
+    public function ProcessFaintedPokemon
+    (
+      int $Ally_Damage_Dealt = null,
+      int $Foe_Damage_Dealt = null,
+      bool $Triggered_By_Non_Attack = false
+    )
+    {
+      if ( empty($Ally_Damage_Dealt) )
+        $Ally_Damage_Dealt = 0;
+
+      if ( empty($Foe_Damage_Dealt) )
+        $Foe_Damage_Dealt = 0;
+
+      $Attacker = $_SESSION['Battle']['Ally'];
+      $Defender = $_SESSION['Battle']['Foe'];
+
+      $Continue = false;
+      $Faint_Dialogue = '';
+
+      if ( $Defender->Active->HP <= 0 )
+      {
+        $Attacker->Active->DisableMoves();
+
+        $Faint_Dialogue .= $Defender->Active->HandleFaint($Triggered_By_Non_Attack, $Ally_Damage_Dealt)['Text'];
+
+        if ( !$Defender->NextPokemon() )
+        {
+          $Faint_Dialogue .= '<br />' . $this->EndBattle('Foe')['Text'];
+
+          return [
+            'Dialogue' => $Faint_Dialogue,
+            'Restart' => true,
+          ];
+        }
+        else
+        {
+          $Continue = true;
+        }
+      }
+
+      if ( $Attacker->Active->HP <= 0 )
+      {
+        $Attacker->Active->DisableMoves();
+
+        $Faint_Dialogue .= $Attacker->Active->HandleFaint($Triggered_By_Non_Attack, $Foe_Damage_Dealt)['Text'];
+
+        if ( !$Attacker->NextPokemon() )
+        {
+          $Faint_Dialogue .= '<br />' . $this->EndBattle('Foe')['Text'];
+
+          return [
+            'Dialogue' => $Faint_Dialogue,
+            'Restart' => true,
+          ];
+        }
+        else
+        {
+          $Continue = true;
+        }
+      }
+
+      return [
+        'Dialogue' => $Faint_Dialogue,
+        'Continue' => $Continue,
+      ];
+    }
     /**
      * Handle the process of switching your active Pokemon.
      * @param int $Roster_Slot
