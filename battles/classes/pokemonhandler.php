@@ -474,12 +474,10 @@
       {
         $Effect_Text .= $this->AbilityProcsOnFaint($Attacker, $Defender);
 
-        $this->GeneratePostcode('Continue');
         $Continue = true;
       }
       else
       {
-        $this->GeneratePostcode('Restart');
         $Restart = true;
       }
 

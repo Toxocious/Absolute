@@ -969,6 +969,7 @@
         'Continue' => $Continue,
       ];
     }
+
     /**
      * Handle the process of switching your active Pokemon.
      * @param int $Roster_Slot
@@ -1718,6 +1719,9 @@
       string $Dialogue
     )
     {
+      if ( !empty($_SESSION['Battle']['Postcodes']['Continue']) )
+        return;
+
       $this->GeneratePostcode('Continue');
 
       return "
@@ -1742,6 +1746,9 @@
       string $Dialogue
     )
     {
+      if ( !empty($_SESSION['Battle']['Postcodes']['Restart']) )
+        return;
+
       $this->GeneratePostcode('Restart');
 
       return "
