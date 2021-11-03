@@ -17,7 +17,6 @@
   require_once 'battles/classes/stat.php';
   require_once 'battles/classes/status.php';
   require_once 'battles/classes/terrain.php';
-  require_once 'battles/classes/useitem.php';
   require_once 'battles/classes/userhandler.php';
   require_once 'battles/classes/weather.php';
 
