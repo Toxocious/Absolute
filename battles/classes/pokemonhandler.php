@@ -1184,14 +1184,19 @@
 
     /**
      * Increase the Pokemon's current HP.
-     * @param int $Heal
+     * @param {int} $Heal
+     * @param {bool} $Full_Heal
      */
     public function IncreaseHP
     (
-      int $Heal
+      int $Heal,
+      bool $Full_Heal = false
     )
     {
-      $this->HP += $Heal;
+      if ( !empty($Full_Heal) )
+        $this->HP += $Heal;
+      else
+        $this->HP = $this->Max_HP;
 
       if ( $this->HP > $this->Max_HP )
         $this->HP = $this->Max_HP;
