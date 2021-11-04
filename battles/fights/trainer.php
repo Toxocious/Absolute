@@ -30,15 +30,6 @@
 
     public function CreateBattle()
     {
-      global $User_Class;
-
-      if
-      (
-        !$User_Class->FetchUserData($this->Ally_ID) ||
-        !$User_Class->FetchUserData($this->Foe_ID)
-      )
-        return false;
-
       $Ally = new UserHandler($this->Ally_ID, 'Ally');
       $this->Ally = $Ally->Initialize();
       if ( !$this->Ally )
