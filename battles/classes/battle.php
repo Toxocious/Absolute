@@ -760,18 +760,6 @@
       $Ally_Active = $_SESSION['Battle']['Ally']->Active;
       $Foe_Active = $_SESSION['Battle']['Foe']->Active;
 
-      $Move_Slot = Purify($Move_Slot) - 1;
-      $Ally_Move = $Ally_Active->Moves[$Move_Slot];
-
-      if ( empty($Ally_Move) )
-      {
-        return [
-          'Type' => 'Error',
-          'Text' => 'There was an error when processing your selected move.',
-          'Debug' => $Ally_Active->Moves[$Move_Slot],
-        ];
-      }
-
       if
       (
         $Ally_Active->HP == 0 ||
@@ -784,7 +772,18 @@
         ];
       }
 
+      $Move_Slot = Purify($Move_Slot) - 1;
+      $Ally_Move = $Ally_Active->Moves[$Move_Slot];
       $this->Foe_Move = $Foe_Active->FetchRandomMove();
+
+      if ( empty($Ally_Move) )
+      {
+        return [
+          'Type' => 'Error',
+          'Text' => 'There was an error when processing your selected move.',
+          'Debug' => $Ally_Active->Moves[$Move_Slot],
+        ];
+      }
 
       if ( $Ally_Active->Ability->Name == 'Dancer' && $this->Foe_Move->HasFlag('dance') )
       {
@@ -810,24 +809,24 @@
             break;
           }
 
-          $Ally_Attack = $this->PerformAttack('Ally');
+          $Ally_Attack = $this->PerformAttack('Ally', $this->Ally_Move);
           $Attack_Dialogue .= $Ally_Attack['Dialogue'];
 
           $Attack_Dialogue .= '<br /><br />';
 
           // Check for foe's switch-out ability/held item here, before performing attack
-          $Foe_Attack = $this->PerformAttack('Foe');
+          $Foe_Attack = $this->PerformAttack('Foe', $this->Foe_Move);
           $Attack_Dialogue .= $Foe_Attack['Dialogue'];
           break;
 
         case 'Foe':
-          $Foe_Attack = $this->PerformAttack('Foe');
+          $Foe_Attack = $this->PerformAttack('Foe', $this->Foe_Move);
           $Attack_Dialogue .= $Foe_Attack['Dialogue'];
 
           $Attack_Dialogue .= '<br /><br />';
 
           // Check for ally's switch-out ability/held item here, before performing attack
-          $Ally_Attack = $this->PerformAttack('Ally');
+          $Ally_Attack = $this->PerformAttack('Ally', $this->Ally_Move);
           $Attack_Dialogue .= $Ally_Attack['Dialogue'];
           break;
       }
@@ -854,10 +853,12 @@
      * Perform the logic behind an attack.
      *
      * @param {string} $Attacker
+     * @param {object} $Move_Data
      */
     public function PerformAttack
     (
-      string $Attacker
+      string $Attacker,
+      object $Move_Data
     )
     {
       switch ( $Attacker )
@@ -875,7 +876,7 @@
 
       if ( $Attacker->HP > 0 && $Defender->HP > 0 )
       {
-        $Ally_Attack = $Attacker->Attack($this->Ally_Move);
+        $Ally_Attack = $Attacker->Attack($Move_Data);
 
         $Attack_Dialogue = $Ally_Attack['Text'];
 
