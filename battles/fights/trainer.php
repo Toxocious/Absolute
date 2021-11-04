@@ -87,7 +87,7 @@
       {
         $_SESSION['Battle']['Dialogue'] = [
           'Type' => 'Success',
-          'Text' => 'The battle has begun' . $Creation_Dialogue,
+          'Text' => 'The battle has begun.' . $Creation_Dialogue,
         ];
       }
 
