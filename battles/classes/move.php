@@ -1869,13 +1869,16 @@
       }
       else
       {
+        if ( empty($Flinch_Chance) )
+          $Flinch_Chance = 10;
+
         if
         (
           $this->HasFlag('Kings_Rock') &&
-          ($Attacker->HasItem(["King's Rock", 'Razor Fang']) || $Attacker->Ability->Name == 'Stench') &&
-          !$Defender->HasStatus('Substitute') &&
+          ( $Attacker->HasItem(["King's Rock", 'Razor Fang']) || $Attacker->HasAbility(['Stench']) ) &&
           $Turn_First_Attacker == $Attacker->Side &&
-          mt_rand(1, 100) <= !empty($Flinch_Chance) ?: 10
+          !$Defender->HasStatus('Substitute') &&
+          mt_rand(1, 100) <= $Flinch_Chance
         )
         {
           $Target->Active->SetStatus('Flinch');
