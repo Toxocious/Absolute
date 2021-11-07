@@ -113,6 +113,14 @@ h1, h2, h3, h4, h5, h6
   margin: 5px;
 }
 
+div
+{
+  .loading-element
+  {
+    border-radius: 8px;
+  }
+}
+
 /**
  * Elements that have a gradient border.
  */
