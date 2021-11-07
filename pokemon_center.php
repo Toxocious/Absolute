@@ -15,7 +15,7 @@
 ?>
 
 <div class='panel content'>
-  <div class='head'>Pokemon Center</div>
+  <div class='head'>Pok&eacute;mon Center</div>
   <div class='body pokecenter'>
     <div class='nav'>
       <div>
@@ -45,10 +45,9 @@
       </div>
     </div>
 
-    <div class='flex wrap' id='pokemon_center'>
-      <div class='panel'>
-        <div class='head'>Loading</div>
-        <div class='body' style='padding: 5px;'>Loading</div>
+    <div class='flex wrap' id='pokemon_center' style='gap: 10px; justify-content: center;'>
+      <div class='flex' style='flex-basis: 100%; align-items: center; justify-content: center; padding: 5px;'>
+        <div>Loading</div>
       </div>
     </div>
   </div>

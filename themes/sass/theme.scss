@@ -230,6 +230,15 @@ div
       }
     }
   }
+
+  .loading-element
+  {
+    animation: 1.5s loadingAnimation linear infinite;
+    background: var(--color-tertiary);
+    background: linear-gradient(110deg, var(--color-tertiary) 8%, var(--color-secondary) 18%, var(--color-tertiary) 33%);
+    background-size: 200% 100%;
+    box-shadow: var(--box-shadow);
+  }
 }
 
 /**
@@ -259,7 +268,10 @@ div
 
   & > div
   {
+    align-items: center;
     background: var(--color-quadternary);
+    display: flex;
+    justify-content: center;
   }
 }
 
@@ -276,6 +288,8 @@ div
  */
 nav
 {
+  border-color: var(--border-color);
+
   & > .button
   {
     background: var(--color-quadternary);
@@ -470,50 +484,6 @@ aside
 }
 
 /**
- * Colorbox Modal
- */
-#cboxOverlay
-{
-  background: #111;
-  color: #fff
-}
-
-#colorbox
-{
-  border-color: var(--border-color);
-  color: #fff;
-
-  & > #cboxWrapper
-  {
-    color: #fff;
-
-    #cboxContent
-    {
-      background: #000;
-      border-color: var(--color-primary);
-      color: #fff;
-
-      #cboxLoadingOverlay
-      {
-        background: #000;
-      }
-
-      #cboxLoadedContent
-      {
-        background: #000;
-        color: #fff;
-
-        .cboxIframe
-        {
-          background: #111;
-          color: #fff;
-        }
-      }
-    }
-  }
-}
-
-/**
  * Table
  */
 table
@@ -614,5 +584,11 @@ footer
   {
     -webkit-filter: hue-rotate(0deg);
     filter: hue-rotate(0deg);
+  }
+}
+
+@keyframes loadingAnimation {
+  to {
+    background-position-x: -200%;
   }
 }

@@ -100,7 +100,7 @@
 							</td>
 						</tr>
 					</tbody>
-					
+
 					<thead>
 						<tr>
 							<th colspan='4'>
@@ -175,6 +175,14 @@
 						</tr>
 					</thead>
 					<tbody>
+            <tr>
+							<td colspan='1' style='width: 50%;'>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/manage_applications.php'>Manage Applications</a>
+							</td>
+							<td colspan='1' style='width: 50%;'>
+								<a href='<?= DOMAIN_ROOT; ?>/clan/invite_members.php'>Invite Members</a>
+							</td>
+						</tr>
 						<tr>
 							<td colspan='1' style='width: 50%;'>
 								<a href='<?= DOMAIN_ROOT; ?>/clan/manage_members.php'>Manage Members</a>
@@ -255,7 +263,7 @@
 							foreach ( $Members as $Index => $Member )
 							{
 								$Member = $User_Class->FetchUserData($Member['ID']);
-								
+
 								echo "
 									<tr>
 										<td>
