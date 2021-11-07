@@ -257,7 +257,9 @@ div
     }
   }
 
-  & > div
+  & > div,
+  & > div *,
+  & > div * img
   {
     align-items: center;
     background: var(--color-quadternary);
