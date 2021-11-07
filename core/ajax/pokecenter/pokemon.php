@@ -15,7 +15,7 @@
     $Item_Icon = "
       <div class='border-gradient' style='height: 28px; width: 28px;'>
         <div>
-          <img src='{$Pokemon['Item_Icon']}' style='height: 24px; width: 24px;' />
+          <img src='{$Pokemon['Item_Icon']}' />
         </div>
       </div>
     ";
