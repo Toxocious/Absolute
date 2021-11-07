@@ -55,13 +55,7 @@
 			";
 
 			echo "
-				<table class='border-gradient' style='flex-basis: 100%;'>
-					<thead>
-						<th colspan='21'>
-							Roster
-						</th>
-					</thead>
-
+				<table class='border-gradient' style='flex-basis: 100%; max-width: 865px;'>
 					<tbody>
 			";
 
@@ -210,7 +204,7 @@
 			}
 
 			echo "
-				<div class='panel' style='flex-basis: calc(100% / 3 - 10px); margin: 5px 3px 5px 10px;'>
+				<div class='panel' style='flex-basis: 300px;'>
 					<div class='head'>Box</div>
 					<div class='body' id='Pokebox'>
 			";
@@ -249,44 +243,15 @@
 				  </div>
 				</div>
 
-				<div class='panel' style='flex-basis: calc(100% / 3 * 2 - 30px); margin: 5px 3px 5px 8px;'>
-					<div class='head'>Selected Pokemon</div>
+				<div class='panel' style='flex-basis: calc(100% - 340px);'>
+					<div class='head'>Selected Pok&eacute;mon</div>
 					<div class='body' style='height: 203px; padding: 3px;'>
 							<div class='flex' id='pokeData' style='align-items: center; justify-content: center; height: inherit;'>
-								<div style='flex-basis: 100%;'>Please select a Pokemon to view it's statistics.</div>
+								<div style='flex-basis: 100%;'>Please select a Pok&eacute;mon to view it's statistics.</div>
 						</div>
 					</div>
 				</div>
 			";
-		}
-
-		/**
-		 * Display misc stats of a Pokemon when you select it from your box.
-		 * Allow the user to add the Pokemon to their roster.
-		 */
-		if ( $_POST['Request'] == 'Stats' )
-		{
-			if ( isset($_POST['PokeID']) )
-			{
-				$Pokemon = $Poke_Class->FetchPokemonData($_POST['PokeID']);
-
-				echo "
-					<div class='head'><div>{$Pokemon['Display_Name']}</div><div style='float: right; margin-top: -21px;'>(#".number_format($Pokemon['ID']).")</div></div>
-					<div class='body' style='padding: 5px;'>
-						<div style='float: left;'>
-							<img class='popup' src='{$Pokemon['Sprite']}' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Pokemon['ID']}' />
-						</div>
-						<div style='text-align: left;'>
-							<div style='text-align: center;'><b>{$Pokemon['Display_Name']}</b></div>
-							<b>Level</b>: {$Pokemon['Level']}<br />
-							<b>Exp</b>: " . number_format($Pokemon['Experience']) . "<br />
-						</div>
-						<div>
-							Choose a slot to put your Pokemon in.<br />
-						</div>
-					</div>
-				";
-			}
 		}
 
 		/**

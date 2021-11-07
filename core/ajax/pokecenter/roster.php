@@ -66,13 +66,7 @@
     }
 ?>
 
-<table class='border-gradient' style='flex-basis: 100%; max-width: 870px;'>
-  <thead>
-    <th colspan='21'>
-      Roster
-    </th>
-  </thead>
-
+<table class='border-gradient' style='flex-basis: 100%; max-width: 865px;'>
   <tbody>
     <?php
       $Items = '';
@@ -116,7 +110,7 @@
               {
                 $Slots .= "
                   <td>
-                    <span style='color: #000; padding: 0px 13px;'>$x</span>
+                    <span style='padding: 0px 13px;'>$x</span>
                   </td>
                 ";
               }
@@ -144,7 +138,7 @@
             {
               $Slots .= "
                 <td>
-                  <span style='color: #000; padding: 0px 13px;'>$x</span>
+                  <span style='padding: 0px 13px;'>$x</span>
                 </td>
               ";
             }
@@ -179,7 +173,7 @@
   </tbody>
 </table>
 
-<div class='panel' style='flex-basis: calc(100% / 3 - 10px); margin: 5px 3px 5px 10px;'>
+<div class='panel' style='flex-basis: 300px;'>
   <div class='head'>Box</div>
   <div class='body' id='Pokebox'>
     <?php
@@ -228,11 +222,11 @@
   </div>
 </div>
 
-<div class='panel' style='flex-basis: calc(100% / 3 * 2 - 30px); margin: 5px 3px 5px 8px;'>
-  <div class='head'>Selected Pokemon</div>
+<div class='panel' style='flex-basis: calc(100% - 340px);'>
+  <div class='head'>Selected Pok&eacute;mon</div>
   <div class='body' style='height: 203px; padding: 3px;'>
       <div class='flex' id='pokeData' style='align-items: center; justify-content: center; height: inherit;'>
-        <div style='flex-basis: 100%;'>Please select a Pokemon to view it's statistics.</div>
+        <div style='flex-basis: 100%;'>Please select a Pok&eacute;mon to view it's statistics.</div>
     </div>
   </div>
 </div>

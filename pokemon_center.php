@@ -45,7 +45,7 @@
       </div>
     </div>
 
-    <div class='flex wrap' id='pokemon_center'>
+    <div class='flex wrap' id='pokemon_center' style='gap: 10px; justify-content: center;'>
       <div class='panel'>
         <div class='head'>Loading</div>
         <div class='body' style='padding: 5px;'>Loading</div>
