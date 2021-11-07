@@ -259,7 +259,10 @@ div
 
   & > div
   {
+    align-items: center;
     background: var(--color-quadternary);
+    display: flex;
+    justify-content: center;
   }
 }
 
