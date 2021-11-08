@@ -23,11 +23,13 @@
 		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css' />
 
+		<link type='text/css' rel='stylesheet' href='/themes/css/lib/toastify.min.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/lib/perfect-scrollbar.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/lib/iframe-lightbox.min.css' />
 
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/jquery.min.js'></script>
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/socket-io.min.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/toastify.min.js'></script>
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/perfect-scrollbar.min.js'></script>
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/iframe-lightbox.min.js'></script>
 		<?php

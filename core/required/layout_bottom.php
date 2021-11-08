@@ -20,7 +20,6 @@
             </svg>
 					</a>
 				</div>
-
 			</footer>
 		</div>
 

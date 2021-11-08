@@ -1,6 +1,7 @@
 absol/node_modules
 absol/chatlog.txt
+themes/css/*
+!themes/css/lib
 scripts/*
 tools/*
-themes/css
 scc.exe
