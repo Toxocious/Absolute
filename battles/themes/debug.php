@@ -313,7 +313,7 @@
           </div>
 
           <div class='border-gradient' style='flex-basis: 70%; margin-top: 5px;'>
-            <div id='BattleDialogue' style='font-size: 12px;'>
+            <div id='BattleDialogue' style='display: block; font-size: 12px;'>
               Loading Battle State
             </div>
           </div>
