@@ -3162,7 +3162,15 @@
         $Special_Damage_Mult = 0.5;
       }
 
-      switch ($Attacker->Item->Name)
+      switch ( $this->Name )
+      {
+        case 'Acrobatics':
+          if ( empty($Attacker->Item) )
+            $this->Power *= 2;
+          break;
+      }
+
+      switch ( $Attacker->Item->Name )
       {
         case 'Bug Gem':
           if ( $this->Move_Type == 'Bug' )
