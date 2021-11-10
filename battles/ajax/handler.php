@@ -43,6 +43,7 @@
 
   $Output = [
     'Time_Started' => $_SESSION['Battle']['Time_Started'],
+    'Battle_Layout' => empty($_SESSION['Battle']['Battle_Layout']) ? $User_Data['Battle_Theme'] : $_SESSION['Battle']['Battle_Layout'],
     'Battle_Type' => $_SESSION['Battle']['Battle_Type'],
     'Started' => $_SESSION['Battle']['Started'],
     'Battle_ID' => $_SESSION['Battle']['Battle_ID'],

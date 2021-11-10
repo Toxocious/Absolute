@@ -28,6 +28,9 @@
     case 'Debug':
       require_once 'battles/themes/debug.php';
       break;
+    case 'Simple':
+      require_once 'battles/themes/simple.php';
+      break;
     default:
       require_once 'battles/themes/default.php';
       break;
@@ -105,7 +108,7 @@
       Battle.HandleRequest('Bag', event);
     },
 
-    RenderRoster: (Side, Roster, Active) =>
+    RenderRoster: (Side, Roster, Active, Battle_Layout) =>
     {
       if
       (
@@ -163,13 +166,22 @@
       {
         document.querySelector(`[slot='${Side}_Slot_${i}'] > img`).setAttribute('src', Roster[i].Icon);
 
+        if ( Battle_Layout == 'Simple' )
+          document.querySelector(`[slot='${Side}_Slot_${i}'] > span`).innerText = Roster[i].Display_Name;
+
         if ( Roster[i].Active )
         {
-          document.querySelector(`[slot='${Side}_Slot_${i}']`).closest('div[class]').style.boxShadow = 'inset 0 0 4px 2px red';
+          if ( Battle_Layout == 'Simple' )
+            document.querySelector(`[slot='${Side}_Slot_${i}']`).style.border = 'border-bottom: 1px solid var(--color-primary);';
+          else
+            document.querySelector(`[slot='${Side}_Slot_${i}']`).closest('div[class]').style.boxShadow = 'inset 0 0 4px 2px red';
         }
         else
         {
-          document.querySelector(`[slot='${Side}_Slot_${i}']`).closest('div[class]').style.boxShadow = '';
+          if ( Battle_Layout == 'Simple' )
+            document.querySelector(`[slot='${Side}_Slot_${i}']`).style.border = '';
+          else
+            document.querySelector(`[slot='${Side}_Slot_${i}']`).closest('div[class]').style.boxShadow = '';
         }
 
         if ( Roster[i].Fainted )
@@ -342,8 +354,8 @@
             if ( req.status === 200 )
             {
               Battle.RenderMoves(JSON_Data.Ally.Active.Moves);
-              Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active);
-              Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active);
+              Battle.RenderRoster('Ally', JSON_Data.Ally.Roster, JSON_Data.Ally.Active, JSON_Data.Battle_Layout);
+              Battle.RenderRoster('Foe', JSON_Data.Foe.Roster, JSON_Data.Foe.Active, JSON_Data.Battle_Layout);
 
               Battle.RenderWeather(JSON_Data.Weather);
               Battle.RenderFieldEffects(JSON_Data.Field_Effects);

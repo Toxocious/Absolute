@@ -48,6 +48,7 @@
 	$Battle_Type = strtolower(Purify($_GET['Battle_Type']));
 	$Foe = Purify($_GET['Foe']);
 
+	$_SESSION['Battle']['Battle_Layout'] = $User_Data['Battle_Theme'];
 	$_SESSION['Battle']['Battle_Type'] = $Battle_Type;
 
 	switch ($Battle_Type)
