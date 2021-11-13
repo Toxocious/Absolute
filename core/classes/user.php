@@ -93,6 +93,12 @@
 				'Clan_Exp_Raw' => $User['Clan_Exp'],
 				'Clan_Rank' => $User['Clan_Rank'],
 				'Clan_Title' => $User['Clan_Title'],
+        'Map_ID' => $User['Map_ID'],
+        'Map_Position' => [
+          'x' => $User['Map_X'],
+          'y' => $User['Map_Y'],
+          'z' => $User['Map_Z'],
+        ],
 				'Status' => $User['Status'],
 				'Staff_Message' => $User['Staff_Message'],
 				'Power' => $User['Power'],
