@@ -99,6 +99,7 @@
           'y' => $User['Map_Y'],
           'z' => $User['Map_Z'],
         ],
+        'Gender' => $User['Gender'],
 				'Status' => $User['Status'],
 				'Staff_Message' => $User['Staff_Message'],
 				'Power' => $User['Power'],
