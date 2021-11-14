@@ -46,8 +46,8 @@
       string $Property_Name
     )
     {
-      foreach ( $this->properties as $Property )
-        if ( $Property->name == $Property_Name )
+      foreach ( $this->properties as $Prop_Name => $Prop_Value )
+        if ( $Prop_Name == $Property_Name )
           return true;
 
       return false;
