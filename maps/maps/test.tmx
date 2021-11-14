@@ -69,6 +69,8 @@
  <objectgroup id="3" name="Objects">
   <object id="1" name="Player_Entity" x="224" y="224" width="16" height="16">
    <properties>
+    <property name="frameheight" type="int" value="48"/>
+    <property name="framewidth" type="int" value="48"/>
     <property name="hidden" type="bool" value="true"/>
     <property name="image" value="character"/>
    </properties>
