@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.5" tiledversion="1.7.2" orientation="orthogonal" renderorder="right-down" width="28" height="28" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="2">
- <tileset firstgid="1" source="../tilesets/halloween.tsx"/>
- <tileset firstgid="901" source="../tilesets/font.tsx"/>
+ <tileset firstgid="1" source="../tilesets/halloween.tmx"/>
+ <tileset firstgid="901" source="../tilesets/font.tmx"/>
  <layer id="1" name="Layer_One" width="28" height="28">
   <data encoding="csv">
 286,286,286,286,286,316,316,317,286,286,286,286,286,286,286,286,287,316,286,286,286,286,286,286,286,286,316,286,
