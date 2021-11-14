@@ -67,9 +67,10 @@
 </data>
  </layer>
  <objectgroup id="3" name="Objects">
-  <object id="1" name="Main_Player" x="192" y="144" width="16" height="16">
+  <object id="1" name="Player_Entity" x="224" y="224" width="16" height="16">
    <properties>
     <property name="hidden" type="bool" value="true"/>
+    <property name="image" value="character"/>
    </properties>
   </object>
  </objectgroup>
