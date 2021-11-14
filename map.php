@@ -6,8 +6,7 @@
 	<div class='head'>Maps</div>
 	<div class='body flex' style='align-items: center; flex-flow: column; gap: 10px; justify-content: center; padding: 5px;'>
     <div class='border-gradient'>
-      <div>
-        <div id='map' style='height: 300px; width: 300px;'></div>
+      <div id='map_canvas'>
       </div>
     </div>
 

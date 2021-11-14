@@ -241,6 +241,20 @@ div
       text-align: center;
     }
 
+    &#map_canvas
+    {
+      height: 300px;
+      width: 300px;
+
+      & > canvas
+      {
+        border-radius: 6px;
+        margin: 0;
+        max-height:300px;
+        max-width: 300px;
+      }
+    }
+
     &:first-child
     {
       border-radius: var(--border-radius-tl-bl);
