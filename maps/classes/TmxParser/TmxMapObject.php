@@ -9,6 +9,7 @@
     public $y;
     public $width;
     public $height;
+    public $hidden;
     public $properties;
 
     public function __construct
