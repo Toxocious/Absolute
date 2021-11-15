@@ -61,6 +61,8 @@
 <!-- Phaser Library -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/phaser.js'></script>
 
+<!-- Map Scripts -->
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/maps/network.js'></script>
 
 <!-- Initialize Engine & Scenes -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/maps/render.js'></script>
