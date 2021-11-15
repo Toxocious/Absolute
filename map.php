@@ -58,8 +58,12 @@
 	</div>
 </div>
 
-<!-- melonJS Library -->
-<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/melonjs.min.js'></script>
+<!-- Phaser Library -->
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/phaser.js'></script>
 
+
+<!-- Initialize Engine & Scenes -->
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/maps/render.js'></script>
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/maps/init.js'></script>
 <?php
 	require_once 'core/required/layout_bottom.php';
