@@ -27,11 +27,11 @@
 		<link type='text/css' rel='stylesheet' href='/themes/css/lib/perfect-scrollbar.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/lib/iframe-lightbox.min.css' />
 
-		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/jquery.min.js'></script>
-		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/socket-io.min.js'></script>
-		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/toastify.min.js'></script>
-		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/perfect-scrollbar.min.js'></script>
-		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/iframe-lightbox.min.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/jquery.min.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/socket-io.min.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/toastify.min.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/perfect-scrollbar.min.js'></script>
+		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/iframe-lightbox.min.js'></script>
 		<?php
 			/**
 			 * Adds snowstorm.js if the current month is December.
