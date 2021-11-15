@@ -53,28 +53,6 @@
     }
 
     /**
-     * Fetch all objects on the map.
-     */
-    public function GetObjects()
-    {
-      $Objects = [];
-
-      if ( !empty($this->Objects) )
-      {
-        foreach ( $this->Objects as $Current_Object )
-        {
-          $Object = $Current_Object->Object;
-
-          $Objects[] = [
-            'Object_ID' => $Object->properties['object_id']
-          ];
-        }
-      }
-
-      return $Objects;
-    }
-
-    /**
      * Fetch the names of all tilesets that need to be loaded.
      */
     public function GetRequiredTilesets()
@@ -116,7 +94,6 @@
       return json_encode($this->Map_Data);
     }
 
-
     /**
      * Send initial map load data.
      */
@@ -127,7 +104,6 @@
       return [
         'Character' => $User_Data['Gender'],
         'Map_Name' => $this->Player->GetMap(),
-        'Objects' => $this->GetObjects(),
         'Position' => $this->Player->GetPosition(),
         'Tilesets' => $this->GetRequiredTilesets(),
         // 'Map_Data' => $this->Map_Data,
