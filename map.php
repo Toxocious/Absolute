@@ -10,7 +10,7 @@
       </div>
     </div>
 
-    <table class='border-gradient' style='width: 310px;'>
+    <table class='border-gradient' style='width: 300px;'>
       <thead>
         <tr>
           <th colspan='2'>
