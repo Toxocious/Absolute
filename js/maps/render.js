@@ -145,15 +145,8 @@ const Render = new Phaser.Class({
     const Map = this.make.tilemap({ key: this.Map_Name });
     console.log('[Map]', Map);
 
-    let Tiles;
-    for ( let Tileset of Map.tilesets )
-    {
-      Tiles = Map.addTilesetImage(Tileset.name, 'tiles');
-    }
-    console.log('[Tiles]', Tiles);
-
-    let Layer = Map.createLayer(0, Tiles, 0, 0);
-    console.log('[Layer]', Layer);
+    const Tiles = this.RenderTiles(Map);
+    const Layers = this.RenderLayers(Map, Tiles);
 
     this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
 
@@ -162,13 +155,45 @@ const Render = new Phaser.Class({
     MapGame.Player.setTexture('character');
     console.log(MapGame.Player);
     this.physics.add.existing(MapGame.Player);
-
     // this.CreateObjects();
   },
 
   update: function(time, delta)
   {
     console.log('[Screen Updated] Render');
+  },
+
+  /**
+   * Render all layers of the map.
+   */
+  RenderLayers: function(Map, Tiles)
+  {
+    // let Layer = Map.createStaticLayer(0, Tiles, 0, 0);
+
+    let Layers;
+    for ( const Layer in Map.layers )
+    {
+      console.log(Layer, Map.layers[Layer]);
+      Layers = Map.createLayer(Map.layers[Layer].name, Tiles);
+    }
+    console.log('[Layer]', Layers);
+
+    return Layers;
+  },
+
+  /**
+   * Render necessary tilesets.
+   */
+  RenderTiles: function(Map)
+  {
+    let Tiles;
+    for ( let Tileset of Map.tilesets )
+    {
+      Tiles = Map.addTilesetImage(Tileset.name, 'tiles');
+    }
+    console.log('[Tiles]', Tiles);
+
+    return Tiles;
   },
   }
 });
