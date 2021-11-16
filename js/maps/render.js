@@ -152,8 +152,7 @@ const Render = new Phaser.Class({
 
     // Handle object creation.
     MapGame.Player = new Player_Entity(this, this.Player_Position['x'], this.Player_Position['y']);
-    MapGame.Player.setTexture('character');
-    console.log(MapGame.Player);
+    console.log('[Player Entity]', MapGame.Player);
     this.physics.add.existing(MapGame.Player);
     // this.CreateObjects();
   },
