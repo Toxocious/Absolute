@@ -157,7 +157,7 @@ const Render = new Phaser.Class({
 
     // Set camera bounts, and center it on the player.
     this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
-    this.cameras.main.centerOn(MapGame.Player.x, MapGame.Player.y);
+    this.cameras.main.startFollow(MapGame.Player);
 
     // this.CreateObjects();
   },
