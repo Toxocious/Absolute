@@ -84,7 +84,6 @@ const Render = new Phaser.Class({
     MapGame.Network.SendRequest('Load').then((Assets) =>
     {
       Assets = JSON.parse(Assets);
-      console.log('[Map Assets]', Assets);
 
       /**
        * Load the map file.
@@ -146,7 +145,9 @@ const Render = new Phaser.Class({
     console.log('[Map]', Map);
 
     const Tiles = this.RenderTiles(Map);
+    console.log('[Tiles]', Tiles);
     const Layers = this.RenderLayers(Map, Tiles);
+    console.log('[Layers]', Layers);
 
     this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
 
@@ -167,16 +168,11 @@ const Render = new Phaser.Class({
    */
   RenderLayers: function(Map, Tiles)
   {
-    // let Layer = Map.createStaticLayer(0, Tiles, 0, 0);
-
     let Layers;
     for ( const Layer in Map.layers )
     {
-      console.log(Layer, Map.layers[Layer]);
       Layers = Map.createLayer(Map.layers[Layer].name, Tiles);
     }
-    console.log('[Layer]', Layers);
-
     return Layers;
   },
 
@@ -190,7 +186,6 @@ const Render = new Phaser.Class({
     {
       Tiles = Map.addTilesetImage(Tileset.name, 'tiles');
     }
-    console.log('[Tiles]', Tiles);
 
     return Tiles;
   },
