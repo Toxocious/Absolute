@@ -9,6 +9,7 @@ const Render = new Phaser.Class({
   init: function()
   {
     MapGame.Player = null;
+    MapGame.Tile_Size = 16;
     MapGame.Network = new Network();
 
     let Width = this.cameras.main.width;
