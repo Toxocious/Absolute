@@ -8,6 +8,58 @@ class Player_Entity extends Phaser.Physics.Arcade.Sprite
     this.setTexture('character');
 
   /**
+   * Handle player input.
+   */
+  InputListener(Input, Layers)
+  {
+    Input.keyboard.on('keydown-A', (e) =>
+    {
+      var Tile_Info = Layers.getTileAtWorldXY(this.x - 16, this.y, true);
+      if ( !Tile_Info || Tile_Info.properties.collision )
+        return;
+
+      this.play('walk_side');
+
+      this.x -= 16;
+      this.scaleX = 1;
+    });
+
+    Input.keyboard.on('keydown-D', (e) =>
+    {
+      var Tile_Info = Layers.getTileAtWorldXY(this.x + 16, this.y, true);
+      if ( !Tile_Info || Tile_Info.properties.collision )
+        return;
+
+      this.play('walk_side');
+
+      this.x += 16;
+      this.scaleX = -1;
+    });
+
+    Input.keyboard.on('keydown-W', (e) =>
+    {
+      var Tile_Info = Layers.getTileAtWorldXY(this.x, this.y - 16, true);
+      if ( !Tile_Info || Tile_Info.properties.collision )
+        return;
+
+      this.play('walk_up');
+
+      this.y -= 16;
+    });
+
+    Input.keyboard.on('keydown-S', (e) =>
+    {
+      var Tile_Info = Layers.getTileAtWorldXY(this.x, this.y + 16, true);
+      if ( !Tile_Info || Tile_Info.properties.collision )
+        return;
+
+      this.play('walk_down');
+
+      this.y += 16;
+    });
+  }
+
+  /**
    * Create animations.
    */
   CreateAnimations()
