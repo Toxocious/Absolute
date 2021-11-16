@@ -64,8 +64,12 @@
 <!-- Map Scripts -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/maps/network.js'></script>
 
+<!-- Entities -->
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/maps/entities/player.js'></script>
+
 <!-- Initialize Engine & Scenes -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/maps/render.js'></script>
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/maps/init.js'></script>
+
 <?php
 	require_once 'core/required/layout_bottom.php';
