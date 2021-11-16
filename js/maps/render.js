@@ -149,12 +149,16 @@ const Render = new Phaser.Class({
     const Layers = this.RenderLayers(Map, Tiles);
     console.log('[Layers]', Layers);
 
-    this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
 
     // Handle object creation.
     MapGame.Player = new Player_Entity(this, this.Player_Position['x'], this.Player_Position['y']);
     console.log('[Player Entity]', MapGame.Player);
     this.physics.add.existing(MapGame.Player);
+
+    // Set camera bounts, and center it on the player.
+    this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
+    this.cameras.main.centerOn(MapGame.Player.x, MapGame.Player.y);
+
     // this.CreateObjects();
   },
 
