@@ -2,10 +2,21 @@ class Player_Entity extends Phaser.Physics.Arcade.Sprite
 {
   constructor(scene, x, y)
   {
-    super(scene, x * 16, y * 16, 'texture');
+    super(scene, x * MapGame.Tile_Size, y * MapGame.Tile_Size, 'texture');
+
+    const offsetX = MapGame.Tile_Size / 2;
+    const offsetY = MapGame.Tile_Size;
 
     this.scene.add.existing(this);
+
     this.setTexture('character');
+    this.setDepth(3);
+    this.setOrigin(0.5, 0.5);
+    this.setPosition(
+      x * MapGame.Tile_Size + offsetX,
+      y * MapGame.Tile_Size + offsetY
+    );
+  }
 
   /**
    * Handle player input.
