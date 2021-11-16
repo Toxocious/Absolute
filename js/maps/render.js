@@ -8,6 +8,7 @@ const Render = new Phaser.Class({
 
   init: function()
   {
+    MapGame.Player = null;
     MapGame.Network = new Network();
 
     let Width = this.cameras.main.width;
@@ -108,15 +109,20 @@ const Render = new Phaser.Class({
       switch ( Assets.Character )
       {
         case 'Female':
-          this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
+          this.Player_Texture = this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
           break;
         case 'Male':
-          this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
+          this.Player_Texture = this.load.spritesheet('character', 'user_male.png', { frameWidth: 48, frameHeight: 48 });
           break;
         case 'Ungendered':
-          this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
+          this.Player_Texture = this.load.spritesheet('character', 'user_ungendered.png', { frameWidth: 48, frameHeight: 48 });
           break;
       }
+
+      /**
+       * Store the player's position.
+       */
+      this.Player_Position = Assets.Position;
     });
 
 
@@ -136,10 +142,6 @@ const Render = new Phaser.Class({
 
   create: function()
   {
-    // let Width = this.cameras.main.width;
-    // let Height = this.cameras.main.height;
-    // this.add.image(Width / 2, Height / 2 , 'logo');
-
     const Map = this.make.tilemap({ key: this.Map_Name });
     console.log('[Map]', Map);
 
@@ -154,10 +156,19 @@ const Render = new Phaser.Class({
     console.log('[Layer]', Layer);
 
     this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
+
+    // Handle object creation.
+    MapGame.Player = new Player_Entity(this, this.Player_Position['x'], this.Player_Position['y']);
+    MapGame.Player.setTexture('character');
+    console.log(MapGame.Player);
+    this.physics.add.existing(MapGame.Player);
+
+    // this.CreateObjects();
   },
 
-  update: function()
+  update: function(time, delta)
   {
     console.log('[Screen Updated] Render');
+  },
   }
 });
