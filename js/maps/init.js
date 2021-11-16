@@ -9,6 +9,22 @@ let MapGame = {
       width: 15 * 16,
     },
 
+    audio: {
+      disableWebAudio: false,
+    },
+
+    physics: {
+      default: 'arcade',
+      arcade: {
+        debug: false,
+      },
+    },
+
+    render: {
+      antialiasGL: false,
+      pixelArt: true,
+    },
+
     scene: [
       Render
     ],
