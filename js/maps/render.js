@@ -156,6 +156,11 @@ const Render = new Phaser.Class({
     console.log('[Player Entity]', MapGame.Player);
     this.physics.add.existing(MapGame.Player);
 
+    // Create tile animations.
+    MapGame.Player.CreateAnimations();
+
+    // Listen for inputs.
+    MapGame.Player.InputListener(this.input, Layers);
     // Set camera bounts, and center it on the player.
     this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
     this.cameras.main.startFollow(MapGame.Player);
