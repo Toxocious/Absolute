@@ -100,6 +100,23 @@ const Render = new Phaser.Class({
       {
         this.load.image('tiles', `${Tileset}.png`);
       }
+
+      /**
+       * Load the player's NPC spritesheet.
+       */
+      this.load.setPath('/maps/assets/npcs/');
+      switch ( Assets.Character )
+      {
+        case 'Female':
+          this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
+          break;
+        case 'Male':
+          this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
+          break;
+        case 'Ungendered':
+          this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
+          break;
+      }
     });
 
 
@@ -110,10 +127,6 @@ const Render = new Phaser.Class({
 
       this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 48, frameHeight: 48 });
     }
-
-    this.load.spritesheet('user_female', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
-    this.load.spritesheet('user_male', 'user_male.png', { frameWidth: 48, frameHeight: 48 });
-    this.load.spritesheet('user_ungendered', 'user_ungendered.png', { frameWidth: 48, frameHeight: 48 });
 
     this.load.setPath('/images/Assets/');
     this.load.image('logo', 'pokeball.png');
