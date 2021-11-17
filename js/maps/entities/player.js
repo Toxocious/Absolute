@@ -1,25 +1,21 @@
-class Player_Entity extends Phaser.Physics.Arcade.Sprite
+class Player_Entity
 {
-  constructor(scene, x, y)
+  constructor(Sprite)
   {
-    super(scene, x * MapGame.Tile_Size, y * MapGame.Tile_Size, 'texture');
 
-    const offsetX = MapGame.Tile_Size / 2;
-    const offsetY = MapGame.Tile_Size;
-
-    this.scene.add.existing(this);
-
-    this.setTexture('character');
-    this.setDepth(3);
-    this.setOrigin(0.5, 0.5);
-    this.setPosition(
-      x * MapGame.Tile_Size + offsetX,
-      y * MapGame.Tile_Size + offsetY
-    );
   }
 
-  Update(Time, Delta)
+  Update(Time, Delta, GridEngine)
   {
+    if (MapGame.Keys.left.isDown) {
+      GridEngine.move("character", "left");
+    } else if (MapGame.Keys.right.isDown) {
+      GridEngine.move("character", "right");
+    } else if (MapGame.Keys.up.isDown) {
+      GridEngine.move("character", "up");
+    } else if (MapGame.Keys.down.isDown) {
+      GridEngine.move("character", "down");
+    }
   }
 
   /**

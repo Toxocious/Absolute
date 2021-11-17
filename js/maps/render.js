@@ -162,26 +162,30 @@ const Render = new Phaser.Class({
     const Layers = this.RenderLayers(Map, Tiles);
     console.log('[Layers]', Layers);
 
-    // Handle object creation.
-    MapGame.Player = new Player_Entity(this, this.Player_Position['x'], this.Player_Position['y']);
-    console.log('[Player Entity]', MapGame.Player);
-    this.physics.add.existing(MapGame.Player);
+    // Set player sprite
+    const Player_Sprite = this.add.sprite(0, 0, "character");
+    Player_Sprite.setOrigin(0.5, 0.5);
+    this.cameras.main.startFollow(Player_Sprite, true);
+    this.cameras.main.setFollowOffset(-Player_Sprite.width / 2, -Player_Sprite.height / 2);
+    MapGame.Player = new Player_Entity(Player_Sprite);
 
-    // Create tile animations.
-    MapGame.Player.CreateAnimations();
-
-    // Listen for inputs.
-    MapGame.Player.InputListener(this.input, Layers);
-
-    // Set camera bounts, and center it on the player.
-    this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
-    this.cameras.main.startFollow(MapGame.Player);
-    this.cameras.main.roundPixels = true;
+    // Grid Engine init
+    const gridEngineConfig = {
+      characters: [
+        {
+          id: "character",
+          sprite: Player_Sprite,
+          walkingAnimationMapping: 6,
+          startPosition: { x: this.Player_Position.x, y: this.Player_Position.y },
+        },
+      ],
+    };
+    this.gridEngine.create(Map, gridEngineConfig);
   },
 
   update: function(Time, Delta)
   {
-    MapGame.Player.Update(Time, Delta);
+    MapGame.Player.Update(Time, Delta, this.gridEngine);
   },
 
   /**
