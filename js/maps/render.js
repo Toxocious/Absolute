@@ -109,13 +109,13 @@ const Render = new Phaser.Class({
       switch ( Assets.Character )
       {
         case 'Female':
-          this.Player_Texture = this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
+          this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
           break;
         case 'Male':
-          this.Player_Texture = this.load.spritesheet('character', 'user_male.png', { frameWidth: 48, frameHeight: 48 });
+          this.load.spritesheet('character', 'user_male.png', { frameWidth: 48, frameHeight: 48 });
           break;
         case 'Ungendered':
-          this.Player_Texture = this.load.spritesheet('character', 'user_ungendered.png', { frameWidth: 48, frameHeight: 48 });
+          this.load.spritesheet('character', 'user_ungendered.png', { frameWidth: 48, frameHeight: 48 });
           break;
       }
 
