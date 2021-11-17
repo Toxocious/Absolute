@@ -18,6 +18,10 @@ class Player_Entity extends Phaser.Physics.Arcade.Sprite
     );
   }
 
+  Update(Time, Delta)
+  {
+  }
+
   /**
    * Handle player input.
    */
