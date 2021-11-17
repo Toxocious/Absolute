@@ -181,7 +181,10 @@ const Render = new Phaser.Class({
     let Layers;
     for ( const Layer in Map.layers )
     {
-      Layers = Map.createLayer(Map.layers[Layer].name, Tiles);
+      const Layer_Name = Map.layers[Layer].name;
+
+      Layers = Map.createLayer(Layer_Name, Tiles);
+      Layers.setDepth(Layer);
     }
     return Layers;
   },
