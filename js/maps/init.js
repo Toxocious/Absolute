@@ -25,6 +25,16 @@ let MapGame = {
       pixelArt: true,
     },
 
+    plugins: {
+      scene: [
+        {
+          key: "gridEngine",
+          plugin: GridEngine,
+          mapping: "gridEngine",
+        },
+      ],
+    },
+
     scene: [
       Render
     ],
