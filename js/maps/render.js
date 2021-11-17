@@ -9,6 +9,13 @@ const Render = new Phaser.Class({
 
   init: function()
   {
+    MapGame.Keys = this.input.keyboard.addKeys({
+      up: 'W',
+      left: 'A',
+      down: 'S',
+      right: 'D'
+    });
+
     MapGame.Player = null;
     MapGame.Tile_Size = 16;
     MapGame.Network = new Network();
