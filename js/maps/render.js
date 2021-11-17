@@ -168,9 +168,9 @@ const Render = new Phaser.Class({
     // this.CreateObjects();
   },
 
-  update: function(time, delta)
+  update: function(Time, Delta)
   {
-    console.log('[Screen Updated] Render');
+    MapGame.Player.Update(Time, Delta);
   },
 
   /**
