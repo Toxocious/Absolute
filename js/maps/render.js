@@ -1,3 +1,4 @@
+
 const Render = new Phaser.Class({
   Extends: Phaser.Scene,
 
@@ -142,14 +143,17 @@ const Render = new Phaser.Class({
 
   create: function()
   {
+    // Make the map.
     const Map = this.make.tilemap({ key: this.Map_Name });
     console.log('[Map]', Map);
 
+    // Render the tiles.
     const Tiles = this.RenderTiles(Map);
     console.log('[Tiles]', Tiles);
+
+    // Render the layers.
     const Layers = this.RenderLayers(Map, Tiles);
     console.log('[Layers]', Layers);
-
 
     // Handle object creation.
     MapGame.Player = new Player_Entity(this, this.Player_Position['x'], this.Player_Position['y']);
@@ -161,11 +165,11 @@ const Render = new Phaser.Class({
 
     // Listen for inputs.
     MapGame.Player.InputListener(this.input, Layers);
+
     // Set camera bounts, and center it on the player.
     this.cameras.main.setBounds(0, 0, Map.widthInPixels, Map.heightInPixels);
     this.cameras.main.startFollow(MapGame.Player);
-
-    // this.CreateObjects();
+    this.cameras.main.roundPixels = true;
   },
 
   update: function(Time, Delta)
