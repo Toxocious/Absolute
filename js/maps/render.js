@@ -163,8 +163,9 @@ const Render = new Phaser.Class({
     console.log('[Layers]', Layers);
 
     // Set player sprite
-    const Player_Sprite = this.add.sprite(0, 0, "character");
+    const Player_Sprite = this.physics.add.sprite(0, 0, "character");
     Player_Sprite.setOrigin(0.5, 0.5);
+    Player_Sprite.body.setSize(16, 16, true);
     this.cameras.main.startFollow(Player_Sprite, true);
     this.cameras.main.setFollowOffset(-Player_Sprite.width / 2, -Player_Sprite.height / 2);
     MapGame.Player = new Player_Entity(Player_Sprite);
