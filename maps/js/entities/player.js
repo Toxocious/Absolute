@@ -16,6 +16,37 @@ class Player_Entity
     } else if (MapGame.Keys.down.isDown) {
       GridEngine.move("character", "down");
     }
+
+    //if (MapGame.Keys.left.isDown)
+    //{
+    //  this.CheckMove("left");
+    //}
+    //else if (MapGame.Keys.right.isDown)
+    //{
+    //  this.CheckMove("right");
+    //}
+    //else if (MapGame.Keys.up.isDown)
+    //{
+    //  this.CheckMove("up");
+    //}
+    //else if (MapGame.Keys.down.isDown)
+    //{
+    //  this.CheckMove("down");
+    //}
+  }
+
+  CheckMove(Direction)
+  {
+    console.log('[Checking Movement]', Direction);
+    console.log('[Checking Movement Layer]', MapGame.Layers);
+
+    let Next_Tile;
+    if ( Direction == 'left' ) Next_Tile = MapGame.Layers.getTileAtWorldXY(this.x - 16, this.y, true);
+    else if ( Direction == 'right' ) Next_Tile = MapGame.Layers.getTileAtWorldXY(this.x + 16, this.y, true);
+    else if ( Direction == 'up' ) Next_Tile = MapGame.Layers.getTileAtWorldXY(this.x, this.y - 16, true);
+    else Next_Tile = MapGame.Layers.getTileAtWorldXY(this.x, this.y + 16, true);
+
+    console.log('[Checking Movement Collision]', Next_Tile);
   }
 
   /**
@@ -132,6 +163,5 @@ class Player_Entity
     });
 
     this.play('idle_down');
-  }
   }
 }

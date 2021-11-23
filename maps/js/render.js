@@ -104,7 +104,7 @@ const Render = new Phaser.Class({
       /**
        * Load tileset images.
        */
-      this.load.setPath('/maps/maps/');
+      this.load.setPath('/maps/tilesets/images/');
       for ( const Tileset of Assets.Tilesets )
       {
         this.load.image('tiles', `${Tileset}.png`);
@@ -151,15 +151,18 @@ const Render = new Phaser.Class({
   create: function()
   {
     // Make the map.
-    const Map = this.make.tilemap({ key: this.Map_Name });
+    const Map = this.make.tilemap({ key: this.Map_Name, tileWidth: 16, tileHeight: 16 });
+    MapGame.Map = Map;
     console.log('[Map]', Map);
 
     // Render the tiles.
     const Tiles = this.RenderTiles(Map);
+    MapGame.Tiles = Tiles;
     console.log('[Tiles]', Tiles);
 
     // Render the layers.
     const Layers = this.RenderLayers(Map, Tiles);
+    MapGame.Layers = Layers;
     console.log('[Layers]', Layers);
 
     // Set player sprite
@@ -215,8 +218,45 @@ const Render = new Phaser.Class({
     {
       Tiles = Map.addTilesetImage(Tileset.name, 'tiles');
     }
-
     return Tiles;
   },
+
+  /**
+   * Find map objects.
+   */
+  FindObjects: function(Type, Map, Layer)
+  {
+    console.log('[Finding Objects]', Type, Map, Layer);
+
+    let Objects = [];
+
+    Map.objects[Layer].forEach((Element) =>
+    {
+      console.log('[Object Found]', Element);
+    });
+
+    return Objects;
+  },
+
+  /**
+   * Create objects.
+   */
+  CreateObjects: function()
+  {
+    console.log('[Creating Objects]');
+
+    this.Objects = this.game.add.group();
+    this.Objects.enableBody = true;
+
+    let Find_Objects = this.FindObjects('null', this.map, 'objectsLayer');
+    console.log(Find_Objects);
+  },
+
+  /**
+   * Create a sprite from an object.
+   */
+  CreateFromTiledObject: function(Element, Group)
+  {
+    console.log('[Creating Object Sprite]', Element, Group);
   }
 });
