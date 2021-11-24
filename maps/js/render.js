@@ -169,9 +169,12 @@ const Render = new Phaser.Class({
     const Player_Sprite = this.physics.add.sprite(0, 0, "character");
     Player_Sprite.setOrigin(0.5, 0.5);
     Player_Sprite.body.setSize(16, 16, true);
+
+    MapGame.Player = new Player_Entity(Player_Sprite);
+
     this.cameras.main.startFollow(Player_Sprite, true);
     this.cameras.main.setFollowOffset(-Player_Sprite.width / 2, -Player_Sprite.height / 2);
-    MapGame.Player = new Player_Entity(Player_Sprite);
+    this.cameras.main.setBounds(0, 0, Map.width * Map.tileWidth, Map.height * Map.tileHeiht);
 
     // Grid Engine init
     const gridEngineConfig = {
