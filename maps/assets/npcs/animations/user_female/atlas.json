@@ -1,0 +1,965 @@
+{
+	"textures": [
+		{
+			"image": "atlas.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 240,
+				"h": 100
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "atlas-43.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 10,
+						"w": 30,
+						"h": 23
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 30,
+						"h": 23
+					}
+				},
+				{
+					"filename": "atlas-44.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 3,
+						"y": 12,
+						"w": 31,
+						"h": 21
+					},
+					"frame": {
+						"x": 1,
+						"y": 26,
+						"w": 31,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-38.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 12,
+						"w": 19,
+						"h": 20
+					},
+					"frame": {
+						"x": 33,
+						"y": 1,
+						"w": 19,
+						"h": 20
+					}
+				},
+				{
+					"filename": "atlas-25.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 10,
+						"w": 24,
+						"h": 27
+					},
+					"frame": {
+						"x": 1,
+						"y": 49,
+						"w": 24,
+						"h": 27
+					}
+				},
+				{
+					"filename": "atlas-20.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 10,
+						"w": 18,
+						"h": 21
+					},
+					"frame": {
+						"x": 1,
+						"y": 78,
+						"w": 18,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-14.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 12,
+						"w": 18,
+						"h": 20
+					},
+					"frame": {
+						"x": 21,
+						"y": 78,
+						"w": 18,
+						"h": 20
+					}
+				},
+				{
+					"filename": "atlas-41.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 5,
+						"w": 24,
+						"h": 27
+					},
+					"frame": {
+						"x": 27,
+						"y": 49,
+						"w": 24,
+						"h": 27
+					}
+				},
+				{
+					"filename": "atlas-0.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 12,
+						"w": 17,
+						"h": 21
+					},
+					"frame": {
+						"x": 41,
+						"y": 78,
+						"w": 17,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-34.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 10,
+						"w": 19,
+						"h": 24
+					},
+					"frame": {
+						"x": 34,
+						"y": 23,
+						"w": 19,
+						"h": 24
+					}
+				},
+				{
+					"filename": "atlas-1.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 17,
+						"h": 20
+					},
+					"frame": {
+						"x": 54,
+						"y": 1,
+						"w": 17,
+						"h": 20
+					}
+				},
+				{
+					"filename": "atlas-23.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 11,
+						"y": 11,
+						"w": 24,
+						"h": 25
+					},
+					"frame": {
+						"x": 53,
+						"y": 49,
+						"w": 24,
+						"h": 25
+					}
+				},
+				{
+					"filename": "atlas-12.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 12,
+						"w": 17,
+						"h": 21
+					},
+					"frame": {
+						"x": 60,
+						"y": 76,
+						"w": 17,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-19.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 12,
+						"w": 17,
+						"h": 21
+					},
+					"frame": {
+						"x": 55,
+						"y": 23,
+						"w": 17,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-2.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 17,
+						"h": 20
+					},
+					"frame": {
+						"x": 73,
+						"y": 1,
+						"w": 17,
+						"h": 20
+					}
+				},
+				{
+					"filename": "atlas-21.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 12,
+						"w": 17,
+						"h": 21
+					},
+					"frame": {
+						"x": 74,
+						"y": 23,
+						"w": 17,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-29.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 13,
+						"w": 17,
+						"h": 20
+					},
+					"frame": {
+						"x": 92,
+						"y": 1,
+						"w": 17,
+						"h": 20
+					}
+				},
+				{
+					"filename": "atlas-24.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 9,
+						"w": 22,
+						"h": 28
+					},
+					"frame": {
+						"x": 79,
+						"y": 46,
+						"w": 22,
+						"h": 28
+					}
+				},
+				{
+					"filename": "atlas-28.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 12,
+						"w": 17,
+						"h": 21
+					},
+					"frame": {
+						"x": 93,
+						"y": 23,
+						"w": 17,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-3.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 13,
+						"w": 17,
+						"h": 20
+					},
+					"frame": {
+						"x": 111,
+						"y": 1,
+						"w": 17,
+						"h": 20
+					}
+				},
+				{
+					"filename": "atlas-30.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 12,
+						"w": 17,
+						"h": 21
+					},
+					"frame": {
+						"x": 79,
+						"y": 76,
+						"w": 17,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-31.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 12,
+						"w": 17,
+						"h": 21
+					},
+					"frame": {
+						"x": 98,
+						"y": 76,
+						"w": 17,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-27.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 12,
+						"y": 10,
+						"w": 24,
+						"h": 25
+					},
+					"frame": {
+						"x": 103,
+						"y": 46,
+						"w": 24,
+						"h": 25
+					}
+				},
+				{
+					"filename": "atlas-32.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 13,
+						"w": 17,
+						"h": 21
+					},
+					"frame": {
+						"x": 112,
+						"y": 23,
+						"w": 17,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-13.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 13,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 130,
+						"y": 1,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "atlas-22.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 10,
+						"w": 23,
+						"h": 26
+					},
+					"frame": {
+						"x": 117,
+						"y": 73,
+						"w": 23,
+						"h": 26
+					}
+				},
+				{
+					"filename": "atlas-37.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 12,
+						"w": 17,
+						"h": 25
+					},
+					"frame": {
+						"x": 129,
+						"y": 46,
+						"w": 17,
+						"h": 25
+					}
+				},
+				{
+					"filename": "atlas-26.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 13,
+						"y": 9,
+						"w": 22,
+						"h": 26
+					},
+					"frame": {
+						"x": 142,
+						"y": 73,
+						"w": 22,
+						"h": 26
+					}
+				},
+				{
+					"filename": "atlas-10.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 13,
+						"w": 16,
+						"h": 21
+					},
+					"frame": {
+						"x": 131,
+						"y": 22,
+						"w": 16,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-35.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 13,
+						"w": 18,
+						"h": 26
+					},
+					"frame": {
+						"x": 148,
+						"y": 45,
+						"w": 18,
+						"h": 26
+					}
+				},
+				{
+					"filename": "atlas-39.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 7,
+						"w": 18,
+						"h": 26
+					},
+					"frame": {
+						"x": 166,
+						"y": 73,
+						"w": 18,
+						"h": 26
+					}
+				},
+				{
+					"filename": "atlas-36.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 16,
+						"h": 30
+					},
+					"frame": {
+						"x": 149,
+						"y": 1,
+						"w": 16,
+						"h": 30
+					}
+				},
+				{
+					"filename": "atlas-42.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 5,
+						"w": 17,
+						"h": 28
+					},
+					"frame": {
+						"x": 167,
+						"y": 1,
+						"w": 17,
+						"h": 28
+					}
+				},
+				{
+					"filename": "atlas-40.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 3,
+						"w": 16,
+						"h": 29
+					},
+					"frame": {
+						"x": 168,
+						"y": 31,
+						"w": 16,
+						"h": 29
+					}
+				},
+				{
+					"filename": "atlas-33.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 17,
+						"y": 6,
+						"w": 16,
+						"h": 27
+					},
+					"frame": {
+						"x": 186,
+						"y": 1,
+						"w": 16,
+						"h": 27
+					}
+				},
+				{
+					"filename": "atlas-16.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 16,
+						"h": 21
+					},
+					"frame": {
+						"x": 204,
+						"y": 1,
+						"w": 16,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-18.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 16,
+						"h": 21
+					},
+					"frame": {
+						"x": 222,
+						"y": 1,
+						"w": 16,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-4.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 12,
+						"w": 16,
+						"h": 21
+					},
+					"frame": {
+						"x": 204,
+						"y": 24,
+						"w": 16,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-5.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 16,
+						"h": 21
+					},
+					"frame": {
+						"x": 186,
+						"y": 30,
+						"w": 16,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-6.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 15,
+						"y": 13,
+						"w": 16,
+						"h": 21
+					},
+					"frame": {
+						"x": 222,
+						"y": 24,
+						"w": 16,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-8.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 12,
+						"w": 16,
+						"h": 21
+					},
+					"frame": {
+						"x": 204,
+						"y": 47,
+						"w": 16,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-9.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 16,
+						"h": 21
+					},
+					"frame": {
+						"x": 186,
+						"y": 53,
+						"w": 16,
+						"h": 21
+					}
+				},
+				{
+					"filename": "atlas-15.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 14,
+						"y": 13,
+						"w": 17,
+						"h": 19
+					},
+					"frame": {
+						"x": 222,
+						"y": 47,
+						"w": 17,
+						"h": 19
+					}
+				},
+				{
+					"filename": "atlas-11.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 16,
+						"h": 20
+					},
+					"frame": {
+						"x": 222,
+						"y": 68,
+						"w": 16,
+						"h": 20
+					}
+				},
+				{
+					"filename": "atlas-17.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 12,
+						"w": 16,
+						"h": 20
+					},
+					"frame": {
+						"x": 204,
+						"y": 70,
+						"w": 16,
+						"h": 20
+					}
+				},
+				{
+					"filename": "atlas-7.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 48,
+						"h": 48
+					},
+					"spriteSourceSize": {
+						"x": 16,
+						"y": 13,
+						"w": 16,
+						"h": 20
+					},
+					"frame": {
+						"x": 186,
+						"y": 76,
+						"w": 16,
+						"h": 20
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:7160b3c37b276a84da33f7fe605123a8:8e23f075a3f8c562f5528af292d38cc6:cbce6b53f0f49e0bf15173c25c41f876$"
+	}
+}
