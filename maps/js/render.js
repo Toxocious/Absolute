@@ -113,17 +113,20 @@ const Render = new Phaser.Class({
       /**
        * Load the player's NPC spritesheet.
        */
-      this.load.setPath('/maps/assets/npcs/');
+      this.load.setPath('/maps/assets/npcs/animations/');
       switch ( Assets.Character )
       {
         case 'Female':
-          this.load.spritesheet('character', 'user_female.png', { frameWidth: 48, frameHeight: 48 });
+          this.load.multiatlas('character', 'user_female/atlas.json', '/maps/assets/npcs/animations/user_female');
+          MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_female';
           break;
         case 'Male':
-          this.load.spritesheet('character', 'user_male.png', { frameWidth: 48, frameHeight: 48 });
+          this.load.multiatlas('character', 'user_male/atlas.json', '/maps/assets/npcs/animations/user_male');
+          MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_male';
           break;
         case 'Ungendered':
-          this.load.spritesheet('character', 'user_ungendered.png', { frameWidth: 48, frameHeight: 48 });
+          this.load.multiatlas('character', 'user_ungendered/atlas.json', '/maps/assets/npcs/animations/user_ungendered');
+          MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_ungendered';
           break;
       }
 
