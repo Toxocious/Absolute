@@ -1,7 +1,17 @@
+# No need to include the .vscode directory.
+.vscode
+
+# Not necessary to push */node_modules to a repo.
+# Chatlog also doesn't need pushed.
 absol/node_modules
 absol/chatlog.txt
+
+# CSS files are compiled from SCSS files on successful push via a pipeline.
 themes/css/*
 !themes/css/lib
+
+# Misc. script files that were used during development and don't need pushed.
 scripts/*
+
+# Misc. tools that were used during development and don't need pushed.
 tools/*
-scc.exe
