@@ -188,4 +188,17 @@
         $this->SetPosition($User_Data['Map_Position']['x'], $User_Data['Map_Position']['y'], $User_Data['Map_Position']['z']);
       }
     }
+
+    /**
+     * Fetch the player's map level and experience.
+     */
+    public function GetMapLevelAndExp()
+    {
+      global $User_Data;
+
+      return [
+        'Map_Level' => FetchLevel($User_Data['Map_Experience'], 'Map'),
+        'Map_Experience' => $User_Data['Map_Experience'],
+      ];
+    }
   }
