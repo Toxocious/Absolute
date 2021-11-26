@@ -160,12 +160,10 @@ const Render = new Phaser.Class({
 
     // Render the tiles.
     const Tiles = this.RenderTiles(Map);
-    MapGame.Tiles = Tiles;
     console.log('[Tiles]', Tiles);
 
     // Render the layers.
     const Layers = this.RenderLayers(Map, Tiles);
-    MapGame.Layers = Layers;
     console.log('[Layers]', Layers);
 
     // Set player sprite
@@ -173,8 +171,13 @@ const Render = new Phaser.Class({
     Player_Sprite.setOrigin(0.5, 0.5);
     Player_Sprite.body.setSize(16, 16, true);
 
-    MapGame.Player = new Player_Entity(Player_Sprite);
+    // Create player animations.
+    MapGame.Player = new Player_Entity(Player_Sprite, this);
+    MapGame.Player.CreateAnimations();
+    MapGame.Player.PlayAnimation('idle-down');
+    console.log('[Player Sprite/Entity]', Player_Sprite, MapGame.Player);
 
+    // Set the main camera to follow the player, and keep it in bounds.
     this.cameras.main.startFollow(Player_Sprite, true);
     this.cameras.main.setFollowOffset(-Player_Sprite.width / 2, -Player_Sprite.height / 2);
     this.cameras.main.setBounds(0, 0, Map.width * Map.tileWidth, Map.height * Map.tileHeiht);
@@ -185,7 +188,6 @@ const Render = new Phaser.Class({
         {
           id: "character",
           sprite: Player_Sprite,
-          walkingAnimationMapping: 6,
           startPosition: { x: this.Player_Position.x, y: this.Player_Position.y },
         },
       ],
