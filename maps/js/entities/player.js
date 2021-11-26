@@ -106,62 +106,62 @@ class Player_Entity
    */
   CreateAnimations()
   {
-    /*
-    this.renderable.addAnimation("run_side", [13, 14, 15]);
-    this.renderable.addAnimation("run_down", [21, 22, 23]);
-    this.renderable.addAnimation("run_up", [17, 18, 19]);
-
-    this.renderable.addAnimation("surf_side", [24, 25]);
-    this.renderable.addAnimation("surf_up", [26, 27]);
-    this.renderable.addAnimation("surf_down", [28, 29]);
-
-    this.renderable.addAnimation("sliding_side", [0, 4, 12, 8]);
-    this.renderable.addAnimation("sliding_up", [0, 4, 12, 8]);
-    this.renderable.addAnimation("sliding_down", [0, 4, 12, 8]);
-    */
-
-    this.anims.create({
-      key: "walk_side",
-      frameRate: 7,
-      frames: this.anims.generateFrameNumbers("character", { start: 1, end: 3 }),
-      repeat: -1
+    const Anims = this.Sprite.anims;
+    Anims.create({
+      key: 'walk-left',
+      frames: Anims.generateFrameNames('character', {
+        start: 0,
+        end: 3,
+        prefix: 'atlas-',
+        suffix: '.png',
+      }),
+      frameRate: 10,
+      repeat: false,
     });
-
-    this.anims.create({
-      key: "walk_down",
-      frameRate: 7,
-      frames: this.anims.generateFrameNumbers("character", { start: 9, end: 10 }),
-      repeat: -1
+    Anims.create({
+      key: 'walk-right',
+      frames: Anims.generateFrameNames('character', {
+        start: 0,
+        end: 3,
+        prefix: 'atlas-',
+        suffix: '.png',
+      }),
+      flipped: true,
+      frameRate: 10,
+      repeat: false,
     });
-
-    this.anims.create({
-      key: "walk_up",
-      frameRate: 7,
-      frames: this.anims.generateFrameNumbers("character", { start: 5, end: 7 }),
-      repeat: -1
+    Anims.create({
+      key: 'walk-down',
+      frames: Anims.generateFrameNames('character', {
+        start: 8,
+        end: 11,
+        prefix: 'atlas-',
+        suffix: '.png',
+      }),
+      frameRate: 10,
+      repeat: false,
     });
-
-    this.anims.create({
-      key: "idle_side",
-      frameRate: 7,
-      frames: this.anims.generateFrameNumbers("character", { start: 0, end: 0 }),
-      repeat: -1
+    Anims.create({
+      key: 'walk-up',
+      frames: Anims.generateFrameNames('character', {
+        start: 4,
+        end: 7,
+        prefix: 'atlas-',
+        suffix: '.png',
+      }),
+      frameRate: 10,
+      repeat: false,
     });
-
-    this.anims.create({
-      key: "idle_down",
-      frameRate: 7,
-      frames: this.anims.generateFrameNumbers("character", { start: 8, end: 8 }),
-      repeat: -1
+    Anims.create({
+      key: 'idle-down',
+      frames: Anims.generateFrameNames('character', {
+        start: 8,
+        end: 8,
+        prefix: 'atlas-',
+        suffix: '.png',
+      }),
+      frameRate: 10,
+      repeat: false,
     });
-
-    this.anims.create({
-      key: "idle_up",
-      frameRate: 7,
-      frames: this.anims.generateFrameNumbers("character", { start: 4, end: 4 }),
-      repeat: -1
-    });
-
-    this.play('idle_down');
   }
 }
