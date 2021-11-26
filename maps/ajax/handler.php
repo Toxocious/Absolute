@@ -24,6 +24,21 @@
   }
 
   /**
+   * Fetch some of the player's map stats.
+   *  - Map Level
+   *  - Exp To Next Map Level
+   *  - Shiny Odds
+   *    - 1 / (4096 - Map Level)
+   *    - Capped at 1 / 2048 (0.00048828125%)
+   *  - Next Encounter In Steps
+   */
+  if ( isset($_GET['Stats']) )
+  {
+    header('Content-Type: application/json');
+    echo json_encode($Map->Stats());
+    exit;
+  }
+  /**
    * Render the map.
    */
   echo $Map->Render();
