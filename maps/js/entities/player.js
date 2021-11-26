@@ -1,20 +1,34 @@
 class Player_Entity
 {
-  constructor(Sprite)
+  constructor(Sprite, Render_Instance)
   {
-
+    this.Sprite = Sprite;
+    this.Render_Instance = Render_Instance;
   }
 
   Update(Time, Delta, GridEngine)
   {
-    if (MapGame.Keys.left.isDown) {
-      GridEngine.move("character", "left");
-    } else if (MapGame.Keys.right.isDown) {
-      GridEngine.move("character", "right");
-    } else if (MapGame.Keys.up.isDown) {
-      GridEngine.move("character", "up");
-    } else if (MapGame.Keys.down.isDown) {
-      GridEngine.move("character", "down");
+    if (MapGame.Keys.left.isDown)
+    {
+      GridEngine.move('character', 'left');
+      this.PlayAnimation('walk-left');
+      this.Sprite.flipX = false;
+    }
+    else if (MapGame.Keys.right.isDown)
+    {
+      GridEngine.move('character', 'right');
+      this.PlayAnimation('walk-right');
+      this.Sprite.flipX = true;
+    }
+    else if (MapGame.Keys.up.isDown)
+    {
+      GridEngine.move('character', 'up');
+      this.PlayAnimation('walk-up');
+    }
+    else if (MapGame.Keys.down.isDown)
+    {
+      GridEngine.move('character', 'down');
+      this.PlayAnimation('walk-down');
     }
 
     //if (MapGame.Keys.left.isDown)
