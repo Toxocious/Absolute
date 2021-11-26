@@ -26,6 +26,8 @@
 				return floor(pow($Experience + 1, 1 / 3));
 			case 'Clan':
 				return floor(pow($Experience + 1, 1 / 2.2));
+      case 'Map':
+        return floor(pow($Experience + 1, 1 / 2.34));
 			default:
 				return false;
 		}
@@ -49,6 +51,8 @@
 				return pow($Level, 3);
 			case 'Clan':
 				return pow($Level, 2.2);
+      case 'Map':
+        return pow($Level, 2.34);
 			default:
 				return false;
 		}
