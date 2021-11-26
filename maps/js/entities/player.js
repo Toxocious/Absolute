@@ -102,6 +102,14 @@ class Player_Entity
   }
 
   /**
+   * Play the specified animation.
+   */
+  PlayAnimation(Animation_Name)
+  {
+    this.Sprite.anims.play(Animation_Name, true);
+  }
+
+  /**
    * Create animations.
    */
   CreateAnimations()
