@@ -136,7 +136,6 @@ const Render = new Phaser.Class({
       this.Player_Position = Assets.Position;
     });
 
-
     this.load.setPath('/maps/assets/npcs/');
     for ( let i = 1; i <= 84; i++ )
     {
@@ -147,6 +146,21 @@ const Render = new Phaser.Class({
 
     this.load.setPath('/images/Assets/');
     this.load.image('logo', 'pokeball.png');
+
+    /**
+     * Load the player's map stats.
+     */
+    MapGame.Network.SendRequest('Stats').then((Stats) =>
+    {
+      Stats = JSON.parse(Stats);
+      console.log('[Player Stats]', Stats);
+
+      document.getElementById('map_level').innerText = Stats.Map_Level;
+      document.getElementById('map_exp_to_level').innerText = Stats.Map_Experience_To_Level.Exp.toLocaleString(undefined, {maximumFractionDigits: 0});
+      document.getElementById('map_shiny_odds').innerText = `${Stats.Shiny_Odds.Text} (${Stats.Shiny_Odds.Percent.toLocaleString(undefined, {maximumFractionDigits: 4})}%)`;
+      document.getElementById('map_steps_until_encounter').innerText = Stats.Next_Encounter;
+      document.getElementById('map_exp_bar').setAttribute('style', `width: ${Stats.Map_Experience_To_Level.Percent}%`);
+    });
 
     return true;
   },
