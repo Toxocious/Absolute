@@ -145,7 +145,7 @@ const Render = new Phaser.Class({
     }
 
     this.load.setPath('/maps/assets/weather/');
-    this.load.image('weather', 'flare.png');
+    this.load.image('weather', 'rain.png');
 
     /**
      * Load the player's map stats.
@@ -235,10 +235,10 @@ const Render = new Phaser.Class({
    */
   RenderTiles: function(Map)
   {
-    let Tiles;
+    let Tiles = [];
     for ( let Tileset of Map.tilesets )
     {
-      Tiles = Map.addTilesetImage(Tileset.name, 'tiles');
+      Tiles.push(Map.addTilesetImage(Tileset.name, 'tiles'));
     }
     return Tiles;
   },
