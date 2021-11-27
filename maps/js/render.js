@@ -144,8 +144,8 @@ const Render = new Phaser.Class({
       this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 48, frameHeight: 48 });
     }
 
-    this.load.setPath('/images/Assets/');
-    this.load.image('logo', 'pokeball.png');
+    this.load.setPath('/maps/assets/weather/');
+    this.load.image('weather', 'flare.png');
 
     /**
      * Load the player's map stats.
