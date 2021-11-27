@@ -1,0 +1,41 @@
+{
+	"textures": [
+		{
+			"image": "snow.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 164,
+				"h": 355
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "snow.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 162,
+						"h": 355
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 162,
+						"h": 353
+					},
+					"frame": {
+						"x": 1,
+						"y": 1,
+						"w": 162,
+						"h": 353
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:4e47ddc40edd3e022ac383bf367cb6ae:e578f7e882e0296110f72673ba0b6935:06a2c7225e748b9073bdcc44bcdfe832$"
+	}
+}
