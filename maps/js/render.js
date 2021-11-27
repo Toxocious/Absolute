@@ -107,7 +107,7 @@ const Render = new Phaser.Class({
       this.load.setPath('/maps/tilesets/images/');
       for ( const Tileset of Assets.Tilesets )
       {
-        this.load.image('tiles', `${Tileset}.png`);
+        this.load.image(`${Tileset}_tiles`, `${Tileset}.png`);
       }
 
       /**
@@ -238,7 +238,7 @@ const Render = new Phaser.Class({
     let Tiles = [];
     for ( let Tileset of Map.tilesets )
     {
-      Tiles.push(Map.addTilesetImage(Tileset.name, 'tiles'));
+      Tiles.push(Map.addTilesetImage(Tileset.name, `${Tileset.name}_tiles`));
     }
     return Tiles;
   },
