@@ -22,7 +22,7 @@ let MapGame = {
     },
 
     render: {
-      antialiasGL: false,
+      antialiasGL: true,
       pixelArt: true,
     },
 
