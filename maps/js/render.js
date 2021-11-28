@@ -224,8 +224,9 @@ const Render = new Phaser.Class({
     {
       const Layer_Name = Map.layers[Layer].name;
 
-      Layers.push(Map.createLayer(Layer_Name, Tiles));
-      Layers[Layer].setDepth(Layer);
+      let Create_Layer = Map.createLayer(Layer_Name, Tiles);
+      Create_Layer.setDepth(Layer);
+      Layers.push(Create_Layer);
     }
     return Layers;
   },
