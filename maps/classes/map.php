@@ -106,7 +106,6 @@
         'Map_Name' => $this->Player->GetMap(),
         'Position' => $this->Player->GetPosition(),
         'Tilesets' => $this->GetRequiredTilesets(),
-        // 'Map_Data' => $this->Map_Data,
       ];
     }
 
@@ -122,6 +121,7 @@
         $Shiny_Chance = 2096;
 
       return [
+        'Map_Name' => $this->Player->GetMap(),
         'Map_Level' => $Map_Level['Map_Level'],
         'Map_Experience' => $Map_Level['Map_Experience'],
         'Map_Experience_To_Level' => FetchExpToNextLevel($Map_Level['Map_Experience'], 'Map', true),

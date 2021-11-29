@@ -20,6 +20,15 @@
       </thead>
       <tbody>
         <tr>
+          <td colspan='2' style='padding: 5px;'>
+            <b style='font-size: 14px;'>
+              <span id='map_name'>Unknown Map</span>
+            </b>
+          </td>
+        </tr>
+      </tbody>
+      <tbody>
+        <tr>
           <td style='width: 50%;'>
             <b>Map Level</b>
           </td>
