@@ -4,8 +4,8 @@
 
 <div class='panel content'>
 	<div class='head'>Maps</div>
-	<div class='body flex' style='align-items: center; flex-flow: column; gap: 10px; justify-content: center; padding: 5px;'>
-    <div class='border-gradient'>
+	<div class='body' style='align-items: center; display: flex; flex-flow: column; gap: 10px; justify-content: center; padding: 5px;'>
+    <div class='border-gradient' style='width: 300px;'>
       <div id='map_canvas'>
       </div>
     </div>
