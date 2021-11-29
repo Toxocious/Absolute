@@ -178,10 +178,12 @@ const Render = new Phaser.Class({
 
     // Render the layers.
     const Layers = this.RenderLayers(Map, Tiles);
+    MapGame.Layers = Layers;
     console.log('[Layers]', Layers);
 
     // Set player sprite
     const Player_Sprite = this.physics.add.sprite(0, 0, "character");
+    Player_Sprite.setDepth(1);
     Player_Sprite.setOrigin(0.5, 0.5);
     Player_Sprite.body.setSize(16, 16, true);
 
@@ -224,7 +226,7 @@ const Render = new Phaser.Class({
     {
       const Layer_Name = Map.layers[Layer].name;
 
-      let Create_Layer = Map.createLayer(Layer_Name, Tiles);
+      let Create_Layer = Map.createLayer(Layer_Name, Tiles, 0, 0);
       Create_Layer.setDepth(Layer);
       Layers.push(Create_Layer);
     }
