@@ -45,4 +45,3 @@ let MapGame = {
 };
 
 MapGame.Game = new Phaser.Game(MapGame.Config);
-console.log('[MapGame.Game]', MapGame.Game);

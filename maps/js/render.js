@@ -89,7 +89,6 @@ const Render = new Phaser.Class({
     /**
      * Load necessary assets.
      */
-    console.log('[Network Instance]', MapGame.Network);
     MapGame.Network.SendRequest('Load').then((Assets) =>
     {
       Assets = JSON.parse(Assets);
@@ -153,7 +152,6 @@ const Render = new Phaser.Class({
     MapGame.Network.SendRequest('Stats').then((Stats) =>
     {
       Stats = JSON.parse(Stats);
-      console.log('[Player Stats]', Stats);
 
       document.getElementById('map_name').innerText = Stats.Map_Name.replace('_', ' ').toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ');
       document.getElementById('map_level').innerText = Stats.Map_Level;
@@ -171,16 +169,13 @@ const Render = new Phaser.Class({
     // Make the map.
     const Map = this.make.tilemap({ key: this.Map_Name, tileWidth: 16, tileHeight: 16 });
     MapGame.Map = Map;
-    console.log('[Map]', Map);
 
     // Render the tiles.
     const Tiles = this.RenderTiles(Map);
-    console.log('[Tiles]', Tiles);
 
     // Render the layers.
     const Layers = this.RenderLayers(Map, Tiles);
     MapGame.Layers = Layers;
-    console.log('[Layers]', Layers);
 
     // Set player sprite
     const Player_Sprite = this.physics.add.sprite(0, 0, "character");
@@ -192,7 +187,6 @@ const Render = new Phaser.Class({
     MapGame.Player = new Player_Entity(Player_Sprite, this);
     MapGame.Player.CreateAnimations();
     MapGame.Player.PlayAnimation('idle-down');
-    console.log('[Player Sprite/Entity]', Player_Sprite, MapGame.Player);
 
     // Set the main camera to follow the player, and keep it in bounds.
     this.cameras.main.startFollow(Player_Sprite, true);
