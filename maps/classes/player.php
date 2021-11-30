@@ -106,7 +106,7 @@
           WHERE `ID` = ?
           LIMIT 1
         ");
-        $Set_Position->execute([ $x, $y, $z ]);
+        $Set_Position->execute([ $x, $y, $z, $User_Data['ID'] ]);
 
         $PDO->commit();
       }
