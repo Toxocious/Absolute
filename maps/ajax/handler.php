@@ -25,12 +25,6 @@
 
   /**
    * Fetch some of the player's map stats.
-   *  - Map Level
-   *  - Exp To Next Map Level
-   *  - Shiny Odds
-   *    - 1 / (4096 - Map Level)
-   *    - Capped at 1 / 2048 (0.00048828125%)
-   *  - Next Encounter In Steps
    */
   if ( isset($_GET['Stats']) )
   {
@@ -38,6 +32,34 @@
     echo json_encode($Map->Stats());
     exit;
   }
+
+  /**
+   * Perform some server-side validation.
+   */
+  if ( isset($_POST['Action']) )
+  {
+    $Action = Purify($_POST['Action']);
+
+    switch ( $Action )
+    {
+      /**
+       * Update the player's map coordinates.
+       */
+      case 'Position':
+        $x = Purify($_POST['x']);
+        $y = Purify($_POST['y']);
+        $z = Purify($_POST['z']);
+
+        $Map->Player->SetPosition($x, $y, $z);
+        break;
+
+      default:
+        return;
+    }
+
+    exit;
+  }
+
   /**
    * Render the map.
    */
