@@ -3,16 +3,6 @@ class Network
   constructor()
   {
     this.AJAX_URL = '/maps/ajax/handler.php';
-
-    this.Network_Position = {
-      Request_ID: 0,
-      x: 0,
-      y: 0,
-      z: 0,
-    };
-
-    this.Processing = false;
-    this.Request_Buffer = [];
   }
 
   /**
@@ -32,8 +22,14 @@ class Network
             break;
 
           case 'POST':
+            const Data_Val = new FormData();
+            Data_Val.append('Action', Data.Action);
+            Data_Val.append('x', Data.x);
+            Data_Val.append('y', Data.y);
+            Data_Val.append('z', Data.z);
+
             req.open('POST', this.AJAX_URL);
-            req.send(Data);
+            req.send(Data_Val);
             break;
 
           default:
