@@ -46,15 +46,15 @@
        * Update the player's map coordinates.
        */
       case 'Position':
-        $x = Purify($_POST['x']);
-        $y = Purify($_POST['y']);
+        $x = Purify(floor($_POST['x']));
+        $y = Purify(floor($_POST['y'])) + 1;
         $z = Purify($_POST['z']);
 
         $Map->Player->SetPosition($x, $y, $z);
         break;
 
       default:
-        return;
+        break;
     }
 
     exit;

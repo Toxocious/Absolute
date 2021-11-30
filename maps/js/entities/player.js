@@ -46,8 +46,8 @@ class Player_Entity
   {
     MapGame.Network.SendRequest({
       Action: 'Position',
-      x: Math.round(this.Sprite.x) / 16,
-      y: Math.round(this.Sprite.y) / 16,
+      x: Math.round(this.Sprite.body.position.x) / 16,
+      y: Math.round(this.Sprite.body.position.y) / 16,
       z: (this.Sprite.z === 0 ? 1 : this.Sprite.z),
     }, 'POST');
   }
