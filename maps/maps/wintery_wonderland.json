@@ -1359,7 +1359,7 @@
                  "id":119,
                  "properties":[
                         {
-                         "name":"collision",
+                         "name":"ge_collide",
                          "type":"bool",
                          "value":true
                         }]
