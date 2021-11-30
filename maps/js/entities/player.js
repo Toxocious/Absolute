@@ -4,6 +4,13 @@ class Player_Entity
   {
     this.Sprite = Sprite;
     this.Render_Instance = Render_Instance;
+
+    this.Update_Timer = this.Render_Instance.time.addEvent({
+      callback: this.UpdateLoop,
+      callbackScope: this,
+      delay: 10000,
+      loop: true
+    });
   }
 
   Update(Time, Delta, GridEngine)
@@ -30,6 +37,19 @@ class Player_Entity
       GridEngine.move('character', 'down');
       this.PlayAnimation('walk-down');
     }
+  }
+
+  /**
+   * Sync the player position to the database.
+   */
+  UpdateLoop()
+  {
+    MapGame.Network.SendRequest({
+      Action: 'Position',
+      x: Math.round(this.Sprite.x) / 16,
+      y: Math.round(this.Sprite.y) / 16,
+      z: (this.Sprite.z === 0 ? 1 : this.Sprite.z),
+    }, 'POST');
   }
 
   /**
