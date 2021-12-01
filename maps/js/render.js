@@ -140,7 +140,7 @@ const Render = new Phaser.Class({
     {
       if ( i === 24 ) continue;
 
-      this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 48, frameHeight: 48 });
+      this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 32, frameHeight: 32 });
     }
 
     this.load.setPath('/maps/assets/weather/');
@@ -199,10 +199,17 @@ const Render = new Phaser.Class({
         {
           id: "character",
           sprite: Player_Sprite,
-          startPosition: { x: this.Player_Position.x, y: this.Player_Position.y },
+          startPosition: {
+            x: this.Player_Position.x,
+            y: this.Player_Position.y
+          },
         },
       ],
     };
+
+    // Render objects.
+    MapGame.Objects = this.RenderObjects(Map, gridEngineConfig);
+
     this.gridEngine.create(Map, gridEngineConfig);
   },
 
@@ -239,6 +246,37 @@ const Render = new Phaser.Class({
       Tiles.push(Map.addTilesetImage(Tileset.name, `${Tileset.name}_tiles`));
     }
     return Tiles;
+  },
+
+  /**
+   * Create objects.
+   */
+  RenderObjects: function(Map, Grid_Engine_Config)
+  {
+    let Map_Objects = [];
+
+    for ( const Obj of Map.objects[0].objects )
+    {
+      if ( Obj.type == 'Player_Entity' )
+        continue;
+
+      const Obj_Sprite = this.physics.add.sprite(0, 0, `${Obj.type}_${Obj.properties[3].value}`);
+      Obj_Sprite.body.setSize(16, 16);
+
+      Grid_Engine_Config.characters.push({
+        id: Obj.id,
+        sprite: Obj_Sprite,
+        startPosition: {
+          x: Obj.x / 16,
+          y: Obj.y / 16
+        },
+      });
+
+      const New_Object = new NPC(Obj_Sprite);
+      Map_Objects.push(New_Object);
+    }
+
+    return Map_Objects;
   },
 
   /**
