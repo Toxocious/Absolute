@@ -279,6 +279,24 @@ const Render = new Phaser.Class({
     return Map_Objects;
   },
 
+
+  /**
+   * Check if an object has a given property.
+   */
+  DoesObjectHavePropertyOfName: function(Obj, Property_Name)
+  {
+    if ( typeof Obj !== 'object' || typeof Property_Name !== 'string' )
+      return false;
+
+    for ( const Prop of Obj.Properties )
+    {
+      if ( Prop.name == Property_Name )
+        return Prop;
+    }
+
+    return false;
+  },
+
   /**
    * Get a random integer between two values.
    */
@@ -289,6 +307,7 @@ const Render = new Phaser.Class({
 
     return Math.floor(Math.random() * (Max_Int - Min_Int + 1)) + Min_Int;
   },
+
   /**
    * Find map objects.
    */
