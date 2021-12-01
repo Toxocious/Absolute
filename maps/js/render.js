@@ -280,6 +280,16 @@ const Render = new Phaser.Class({
   },
 
   /**
+   * Get a random integer between two values.
+   */
+  GetRandomInt: function(Min_Int, Max_Int)
+  {
+    Min_Int = Math.ceil(Min_Int);
+    Max_Int = Math.floor(Max_Int);
+
+    return Math.floor(Math.random() * (Max_Int - Min_Int + 1)) + Min_Int;
+  },
+  /**
    * Find map objects.
    */
   FindObjects: function(Type, Map, Layer)
