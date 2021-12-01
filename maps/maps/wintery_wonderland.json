@@ -104,6 +104,38 @@
                  "width":16,
                  "x":272,
                  "y":1280
+                }, 
+                {
+                 "height":16,
+                 "id":2,
+                 "name":"Alice",
+                 "properties":[
+                        {
+                         "name":"frameheight",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"framewidth",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"hidden",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"7"
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":16,
+                 "x":288,
+                 "y":1200
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -112,7 +144,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":2,
+ "nextobjectid":3,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
