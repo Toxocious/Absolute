@@ -8,7 +8,7 @@ class Player_Entity
     this.Update_Timer = this.Render_Instance.time.addEvent({
       callback: this.UpdateLoop,
       callbackScope: this,
-      delay: 10000,
+      delay: 3000,
       loop: true
     });
   }
