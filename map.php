@@ -76,6 +76,7 @@
 
 <!-- Entities -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/entities/player.js'></script>
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/entities/npc.js'></script>
 
 <!-- Initialize Engine & Scenes -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/render.js'></script>
