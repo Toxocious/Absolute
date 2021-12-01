@@ -212,6 +212,9 @@ const Render = new Phaser.Class({
 
     // Create the grid map.
     this.gridEngine.create(Map, this.Grid_Engine_Config);
+
+    // Process object movement.
+    this.ProcessObjectMovement();
   },
 
   update: function(Time, Delta)
@@ -284,6 +287,21 @@ const Render = new Phaser.Class({
     return Map_Objects;
   },
 
+  /**
+   * Process the movement of objects.
+   */
+  ProcessObjectMovement: function()
+  {
+    for ( const Obj of MapGame.Objects )
+    {
+      let Movement_Prop = this.DoesObjectHavePropertyOfName(Obj, 'movement');
+      if ( Movement_Prop && Movement_Prop.value )
+      {
+        //                           Engine Char ID      Delay                       Radius?
+        this.gridEngine.moveRandomly(Obj.Grid_Engine_ID, this.GetRandomInt(1000, 5000), 3);
+      }
+    }
+  },
 
   /**
    * Check if an object has a given property.
