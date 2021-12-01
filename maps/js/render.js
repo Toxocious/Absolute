@@ -273,11 +273,12 @@ const Render = new Phaser.Class({
 
       this.Grid_Engine_Config.characters.push({
         id: `${Obj.type}_${Obj.id}`,
+        offsetY: -16,
         sprite: Obj_Sprite,
         startPosition: {
           x: Obj_X,
           y: Obj_Y
-        }
+        },
       });
 
       const New_Object = new NPC(`${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties);
