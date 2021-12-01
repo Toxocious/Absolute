@@ -140,7 +140,7 @@ const Render = new Phaser.Class({
     {
       if ( i === 24 ) continue;
 
-      this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 32, frameHeight: 32 });
+      this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 16, frameHeight: 16 });
     }
 
     this.load.setPath('/maps/assets/weather/');
@@ -267,8 +267,8 @@ const Render = new Phaser.Class({
         id: Obj.id,
         sprite: Obj_Sprite,
         startPosition: {
-          x: Obj.x / 16,
-          y: Obj.y / 16
+          x: Math.floor(Obj.x) / 16,
+          y: Math.floor(Obj.y) / 16
         },
       });
 
