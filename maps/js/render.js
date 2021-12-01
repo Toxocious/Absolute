@@ -297,20 +297,6 @@ const Render = new Phaser.Class({
   },
 
   /**
-   * Create objects.
-   */
-  CreateObjects: function()
-  {
-    console.log('[Creating Objects]');
-
-    this.Objects = this.game.add.group();
-    this.Objects.enableBody = true;
-
-    let Find_Objects = this.FindObjects('null', this.map, 'objectsLayer');
-    console.log(Find_Objects);
-  },
-
-  /**
    * Create a sprite from an object.
    */
   CreateFromTiledObject: function(Element, Group)
