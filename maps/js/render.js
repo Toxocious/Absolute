@@ -194,10 +194,10 @@ const Render = new Phaser.Class({
     this.cameras.main.setBounds(0, 0, Map.width * Map.tileWidth, Map.height * Map.tileHeiht);
 
     // Grid Engine init
-    const gridEngineConfig = {
+    this.Grid_Engine_Config = {
       characters: [
         {
-          id: "character",
+          id: 'character',
           sprite: Player_Sprite,
           startPosition: {
             x: this.Player_Position.x,
@@ -208,9 +208,10 @@ const Render = new Phaser.Class({
     };
 
     // Render objects.
-    MapGame.Objects = this.RenderObjects(Map, gridEngineConfig);
+    MapGame.Objects = this.RenderObjects(Map);
 
-    this.gridEngine.create(Map, gridEngineConfig);
+    // Create the grid map.
+    this.gridEngine.create(Map, this.Grid_Engine_Config);
   },
 
   update: function(Time, Delta)
@@ -251,7 +252,7 @@ const Render = new Phaser.Class({
   /**
    * Create objects.
    */
-  RenderObjects: function(Map, Grid_Engine_Config)
+  RenderObjects: function(Map)
   {
     let Map_Objects = [];
 
@@ -263,8 +264,8 @@ const Render = new Phaser.Class({
       const Obj_Sprite = this.physics.add.sprite(0, 0, `${Obj.type}_${Obj.properties[3].value}`);
       Obj_Sprite.body.setSize(16, 16);
 
-      Grid_Engine_Config.characters.push({
-        id: Obj.id,
+      this.Grid_Engine_Config.characters.push({
+        id: `${Obj.type}_${Obj.id}`,
         sprite: Obj_Sprite,
         startPosition: {
           x: Math.floor(Obj.x) / 16,
