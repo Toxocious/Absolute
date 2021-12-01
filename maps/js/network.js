@@ -24,9 +24,13 @@ class Network
           case 'POST':
             const Data_Val = new FormData();
             Data_Val.append('Action', Data.Action);
-            Data_Val.append('x', Data.x);
-            Data_Val.append('y', Data.y);
-            Data_Val.append('z', Data.z);
+
+            if ( typeof Data.x !== 'undefined' )
+              Data_Val.append('x', Data.x);
+            if ( typeof Data.y !== 'undefined' )
+              Data_Val.append('y', Data.y);
+            if ( typeof Data.z !== 'undefined' )
+              Data_Val.append('z', Data.z);
 
             req.open('POST', this.AJAX_URL);
             req.send(Data_Val);
