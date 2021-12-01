@@ -272,7 +272,7 @@ const Render = new Phaser.Class({
         },
       });
 
-      const New_Object = new NPC(Obj_Sprite);
+      const New_Object = new NPC(`${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties);
       Map_Objects.push(New_Object);
     }
 
