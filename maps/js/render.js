@@ -261,16 +261,20 @@ const Render = new Phaser.Class({
       if ( Obj.type == 'Player_Entity' )
         continue;
 
+      const Obj_X = Math.round(Obj.x) / 16;
+      const Obj_Y = Math.round(Obj.y) / 16;
+
       const Obj_Sprite = this.physics.add.sprite(0, 0, `${Obj.type}_${Obj.properties[3].value}`);
       Obj_Sprite.body.setSize(16, 16);
+      Obj_Sprite.setOrigin(0.5, 0.5);
 
       this.Grid_Engine_Config.characters.push({
         id: `${Obj.type}_${Obj.id}`,
         sprite: Obj_Sprite,
         startPosition: {
-          x: Math.floor(Obj.x) / 16,
-          y: Math.floor(Obj.y) / 16
-        },
+          x: Obj_X,
+          y: Obj_Y
+        }
       });
 
       const New_Object = new NPC(`${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties);
