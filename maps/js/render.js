@@ -197,6 +197,7 @@ const Render = new Phaser.Class({
     this.Grid_Engine_Config = {
       characters: [
         {
+          charLayer: 'Layer_1',
           id: 'character',
           sprite: Player_Sprite,
           startPosition: {
@@ -215,6 +216,9 @@ const Render = new Phaser.Class({
 
     // Process object movement.
     this.ProcessObjectMovement();
+
+    // Set layer transitions.
+    this.ProcessLayerTransitions();
   },
 
   update: function(Time, Delta)
