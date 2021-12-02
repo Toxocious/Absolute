@@ -261,9 +261,6 @@ const Render = new Phaser.Class({
 
     for ( const Obj_Layer of Map.objects )
     {
-      if ( Obj_Layer.name != 'Objects' )
-        continue;
-
       for ( const Obj of Obj_Layer.objects )
       {
         if ( Obj.type == 'Player_Entity' )
@@ -272,20 +269,27 @@ const Render = new Phaser.Class({
         const Obj_X = Math.round(Obj.x) / 16;
         const Obj_Y = Math.round(Obj.y) / 16;
 
-        const NPC_Sprite = this.DoesObjectHavePropertyOfName(Obj, 'image');
-        const Obj_Sprite = this.physics.add.sprite(0, 0, `${Obj.type}_${NPC_Sprite.value}`);
-        Obj_Sprite.body.setSize(16, 16);
-        Obj_Sprite.setOrigin(0.5, 0.5);
+        let Obj_Sprite = null;
+        const Is_Obj_Hidden = this.DoesObjectHavePropertyOfName(Obj, 'hidden');
+        if ( !Is_Obj_Hidden.value )
+        {
+          const Char_Layer = this.DoesObjectHavePropertyOfName(Obj, 'charLayer');
+          const NPC_Sprite = this.DoesObjectHavePropertyOfName(Obj, 'image');
+          Obj_Sprite = this.physics.add.sprite(0, 0, `${Obj.type}_${NPC_Sprite.value}`);
+          Obj_Sprite.body.setSize(16, 16);
+          Obj_Sprite.setOrigin(0.5, 0.5);
 
-        this.Grid_Engine_Config.characters.push({
-          id: `${Obj.type}_${Obj.id}`,
-          offsetY: -16,
-          sprite: Obj_Sprite,
-          startPosition: {
-            x: Obj_X,
-            y: Obj_Y
-          },
-        });
+          this.Grid_Engine_Config.characters.push({
+            charLayer: Char_Layer,
+            id: `${Obj.type}_${Obj.id}`,
+            offsetY: -16,
+            sprite: Obj_Sprite,
+            startPosition: {
+              x: Obj_X,
+              y: Obj_Y
+            },
+          });
+        }
 
         const New_Object = new NPC(`${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y });
         Map_Objects.push(New_Object);
