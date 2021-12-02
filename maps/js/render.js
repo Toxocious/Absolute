@@ -313,7 +313,6 @@ const Render = new Phaser.Class({
       if ( Obj.type != 'transition' )
         continue;
 
-      console.log('[Transition | Coords]', Obj);
       const Transition_X = Obj.coords.x;
       const Transition_Y = Obj.coords.y;
 
@@ -322,7 +321,6 @@ const Render = new Phaser.Class({
 
       if ( Transition_From && Transition_To )
       {
-        console.log('[Transition | Set]', { x: Transition_X, y: Transition_Y }, Transition_From.value, Transition_To.value);
         this.gridEngine.setTransition({ x: Transition_X, y: Transition_Y }, Transition_From.value, Transition_To.value);
       }
     }
