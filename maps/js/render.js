@@ -259,30 +259,37 @@ const Render = new Phaser.Class({
   {
     let Map_Objects = [];
 
-    for ( const Obj of Map.objects[0].objects )
+    for ( const Obj_Layer of Map.objects )
     {
-      if ( Obj.type == 'Player_Entity' )
+      if ( Obj_Layer.name != 'Objects' )
         continue;
 
-      const Obj_X = Math.round(Obj.x) / 16;
-      const Obj_Y = Math.round(Obj.y) / 16;
+      for ( const Obj of Obj_Layer.objects )
+      {
+        if ( Obj.type == 'Player_Entity' )
+          continue;
 
-      const Obj_Sprite = this.physics.add.sprite(0, 0, `${Obj.type}_${Obj.properties[3].value}`);
-      Obj_Sprite.body.setSize(16, 16);
-      Obj_Sprite.setOrigin(0.5, 0.5);
+        const Obj_X = Math.round(Obj.x) / 16;
+        const Obj_Y = Math.round(Obj.y) / 16;
 
-      this.Grid_Engine_Config.characters.push({
-        id: `${Obj.type}_${Obj.id}`,
-        offsetY: -16,
-        sprite: Obj_Sprite,
-        startPosition: {
-          x: Obj_X,
-          y: Obj_Y
-        },
-      });
+        const NPC_Sprite = this.DoesObjectHavePropertyOfName(Obj, 'image');
+        const Obj_Sprite = this.physics.add.sprite(0, 0, `${Obj.type}_${NPC_Sprite.value}`);
+        Obj_Sprite.body.setSize(16, 16);
+        Obj_Sprite.setOrigin(0.5, 0.5);
 
-      const New_Object = new NPC(`${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties);
-      Map_Objects.push(New_Object);
+        this.Grid_Engine_Config.characters.push({
+          id: `${Obj.type}_${Obj.id}`,
+          offsetY: -16,
+          sprite: Obj_Sprite,
+          startPosition: {
+            x: Obj_X,
+            y: Obj_Y
+          },
+        });
+
+        const New_Object = new NPC(`${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties);
+        Map_Objects.push(New_Object);
+      }
     }
 
     return Map_Objects;
@@ -312,7 +319,7 @@ const Render = new Phaser.Class({
     if ( typeof Obj !== 'object' || typeof Property_Name !== 'string' )
       return false;
 
-    for ( const Prop of Obj.Properties )
+    for ( const Prop of Obj.properties )
     {
       if ( Prop.name == Property_Name )
         return Prop;

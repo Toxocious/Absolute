@@ -4,7 +4,7 @@ class NPC
   {
     this.Grid_Engine_ID = Grid_Engine_ID;
     this.Sprite = Sprite;
-    this.Properties = Properties;
+    this.properties = Properties;
   }
 
   /**
