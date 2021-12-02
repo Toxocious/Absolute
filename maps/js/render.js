@@ -300,6 +300,31 @@ const Render = new Phaser.Class({
   },
 
   /**
+   * Process layer transition tile objects.
+   */
+  ProcessLayerTransitions: function()
+  {
+    for ( const Obj of MapGame.Objects )
+    {
+      if ( Obj.type != 'transition' )
+        continue;
+
+      console.log('[Transition | Coords]', Obj);
+      const Transition_X = Obj.coords.x;
+      const Transition_Y = Obj.coords.y;
+
+      const Transition_From = this.DoesObjectHavePropertyOfName(Obj, 'transitionFrom');
+      const Transition_To = this.DoesObjectHavePropertyOfName(Obj, 'transitionTo');
+
+      if ( Transition_From && Transition_To )
+      {
+        console.log('[Transition | Set]', { x: Transition_X, y: Transition_Y }, Transition_From.value, Transition_To.value);
+        this.gridEngine.setTransition({ x: Transition_X, y: Transition_Y }, Transition_From.value, Transition_To.value);
+      }
+    }
+  },
+
+  /**
    * Process the movement of objects.
    */
   ProcessObjectMovement: function()
@@ -309,7 +334,6 @@ const Render = new Phaser.Class({
       let Movement_Prop = this.DoesObjectHavePropertyOfName(Obj, 'movement');
       if ( Movement_Prop && Movement_Prop.value )
       {
-        //                           Engine Char ID      Delay                       Radius?
         this.gridEngine.moveRandomly(Obj.Grid_Engine_ID, this.GetRandomInt(1000, 5000), 3);
       }
     }
