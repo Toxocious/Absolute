@@ -284,7 +284,7 @@ const Render = new Phaser.Class({
           Obj_Sprite.setOrigin(0.5, 0.5);
 
           this.Grid_Engine_Config.characters.push({
-            charLayer: Char_Layer,
+            charLayer: Char_Layer.value,
             id: `${Obj.type}_${Obj.id}`,
             offsetY: -16,
             sprite: Obj_Sprite,
