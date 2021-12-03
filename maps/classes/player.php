@@ -80,12 +80,6 @@
         return $this->SetPosition($Spawn_Coords['x'], $Spawn_Coords['y'], $Spawn_Coords['z']);
       }
 
-      $_SESSION['Absolute']['Maps']['Position'] = [
-        'x' => $x,
-        'y' => $y,
-        'z' => $z,
-      ];
-
       if
       (
         $User_Data['Map_Position']['x'] == $x &&
@@ -95,6 +89,12 @@
       {
         return true;
       }
+
+      $_SESSION['Absolute']['Maps']['Position'] = [
+        'x' => $x,
+        'y' => $y,
+        'z' => $z,
+      ];
 
       try
       {
