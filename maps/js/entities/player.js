@@ -49,7 +49,7 @@ class Player_Entity
       Action: 'Position',
       x: Math.round(this.Sprite.body.position.x) / 16,
       y: Math.round(this.Sprite.body.position.y) / 16,
-      z: (this.Sprite.z === 0 ? 1 : this.Sprite.z),
+      z: this.GetCurrentLayer(),
     }, 'POST');
   }
 
@@ -60,6 +60,7 @@ class Player_Entity
   {
     return this.GE_Instance.gridCharacters.entries().next().value[1]._tilePos.layer.replace('Layer_', '');
   }
+
   /**
    * Play the specified animation.
    */
