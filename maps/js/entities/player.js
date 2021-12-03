@@ -1,9 +1,10 @@
 class Player_Entity
 {
-  constructor(Sprite, Render_Instance)
+  constructor(Sprite, Render_Instance, GE_Instance)
   {
     this.Sprite = Sprite;
     this.Render_Instance = Render_Instance;
+    this.GE_Instance = GE_Instance;
 
     this.Update_Timer = this.Render_Instance.time.addEvent({
       callback: this.UpdateLoop,

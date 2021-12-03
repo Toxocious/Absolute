@@ -184,7 +184,7 @@ const Render = new Phaser.Class({
     Player_Sprite.body.setSize(16, 16, true);
 
     // Create player animations.
-    MapGame.Player = new Player_Entity(Player_Sprite, this);
+    MapGame.Player = new Player_Entity(Player_Sprite, this, this.gridEngine);
     MapGame.Player.CreateAnimations();
     MapGame.Player.PlayAnimation('idle-down');
 
