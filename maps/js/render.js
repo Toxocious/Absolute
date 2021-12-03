@@ -197,7 +197,7 @@ const Render = new Phaser.Class({
     this.Grid_Engine_Config = {
       characters: [
         {
-          charLayer: 'Layer_1',
+          charLayer: `Layer_${this.Player_Position.z}`,
           id: 'character',
           sprite: Player_Sprite,
           startPosition: {
