@@ -54,6 +54,13 @@ class Player_Entity
   }
 
   /**
+   * Fetch the player's current layer.
+   */
+  GetCurrentLayer()
+  {
+    return this.GE_Instance.gridCharacters.entries().next().value[1]._tilePos.layer.replace('Layer_', '');
+  }
+  /**
    * Play the specified animation.
    */
   PlayAnimation(Animation_Name)
