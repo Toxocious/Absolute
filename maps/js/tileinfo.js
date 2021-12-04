@@ -1,4 +1,4 @@
-class Tile
+class TileInfo
 {
   constructor(x, y, z)
   {

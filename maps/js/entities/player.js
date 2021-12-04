@@ -74,7 +74,7 @@ class Player_Entity
         break;
     }
 
-    const Get_Tile = new Tile(x, y, z);
+    const Get_Tile = new TileInfo(x, y, z);
     const Tile_Info = Get_Tile.GetTileInfo();
 
     if ( typeof Tile_Info.Objects !== 'undefined' )
