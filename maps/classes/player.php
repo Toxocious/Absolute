@@ -82,18 +82,18 @@
 
       if
       (
-        $User_Data['Map_Position']['x'] == $x &&
-        $User_Data['Map_Position']['y'] == $y &&
-        $User_Data['Map_Position']['z'] == $z
+        $User_Data['Map_Position']['Map_X'] == $x &&
+        $User_Data['Map_Position']['Map_Y'] == $y &&
+        $User_Data['Map_Position']['Map_Z'] == $z
       )
       {
         return true;
       }
 
       $_SESSION['Absolute']['Maps']['Position'] = [
-        'x' => $x,
-        'y' => $y,
-        'z' => $z,
+        'Map_X' => $x,
+        'Map_Y' => $y,
+        'Map_Z' => $z,
       ];
 
       try
@@ -185,7 +185,7 @@
       else
       {
         $this->SetMap($User_Data['Map_ID']);
-        $this->SetPosition($User_Data['Map_Position']['x'], $User_Data['Map_Position']['y'], $User_Data['Map_Position']['z']);
+        $this->SetPosition($User_Data['Map_Position']['Map_X'], $User_Data['Map_Position']['Map_Y'], $User_Data['Map_Position']['Map_Z']);
       }
     }
 
