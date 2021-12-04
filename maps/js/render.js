@@ -198,12 +198,12 @@ const Render = new Phaser.Class({
     this.Grid_Engine_Config = {
       characters: [
         {
-          charLayer: `Layer_${this.Player_Position.z}`,
+          charLayer: `Layer_${this.Player_Position.Map_Z}`,
           id: 'character',
           sprite: Player_Sprite,
           startPosition: {
-            x: this.Player_Position.x,
-            y: this.Player_Position.y
+            x: this.Player_Position.Map_X,
+            y: this.Player_Position.Map_Y
           },
         },
       ],
