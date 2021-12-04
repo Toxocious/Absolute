@@ -12,8 +12,8 @@ class NPC
   /**
    *
    */
-  OnInteraction()
+  Interact()
   {
-
+    console.log('[NPC | Interaction] Interacting with an NPC');
   }
 }

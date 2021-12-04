@@ -74,9 +74,14 @@ class Player_Entity
         break;
     }
 
-    const Tile_Info = new Tile(x, y, z);
+    const Get_Tile = new Tile(x, y, z);
+    const Tile_Info = Get_Tile.GetTileInfo();
 
-    Tile_Info.GetTileInfo();
+    if ( typeof Tile_Info.Objects !== 'undefined' )
+    {
+      const Tile_Object = Tile_Info.Objects;
+      Tile_Object.Interact();
+    }
   }
 
   /**
