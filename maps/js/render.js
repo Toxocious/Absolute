@@ -13,7 +13,8 @@ const Render = new Phaser.Class({
       up: 'W',
       left: 'A',
       down: 'S',
-      right: 'D'
+      right: 'D',
+      space: 'SPACE',
     });
 
     MapGame.Player = null;

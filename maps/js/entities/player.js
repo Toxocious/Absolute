@@ -40,6 +40,11 @@ class Player_Entity
       GridEngine.move('character', 'down');
       this.PlayAnimation('walk-down');
     }
+    else if ( MapGame.Keys.space.isDown )
+    {
+      this.Interact();
+    }
+  }
 
   /**
    * Handle interacting with whatever is in front of the player.
