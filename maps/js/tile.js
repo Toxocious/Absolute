@@ -21,6 +21,23 @@ class Tile
 
     return false;
   }
+
+  /**
+   * Get any objects on the tile.
+   */
+  GetObjectOnTile()
+  {
+    for ( const Obj of MapGame.Objects )
+    {
+      if ( Obj.type == 'transition' )
+        continue;
+
+      const Obj_Layer = this.DoesObjectHavePropertyOfName(Obj, 'charLayer');
+      if ( Obj_Layer && Obj_Layer.value.replace('Layer_', '') == this.z && Obj.coords.x == this.x && Obj.coords.y == this.y )
+        return Obj;
+    }
+  }
+
   /**
    * Check if the tile object has a given property.
    */
