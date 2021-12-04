@@ -13,11 +13,14 @@ class Tile
   GetTileInfo()
   {
     const Layer_Instance = this.GetLayerInstance();
-    const Tile_Object = Layer_Instance.data[this.x][this.y];
+    const Tile_Objects = this.GetObjectOnTile();
+    const Tile_Data = Layer_Instance.data[this.x][this.y];
 
-    console.log('[Tile Info | Tile]', Tile_Object);
-    console.log('[Tile Info | Objects]', this.GetObjectOnTile());
-    console.log('[Tile Info | Layer]', Layer_Instance);
+    return {
+      Data: Tile_Data,
+      Layer: Layer_Instance,
+      Objects: Tile_Objects
+    };
   }
 
   /**
