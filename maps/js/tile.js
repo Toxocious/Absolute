@@ -7,6 +7,20 @@ class Tile
     this.z = z;
   }
 
+
+  /**
+   * Get the correct layer instance.
+   */
+  GetLayerInstance()
+  {
+    for ( const Layer of MapGame.Layers )
+      if ( Layer.layer.name === `Layer_${this.z}` )
+      {
+        return Layer.layer;
+      }
+
+    return false;
+  }
   /**
    * Check if the tile object has a given property.
    */
