@@ -136,6 +136,9 @@ const Render = new Phaser.Class({
       this.Player_Position = Assets.Position;
     });
 
+    /**
+     * Load NPC spritesheets.
+     */
     this.load.setPath('/maps/assets/npcs/');
     for ( let i = 1; i <= 84; i++ )
     {
@@ -144,6 +147,15 @@ const Render = new Phaser.Class({
       this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 16, frameHeight: 16 });
     }
 
+    /**
+     * Load dialogue frame images.
+     */
+    this.load.setPath('/maps/assets/frames/');
+    this.load.image('dialogue_frame', 'default.png');
+
+    /**
+     * Load weather images.
+     */
     this.load.setPath('/maps/assets/weather/');
     this.load.image('weather', 'rain.png');
 
@@ -167,6 +179,9 @@ const Render = new Phaser.Class({
 
   create: function()
   {
+    // Run the HUD scene.
+    this.scene.run('HUD');
+
     // Make the map.
     const Map = this.make.tilemap({ key: this.Map_Name, tileWidth: 16, tileHeight: 16 });
     MapGame.Map = Map;
