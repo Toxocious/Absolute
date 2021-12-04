@@ -73,6 +73,7 @@
 
 <!-- Map Scripts -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/network.js'></script>
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/tile.js'></script>
 
 <!-- Entities -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/entities/player.js'></script>
