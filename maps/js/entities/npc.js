@@ -16,5 +16,18 @@ class NPC
   Interact()
   {
     console.log(`[NPC | Interaction] Interacting with ${this.Name}`);
+
+  /**
+   * Get all lines of dialogue from the NPC.
+   */
+  GetDialogue()
+  {
+    this.Dialogue = [];
+
+    for ( const Prop of this.properties )
+    {
+      if ( Prop.name.includes('dialogue_') )
+        this.Dialogue.push(Prop);
+    }
   }
 }
