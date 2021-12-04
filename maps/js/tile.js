@@ -13,8 +13,14 @@ class Tile
   GetTileInfo()
   {
     const Layer_Instance = this.GetLayerInstance();
-    const Tile_Objects = this.GetObjectOnTile();
+    if ( !Layer_Instance )
+      return false;
+
     const Tile_Data = Layer_Instance.data[this.x][this.y];
+    if ( typeof Tile_Data === 'undefined' )
+      return false;
+
+    const Tile_Objects = this.GetObjectOnTile();
 
     return {
       Data: Tile_Data,
