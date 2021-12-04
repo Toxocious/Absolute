@@ -16,6 +16,8 @@ class Player_Entity
 
   Update(Time, Delta, GridEngine)
   {
+    this.Facing_Direction = this.GetFacingDirection();
+
     if (MapGame.Keys.left.isDown)
     {
       GridEngine.move('character', 'left');
@@ -51,6 +53,14 @@ class Player_Entity
       y: Math.round(this.Sprite.body.position.y) / 16,
       z: this.GetCurrentLayer(),
     }, 'POST');
+  }
+
+  /**
+   * Get the direction the player is facing.
+   */
+  GetFacingDirection()
+  {
+    return this.GE_Instance.gridCharacters.entries().next().value[1].facingDirection;
   }
 
   /**
