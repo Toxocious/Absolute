@@ -40,6 +40,38 @@ class Player_Entity
       GridEngine.move('character', 'down');
       this.PlayAnimation('walk-down');
     }
+
+  /**
+   * Handle interacting with whatever is in front of the player.
+   */
+  Interact()
+  {
+    let x = Math.round(this.Sprite.body.position.x) / 16;
+    let y = Math.round(this.Sprite.body.position.y) / 16 + 1;
+    let z = this.GetCurrentLayer();
+
+    switch ( this.Facing_Direction )
+    {
+      case 'up':
+        y--;
+        break;
+
+      case 'down':
+        y++;
+        break;
+
+      case 'left':
+        x--;
+        break;
+
+      case 'right':
+        x++;
+        break;
+    }
+
+    const Tile_Info = new Tile(x, y, z);
+
+    Tile_Info.GetTileInfo();
   }
 
   /**

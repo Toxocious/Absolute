@@ -7,6 +7,18 @@ class Tile
     this.z = z;
   }
 
+  /**
+   * Get the tile's information and check for objects.
+   */
+  GetTileInfo()
+  {
+    const Layer_Instance = this.GetLayerInstance();
+    const Tile_Object = Layer_Instance.data[this.x][this.y];
+
+    console.log('[Tile Info | Tile]', Tile_Object);
+    console.log('[Tile Info | Objects]', this.GetObjectOnTile());
+    console.log('[Tile Info | Layer]', Layer_Instance);
+  }
 
   /**
    * Get the correct layer instance.
