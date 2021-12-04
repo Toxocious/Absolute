@@ -24,8 +24,8 @@ const Render = new Phaser.Class({
     let Width = this.cameras.main.width;
     let Height = this.cameras.main.height;
 
-    var Progress_Bar = this.add.graphics();
-    var Progress_Box = this.add.graphics();
+    let Progress_Bar = this.add.graphics();
+    let Progress_Box = this.add.graphics();
     Progress_Box.fillStyle(0x222222, 0.8);
     Progress_Box.fillRect(20, 95, 200, 40);
 
