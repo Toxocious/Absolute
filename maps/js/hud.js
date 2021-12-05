@@ -34,7 +34,7 @@ class HUD extends Phaser.Scene
       console.log('[HUD | Dialogue] Displaying object dialogue', Dialogue_Array);
 
       this.In_Dialogue = true;
-      this.Dialogue_State = 1;
+      this.Dialogue_State = 0;
 
       this.Dialogue_Box.createMultiple({
         key: 'dialogue_frame',
@@ -43,6 +43,17 @@ class HUD extends Phaser.Scene
           x: 120,
           y: 220
         }
+      });
+    }
+    else
+    {
+      const Dialogue = Dialogue_Array[this.Dialogue_State];
+
+      this.add.text(10, 200, Dialogue.value, {
+        color: '#000',
+        fontFamily: 'Times New Roman',
+        fontSize: 12,
+        wordWrap: { width: 200 }
       });
     }
   }
