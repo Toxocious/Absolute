@@ -72,6 +72,7 @@
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/GridEngine.min.js'></script>
 
 <!-- Map Scripts -->
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/eventhandler.js'></script>
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/network.js'></script>
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/tileinfo.js'></script>
 

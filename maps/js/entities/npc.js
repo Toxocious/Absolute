@@ -30,6 +30,8 @@ class NPC extends Phaser.Scene
   DisplayDialogue()
   {
     console.log(`[NPC | Dialogue] Displaying the dialogue of ${this.Name}`);
+
+    Scene_Events.emit('NPC_Dialogue', this.Dialogue);
   }
 
   /**
