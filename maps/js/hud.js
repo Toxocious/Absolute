@@ -29,6 +29,7 @@ class HUD extends Phaser.Scene
    */
   DisplayDialogue(Dialogue_Array)
   {
+
     if ( !this.In_Dialogue )
     {
       console.log('[HUD | Dialogue] Displaying object dialogue', Dialogue_Array);
@@ -44,9 +45,7 @@ class HUD extends Phaser.Scene
           y: 220
         }
       });
-    }
-    else
-    {
+
       const Dialogue = Dialogue_Array[this.Dialogue_State];
 
       this.add.text(10, 200, Dialogue.value, {
