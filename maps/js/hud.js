@@ -22,6 +22,7 @@ class HUD extends Phaser.Scene
      * Listen for custom scene events.
      */
     Scene_Events.on('NPC_Dialogue', this.DisplayDialogue, this);
+    Scene_Events.on('NPC_Dialogue_Remove', this.RemoveDialogue, this);
   }
 
   /**
@@ -54,6 +55,16 @@ class HUD extends Phaser.Scene
         fontSize: 12,
         wordWrap: { width: 200 }
       });
+
+  /**
+   * Remove active dialogue,
+   */
+  RemoveDialogue()
+  {
+    if ( typeof this.Dialogue_State === 'number' )
+    {
+      this.Dialogue_Box.clear(true);
+      this.Dialogue_State = null;
     }
   }
 }
