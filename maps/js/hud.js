@@ -6,14 +6,12 @@ class HUD extends Phaser.Scene
 
     this.Render_Instance = Render_Instance;
 
-    this.In_Dialogue = false;
     this.Dialogue_State = null;
+    this.Dialogue_Text = null;
   }
 
   create()
   {
-    console.log('[HUD] Has been created');
-
     this.Dialogue_Box = this.add.group({
       classType: Phaser.GameObjects.Image
     });
@@ -30,12 +28,9 @@ class HUD extends Phaser.Scene
    */
   DisplayDialogue(Dialogue_Array)
   {
-
     if ( !this.In_Dialogue )
     {
-      console.log('[HUD | Dialogue] Displaying object dialogue', Dialogue_Array);
-
-      this.In_Dialogue = true;
+      MapGame.Player.In_Dialogue = true;
       this.Dialogue_State = 0;
 
       this.Dialogue_Box.createMultiple({
@@ -49,12 +44,16 @@ class HUD extends Phaser.Scene
 
       const Dialogue = Dialogue_Array[this.Dialogue_State];
 
-      this.add.text(10, 200, Dialogue.value, {
+      this.Dialogue_Text = this.add.text(10, 200, Dialogue.value, {
         color: '#000',
         fontFamily: 'Times New Roman',
         fontSize: 12,
         wordWrap: { width: 200 }
       });
+
+      this.Dialogue_Box.add(this.Dialogue_Text);
+    }
+  }
 
   /**
    * Remove active dialogue,
