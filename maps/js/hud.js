@@ -62,6 +62,8 @@ class HUD extends Phaser.Scene
   {
     if ( typeof this.Dialogue_State === 'number' )
     {
+      MapGame.Player.In_Dialogue = false;
+
       this.Dialogue_Box.clear(true);
       this.Dialogue_State = null;
     }
