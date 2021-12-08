@@ -96,9 +96,9 @@
         'Map_Experience' => $User['Map_Experience'],
         'Map_ID' => $User['Map_ID'],
         'Map_Position' => [
-          'x' => $User['Map_X'],
-          'y' => $User['Map_Y'],
-          'z' => $User['Map_Z'],
+          'Map_X' => $User['Map_X'],
+          'Map_Y' => $User['Map_Y'],
+          'Map_Z' => $User['Map_Z'],
         ],
         'Gender' => $User['Gender'],
 				'Status' => $User['Status'],
