@@ -18,8 +18,6 @@ class NPC extends Phaser.Scene
    */
   Interact()
   {
-    console.log(`[NPC | Interaction] Interacting with ${this.Name}`);
-
     this.GetDialogue();
     if ( this.Dialogue.length > 0 )
       this.DisplayDialogue();
@@ -30,8 +28,6 @@ class NPC extends Phaser.Scene
    */
   DisplayDialogue()
   {
-    console.log(`[NPC | Dialogue] Displaying the dialogue of ${this.Name}`);
-
     Scene_Events.emit('NPC_Dialogue', this.Dialogue);
   }
 
