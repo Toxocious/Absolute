@@ -50,6 +50,42 @@
     }
 
     /**
+     * Check if the player is next to a given tile.
+     *
+     * @param {int} $x
+     * @param {int} $y
+     * @param {int} $z
+     */
+    public function IsNextToTile
+    (
+      int $x = null,
+      int $y = null,
+      int $z = null
+    )
+    {
+      $Player_Position = $_SESSION['Absolute']['Maps']['Position'];
+
+      $Adjacent_Coords = [
+        [0, -1],
+        [1, 0],
+        [0, 1],
+        [-1, 0],
+      ];
+
+      foreach ( ['up', 'right', 'down', 'left'] as $Index => $Direction )
+      {
+        if
+        (
+          $Player_Position['Map_X'] == $x + $Adjacent_Coords[$Index][0] &&
+          $Player_Position['Map_Y'] == $y + $Adjacent_Coords[$Index][1] &&
+          $Player_Position['Map_Z'] == $z
+        )
+          return true;
+      }
+
+      return false;
+    }
+    /**
      * Fetch the player's current position.
      */
     public function GetPosition()
