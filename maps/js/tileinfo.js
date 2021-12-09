@@ -36,9 +36,7 @@ class TileInfo
   {
     for ( const Layer of MapGame.Layers )
       if ( Layer.layer.name === `Layer_${this.z}` )
-      {
         return Layer.layer;
-      }
 
     return false;
   }
@@ -68,10 +66,8 @@ class TileInfo
       return false;
 
     for ( const Prop of Obj.properties )
-    {
       if ( Prop.name == Property_Name )
         return Prop;
-    }
 
     return false;
   }
