@@ -46,7 +46,8 @@
     public function ParseMap()
     {
       $Map_File_Content = file_get_contents($this->Map_File);
-      if ( !$Map_File_Content ) throw new Exception("{$this->Map_File}] Could not get file contents.");
+      if ( !$Map_File_Content )
+        throw new Exception("{$this->Map_File}] Could not get file contents.");
 
       $this->Map_Data = json_decode($Map_File_Content);
       return $this->Map_Data;
@@ -61,12 +62,25 @@
 
       foreach ( $this->Map_Data->tilesets as $Tileset )
       {
-        // "../tilesets/images/halloween.png"
         $Tileset->image = str_replace(['../tilesets/images/', '.png'], '', $Tileset->image);
         $Tilesets[] = $Tileset->image;
       }
 
       return $Tilesets;
+    }
+
+    /**
+     * Fetch all objects on the map.
+     */
+    public function GetMapObjects()
+    {
+      foreach ( $this->Map_Data->layers as $Layer )
+      {
+        if ( $Layer->name == 'Objects' )
+        {
+          return $Layer->objects;
+        }
+      }
     }
 
     /**
@@ -106,6 +120,7 @@
         'Map_Name' => $this->Player->GetMap(),
         'Position' => $this->Player->GetPosition(),
         'Tilesets' => $this->GetRequiredTilesets(),
+        'Objects' => $this->GetMapObjects(),
       ];
     }
 
