@@ -1,5 +1,5 @@
 <?php
-  class Player
+  class Player extends Map
   {
     private static $Instance;
     public $Map_ID;
@@ -22,6 +22,31 @@
         self::$Instance = new Player();
 
       return self::$Instance;
+    }
+
+    /**
+     * Verify the player's interaction with a tile.
+     *
+     * @param {int} $x
+     * @param {int} $y
+     * @param {int} $z
+     */
+    public function CheckInteraction
+    (
+      int $x = null,
+      int $y = null,
+      int $z = null
+    )
+    {
+      $Map_Objects = $_SESSION['Absolute']['Maps']['Objects'];
+      if ( empty($Map_Objects) )
+        return false;
+
+      $Check_Tile_Object = MapObject::GetObjectAtTile($Map_Objects, $x, $y, $z);
+      if ( empty($Check_Tile_Object) )
+        return false;
+
+      return true;
     }
 
     /**
