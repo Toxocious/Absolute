@@ -1,5 +1,4 @@
 <?php
-  // use TMXParser\Parser;
 
   class Map
   {
@@ -78,6 +77,7 @@
       {
         if ( $Layer->name == 'Objects' )
         {
+          $_SESSION['Absolute']['Maps']['Objects'] = $Layer->objects;
           return $Layer->objects;
         }
       }
