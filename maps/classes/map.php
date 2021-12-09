@@ -1,5 +1,4 @@
 <?php
-
   class Map
   {
     public $Map_Data;
