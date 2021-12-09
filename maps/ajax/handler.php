@@ -43,6 +43,18 @@
     switch ( $Action )
     {
       /**
+       * Handle object interaction.
+       */
+      case 'Interact':
+        $x = Purify(floor($_POST['x']));
+        $y = Purify(floor($_POST['y']));
+        $z = Purify($_POST['z']);
+
+        $Interaction_Check = $Map->Player->CheckInteraction($x, $y, $z);
+        var_dump($Interaction_Check);
+        break;
+
+      /**
        * Update the player's map coordinates.
        */
       case 'Position':

@@ -89,6 +89,13 @@ class Player_Entity
     const Get_Tile = new TileInfo(x, y, z);
     const Tile_Info = Get_Tile.GetTileInfo();
 
+    MapGame.Network.SendRequest({
+      Action: 'Interact',
+      x: x,
+      y: y,
+      z: z,
+    }, 'POST').then((data) => console.log(data));
+
     if ( typeof Tile_Info.Objects !== 'undefined' )
     {
       const Tile_Object = Tile_Info.Objects;

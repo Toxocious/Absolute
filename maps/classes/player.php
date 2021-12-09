@@ -46,6 +46,10 @@
       if ( empty($Check_Tile_Object) )
         return false;
 
+      $Is_Player_By_Tile = $this->IsNextToTile($x, $y, $z);
+      if ( empty($Is_Player_By_Tile) )
+        return false;
+
       return true;
     }
 
@@ -85,6 +89,7 @@
 
       return false;
     }
+
     /**
      * Fetch the player's current position.
      */
