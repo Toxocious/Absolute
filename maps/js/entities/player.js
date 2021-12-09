@@ -86,21 +86,24 @@ class Player_Entity
         break;
     }
 
-    const Get_Tile = new TileInfo(x, y, z);
-    const Tile_Info = Get_Tile.GetTileInfo();
-
     MapGame.Network.SendRequest({
       Action: 'Interact',
       x: x,
       y: y,
       z: z,
-    }, 'POST').then((data) => console.log(data));
+    }, 'POST').then((data) => {
+      if ( data === 'true' )
+      {
+        const Get_Tile = new TileInfo(x, y, z);
+        const Tile_Info = Get_Tile.GetTileInfo();
 
-    if ( typeof Tile_Info.Objects !== 'undefined' )
-    {
-      const Tile_Object = Tile_Info.Objects;
-      Tile_Object.Interact();
-    }
+        if ( typeof Tile_Info.Objects !== 'undefined' )
+        {
+          const Tile_Object = Tile_Info.Objects;
+          Tile_Object.Interact();
+        }
+      }
+    });
   }
 
   /**

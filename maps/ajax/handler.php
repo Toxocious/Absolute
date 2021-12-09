@@ -51,7 +51,9 @@
         $z = Purify($_POST['z']);
 
         $Interaction_Check = $Map->Player->CheckInteraction($x, $y, $z);
-        var_dump($Interaction_Check);
+
+        header('Content-Type: application/json');
+        echo json_encode($Interaction_Check);
         break;
 
       /**
