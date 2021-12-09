@@ -10,6 +10,8 @@ class Network
    */
   SendRequest(Data, HTTP_TYPE = 'GET')
   {
+    const URL_PARAMS = new URLSearchParams(Data).toString();
+
     return new Promise((resolve, reject) =>
     {
       const req = new XMLHttpRequest();
@@ -17,7 +19,7 @@ class Network
       switch ( HTTP_TYPE )
       {
         case 'GET':
-          req.open('GET', `${this.AJAX_URL}?${Data}`);
+          req.open('GET', `${this.AJAX_URL}?${URL_PARAMS}`);
           req.send();
           break;
 
@@ -37,7 +39,7 @@ class Network
           break;
 
         default:
-          req.open('GET', `${this.AJAX_URL}?${Data}`);
+          req.open('GET', `${this.AJAX_URL}?${URL_PARAMS}`);
           req.send();
           break;
       }
