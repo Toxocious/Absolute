@@ -292,7 +292,7 @@ const Render = new Phaser.Class({
           continue;
 
         const Obj_X = Math.round(Obj.x) / 16;
-        const Obj_Y = Math.round(Obj.y) / 16;
+        const Obj_Y = Math.round(Obj.y) / 16 + 1;
 
         let Obj_Sprite = null;
         const Is_Obj_Hidden = this.DoesObjectHavePropertyOfName(Obj, 'hidden');
