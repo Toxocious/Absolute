@@ -120,6 +120,16 @@ class Player_Entity
   }
 
   /**
+   * Handle events that may need to happen when the player moves to a new tile.
+   *  - Encounters
+   */
+  ProcessMovement()
+  {
+    console.log('[Player Entity | Processing Movement] Processing player movement.');
+  }
+
+
+  /**
    * Get the direction the player is facing.
    */
   GetFacingDirection()

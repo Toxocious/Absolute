@@ -235,6 +235,11 @@ const Render = new Phaser.Class({
 
     // Set layer transitions.
     this.ProcessLayerTransitions();
+
+    // Subscribe to player movement.
+    this.gridEngine.positionChangeStarted().subscribe(( Character ) => {
+      Character.charId === 'character' ? MapGame.Player.ProcessMovement() : null;
+    });
   },
 
   update: function(Time, Delta)
