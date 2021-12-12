@@ -116,6 +116,7 @@
           HandleError($e);
         }
 
+        $_SESSION['Absolute']['Maps']['Position'] = $Map_Position;
         return $Map_Position;
       }
 
