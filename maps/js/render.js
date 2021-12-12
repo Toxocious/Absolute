@@ -398,29 +398,4 @@ const Render = new Phaser.Class({
 
     return Math.floor(Math.random() * (Max_Int - Min_Int + 1)) + Min_Int;
   },
-
-  /**
-   * Find map objects.
-   */
-  FindObjects: function(Type, Map, Layer)
-  {
-    console.log('[Finding Objects]', Type, Map, Layer);
-
-    let Objects = [];
-
-    Map.objects[Layer].forEach((Element) =>
-    {
-      console.log('[Object Found]', Element);
-    });
-
-    return Objects;
-  },
-
-  /**
-   * Create a sprite from an object.
-   */
-  CreateFromTiledObject: function(Element, Group)
-  {
-    console.log('[Creating Object Sprite]', Element, Group);
-  }
 });
