@@ -311,7 +311,21 @@ const Render = new Phaser.Class({
           });
         }
 
-        const New_Object = new NPC(Obj.name, `${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
+        switch ( Obj.type )
+        {
+          case 'encounter':
+            New_Object = new Encounter(Obj.name, `${Obj.type}_${Obj.id}`, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
+            break;
+
+          case 'npc':
+            New_Object = new NPC(Obj.name, `${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
+            break;
+
+          case 'transition':
+            New_Object = new Transition(Obj.name, `${Obj.type}_${Obj.id}`, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
+            break;
+        }
+
         Map_Objects.push(New_Object);
       }
     }
