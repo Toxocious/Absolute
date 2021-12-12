@@ -124,7 +124,7 @@ class Player_Entity
    */
   GetFacingDirection()
   {
-    return this.GE_Instance.gridCharacters.entries().next().value[1].facingDirection;
+    return this.GE_Instance.getFacingDirection('character');
   }
 
   /**
