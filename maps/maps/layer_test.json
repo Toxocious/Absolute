@@ -2145,6 +2145,53 @@
                  "width":16,
                  "x":256,
                  "y":384
+                }, 
+                {
+                 "height":16,
+                 "id":129,
+                 "name":"Crowley",
+                 "properties":[
+                        {
+                         "name":"charLayer",
+                         "type":"string",
+                         "value":"Layer_1"
+                        }, 
+                        {
+                         "name":"dialogue_1",
+                         "type":"string",
+                         "value":"Filler Dialogue!"
+                        }, 
+                        {
+                         "name":"frameheight",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"framewidth",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"hidden",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"17"
+                        }, 
+                        {
+                         "name":"movement",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":16,
+                 "x":224,
+                 "y":384
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2153,7 +2200,7 @@
          "y":0
         }],
  "nextlayerid":10,
- "nextobjectid":121,
+ "nextobjectid":130,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
