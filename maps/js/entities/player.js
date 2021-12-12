@@ -142,7 +142,7 @@ class Player_Entity
    */
   GetCurrentLayer()
   {
-    return this.GE_Instance.gridCharacters.entries().next().value[1]._tilePos.layer.replace('Layer_', '');
+    return parseInt(this.GE_Instance.gridCharacters.entries().next().value[1]._tilePos.layer.replace('Layer_', ''));
   }
 
   /**
