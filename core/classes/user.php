@@ -100,6 +100,7 @@
           'Map_Y' => $User['Map_Y'],
           'Map_Z' => $User['Map_Z'],
         ],
+        'Map_Steps_To_Encounter' => $User['Map_Steps_To_Encounter'],
         'Gender' => $User['Gender'],
 				'Status' => $User['Status'],
 				'Staff_Message' => $User['Staff_Message'],
