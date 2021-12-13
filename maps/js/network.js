@@ -33,6 +33,8 @@ class Network
             Data_Val.append('y', Data.y);
           if ( typeof Data.z !== 'undefined' )
             Data_Val.append('z', Data.z);
+          if ( typeof Data.Encounter_Tile !== 'undefined' )
+            Data_Val.append('Encounter_Tile', Data.Encounter_Tile);
 
           req.open('POST', this.AJAX_URL);
           req.send(Data_Val);
