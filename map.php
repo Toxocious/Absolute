@@ -50,7 +50,7 @@
             <b>Shiny Odds</b>
           </td>
           <td style='width: 50%;'>
-            <span id='map_shiny_odds'>1 / 8192 (0.0001%)</span>
+            <span id='map_shiny_odds'>1 / 8192 (0.0122%)</span>
           </td>
         </tr>
 

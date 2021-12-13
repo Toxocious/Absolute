@@ -141,7 +141,7 @@
         'Map_Experience_To_Level' => FetchExpToNextLevel($Map_Level['Map_Experience'], 'Map', true),
         'Shiny_Odds' => [
           'Text' => "1 / {$Shiny_Chance}",
-          'Percent' => 1 / $Shiny_Chance
+          'Percent' => (1 / $Shiny_Chance) * 100
         ],
         'Next_Encounter' => $this->Player->GetStepsTillEncounter()
       ];
