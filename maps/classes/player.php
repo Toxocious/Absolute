@@ -187,6 +187,16 @@
     }
 
     /**
+     * Get the amount of steps until the player's next wild encounter,
+     */
+    public function GetStepsTillEncounter()
+    {
+      global $User_Data;
+
+      return $User_Data['Map_Steps_To_Encounter'];
+    }
+
+    /**
      * Fetch the player's current map.
      */
     public function GetMap()
