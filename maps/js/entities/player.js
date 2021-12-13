@@ -126,6 +126,24 @@ class Player_Entity
   ProcessMovement()
   {
     console.log('[Player Entity | Processing Movement] Processing player movement.');
+
+    let x = Math.round(this.Sprite.body.position.x / 16);
+    let y = Math.round(this.Sprite.body.position.y / 16) + 1;
+    let z = this.GetCurrentLayer();
+    console.log('[Player Entity | Processing Movement | Current Tile]', x, y, z);
+
+    const Get_Tile = new TileInfo(x, y, z);
+    const Tile_Info = Get_Tile.GetTileInfo();
+    console.log('[Player Entity | Processing Movement | Tile Info]', Tile_Info);
+
+    if
+    (
+      typeof Tile_Info.Objects.type !== 'undefined' &&
+      Tile_Info.Objects.type === 'encounter'
+    )
+    {
+      console.log('[Player Entity | Processing Movement | Encounter Tile] Stepped onto an encounter tile.');
+    }
   }
 
 
