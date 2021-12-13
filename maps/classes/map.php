@@ -143,7 +143,7 @@
           'Text' => "1 / {$Shiny_Chance}",
           'Percent' => 1 / $Shiny_Chance
         ],
-        'Next_Encounter' => -1,
+        'Next_Encounter' => $this->Player->GetStepsTillEncounter()
       ];
     }
   }

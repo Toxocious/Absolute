@@ -172,6 +172,7 @@ const Render = new Phaser.Class({
       document.getElementById('map_shiny_odds').innerText = `${Stats.Shiny_Odds.Text} (${Stats.Shiny_Odds.Percent.toLocaleString(undefined, {maximumFractionDigits: 4})}%)`;
       document.getElementById('map_steps_until_encounter').innerText = Stats.Next_Encounter;
       document.getElementById('map_exp_bar').setAttribute('style', `width: ${Stats.Map_Experience_To_Level.Percent}%`);
+      document.getElementById('map_steps_until_encounter').innerText = `${Stats.Next_Encounter} Steps`;
     });
 
     return true;
