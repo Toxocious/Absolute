@@ -167,7 +167,7 @@ const Render = new Phaser.Class({
       Stats = JSON.parse(Stats);
 
       document.getElementById('map_name').innerText = Stats.Map_Name.replace('_', ' ').toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ');
-      document.getElementById('map_level').innerText = Stats.Map_Level;
+      document.getElementById('map_level').innerText = Stats.Map_Level.toLocaleString(undefined, {maximumFractionDigits: 0});
       document.getElementById('map_exp_to_level').innerText = Stats.Map_Experience_To_Level.Exp.toLocaleString(undefined, {maximumFractionDigits: 0});
       document.getElementById('map_shiny_odds').innerText = `${Stats.Shiny_Odds.Text} (${Stats.Shiny_Odds.Percent.toLocaleString(undefined, {maximumFractionDigits: 4})}%)`;
       document.getElementById('map_steps_until_encounter').innerText = Stats.Next_Encounter;
