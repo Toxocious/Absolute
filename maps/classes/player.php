@@ -194,6 +194,36 @@
       global $User_Data;
 
       return $User_Data['Map_Steps_To_Encounter'];
+
+    /**
+     * Set the player's steps until their next wild encounter.
+     */
+    public function SetStepsTillEncounter()
+    {
+      global $User_Data, $PDO;
+
+      try
+      {
+        $PDO->beginTransaction();
+
+        $Update_Steps = $PDO->prepare("
+          UPDATE `users`
+          SET `Map_Steps_To_Encounter` = `Map_Steps_To_Encounter` - 1
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Steps->execute([ $User_Data['ID'] ]);
+      }
+      catch ( \PDOException $e )
+      {
+        $PDO->rollBack();
+        HandleError($e);
+      }
+
+      $PDO->commit();
+
+      $_SESSION['Absolute']['Maps']['Map_Steps_To_Encounter'] = $User_Data['Map_Steps_To_Encounter'];
+      return $_SESSION['Absolute']['Maps']['Map_Steps_To_Encounter'];
     }
 
     /**
