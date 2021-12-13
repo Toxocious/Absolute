@@ -193,7 +193,11 @@
     {
       global $User_Data;
 
-      return $User_Data['Map_Steps_To_Encounter'];
+      if ( empty($_SESSION['Absolute']['Maps']['Map_Steps_To_Encounter']) )
+        return $User_Data['Map_Steps_To_Encounter'];
+
+      return $_SESSION['Absolute']['Maps']['Map_Steps_To_Encounter'];
+    }
 
     /**
      * Set the player's steps until their next wild encounter.
