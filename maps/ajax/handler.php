@@ -57,14 +57,23 @@
         break;
 
       /**
-       * Update the player's map coordinates.
+       * Handle player movement.
+       *  - Update player's map coordinates.
+       *  - Check for encounters.
        */
-      case 'Position':
+      case 'Movement':
         $x = Purify(floor($_POST['x']));
         $y = Purify(floor($_POST['y'])) + 1;
         $z = Purify($_POST['z']);
 
         $Map->Player->SetPosition($x, $y, $z);
+
+        $Encounter_Tile = Purify($_POST['Encounter_Tile']);
+        if ( isset($Encounter_Tile) && $Encounter_Tile === 'true' )
+          $Map->Player->SetStepsTillEncounter();
+
+        header('Content-Type: application/json');
+        echo json_encode($Map->Stats());
         break;
 
       default:

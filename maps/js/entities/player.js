@@ -5,13 +5,6 @@ class Player_Entity
     this.Sprite = Sprite;
     this.Render_Instance = Render_Instance;
     this.GE_Instance = GE_Instance;
-
-    this.Update_Timer = this.Render_Instance.time.addEvent({
-      callback: this.UpdateLoop,
-      callbackScope: this,
-      delay: 3000,
-      loop: true
-    });
   }
 
   Update(Time, Delta, GridEngine)
@@ -107,45 +100,40 @@ class Player_Entity
   }
 
   /**
-   * Sync the player position to the database.
-   */
-  UpdateLoop()
-  {
-    MapGame.Network.SendRequest({
-      Action: 'Position',
-      x: Math.round(this.Sprite.body.position.x) / 16,
-      y: Math.round(this.Sprite.body.position.y) / 16,
-      z: this.GetCurrentLayer(),
-    }, 'POST');
-  }
-
-  /**
    * Handle events that may need to happen when the player moves to a new tile.
+   *  - Position Update
    *  - Encounters
    */
   ProcessMovement()
   {
-    console.log('[Player Entity | Processing Movement] Processing player movement.');
-
-    let x = Math.round(this.Sprite.body.position.x / 16);
-    let y = Math.round(this.Sprite.body.position.y / 16) + 1;
-    let z = this.GetCurrentLayer();
-    console.log('[Player Entity | Processing Movement | Current Tile]', x, y, z);
+    const x = Math.round(this.Sprite.body.position.x / 16);
+    const y = Math.round(this.Sprite.body.position.y / 16);
+    const z = this.GetCurrentLayer();
 
     const Get_Tile = new TileInfo(x, y, z);
     const Tile_Info = Get_Tile.GetTileInfo();
-    console.log('[Player Entity | Processing Movement | Tile Info]', Tile_Info);
 
+    let Encounter_Tile = false;
     if
     (
-      typeof Tile_Info.Objects.type !== 'undefined' &&
+      typeof Tile_Info.Objects !== 'undefined' &&
       Tile_Info.Objects.type === 'encounter'
     )
     {
-      console.log('[Player Entity | Processing Movement | Encounter Tile] Stepped onto an encounter tile.');
+      Encounter_Tile = true;
     }
-  }
 
+    MapGame.Network.SendRequest({
+      Action: 'Movement',
+      Encounter_Tile: Encounter_Tile,
+      x: x,
+      y: y,
+      z: z,
+    }, 'POST').then((data) => {
+      data = JSON.parse(data);
+      document.getElementById('map_steps_until_encounter').innerText = `${data.Next_Encounter} Steps`;
+    });
+  }
 
   /**
    * Get the direction the player is facing.
