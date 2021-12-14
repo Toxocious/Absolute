@@ -108,14 +108,9 @@ class Player_Entity
     const Tile_Info = Get_Tile.GetTileInfo();
 
     let Encounter_Tile = false;
-    if
-    (
-      typeof Tile_Info.Objects !== 'undefined' &&
-      Tile_Info.Objects.type === 'encounter'
-    )
-    {
-      Encounter_Tile = true;
-    }
+    if ( typeof Tile_Info.Objects !== 'undefined' )
+      if ( Tile_Info.Objects.type === 'encounter' )
+        Encounter_Tile = true;
 
     MapGame.Network.SendRequest({
       Action: 'Movement',
