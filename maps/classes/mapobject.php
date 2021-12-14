@@ -29,7 +29,7 @@
         if
         (
           $Map_Object->x / 16 == $x &&
-          $Map_Object->y / 16 + 1 == $y &&
+          $Map_Object->y / 16 == $y &&
           $Get_Layer_Property->value == "Layer_{$z}"
         )
           return true;
