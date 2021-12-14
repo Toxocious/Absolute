@@ -37,7 +37,7 @@ let MapGame = {
     },
 
     scene: [
-      Render, HUD
+      Render
     ],
   },
 

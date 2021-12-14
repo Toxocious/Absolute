@@ -13,35 +13,23 @@ class Player_Entity
 
     if (MapGame.Keys.left.isDown)
     {
-      if ( MapGame.Player.In_Dialogue )
-        Scene_Events.emit('NPC_Dialogue_Remove');
-
       GridEngine.move('character', 'left');
       this.PlayAnimation('walk-left');
       this.Sprite.flipX = false;
     }
     else if (MapGame.Keys.right.isDown)
     {
-      if ( MapGame.Player.In_Dialogue )
-        Scene_Events.emit('NPC_Dialogue_Remove');
-
       GridEngine.move('character', 'right');
       this.PlayAnimation('walk-right');
       this.Sprite.flipX = true;
     }
     else if (MapGame.Keys.up.isDown)
     {
-      if ( MapGame.Player.In_Dialogue )
-        Scene_Events.emit('NPC_Dialogue_Remove');
-
       GridEngine.move('character', 'up');
       this.PlayAnimation('walk-up');
     }
     else if (MapGame.Keys.down.isDown)
     {
-      if ( MapGame.Player.In_Dialogue )
-        Scene_Events.emit('NPC_Dialogue_Remove');
-
       GridEngine.move('character', 'down');
       this.PlayAnimation('walk-down');
     }
@@ -133,6 +121,12 @@ class Player_Entity
       data = JSON.parse(data);
       document.getElementById('map_steps_until_encounter').innerText = `${data.Next_Encounter} Steps`;
     });
+
+    if ( MapGame.Player.In_Dialogue )
+    {
+      MapGame.Player.In_Dialogue = false;
+      document.getElementById('map_dialogue').innerHTML = `You wander around aimlessly.`;
+    }
   }
 
   /**

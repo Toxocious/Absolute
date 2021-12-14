@@ -92,7 +92,6 @@
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/entities/encounter.js'></script>
 
 <!-- Initialize Engine & Scenes -->
-<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/hud.js'></script>
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/render.js'></script>
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/init.js'></script>
 

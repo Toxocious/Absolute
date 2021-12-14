@@ -180,9 +180,6 @@ const Render = new Phaser.Class({
 
   create: function()
   {
-    // Run the HUD scene.
-    this.scene.run('HUD');
-
     // Make the map.
     const Map = this.make.tilemap({ key: this.Map_Name, tileWidth: 16, tileHeight: 16 });
     MapGame.Map = Map;

@@ -20,15 +20,26 @@ class NPC extends Phaser.Scene
   {
     this.GetDialogue();
     if ( this.Dialogue.length > 0 )
-      this.DisplayDialogue();
+    {
+      MapGame.Player.In_Dialogue = true;
+
+      this.Dialogue_State = 0;
+      this.DisplayDialogue(this.Dialogue_State);
+    }
   }
 
   /**
    * Display the NPC's dialogue.
    */
-  DisplayDialogue()
+  DisplayDialogue(Dialogue_State)
   {
-    Scene_Events.emit('NPC_Dialogue', this.Dialogue);
+    document.getElementById('map_dialogue').innerHTML = `
+      <div style='max-width: 230px;'>
+        <b>${this.Name}</b>
+        <br /><br />
+        <i>"${this.Dialogue[Dialogue_State].value}"</i>
+      </div>
+    `;
   }
 
   /**
