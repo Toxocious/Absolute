@@ -5,12 +5,29 @@
 <div class='panel content'>
 	<div class='head'>Maps</div>
 	<div class='body' style='align-items: center; display: flex; flex-flow: column; gap: 10px; justify-content: center; padding: 5px;'>
-    <div class='border-gradient' style='width: 300px;'>
-      <div id='map_canvas'>
-      </div>
-    </div>
+    <table class='border-gradient' style='flex-basis: 300px;'>
+      <thead>
+        <tr>
+          <th colspan='2'>
+            <span id='map_name'>Unknown Map</span>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style='padding: 0px;'>
+            <div
+              id='map_canvas'
+              style='height: 240px; width: 240px;'
+            >
+            </div>
+          </td>
+          <td id='map_dialogue'>
+            You wander around aimlessly.
+          </td>
+        </tr>
+      </tbody>
 
-    <table class='border-gradient' style='width: 300px;'>
       <thead>
         <tr>
           <th colspan='2'>
@@ -18,15 +35,6 @@
           </th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td colspan='2' style='padding: 5px;'>
-            <b style='font-size: 14px;'>
-              <span id='map_name'>Unknown Map</span>
-            </b>
-          </td>
-        </tr>
-      </tbody>
       <tbody>
         <tr>
           <td style='width: 50%;'>
@@ -64,6 +72,7 @@
         </tr>
       </tbody>
     </table>
+
 	</div>
 </div>
 
