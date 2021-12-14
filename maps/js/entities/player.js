@@ -94,6 +94,12 @@ class Player_Entity
    */
   ProcessMovement()
   {
+    if ( MapGame.Player.In_Dialogue )
+    {
+      MapGame.Player.In_Dialogue = false;
+      document.getElementById('map_dialogue').innerHTML = `You wander around aimlessly.`;
+    }
+
     const x = Math.round(this.Sprite.body.position.x / 16);
     const y = Math.round(this.Sprite.body.position.y / 16);
     const z = this.GetCurrentLayer();
@@ -121,12 +127,6 @@ class Player_Entity
       data = JSON.parse(data);
       document.getElementById('map_steps_until_encounter').innerText = `${data.Next_Encounter} Steps`;
     });
-
-    if ( MapGame.Player.In_Dialogue )
-    {
-      MapGame.Player.In_Dialogue = false;
-      document.getElementById('map_dialogue').innerHTML = `You wander around aimlessly.`;
-    }
   }
 
   /**
