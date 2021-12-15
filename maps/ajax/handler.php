@@ -88,6 +88,7 @@
         $z = Purify($_POST['z']);
 
         $Map->Player->SetPosition($x, $y, $z);
+        User::UpdateStat($User_Data['ID'], 'Map_Steps_Taken', 1);
 
         $Encounter_Tile = Purify($_POST['Encounter_Tile']);
         if ( isset($Encounter_Tile) && $Encounter_Tile === 'true' )
