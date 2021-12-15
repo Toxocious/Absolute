@@ -1,5 +1,5 @@
 <?php
-  class Encounter
+  class Encounter extends Player
   {
     /**
      * Generate a wild encounter.
@@ -27,14 +27,14 @@
       if ( mt_rand(1, $Shiny_Chance) === 1 )
         $Encounter_Type = 'Shiny';
 
-      $_SESSION['Maps']['Absolute']['Encounter'] = [
+      $_SESSION['Absolute']['Maps']['Encounter'] = [
         'Pokedex_Data' => $Poke_Class->FetchPokedexData($Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID'], $Encounter_Type),
         'Level' => mt_rand($Generated_Encounter['Min_Level'], $Generated_Encounter['Max_Level']),
         'Gender' => $Poke_Class->GenerateGender(null, $Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID']),
         'Type' => $Encounter_Type,
       ];
 
-      return $_SESSION['Maps']['Absolute']['Encounter'];
+      return $_SESSION['Absolute']['Maps']['Encounter'];
     }
 
     /**
