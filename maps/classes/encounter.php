@@ -87,6 +87,8 @@
      */
     public static function Run()
     {
+      global $User_Data;
+
       if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
         return false;
 
@@ -95,6 +97,8 @@
       $New_Steps_Till_Encounter = mt_rand(2, 21);
       $Player_Instance->SetStepsTillEncounter($New_Steps_Till_Encounter);
       $Get_Steps_Till_Encounter = $Player_Instance->GetStepsTillEncounter();
+
+      User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Fled_From', 1);
 
       unset($_SESSION['Absolute']['Maps']['Encounter']);
       return $Get_Steps_Till_Encounter;
