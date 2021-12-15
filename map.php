@@ -5,7 +5,7 @@
 <div class='panel content'>
 	<div class='head'>Maps</div>
 	<div class='body' style='align-items: center; display: flex; flex-flow: column; gap: 10px; justify-content: center; padding: 5px;'>
-    <table class='border-gradient' style='flex-basis: 300px;'>
+    <table class='border-gradient' style='flex-basis: 300px; max-width: 485px;'>
       <thead>
         <tr>
           <th colspan='2'>
