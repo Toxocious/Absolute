@@ -162,8 +162,8 @@ class Player_Entity
     MapGame.Network.SendRequest('Encounter').then((Encounter) => {
       Encounter = JSON.parse(Encounter);
 
-      if ( Encounter.Type !== 'Normal' )
-        alert(`You found a wild ${Encounter.Type} Pok&eacute;mon!`);
+      if ( Encounter.Generated_Encounter.Type !== 'Normal' )
+        alert(`You found a wild ${Encounter.Generated_Encounter.Type} Pok&eacute;mon!`);
 
       document.getElementById('map_dialogue').innerHTML = `
         A wild <b>${Encounter.Generated_Encounter.Pokedex_Data.Display_Name}</b> appeared!
