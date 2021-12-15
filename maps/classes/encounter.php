@@ -81,4 +81,22 @@
       $Selected_Encounter = $Possible_Encounters[$Get_Random_Encounter];
       return $Selected_Encounter;
     }
+
+    /**
+     * Run away from the active encounter.
+     */
+    public static function Run()
+    {
+      if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
+        return false;
+
+      $Player_Instance = Player::GetInstance();
+
+      $New_Steps_Till_Encounter = mt_rand(2, 21);
+      $Player_Instance->SetStepsTillEncounter($New_Steps_Till_Encounter);
+      $Get_Steps_Till_Encounter = $Player_Instance->GetStepsTillEncounter();
+
+      unset($_SESSION['Absolute']['Maps']['Encounter']);
+      return $Get_Steps_Till_Encounter;
+    }
   }

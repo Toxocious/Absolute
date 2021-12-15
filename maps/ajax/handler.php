@@ -95,6 +95,15 @@
         echo json_encode($Map->Stats());
         break;
 
+      /**
+       * Run from the active encounter.
+       */
+      case 'Run':
+        $Run_From_Encounter = Encounter::Run();
+        header('Content-Type: application/json');
+        echo json_encode([ 'Steps_Until_Next_Encounter' => $Run_From_Encounter ]);
+        break;
+
       default:
         break;
     }

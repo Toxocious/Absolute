@@ -174,9 +174,30 @@ class Player_Entity
           <button style='flex-basis: 100px;'>Fight</button>
           <button style='flex-basis: 100px;'>Catch</button>
           <button style='flex-basis: 100px;'>Release</button>
-          <button style='flex-basis: 100px;'>Run</button>
+          <button style='flex-basis: 100px;' onclick='MapGame.Player.RunFromEncounter();'>Run</button>
         </div>
       `;
+    });
+  }
+
+  /**
+   * Run away from the active encounter.
+   */
+  RunFromEncounter()
+  {
+    if ( !MapGame.Player.In_Encounter )
+      return;
+
+    MapGame.Network.SendRequest({
+      Action: 'Run',
+    }, 'POST').then((Run_Data) => {
+      Run_Data = JSON.parse(Run_Data);
+      console.log(Run_Data);
+
+      MapGame.Player.In_Encounter = false;
+      this.Steps_Till_Encounter = Run_Data.Steps_Until_Next_Encounter;
+
+      document.getElementById('map_dialogue').innerHTML = `You ran away from the wild Pok&eacute;mon.`;
     });
   }
 
