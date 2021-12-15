@@ -15,25 +15,37 @@ class Player_Entity
 
     if (MapGame.Keys.left.isDown)
     {
-      GridEngine.move('character', 'left');
-      this.PlayAnimation('walk-left');
-      this.Sprite.flipX = false;
+      if ( !MapGame.Player.In_Encounter )
+      {
+        GridEngine.move('character', 'left');
+        this.PlayAnimation('walk-left');
+        this.Sprite.flipX = false;
+      }
     }
     else if (MapGame.Keys.right.isDown)
     {
-      GridEngine.move('character', 'right');
-      this.PlayAnimation('walk-right');
-      this.Sprite.flipX = true;
+      if ( !MapGame.Player.In_Encounter )
+      {
+        GridEngine.move('character', 'right');
+        this.PlayAnimation('walk-right');
+        this.Sprite.flipX = true;
+      }
     }
     else if (MapGame.Keys.up.isDown)
     {
-      GridEngine.move('character', 'up');
-      this.PlayAnimation('walk-up');
+      if ( !MapGame.Player.In_Encounter )
+      {
+        GridEngine.move('character', 'up');
+        this.PlayAnimation('walk-up');
+      }
     }
     else if (MapGame.Keys.down.isDown)
     {
-      GridEngine.move('character', 'down');
-      this.PlayAnimation('walk-down');
+      if ( !MapGame.Player.In_Encounter )
+      {
+        GridEngine.move('character', 'down');
+        this.PlayAnimation('walk-down');
+      }
     }
     else if ( MapGame.Keys.space.isDown )
     {
