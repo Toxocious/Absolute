@@ -5,6 +5,8 @@ class Player_Entity
     this.Sprite = Sprite;
     this.Render_Instance = Render_Instance;
     this.GE_Instance = GE_Instance;
+
+    this.Steps_Till_Encounter = -1;
   }
 
   Update(Time, Delta, GridEngine)
@@ -94,6 +96,9 @@ class Player_Entity
    */
   ProcessMovement()
   {
+    if ( MapGame.Player.In_Encounter )
+      return;
+
     if ( MapGame.Player.In_Dialogue )
     {
       MapGame.Player.In_Dialogue = false;
@@ -121,6 +126,43 @@ class Player_Entity
     }, 'POST').then((data) => {
       data = JSON.parse(data);
       document.getElementById('map_steps_until_encounter').innerText = `${data.Next_Encounter} Steps`;
+
+      this.Steps_Till_Encounter = data.Next_Encounter;
+    });
+
+    this.CheckForEncounter();
+  }
+
+  /**
+   * Check for a wild encounter.
+   */
+  CheckForEncounter()
+  {
+    if ( this.Steps_Till_Encounter !== 0 )
+      return;
+
+    MapGame.Player.In_Encounter = true;
+
+    MapGame.Network.SendRequest('Encounter').then((Encounter) => {
+      Encounter = JSON.parse(Encounter);
+      console.log(Encounter.Generated_Encounter);
+
+      document.getElementById('map_dialogue').innerHTML = `
+        <img src='${Encounter.Generated_Encounter.Pokedex_Data.Sprite}' />
+        <br />
+        <b>${Encounter.Generated_Encounter.Pokedex_Data.Display_Name}</b>
+        ${Encounter.Generated_Encounter.Gender.charAt(0)}
+        (Level: ${Encounter.Generated_Encounter.Level.toLocaleString()})
+
+        <br /><br />
+
+        <div class='flex wrap' style='gap: 10px; justify-content: center; max-width: 240px;'>
+          <button style='flex-basis: 100px;'>Fight</button>
+          <button style='flex-basis: 100px;'>Catch</button>
+          <button style='flex-basis: 100px;'>Release</button>
+          <button style='flex-basis: 100px;'>Run</button>
+        </div>
+      `;
     });
   }
 

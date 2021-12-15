@@ -34,6 +34,25 @@
   }
 
   /**
+   * Generate an encounter for the player.
+   */
+  if ( isset($_GET['Encounter']) )
+  {
+    header('Content-Type: application/json');
+
+    $Steps_Till_Encounter = $Map->Player->GetStepsTillEncounter();
+    // if ( $Steps_Till_Encounter != 0 )
+    // {
+    //   echo json_encode([ 'Generated_Encounter' => null ]);
+    //   exit;
+    // }
+
+    $Encounter = Encounter::Generate($Map->Player->GetMap(), $Map->Player->GetMapLevelAndExp()['Map_Level']);
+    echo json_encode([ 'Generated_Encounter' => $Encounter ]);
+    exit;
+  }
+
+  /**
    * Perform some server-side validation.
    */
   if ( isset($_POST['Action']) )
