@@ -148,6 +148,8 @@ class Player_Entity
       console.log(Encounter.Generated_Encounter);
 
       document.getElementById('map_dialogue').innerHTML = `
+        A wild <b>${Encounter.Generated_Encounter.Pokedex_Data.Display_Name}</b> appeared!
+        <br />
         <img src='${Encounter.Generated_Encounter.Pokedex_Data.Sprite}' />
         <br />
         <b>${Encounter.Generated_Encounter.Pokedex_Data.Display_Name}</b>
