@@ -161,7 +161,6 @@ class Player_Entity
 
     MapGame.Network.SendRequest('Encounter').then((Encounter) => {
       Encounter = JSON.parse(Encounter);
-      console.log(Encounter.Generated_Encounter);
 
       document.getElementById('map_dialogue').innerHTML = `
         A wild <b>${Encounter.Generated_Encounter.Pokedex_Data.Display_Name}</b> appeared!
@@ -196,7 +195,6 @@ class Player_Entity
       Action: 'Run',
     }, 'POST').then((Run_Data) => {
       Run_Data = JSON.parse(Run_Data);
-      console.log(Run_Data);
 
       MapGame.Player.In_Encounter = false;
       this.Steps_Till_Encounter = Run_Data.Steps_Until_Next_Encounter;
