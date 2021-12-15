@@ -15,7 +15,7 @@ class Player_Entity
 
     if (MapGame.Keys.left.isDown)
     {
-      if ( !MapGame.Player.In_Encounter )
+      if ( !MapGame.Player.In_Encounter && this.Steps_Till_Encounter !== 0 )
       {
         GridEngine.move('character', 'left');
         this.PlayAnimation('walk-left');
@@ -24,7 +24,7 @@ class Player_Entity
     }
     else if (MapGame.Keys.right.isDown)
     {
-      if ( !MapGame.Player.In_Encounter )
+      if ( !MapGame.Player.In_Encounter && this.Steps_Till_Encounter !== 0 )
       {
         GridEngine.move('character', 'right');
         this.PlayAnimation('walk-right');
@@ -33,7 +33,7 @@ class Player_Entity
     }
     else if (MapGame.Keys.up.isDown)
     {
-      if ( !MapGame.Player.In_Encounter )
+      if ( !MapGame.Player.In_Encounter && this.Steps_Till_Encounter !== 0 )
       {
         GridEngine.move('character', 'up');
         this.PlayAnimation('walk-up');
@@ -41,7 +41,7 @@ class Player_Entity
     }
     else if (MapGame.Keys.down.isDown)
     {
-      if ( !MapGame.Player.In_Encounter )
+      if ( !MapGame.Player.In_Encounter && this.Steps_Till_Encounter !== 0 )
       {
         GridEngine.move('character', 'down');
         this.PlayAnimation('walk-down');
