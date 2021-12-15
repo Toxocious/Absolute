@@ -6,7 +6,7 @@ class Player_Entity
     this.Render_Instance = Render_Instance;
     this.GE_Instance = GE_Instance;
 
-    this.Steps_Till_Encounter = -1;
+    this.Steps_Till_Encounter = 21;
   }
 
   Update(Time, Delta, GridEngine)
@@ -108,7 +108,7 @@ class Player_Entity
    */
   ProcessMovement()
   {
-    if ( MapGame.Player.In_Encounter )
+    if ( MapGame.Player.In_Encounter || this.Steps_Till_Encounter === 0 )
       return;
 
     if ( MapGame.Player.In_Dialogue )
@@ -139,10 +139,14 @@ class Player_Entity
       data = JSON.parse(data);
       document.getElementById('map_steps_until_encounter').innerText = `${data.Next_Encounter} Steps`;
 
-      this.Steps_Till_Encounter = data.Next_Encounter;
-    });
+      if ( data.Next_Encounter < 0 )
+        data.Next_Encounter = 0;
 
-    this.CheckForEncounter();
+      this.Steps_Till_Encounter = data.Next_Encounter;
+
+      if ( this.Steps_Till_Encounter === 0 )
+        this.CheckForEncounter();
+    });
   }
 
   /**
