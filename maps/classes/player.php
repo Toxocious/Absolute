@@ -201,8 +201,13 @@
 
     /**
      * Set the player's steps until their next wild encounter.
+     *
+     * @param {int} $Steps
      */
-    public function SetStepsTillEncounter()
+    public function SetStepsTillEncounter
+    (
+      int $Steps = -1
+    )
     {
       global $User_Data, $PDO;
 
@@ -212,11 +217,11 @@
 
         $Update_Steps = $PDO->prepare("
           UPDATE `users`
-          SET `Map_Steps_To_Encounter` = `Map_Steps_To_Encounter` - 1
+          SET `Map_Steps_To_Encounter` = `Map_Steps_To_Encounter` + ?
           WHERE `ID` = ?
           LIMIT 1
         ");
-        $Update_Steps->execute([ $User_Data['ID'] ]);
+        $Update_Steps->execute([ $Steps, $User_Data['ID'] ]);
       }
       catch ( \PDOException $e )
       {
