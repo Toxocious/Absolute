@@ -13,15 +13,28 @@
       int $Player_Map_Level
     )
     {
+      global $Poke_Class;
+
       $Shiny_Chance = 4192 - $Player_Map_Level;
       if ( $Shiny_Chance < 2096 )
         $Shiny_Chance = 2096;
 
-      $Possible_Encounters = self::GetPossibleEncounters($Player_Map_Name);
-      if ( !$Possible_Encounters )
+      $Generated_Encounter = self::GetRandomEncounter($Player_Map_Name);
+      if ( !$Generated_Encounter )
         return false;
 
-      return true;
+      $Encounter_Type = 'Normal';
+      if ( mt_rand(1, $Shiny_Chance) === 1 )
+        $Encounter_Type = 'Shiny';
+
+      $_SESSION['Maps']['Absolute']['Encounter'] = [
+        'Pokedex_Data' => $Poke_Class->FetchPokedexData($Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID'], $Encounter_Type),
+        'Level' => mt_rand($Generated_Encounter['Min_Level'], $Generated_Encounter['Max_Level']),
+        'Gender' => $Poke_Class->GenerateGender(null, $Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID']),
+        'Type' => $Encounter_Type,
+      ];
+
+      return $_SESSION['Maps']['Absolute']['Encounter'];
     }
 
     /**
@@ -29,7 +42,7 @@
      *
      * @param {string} $Player_Map_Name
      */
-    public static function GetPossibleEncounters
+    public static function GetRandomEncounter
     (
       string $Player_Map_Name
     )
