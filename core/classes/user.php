@@ -308,4 +308,40 @@
 					break;
 			}
 		}
+
+    /**
+     * Create and/or update the desired stat of a user.
+     *
+     * @param {int} $User_ID
+     * @param {string} $Stat_Name
+     * @param {int} $Stat_Value
+     */
+    public static function UpdateStat
+    (
+      int $User_ID,
+      string $Stat_Name,
+      int $Stat_Value
+    )
+    {
+      global $PDO;
+
+      if ( empty($Stat_Value) || $Stat_Value == 0 )
+        return false;
+
+      try
+      {
+        $Stat = $PDO->prepare("
+          INSERT INTO `user_stats` (`User_ID`, `Stat_Name`, `Stat_Value`)
+          VALUES (?, ?, ?)
+          ON DUPLICATE KEY UPDATE `Stat_Value` = `Stat_Value` + VALUES(`Stat_Value`)
+        ");
+        $Stat->execute([ $User_ID, $Stat_Name, $Stat_Value ]);
+      }
+      catch ( PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      return true;
+    }
 	}
