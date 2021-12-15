@@ -154,7 +154,7 @@ class Player_Entity
    */
   CheckForEncounter()
   {
-    if ( this.Steps_Till_Encounter !== 0 )
+    if ( this.Steps_Till_Encounter !== 0 || MapGame.Player.In_Encounter )
       return;
 
     MapGame.Player.In_Encounter = true;
