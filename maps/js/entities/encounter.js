@@ -15,7 +15,7 @@ class Encounter extends Phaser.Scene
   /**
    * Display the currently active encounter to the player.
    */
-  DisplayEncounter(Steps_Till_Encounter, In_Encounter)
+  DisplayEncounter()
   {
     MapGame.Network.SendRequest('Encounter').then((Encounter) => {
       Encounter = JSON.parse(Encounter);

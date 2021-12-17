@@ -159,7 +159,7 @@ class Player_Entity
     MapGame.Player.In_Encounter = true;
 
     MapGame.Encounter = new Encounter(Tile_Info.Objects.Name, Tile_Info.Objects.Grid_Engine_ID, Tile_Info.Objects.properties, Tile_Info.Objects.type, Tile_Info.Objects.coords, Tile_Info.Objects.Render_Instance);
-    MapGame.Encounter.DisplayEncounter(MapGame.Player.Steps_Till_Encounter, MapGame.Player.In_Encounter);
+    MapGame.Encounter.DisplayEncounter();
   }
 
   /**
