@@ -317,4 +317,36 @@
         'Map_Experience' => $User_Data['Map_Experience'],
       ];
     }
+
+    /**
+     * Update the user's map experience.
+     *
+     * @param {int} $Exp_Earned
+     */
+    public function UpdateMapExperience
+    (
+      int $Exp_Earned
+    )
+    {
+      global $PDO, $User_Data;
+
+      try
+      {
+        $PDO->beginTransaction();
+
+        $Update_Map_Exp = $PDO->prepare("
+          UPDATE `users`
+          SET `Map_Experience` = `Map_Experience` + ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Map_Exp->execute([ $Exp_Earned, $User_Data['ID'] ]);
+
+        $PDO->commit();
+      }
+      catch ( \PDOException $e )
+      {
+        $PDO->rollBack();
+      }
+    }
   }
