@@ -135,7 +135,13 @@
 
       User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Fled_From', 1);
 
+      $Run_Text = "You ran away from the wild {$_SESSION['Absolute']['Maps']['Encounter']['Pokedex_Data']['Display_Name']}.";
+
       unset($_SESSION['Absolute']['Maps']['Encounter']);
-      return $Get_Steps_Till_Encounter;
+
+      return [
+        'Run_Text' => $Run_Text,
+        'Steps_Till_Next_Encounter' => $Get_Steps_Till_Encounter
+      ];
     }
   }

@@ -113,7 +113,7 @@
       case 'Run':
         $Run_From_Encounter = Encounter::Run();
         header('Content-Type: application/json');
-        echo json_encode([ 'Steps_Until_Next_Encounter' => $Run_From_Encounter ]);
+        echo json_encode($Run_From_Encounter);
         break;
 
       default:
