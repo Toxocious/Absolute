@@ -35,12 +35,32 @@ class Encounter extends Phaser.Scene
         <br /><br />
 
         <div class='flex wrap' style='gap: 10px; justify-content: center; max-width: 240px;'>
-          <button style='flex-basis: 100px;' onclick='MapGame.Player.FightEncounter();'>Fight</button>
-          <button style='flex-basis: 100px;' onclick='MapGame.Player.CatchEncounter();'>Catch</button>
-          <button style='flex-basis: 100px;' onclick='MapGame.Player.ReleaseEncounter();'>Release</button>
-          <button style='flex-basis: 100px;' onclick='MapGame.Player.RunFromEncounter();'>Run</button>
+          <button style='flex-basis: 100px;' onclick='MapGame.Encounter.FightEncounter();'>Fight</button>
+          <button style='flex-basis: 100px;' onclick='MapGame.Encounter.CatchEncounter();'>Catch</button>
+          <button style='flex-basis: 100px;' onclick='MapGame.Encounter.ReleaseEncounter();'>Release</button>
+          <button style='flex-basis: 100px;' onclick='MapGame.Encounter.RunFromEncounter();'>Run</button>
         </div>
       `;
+    });
+  }
+
+  /**
+   * Run away from the active encounter.
+   */
+  RunFromEncounter()
+  {
+    if ( !MapGame.Player.In_Encounter )
+      return;
+
+    MapGame.Network.SendRequest({
+      Action: 'Run',
+    }, 'POST').then((Run_Data) => {
+      Run_Data = JSON.parse(Run_Data);
+
+      MapGame.Player.In_Encounter = false;
+      this.Steps_Till_Encounter = Run_Data.Steps_Until_Next_Encounter;
+
+      document.getElementById('map_dialogue').innerHTML = `You ran away from the wild Pok&eacute;mon.`;
     });
   }
 }

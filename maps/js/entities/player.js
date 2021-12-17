@@ -164,26 +164,6 @@ class Player_Entity
   }
 
   /**
-   * Run away from the active encounter.
-   */
-  RunFromEncounter()
-  {
-    if ( !MapGame.Player.In_Encounter )
-      return;
-
-    MapGame.Network.SendRequest({
-      Action: 'Run',
-    }, 'POST').then((Run_Data) => {
-      Run_Data = JSON.parse(Run_Data);
-
-      MapGame.Player.In_Encounter = false;
-      this.Steps_Till_Encounter = Run_Data.Steps_Until_Next_Encounter;
-
-      document.getElementById('map_dialogue').innerHTML = `You ran away from the wild Pok&eacute;mon.`;
-    });
-  }
-
-  /**
    * Get the direction the player is facing.
    */
   GetFacingDirection()
