@@ -202,6 +202,9 @@ const Render = new Phaser.Class({
     MapGame.Player.CreateAnimations();
     MapGame.Player.PlayAnimation('idle-down');
 
+    // Set initial player movement steps.
+    MapGame.Player.Steps_Till_Encounter = 21;
+
     // Set the main camera to follow the player, and keep it in bounds.
     this.cameras.main.startFollow(Player_Sprite, true);
     this.cameras.main.setFollowOffset(-Player_Sprite.width / 2, -Player_Sprite.height / 2);

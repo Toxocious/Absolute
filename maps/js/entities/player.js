@@ -5,17 +5,16 @@ class Player_Entity
     this.Sprite = Sprite;
     this.Render_Instance = Render_Instance;
     this.GE_Instance = GE_Instance;
-
-    this.Steps_Till_Encounter = 21;
   }
 
   Update(Time, Delta, GridEngine)
   {
     this.Facing_Direction = this.GetFacingDirection();
 
+    console.log('Is the player in an encounter?:', MapGame.Player.In_Encounter, '|| Steps till next encounter?:', MapGame.Player.Steps_Till_Encounter);
     if (MapGame.Keys.left.isDown)
     {
-      if ( !MapGame.Player.In_Encounter && this.Steps_Till_Encounter !== 0 )
+      if ( !MapGame.Player.In_Encounter && MapGame.Player.Steps_Till_Encounter !== 0 )
       {
         GridEngine.move('character', 'left');
         this.PlayAnimation('walk-left');
@@ -24,7 +23,7 @@ class Player_Entity
     }
     else if (MapGame.Keys.right.isDown)
     {
-      if ( !MapGame.Player.In_Encounter && this.Steps_Till_Encounter !== 0 )
+      if ( !MapGame.Player.In_Encounter && MapGame.Player.Steps_Till_Encounter !== 0 )
       {
         GridEngine.move('character', 'right');
         this.PlayAnimation('walk-right');
@@ -33,7 +32,7 @@ class Player_Entity
     }
     else if (MapGame.Keys.up.isDown)
     {
-      if ( !MapGame.Player.In_Encounter && this.Steps_Till_Encounter !== 0 )
+      if ( !MapGame.Player.In_Encounter && MapGame.Player.Steps_Till_Encounter !== 0 )
       {
         GridEngine.move('character', 'up');
         this.PlayAnimation('walk-up');
@@ -41,7 +40,7 @@ class Player_Entity
     }
     else if (MapGame.Keys.down.isDown)
     {
-      if ( !MapGame.Player.In_Encounter && this.Steps_Till_Encounter !== 0 )
+      if ( !MapGame.Player.In_Encounter && MapGame.Player.Steps_Till_Encounter !== 0 )
       {
         GridEngine.move('character', 'down');
         this.PlayAnimation('walk-down');
@@ -108,7 +107,7 @@ class Player_Entity
    */
   ProcessMovement()
   {
-    if ( MapGame.Player.In_Encounter || this.Steps_Till_Encounter === 0 )
+    if ( MapGame.Player.In_Encounter || MapGame.Player.Steps_Till_Encounter === 0 )
       return;
 
     if ( MapGame.Player.In_Dialogue )
@@ -142,9 +141,9 @@ class Player_Entity
       if ( data.Next_Encounter < 0 )
         data.Next_Encounter = 0;
 
-      this.Steps_Till_Encounter = data.Next_Encounter;
+      MapGame.Player.Steps_Till_Encounter = data.Next_Encounter;
 
-      if ( this.Steps_Till_Encounter === 0 )
+      if ( MapGame.Player.Steps_Till_Encounter === 0 )
         this.CheckForEncounter(Tile_Info);
     });
   }
@@ -154,13 +153,13 @@ class Player_Entity
    */
   CheckForEncounter(Tile_Info)
   {
-    if ( this.Steps_Till_Encounter !== 0 || MapGame.Player.In_Encounter )
+    if ( MapGame.Player.Steps_Till_Encounter !== 0 || MapGame.Player.In_Encounter )
       return;
 
     MapGame.Player.In_Encounter = true;
 
     MapGame.Encounter = new Encounter(Tile_Info.Objects.Name, Tile_Info.Objects.Grid_Engine_ID, Tile_Info.Objects.properties, Tile_Info.Objects.type, Tile_Info.Objects.coords, Tile_Info.Objects.Render_Instance);
-    MapGame.Encounter.DisplayEncounter(this.Steps_Till_Encounter, MapGame.Player.In_Encounter);
+    MapGame.Encounter.DisplayEncounter(MapGame.Player.Steps_Till_Encounter, MapGame.Player.In_Encounter);
   }
 
   /**

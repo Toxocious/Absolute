@@ -58,7 +58,7 @@ class Encounter extends Phaser.Scene
       Run_Data = JSON.parse(Run_Data);
 
       MapGame.Player.In_Encounter = false;
-      this.Steps_Till_Encounter = Run_Data.Steps_Until_Next_Encounter;
+      MapGame.Player.Steps_Till_Encounter = Run_Data.Steps_Until_Next_Encounter;
 
       document.getElementById('map_dialogue').innerHTML = `You ran away from the wild Pok&eacute;mon.`;
     });
