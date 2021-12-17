@@ -99,6 +99,15 @@
         break;
 
       /**
+       * Release the active encounter.
+       */
+      case 'Release':
+        $Release_Encounter = Encounter::Release();
+        header('Content-Type: application/json');
+        echo json_encode($Release_Encounter);
+        break;
+
+      /**
        * Run from the active encounter.
        */
       case 'Run':

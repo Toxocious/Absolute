@@ -63,4 +63,24 @@ class Encounter extends Phaser.Scene
       document.getElementById('map_dialogue').innerHTML = `You ran away from the wild Pok&eacute;mon.`;
     });
   }
+
+  /**
+   * Release the active encounter.
+   */
+  ReleaseEncounter()
+  {
+    if ( !MapGame.Player.In_Encounter )
+      return;
+
+    MapGame.Network.SendRequest({
+      Action: 'Release',
+    }, 'POST').then((Release_Data) => {
+      Release_Data = JSON.parse(Release_Data);
+
+      MapGame.Player.In_Encounter = false;
+      MapGame.Player.Steps_Till_Encounter = Release_Data.Steps_Till_Next_Encounter;
+
+      document.getElementById('map_dialogue').innerHTML = Release_Data.Release_Text;
+    });
+  }
 }
