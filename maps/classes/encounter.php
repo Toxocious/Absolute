@@ -84,6 +84,40 @@
     }
 
     /**
+     * Release the active encounter.
+     */
+    public static function Release()
+    {
+      global $User_Data;
+
+      if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
+        return false;
+
+      $Player_Instance = Player::GetInstance();
+
+      $New_Steps_Till_Encounter = mt_rand(2, 21);
+      $Player_Instance->SetStepsTillEncounter($New_Steps_Till_Encounter);
+      $Get_Steps_Till_Encounter = $Player_Instance->GetStepsTillEncounter();
+
+      $Player_Instance->UpdateMapExperience($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
+      User::UpdateStat($User_Data['ID'], 'Map_Exp_Earned', $_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
+      User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Released', 1);
+
+      $Release_Text = "
+        You caught and released a(n) {$_SESSION['Absolute']['Maps']['Encounter']['Pokedex_Data']['Display_Name']}!
+        <br /><br />
+        +" . number_format($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']) . " Map Exp.
+      ";
+
+      unset($_SESSION['Absolute']['Maps']['Encounter']);
+
+      return [
+        'Release_Text' => $Release_Text,
+        'Steps_Till_Next_Encounter' => $Get_Steps_Till_Encounter,
+      ];
+    }
+
+    /**
      * Run away from the active encounter.
      */
     public static function Run()
