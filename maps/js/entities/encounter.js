@@ -82,5 +82,7 @@ class Encounter extends Phaser.Scene
 
       document.getElementById('map_dialogue').innerHTML = Release_Data.Release_Text;
     });
+
+    MapGame.Player.UpdateMapStats();
   }
 }
