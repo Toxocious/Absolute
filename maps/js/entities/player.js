@@ -163,6 +163,25 @@ class Player_Entity
   }
 
   /**
+   * Refresh the player's map stats.
+   */
+  UpdateMapStats()
+  {
+    MapGame.Network.SendRequest('Stats').then((Stats) =>
+    {
+      Stats = JSON.parse(Stats);
+
+      document.getElementById('map_name').innerText = Stats.Map_Name.replace('_', ' ').toLowerCase().split(' ').map(word => word.charAt(0).toUpperCase() + word.substring(1)).join(' ');
+      document.getElementById('map_level').innerText = Stats.Map_Level.toLocaleString(undefined, {maximumFractionDigits: 0});
+      document.getElementById('map_exp_to_level').innerText = Stats.Map_Experience_To_Level.Exp.toLocaleString(undefined, {maximumFractionDigits: 0});
+      document.getElementById('map_shiny_odds').innerText = `${Stats.Shiny_Odds.Text} (${Stats.Shiny_Odds.Percent.toLocaleString(undefined, {maximumFractionDigits: 4})}%)`;
+      document.getElementById('map_steps_until_encounter').innerText = Stats.Next_Encounter;
+      document.getElementById('map_exp_bar').setAttribute('style', `width: ${Stats.Map_Experience_To_Level.Percent}%`);
+      document.getElementById('map_steps_until_encounter').innerText = `${Stats.Next_Encounter} Steps`;
+    });
+  }
+
+  /**
    * Get the direction the player is facing.
    */
   GetFacingDirection()
