@@ -119,6 +119,21 @@ div
   {
     border-radius: 8px;
   }
+
+  &#map_canvas
+  {
+    height: 300px;
+    padding: 0px;
+    width: 300px;
+
+    & > canvas
+    {
+      border-radius: 6px 0px 0px 6px;
+      margin: 0;
+      max-height:300px;
+      max-width: 300px;
+    }
+  }
 }
 
 /**
@@ -239,21 +254,6 @@ div
     {
       border-radius: var(--border-radius);
       text-align: center;
-    }
-
-    &#map_canvas
-    {
-      height: 300px;
-      padding: 0px;
-      width: 300px;
-
-      & > canvas
-      {
-        border-radius: 6px;
-        margin: 0;
-        max-height:300px;
-        max-width: 300px;
-      }
     }
 
     &:first-child
