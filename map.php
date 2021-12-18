@@ -5,29 +5,34 @@
 <div class='panel content'>
 	<div class='head'>Maps</div>
 	<div class='body' style='align-items: center; display: flex; flex-flow: column; gap: 10px; justify-content: center; padding: 5px;'>
-    <table class='border-gradient' style='flex-basis: 300px; max-width: 485px;'>
-      <thead>
-        <tr>
-          <th colspan='2'>
-            <span id='map_name'>Unknown Map</span>
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style='padding: 0px;'>
-            <div
-              id='map_canvas'
-              style='height: 240px; width: 240px;'
-            >
-            </div>
-          </td>
-          <td id='map_dialogue'>
-            You wander around aimlessly.
-          </td>
-        </tr>
-      </tbody>
+    <div style='display: flex; flex-basis: 280px; flex-wrap: wrap; width: 600px;'>
+      <div class='border-gradient' style='height: 280px; width: 280px;'>
+        <div
+          id='map_canvas'
+          style='height: 280px; width: 280px;'
+        >
+        </div>
+      </div>
 
+      <table class='border-gradient' style='min-height: 240px; width: 300px;'>
+        <thead>
+          <tr>
+            <th id='map_name'>
+              Unknown Map
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td id='map_dialogue'>
+              You wander around aimlessly.
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <table class='border-gradient' style='min-width: 485px; max-width: 485px;'>
       <thead>
         <tr>
           <th colspan='2'>
