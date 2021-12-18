@@ -251,7 +251,10 @@
       )
         return false;
 
+      if ( document.getElementById('user_money') )
         document.getElementById(`user_money`).innerHTML = Money.toLocaleString(undefined, {maximumFractionDigits: 0});
+
+      if ( document.getElementById('user_abso_coins') )
         document.getElementById(`user_abso_coins`).innerHTML = Abso_Coins.toLocaleString(undefined, {maximumFractionDigits: 0});
     },
 
