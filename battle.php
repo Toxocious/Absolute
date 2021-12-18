@@ -20,6 +20,9 @@
     exit;
   }
 
+  if ( isset($_SESSION['Battle']['Battle_Layout']) )
+    $User_Data['Battle_Theme'] = $_SESSION['Battle']['Battle_Layout'];
+
   switch ($User_Data['Battle_Theme'])
   {
     case 'Default':
@@ -30,6 +33,9 @@
       break;
     case 'Simple':
       require_once 'battles/themes/simple.php';
+      break;
+    case 'iFrame':
+      require_once 'battles/themes/iframe.php';
       break;
     default:
       require_once 'battles/themes/default.php';
