@@ -33,6 +33,7 @@
         'Map_Exp_Yield' => mt_rand($Generated_Encounter['Min_Exp_Yield'], $Generated_Encounter['Max_Exp_Yield']),
         'Gender' => $Poke_Class->GenerateGender(null, $Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID']),
         'Type' => $Encounter_Type,
+        'Obtained_Text' => $Generated_Encounter['Obtained_Text'],
       ];
 
       return $_SESSION['Absolute']['Maps']['Encounter'];
@@ -81,6 +82,101 @@
 
       $Selected_Encounter = $Possible_Encounters[$Get_Random_Encounter];
       return $Selected_Encounter;
+    }
+
+    /**
+     * Catch the active encounter.
+     */
+    public static function Catch()
+    {
+      global $Poke_Class, $User_Data;
+
+      if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
+        return false;
+
+      $Encounter_Data = $_SESSION['Absolute']['Maps']['Encounter'];
+
+      $Player_Instance = Player::GetInstance();
+
+      $New_Steps_Till_Encounter = mt_rand(2, 21);
+      $Player_Instance->SetStepsTillEncounter($New_Steps_Till_Encounter);
+      $Get_Steps_Till_Encounter = $Player_Instance->GetStepsTillEncounter();
+
+      $Player_Instance->UpdateMapExperience($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
+      User::UpdateStat($User_Data['ID'], 'Map_Exp_Earned', $_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
+      User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Caught', 1);
+
+      $Generate_Gender = $Poke_Class->GenerateGender($Encounter_Data['Pokedex_Data']['Pokedex_ID'], $Encounter_Data['Pokedex_Data']['Alt_ID']);
+      $Spawn_Pokemon = $Poke_Class->CreatePokemon(
+        $Encounter_Data['Pokedex_Data']['Pokedex_ID'],
+        $Encounter_Data['Pokedex_Data']['Alt_ID'],
+        $Encounter_Data['Level'],
+        $Encounter_Data['Type'],
+        $Generate_Gender,
+        $Encounter_Data['Obtained_Text'],
+        null,
+        null,
+        $User_Data['ID']
+      );
+
+      $Catch_Text = "
+        You caught a wild {$Spawn_Pokemon['Display_Name']} (Level: " . number_format($Encounter_Data['Level']) . ")
+        <br />
+        <img src='{$Spawn_Pokemon['Sprite']}' />
+        <br />
+        +<b>" . number_format($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']) . " Map Exp.</b>
+        <br />
+        <table class='border-gradient' style='width: 210px;'>
+          <tbody>
+            <tr>
+              <td>
+                <b>HP</b>
+              </td>
+              <td>{$Spawn_Pokemon['IVs'][0]}</td>
+              <td>
+                <b>Att</b>
+              </td>
+              <td>{$Spawn_Pokemon['IVs'][1]}</td>
+            </tr>
+            <tr>
+              <td>
+                <b>Def</b>
+              </td>
+              <td>{$Spawn_Pokemon['IVs'][2]}</td>
+              <td>
+                <b>Sp.Att</b>
+              </td>
+              <td>{$Spawn_Pokemon['IVs'][3]}</td>
+            </tr>
+            <tr>
+              <td>
+                <b>Sp.Def</b>
+              </td>
+              <td>{$Spawn_Pokemon['IVs'][4]}</td>
+              <td>
+                <b>Speed</b>
+              </td>
+              <td>{$Spawn_Pokemon['IVs'][5]}</td>
+            </tr>
+            <tr>
+              <td colspan='2'>
+                <b>{$Spawn_Pokemon['Nature']}</b>
+              </td>
+              <td>
+                <b>Total</b>
+              </td>
+              <td>" . array_sum($Spawn_Pokemon['IVs']) . "</td>
+            </tr>
+          </tbody>
+        </table>
+      ";
+
+      unset($_SESSION['Absolute']['Maps']['Encounter']);
+
+      return [
+        'Catch_Text' => $Catch_Text,
+        'Steps_Till_Next_Encounter' => $Get_Steps_Till_Encounter,
+      ];
     }
 
     /**
