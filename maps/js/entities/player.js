@@ -111,10 +111,9 @@ class Player_Entity
       return;
 
     if ( MapGame.Player.In_Dialogue )
-    {
       MapGame.Player.In_Dialogue = false;
-      document.getElementById('map_dialogue').innerHTML = `You wander around aimlessly.`;
-    }
+
+    document.getElementById('map_dialogue').innerHTML = `You wander around aimlessly.`;
 
     const x = Math.round(this.Sprite.body.position.x / 16);
     const y = Math.round(this.Sprite.body.position.y / 16);
