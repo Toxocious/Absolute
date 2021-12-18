@@ -34,11 +34,11 @@ class Encounter extends Phaser.Scene
 
         <br /><br />
 
-        <div class='flex wrap' style='gap: 10px; justify-content: center; max-width: 240px;'>
-          <button style='flex-basis: 100px;' onclick='MapGame.Encounter.FightEncounter();'>Fight</button>
-          <button style='flex-basis: 100px;' onclick='MapGame.Encounter.CatchEncounter();'>Catch</button>
-          <button style='flex-basis: 100px;' onclick='MapGame.Encounter.ReleaseEncounter();'>Release</button>
-          <button style='flex-basis: 100px;' onclick='MapGame.Encounter.RunFromEncounter();'>Run</button>
+        <div class='flex wrap' style='gap: 10px; justify-content: center; max-width: 290px; padding-bottom: 0px;'>
+          <button style='flex-basis: 120px;' onclick='MapGame.Encounter.FightEncounter();'>Fight</button>
+          <button style='flex-basis: 120px;' onclick='MapGame.Encounter.CatchEncounter();'>Catch</button>
+          <button style='flex-basis: 120px;' onclick='MapGame.Encounter.ReleaseEncounter();'>Release</button>
+          <button style='flex-basis: 120px;' onclick='MapGame.Encounter.RunFromEncounter();'>Run</button>
         </div>
       `;
     });
