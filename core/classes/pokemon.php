@@ -599,8 +599,8 @@
 
 			if ( $Nature == null )
 			{
-				$Nature_List = $this->Natures();
-	    	$Nature = $Nature_List[mt_rand(0, count($Nature_List) - 1)];
+        $Nature_Keys = array_keys($this->Natures());
+	    	$Nature = $Nature_Keys[mt_rand(0, count($Nature_Keys) - 1)];
 			}
 
 			$Pokemon_Create = $PDO->prepare("
