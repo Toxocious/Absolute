@@ -85,4 +85,26 @@ class Encounter extends Phaser.Scene
 
     MapGame.Player.UpdateMapStats();
   }
+
+  /**
+   * Catch the active encounter.
+   */
+  CatchEncounter()
+  {
+    if ( !MapGame.Player.In_Encounter )
+      return;
+
+    MapGame.Network.SendRequest({
+      Action: 'Catch',
+    }, 'POST').then((Catch_Data) => {
+      Catch_Data = JSON.parse(Catch_Data);
+
+      MapGame.Player.In_Encounter = false;
+      MapGame.Player.Steps_Till_Encounter = Catch_Data.Steps_Till_Next_Encounter;
+
+      document.getElementById('map_dialogue').innerHTML = Catch_Data.Catch_Text;
+    });
+
+    MapGame.Player.UpdateMapStats();
+  }
 }

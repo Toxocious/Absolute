@@ -99,6 +99,15 @@
         break;
 
       /**
+       * Catch the active encounter.
+       */
+      case 'Catch':
+        $Catch_Encounter = Encounter::Catch();
+        header('Content-Type: application/json');
+        echo json_encode($Catch_Encounter);
+        break;
+
+      /**
        * Release the active encounter.
        */
       case 'Release':
