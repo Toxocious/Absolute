@@ -305,7 +305,7 @@
 
   <!-- dialogue -->
   <div class='border-gradient' style='display: block; font-size: 12px; width: 100%;'>
-    <div id='BattleDialogue'>
+    <div id='BattleDialogue' style='display: block;'>
       Loading Battle State
     </div>
   </div>
