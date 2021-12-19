@@ -1519,6 +1519,11 @@
                          "name":"hidden",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zone",
+                         "type":"int",
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"encounter",
@@ -1556,6 +1561,11 @@
                          "name":"hidden",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zone",
+                         "type":"int",
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"encounter",
@@ -1593,6 +1603,11 @@
                          "name":"hidden",
                          "type":"bool",
                          "value":true
+                        }, 
+                        {
+                         "name":"zone",
+                         "type":"int",
+                         "value":1
                         }],
                  "rotation":0,
                  "type":"encounter",
