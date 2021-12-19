@@ -15,11 +15,14 @@
     {
       global $Poke_Class;
 
+      $Player_Instance = Player::GetInstance();
+      $Encounter_Zone = $Player_Instance->GetEncounterZone();
+
       $Shiny_Chance = 4192 - $Player_Map_Level;
       if ( $Shiny_Chance < 2096 )
         $Shiny_Chance = 2096;
 
-      $Generated_Encounter = self::GetRandomEncounter($Player_Map_Name);
+      $Generated_Encounter = self::GetRandomEncounter($Player_Map_Name, $Encounter_Zone);
       if ( !$Generated_Encounter )
         return false;
 
@@ -46,7 +49,8 @@
      */
     public static function GetRandomEncounter
     (
-      string $Player_Map_Name
+      string $Player_Map_Name,
+      int $Encounter_Zone
     )
     {
       global $PDO;
@@ -56,9 +60,9 @@
         $Fetch_Encounters = $PDO->prepare("
           SELECT *
           FROM `map_encounters`
-          WHERE `Map_Name` = ? AND `Active` = 1
+          WHERE `Map_Name` = ? AND `Active` = 1 AND (`Zone` = ? OR `Zone` IS NULL)
         ");
-        $Fetch_Encounters->execute([ $Player_Map_Name ]);
+        $Fetch_Encounters->execute([ $Player_Map_Name, $Encounter_Zone ]);
         $Fetch_Encounters->setFetchMode(PDO::FETCH_ASSOC);
         $Possible_Encounters = $Fetch_Encounters->fetchAll();
       }
