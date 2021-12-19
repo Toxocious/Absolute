@@ -32,7 +32,7 @@
           $Map_Object->y / 16 == $y &&
           $Get_Layer_Property->value == "Layer_{$z}"
         )
-          return true;
+          return $Map_Object;
       }
 
       return false;
