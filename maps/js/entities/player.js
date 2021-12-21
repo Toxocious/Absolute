@@ -134,7 +134,6 @@ class Player_Entity
       z: z,
     }, 'POST').then((data) => {
       data = JSON.parse(data);
-      document.getElementById('map_steps_until_encounter').innerText = `${data.Next_Encounter} Steps`;
 
       if ( data.Next_Encounter < 0 )
         data.Next_Encounter = 0;
@@ -173,9 +172,7 @@ class Player_Entity
       document.getElementById('map_level').innerText = Stats.Map_Level.toLocaleString(undefined, {maximumFractionDigits: 0});
       document.getElementById('map_exp_to_level').innerText = Stats.Map_Experience_To_Level.Exp.toLocaleString(undefined, {maximumFractionDigits: 0});
       document.getElementById('map_shiny_odds').innerText = `${Stats.Shiny_Odds.Text} (${Stats.Shiny_Odds.Percent.toLocaleString(undefined, {maximumFractionDigits: 4})}%)`;
-      document.getElementById('map_steps_until_encounter').innerText = Stats.Next_Encounter;
       document.getElementById('map_exp_bar').setAttribute('style', `width: ${Stats.Map_Experience_To_Level.Percent}%`);
-      document.getElementById('map_steps_until_encounter').innerText = `${Stats.Next_Encounter} Steps`;
     });
   }
 

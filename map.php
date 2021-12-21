@@ -66,15 +66,6 @@
             <span id='map_shiny_odds'>1 / 8192 (0.0122%)</span>
           </td>
         </tr>
-
-        <tr>
-          <td style='width: 50%;'>
-            <b>Next Encounter In</b>
-          </td>
-          <td style='width: 50%;'>
-            <span id='map_steps_until_encounter'>-1 Steps</span>
-          </td>
-        </tr>
       </tbody>
     </table>
 
