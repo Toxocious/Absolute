@@ -1814,4 +1814,27 @@
         mt_rand(0, 31)
       ];
     }
+
+    /**
+     * Generate a random set of EVs.
+     */
+    public function GenerateEVs()
+    {
+      $Total_EVs = 0;
+      $EVs = [0, 0, 0, 0, 0, 0];
+      $EV_Cap = mt_rand(255, 510);
+
+      while ($Total_EVs < $EV_Cap)
+      {
+        $Stat_Index = mt_rand(0, 5);
+        if ( $EVs[$Stat_Index] > 252 )
+          continue;
+
+        $EV_Amount = mt_rand(1, 3);
+        $EVs[$Stat_Index] += $EV_Amount;
+        $Total_EVs += $EV_Amount;
+      }
+
+      return $EVs;
+    }
   }
