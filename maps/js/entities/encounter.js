@@ -35,7 +35,7 @@ class Encounter extends Phaser.Scene
         <br /><br />
 
         <div class='flex wrap' style='gap: 10px; justify-content: center; max-width: 290px; padding-bottom: 0px;'>
-          <button style='flex-basis: 120px;' class='popup' data-src='${window.location.origin}/battle_create.php?Battle_Type=Wild&iFrame'>Fight</button>
+          <button style='flex-basis: 120px;' id='Battle_iFrame' data-src='${window.location.origin}/battle_create.php?Battle_Type=Wild&iFrame'>Fight</button>
           <button style='flex-basis: 120px;' onclick='MapGame.Encounter.CatchEncounter();'>Catch</button>
           <button style='flex-basis: 120px;' onclick='MapGame.Encounter.ReleaseEncounter();'>Release</button>
           <button style='flex-basis: 120px;' onclick='MapGame.Encounter.RunFromEncounter();'>Run</button>
@@ -45,7 +45,7 @@ class Encounter extends Phaser.Scene
       (function(root, document) {
         "use strict";
 
-        [].forEach.call(document.getElementsByClassName("popup"), function(el) {
+        [].forEach.call(document.getElementsById("Battle_iFrame"), function(el) {
           el.lightbox = new IframeLightbox(el, {
             scrolling: true,
             rate: 500,
