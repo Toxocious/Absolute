@@ -1560,7 +1560,7 @@
 
     /**
      * Handle move applied stat changes.
-     * @param {UserHandler} $Target
+     * @param $Target
      * @param {PokemonHandler} $Attacker
      * @param {PokemonHandler} $Defender
      * @param {boolean} $Does_Move_Crit
@@ -1568,7 +1568,7 @@
      */
     public function ProcessStatChanges
     (
-      UserHandler $Target,
+      $Target,
       PokemonHandler $Attacker,
       PokemonHandler $Defender,
       bool $Does_Move_Crit
@@ -1719,7 +1719,7 @@
 
     /**
      * Handle move applied status ailments.
-     * @param {UserHandler} $Target
+     * @param $Target
      * @param {PokemonHandler} $Attacker
      * @param {PokemonHandler} $Defender
      * @param {string} $Turn_First_Attacker
@@ -1727,7 +1727,7 @@
      */
     public function ProcessAilments
     (
-      UserHandler $Target,
+      $Target,
       PokemonHandler $Attacker,
       PokemonHandler $Defender,
       string $Turn_First_Attacker
