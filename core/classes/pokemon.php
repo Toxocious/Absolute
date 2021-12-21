@@ -602,8 +602,7 @@
 
 			if ( $Nature == null )
 			{
-        $Nature_Keys = array_keys($this->Natures());
-	    	$Nature = $Nature_Keys[mt_rand(0, count($Nature_Keys) - 1)];
+        $Nature = $this->GenerateNature();
 			}
 
 			$Pokemon_Create = $PDO->prepare("
@@ -657,6 +656,17 @@
 				'Icon' => $Poke_Images['Icon'],
 			];
 		}
+
+    /**
+     * Generate a random nature.
+     */
+    public function GenerateNature()
+    {
+      $Nature_Keys = array_keys($this->Natures());
+      $Nature = $Nature_Keys[mt_rand(0, count($Nature_Keys) - 1)];
+
+      return $Nature;
+    }
 
 		/**
 		 * Fetch a random gender given a Pokemon's gender ratio.
