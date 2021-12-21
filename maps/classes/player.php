@@ -69,6 +69,9 @@
 
       $Encounter_Zone = MapObject::CheckPropertyByName($Check_Tile_Object->properties, 'zone');
 
+      if ( !$Encounter_Zone )
+        return false;
+
       return $Encounter_Zone->value;
     }
 

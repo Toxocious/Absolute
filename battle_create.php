@@ -46,7 +46,9 @@
   unset($_SESSION['Battle']);
 
 	$Battle_Type = strtolower(Purify($_GET['Battle_Type']));
-	$Foe = Purify($_GET['Foe']);
+
+  if ( isset($_GET['Foe']) )
+	  $Foe = Purify($_GET['Foe']);
 
   if ( isset($_GET['iFrame']) )
 	  $_SESSION['Battle']['Battle_Layout'] = 'iFrame';

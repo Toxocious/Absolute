@@ -17,6 +17,8 @@
 
       $Player_Instance = Player::GetInstance();
       $Encounter_Zone = $Player_Instance->GetEncounterZone();
+      if ( !$Encounter_Zone )
+        $Encounter_Zone = null;
 
       $Shiny_Chance = 4192 - $Player_Map_Level;
       if ( $Shiny_Chance < 2096 )
@@ -50,7 +52,7 @@
     public static function GetRandomEncounter
     (
       string $Player_Map_Name,
-      int $Encounter_Zone
+      int $Encounter_Zone = null
     )
     {
       global $PDO;
