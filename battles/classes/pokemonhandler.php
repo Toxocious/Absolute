@@ -1799,4 +1799,19 @@
 
       return $Random_Move['ID'];
     }
+
+    /**
+     * Generate a random set of IVs.
+     */
+    public function GenerateIVs()
+    {
+      return [
+        mt_rand(0, 31),
+        mt_rand(0, 31),
+        mt_rand(0, 31),
+        mt_rand(0, 31),
+        mt_rand(0, 31),
+        mt_rand(0, 31)
+      ];
+    }
   }
