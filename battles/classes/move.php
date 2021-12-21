@@ -3738,6 +3738,9 @@
       string $Flag_Name
     )
     {
+      if ( empty($this->Flags) )
+        return false;
+
       foreach ( $this->Flags as $Flag => $Value )
         if ( $Flag == $Flag_Name )
           return true;
