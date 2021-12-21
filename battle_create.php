@@ -2,6 +2,7 @@
   require_once 'battles/classes/battle.php';
 
   require_once 'battles/fights/trainer.php';
+  require_once 'battles/fights/wild.php';
 
   require_once 'battles/classes/ability.php';
   require_once 'battles/classes/clanhandler.php';
@@ -33,11 +34,7 @@
 		exit;
 	}
 
-	if
-	(
-		empty($_GET['Battle_Type']) ||
-		empty($_GET['Foe'])
-	)
+	if ( empty($_GET['Battle_Type']) )
 	{
 		header('Location: /battle_search.php');
 		exit;
@@ -63,6 +60,10 @@
       $Foe = (int) $Foe;
 			$Battle = new Trainer($User_Data['ID'], $Foe);
 			break;
+
+    case 'wild':
+      $Battle = new Wild($User_Data['ID']);
+      break;
 
 		default:
       $Foe = (int) $Foe;
