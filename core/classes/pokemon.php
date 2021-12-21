@@ -237,6 +237,9 @@
 				"Type_Primary" => $Pokedex['Type_Primary'],
 				"Type_Secondary" => $Pokedex['Type_Secondary'],
 				"Base_Stats" => $BaseStats,
+        'Exp_Yield' => $Pokedex['Exp_Yield'],
+        'Height' => $Pokedex['Height'],
+        'Weight' => $Pokedex['Weight'],
 				"Sprite" => $Poke_Images['Sprite'],
 				"Icon" => $Poke_Images['Icon'],
 			];
