@@ -1746,6 +1746,9 @@
       if ( !empty($_SESSION['Battle']['Postcodes']['Restart']) )
         return;
 
+      if ( $_SESSION['Battle']['Battle_Type'] == 'Wild' )
+        return $Dialogue;
+
       $this->GeneratePostcode('Restart');
 
       return "
