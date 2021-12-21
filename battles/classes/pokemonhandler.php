@@ -56,7 +56,12 @@
     (
       $Pokemon_ID,
       $Side,
-      $Slot
+      $Slot,
+      $Pokedex_ID = null,
+      $Alt_ID = null,
+      $Level = null,
+      $Type = null,
+      $Gender = null
     )
     {
       $this->Pokemon_ID = $Pokemon_ID;
@@ -65,7 +70,10 @@
       $this->Active = ($Slot == 1 ? true : false);
       $this->Participated = ($Slot == 1 ? true : false);
 
-      $this->SetupPokemon();
+      if ( empty($Pokemon_ID) )
+        $this->SetupFakePokemon($Pokedex_ID, $Alt_ID, $Level, $Type, $Gender);
+      else
+        $this->SetupPokemon();
     }
 
     /**
@@ -146,6 +154,105 @@
         new Move($Pokemon['Move_4'], 3),
       ];
       $this->Item = new HeldItem($Pokemon['Item_ID']);
+
+      return $this;
+    }
+
+    /**
+     * Setup the specified fake Pokemon for the battle.
+     *
+     * @param {int} $Pokedex_ID
+     * @param {int} $Alt_ID
+     * @param {int} $Level
+     * @param {string} $Type
+     * @param {string} $Gender
+     */
+    public function SetupFakePokemon
+    (
+      $Pokedex_ID,
+      $Alt_ID,
+      $Level,
+      $Type,
+      $Gender
+    )
+    {
+      global $PDO, $Poke_Class;
+
+      $Pokedex_Data = $Poke_Class->FetchPokedexData($Pokedex_ID, $Alt_ID, $Type);
+      if ( empty($Pokedex_Data) )
+        return false;
+
+      $Pokemon_Ability = $Poke_Class->GenerateAbility($Pokedex_ID, $Alt_ID);
+      $Pokemon_Exp = FetchExperience($Level, 'Pokemon');
+      $Nature = $Poke_Class->GenerateNature();
+      $IVs = $this->GenerateIVs();
+      $EVs = $this->GenerateEVs();
+
+      $this->Pokedex_ID = $Pokedex_Data['Pokedex_ID'];
+      $this->Pokedex_ID_Original = $Pokedex_Data['Pokedex_ID'];
+      $this->Alt_ID = $Pokedex_Data['Alt_ID'];
+      $this->Alt_ID_Original = $Pokedex_Data['Alt_ID'];
+      $this->Sprite = $Pokedex_Data['Sprite'];
+      $this->Sprite_Original = $Pokedex_Data['Sprite'];
+      $this->Icon = $Pokedex_Data['Icon'];
+      $this->Icon_Original = $Pokedex_Data['Icon'];
+      $this->Display_Name = $Pokedex_Data['Display_Name'];
+      $this->Display_Name_Original = $Pokedex_Data['Display_Name'];
+      $this->Shiny = ($Type == 'Shiny' ? true : false);
+      $this->Ability = new Ability($Pokemon_Ability);
+      $this->Ability_Original = new Ability($Pokemon_Ability);
+      $this->Gender = $Gender;
+      $this->Gender_Original = $Gender;
+      $this->Level = $Level;
+      $this->Primary_Type = $Pokedex_Data['Type_Primary'];
+      $this->Primary_Type_Original = $Pokedex_Data['Type_Primary'];
+      $this->Secondary_Type = $Pokedex_Data['Type_Secondary'];
+      $this->Secondary_Type_Original = $Pokedex_Data['Type_Secondary'];
+      $this->Exp = $Pokemon_Exp;
+      $this->Exp_Needed = FetchExpToNextLevel($Pokemon_Exp, 'Pokemon', true);
+      $this->Exp_Yield = $Pokedex_Data['Exp_Yield'];
+      $this->Critical_Hit_Boost = 0;
+      $this->Happiness = mt_rand(70, 150);
+      $this->Owner_Original = -1;
+      $this->Owner_Current = -1;
+      $this->Height = $Pokedex_Data['Height'];
+      $this->Weight = $Pokedex_Data['Weight'];
+      $this->Weight_Original = $Pokedex_Data['Weight'];
+      $this->HP = $Poke_Class->CalcStat('HP', $Pokedex_Data['Base_Stats'][0], $Level, $IVs[0], $EVs[0], $Nature);
+      $this->Max_HP = $Poke_Class->CalcStat('HP', $Pokedex_Data['Base_Stats'][0], $Level, $IVs[0], $EVs[0], $Nature);
+      $this->Stats = [
+        'Attack' => new Stat('Attack', $Poke_Class->CalcStat('Attack', $Pokedex_Data['Base_Stats'][1], $Level, $IVs[1], $EVs[1], $Nature)),
+        'Defense' => new Stat('Defense', $Poke_Class->CalcStat('Defense', $Pokedex_Data['Base_Stats'][2], $Level, $IVs[2], $EVs[2], $Nature)),
+        'Sp_Attack' => new Stat('Sp_Attack', $Poke_Class->CalcStat('Sp_Attack', $Pokedex_Data['Base_Stats'][3], $Level, $IVs[3], $EVs[3], $Nature)),
+        'Sp_Defense' => new Stat('Sp_Defense', $Poke_Class->CalcStat('Sp_Defense', $Pokedex_Data['Base_Stats'][4], $Level, $IVs[4], $EVs[4], $Nature)),
+        'Speed' => new Stat('Speed', $Poke_Class->CalcStat('Speed', $Pokedex_Data['Base_Stats'][5], $Level, $IVs[5], $EVs[5], $Nature)),
+        'Accuracy' => new Stat('Accuracy', 100),
+        'Evasion' => new Stat('Evasion', 100),
+      ];
+      $this->Stats_Original = [
+        'Attack' => new Stat('Attack', $Poke_Class->CalcStat('Attack', $Pokedex_Data['Base_Stats'][1], $Level, $IVs[1], $EVs[1], $Nature)),
+        'Defense' => new Stat('Defense', $Poke_Class->CalcStat('Defense', $Pokedex_Data['Base_Stats'][2], $Level, $IVs[2], $EVs[2], $Nature)),
+        'Sp_Attack' => new Stat('Sp_Attack', $Poke_Class->CalcStat('Sp_Attack', $Pokedex_Data['Base_Stats'][3], $Level, $IVs[3], $EVs[3], $Nature)),
+        'Sp_Defense' => new Stat('Sp_Defense', $Poke_Class->CalcStat('Sp_Defense', $Pokedex_Data['Base_Stats'][4], $Level, $IVs[4], $EVs[4], $Nature)),
+        'Speed' => new Stat('Speed', $Poke_Class->CalcStat('Speed', $Pokedex_Data['Base_Stats'][5], $Level, $IVs[5], $EVs[5], $Nature)),
+        'Accuracy' => new Stat('Accuracy', 100),
+        'Evasion' => new Stat('Evasion', 100),
+      ];
+      $this->IVs = $IVs;
+      $this->EVs = $EVs;
+      $this->Moves = [
+        new Move($this->GetRandomMoveFromDatabase($Pokedex_Data['Type_Primary'], $Pokedex_Data['Type_Secondary']), 0),
+        new Move($this->GetRandomMoveFromDatabase($Pokedex_Data['Type_Primary'], $Pokedex_Data['Type_Secondary']), 1),
+        new Move($this->GetRandomMoveFromDatabase($Pokedex_Data['Type_Primary'], $Pokedex_Data['Type_Secondary']), 2),
+        new Move($this->GetRandomMoveFromDatabase($Pokedex_Data['Type_Primary'], $Pokedex_Data['Type_Secondary']), 3),
+      ];
+      $this->Moves_Original = [
+        new Move($this->GetRandomMoveFromDatabase($Pokedex_Data['Type_Primary'], $Pokedex_Data['Type_Secondary']), 0),
+        new Move($this->GetRandomMoveFromDatabase($Pokedex_Data['Type_Primary'], $Pokedex_Data['Type_Secondary']), 1),
+        new Move($this->GetRandomMoveFromDatabase($Pokedex_Data['Type_Primary'], $Pokedex_Data['Type_Secondary']), 2),
+        new Move($this->GetRandomMoveFromDatabase($Pokedex_Data['Type_Primary'], $Pokedex_Data['Type_Secondary']), 3),
+      ];
+      $this->Item = new HeldItem(null);
 
       return $this;
     }
