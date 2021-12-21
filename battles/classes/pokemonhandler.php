@@ -1761,4 +1761,42 @@
 
       return $Effective_Mult;
     }
+
+    /**
+     * Get a random move given a Pokemon's typing.
+     *
+     * @param {string} $Primary_Type
+     * @param {string} $Secondary_Type
+     */
+    public function GetRandomMoveFromDatabase
+    (
+      string $Primary_Type,
+      string $Secondary_Type
+    )
+    {
+      global $PDO;
+
+      try
+      {
+        $Fetch_Random_Move = $PDO->prepare("
+          SELECT `ID`
+          FROM `moves`
+          WHERE `Move_Type` = ? OR `Move_Type` = ?
+          ORDER BY RAND()
+          LIMIT 1
+        ");
+        $Fetch_Random_Move->execute([ $Primary_Type, $Secondary_Type ]);
+        $Fetch_Random_Move->setFetchMode(PDO::FETCH_ASSOC);
+        $Random_Move = $Fetch_Random_Move->fetch();
+      }
+      catch ( \PDOException $e )
+      {
+        HandleError($e);
+      }
+
+      if ( empty($Random_Move) )
+        return false;
+
+      return $Random_Move['ID'];
+    }
   }
