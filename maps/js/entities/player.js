@@ -11,7 +11,6 @@ class Player_Entity
   {
     this.Facing_Direction = this.GetFacingDirection();
 
-    console.log('Is the player in an encounter?:', MapGame.Player.In_Encounter, '|| Steps till next encounter?:', MapGame.Player.Steps_Till_Encounter);
     if (MapGame.Keys.left.isDown)
     {
       if ( !MapGame.Player.In_Encounter && MapGame.Player.Steps_Till_Encounter !== 0 )
