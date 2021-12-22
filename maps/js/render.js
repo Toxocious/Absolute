@@ -236,7 +236,7 @@ const Render = new Phaser.Class({
     this.ProcessLayerTransitions();
 
     // Subscribe to player movement.
-    this.gridEngine.positionChangeStarted().subscribe(( Character ) => {
+    this.gridEngine.positionChangeFinished().subscribe(( Character ) => {
       if ( Character.charId === 'character' )
         MapGame.Player.ProcessMovement();
     });
