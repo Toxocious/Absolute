@@ -329,6 +329,10 @@ const Render = new Phaser.Class({
           case 'transition':
             New_Object = new Transition(Obj.name, `${Obj.type}_${Obj.id}`, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
             break;
+
+          case 'warp':
+            New_Object = new Warp(Obj.name, `${Obj.type}_${Obj.id}`, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
+            break;
         }
 
         Map_Objects.push(New_Object);
