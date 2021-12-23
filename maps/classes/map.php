@@ -72,6 +72,9 @@
      */
     public function GetMapObjects()
     {
+      if ( !empty($_SESSION['Absolute']['Maps']['Objects']) )
+        unset($_SESSION['Absolute']['Maps']['Objects']);
+
       foreach ( $this->Map_Data->layers as $Layer )
       {
         if ( in_array($Layer->name, ['Objects', 'Encounters']) )
