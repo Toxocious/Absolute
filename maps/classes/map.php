@@ -91,16 +91,50 @@
      */
     public function GetSpawnCoords()
     {
-      // Loop through tilesets
-      // If tileset is the 'objects' tileset
-      // Look for 'Player_Entity' object
-      // If 'Player_Entity' object is found
-      // Return the coordinates of the object
+      return $this->GetSpawnCoordinates();
+    }
+
+    /**
+     * Get the spawn coordinates of the map.
+     */
+    public function GetSpawnCoordinates()
+    {
+      if ( empty($_SESSION['Absolute']['Maps']['Objects']) )
+      {
+        return [
+          'x' => -1,
+          'y' => -1,
+          'z' => -1
+        ];
+      }
+
+      $Map_Objects = $_SESSION['Absolute']['Maps']['Objects'];
+      foreach ( $Map_Objects as $Objects )
+      {
+        foreach ( $Objects as $Object )
+        {
+          if ( $Object->type != 'Player_Entity' )
+            continue;
+
+          $Get_Spawn_Layer = MapObject::CheckPropertyByName($Object->properties, 'charLayer');
+
+          $Spawn_Layer = 1;
+          if ( $Get_Spawn_Layer )
+            $Spawn_Layer = str_replace('Layer_', '', $Get_Spawn_Layer->value);
+
+          return [
+            'x' => floor($Object->x / 16),
+            'y' => floor($Object->y / 16),
+            'z' => $Spawn_Layer,
+          ];
+        }
+      }
 
       return [
-        'x' => 12 * 16,
-        'y' => 9 * 16,
-        'z' => 1 ];
+        'x' => -1,
+        'y' => -1,
+        'z' => -1
+      ];
     }
 
     /**
