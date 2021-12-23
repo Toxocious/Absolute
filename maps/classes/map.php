@@ -91,14 +91,6 @@
      */
     public function GetSpawnCoords()
     {
-      return $this->GetSpawnCoordinates();
-    }
-
-    /**
-     * Get the spawn coordinates of the map.
-     */
-    public function GetSpawnCoordinates()
-    {
       if ( empty($_SESSION['Absolute']['Maps']['Objects']) )
       {
         return [
