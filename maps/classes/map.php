@@ -77,7 +77,7 @@
 
       foreach ( $this->Map_Data->layers as $Layer )
       {
-        if ( in_array($Layer->name, ['Objects', 'Encounters']) )
+        if ( in_array($Layer->name, ['Objects', 'Warps', 'Encounters']) )
         {
           $_SESSION['Absolute']['Maps']['Objects'] = $Layer->objects;
         }
