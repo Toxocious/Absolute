@@ -20,19 +20,27 @@
       if ( empty($Map_Objects) )
         return false;
 
-      foreach ( $Map_Objects as $Map_Object )
+      foreach ( $Map_Objects as $Map_Object_Array )
       {
-        $Get_Layer_Property = self::CheckPropertyByName($Map_Object->properties, 'charLayer');
-        if ( empty($Get_Layer_Property) )
-          return false;
+        foreach ( $Map_Object_Array as $Map_Object )
+        {
+          if ( !isset($Type) || $Map_Object->type != $Type )
+            continue;
 
-        if
-        (
-          $Map_Object->x / 16 == $x &&
-          $Map_Object->y / 16 == $y &&
-          $Get_Layer_Property->value == "Layer_{$z}"
-        )
-          return $Map_Object;
+          $Get_Layer_Property = self::CheckPropertyByName($Map_Object->properties, 'charLayer');
+          if ( empty($Get_Layer_Property) )
+            return false;
+
+          if
+          (
+            $Map_Object->x / 16 == $x &&
+            $Map_Object->y / 16 == $y &&
+            $Get_Layer_Property->value == "Layer_{$z}"
+          )
+          {
+              return $Map_Object;
+          }
+        }
       }
 
       return false;
