@@ -99,6 +99,23 @@
         break;
 
       /**
+       * Handle map warping.
+       */
+      case 'Warp':
+        $x = Purify(floor($_POST['x']));
+        $y = Purify(floor($_POST['y']));
+        $z = Purify($_POST['z']);
+
+        $Warp_Data = false;
+        $Warp_Tile = Purify($_POST['Warp_Tile']);
+        if ( isset($Warp_Tile) && $Warp_Tile === 'true' )
+          $Warp_Data = $Map->Player->ProcessWarp($x, $y, $z, $Warp_Tile);
+
+        header('Content-Type: application/json');
+        echo json_encode($Warp_Data);
+        break;
+
+      /**
        * Catch the active encounter.
        */
       case 'Catch':
