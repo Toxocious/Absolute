@@ -54,6 +54,38 @@
     }
 
     /**
+     * Process warping the user.
+     */
+    public function ProcessWarp
+    (
+      int $Tile_X,
+      int $Tile_Y,
+      int $Tile_Z,
+      bool $Is_Warp_Tile = false
+    )
+    {
+      if ( empty($Tile_X) || empty($Tile_Y) || empty($Tile_Z) || !$Is_Warp_Tile )
+        return false;
+
+      if ( !$this->IsNextToTile($Tile_X, $Tile_Y + 1, $Tile_Z) )
+        return false;
+
+      $Map_Objects = $_SESSION['Absolute']['Maps']['Objects'];
+      $Get_Warp_Object = MapObject::GetObjectAtTile($Map_Objects, $Tile_X, $Tile_Y, $Tile_Z, 'warp');
+      if ( !$Get_Warp_Object )
+        return false;
+
+      $Get_Designated_Warp_Map = MapObject::CheckPropertyByName($Get_Warp_Object->properties, 'warpTo');
+      if ( !$Get_Designated_Warp_Map )
+        return false;
+
+      $this->SetMap($Get_Designated_Warp_Map->value);
+      $this->SetPosition();
+
+      return $this->GetMap();
+    }
+
+    /**
      * Get the encounter zone the player is in.
      */
     public function GetEncounterZone()
