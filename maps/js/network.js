@@ -35,6 +35,8 @@ class Network
             Data_Val.append('z', Data.z);
           if ( typeof Data.Encounter_Tile !== 'undefined' )
             Data_Val.append('Encounter_Tile', Data.Encounter_Tile);
+          if ( typeof Data.Warp_Tile !== 'undefined' )
+            Data_Val.append('Warp_Tile', Data.Warp_Tile);
 
           req.open('POST', this.AJAX_URL);
           req.send(Data_Val);
