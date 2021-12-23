@@ -45,7 +45,7 @@ class Encounter extends Phaser.Scene
       (function(root, document) {
         "use strict";
 
-        [].forEach.call(document.getElementsById("Battle_iFrame"), function(el) {
+        [].forEach.call(document.getElementById("Battle_iFrame"), function(el) {
           el.lightbox = new IframeLightbox(el, {
             scrolling: true,
             rate: 500,
