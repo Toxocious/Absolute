@@ -14,7 +14,8 @@
       array $Map_Objects = null,
       int $x = null,
       int $y = null,
-      int $z = null
+      int $z = null,
+      string $Type = null
     )
     {
       if ( empty($Map_Objects) )
