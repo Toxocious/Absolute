@@ -122,9 +122,27 @@ class Player_Entity
     const Tile_Info = Get_Tile.GetTileInfo();
 
     let Encounter_Tile = false;
+    let Warp_Tile = false;
+
     if ( typeof Tile_Info.Objects !== 'undefined' )
-      if ( Tile_Info.Objects.type === 'encounter' )
-        Encounter_Tile = true;
+    {
+      switch ( Tile_Info.Objects.type )
+      {
+        case 'encounter':
+          Encounter_Tile = true;
+          break;
+
+        case 'warp':
+          Warp_Tile = true;
+          break;
+
+        default:
+          break;
+      }
+    }
+
+    if ( Warp_Tile )
+      return this.ProcessWarp(x, y, z, Warp_Tile);
 
     MapGame.Network.SendRequest({
       Action: 'Movement',
@@ -142,6 +160,28 @@ class Player_Entity
 
       if ( MapGame.Player.Steps_Till_Encounter === 0 )
         this.CheckForEncounter(Tile_Info);
+    });
+  }
+
+  /**
+   * Process warp tiles.
+   */
+  ProcessWarp(x, y, z, Warp_Tile)
+  {
+    console.log('Processing Warp');
+    console.log('x:', x, '|| y:', y, '|| z:', z, '|| TileInfo:', Warp_Tile);
+
+    MapGame.Network.SendRequest({
+      Action: 'Warp',
+      Warp_Tile: Warp_Tile,
+      x: x,
+      y: y,
+      z: z,
+    }, 'POST').then((Warp_Data) => {
+      Warp_Data = JSON.parse(Warp_Data);
+
+      if ( Warp_Data )
+        this.Render_Instance.scene.restart({ level: Warp_Data });
     });
   }
 
