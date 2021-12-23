@@ -296,7 +296,7 @@
           WHERE `ID` = ?
           LIMIT 1
         ");
-        $Set_Position->execute([ $Map_ID ]);
+        $Set_Position->execute([ $Map_ID, $User_Data['ID'] ]);
 
         $PDO->commit();
       }
