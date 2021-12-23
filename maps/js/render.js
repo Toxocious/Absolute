@@ -9,6 +9,8 @@ const Render = new Phaser.Class({
 
   init: function()
   {
+    this.Map_Name = null;
+
     MapGame.Keys = this.input.keyboard.addKeys({
       up: 'W',
       left: 'A',
@@ -283,6 +285,9 @@ const Render = new Phaser.Class({
   RenderObjects: function(Map)
   {
     let Map_Objects = [];
+
+    if ( Object.keys(Map.objects).length === 0 )
+      return Map_Objects;
 
     for ( const Obj_Layer of Map.objects )
     {
