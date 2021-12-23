@@ -79,7 +79,7 @@
       {
         if ( in_array($Layer->name, ['Objects', 'Warps', 'Encounters']) )
         {
-          $_SESSION['Absolute']['Maps']['Objects'] = $Layer->objects;
+          $_SESSION['Absolute']['Maps']['Objects'][] = $Layer->objects;
         }
       }
 
