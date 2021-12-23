@@ -150,7 +150,7 @@ class Player_Entity
    */
   CheckForEncounter(Tile_Info)
   {
-    if ( MapGame.Player.Steps_Till_Encounter !== 0 || MapGame.Player.In_Encounter )
+    if ( typeof Tile_Info.Objects === 'undefined' || MapGame.Player.Steps_Till_Encounter !== 0 || MapGame.Player.In_Encounter )
       return;
 
     MapGame.Player.In_Encounter = true;
