@@ -81,6 +81,7 @@
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/tileinfo.js'></script>
 
 <!-- Entities -->
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/entities/warp.js'></script>
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/entities/player.js'></script>
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/entities/transition.js'></script>
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/entities/npc.js'></script>
