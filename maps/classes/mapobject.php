@@ -43,6 +43,9 @@
         }
       }
 
+      unset($Map_Objects);
+      unset($Map_Object);
+
       return false;
     }
 
