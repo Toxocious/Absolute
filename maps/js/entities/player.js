@@ -106,7 +106,11 @@ class Player_Entity
    */
   ProcessMovement()
   {
-    if ( MapGame.Player.In_Encounter || MapGame.Player.Steps_Till_Encounter === 0 )
+    if
+    (
+      MapGame.Player.In_Encounter ||
+      MapGame.Player.Steps_Till_Encounter === 0
+    )
       return;
 
     if ( MapGame.Player.In_Dialogue )
@@ -168,9 +172,6 @@ class Player_Entity
    */
   ProcessWarp(x, y, z, Warp_Tile)
   {
-    console.log('Processing Warp');
-    console.log('x:', x, '|| y:', y, '|| z:', z, '|| TileInfo:', Warp_Tile);
-
     MapGame.Network.SendRequest({
       Action: 'Warp',
       Warp_Tile: Warp_Tile,
@@ -190,12 +191,25 @@ class Player_Entity
    */
   CheckForEncounter(Tile_Info)
   {
-    if ( typeof Tile_Info.Objects === 'undefined' || MapGame.Player.Steps_Till_Encounter !== 0 || MapGame.Player.In_Encounter )
+    if
+    (
+      typeof Tile_Info.Objects === 'undefined' ||
+      MapGame.Player.Steps_Till_Encounter !== 0 ||
+      MapGame.Player.In_Encounter
+    )
       return;
 
     MapGame.Player.In_Encounter = true;
 
-    MapGame.Encounter = new Encounter(Tile_Info.Objects.Name, Tile_Info.Objects.Grid_Engine_ID, Tile_Info.Objects.properties, Tile_Info.Objects.type, Tile_Info.Objects.coords, Tile_Info.Objects.Render_Instance);
+    MapGame.Encounter = new Encounter(
+      Tile_Info.Objects.Name,
+      Tile_Info.Objects.Grid_Engine_ID,
+      Tile_Info.Objects.properties,
+      Tile_Info.Objects.type,
+      Tile_Info.Objects.coords,
+      Tile_Info.Objects.Render_Instance
+    );
+
     MapGame.Encounter.DisplayEncounter();
   }
 
