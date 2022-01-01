@@ -1,0 +1,83 @@
+{
+	"textures": [
+		{
+			"image": "test-cave-0.png",
+			"format": "RGBA8888",
+			"size": {
+				"w": 241,
+				"h": 1505
+			},
+			"scale": 1,
+			"frames": [
+				{
+					"filename": "caelum-caveset.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 255,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 241,
+						"h": 336
+					},
+					"frame": {
+						"x": 0,
+						"y": 0,
+						"w": 241,
+						"h": 336
+					}
+				},
+				{
+					"filename": "caelum-terrain.png",
+					"rotated": false,
+					"trimmed": true,
+					"sourceSize": {
+						"w": 224,
+						"h": 600
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 224,
+						"h": 593
+					},
+					"frame": {
+						"x": 0,
+						"y": 336,
+						"w": 224,
+						"h": 593
+					}
+				},
+				{
+					"filename": "caelum-shadows.png",
+					"rotated": false,
+					"trimmed": false,
+					"sourceSize": {
+						"w": 192,
+						"h": 576
+					},
+					"spriteSourceSize": {
+						"x": 0,
+						"y": 0,
+						"w": 192,
+						"h": 576
+					},
+					"frame": {
+						"x": 0,
+						"y": 929,
+						"w": 192,
+						"h": 576
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "https://www.codeandweb.com/texturepacker",
+		"version": "3.0",
+		"smartupdate": "$TexturePacker:SmartUpdate:fa30015c04c730a16e14f076235180b6:2273522fdd563c18d1b5b35722ed0fec:d94316ca2d59977ec3a5c4670f20bb09$"
+	}
+}
