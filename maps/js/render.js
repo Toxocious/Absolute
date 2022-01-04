@@ -324,7 +324,27 @@ const Render = new Phaser.Class({
         switch ( Obj.type )
         {
           case 'encounter':
-            New_Object = new Encounter(Obj.name, `${Obj.type}_${Obj.id}`, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
+            const Encounter_Zone_Height = Math.floor(Obj.height / 16);
+            const Encounter_Zone_Width = Math.floor(Obj.width / 16);
+            if ( Encounter_Zone_Height > 1 && Encounter_Zone_Width > 1 )
+            {
+              for ( let h = 0; h < Encounter_Zone_Height; h++ )
+              {
+                for ( let w = 0; w < Encounter_Zone_Width; w++ )
+                {
+                  const Zone_X = Obj_X + h;
+                  const Zone_Y = Obj_Y + w;
+
+                  New_Object = new Encounter(Obj.name, `${Obj.type}_${Obj.id + h}`, Obj.properties, Obj.type, { x: Zone_X, y: Zone_Y }, this);
+                  Map_Objects.push(New_Object);
+                }
+              }
+            }
+            else
+            {
+              New_Object = new Encounter(Obj.name, `${Obj.type}_${Obj.id}`, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
+              Map_Objects.push(New_Object);
+            }
             break;
 
           case 'npc':
@@ -340,6 +360,7 @@ const Render = new Phaser.Class({
             break;
         }
 
+        if ( Obj.type !== 'encounter' )
         Map_Objects.push(New_Object);
       }
     }
