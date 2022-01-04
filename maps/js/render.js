@@ -326,6 +326,7 @@ const Render = new Phaser.Class({
           case 'encounter':
             const Encounter_Zone_Height = Math.floor(Obj.height / 16);
             const Encounter_Zone_Width = Math.floor(Obj.width / 16);
+
             if ( Encounter_Zone_Height > 1 && Encounter_Zone_Width > 1 )
             {
               for ( let h = 0; h < Encounter_Zone_Height; h++ )
@@ -361,7 +362,7 @@ const Render = new Phaser.Class({
         }
 
         if ( Obj.type !== 'encounter' )
-        Map_Objects.push(New_Object);
+          Map_Objects.push(New_Object);
       }
     }
 
