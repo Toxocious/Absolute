@@ -2255,6 +2255,48 @@
                  "width":16,
                  "x":288,
                  "y":336
+                }, 
+                {
+                 "height":112,
+                 "id":177,
+                 "name":"Encounter_Test",
+                 "properties":[
+                        {
+                         "name":"charLayer",
+                         "type":"string",
+                         "value":"Layer_1"
+                        }, 
+                        {
+                         "name":"encounter_id",
+                         "type":"int",
+                         "value":-1
+                        }, 
+                        {
+                         "name":"frameheight",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"framewidth",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"hidden",
+                         "type":"bool",
+                         "value":true
+                        }, 
+                        {
+                         "name":"zone",
+                         "type":"int",
+                         "value":1
+                        }],
+                 "rotation":0,
+                 "type":"encounter",
+                 "visible":true,
+                 "width":112,
+                 "x":128,
+                 "y":400
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -2263,7 +2305,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":173,
+ "nextobjectid":178,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
