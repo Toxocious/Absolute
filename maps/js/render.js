@@ -333,8 +333,8 @@ const Render = new Phaser.Class({
               {
                 for ( let w = 0; w < Encounter_Zone_Width; w++ )
                 {
-                  const Zone_X = Obj_X + h;
-                  const Zone_Y = Obj_Y + w;
+                  const Zone_X = Obj_X + w;
+                  const Zone_Y = Obj_Y + h;
 
                   New_Object = new Encounter(Obj.name, `${Obj.type}_${Obj.id + h}`, Obj.properties, Obj.type, { x: Zone_X, y: Zone_Y }, this);
                   Map_Objects.push(New_Object);
