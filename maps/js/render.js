@@ -412,7 +412,12 @@ const Render = new Phaser.Class({
    */
   DoesObjectHavePropertyOfName: function(Obj, Property_Name)
   {
-    if ( typeof Obj !== 'object' || typeof Property_Name !== 'string' )
+    if
+    (
+      typeof Obj !== 'object' ||
+      typeof Obj.properties === 'undefined' ||
+      typeof Property_Name !== 'string'
+    )
       return false;
 
     for ( const Prop of Obj.properties )
