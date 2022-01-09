@@ -51,6 +51,10 @@ class TileInfo
       if ( Obj.type == 'transition' )
         continue;
 
+      if ( Obj.type == 'encounter' )
+        if ( Obj.coords.x == this.x && Obj.coords.y == this.y )
+          return Obj;
+
       const Obj_Layer = this.DoesObjectHavePropertyOfName(Obj, 'charLayer');
       if ( Obj_Layer && Obj_Layer.value.replace('Layer_', '') == this.z && Obj.coords.x == this.x && Obj.coords.y == this.y )
         return Obj;

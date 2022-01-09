@@ -231,6 +231,9 @@ const Render = new Phaser.Class({
     // Create the grid map.
     this.gridEngine.create(Map, this.Grid_Engine_Config);
 
+    // Process encounter tiles.
+    this.ProcessEncounterTiles();
+
     // Process object movement.
     this.ProcessObjectMovement();
 
@@ -323,31 +326,6 @@ const Render = new Phaser.Class({
 
         switch ( Obj.type )
         {
-          case 'encounter':
-            const Encounter_Zone_Height = Math.floor(Obj.height / 16);
-            const Encounter_Zone_Width = Math.floor(Obj.width / 16);
-
-            if ( Encounter_Zone_Height > 1 && Encounter_Zone_Width > 1 )
-            {
-              for ( let h = 0; h < Encounter_Zone_Height; h++ )
-              {
-                for ( let w = 0; w < Encounter_Zone_Width; w++ )
-                {
-                  const Zone_X = Obj_X + w;
-                  const Zone_Y = Obj_Y + h;
-
-                  New_Object = new Encounter(Obj.name, `${Obj.type}_${Obj.id + h}`, Obj.properties, Obj.type, { x: Zone_X, y: Zone_Y }, this);
-                  Map_Objects.push(New_Object);
-                }
-              }
-            }
-            else
-            {
-              New_Object = new Encounter(Obj.name, `${Obj.type}_${Obj.id}`, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
-              Map_Objects.push(New_Object);
-            }
-            break;
-
           case 'npc':
             New_Object = new NPC(Obj.name, `${Obj.type}_${Obj.id}`, Obj_Sprite, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
             break;
@@ -359,6 +337,10 @@ const Render = new Phaser.Class({
           case 'warp':
             New_Object = new Warp(Obj.name, `${Obj.type}_${Obj.id}`, Obj.properties, Obj.type, { x: Obj_X, y: Obj_Y }, this);
             break;
+
+          default:
+            console.warn(`Object of type '${Obj.type}' is not supported by Absolute's map engine, and will not be rendered.`);
+            break;
         }
 
         if ( Obj.type !== 'encounter' )
@@ -367,6 +349,71 @@ const Render = new Phaser.Class({
     }
 
     return Map_Objects;
+  },
+
+  /**
+   * Setup encounter tiles.
+   */
+  ProcessEncounterTiles: function()
+  {
+    let Encounter_Layer;
+    let First_GID = -1;
+
+    MapGame.Layers.filter(Layer => Layer.layer.name == 'Encounter_Tiles' ? Encounter_Layer = Layer : null);
+
+    if ( typeof Encounter_Layer === 'undefined' )
+      return false;
+
+    for ( const Layer in Encounter_Layer.layer.tilemapLayer.gidMap )
+    {
+      let Layer_Data = Encounter_Layer.layer.tilemapLayer.gidMap[Layer];
+
+      if ( Layer_Data.name != 'font' )
+        continue;
+
+      if ( First_GID == -1 )
+      {
+        First_GID = Layer_Data.firstgid;
+        break;
+      }
+    }
+
+    if ( First_GID == -1 )
+      return false;
+
+    for ( const Row of Encounter_Layer.layer.data )
+    {
+      for ( const Tile of Row )
+      {
+        if ( Tile.index === -1 )
+          continue;
+
+        const Tile_Index_Offset = 118;
+        const Tile_ID = Tile.index - First_GID;
+
+        Encounter_Obj = new Encounter(
+          'Encounter_Tile',
+          `encounter_x${Tile.x}_y${Tile.y}`,
+          [
+            { name: 'frameheight', type: 'int', value: 16 },
+            { name: 'framewidth', type: 'int', value: 16 },
+            { name: 'hidden', type: 'bool', value: true },
+            { name: 'encounter_id', type: 'int', value: Tile_ID - Tile_Index_Offset },
+            { name: 'zone', type: 'int', value: Tile_ID - Tile_Index_Offset },
+          ],
+          'encounter',
+          {
+            x: Tile.x,
+            y: Tile.y,
+          },
+          this
+        );
+
+        MapGame.Objects.push(Encounter_Obj);
+      }
+    }
+
+    return true;
   },
 
   /**
