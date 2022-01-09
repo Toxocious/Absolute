@@ -726,7 +726,7 @@
          "name":"Encounter_Tiles",
          "opacity":0.29,
          "type":"tilelayer",
-         "visible":true,
+         "visible":false,
          "width":38,
          "x":0,
          "y":0
