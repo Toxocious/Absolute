@@ -20,8 +20,8 @@ class Encounter extends Phaser.Scene
     MapGame.Network.SendRequest('Encounter').then((Encounter) => {
       Encounter = JSON.parse(Encounter);
 
-      if ( Encounter.Generated_Encounter.Type !== 'Normal' )
-        alert(`You found a wild ${Encounter.Generated_Encounter.Type} Pok&eacute;mon!`);
+      if ( typeof Encounter.Generated_Encounter.Page_Alert !== 'undefined' )
+        alert(Encounter.Generated_Encounter.Page_Alert.Alert_Dialogue);
 
       document.getElementById('map_dialogue').innerHTML = `
         A wild <b>${Encounter.Generated_Encounter.Pokedex_Data.Display_Name}</b> appeared!

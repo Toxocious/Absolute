@@ -1,6 +1,9 @@
 <?php
   class Encounter extends Player
   {
+    const ALERT_POKEDEX_IDS = [ 144, 151, 243, 244, 245, 249, 250, 384, 489, 639, 640, 716, 802, 888, 889 ];
+    const ALERT_POKEMON_TYPES = [ 'Shiny' ];
+
     /**
      * Generate a wild encounter.
      *
@@ -32,8 +35,24 @@
       if ( mt_rand(1, $Shiny_Chance) === 1 )
         $Encounter_Type = 'Shiny';
 
+      $Pokedex_Data = $Poke_Class->FetchPokedexData($Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID'], $Encounter_Type);
+
+      $Page_Alert = null;
+      if ( in_array($Encounter_Type, self::ALERT_POKEMON_TYPES) )
+      {
+        if ( in_array($Generated_Encounter['Pokedex_ID'], self::ALERT_POKEDEX_IDS) )
+          $Alert_Dialogue = "You found a wild {$Encounter_Type} {$Pokedex_Data['Display_Name']}!";
+        else
+          $Alert_Dialogue = "You found a wild {$Encounter_Type} Pok&eacute;mon!";
+
+        $Page_Alert = [
+          'Dialogue' => $Alert_Dialogue,
+        ];
+      }
+
       $_SESSION['Absolute']['Maps']['Encounter'] = [
-        'Pokedex_Data' => $Poke_Class->FetchPokedexData($Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID'], $Encounter_Type),
+        'Page_Alert' => $Page_Alert,
+        'Pokedex_Data' => $Pokedex_Data,
         'Level' => mt_rand($Generated_Encounter['Min_Level'], $Generated_Encounter['Max_Level']),
         'Map_Exp_Yield' => mt_rand($Generated_Encounter['Min_Exp_Yield'], $Generated_Encounter['Max_Exp_Yield']),
         'Gender' => $Poke_Class->GenerateGender(null, $Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID']),
