@@ -724,7 +724,7 @@
          "height":38,
          "id":11,
          "name":"Encounter_Tiles",
-         "opacity":0.29,
+         "opacity":0,
          "type":"tilelayer",
          "visible":false,
          "width":38,
