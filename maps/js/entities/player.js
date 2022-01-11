@@ -182,7 +182,7 @@ class Player_Entity
       Warp_Data = JSON.parse(Warp_Data);
 
       if ( Warp_Data )
-        this.Render_Instance.scene.restart({ level: Warp_Data });
+        this.Render_Instance.scene.restart();
     });
   }
 

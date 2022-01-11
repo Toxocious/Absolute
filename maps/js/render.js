@@ -1,13 +1,11 @@
-
-const Render = new Phaser.Class({
-  Extends: Phaser.Scene,
-
-  initialize: function()
+class Render extends Phaser.Scene
+{
+  constructor()
   {
-    Phaser.Scene.call(this, { "key": "Render" });
-  },
+    super(MapGame.Config);
+  }
 
-  init: function()
+  init()
   {
     this.Map_Name = null;
 
@@ -23,6 +21,7 @@ const Render = new Phaser.Class({
     MapGame.Tile_Size = 16;
     MapGame.Network = new Network();
 
+    /*
     let Width = this.cameras.main.width;
     let Height = this.cameras.main.height;
 
@@ -85,57 +84,62 @@ const Render = new Phaser.Class({
       Percent_Text.destroy();
       Asset_Text.destroy();
     });
-  },
+    */
+  }
 
-  preload: function()
+  preload()
   {
-    /**
-     * Load necessary assets.
-     */
-    MapGame.Network.SendRequest('Load').then((Assets) =>
-    {
-      Assets = JSON.parse(Assets);
+    this.plugins.get('rexawaitloaderplugin').addToScene(this);
 
-      /**
-       * Load the map file.
-       */
-      this.Map_Name = Assets.Map_Name;
-      this.load.setPath('/maps/maps/');
-      this.load.tilemapTiledJSON(Assets.Map_Name, `${Assets.Map_Name}.json`);
-
-      /**
-       * Load tileset images.
-       */
-      this.load.setPath('/maps/tilesets/images/');
-      for ( const Tileset of Assets.Tilesets )
+    this.load.rexAwait((successCallback, failureCallback) => {
+      MapGame.Network.SendRequest('Load').then((Assets) =>
       {
-        this.load.image(`${Tileset}_tiles`, `${Tileset}.png`);
-      }
+        Assets = JSON.parse(Assets);
 
-      /**
-       * Load the player's NPC spritesheet.
-       */
-      this.load.setPath('/maps/assets/npcs/animations/');
-      switch ( Assets.Character )
-      {
-        case 'Female':
-          this.load.multiatlas('character', 'user_female/atlas.json', '/maps/assets/npcs/animations/user_female');
-          MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_female';
-          break;
-        case 'Male':
-          this.load.multiatlas('character', 'user_male/atlas.json', '/maps/assets/npcs/animations/user_male');
-          MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_male';
-          break;
-        case 'Ungendered':
-          this.load.multiatlas('character', 'user_ungendered/atlas.json', '/maps/assets/npcs/animations/user_ungendered');
-          MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_ungendered';
-          break;
-      }
+        /**
+         * Load the map file.
+         */
+        this.Map_Name = Assets.Map_Name;
+        this.load.setPath('/maps/maps/');
+        this.load.tilemapTiledJSON(Assets.Map_Name, `${Assets.Map_Name}.json`);
 
-      /**
-       * Store the player's position.
-       */
-      this.Player_Position = Assets.Position;
+        /**
+         * Load tileset images.
+         */
+        this.load.setPath('/maps/tilesets/images/');
+        for ( const Tileset of Assets.Tilesets )
+        {
+          this.load.image(`${Tileset}_tiles`, `${Tileset}.png`);
+        }
+
+        /**
+         * Load the player's NPC spritesheet.
+         */
+        this.load.setPath('/maps/assets/npcs/animations/');
+        switch ( Assets.Character )
+        {
+          case 'Female':
+            this.load.multiatlas('character', 'user_female/atlas.json', '/maps/assets/npcs/animations/user_female');
+            MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_female';
+            break;
+          case 'Male':
+            this.load.multiatlas('character', 'user_male/atlas.json', '/maps/assets/npcs/animations/user_male');
+            MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_male';
+            break;
+          case 'Ungendered':
+            this.load.multiatlas('character', 'user_ungendered/atlas.json', '/maps/assets/npcs/animations/user_ungendered');
+            MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_ungendered';
+            break;
+        }
+
+        /**
+         * Store the player's position.
+         */
+        this.Player_Position = Assets.Position;
+
+        // call success
+        successCallback();
+      });
     });
 
     /**
@@ -144,7 +148,8 @@ const Render = new Phaser.Class({
     this.load.setPath('/maps/assets/npcs/');
     for ( let i = 1; i <= 84; i++ )
     {
-      if ( i === 24 ) continue;
+      if ( i === 24 )
+        continue;
 
       this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 16, frameHeight: 16 });
     }
@@ -174,11 +179,9 @@ const Render = new Phaser.Class({
       document.getElementById('map_shiny_odds').innerText = `${Stats.Shiny_Odds.Text} (${Stats.Shiny_Odds.Percent.toLocaleString(undefined, {maximumFractionDigits: 4})}%)`;
       document.getElementById('map_exp_bar').setAttribute('style', `width: ${Stats.Map_Experience_To_Level.Percent}%`);
     });
+  }
 
-    return true;
-  },
-
-  create: function()
+  create()
   {
     // Make the map.
     const Map = this.make.tilemap({ key: this.Map_Name, tileWidth: 16, tileHeight: 16 });
@@ -220,8 +223,8 @@ const Render = new Phaser.Class({
           startPosition: {
             x: this.Player_Position.Map_X,
             y: this.Player_Position.Map_Y
-          },
-        },
+          }
+        }
       ],
     };
 
@@ -245,17 +248,17 @@ const Render = new Phaser.Class({
       if ( Character.charId === 'character' )
         MapGame.Player.ProcessMovement();
     });
-  },
+  }
 
-  update: function(Time, Delta)
+  update(Time, Delta)
   {
     MapGame.Player.Update(Time, Delta, this.gridEngine);
-  },
+  }
 
   /**
    * Render all layers of the map.
    */
-  RenderLayers: function(Map, Tiles)
+  RenderLayers(Map, Tiles)
   {
     let Layers = [];
     for ( const Layer in Map.layers )
@@ -267,12 +270,12 @@ const Render = new Phaser.Class({
       Layers.push(Create_Layer);
     }
     return Layers;
-  },
+  }
 
   /**
    * Render necessary tilesets.
    */
-  RenderTiles: function(Map)
+  RenderTiles(Map)
   {
     let Tiles = [];
     for ( let Tileset of Map.tilesets )
@@ -280,14 +283,14 @@ const Render = new Phaser.Class({
       Tiles.push(Map.addTilesetImage(Tileset.name, `${Tileset.name}_tiles`));
     }
     return Tiles;
-  },
+  }
 
   /**
    * Create objects.
    */
-  RenderObjects: function(Map)
+  RenderObjects(Map)
   {
-    let Map_Objects = [];
+    const Map_Objects = [];
 
     if ( Object.keys(Map.objects).length === 0 )
       return Map_Objects;
@@ -296,8 +299,10 @@ const Render = new Phaser.Class({
     {
       for ( const Obj of Obj_Layer.objects )
       {
-        if ( Obj.type == 'Player_Entity' )
+        if ( Obj.type == 'Player_Entity' || Obj.type == 'encounter' )
           continue;
+
+        let New_Object;
 
         const Obj_X = Math.round(Obj.x / 16);
         const Obj_Y = Math.round(Obj.y / 16);
@@ -320,7 +325,7 @@ const Render = new Phaser.Class({
             startPosition: {
               x: Obj_X,
               y: Obj_Y
-            },
+            }
           });
         }
 
@@ -343,18 +348,17 @@ const Render = new Phaser.Class({
             break;
         }
 
-        if ( Obj.type !== 'encounter' )
-          Map_Objects.push(New_Object);
+        Map_Objects.push(New_Object);
       }
     }
 
     return Map_Objects;
-  },
+  }
 
   /**
    * Setup encounter tiles.
    */
-  ProcessEncounterTiles: function()
+  ProcessEncounterTiles()
   {
     let Encounter_Layer;
     let First_GID = -1;
@@ -391,7 +395,7 @@ const Render = new Phaser.Class({
         const Tile_Index_Offset = 118;
         const Tile_ID = Tile.index - First_GID;
 
-        Encounter_Obj = new Encounter(
+        let Encounter_Obj = new Encounter(
           'Encounter_Tile',
           `encounter_x${Tile.x}_y${Tile.y}`,
           [
@@ -414,12 +418,12 @@ const Render = new Phaser.Class({
     }
 
     return true;
-  },
+  }
 
   /**
    * Process layer transition tile objects.
    */
-  ProcessLayerTransitions: function()
+  ProcessLayerTransitions()
   {
     for ( const Obj of MapGame.Objects )
     {
@@ -437,12 +441,12 @@ const Render = new Phaser.Class({
         this.gridEngine.setTransition({ x: Transition_X, y: Transition_Y }, Transition_From.value, Transition_To.value);
       }
     }
-  },
+  }
 
   /**
    * Process the movement of objects.
    */
-  ProcessObjectMovement: function()
+  ProcessObjectMovement()
   {
     for ( const Obj of MapGame.Objects )
     {
@@ -452,12 +456,12 @@ const Render = new Phaser.Class({
         this.gridEngine.moveRandomly(Obj.Grid_Engine_ID, this.GetRandomInt(1000, 5000), 3);
       }
     }
-  },
+  }
 
   /**
    * Check if an object has a given property.
    */
-  DoesObjectHavePropertyOfName: function(Obj, Property_Name)
+  DoesObjectHavePropertyOfName(Obj, Property_Name)
   {
     if
     (
@@ -474,16 +478,16 @@ const Render = new Phaser.Class({
     }
 
     return false;
-  },
+  }
 
   /**
    * Get a random integer between two values.
    */
-  GetRandomInt: function(Min_Int, Max_Int)
+  GetRandomInt(Min_Int, Max_Int)
   {
     Min_Int = Math.ceil(Min_Int);
     Max_Int = Math.floor(Max_Int);
 
     return Math.floor(Math.random() * (Max_Int - Min_Int + 1)) + Min_Int;
-  },
-});
+  }
+}
