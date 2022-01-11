@@ -20,7 +20,7 @@ class Encounter extends Phaser.Scene
     MapGame.Network.SendRequest('Encounter').then((Encounter) => {
       Encounter = JSON.parse(Encounter);
 
-      if ( typeof Encounter.Generated_Encounter.Page_Alert !== 'undefined' )
+      if ( Encounter.Generated_Encounter.Page_Alert )
         alert(Encounter.Generated_Encounter.Page_Alert.Alert_Dialogue);
 
       document.getElementById('map_dialogue').innerHTML = `
