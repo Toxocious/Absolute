@@ -26,12 +26,21 @@ let MapGame = {
       pixelArt: true,
     },
 
+    pack: {
+        files: [{
+            type: 'plugin',
+            key: 'rexawaitloaderplugin',
+            url: 'https://raw.githubusercontent.com/rexrainbow/phaser3-rex-notes/master/dist/rexawaitloaderplugin.min.js',
+            start: true
+        }]
+    },
+
     plugins: {
       scene: [
         {
-          key: "gridEngine",
+          key: 'gridEngine',
           plugin: GridEngine,
-          mapping: "gridEngine",
+          mapping: 'gridEngine',
         },
       ],
     },
