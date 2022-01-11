@@ -1,5 +1,7 @@
 <?php
 	require_once 'core/required/layout_top.php';
+
+  unset($_SESSION['Absolute']['Maps']);
 ?>
 
 <div class='panel content'>
@@ -74,7 +76,8 @@
 
 <!-- Phaser Library -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/phaser.js'></script>
-<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/GridEngine.min.js'></script>
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/phaser-GridEngine.min.js'></script>
+<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/phaser-rexawaitloaderplugin.min.js'></script>
 
 <!-- Map Scripts -->
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/network.js'></script>
