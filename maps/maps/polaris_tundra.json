@@ -197,7 +197,7 @@
                         {
                          "name":"warpTo",
                          "type":"string",
-                         "value":"test_cave"
+                         "value":"chrysalis_cavern"
                         }],
                  "rotation":0,
                  "type":"warp",
