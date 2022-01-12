@@ -196,6 +196,7 @@
       if ( empty(func_get_args()) )
       {
         $Map = new Map($this->GetMap());
+        $Map->GetMapObjects();
         $Spawn_Coords = $Map->GetSpawnCoords();
 
         return $this->SetPosition($Spawn_Coords['x'], $Spawn_Coords['y'], $Spawn_Coords['z']);

@@ -116,7 +116,7 @@
 
           return [
             'x' => floor($Object->x / 16),
-            'y' => floor($Object->y / 16),
+            'y' => floor($Object->y / 16) + 1,
             'z' => $Spawn_Layer,
           ];
         }
