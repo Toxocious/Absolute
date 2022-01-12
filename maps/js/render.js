@@ -243,6 +243,9 @@ class Render extends Phaser.Scene
     // Set layer transitions.
     this.ProcessLayerTransitions();
 
+    // Set player warp status to false.
+    MapGame.Player.Warping = false;
+
     // Subscribe to player movement.
     this.gridEngine.positionChangeFinished().subscribe(( Character ) => {
       if ( Character.charId === 'character' )

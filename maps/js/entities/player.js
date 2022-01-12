@@ -108,6 +108,7 @@ class Player_Entity
   {
     if
     (
+      MapGame.Player.Warping ||
       MapGame.Player.In_Encounter ||
       MapGame.Player.Steps_Till_Encounter === 0
     )
@@ -182,7 +183,10 @@ class Player_Entity
       Warp_Data = JSON.parse(Warp_Data);
 
       if ( Warp_Data )
+      {
+        MapGame.Player.Warping = true;
         this.Render_Instance.scene.restart();
+      }
     });
   }
 
