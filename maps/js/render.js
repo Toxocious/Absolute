@@ -194,6 +194,44 @@ class Render extends Phaser.Scene
     const Layers = this.RenderLayers(Map, Tiles);
     MapGame.Layers = Layers;
 
+    // Setup the player entity.
+    this.SetupPlayerEntity();
+
+    // Render objects.
+    MapGame.Objects = this.RenderObjects(Map);
+
+    // Create the grid map.
+    this.gridEngine.create(Map, this.Grid_Engine_Config);
+
+    // Process encounter tiles.
+    this.ProcessEncounterTiles();
+
+    // Process object movement.
+    this.ProcessObjectMovement();
+
+    // Set layer transitions.
+    this.ProcessLayerTransitions();
+
+    // Set player warp status to false.
+    MapGame.Player.Warping = false;
+
+    // Subscribe to player movement.
+    this.gridEngine.positionChangeFinished().subscribe(( Character ) => {
+      if ( Character.charId === 'character' )
+        MapGame.Player.ProcessMovement();
+    });
+  }
+
+  update(Time, Delta)
+  {
+    MapGame.Player.Update(Time, Delta, this.gridEngine);
+  }
+
+  /**
+   * Setup the player entity.
+   */
+  SetupPlayerEntity()
+  {
     // Set player sprite
     const Player_Sprite = this.physics.add.sprite(0, 0, "character");
     Player_Sprite.setDepth(1);
@@ -227,35 +265,6 @@ class Render extends Phaser.Scene
         }
       ],
     };
-
-    // Render objects.
-    MapGame.Objects = this.RenderObjects(Map);
-
-    // Create the grid map.
-    this.gridEngine.create(Map, this.Grid_Engine_Config);
-
-    // Process encounter tiles.
-    this.ProcessEncounterTiles();
-
-    // Process object movement.
-    this.ProcessObjectMovement();
-
-    // Set layer transitions.
-    this.ProcessLayerTransitions();
-
-    // Set player warp status to false.
-    MapGame.Player.Warping = false;
-
-    // Subscribe to player movement.
-    this.gridEngine.positionChangeFinished().subscribe(( Character ) => {
-      if ( Character.charId === 'character' )
-        MapGame.Player.ProcessMovement();
-    });
-  }
-
-  update(Time, Delta)
-  {
-    MapGame.Player.Update(Time, Delta, this.gridEngine);
   }
 
   /**
