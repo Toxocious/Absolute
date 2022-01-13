@@ -40,15 +40,23 @@
   {
     header('Content-Type: application/json');
 
-    $Steps_Till_Encounter = $Map->Player->GetStepsTillEncounter();
-    if ( $Steps_Till_Encounter !== -1 )
+    $Encounter_Zone = Purify($_GET['Encounter']);
+    if ( strlen($Encounter_Zone) > 1 )
     {
       echo json_encode([ 'Generated_Encounter' => 'Invalid Encounter' ]);
     }
     else
     {
-      $Encounter = Encounter::Generate($Map->Player->GetMap(), $Map->Player->GetMapLevelAndExp()['Map_Level']);
-      echo json_encode([ 'Generated_Encounter' => $Encounter ]);
+      $Steps_Till_Encounter = $Map->Player->GetStepsTillEncounter();
+      if ( $Steps_Till_Encounter !== -1 )
+      {
+        echo json_encode([ 'Generated_Encounter' => 'Invalid Encounter' ]);
+      }
+      else
+      {
+        $Encounter = Encounter::Generate($Map->Player->GetMap(), $Map->Player->GetMapLevelAndExp()['Map_Level'], $Encounter_Zone);
+        echo json_encode([ 'Generated_Encounter' => $Encounter ]);
+      }
     }
 
     exit;

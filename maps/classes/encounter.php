@@ -13,15 +13,11 @@
     public static function Generate
     (
       string $Player_Map_Name,
-      int $Player_Map_Level
+      int $Player_Map_Level,
+      string $Encounter_Zone
     )
     {
       global $Poke_Class;
-
-      $Player_Instance = Player::GetInstance();
-      $Encounter_Zone = $Player_Instance->GetEncounterZone();
-      if ( !$Encounter_Zone )
-        $Encounter_Zone = null;
 
       $Shiny_Chance = 4192 - $Player_Map_Level;
       if ( $Shiny_Chance < 2096 )
@@ -105,8 +101,7 @@
       if ( $Get_Random_Encounter === false )
         return false;
 
-      $Selected_Encounter = $Possible_Encounters[$Get_Random_Encounter];
-      return $Selected_Encounter;
+      return $Possible_Encounters[$Get_Random_Encounter];
     }
 
     /**

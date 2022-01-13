@@ -77,9 +77,15 @@
 
       foreach ( $this->Map_Data->layers as $Layer )
       {
-        if ( in_array($Layer->name, ['Objects', 'Warps', 'Encounters']) )
+        switch ( $Layer->name )
         {
-          $_SESSION['Absolute']['Maps']['Objects'][] = $Layer->objects;
+          case 'Objects':
+          case 'Warps':
+            $_SESSION['Absolute']['Maps']['Objects'][] = $Layer->objects;
+            break;
+
+          default:
+            break;
         }
       }
 

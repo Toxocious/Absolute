@@ -86,28 +86,6 @@
     }
 
     /**
-     * Get the encounter zone the player is in.
-     */
-    public function GetEncounterZone()
-    {
-      $Map_Objects = $_SESSION['Absolute']['Maps']['Objects'];
-      if ( empty($Map_Objects) )
-        return false;
-
-      $Player_Position = $this->GetPosition();
-      $Check_Tile_Object = MapObject::GetObjectAtTile($Map_Objects, $Player_Position['Map_X'], $Player_Position['Map_Y'] - 1, $Player_Position['Map_Z']);
-      if ( empty($Check_Tile_Object) )
-        return false;
-
-      $Encounter_Zone = MapObject::CheckPropertyByName($Check_Tile_Object->properties, 'zone');
-
-      if ( !$Encounter_Zone )
-        return false;
-
-      return $Encounter_Zone->value;
-    }
-
-    /**
      * Check if the player is next to a given tile.
      *
      * @param {int} $x

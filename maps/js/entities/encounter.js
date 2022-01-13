@@ -17,7 +17,8 @@ class Encounter extends Phaser.Scene
    */
   DisplayEncounter()
   {
-    MapGame.Network.SendRequest('Encounter').then((Encounter) => {
+    const Encounter_Zone = this.DoesObjectHavePropertyOfName('zone').value;
+    MapGame.Network.SendRequest(`Encounter=${Encounter_Zone}`).then((Encounter) => {
       Encounter = JSON.parse(Encounter);
 
       if ( Encounter.Generated_Encounter.Page_Alert )
@@ -118,5 +119,24 @@ class Encounter extends Phaser.Scene
     });
 
     MapGame.Player.UpdateMapStats();
+  }
+
+  /**
+   * Check if the encounter object has a given property.
+   */
+  DoesObjectHavePropertyOfName(Property_Name)
+  {
+    if
+    (
+      typeof this.properties === 'undefined' ||
+      typeof Property_Name !== 'string'
+    )
+      return false;
+
+    for ( const Prop of this.properties )
+      if ( Prop.name == Property_Name )
+        return Prop;
+
+    return false;
   }
 }
