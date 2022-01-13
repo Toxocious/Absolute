@@ -109,27 +109,31 @@ class Render extends Phaser.Scene
         this.load.setPath('/maps/tilesets/images/');
         for ( const Tileset of Assets.Tilesets )
         {
-          this.load.image(`${Tileset}_tiles`, `${Tileset}.png`);
+          if ( !this.textures.exists(`${Tileset}_tiles`) )
+            this.load.image(`${Tileset}_tiles`, `${Tileset}.png`);
         }
 
         /**
          * Load the player's NPC spritesheet.
          */
-        this.load.setPath('/maps/assets/npcs/animations/');
-        switch ( Assets.Character )
+        if ( !this.textures.exists('character') )
         {
-          case 'Female':
-            this.load.multiatlas('character', 'user_female/atlas.json', '/maps/assets/npcs/animations/user_female');
-            MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_female';
-            break;
-          case 'Male':
-            this.load.multiatlas('character', 'user_male/atlas.json', '/maps/assets/npcs/animations/user_male');
-            MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_male';
-            break;
-          case 'Ungendered':
-            this.load.multiatlas('character', 'user_ungendered/atlas.json', '/maps/assets/npcs/animations/user_ungendered');
-            MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_ungendered';
-            break;
+          this.load.setPath('/maps/assets/npcs/animations/');
+          switch ( Assets.Character )
+          {
+            case 'Female':
+              this.load.multiatlas('character', 'user_female/atlas.json', '/maps/assets/npcs/animations/user_female');
+              MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_female';
+              break;
+            case 'Male':
+              this.load.multiatlas('character', 'user_male/atlas.json', '/maps/assets/npcs/animations/user_male');
+              MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_male';
+              break;
+            case 'Ungendered':
+              this.load.multiatlas('character', 'user_ungendered/atlas.json', '/maps/assets/npcs/animations/user_ungendered');
+              MapGame.Atlas_Dir = '/maps/assets/npcs/animations/user_ungendered';
+              break;
+          }
         }
 
         /**
@@ -151,14 +155,9 @@ class Render extends Phaser.Scene
       if ( i === 24 )
         continue;
 
-      this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 16, frameHeight: 16 });
+      if ( !this.textures.exists(`npc_${i}`) )
+        this.load.spritesheet(`npc_${i}`, `${i}.png`, { frameWidth: 16, frameHeight: 16 });
     }
-
-    /**
-     * Load dialogue frame images.
-     */
-    this.load.setPath('/maps/assets/frames/');
-    this.load.image('dialogue_frame', 'default.png');
 
     /**
      * Load weather images.
