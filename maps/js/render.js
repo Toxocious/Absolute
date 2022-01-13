@@ -212,9 +212,6 @@ class Render extends Phaser.Scene
     // Set layer transitions.
     this.ProcessLayerTransitions();
 
-    // Set player warp status to false.
-    MapGame.Player.Warping = false;
-
     // Subscribe to player movement.
     this.gridEngine.positionChangeFinished().subscribe(( Character ) => {
       if ( Character.charId === 'character' )
@@ -245,6 +242,9 @@ class Render extends Phaser.Scene
 
     // Set initial player movement steps.
     MapGame.Player.Steps_Till_Encounter = 21;
+
+    // Set player warp status to false.
+    MapGame.Player.Warping = false;
 
     // Set the main camera to follow the player, and keep it in bounds.
     this.cameras.main.startFollow(Player_Sprite, true);
