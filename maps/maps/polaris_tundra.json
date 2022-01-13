@@ -157,6 +157,100 @@
                  "width":16,
                  "x":320,
                  "y":1328
+                }, 
+                {
+                 "height":16,
+                 "id":942,
+                 "name":"Steven",
+                 "properties":[
+                        {
+                         "name":"charLayer",
+                         "type":"string",
+                         "value":"Layer_1"
+                        }, 
+                        {
+                         "name":"dialogue_1",
+                         "type":"string",
+                         "value":"I heard about a rare stone that can evolve Eevee may be located around here."
+                        }, 
+                        {
+                         "name":"frameheight",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"framewidth",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"hidden",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"17"
+                        }, 
+                        {
+                         "name":"movement",
+                         "type":"bool",
+                         "value":false
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":16,
+                 "x":1104,
+                 "y":384
+                }, 
+                {
+                 "height":16,
+                 "id":943,
+                 "name":"Drayven",
+                 "properties":[
+                        {
+                         "name":"charLayer",
+                         "type":"string",
+                         "value":"Layer_2"
+                        }, 
+                        {
+                         "name":"dialogue_1",
+                         "type":"string",
+                         "value":"Training in the cold is great for developing character."
+                        }, 
+                        {
+                         "name":"frameheight",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"framewidth",
+                         "type":"int",
+                         "value":16
+                        }, 
+                        {
+                         "name":"hidden",
+                         "type":"bool",
+                         "value":false
+                        }, 
+                        {
+                         "name":"image",
+                         "type":"string",
+                         "value":"60"
+                        }, 
+                        {
+                         "name":"movement",
+                         "type":"bool",
+                         "value":true
+                        }],
+                 "rotation":0,
+                 "type":"npc",
+                 "visible":true,
+                 "width":16,
+                 "x":240,
+                 "y":352
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -236,7 +330,7 @@
          "y":0
         }],
  "nextlayerid":13,
- "nextobjectid":942,
+ "nextobjectid":944,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.7.2",
