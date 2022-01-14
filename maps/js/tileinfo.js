@@ -74,26 +74,9 @@ class TileInfo
     )
       return false;
 
-    switch ( typeof Obj.properties )
-    {
-      case 'array':
-        for ( const Prop of Obj.properties )
-          if ( Prop.name == Property_Name )
-            return Prop;
-
-        break;
-
-      case 'object':
-        for ( const Prop in Obj.properties )
-          if ( Prop == Property_Name )
-            return Obj.properties[Prop];
-
-        break;
-
-      default:
-        console.warn(`Unable to fetch object property of type ${typeof Obj.properties}.`);
-        break;
-    }
+    for ( const Prop of Obj.properties )
+      if ( Prop.name == Property_Name )
+        return Prop;
 
     return false;
   }
