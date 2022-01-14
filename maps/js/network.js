@@ -10,7 +10,7 @@ class Network
    */
   SendRequest(Data, HTTP_TYPE = 'GET')
   {
-    const URL_PARAMS = new URLSearchParams(Data).toString();
+    const URL_PARAMS = new URLSearchParams(Data).toString().replace(/\:=/, '');
 
     return new Promise((resolve, reject) =>
     {
