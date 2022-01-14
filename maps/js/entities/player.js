@@ -222,7 +222,7 @@ class Player_Entity
    */
   UpdateMapStats()
   {
-    MapGame.Network.SendRequest('Stats').then((Stats) =>
+    MapGame.Network.SendRequest('Request=Stats').then((Stats) =>
     {
       Stats = JSON.parse(Stats);
 

@@ -92,7 +92,7 @@ class Render extends Phaser.Scene
     this.plugins.get('rexawaitloaderplugin').addToScene(this);
 
     this.load.rexAwait((successCallback, failureCallback) => {
-      MapGame.Network.SendRequest('Load').then((Assets) =>
+      MapGame.Network.SendRequest('Request=Load').then((Assets) =>
       {
         Assets = JSON.parse(Assets);
 
@@ -168,7 +168,7 @@ class Render extends Phaser.Scene
     /**
      * Load the player's map stats.
      */
-    MapGame.Network.SendRequest('Stats').then((Stats) =>
+    MapGame.Network.SendRequest('Request=Stats').then((Stats) =>
     {
       Stats = JSON.parse(Stats);
 

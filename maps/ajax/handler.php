@@ -10,26 +10,29 @@
       require_once $Map_Directory . "/classes/{$Class}.php";
   });
 
-  $Player = Player::GetInstance();
   $Map = new Map();
+  $Player = Player::GetInstance();
 
   /**
    * Handle loading.
    */
-  if ( isset($_GET['Load']) )
+  if ( isset($_GET['Request']) )
   {
-    header('Content-Type: application/json');
-    echo json_encode($Map->Load());
-    exit;
-  }
+    $Request = Purify($_GET['Request']);
 
-  /**
-   * Fetch some of the player's map stats.
-   */
-  if ( isset($_GET['Stats']) )
-  {
-    header('Content-Type: application/json');
-    echo json_encode($Map->Stats());
+    switch ( $Request )
+    {
+      case 'Load':
+        header('Content-Type: application/json');
+        echo json_encode($Map->Load());
+        break;
+
+      case 'Stats':
+        header('Content-Type: application/json');
+        echo json_encode($Map->Stats());
+        break;
+    }
+
     exit;
   }
 
@@ -156,8 +159,3 @@
 
     exit;
   }
-
-  /**
-   * Render the map.
-   */
-  echo $Map->Render();
