@@ -732,6 +732,7 @@ footer
     {
       border-radius: 6px;
       float: left;
+      font-weight: bold;
       transition: all 150ms;
       width: 195px;
 
@@ -762,6 +763,7 @@ footer
         {
           border-radius: var(--border-radius);
           display: block;
+          font-weight: bold;
           padding: var(--padding-5px);
           transition: background 0.15s;
         }
