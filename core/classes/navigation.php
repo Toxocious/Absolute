@@ -108,7 +108,7 @@
 						{
 							$Display_Links .= "
 								<div class='dropdown-item'>
-									<a href='javascript:void(0);' onclick='LoadContent(\"/staff/{$Link['Link']}\");'>{$Link['Name']}</a>
+									<a href='javascript:void(0);' onclick='LoadPage(\"/staff/{$Link['Link']}\");'>{$Link['Name']}</a>
 								</div>
 							";
 						}
