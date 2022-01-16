@@ -35,7 +35,7 @@
 				$Query_Headers->execute([ $Class ]);
 				$Query_Headers->setFetchMode(PDO::FETCH_ASSOC);
 				$Headers = $Query_Headers->fetchAll();
-				
+
 				$Query_Links = $PDO->prepare("SELECT * FROM `navigation` WHERE `Class` = ? AND `Type` = 'Link'");
 				$Query_Links->execute([ $Class ]);
 				$Query_Links->setFetchMode(PDO::FETCH_ASSOC);
@@ -71,13 +71,13 @@
 						<a href='{$Link_URL}'>{$Link_Name}</a>
 					</div>
 
-					<ul class='nav-container'{$Nav_Width}>
+					<div class='nav-container'{$Nav_Width}>
 				";
 			}
 			else
 			{
 				echo "
-					<ul class='nav-container'>
+					<div class='nav-container'>
 				";
 			}
 
@@ -107,9 +107,9 @@
 						if ( $Link['Menu'] === $Head['Menu'] && $Link['Power'] <= $User_Data['Power'] )
 						{
 							$Display_Links .= "
-								<li class='dropdown-item'>
+								<div class='dropdown-item'>
 									<a href='javascript:void(0);' onclick='LoadContent(\"/staff/{$Link['Link']}\");'>{$Link['Name']}</a>
-								</li>
+								</div>
 							";
 						}
 					}
@@ -122,9 +122,9 @@
 						if ( $Link['Menu'] === $Head['Menu'] && $Link['Power'] <= $User_Data['Power'] )
 						{
 							$Display_Links .= "
-								<li class='dropdown-item'>
+								<div class='dropdown-item'>
 									<a href='" . DOMAIN_ROOT . "{$Link['Link']}'>{$Link['Name']}</a>
-								</li>
+								</div>
 							";
 						}
 					}
@@ -134,21 +134,21 @@
 				 * Render the menu item and it's dropdown contents.
 				 */
 				echo "
-					<li class='nav-item has-dropdown'>
+					<div class='nav-item has-dropdown'>
 						<a href='javascript:void(0);'>
 							{$Head['Name']}
 						</a>
 						<ul class='dropdown'>
 							{$Display_Links}
 						</ul>
-					</li>
+					</div>
 				";
 
 				$Display_Links = '';
 			}
 
 			echo "
-					</ul>
+					</div>
 				</nav>
 			";
 		}

@@ -288,13 +288,8 @@ div
  */
 nav
 {
-  border-color: var(--border-color);
-
   & > .button
   {
-    background: var(--color-quadternary);
-    border-color: var(--color-primary);
-
     &:hover
     {
       background: var(--color-tertiary);
@@ -303,9 +298,6 @@ nav
 
   & > .nav-container
   {
-    background: var(--color-quadternary);
-    border-color: var(--color-primary);
-
     & > .nav-item
     {
       & > a:hover
