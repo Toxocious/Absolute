@@ -1,6 +1,20 @@
 <?php
 	require_once '../core/required/layout_top.php';
-	require_once 'auth/power_level.php';
+	require_once 'functions/auth.php';
+
+  if ( !AuthorizeUser() ) {
+?>
+
+<div class='panel content'>
+  <div class='head'>Staff Panel</div>
+  <div class='body' style='padding: 5px'>
+    You aren't authorized to be here.
+  </div>
+</div>
+
+<?php
+    exit;
+  }
 
   require_once 'functions/online_list.php';
 ?>
