@@ -951,14 +951,16 @@
 				case 'dynamax':
 					$Pokemon_Forme = '-dmax';
 					break;
+        case 'female':
+          $Pokemon_Forme = '-f';
+          break;
+        case 'male':
+          $Pokemon_Forme = '-m';
+          break;
+        case NULL:
+          break;
 				default:
-          if ( !empty($Pokemon_Forme) )
-            if ( $Pokemon_Forme == 'female' )
-              $Pokemon_Forme = '-f';
-            else if ( $Pokemon_Forme == 'male' )
-              $Pokemon_Forme = '-m';
-            else
-					    $Pokemon_Forme = "-{$Pokemon_Forme}";
+          $Pokemon_Forme = "-{$Pokemon_Forme}";
 					break;
 			}
 
