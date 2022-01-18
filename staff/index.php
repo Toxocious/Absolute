@@ -1,18 +1,18 @@
 <?php
-	require_once '../core/required/layout_top.php';
-	require_once 'functions/auth.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/auth.php';
 
-  if ( !AuthorizeUser() ) {
-?>
+  if ( !AuthorizeUser() )
+  {
+    echo "
+      <div class='panel content'>
+        <div class='head'>Staff Panel</div>
+        <div class='body' style='padding: 5px'>
+          You aren't authorized to be here.
+        </div>
+      </div>
+    ";
 
-<div class='panel content'>
-  <div class='head'>Staff Panel</div>
-  <div class='body' style='padding: 5px'>
-    You aren't authorized to be here.
-  </div>
-</div>
-
-<?php
     exit;
   }
 
@@ -36,5 +36,5 @@
 </div>
 
 <?php
-	require_once 'required/ajax_script.php';
-	require_once '../core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/required/ajax_script.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
