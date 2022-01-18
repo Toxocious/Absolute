@@ -948,6 +948,12 @@
 				case 'mega y':
 					$Pokemon_Forme = '-y-mega';
 					break;
+				case 'alola':
+					$Pokemon_Forme = '-alola';
+					break;
+				case 'galar':
+					$Pokemon_Forme = '-galar';
+					break;
 				case 'gigantamax':
 					$Pokemon_Forme = '-gmax';
 					break;
