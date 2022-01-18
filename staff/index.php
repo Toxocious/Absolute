@@ -35,6 +35,8 @@
 	</div>
 </div>
 
+<script type='text/javascript' src='js/ajax_functions.js'></script>
+<script type='text/javascript' src='js/sprite_list.js'></script>
+
 <?php
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/required/ajax_script.php';
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
