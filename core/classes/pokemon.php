@@ -939,20 +939,11 @@
 
 			switch($Pokemon_Forme)
 			{
-				case 'mega':
-					$Pokemon_Forme = '-mega';
-					break;
 				case 'mega x':
 					$Pokemon_Forme = '-x-mega';
 					break;
 				case 'mega y':
 					$Pokemon_Forme = '-y-mega';
-					break;
-				case 'alola':
-					$Pokemon_Forme = '-alola';
-					break;
-				case 'galar':
-					$Pokemon_Forme = '-galar';
 					break;
 				case 'gigantamax':
 					$Pokemon_Forme = '-gmax';
@@ -961,7 +952,13 @@
 					$Pokemon_Forme = '-dmax';
 					break;
 				default:
-					$Pokemon_Forme = '';
+          if ( !empty($Pokemon_Forme) )
+            if ( $Pokemon_Forme == 'female' )
+              $Pokemon_Forme = '-f';
+            else if ( $Pokemon_Forme == 'male' )
+              $Pokemon_Forme = '-m';
+            else
+					    $Pokemon_Forme = "-{$Pokemon_Forme}";
 					break;
 			}
 
