@@ -32,7 +32,7 @@ function SendRequest(Page, Data, HTTP_TYPE = 'GET')
     switch ( HTTP_TYPE )
     {
       case 'GET':
-        req.open('GET', `${this.AJAX_URL}?${URL_PARAMS}`);
+        req.open('GET', `${AJAX_URL}?${URL_PARAMS}`);
         req.send();
         break;
 
@@ -51,7 +51,7 @@ function SendRequest(Page, Data, HTTP_TYPE = 'GET')
         if ( typeof Data.Warp_Tile !== 'undefined' )
           Data_Val.append('Warp_Tile', Data.Warp_Tile);
 
-        req.open('POST', this.AJAX_URL);
+        req.open('POST', AJAX_URL);
         req.send(Data_Val);
         break;
 
