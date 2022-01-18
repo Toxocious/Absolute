@@ -11,7 +11,10 @@
       req.onload = () =>
       {
         if ( req.status === 200 )
+        {
+          document.getElementById('Staff_Content').innerHTML = req.response;
           resolve(req.response);
+        }
         else
           reject(Error(req.statusText));
       };
