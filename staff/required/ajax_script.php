@@ -18,9 +18,9 @@
     });
   }
 
-	function SendRequest(Data, HTTP_TYPE = 'GET')
+	function SendRequest(Page, Data, HTTP_TYPE = 'GET')
   {
-    const AJAX_URL = '/staff/ajax/';
+    const AJAX_URL = `/staff/ajax/${Page}.php`;
     const URL_PARAMS = new URLSearchParams(Data).toString().replace(/\=$/, '');
 
     return new Promise((resolve, reject) =>
