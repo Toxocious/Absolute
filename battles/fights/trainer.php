@@ -1,6 +1,9 @@
 <?php
   use BattleHandler\Battle;
 
+  $Battle_Directory = dirname(__DIR__, 1);
+  require_once $Battle_Directory . "\\classes\\log.php";
+
   class Trainer extends Battle
   {
     public $Earn_Exp = true;
@@ -22,6 +25,8 @@
       int $Foe_ID
     )
     {
+      $this->Log_Data = new Log();
+
       $this->Ally_ID = $Ally_ID;
       $this->Foe_ID = $Foe_ID;
 
@@ -90,6 +95,8 @@
           'Text' => 'The battle has begun.' . $Creation_Dialogue,
         ];
       }
+
+      $this->Log_Data->Initialize();
 
       return true;
     }

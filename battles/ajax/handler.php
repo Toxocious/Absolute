@@ -61,28 +61,42 @@
     $_POST['Data'] != 'null'
   )
   {
-    if ( isset($_POST['Client_X']) )
-      $_SESSION['Battle']['Logging']['Input']['Client_X'] = Purify($_POST['Client_X']);
-
-    if ( isset($_POST['Client_Y']) )
-      $_SESSION['Battle']['Logging']['Input']['Client_Y'] = Purify($_POST['Client_Y']);
-
-    if ( isset($_POST['Input_Type']) )
-      $_SESSION['Battle']['Logging']['Input']['Type'] = Purify($_POST['Input_Type']);
-
-    if ( isset($_POST['Is_Trusted']) )
-      $_SESSION['Battle']['Logging']['Input']['Is_Trusted'] = Purify($_POST['Is_Trusted']);
-
     if ( isset($_POST['Battle_ID']) )
       $_SESSION['Battle']['Logging']['Battle_ID'] = Purify($_POST['Battle_ID']);
     else
       $_SESSION['Battle']['Logging']['Battle_ID'] = 'Battle ID - Not Sent';
 
+    if ( isset($_POST['Client_X']) )
+      $_SESSION['Battle']['Logging']['Input']['Client_X'] = Purify($_POST['Client_X']);
+    else
+      $_SESSION['Battle']['Logging']['Input']['Client_X'] = -1;
+
+    if ( isset($_POST['Client_Y']) )
+      $_SESSION['Battle']['Logging']['Input']['Client_Y'] = Purify($_POST['Client_Y']);
+    else
+      $_SESSION['Battle']['Logging']['Input']['Client_Y'] = -1;
+
+    if ( isset($_POST['Input_Type']) )
+      $_SESSION['Battle']['Logging']['Input']['Type'] = Purify($_POST['Input_Type']);
+    else
+      $_SESSION['Battle']['Logging']['Input']['Type'] = null;
+
+    if ( isset($_POST['Is_Trusted']) )
+      $_SESSION['Battle']['Logging']['Input']['Is_Trusted'] = Purify($_POST['Is_Trusted']);
+    else
+      $_SESSION['Battle']['Logging']['Input']['Is_Trusted'] = 0;
+
     if ( isset($_POST['In_Focus']) )
       $_SESSION['Battle']['Logging']['In_Focus'] = Purify($_POST['In_Focus']);
+    else
+      $_SESSION['Battle']['Logging']['In_Focus'] = 0;
 
     $Action = Purify($_POST['Action']);
     $Data = Purify($_POST['Data']);
+
+    $Battle->Log_Data->AddAction($Action);
+    if ( !empty($_SESSION['Battle']['Postcodes']['Restart']) )
+      $Battle->Log_Data->Finalize();
 
     $Turn_Data = $Battle->ProcessTurn($Action, $Data);
 
