@@ -61,6 +61,9 @@
     $_POST['Data'] != 'null'
   )
   {
+    $Action = Purify($_POST['Action']);
+    $Data = Purify($_POST['Data']);
+
     if ( isset($_POST['Battle_ID']) )
       $_SESSION['Battle']['Logging']['Battle_ID'] = Purify($_POST['Battle_ID']);
     else
@@ -91,8 +94,18 @@
     else
       $_SESSION['Battle']['Logging']['In_Focus'] = 0;
 
-    $Action = Purify($_POST['Action']);
-    $Data = Purify($_POST['Data']);
+    if ( !empty($_SESSION['Battle']['Postcodes']) )
+    {
+      if ( !empty($_SESSION['Battle']['Postcodes']['Continue']) )
+        $Expected_Postcode = $_SESSION['Battle']['Postcodes']['Continue'];
+      else
+        $Expected_Postcode = $_SESSION['Battle']['Postcodes']['Restart'];
+
+      $_SESSION['Battle']['Logging']['Postcode'] = [
+        'Expected' => $Expected_Postcode,
+        'Received' => str_replace('"', "", $Data)
+      ];
+    }
 
     $Battle->Log_Data->AddAction($Action);
     if ( !empty($_SESSION['Battle']['Postcodes']['Restart']) )

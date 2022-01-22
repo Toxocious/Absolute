@@ -94,6 +94,14 @@
       $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Is_Trusted'];
       $Action = $Action << 13;
       $Action = $Action + (int) $_SESSION['Battle']['Logging']['In_Focus'];
+      $Action = $Action << 13;
+
+      $Postcode_Match = false;
+      if ( !empty($_SESSION['Battle']['Logging']['Postcode']) && count($_SESSION['Battle']['Logging']['Postcode']) == 2 )
+      {
+        $Postcode_Match = $_SESSION['Battle']['Logging']['Postcode']['Expected'] == $_SESSION['Battle']['Logging']['Postcode']['Received'];
+        $Action = $Action + (int) $Postcode_Match;
+      }
 
       $_SESSION['Battle']['Logging']['Actions'][] = $Action;
     }
