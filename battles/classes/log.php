@@ -148,4 +148,47 @@
         HandleError($e);
       }
     }
+
+    /**
+     * Parse the battle log's performed actions.
+     *
+     * @param $Encoded_Move
+     */
+    public static function Parse
+    (
+      $Encoded_Move
+    )
+    {
+      $Action = self::ACTIONS[$Encoded_Move >> 26];
+
+      $Postcode_Match = null;
+      if ( in_array($Action, [2, 3]) )
+        $Postcode_Match = self::GetBits($Encoded_Move, 52, 65);
+
+      return [
+        'Action' => $Action,
+        'Coords' => [
+          'x' => self::GetBits($Encoded_Move, 0, 13),
+          'y' => self::GetBits($Encoded_Move, 13, 26),
+        ],
+        'Is_Trusted' => self::GetBits($Encoded_Move, 26, 39),
+        'Window_In_Focus' => self::GetBits($Encoded_Move, 39, 52),
+        'Postcode_Match' => $Postcode_Match
+      ];
+    }
+
+    /**
+     * Get the bits of a performed action.
+     */
+    public static function GetBits
+    (
+      $Encoded_Move,
+      $Start_Position,
+      $End_Position
+    )
+    {
+      $Mask = (1 << ($End_Position - $Start_Position)) - 1;
+
+      return ($Encoded_Move >> $Start_Position) & $Mask;
+    }
   }
