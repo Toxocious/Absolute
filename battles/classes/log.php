@@ -1,7 +1,5 @@
 <?php
-  use BattleHandler\Battle;
-
-  class Log extends Battle
+  class Log
   {
     const ACTIONS = [
       'Unknown',
@@ -90,17 +88,18 @@
       $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Client_X'];
       $Action = $Action << 13;
       $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Client_Y'];
-      $Action = $Action << 13;
-      $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Is_Trusted'];
-      $Action = $Action << 13;
-      $Action = $Action + (int) $_SESSION['Battle']['Logging']['In_Focus'];
-      $Action = $Action << 13;
+      // $Action = $Action << 13;
+      // $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Is_Trusted'];
+      // $Action = $Action << 13;
+      // $Action = $Action + (int) $_SESSION['Battle']['Logging']['In_Focus'];
 
       $Postcode_Match = false;
       if ( !empty($_SESSION['Battle']['Logging']['Postcode']) && count($_SESSION['Battle']['Logging']['Postcode']) == 2 )
       {
         $Postcode_Match = $_SESSION['Battle']['Logging']['Postcode']['Expected'] == $_SESSION['Battle']['Logging']['Postcode']['Received'];
-        $Action = $Action + (int) $Postcode_Match;
+
+        // $Action = $Action << 13;
+        // $Action = $Action + (int) $Postcode_Match;
       }
 
       $_SESSION['Battle']['Logging']['Actions'][] = $Action;
@@ -171,9 +170,9 @@
           'x' => self::GetBits($Encoded_Move, 0, 13),
           'y' => self::GetBits($Encoded_Move, 13, 26),
         ],
-        'Is_Trusted' => self::GetBits($Encoded_Move, 26, 39),
-        'Window_In_Focus' => self::GetBits($Encoded_Move, 39, 52),
-        'Postcode_Match' => $Postcode_Match
+        // 'Is_Trusted' => self::GetBits($Encoded_Move, 26, 39),
+        // 'Window_In_Focus' => self::GetBits($Encoded_Move, 39, 52),
+        // 'Postcode_Match' => $Postcode_Match
       ];
     }
 
