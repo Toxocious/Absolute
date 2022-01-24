@@ -32,8 +32,13 @@
   $Total_Logs = number_format(count($Battle_Logs));
   $Log_Limit = number_format($Total_Logs);
 
+  $Battle_Image_Heatmap_URL = DOMAIN_ROOT . "/staff/ajax/logs/battle_image.php?User_ID_To_Show={$User_Info['ID']}";
+
   echo "
     <h3>Displaying {$Log_Limit} of {$Total_Logs} Logs</h3>
+    <button onclick=\"window.open('{$Battle_Image_Heatmap_URL}', 'Battle Log Heatmap', 'width=1600,height=900,scrollbars=no'); return false;\">
+      Battle Image Heatmap
+    </button>
     <br />
     <hr class='faded' />
     <br />
