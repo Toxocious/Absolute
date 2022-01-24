@@ -356,7 +356,6 @@
           req.onload = () =>
           {
             let JSON_Data = JSON.parse(req.response);
-            console.log(JSON_Data);
 
             Battle.Loading = false;
 
