@@ -36,10 +36,11 @@
 
   echo "
     <h3>Displaying {$Log_Limit} of {$Total_Logs} Logs</h3>
+    <br />
     <button onclick=\"window.open('{$Battle_Image_Heatmap_URL}', 'Battle Log Heatmap', 'width=1600,height=900,scrollbars=no'); return false;\">
       Battle Image Heatmap
     </button>
-    <br />
+    <br /><br />
     <hr class='faded' />
     <br />
   ";
