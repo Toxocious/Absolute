@@ -104,7 +104,7 @@
 
       $Table_Text .= "
         <tr>
-          <td colspan='1'>
+          <td colspan='1' style='width: 150px;'>
             <div>
               <b>{$Log['Battle_Type']} &bull; {$Log['Foe_ID']}</b>
             </div>
