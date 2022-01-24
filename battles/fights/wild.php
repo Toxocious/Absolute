@@ -58,7 +58,7 @@
       $_SESSION['Battle']['Ally'] = $this->Ally;
       $_SESSION['Battle']['Ally_ID'] = $this->Ally_ID;
       $_SESSION['Battle']['Foe'] = $this->Foe;
-    $_SESSION['Battle']['Foe_ID'] = -1;
+      $_SESSION['Battle']['Foe_ID'] = -1;
 
       $Creation_Dialogue = '';
       foreach(['Ally', 'Foe'] as $Side)

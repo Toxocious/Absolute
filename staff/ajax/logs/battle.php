@@ -25,7 +25,7 @@
 
   if ( empty($Battle_Logs) )
   {
-    echo 'This user has no battle logs.';
+    echo '<h3>This user has no battle logs.</h3>';
     exit;
   }
 
@@ -87,6 +87,15 @@
     }
     else
     {
+      $Is_Battle_Trusted_Text = '';
+
+      if ( !$Log['All_Inputs_Trusted'] )
+        $Is_Battle_Trusted_Text .= '<div style="color: red;"><b>INPUTS UNTRUSTED</b></div>';
+      if ( !$Log['Window_In_Focus'] )
+        $Is_Battle_Trusted_Text .= '<div style="color: red;"><b>TAB NOT IN FOCUS</b></div>';
+      if ( !$Log['All_Postcodes_Matched'] )
+        $Is_Battle_Trusted_Text .= '<div style="color: red;"><b>ALL POSTCODES NOT MATCHED</b></div>';
+
       $Table_Text .= "
         <tr>
           <td colspan='1'>
@@ -97,8 +106,9 @@
               " . number_format($Log['Battle_Duration']) . "ms &mdash; {$Log['Turn_Count']} Turns
             </div>
             <div>
-              " . date("n/j/Y h:i:s A", $Log['Time_Battle_Started']) . "
+              " . date('m/d/y&\nb\sp;&\nb\sp;h:i A', $Log['Time_Battle_Started']) . "
             </div>
+            {$Is_Battle_Trusted_Text}
           </td>
           <td>
       ";

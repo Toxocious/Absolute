@@ -66,6 +66,10 @@
 
         HandleError($e);
       }
+
+      $_SESSION['Battle']['Logging']['All_Inputs_Trusted'] = true;
+      $_SESSION['Battle']['Logging']['All_Postcodes_Matched'] = true;
+      $_SESSION['Battle']['Logging']['Page_Always_In_Focus'] = true;
     }
 
     /**
@@ -88,21 +92,25 @@
       $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Client_X'];
       $Action = $Action << 13;
       $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Client_Y'];
-      // $Action = $Action << 13;
-      // $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Is_Trusted'];
-      // $Action = $Action << 13;
-      // $Action = $Action + (int) $_SESSION['Battle']['Logging']['In_Focus'];
-
-      $Postcode_Match = false;
-      if ( !empty($_SESSION['Battle']['Logging']['Postcode']) && count($_SESSION['Battle']['Logging']['Postcode']) == 2 )
-      {
-        $Postcode_Match = $_SESSION['Battle']['Logging']['Postcode']['Expected'] == $_SESSION['Battle']['Logging']['Postcode']['Received'];
-
-        // $Action = $Action << 13;
-        // $Action = $Action + (int) $Postcode_Match;
-      }
 
       $_SESSION['Battle']['Logging']['Actions'][] = $Action;
+
+      if ( !$_SESSION['Battle']['Logging']['Input']['Is_Trusted'] )
+        $_SESSION['Battle']['Logging']['All_Inputs_Trusted'] = false;
+
+      if ( !$_SESSION['Battle']['Logging']['In_Focus'] )
+        $_SESSION['Battle']['Logging']['Page_Always_In_Focus'] = false;
+
+      if
+      (
+        !empty($_SESSION['Battle']['Logging']['Postcode']) &&
+        count($_SESSION['Battle']['Logging']['Postcode']) == 2
+      )
+      {
+        $Postcode_Match = $_SESSION['Battle']['Logging']['Postcode']['Expected'] == $_SESSION['Battle']['Logging']['Postcode']['Received'];
+        if ( !$Postcode_Match )
+          $_SESSION['Battle']['Logging']['All_Postcodes_Matched'] = false;
+      }
     }
 
     /**
@@ -127,7 +135,13 @@
 
         $Update_Battle_Log = $PDO->prepare("
           UPDATE `battle_logs`
-          SET `Battle_Duration` = ?, `Actions_Performed` = ?, `Turn_Count` = ?
+          SET
+            `Battle_Duration` = ?,
+            `Actions_Performed` = ?,
+            `Turn_Count` = ?,
+            `All_Inputs_Trusted` = ?,
+            `Window_In_Focus` = ?,
+            `All_Postcodes_Matched` = ?
           WHERE `ID` = ?
           LIMIT 1
         ");
@@ -135,6 +149,9 @@
           $_SESSION['Battle']['Last_Action_Time'],
           $Actions,
           $_SESSION['Battle']['Turn_ID'],
+          $_SESSION['Battle']['Logging']['All_Inputs_Trusted'],
+          $_SESSION['Battle']['Logging']['Page_Always_In_Focus'],
+          $_SESSION['Battle']['Logging']['All_Postcodes_Matched'],
           $_SESSION['Battle']['Logging']['Log_ID']
         ]);
 
@@ -160,19 +177,12 @@
     {
       $Action = self::ACTIONS[$Encoded_Move >> 26];
 
-      $Postcode_Match = null;
-      if ( in_array($Action, [2, 3]) )
-        $Postcode_Match = self::GetBits($Encoded_Move, 52, 65);
-
       return [
         'Action' => $Action,
         'Coords' => [
           'x' => self::GetBits($Encoded_Move, 0, 13),
           'y' => self::GetBits($Encoded_Move, 13, 26),
         ],
-        // 'Is_Trusted' => self::GetBits($Encoded_Move, 26, 39),
-        // 'Window_In_Focus' => self::GetBits($Encoded_Move, 39, 52),
-        // 'Postcode_Match' => $Postcode_Match
       ];
     }
 
