@@ -108,7 +108,7 @@
 
       try
       {
-        $Fetch_Shop_Objects = $PDO->prepare("SELECT * FROM `obtainable_items` WHERE `obtained_place` = ?");
+        $Fetch_Shop_Objects = $PDO->prepare("SELECT * FROM `shop_items` WHERE `obtained_place` = ?");
         $Fetch_Shop_Objects->execute([ $Shop_Data['Obtained_Place'] ]);
         $Fetch_Shop_Objects->setFetchMode(PDO::FETCH_ASSOC);
         $Shop_Objects = $Fetch_Shop_Objects->fetchAll();
@@ -118,7 +118,7 @@
         HandleError($e);
       }
 
-      if ( !isset($Shop_Objects) )
+      if ( !isset($Shop_Objects) || count($Shop_Objects) === 0 )
         return false;
 
       return $Shop_Objects;
