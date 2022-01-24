@@ -278,6 +278,19 @@
         foreach ( $Price_Array[0] as $Currency => $Amount )
           $User_Class->RemoveCurrency($User_Data['ID'], $Currency, $Amount);
 
+        $this->InsertLog(
+          $Shop_Data['Name'],
+          null,
+          $Spawn_Pokemon['PokeID'],
+          $Object['Pokedex_ID'],
+          $Object['Alt_ID'],
+          $Object['Type'],
+          $Object['Gender'],
+          $Object['Prices'],
+          $User_Data['ID'],
+          time()
+        );
+
         return [
           'Display_Name' => $Spawn_Pokemon['Display_Name'],
           'Stats' => $Spawn_Pokemon['Stats'],
@@ -300,6 +313,15 @@
 
         foreach ( $Price_Array[0] as $Currency => $Amount )
           $User_Class->RemoveCurrency($User_Data['ID'], $Currency, $Amount);
+
+        $this->InsertLog(
+          $Shop_Data['Name'],
+          $Object['ID'],
+          null, null, null, null, null,
+          $Object['Prices'],
+          $User_Data['ID'],
+          time()
+        );
 
         return true;
       }
