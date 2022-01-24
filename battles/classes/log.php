@@ -29,7 +29,7 @@
         $PDO->beginTransaction();
 
         $Initialize_Battle_Log = $PDO->prepare("
-          INSERT INTO battle_logs
+          INSERT INTO `battle_logs`
           (
             `User_ID`,
             `Foe_ID`,

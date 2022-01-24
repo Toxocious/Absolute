@@ -258,7 +258,6 @@
         else
           $Object['Gender'] = $Poke_Class->GenerateGender($Object['Pokedex_ID'], $Object['Alt_ID']);
 
-        
         $Spawn_Pokemon = $Poke_Class->CreatePokemon(
           $Object['Pokedex_ID'],
           $Object['Alt_ID'],
@@ -393,5 +392,65 @@
         return true;
       else
         return false;
+    }
+
+    /**
+     * Insert a new purchase log into the `shop_logs` database table.
+     *
+     * @param {string} $Shop_Name
+     * @param {int} $Item_ID
+     * @param {int} $Pokemon_ID
+     * @param {int} $Pokemon_Pokedex_ID
+     * @param {int} $Pokemon_Alt_ID
+     * @param {int} $Pokemon_Type
+     * @param {int} $Pokemon_Gender
+     * @param {string} $Bought_With
+     * @param {int} $Bought_By
+     * @param {int} $Timestamp
+     */
+    private function InsertLog
+    (
+      $Shop_Name,
+      $Item_ID,
+      $Pokemon_ID,
+      $Pokemon_Pokedex_ID,
+      $Pokemon_Alt_ID,
+      $Pokemon_Type,
+      $Pokemon_Gender,
+      $Bought_With,
+      $Bought_By,
+      $Timestamp
+    )
+    {
+      global $PDO;
+
+      try
+      {
+        $PDO->beginTransaction();
+
+        $Insert_Shop_Log = $PDO->prepare("
+          INSERT INTO `shop_logs` (
+            `Shop_Name`,
+            `Item_ID`,
+            `Pokemon_ID`,
+            `Pokemon_Pokedex_ID`,
+            `Pokemon_Alt_ID`,
+            `Pokemon_Type`,
+            `Pokemon_Gender`,
+            `Bought_With`,
+            `Bought_By`,
+            `Timestamp`
+          ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+        ");
+        $Insert_Shop_Log->execute(func_get_args());
+
+        $PDO->commit();
+      }
+      catch ( \PDOException $e )
+      {
+        $PDO->rollBack();
+
+        HandleError($e);
+      }
     }
   }
