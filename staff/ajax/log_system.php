@@ -32,6 +32,10 @@
       require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/ajax/logs/battle.php';
       break;
 
+    case 'Shop':
+      require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/ajax/logs/shop.php';
+      break;
+
     case 'Trade':
       require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/ajax/logs/trades.php';
       break;
