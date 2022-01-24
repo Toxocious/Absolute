@@ -177,11 +177,16 @@
 
 			try
 			{
-				$Select_Query = $PDO->prepare("UPDATE `user_currency` SET `{$Currency}` = `{$Currency}` - ? WHERE `User_ID` = ? LIMIT 1");
+        $PDO->beginTransaction();
+
+				$Select_Query = $PDO->prepare("UPDATE `user_currency` SET `{$Currency}` = `{$Currency}` - ? WHERE `ID` = ? LIMIT 1");
 				$Select_Query->execute([ $Amount, $User_ID ]);
+
+        $PDO->commit();
 			}
 			catch ( PDOException $e )
 			{
+        $PDO->rollBack();
 				HandleError($e);
 			}
 
