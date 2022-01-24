@@ -63,6 +63,7 @@
           <td>
             <select name='log_type'>
               <option value='Battle'>Battle</option>
+              <option value='Trade'>Trade</option>
             </select>
           </td>
         </tr>

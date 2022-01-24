@@ -64,7 +64,23 @@ function SendRequest(Page, Data, HTTP_TYPE = 'GET')
     req.onload = () =>
     {
       if ( req.status === 200 )
+      {
+        setTimeout(() =>
+        {
+          [].forEach.call(document.getElementsByName("iFrame_Handler"), function(el)
+          {
+            console.log('setting iframelightbox on', el);
+
+            el.lightbox = new IframeLightbox(el, {
+              scrolling: true,
+              rate: 500,
+              touch: true,
+            });
+          });
+        }, 250);
+
         resolve(req.response);
+      }
       else
         reject(Error(req.statusText));
     };
