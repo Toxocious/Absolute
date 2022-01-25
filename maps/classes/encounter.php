@@ -54,6 +54,7 @@
         'Gender' => $Poke_Class->GenerateGender(null, $Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID']),
         'Type' => $Encounter_Type,
         'Obtained_Text' => $Generated_Encounter['Obtained_Text'],
+        'Generated_On' => time()
       ];
 
       return $_SESSION['Absolute']['Maps']['Encounter'];
@@ -191,6 +192,8 @@
         </table>
       ";
 
+      self::LogEncounter();
+
       unset($_SESSION['Absolute']['Maps']['Encounter']);
 
       return [
@@ -224,6 +227,8 @@
         <br /><br />
         +" . number_format($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']) . " Map Exp.
       ";
+
+      self::LogEncounter();
 
       unset($_SESSION['Absolute']['Maps']['Encounter']);
 
@@ -259,5 +264,51 @@
         'Run_Text' => $Run_Text,
         'Steps_Till_Next_Encounter' => $Get_Steps_Till_Encounter
       ];
+    }
+
+    /**
+     * Log the encounter to the database.
+     */
+    public static function LogEncounter()
+    {
+      global $PDO, $User_Data;
+
+      try
+      {
+        $PDO->beginTransaction();
+
+        $Log_Map_Encounter = $PDO->prepare("
+          INSERT INTO `map_logs` (
+            `Map_Name`,
+            `Pokemon_Pokedex_ID`,
+            `Pokemon_Alt_ID`,
+            `Pokemon_Type`,
+            `Pokemon_Level`,
+            `Pokemon_Gender`,
+            `Encountered_On`,
+            `Caught_By`,
+            `Time_Caught`
+          ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
+        ");
+        $Log_Map_Encounter->execute([
+          $_SESSION['Absolute']['Maps']['Encounter']['Obtained_Text'],
+          $_SESSION['Absolute']['Maps']['Encounter']['Pokedex_Data']['Pokedex_ID'],
+          $_SESSION['Absolute']['Maps']['Encounter']['Pokedex_Data']['Alt_ID'],
+          $_SESSION['Absolute']['Maps']['Encounter']['Type'],
+          $_SESSION['Absolute']['Maps']['Encounter']['Level'],
+          $_SESSION['Absolute']['Maps']['Encounter']['Gender'],
+          $_SESSION['Absolute']['Maps']['Encounter']['Generated_On'],
+          $User_Data['ID'],
+          time()
+        ]);
+
+        $PDO->commit();
+      }
+      catch ( \PDOException $e )
+      {
+        $PDO->rollBack();
+
+        HandleError($e);
+      }
     }
   }
