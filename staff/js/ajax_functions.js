@@ -69,8 +69,6 @@ function SendRequest(Page, Data, HTTP_TYPE = 'GET')
         {
           [].forEach.call(document.getElementsByName("iFrame_Handler"), function(el)
           {
-            console.log('setting iframelightbox on', el);
-
             el.lightbox = new IframeLightbox(el, {
               scrolling: true,
               rate: 500,
