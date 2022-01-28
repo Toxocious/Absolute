@@ -19,7 +19,7 @@
   if ( !empty($_GET['Ban_Type']) && in_array($_GET['Ban_Type'], ['RPG', 'Chat']) )
     $Ban_Type = Purify($_GET['Ban_Type']);
 
-  $Unban_Date = '';
+  $Unban_Date = null;
   if ( !empty($_GET['Unban_Date']) && gettype($_GET['Unban_Date']) === 'string' && strlen($_GET['Unban_Date']) == 8 )
     $Unban_Date = Purify($_GET['Unban_Date']);
 
