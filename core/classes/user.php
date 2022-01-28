@@ -37,6 +37,18 @@
 				$Fetch_User->execute([ $User_Query ]);
 				$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 				$User = $Fetch_User->fetch();
+
+        $Check_User_Ban = $PDO->prepare("
+          SELECT *
+          FROM `user_bans`
+          WHERE `User_ID` = ?
+          LIMIT 1
+        ");
+        $Check_User_Ban->execute([
+          $User_Query
+        ]);
+        $Check_User_Ban->setFetchMode(PDO::FETCH_ASSOC);
+        $User_Ban = $Check_User_Ban->fetch();
 			}
 			catch ( PDOException $e )
 			{
@@ -53,12 +65,12 @@
 			if ( !isset($User) || !$User )
 				return false;
 
-			if ( $User['RPG_Ban'] )
+			if ( $User_Ban['RPG_Ban'] )
 				$Banned_RPG = true;
 			else
 				$Banned_RPG = false;
 
-			if ( $User['Chat_Ban'] )
+			if ( $User_Ban['Chat_Ban'] )
 				$Banned_Chat = true;
 			else
 				$Banned_Chat = false;
