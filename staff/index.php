@@ -24,13 +24,12 @@
 	<div class='body' id='Staff_Content' style='padding: 5px'>
     <br />
     <h3>
-      Welcome, <?= $User_Username = $User_Class->DisplayUsername($User_Data['ID'], true, false, true); ?>
+      Welcome, <?= $User_Class->DisplayUsername($User_Data['ID'], true, false, true); ?>
     </h3>
     <br />
 
     <?php
-      $Online_Users = GetOnlineUsers();
-      echo $Online_Users;
+      echo GetOnlineUsers();
     ?>
 	</div>
 </div>
