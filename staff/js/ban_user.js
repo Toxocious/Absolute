@@ -15,7 +15,6 @@ function BanUser()
 
   SendRequest('ban_user', Form_Data)
     .then((Ban_Data) => {
-      console.log(Ban_Data);
       Ban_Data = JSON.parse(Ban_Data);
 
       document.getElementById('Ban_AJAX').className = Ban_Data.Success ? 'success' : 'error';
