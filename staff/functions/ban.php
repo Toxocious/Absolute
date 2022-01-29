@@ -157,7 +157,7 @@
    */
   function GetBannedUsers()
   {
-    global $PDO, $User_Class;
+    global $PDO;
 
     try
     {
@@ -173,6 +173,23 @@
     {
       HandleError( $e );
     }
+
+    return $Banned_Users;
+  }
+
+  /**
+   * ShowBannedUsers
+   *
+   * @param $Banned_Users
+   *
+   * @return string
+   */
+  function ShowBannedUsers
+  (
+    $Banned_Users
+  )
+  {
+    global $User_Class;
 
     if ( empty($Banned_Users) )
     {

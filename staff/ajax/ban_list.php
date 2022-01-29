@@ -67,7 +67,7 @@
       echo json_encode([
         'Success' => true,
         'Message' => "{$User_Username} has been unbanned.",
-        'Banned_User_List' => GetBannedUsers(),
+        'Banned_User_List' => ShowBannedUsers(GetBannedUsers()),
       ]);
       break;
   }

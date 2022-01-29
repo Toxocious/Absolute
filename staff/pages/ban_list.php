@@ -28,7 +28,7 @@
 
   <div style='display: flex; flex-wrap: wrap; gap: 10px;' id='Banned_User_List'>
     <?php
-      echo GetBannedUsers();
+      echo ShowBannedUsers(GetBannedUsers());
     ?>
   </div>
 </div>
