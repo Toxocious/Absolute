@@ -17,6 +17,8 @@
   }
 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/report.php';
+
+  $Active_Reports = GetActiveReports();
 ?>
 
 <div style='display: flex; flex-wrap: wrap; justify-content: center;'>
@@ -24,11 +26,15 @@
     <h3>Active Reports</h3>
   </div>
 
+  <div style='flex-basis: 100%; width: 100%;'>
+    <h4>There are <?= number_format(count($Active_Reports)); ?> active reports.</h3>
+  </div>
+
   <div id='Report_AJAX'></div>
 
   <div style='display: flex; flex-wrap: wrap; gap: 10px;' id='Active_Report_List'>
     <?php
-      echo ShowActiveReports(GetActiveReports());
+      echo ShowActiveReports($Active_Reports);
     ?>
   </div>
 </div>
