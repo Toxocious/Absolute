@@ -1,6 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/ban_user.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/ban.php';
 
   if ( !empty($_GET['User_Value']) && in_array(gettype($_GET['User_Value']), ['integer', 'string']) )
     $User_Value = Purify($_GET['User_Value']);

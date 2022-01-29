@@ -38,7 +38,7 @@
 <script type='text/javascript' src='js/ajax_functions.js'></script>
 <script type='text/javascript' src='js/sprite_list.js'></script>
 <script type='text/javascript' src='js/log_system.js'></script>
-<script type='text/javascript' src='js/ban_user.js'></script>
+<script type='text/javascript' src='js/ban.js'></script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

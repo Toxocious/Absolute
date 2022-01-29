@@ -20,5 +20,23 @@ function BanUser()
       document.getElementById('Ban_AJAX').className = Ban_Data.Success ? 'success' : 'error';
       document.getElementById('Ban_AJAX').innerHTML = Ban_Data.Message;
     })
-    .catch((Error) => console.log('Error:', Error));
+    .catch((Error) => console.error('Error:', Error));
+}
+
+function UnbanUser(Banned_User_ID)
+{
+  let Form_Data = new FormData();
+  Form_Data.append('Banned_User_ID', Banned_User_ID);
+  Form_Data.append('Ban_Action', 'Unban');
+
+  SendRequest('ban_list', Form_Data)
+    .then((Unban_Data) => {
+      Unban_Data = JSON.parse(Unban_Data);
+
+      document.getElementById('Ban_AJAX').className = Unban_Data.Success ? 'success' : 'error';
+      document.getElementById('Ban_AJAX').innerHTML = Unban_Data.Message;
+
+      document.getElementById('Banned_User_List').innerHTML = Unban_Data.Banned_User_List;
+    })
+    .catch((Error) => console.error('Error:', Error));
 }
