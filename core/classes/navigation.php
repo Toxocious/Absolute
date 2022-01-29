@@ -1,4 +1,6 @@
 <?php
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/report.php';
+
 	Class Navigation
 	{
 		public $PDO;
@@ -66,9 +68,19 @@
 					$Link_Name = 'Index';
 				}
 
+        $Notification_Amount = 0;
+        $Notification_Text = '';
+
+        $Reported_Users = count(GetActiveReports());
+        if ( $Reported_Users > 0 )
+          $Notification_Amount += $Reported_Users;
+
+        if ( $Notification_Amount > 0 && $Link_Name == 'Staff Panel' )
+          $Notification_Text = " (<b style='color: red;'> {$Notification_Amount} </b>)";
+
 				echo "
 					<div class='button' style='margin-right: 5px;'>
-						<a href='{$Link_URL}'>{$Link_Name}</a>
+						<a href='{$Link_URL}'>{$Link_Name}{$Notification_Text}</a>
 					</div>
 
 					<div class='nav-container'{$Nav_Width}>
@@ -106,9 +118,20 @@
 					{
 						if ( $Link['Menu'] === $Head['Menu'] && $Link['Power'] <= $User_Data['Power'] )
 						{
+              $Notification_Amount = '';
+
+              switch ( $Link['Name'] )
+              {
+                case 'Reported Users':
+                  $Reported_Users = count(GetActiveReports());
+                  if ( $Reported_Users > 0 )
+                    $Notification_Amount = " (<b style='color: red;'> {$Reported_Users} </b>)";
+                  break;
+              }
+
 							$Display_Links .= "
 								<div class='dropdown-item'>
-									<a href='javascript:void(0);' onclick='LoadPage(\"/staff/{$Link['Link']}\");'>{$Link['Name']}</a>
+									<a href='javascript:void(0);' onclick='LoadPage(\"/staff/{$Link['Link']}\");'>{$Link['Name']}{$Notification_Amount}</a>
 								</div>
 							";
 						}
