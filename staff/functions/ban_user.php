@@ -26,15 +26,16 @@
 
       $RPG_Ban_User = $PDO->prepare("
         INSERT INTO `user_bans` (
-          `User_ID`, `Banned_By`,
+          `User_ID`, `Banned_By`, `Banned_On`,
           `RPG_Ban`, `RPG_Ban_Reason`, `RPG_Ban_Staff_Notes`, `RPG_Ban_Until`
         )
-        VALUES ( ?, ?, ?, ?, ?, ? )
+        VALUES ( ?, ?, ?, ?, ?, ?, ? )
         ON DUPLICATE KEY UPDATE `RPG_Ban` = ?, `RPG_Ban_Reason` = ?, `RPG_Ban_Staff_Notes` = ?, `RPG_Ban_Until` = ?
       ");
       $RPG_Ban_User->execute([
         $User_ID,
         $User_Data['ID'],
+        time(),
         $RPG_Ban,
         $RPG_Ban_Reason,
         $RPG_Ban_Staff_Notes,
@@ -82,15 +83,16 @@
 
       $Chat_Ban_User = $PDO->prepare("
         INSERT INTO `user_bans` (
-          `User_ID`, `Banned_By`,
+          `User_ID`, `Banned_By`, `Banned_On`,
           `Chat_Ban`, `Chat_Ban_Reason`, `Chat_Ban_Staff_Notes`, `Chat_Ban_Until`
         )
-        VALUES ( ?, ?, ?, ?, ?, ? )
+        VALUES ( ?, ?, ?, ?, ?, ?, ? )
         ON DUPLICATE KEY UPDATE `Chat_Ban` = ?, `Chat_Ban_Reason` = ?, `Chat_Ban_Staff_Notes` = ?, `Chat_Ban_Until` = ?
       ");
       $Chat_Ban_User->execute([
         $User_ID,
         $User_Data['ID'],
+        time(),
         $Chat_Ban,
         $Chat_Ban_Reason,
         $Chat_Ban_Staff_Notes,
