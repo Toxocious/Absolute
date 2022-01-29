@@ -153,7 +153,7 @@
   /**
    * GetBannedUsers
    *
-   * @return void
+   * @return array
    */
   function GetBannedUsers()
   {
