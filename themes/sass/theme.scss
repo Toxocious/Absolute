@@ -42,7 +42,8 @@ a:hover
 
 input
 {
-  &[type='text']
+  &[type='text'],
+  &[type='password']
   {
     background: var(--color-secondary);
     border-color: var(--color-black);

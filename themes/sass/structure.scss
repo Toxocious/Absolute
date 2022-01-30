@@ -39,7 +39,8 @@ hr.faded
 
 input
 {
-  &[type='text']
+  &[type='text'],
+  &[type='password']
   {
     border: 2px solid;
     border-radius: var(--border-radius);
