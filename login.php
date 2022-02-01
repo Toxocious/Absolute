@@ -1,5 +1,6 @@
 <?php
 	require_once 'core/required/session.php';
+  require_once 'core/functions/login.php';
 
   /**
    * The user is already logged in; don't process login logic.
@@ -26,38 +27,34 @@
   /**
    * The user is attempting to log in.
    */
-	if ( isset($_POST['username']) && isset($_POST['password']) )
+	if ( !empty($_POST['username']) && !empty($_POST['password']) )
 	{
-		$Username = $Purify->Cleanse($_POST['username']);
-		$Password = $Purify->Cleanse($_POST['password']);
+		$Username = Purify($_POST['username']);
+		$Password = Purify($_POST['password']);
 		$IP = $_SERVER["REMOTE_ADDR"];
 
-		try
-		{
-			$Query_User = $PDO->prepare("SELECT `ID`, `Password`, `Password_Salt` FROM `users` WHERE `Username` = ? or `ID` = ? LIMIT 1");
-			$Query_User->execute([ $Username, $Username ]);
-			$Query_User->setFetchMode(PDO::FETCH_ASSOC);
-			$User_Info = $Query_User->fetch();
-		}
-		catch ( PDOException $e )
-		{
-			HandleError( $e->getMessage() );
-		}
+    $Login_Attempt = false;
+
+    $User_Info = CheckUserExistence($Username);
 
     if ( empty($User_Info) )
     {
+      TrackLoginAttempt($Username, $IP, false);
+
       $Login_Message = [
         'Type' => 'error',
         'Text' => "An account with that ID or Username does not exist."
       ];
     }
-    else
-    {
-      $Salt = '5rrx4YP64TIuxqclMLaV1elGheNxJJRggMxzQjv5gQeFl84NFgXvR3NxcHuOc31SSZBTzUFEt0mYQ4Oo';
-      $Hashed_Password = hash_hmac('sha512', $Password . $User_Info['Password_Salt'], $Salt);
 
-      if ( $User_Info['Password'] != $Hashed_Password )
+    if ( empty($Login_Message) )
+    {
+      $Password_Check = CheckUserPasswordMatch($User_Info['ID'], $Password);
+
+      if ( !$Password_Check )
       {
+        TrackLoginAttempt($User_Info['ID'], $IP, false);
+
         $Login_Message = [
           'Type' => 'error',
           'Text' => "You have entered an incorrect password."
@@ -67,6 +64,8 @@
 
     if ( empty($Login_Message) )
     {
+      TrackLoginAttempt($User_Info['ID'], $IP, true);
+
       $_SESSION['Absolute']['Logged_In_As'] = $User_Info['ID'];
       header('Location: /news.php');
       exit;
@@ -78,7 +77,7 @@
 
 <div class='panel content' style='margin: 5px; width: calc(100% - 14px);'>
 	<div class='head'>Login</div>
-	<div class='body'>
+	<div class='body' style='padding-bottom: 5px;'>
 		<div class='nav'>
 			<div><a href='index.php' style='display: block;'>Home</a></div>
 			<div><a href='login.php' style='display: block;'>Login</a></div>
@@ -112,7 +111,6 @@
 				<input type='submit' name='action' value='Login to Absolute' style='margin-left: -3px; width: 180px;' />
 			</form>
 		</div>
-		<br />
 	</div>
 </div>
 
