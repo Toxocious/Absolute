@@ -39,6 +39,7 @@
 <script type='text/javascript' src='js/log_system.js'></script>
 <script type='text/javascript' src='js/report.js'></script>
 <script type='text/javascript' src='js/ban.js'></script>
+<script type='text/javascript' src='js/modify_user.js'></script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
