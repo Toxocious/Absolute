@@ -37,7 +37,7 @@
         {
           Absolute.user = {
             user_id: <?= $User_Data['ID']; ?>,
-            postcode: <?= $User_Data['Auth_Code']; ?>,
+            postcode: '<?= $User_Data['Auth_Code']; ?>',
           }
 
           Absolute.Enable();
