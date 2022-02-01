@@ -28,7 +28,7 @@
         <tbody>
           <tr>
             <td colspan='2'>
-              <input type='password' />
+              <input type='password' name='New_User_Password' />
               <br />
               <i>Enter the new password</i>
             </td>
@@ -38,11 +38,11 @@
     }
 
     $Preset_Avatars = glob($_SERVER['DOCUMENT_ROOT'] . "/images/Avatars/Sprites/*.png");
-    $Avatar_Options = '<option>Select An Avatar</option>';
+    $Avatar_Options = '';
     foreach ( $Preset_Avatars as $Avatar_ID => $Avatar )
     {
       $Avatar_ID++;
-      $Avatar_Options .= "<option value='{$Avatar_ID}'> Avatar #{$Avatar_ID} </option>";
+      $Avatar_Options .= "<option value='{$Avatar_ID}'>Avatar #{$Avatar_ID}</option>";
     }
 
     return "
@@ -73,7 +73,7 @@
             <td colspan='1' style='width: 50%;'>
               <b>New Avatar</b>
               <br />
-              <select name='New_Avatar'>
+              <select name='New_User_Avatar'>
                 {$Avatar_Options}
               </select>
             </td>
@@ -117,14 +117,20 @@
 
     if ( !empty($New_User_Avatar) )
     {
-      $Avatar_Source = DOMAIN_SPRITES . "/Avatars/Sprites/{$New_User_Avatar}.png";
+      $Avatar_Source = "/Avatars/Sprites/{$New_User_Avatar}.png";
       UpdateAvatar($User_Value, $Avatar_Source);
     }
 
     if ( !empty($New_User_Password) && $User_Data['Power'] >= 7 )
     {
-      // password logic needs a complete overhaul
+      UpdatePassword($User_Value, $New_User_Password);
     }
+
+    return [
+      'Success' => true,
+      'Message' => 'You have modified this user\'s information.',
+      'New_Table_HTML' => ShowModifyUserTable($User_Value)
+    ];
   }
 
   /**
@@ -152,8 +158,51 @@
         LIMIT 1
       ");
       $Update_Avatar->execute([
+        $Avatar_Source,
         $User_Value,
-        $Avatar_Source
+        $User_Value
+      ]);
+
+      $PDO->commit();
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+    }
+  }
+
+  /**
+   * Update the user's password.
+   *
+   * @param $User_Value
+   * @param $New_Password
+   */
+  function UpdatePassword
+  (
+    $User_Value,
+    $New_Password
+  )
+  {
+    global $PDO;
+
+    $New_Password_Hash = password_hash($New_Password, PASSWORD_DEFAULT);
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Create_User_Password = $PDO->prepare("
+        UPDATE `user_passwords`
+        SET `Password` = ?
+        WHERE `ID` = ? OR `Username` = ?
+        LIMIT 1
+      ");
+      $Create_User_Password->execute([
+        $New_Password_Hash,
+        $User_Value,
+        $User_Value
       ]);
 
       $PDO->commit();

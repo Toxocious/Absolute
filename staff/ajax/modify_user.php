@@ -81,7 +81,8 @@
 
       echo json_encode([
         'Success' => $Update_User['Success'],
-        'Message' => $Update_User['Update_Message'],
+        'Message' => $Update_User['Message'],
+        'Modify_User_Table' => $Update_User['New_Table_HTML'],
       ]);
       break;
   }
