@@ -112,18 +112,18 @@
   /**
 	 * If the user is currently in a session, run the following code at the start of every page load.
 	 */
-	if ( isset($_SESSION['abso_user']) )
+	if ( isset($_SESSION['Absolute']) )
 	{
-    $User_Data = $User_Class->FetchUserData($_SESSION['abso_user']);
+    $User_Data = $User_Class->FetchUserData($_SESSION['Absolute']['Logged_In_As']);
 
-		if ( !isset($_SESSION['Playtime']) )
+		if ( !isset($_SESSION['Absolute']['Playtime']) )
 		{
-			$_SESSION['Playtime'] = $Time;
+			$_SESSION['Absolute']['Playtime'] = $Time;
 		}
 
-		$Playtime = $Time - $_SESSION['Playtime'];
+		$Playtime = $Time - $_SESSION['Absolute']['Playtime'];
 		$Playtime = $Playtime > 20 ? 20 : $Playtime;
-		$_SESSION['Playtime'] = $Time;
+		$_SESSION['Absolute']['Playtime'] = $Time;
 
 		try
 		{

@@ -89,21 +89,21 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
           break;
       }
 
       $Damage = $Attacker->Level * 2;
 
-      if ( !isset($_SESSION['Battle']['Pay_Day']) )
-        $_SESSION['Battle']['Pay_Day'] = $Damage;
+      if ( !isset($_SESSION['Absolute']['Battle']['Pay_Day']) )
+        $_SESSION['Absolute']['Battle']['Pay_Day'] = $Damage;
       else
-        $_SESSION['Battle']['Pay_Day'] += $Damage;
+        $_SESSION['Absolute']['Battle']['Pay_Day'] += $Damage;
 
       return [
         'Text' => "{$Attacker->Display_Name} used {$this->Name} and dealt <b>" . number_format($Damage) . "</b> damage to {$Defender->Display_Name}." .
@@ -132,12 +132,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
           break;
       }
 

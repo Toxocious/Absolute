@@ -35,7 +35,7 @@
 	}
 	else
 	{
-		$_SESSION['Trade'] = [
+		$_SESSION['Absolute']['Trade'] = [
 			'Sender' => [
 				'User' => $User_Data['ID'],
 				'Pokemon' => [],

@@ -1,7 +1,7 @@
 <?php
 	require_once 'core/required/layout_top.php';
 
-	if ( isset($_SESSION['abso_user']) )
+	if ( isset($_SESSION['Absolute']) )
 	{
 ?>
 
@@ -27,10 +27,10 @@
 
 			$Fetch_User_Count = $PDO->query("SELECT COUNT(`id`) FROM `users`");
       $User_Count = $Fetch_User_Count->fetchColumn();
-	
+
 			$Fetch_Pokemon_Count = $PDO->query("SELECT COUNT(`ID`) FROM `pokemon`");
       $Pokemon_Count = $Fetch_Pokemon_Count->fetchColumn();
-		} 
+		}
 		catch ( PDOException $e )
 		{
 			HandleError( $e->getMessage() );
@@ -50,7 +50,7 @@
 		<div class='description' style='width: 70%;'>
 			The Pok&eacute;mon Absolute is home to <b><?= number_format($User_Count); ?></b> trainers and <b><?= number_format($Pokemon_Count); ?></b> Pok&eacute;mon!
 		</div>
-		
+
 		<div class='flex wrap'>
 			<div style='flex-basis: 250px;'>
 				<img src='images/Assets/Prof_Syc.png' style='height: 345px; transform: scaleX(-1); width: 230px;' />

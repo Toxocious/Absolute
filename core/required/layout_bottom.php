@@ -27,7 +27,7 @@
       /**
        * Include the necessary Absolute Chat scripts.
        */
-      if ( isset($_SESSION['abso_user']) )
+      if ( isset($_SESSION['Absolute']) )
       {
     ?>
       <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/absochat.js'></script>

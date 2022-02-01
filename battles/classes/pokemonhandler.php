@@ -346,16 +346,16 @@
         switch ($this->Side)
         {
           case 'Ally':
-            $Attacker = $_SESSION['Battle']['Ally']->Active;
-            $Defender = $_SESSION['Battle']['Foe']->Active;
+            $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
+            $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
             break;
           case 'Foe';
-            $Attacker = $_SESSION['Battle']['Ally']->Active;
-            $Defender = $_SESSION['Battle']['Ally']->Active;
+            $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
+            $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
             break;
         }
 
-        $Previous_Attacker = $_SESSION['Battle'][$this->Side]->Active;
+        $Previous_Attacker = $_SESSION['Absolute']['Battle'][$this->Side]->Active;
 
         switch ($this->Ability)
         {
@@ -376,7 +376,7 @@
         if ( $this->Ability_Original != $this->Ability )
           $this->Ability == $this->Ability_Original;
 
-        foreach ($_SESSION['Battle'][$this->Side]->Roster as $Roster_Pokemon)
+        foreach ($_SESSION['Absolute']['Battle'][$this->Side]->Roster as $Roster_Pokemon)
         {
           $Roster_Pokemon->Active = false;
 
@@ -390,10 +390,10 @@
         }
 
         $this->Participated = true;
-        $_SESSION['Battle'][$this->Side]->Active = $this;
+        $_SESSION['Absolute']['Battle'][$this->Side]->Active = $this;
       }
 
-      $New_Active = $_SESSION['Battle'][$this->Side]->Active;
+      $New_Active = $_SESSION['Absolute']['Battle'][$this->Side]->Active;
       $this->RevertCopy();
 
       $Effect_Text = '';
@@ -533,12 +533,12 @@
       switch ( $this->Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally'];
-          $Defender = $_SESSION['Battle']['Foe'];
+          $Attacker = $_SESSION['Absolute']['Battle']['Ally'];
+          $Defender = $_SESSION['Absolute']['Battle']['Foe'];
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe'];
-          $Defender = $_SESSION['Battle']['Ally'];
+          $Attacker = $_SESSION['Absolute']['Battle']['Foe'];
+          $Defender = $_SESSION['Absolute']['Battle']['Ally'];
           break;
       }
 
@@ -662,8 +662,8 @@
 
       $New_Active = $this;
 
-      $Attacker_Owner = $_SESSION['Battle'][$Attacker->Side];
-      $Defender_Owner = $_SESSION['Battle'][$Defender->Side];
+      $Attacker_Owner = $_SESSION['Absolute']['Battle'][$Attacker->Side];
+      $Defender_Owner = $_SESSION['Absolute']['Battle'][$Defender->Side];
 
       switch ($New_Active->Ability->Name)
       {
@@ -858,7 +858,7 @@
           $Attacker_Roster_Slots = count($Attacker_Owner->Roster);
           for ( $i = $Attacker_Roster_Slots - 1; $i >= $this->Slot; $i-- )
           {
-            $Checking_Ally = $_SESSION['Battle'][$this->Side]->Roster[$i];
+            $Checking_Ally = $_SESSION['Absolute']['Battle'][$this->Side]->Roster[$i];
             if ( !$Checking_Ally->Fainted )
             {
               $this->CopyPokemon($Checking_Ally);
@@ -1185,7 +1185,7 @@
       global $PDO;
 
       $Exp_Divisor = 0;
-      foreach ( $_SESSION['Battle']['Ally']->Roster as $Pokemon )
+      foreach ( $_SESSION['Absolute']['Battle']['Ally']->Roster as $Pokemon )
       {
         if
         (
@@ -1204,7 +1204,7 @@
         'Text' => ''
       ];
 
-      foreach ( $_SESSION['Battle']['Ally']->Roster as $Pokemon )
+      foreach ( $_SESSION['Absolute']['Battle']['Ally']->Roster as $Pokemon )
       {
         if
         (
@@ -1267,9 +1267,9 @@
       if ( $this->Active )
         $Ally_Active = $this;
       else
-        $Ally_Active = $_SESSION['Battle']['Ally']->Active;
+        $Ally_Active = $_SESSION['Absolute']['Battle']['Ally']->Active;
 
-      $Foe_Active = $_SESSION['Battle']['Foe']->Active;
+      $Foe_Active = $_SESSION['Absolute']['Battle']['Foe']->Active;
 
       if ( $this->Item->Name == 'Exp Share' )
         $s = 2;

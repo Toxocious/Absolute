@@ -7,7 +7,7 @@
   if
   (
     session_status() === PHP_SESSION_ACTIVE &&
-    !empty($_SESSION['abso_user'])
+    !empty($_SESSION['Absolute'])
   )
   {
     echo "
@@ -67,7 +67,7 @@
 
     if ( empty($Login_Message) )
     {
-      $_SESSION['abso_user'] = $User_Info['ID'];
+      $_SESSION['Absolute']['Logged_In_As'] = $User_Info['ID'];
       header('Location: /news.php');
       exit;
     }

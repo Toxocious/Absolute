@@ -47,7 +47,7 @@
 		<div class='BODY-CONTAINER'>
 			<header>
 				<?php
-					if ( isset($_SESSION['abso_user']) )
+					if ( isset($_SESSION['Absolute']) )
 					{
 				?>
 

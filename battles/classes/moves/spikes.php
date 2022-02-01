@@ -90,13 +90,13 @@
       {
         case 'Ally':
           $Target = 'Foe';
-          $Attacker = $_SESSION['Battle']['Ally'];
-          $Defender = $_SESSION['Battle']['Foe'];
+          $Attacker = $_SESSION['Absolute']['Battle']['Ally'];
+          $Defender = $_SESSION['Absolute']['Battle']['Foe'];
           break;
         case 'Foe':
           $Target = 'Ally';
-          $Attacker = $_SESSION['Battle']['Foe'];
-          $Defender = $_SESSION['Battle']['Ally'];
+          $Attacker = $_SESSION['Absolute']['Battle']['Foe'];
+          $Defender = $_SESSION['Absolute']['Battle']['Ally'];
           break;
       }
 

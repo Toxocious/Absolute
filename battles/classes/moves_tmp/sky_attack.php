@@ -89,12 +89,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
           break;
       }
 
@@ -118,8 +118,8 @@
         }
       }
 
-      if ( isset($_SESSION['Battle'][$this->Turn_ID]['First_Attacker']) )
-        $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      if ( isset($_SESSION['Absolute']['Battle'][$this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['Absolute']['Battle'][$this->Turn_ID]['First_Attacker'];
       else
         $Turn_First_Attacker = $Side;
 
@@ -158,12 +158,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
           break;
       }
 

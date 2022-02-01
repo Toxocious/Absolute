@@ -1,7 +1,7 @@
 <?php
 	require_once '../../required/session.php';
 
-	if ( isset($_SESSION['abso_user']) )
+	if ( isset($_SESSION['Absolute']) )
 	{
 		try
 		{

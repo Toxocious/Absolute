@@ -4,13 +4,13 @@
   /**
    * Reset the compose session data.
    */
-  if ( isset($_SESSION['direct_message']['users']) )
+  if ( isset($_SESSION['Absolute']['Direct_Message']['users']) )
   {
-    $_SESSION['direct_message']['users'] = [];
-    unset($_SESSION['direct_message']['users']);
+    $_SESSION['Absolute']['Direct_Message']['users'] = [];
+    unset($_SESSION['Absolute']['Direct_Message']['users']);
   }
 
-  $_SESSION['direct_message']['users'][] = [
+  $_SESSION['Absolute']['Direct_Message']['users'][] = [
     'User_ID' => $User_Data['ID'],
   ];
 ?>

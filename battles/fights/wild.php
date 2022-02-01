@@ -50,15 +50,15 @@
       $this->Time_Started = time();
       $this->Started = true;
 
-      $_SESSION['Battle']['Battle_ID'] = $this->Battle_ID;
-      $_SESSION['Battle']['Battle_Type'] = $this->Battle_Type;
-      $_SESSION['Battle']['Time_Started'] = $this->Time_Started;
-      $_SESSION['Battle']['Started'] = $this->Started;
-      $_SESSION['Battle']['Turn_ID'] = 1;
-      $_SESSION['Battle']['Ally'] = $this->Ally;
-      $_SESSION['Battle']['Ally_ID'] = $this->Ally_ID;
-      $_SESSION['Battle']['Foe'] = $this->Foe;
-      $_SESSION['Battle']['Foe_ID'] = -1;
+      $_SESSION['Absolute']['Battle']['Battle_ID'] = $this->Battle_ID;
+      $_SESSION['Absolute']['Battle']['Battle_Type'] = $this->Battle_Type;
+      $_SESSION['Absolute']['Battle']['Time_Started'] = $this->Time_Started;
+      $_SESSION['Absolute']['Battle']['Started'] = $this->Started;
+      $_SESSION['Absolute']['Battle']['Turn_ID'] = 1;
+      $_SESSION['Absolute']['Battle']['Ally'] = $this->Ally;
+      $_SESSION['Absolute']['Battle']['Ally_ID'] = $this->Ally_ID;
+      $_SESSION['Absolute']['Battle']['Foe'] = $this->Foe;
+      $_SESSION['Absolute']['Battle']['Foe_ID'] = -1;
 
       $Creation_Dialogue = '';
       foreach(['Ally', 'Foe'] as $Side)
@@ -83,14 +83,14 @@
 
       if ( $Creation_Dialogue == '' )
       {
-        $_SESSION['Battle']['Dialogue'] = [
+        $_SESSION['Absolute']['Battle']['Dialogue'] = [
           'Type' => 'Success',
           'Text' => 'The battle has begun.',
         ];
       }
       else
       {
-        $_SESSION['Battle']['Dialogue'] = [
+        $_SESSION['Absolute']['Battle']['Dialogue'] = [
           'Type' => 'Success',
           'Text' => 'The battle has begun.' . $Creation_Dialogue,
         ];

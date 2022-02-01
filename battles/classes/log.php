@@ -44,19 +44,19 @@
           VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
         ");
         $Initialize_Battle_Log->execute([
-          $_SESSION['Battle']['Ally_ID'],
-          $_SESSION['Battle']['Foe_ID'],
-          $_SESSION['Battle']['Battle_ID'],
-          $_SESSION['Battle']['Battle_Type'],
-          empty($_SESSION['Battle']['Battle_Layout']) ? $User_Data['Battle_Theme'] : $_SESSION['Battle']['Battle_Layout'],
-          $_SESSION['Battle']['Time_Started'],
+          $_SESSION['Absolute']['Battle']['Ally_ID'],
+          $_SESSION['Absolute']['Battle']['Foe_ID'],
+          $_SESSION['Absolute']['Battle']['Battle_ID'],
+          $_SESSION['Absolute']['Battle']['Battle_Type'],
+          empty($_SESSION['Absolute']['Battle']['Battle_Layout']) ? $User_Data['Battle_Theme'] : $_SESSION['Absolute']['Battle']['Battle_Layout'],
+          $_SESSION['Absolute']['Battle']['Time_Started'],
           true,
           $_SERVER['REMOTE_ADDR'],
           $Client_User_Agent['User_Agent']
         ]);
 
-        $_SESSION['Battle']['Logging']['Actions'] = [];
-        $_SESSION['Battle']['Logging']['Log_ID'] = $PDO->lastInsertId();
+        $_SESSION['Absolute']['Battle']['Logging']['Actions'] = [];
+        $_SESSION['Absolute']['Battle']['Logging']['Log_ID'] = $PDO->lastInsertId();
 
         $PDO->commit();
       }
@@ -67,9 +67,9 @@
         HandleError($e);
       }
 
-      $_SESSION['Battle']['Logging']['All_Inputs_Trusted'] = true;
-      $_SESSION['Battle']['Logging']['All_Postcodes_Matched'] = true;
-      $_SESSION['Battle']['Logging']['Page_Always_In_Focus'] = true;
+      $_SESSION['Absolute']['Battle']['Logging']['All_Inputs_Trusted'] = true;
+      $_SESSION['Absolute']['Battle']['Logging']['All_Postcodes_Matched'] = true;
+      $_SESSION['Absolute']['Battle']['Logging']['Page_Always_In_Focus'] = true;
     }
 
     /**
@@ -89,27 +89,27 @@
         $Get_Action = 0;
 
       $Action = $Get_Action << 13;
-      $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Client_X'];
+      $Action = $Action + (int) $_SESSION['Absolute']['Battle']['Logging']['Input']['Client_X'];
       $Action = $Action << 13;
-      $Action = $Action + (int) $_SESSION['Battle']['Logging']['Input']['Client_Y'];
+      $Action = $Action + (int) $_SESSION['Absolute']['Battle']['Logging']['Input']['Client_Y'];
 
-      $_SESSION['Battle']['Logging']['Actions'][] = $Action;
+      $_SESSION['Absolute']['Battle']['Logging']['Actions'][] = $Action;
 
-      if ( !$_SESSION['Battle']['Logging']['Input']['Is_Trusted'] )
-        $_SESSION['Battle']['Logging']['All_Inputs_Trusted'] = false;
+      if ( !$_SESSION['Absolute']['Battle']['Logging']['Input']['Is_Trusted'] )
+        $_SESSION['Absolute']['Battle']['Logging']['All_Inputs_Trusted'] = false;
 
-      if ( !$_SESSION['Battle']['Logging']['In_Focus'] )
-        $_SESSION['Battle']['Logging']['Page_Always_In_Focus'] = false;
+      if ( !$_SESSION['Absolute']['Battle']['Logging']['In_Focus'] )
+        $_SESSION['Absolute']['Battle']['Logging']['Page_Always_In_Focus'] = false;
 
       if
       (
-        !empty($_SESSION['Battle']['Logging']['Postcode']) &&
-        count($_SESSION['Battle']['Logging']['Postcode']) == 2
+        !empty($_SESSION['Absolute']['Battle']['Logging']['Postcode']) &&
+        count($_SESSION['Absolute']['Battle']['Logging']['Postcode']) == 2
       )
       {
-        $Postcode_Match = $_SESSION['Battle']['Logging']['Postcode']['Expected'] == $_SESSION['Battle']['Logging']['Postcode']['Received'];
+        $Postcode_Match = $_SESSION['Absolute']['Battle']['Logging']['Postcode']['Expected'] == $_SESSION['Absolute']['Battle']['Logging']['Postcode']['Received'];
         if ( !$Postcode_Match )
-          $_SESSION['Battle']['Logging']['All_Postcodes_Matched'] = false;
+          $_SESSION['Absolute']['Battle']['Logging']['All_Postcodes_Matched'] = false;
       }
     }
 
@@ -120,14 +120,14 @@
     {
       global $PDO;
 
-      if ( empty($_SESSION['Battle']['Logging']) )
+      if ( empty($_SESSION['Absolute']['Battle']['Logging']) )
         return false;
 
-      $_SESSION['Battle']['Last_Action_Time'] = (microtime(true) - $_SESSION['Battle']['Time_Started']) * 1000;
+      $_SESSION['Absolute']['Battle']['Last_Action_Time'] = (microtime(true) - $_SESSION['Absolute']['Battle']['Time_Started']) * 1000;
 
       $Actions = '';
-      if ( !empty($_SESSION['Battle']['Logging']['Actions']) )
-        $Actions = pack('l*', ...$_SESSION['Battle']['Logging']['Actions']);
+      if ( !empty($_SESSION['Absolute']['Battle']['Logging']['Actions']) )
+        $Actions = pack('l*', ...$_SESSION['Absolute']['Battle']['Logging']['Actions']);
 
       try
       {
@@ -146,13 +146,13 @@
           LIMIT 1
         ");
         $Update_Battle_Log->execute([
-          $_SESSION['Battle']['Last_Action_Time'],
+          $_SESSION['Absolute']['Battle']['Last_Action_Time'],
           $Actions,
-          $_SESSION['Battle']['Turn_ID'],
-          $_SESSION['Battle']['Logging']['All_Inputs_Trusted'],
-          $_SESSION['Battle']['Logging']['Page_Always_In_Focus'],
-          $_SESSION['Battle']['Logging']['All_Postcodes_Matched'],
-          $_SESSION['Battle']['Logging']['Log_ID']
+          $_SESSION['Absolute']['Battle']['Turn_ID'],
+          $_SESSION['Absolute']['Battle']['Logging']['All_Inputs_Trusted'],
+          $_SESSION['Absolute']['Battle']['Logging']['Page_Always_In_Focus'],
+          $_SESSION['Absolute']['Battle']['Logging']['All_Postcodes_Matched'],
+          $_SESSION['Absolute']['Battle']['Logging']['Log_ID']
         ]);
 
         $PDO->commit();

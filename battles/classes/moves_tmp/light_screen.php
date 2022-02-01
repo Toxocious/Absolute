@@ -84,10 +84,10 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally'];
+          $Attacker = $_SESSION['Absolute']['Battle']['Ally'];
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe'];
+          $Attacker = $_SESSION['Absolute']['Battle']['Foe'];
           break;
       }
 

@@ -57,7 +57,7 @@
 		return;
 	}
 
-	
+
 	$Action = $Purify->Cleanse($_POST['Action']);
 	$Type = $Purify->Cleanse($_POST['Type']);
 	$Data = $Purify->Cleanse($_POST['Data']);
@@ -68,7 +68,7 @@
 	/**
 	 * Determine if something is getting added/removed from a certain side of the trade.
 	 */
-	if ( $User['ID'] == $_SESSION['Trade']['Sender']['User'] )
+	if ( $User['ID'] == $_SESSION['Absolute']['Trade']['Sender']['User'] )
 	{
 		$Side = "Sender";
 	}
@@ -91,9 +91,9 @@
 		{
 			$Pokemon = $Poke_Class->FetchPokemonData($Data);
 
-			if ( isset($_SESSION['Trade'][$Side]['Pokemon']) )
+			if ( isset($_SESSION['Absolute']['Trade'][$Side]['Pokemon']) )
 			{
-				foreach ( $_SESSION['Trade'][$Side]['Pokemon'] as $Key => $Value )
+				foreach ( $_SESSION['Absolute']['Trade'][$Side]['Pokemon'] as $Key => $Value )
 				{
 					if ( $Value['ID'] == $Pokemon['ID'] )
 					{
@@ -150,7 +150,7 @@
 					</tr>
 				";
 
-				$_SESSION['Trade'][$Side]['Pokemon'][] = [
+				$_SESSION['Absolute']['Trade'][$Side]['Pokemon'][] = [
 					'ID' => $Pokemon['ID'],
 				];
 			}
@@ -167,9 +167,9 @@
 			 */
 			$Item = $Item_Class->FetchOwnedItem($User['ID'], $Data);
 
-			if ( isset( $_SESSION['Trade'][$Side]['Items']) )
+			if ( isset( $_SESSION['Absolute']['Trade'][$Side]['Items']) )
 			{
-				foreach ( $_SESSION['Trade'][$Side]['Items'] as $Key => $Value )
+				foreach ( $_SESSION['Absolute']['Trade'][$Side]['Items'] as $Key => $Value )
 				{
 					if ( $Value['ID'] == $Item['ID'] )
 					{
@@ -238,7 +238,7 @@
 					</tr>
 				";
 
-				$_SESSION['Trade'][$Side]['Items'][] = [
+				$_SESSION['Absolute']['Trade'][$Side]['Items'][] = [
 					'Row' => $Item['Row'],
 					'ID' => $Item['ID'],
 					'Quantity' => 1,
@@ -257,9 +257,9 @@
 				"Amount" => $Data['Amount'],
 			];
 
-			if ( isset( $_SESSION['Trade'][$Side]['Currency']) )
+			if ( isset( $_SESSION['Absolute']['Trade'][$Side]['Currency']) )
 			{
-				foreach ( $_SESSION['Trade'][$Side]['Currency'] as $Key => $Value )
+				foreach ( $_SESSION['Absolute']['Trade'][$Side]['Currency'] as $Key => $Value )
 				{
 					if ( $Value['Currency'] == $Currency_Data['Name'] )
 					{
@@ -328,7 +328,7 @@
 					</tr>
 				";
 
-				$_SESSION['Trade'][$Side]['Currency'][] = [
+				$_SESSION['Absolute']['Trade'][$Side]['Currency'][] = [
 					'Currency' => $Currency_Data['Name'],
 					'Quantity' => $Currency_Data['Amount'],
 				];
@@ -346,16 +346,16 @@
 		 */
 		if ( $Type == 'Pokemon' )
 		{
-			if ( isset( $_SESSION['Trade'][$Side]['Pokemon']) )
+			if ( isset( $_SESSION['Absolute']['Trade'][$Side]['Pokemon']) )
 			{
-				foreach ( $_SESSION['Trade'][$Side]['Pokemon'] as $Key => $Pokemon )
+				foreach ( $_SESSION['Absolute']['Trade'][$Side]['Pokemon'] as $Key => $Pokemon )
 				{
 					if ( $Pokemon['ID'] == $Data )
 					{
 						$Poke_Data = $Poke_Class->FetchPokemonData($Pokemon['ID']);
 
 						array_splice(
-							$_SESSION['Trade'][$Side]['Pokemon'],
+							$_SESSION['Absolute']['Trade'][$Side]['Pokemon'],
 							$Key,
 							1
 						);
@@ -379,16 +379,16 @@
 		 */
 		if ( $Type == 'Item' )
 		{
-			if ( isset( $_SESSION['Trade'][$Side]['Items']) )
+			if ( isset( $_SESSION['Absolute']['Trade'][$Side]['Items']) )
 			{
-				foreach ( $_SESSION['Trade'][$Side]['Items'] as $Key => $Item )
+				foreach ( $_SESSION['Absolute']['Trade'][$Side]['Items'] as $Key => $Item )
 				{
 					if ( $Item['ID'] == $Data )
 					{
 						$Item_Data = $Item_Class->FetchItemData($Item['ID']);
 
 						array_splice(
-							$_SESSION['Trade'][$Side]['Items'],
+							$_SESSION['Absolute']['Trade'][$Side]['Items'],
 							$Key,
 							1
 						);
@@ -412,14 +412,14 @@
 		 */
 		if ( $Type == 'Currency' )
 		{
-			if ( isset( $_SESSION['Trade'][$Side]['Currency']) )
+			if ( isset( $_SESSION['Absolute']['Trade'][$Side]['Currency']) )
 			{
-				foreach ( $_SESSION['Trade'][$Side]['Currency'] as $Key => $Currencies )
+				foreach ( $_SESSION['Absolute']['Trade'][$Side]['Currency'] as $Key => $Currencies )
 				{
 					if ( $Currencies['Currency'] === $Data )
 					{
 						array_splice(
-							$_SESSION['Trade'][$Side]['Currency'],
+							$_SESSION['Absolute']['Trade'][$Side]['Currency'],
 							0,
 							1
 						);
@@ -442,9 +442,9 @@
 	/**
 	 * Display the current content of the trade.
 	 */
-	if ( isset( $_SESSION['Trade'][$Side]['Currency']) )
+	if ( isset( $_SESSION['Absolute']['Trade'][$Side]['Currency']) )
 	{
-		foreach ( $_SESSION['Trade'][$Side]['Currency'] as $Key => $Currencies )
+		foreach ( $_SESSION['Absolute']['Trade'][$Side]['Currency'] as $Key => $Currencies )
 		{
 			echo "
 				<tr>
@@ -467,9 +467,9 @@
 		}
 	}
 
-	if ( isset( $_SESSION['Trade'][$Side]['Items']) )
+	if ( isset( $_SESSION['Absolute']['Trade'][$Side]['Items']) )
 	{
-		foreach ( $_SESSION['Trade'][$Side]['Items'] as $Key => $Items )
+		foreach ( $_SESSION['Absolute']['Trade'][$Side]['Items'] as $Key => $Items )
 		{
 			$Item_Data = $Item_Class->FetchItemData($Items['ID']);
 
@@ -496,9 +496,9 @@
 		}
 	}
 
-	if ( isset( $_SESSION['Trade'][$Side]['Pokemon']) )
+	if ( isset( $_SESSION['Absolute']['Trade'][$Side]['Pokemon']) )
 	{
-		foreach ( $_SESSION['Trade'][$Side]['Pokemon'] as $Key => $Pokemon )
+		foreach ( $_SESSION['Absolute']['Trade'][$Side]['Pokemon'] as $Key => $Pokemon )
 		{
 			$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon['ID']);
 

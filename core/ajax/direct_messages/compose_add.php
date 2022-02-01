@@ -39,9 +39,9 @@
     ";
   }
 
-  if ( isset( $_SESSION['direct_message']['users']) )
+  if ( isset( $_SESSION['Absolute']['Direct_Message']['users']) )
   {
-    foreach ( $_SESSION['direct_message']['users'] as $Key => $Value )
+    foreach ( $_SESSION['Absolute']['Direct_Message']['users'] as $Key => $Value )
     {
       if ( $Value['User_ID'] == $Added_User_Data['ID'] )
       {
@@ -58,22 +58,22 @@
 
   if ( !$Error )
   {
-    $_SESSION['direct_message']['users'][] = [
+    $_SESSION['Absolute']['Direct_Message']['users'][] = [
       'User_ID' => $Added_User_Data['ID'],
     ];
-    
+
     echo "
       <div class='success'>
-        You have successfully added <b>{$Added_User_Data['Username']}</b> as a recipient to this direct message.  
+        You have successfully added <b>{$Added_User_Data['Username']}</b> as a recipient to this direct message.
       </div>
     ";
   }
 
-  foreach ( $_SESSION['direct_message']['users'] as $Key => $Included_User )
+  foreach ( $_SESSION['Absolute']['Direct_Message']['users'] as $Key => $Included_User )
   {
     if ( $Included_User['User_ID'] == $User_Data['ID'] )
       continue;
-      
+
     $Included_User_Name = $User_Class->DisplayUserName($Included_User['User_ID']);
 
     echo "&bull; {$Included_User_Name}<br />";

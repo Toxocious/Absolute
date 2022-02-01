@@ -15,7 +15,7 @@
 		HandleError( $e->getMessage() );
 	}
 
-	if ( !isset($_SESSION['abso_user']) )
+	if ( !isset($_SESSION['Absolute']) )
 	{
 		$style = " style='margin: 5px; width: calc(100% - 14px);'";
 	}

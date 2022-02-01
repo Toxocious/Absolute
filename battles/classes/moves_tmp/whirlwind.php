@@ -84,16 +84,16 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
           break;
       }
 
-      $Turn_First_Attacker = $_SESSION['Battle'][$this->Turn_ID]['First_Attacker'];
+      $Turn_First_Attacker = $_SESSION['Absolute']['Battle'][$this->Turn_ID]['First_Attacker'];
 
       if
       (
@@ -110,8 +110,8 @@
         $Defender->Ability == 'Magic Bounce'
       )
       {
-        $Random_Slot = mt_rand(1, count($_SESSION['Battle']['Ally']->Roster));
-        $Perform_Switch = $_SESSION['Battle']['Ally']->Roster[$Random_Slot]->SwitchInto();
+        $Random_Slot = mt_rand(1, count($_SESSION['Absolute']['Battle']['Ally']->Roster));
+        $Perform_Switch = $_SESSION['Absolute']['Battle']['Ally']->Roster[$Random_Slot]->SwitchInto();
 
         $Effect_Text = "
           It got redirected back at {$Attacker->Display_Name}!<br />
@@ -120,11 +120,11 @@
       }
       else
       {
-        $Random_Slot = mt_rand(1, count($_SESSION['Battle']['Foe']->Roster));
-        $Perform_Switch = $_SESSION['Battle']['Foe']->Roster[$Random_Slot]->SwitchInto();
-        $_SESSION['Battle']['Foe']->Active->SetCanAttack(false);
+        $Random_Slot = mt_rand(1, count($_SESSION['Absolute']['Battle']['Foe']->Roster));
+        $Perform_Switch = $_SESSION['Absolute']['Battle']['Foe']->Roster[$Random_Slot]->SwitchInto();
+        $_SESSION['Absolute']['Battle']['Foe']->Active->SetCanAttack(false);
 
-        $Effect_Text = "<br />{$_SESSION['Battle']['Foe']->Active->Display_Name} has been sent into battle!";
+        $Effect_Text = "<br />{$_SESSION['Absolute']['Battle']['Foe']->Active->Display_Name} has been sent into battle!";
       }
 
       return [
