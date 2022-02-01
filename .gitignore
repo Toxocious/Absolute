@@ -15,3 +15,6 @@ scripts/*
 
 # Misc. tools that were used during development and don't need pushed.
 tools/*
+
+# Misc. log files.
+misc/
