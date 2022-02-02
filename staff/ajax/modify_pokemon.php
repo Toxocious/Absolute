@@ -17,7 +17,7 @@
     exit;
   }
 
-  if ( !empty($_GET['Pokemon_Action']) && in_array($_GET['Pokemon_Action'], ['Freeze', 'Move_List', 'Show', 'Update', 'Update_Move']) )
+  if ( !empty($_GET['Pokemon_Action']) && in_array($_GET['Pokemon_Action'], ['Delete', 'Freeze', 'Move_List', 'Show', 'Update', 'Update_Move']) )
     $Pokemon_Action = Purify($_GET['Pokemon_Action']);
 
   if ( empty($Pokemon_Action) )
@@ -73,6 +73,15 @@
 
   switch ( $Pokemon_Action )
   {
+    case 'Delete':
+      $Delete_Pokemon = DeletePokemon($Pokemon_Existence['ID']);
+
+      echo json_encode([
+        'Success' => $Delete_Pokemon['Success'],
+        'Message' => $Delete_Pokemon['Message'],
+      ]);
+      break;
+
     case 'Freeze':
       $Toggle_Pokemon_Freeze = ToggleFreeze($Pokemon_Existence['ID'], $Pokemon_Frozen_Status);
 

@@ -113,3 +113,31 @@ function TogglePokemonFreeze()
     })
     .catch((Error) => console.error('Error:', Error));
 }
+
+/**
+ * Delete the Pokemon.
+ */
+function DeletePokemon()
+{
+  if ( !confirm('Are you sure you want to delete this Pokemon?') )
+    return;
+
+  const Pokemon_Value = document.getElementsByName('Pokemon_Search')[0].value;
+  if ( typeof Pokemon_Value === 'undefined' )
+    return;
+
+  let Form_Data = new FormData();
+  Form_Data.append('Pokemon_Value', Pokemon_Value);
+  Form_Data.append('Pokemon_Action', 'Delete');
+
+  SendRequest('modify_pokemon', Form_Data)
+    .then((Pokemon_Data) => {
+      console.log(JSON.parse(Pokemon_Data));
+      Pokemon_Data = JSON.parse(Pokemon_Data);
+
+      document.getElementById('Modification_AJAX').className = Pokemon_Data.Success ? 'success' : 'error';
+      document.getElementById('Modification_AJAX').innerHTML = Pokemon_Data.Message;
+      document.getElementById('Modification_Table').innerHTML = '';
+    })
+    .catch((Error) => console.error('Error:', Error));
+}

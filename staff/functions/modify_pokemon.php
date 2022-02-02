@@ -161,7 +161,7 @@
         <tbody>
           <tr>
             <td colspan='1' style='padding: 0px 10px; width: 50%;'>
-              <button>
+              <button onclick='DeletePokemon();'>
                 Delete Pok&eacute;mon
               </button>
 
@@ -355,4 +355,33 @@
         'Modification_Table' => ShowPokemonModTable($Pokemon_ID)
       ];
     }
+  }
+
+  /**
+   * Delete the selected Pokemon.
+   *
+   * @param $Pokemon_ID
+   */
+  function DeletePokemon
+  (
+    $Pokemon_ID
+  )
+  {
+    global $Poke_Class;
+
+    $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    if ( !$Pokemon_Info )
+    {
+      return [
+        'Success' => false,
+        'Message' => "The Pok&eacute;mon you're trying to delete does not exist.",
+      ];
+    }
+
+    $Release_Pokemon = $Poke_Class->ReleasePokemon($Pokemon_ID, $Pokemon_Info['Owner_Current'], true);
+
+    return [
+      'Success' => $Release_Pokemon['Type'] == 'success' ? true : false,
+      'Message' => $Release_Pokemon['Message']
+    ];
   }
