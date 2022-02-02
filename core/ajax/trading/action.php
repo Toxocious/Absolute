@@ -126,6 +126,18 @@
 					</tr>
 				";
 			}
+			else if ( $Pokemon['Frozen'] )
+			{
+				echo "
+					<tr>
+						<td colspan='3' style='padding: 10px;'>
+							<b style='color: #f00;'>
+								This Pok&eacute;mon is frozen and may not be traded.
+							</b>
+						</td>
+					</tr>
+				";
+			}
 			else if ( $Already_Included )
 			{
 				echo "
