@@ -76,7 +76,7 @@
               <h3>Gender</h3>
             </td>
             <td colspan='2' style='width: 50%;'>
-              <select name='Gender' style='padding: 4px; text-align: center; width: 180px;'>
+              <select name='Gender' style='padding: 4px; text-align: center;'>
                 <option value='Ungendered'>(?)</option>
                 <option value='Genderless'>Genderless</option>
                 <option value='Female'>Female</option>
@@ -90,7 +90,7 @@
               <h3>Nature</h3>
             </td>
             <td colspan='2' style='width: 50%;'>
-              <select name='Nature' style='padding: 4px; text-align: center; width: 180px;'>
+              <select name='Nature' style='padding: 4px; text-align: center;'>
                 {$Nature_Options}
               </select>
             </td>
@@ -101,7 +101,7 @@
               <h3>Ability</h3>
             </td>
             <td colspan='2' style='width: 50%;'>
-              <select name='Ability' style='padding: 4px; text-align: center; width: 180px;'>
+              <select name='Ability' style='padding: 4px; text-align: center;'>
                 {$Ability_Options}
               </select>
             </td>
@@ -142,7 +142,7 @@
 
         <tbody>
           <tr>
-            <td colspan='4' style='padding: 10px; width: 100%;'>
+            <td colspan='4' style='padding: 5px; width: 100%;'>
               <button>
                 Update Pok&eacute;mon
               </button>
