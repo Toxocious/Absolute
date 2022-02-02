@@ -429,7 +429,7 @@
 		 * Release a Pokemon via it's `pokemon` DB ID.
 		 * Store all released Pokemon in the `released` database table.
 		 */
-		public function ReleasePokemon($Pokemon_ID, $User_ID)
+		public function ReleasePokemon($Pokemon_ID, $User_ID, $Staff_Panel_Deletion = false)
 		{
 			global $PDO, $User_Data;
 
@@ -437,41 +437,52 @@
 			{
 				return [
 					'Type' => 'error',
-					'Message' => 'The Pokemon/User ID wasn\'t set, please try again.',
+					'Message' => 'The Pok&eacute;mon/User ID wasn\'t set, please try again.',
 				];
 			}
 
 			$Pokemon = $this->FetchPokemonData($Pokemon_ID);
 
-			if ( $Pokemon['Owner_Current'] !== $User_Data['ID'] )
+			if ( $Pokemon['Owner_Current'] !== $User_Data['ID'] && !$Staff_Panel_Deletion )
 			{
 				return [
 					'Type' => 'error',
-					'Message' => 'You may not release a Pokemon that does not belong to you.',
+					'Message' => 'You may not release a Pok&eacute;mon that does not belong to you.',
 				];
 			}
 
 			try
 			{
+        $PDO->beginTransaction();
+
 				$Release_Pokemon = $PDO->prepare("
-					INSERT INTO `released` (ID, Pokedex_ID, Alt_ID, Name, Forme, Type, Location, Slot, Item, Owner_Current, Owner_Original, Gender, Experience, IVs, EVs, Nature, Happiness, Trade_Interest, Challenge_Status, Moves, Move_1, Move_2, Move_3, Move_4, Nickname, Biography, Creation_Date, Creation_Location)
-					SELECT ID, Pokedex_ID, Alt_ID, Name, Forme, Type, Location, Slot, Item, Owner_Current, Owner_Original, Gender, Experience, IVs, EVs, Nature, Happiness, Trade_Interest, Challenge_Status, Moves, Move_1, Move_2, Move_3, Move_4, Nickname, Biography, Creation_Date, Creation_Location
+					INSERT INTO `released` (
+            ID, Pokedex_ID, Alt_ID, Name, Forme, Type, Location, Slot, Item, Owner_Current, Owner_Original, Gender, Experience, IVs, EVs, Nature, Happiness, Trade_Interest, Challenge_Status, Frozen, Ability, Move_1, Move_2, Move_3, Move_4, Nickname, Biography, Creation_Date, Creation_Location
+          )
+					SELECT ID, Pokedex_ID, Alt_ID, Name, Forme, Type, Location, Slot, Item, Owner_Current, Owner_Original, Gender, Experience, IVs, EVs, Nature, Happiness, Trade_Interest, Challenge_Status, Frozen, Ability, Move_1, Move_2, Move_3, Move_4, Nickname, Biography, Creation_Date, Creation_Location
 					FROM `pokemon`
 					WHERE ID = ?;
+				");
+				$Release_Pokemon->execute([ $Pokemon_ID ]);
 
+        $Delete_Pokemon = $PDO->prepare("
 					DELETE FROM `pokemon`
 					WHERE ID = ?;
-				");
-				$Release_Pokemon->execute([ $Pokemon_ID, $Pokemon_ID ]);
+        ");
+        $Delete_Pokemon->execute([ $Pokemon_ID ]);
+
+        $PDO->commit();
 			}
 			catch ( PDOException $e )
 			{
+        $PDO->rollBack();
+
 				HandleError( $e );
 			}
 
 			return [
 				'Type' => 'success',
-				'Message' => "You have successfully release your {$Pokemon['Display_Name']}.",
+				'Message' => "You have successfully released {$Pokemon['Display_Name']}.",
 			];
 		}
 
