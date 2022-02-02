@@ -156,7 +156,7 @@
       <table style='width: 600px;'>
         <tbody>
           <tr>
-            <td colspan='1' style='padding: 10px; width: 50%;'>
+            <td colspan='1' style='padding: 0px 10px; width: 50%;'>
               <button>
                 Delete Pok&eacute;mon
               </button>
@@ -168,7 +168,7 @@
               </i>
             </td>
 
-            <td colspan='1' style='padding: 10px; width: 50%;'>
+            <td colspan='1' style='padding: 0px 10px; width: 50%;'>
               <button onclick='TogglePokemonFreeze();'>
                 Freeze Pok&eacute;mon
               </button>

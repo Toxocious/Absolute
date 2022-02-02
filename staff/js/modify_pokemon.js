@@ -1,5 +1,11 @@
 let Move_Changing = false;
 
+/**
+ * Display HTML select/options for changing moves.
+ *
+ * @param Pokemon_ID
+ * @param Move_Slot
+ */
 function SelectMove(Pokemon_ID, Move_Slot)
 {
   if ( Move_Changing )
@@ -21,6 +27,12 @@ function SelectMove(Pokemon_ID, Move_Slot)
     .catch((Error) => console.error('Error:', Error));
 }
 
+/**
+ * Update the selected move w/ the desired move.
+ *
+ * @param Pokemon_ID
+ * @param Move_Slot
+ */
 function UpdateMove(Pokemon_ID, Move_Slot)
 {
   Move_Changing = false;
@@ -47,6 +59,9 @@ function UpdateMove(Pokemon_ID, Move_Slot)
     .catch((Error) => console.error('Error:', Error));
 }
 
+/**
+ * Show the modification table for the selected Pokemon.
+ */
 function ShowPokemon()
 {
   const Pokemon_Value = document.getElementsByName('Pokemon_Search')[0].value;
@@ -66,6 +81,9 @@ function ShowPokemon()
     .catch((Error) => console.error('Error:', Error));
 }
 
+/**
+ * Toggle whether or not the selected Pokemon is frozen.
+ */
 function TogglePokemonFreeze()
 {
   const Pokemon_Value = document.getElementsByName('Pokemon_Search')[0].value;

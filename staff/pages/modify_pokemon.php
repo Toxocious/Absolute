@@ -28,10 +28,8 @@
         <td>
           <input type='text' name='Pokemon_Search' placeholder='Pok&eacute;mon ID' />
         </td>
-      </tr>
-      <tr>
         <td>
-          <button onclick='ShowPokemon();'>Select Pok&eacute;mon</button>
+          <button style='width: 130px;' onclick='ShowPokemon();'>Select Pok&eacute;mon</button>
         </td>
       </tr>
     </tbody>
