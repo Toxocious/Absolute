@@ -295,3 +295,60 @@
       ];
     }
   }
+
+  /**
+   * Toggle whether the Pokemon is frozen.
+   *
+   * @param $Pokemon_ID
+   * @param $Frozen_Status
+   */
+  function ToggleFreeze
+  (
+    $Pokemon_ID,
+    $Frozen_Status
+  )
+  {
+    global $PDO;
+
+    $Opposite_Status = $Frozen_Status ? 0 : 1;
+    if ( $Opposite_Status )
+      $Frozen_Message = 'This Pok&eacute;mon has been frozen.';
+    else
+      $Frozen_Message = 'This Pok&eacute;mon has been unfrozen.';
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Update_Frozen_Status = $PDO->prepare("
+        UPDATE `pokemon`
+        SET `Frozen` = ?
+        WHERE `ID` = ?
+        LIMIT 1
+      ");
+      $Update_Frozen_Status->execute([
+        $Opposite_Status,
+        $Pokemon_ID
+      ]);
+
+      $PDO->commit();
+
+      return [
+        'Success' => true,
+        'Message' => $Frozen_Message,
+        'Modification_Table' => ShowPokemonModTable($Pokemon_ID)
+      ];
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+
+      return [
+        'Success' => false,
+        'Message' => 'There was an error while toggling the frozen status of this Pok&eacute;mon.',
+        'Modification_Table' => ShowPokemonModTable($Pokemon_ID)
+      ];
+    }
+  }

@@ -154,6 +154,7 @@
 				'Move_2' => $Pokemon['Move_2'],
 				'Move_3' => $Pokemon['Move_3'],
 				'Move_4' => $Pokemon['Move_4'],
+        'Frozen' => $Pokemon['Frozen'],
 				'Happiness' => $Pokemon['Happiness'],
         'Exp_Yield' => $Pokedex['Exp_Yield'],
         'Can_Evolve' => ($Can_Evolve === 0 ? false : true),
