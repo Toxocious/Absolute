@@ -40,6 +40,7 @@
 <script type='text/javascript' src='js/report.js'></script>
 <script type='text/javascript' src='js/ban.js'></script>
 <script type='text/javascript' src='js/modify_user.js'></script>
+<script type='text/javascript' src='js/modify_pokemon.js'></script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
