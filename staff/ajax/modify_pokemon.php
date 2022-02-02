@@ -15,7 +15,7 @@
     exit;
   }
 
-  if ( !empty($_GET['Pokemon_Action']) && in_array($_GET['Pokemon_Action'], ['Freeze', 'Show', 'Update']) )
+  if ( !empty($_GET['Pokemon_Action']) && in_array($_GET['Pokemon_Action'], ['Freeze', 'Move_List', 'Show', 'Update', 'Update_Move']) )
     $Pokemon_Action = Purify($_GET['Pokemon_Action']);
 
   if ( empty($Pokemon_Action) )
@@ -31,6 +31,14 @@
   $Pokemon_Frozen_Status = 0;
   if ( !empty($_GET['Pokemon_Frozen_Status']) )
     $Pokemon_Frozen_Status = Purify($_GET['Pokemon_Frozen_Status']);
+
+  $Pokemon_Move_Slot = 1;
+  if ( !empty($_GET['Pokemon_Move_Slot']) )
+    $Pokemon_Move_Slot = Purify($_GET['Pokemon_Move_Slot']);
+
+  $Pokemon_Move_Value = 1;
+  if ( !empty($_GET['Pokemon_Move_Value']) )
+    $Pokemon_Move_Value = Purify($_GET['Pokemon_Move_Value']);
 
   try
   {
@@ -73,6 +81,14 @@
       ]);
       break;
 
+    case 'Move_List':
+      $Move_List = ShowMoveList($Pokemon_Existence['ID'], $Pokemon_Move_Slot);
+
+      echo json_encode([
+        'Move_List' => $Move_List,
+      ]);
+      break;
+
     case 'Show':
       $Modification_Table = ShowPokemonModTable($Pokemon_Existence['ID']);
 
@@ -88,6 +104,15 @@
         'Success' => $Update_User['Success'],
         'Message' => $Update_User['Message'],
         'Modification_Table' => $Update_User['New_Table_HTML'],
+      ]);
+      break;
+
+    case 'Update_Move':
+      $Update_Move = UpdateMove($Pokemon_Existence['ID'], $Pokemon_Move_Slot, $Pokemon_Move_Value);
+
+      echo json_encode([
+        'Success' => $Update_Move['Success'],
+        'Message' => $Update_Move['Message'],
       ]);
       break;
   }

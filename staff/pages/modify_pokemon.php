@@ -26,7 +26,7 @@
     <tbody>
       <tr>
         <td>
-          <input type='text' name='Pokemon_Search' />
+          <input type='text' name='Pokemon_Search' placeholder='Pok&eacute;mon ID' />
         </td>
       </tr>
       <tr>
