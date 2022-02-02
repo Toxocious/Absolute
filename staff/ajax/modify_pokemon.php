@@ -5,11 +5,13 @@
   if ( !empty($_GET['Pokemon_Value']) )
     $Pokemon_Value = Purify($_GET['Pokemon_Value']);
 
-  if ( empty($Pokemon_Value) )
+  $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_Value);
+
+  if ( empty($Pokemon_Value) || !$Pokemon_Info )
   {
     echo json_encode([
       'Success' => false,
-      'Message' => 'The Pok&eacute;mon you are trying to modify doesn\'t exist.',
+      'Message' => "The Pok&eacute;mon you are trying to modify doesn't exist.",
     ]);
 
     exit;

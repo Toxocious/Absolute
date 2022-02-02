@@ -40,6 +40,10 @@
         $Ability_Options .= "<option value='{$Ability}'>{$Ability}</option>";
 
     return "
+      <div class='description'>
+        Moves update automatically; the rest do not.
+      </div>
+
       <input type='hidden' name='Pokemon_ID_To_Update' value='{$Pokemon_ID}}' />
       <input type='hidden' name='Pokemon_Freeze_Status' value='{$Frozen_Status}' />
 
@@ -110,6 +114,16 @@
 
         <tbody>
           <tr>
+            <td colspan='4' style='padding: 5px; width: 100%;'>
+              <button>
+                Update Pok&eacute;mon
+              </button>
+            </td>
+          </tr>
+        </tbody>
+
+        <tbody>
+          <tr>
             <td colspan='4' style='width: 50%;'>
               <h3>Moves</h3>
             </td>
@@ -136,16 +150,6 @@
               <div id='{$Pokemon_ID}_Move_4' onclick='SelectMove(\"{$Pokemon_ID}\", 4);' style='padding: 3px 0px;'>
                 {$Pokemon_Moves['4']['Name']}
               </div>
-            </td>
-          </tr>
-        </tbody>
-
-        <tbody>
-          <tr>
-            <td colspan='4' style='padding: 5px; width: 100%;'>
-              <button>
-                Update Pok&eacute;mon
-              </button>
             </td>
           </tr>
         </tbody>

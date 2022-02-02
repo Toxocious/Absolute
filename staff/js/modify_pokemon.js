@@ -76,7 +76,11 @@ function ShowPokemon()
     .then((Pokemon_Data) => {
       Pokemon_Data = JSON.parse(Pokemon_Data);
 
-      document.getElementById('Modification_Table').innerHTML = Pokemon_Data.Modification_Table;
+      document.getElementById('Modification_AJAX').className = Pokemon_Data.Success ? 'success' : 'error';
+      document.getElementById('Modification_AJAX').innerHTML = Pokemon_Data.Message;
+
+      if ( typeof Pokemon_Data.Modification_Table !== 'undefined' )
+        document.getElementById('Modification_Table').innerHTML = Pokemon_Data.Modification_Table;
     })
     .catch((Error) => console.error('Error:', Error));
 }
