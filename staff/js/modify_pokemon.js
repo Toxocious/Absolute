@@ -93,7 +93,7 @@ function ShowPokemon()
  */
 function TogglePokemonFreeze()
 {
-  const Pokemon_Value = document.getElementsByName('Pokemon_Search')[0].value;
+  const Pokemon_Value = document.getElementsByName('Pokemon_ID_To_Update')[0].value;
   if ( typeof Pokemon_Value === 'undefined' )
     return;
 
@@ -125,7 +125,7 @@ function DeletePokemon()
   if ( !confirm('Are you sure you want to delete this Pokemon?') )
     return;
 
-  const Pokemon_Value = document.getElementsByName('Pokemon_Search')[0].value;
+  const Pokemon_Value = document.getElementsByName('Pokemon_ID_To_Update')[0].value;
   if ( typeof Pokemon_Value === 'undefined' )
     return;
 
@@ -135,12 +135,47 @@ function DeletePokemon()
 
   SendRequest('modify_pokemon', Form_Data)
     .then((Pokemon_Data) => {
-      console.log(JSON.parse(Pokemon_Data));
       Pokemon_Data = JSON.parse(Pokemon_Data);
 
       document.getElementById('Modification_AJAX').className = Pokemon_Data.Success ? 'success' : 'error';
       document.getElementById('Modification_AJAX').innerHTML = Pokemon_Data.Message;
       document.getElementById('Modification_Table').innerHTML = '';
+    })
+    .catch((Error) => console.error('Error:', Error));
+}
+
+/**
+ * Update the Pokemon.
+ */
+function UpdatePokemon()
+{
+  if ( !confirm('Are you sure you want to update this Pokemon?') )
+    return;
+
+  const Pokemon_Value = document.getElementsByName('Pokemon_ID_To_Update')[0].value;
+  if ( typeof Pokemon_Value === 'undefined' )
+    return;
+
+  const Pokemon_Level = document.getElementsByName('Level')[0].value ?? 5;
+  const Pokemon_Gender = document.getElementsByName('Gender')[0].value;
+  const Pokemon_Nature = document.getElementsByName('Nature')[0].value;
+  const Pokemon_Ability = document.getElementsByName('Ability')[0].value;
+
+  let Form_Data = new FormData();
+  Form_Data.append('Pokemon_Value', Pokemon_Value);
+  Form_Data.append('Pokemon_Action', 'Update_Pokemon');
+  Form_Data.append('Pokemon_Level', Pokemon_Level);
+  Form_Data.append('Pokemon_Gender', Pokemon_Gender);
+  Form_Data.append('Pokemon_Nature', Pokemon_Nature);
+  Form_Data.append('Pokemon_Ability', Pokemon_Ability);
+
+  SendRequest('modify_pokemon', Form_Data)
+    .then((Pokemon_Data) => {
+      Pokemon_Data = JSON.parse(Pokemon_Data);
+
+      document.getElementById('Modification_AJAX').className = Pokemon_Data.Success ? 'success' : 'error';
+      document.getElementById('Modification_AJAX').innerHTML = Pokemon_Data.Message;
+      document.getElementById('Modification_Table').innerHTML = Pokemon_Data.Modification_Table;
     })
     .catch((Error) => console.error('Error:', Error));
 }

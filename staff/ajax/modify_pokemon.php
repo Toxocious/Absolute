@@ -17,7 +17,7 @@
     exit;
   }
 
-  if ( !empty($_GET['Pokemon_Action']) && in_array($_GET['Pokemon_Action'], ['Delete', 'Freeze', 'Move_List', 'Show', 'Update', 'Update_Move']) )
+  if ( !empty($_GET['Pokemon_Action']) && in_array($_GET['Pokemon_Action'], ['Delete', 'Freeze', 'Move_List', 'Show', 'Update_Pokemon', 'Update_Move']) )
     $Pokemon_Action = Purify($_GET['Pokemon_Action']);
 
   if ( empty($Pokemon_Action) )
@@ -41,6 +41,22 @@
   $Pokemon_Move_Value = 1;
   if ( !empty($_GET['Pokemon_Move_Value']) )
     $Pokemon_Move_Value = Purify($_GET['Pokemon_Move_Value']);
+
+  $Pokemon_Level = 1;
+  if ( !empty($_GET['Pokemon_Level']) )
+    $Pokemon_Level = Purify($_GET['Pokemon_Level']);
+
+  $Pokemon_Gender = 1;
+  if ( !empty($_GET['Pokemon_Gender']) )
+    $Pokemon_Gender = Purify($_GET['Pokemon_Gender']);
+
+  $Pokemon_Nature = 1;
+  if ( !empty($_GET['Pokemon_Nature']) )
+    $Pokemon_Nature = Purify($_GET['Pokemon_Nature']);
+
+  $Pokemon_Ability = 1;
+  if ( !empty($_GET['Pokemon_Ability']) )
+    $Pokemon_Ability = Purify($_GET['Pokemon_Ability']);
 
   try
   {
@@ -108,13 +124,13 @@
       ]);
       break;
 
-    case 'Update':
-      $Update_User = UpdateUser($Pokemon_Existence['ID'], $New_User_Avatar, $New_User_Password);
+    case 'Update_Pokemon':
+      $Update_Pokemon = UpdatePokemon($Pokemon_Existence['ID'], $Pokemon_Level, $Pokemon_Gender, $Pokemon_Nature, $Pokemon_Ability);
 
       echo json_encode([
-        'Success' => $Update_User['Success'],
-        'Message' => $Update_User['Message'],
-        'Modification_Table' => $Update_User['New_Table_HTML'],
+        'Success' => $Update_Pokemon['Success'],
+        'Message' => $Update_Pokemon['Message'],
+        'Modification_Table' => $Update_Pokemon['Modification_Table'],
       ]);
       break;
 

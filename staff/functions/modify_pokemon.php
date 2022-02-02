@@ -40,10 +40,6 @@
         $Ability_Options .= "<option value='{$Ability}'>{$Ability}</option>";
 
     return "
-      <div class='description'>
-        Moves update automatically; the rest do not.
-      </div>
-
       <input type='hidden' name='Pokemon_ID_To_Update' value='{$Pokemon_ID}}' />
       <input type='hidden' name='Pokemon_Freeze_Status' value='{$Frozen_Status}' />
 
@@ -115,7 +111,7 @@
         <tbody>
           <tr>
             <td colspan='4' style='padding: 5px; width: 100%;'>
-              <button>
+              <button onclick='UpdatePokemon();'>
                 Update Pok&eacute;mon
               </button>
             </td>
@@ -298,6 +294,90 @@
         'Message' => "<b>{$Pokemon_Data['Display_Name']}'s</b> moves have been updated successfully.",
       ];
     }
+  }
+
+  /**
+   * Update the selected Pokemon.
+   *
+   * @param $Pokemon_ID
+   * @param $Pokemon_Level
+   * @param $Pokemon_Gender
+   * @param $Pokemon_Nature
+   * @param $Pokemon_Ability
+   */
+  function UpdatePokemon
+  (
+    $Pokemon_ID,
+    $Pokemon_Level,
+    $Pokemon_Gender,
+    $Pokemon_Nature,
+    $Pokemon_Ability
+  )
+  {
+    global $PDO, $Poke_Class;
+
+    $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    if ( !$Pokemon_Info )
+    {
+      return [
+        'Success' => false,
+        'Message' => "The Pok&eacute;mon that you attempted to update doesn't exist.",
+        'Modification_Table' => ShowPokemonModTable($Pokemon_ID)
+      ];
+    }
+
+    $Update_Query = 'UPDATE `pokemon` SET ';
+
+    if ( $Pokemon_Level != $Pokemon_Info['Level_Raw'] )
+    {
+      $Pokemon_Exp = FetchExperience($Pokemon_Level, 'Pokemon');
+      $Update_Query .= '`Experience` = ?, ';
+      $Update_Params[] = $Pokemon_Exp;
+    }
+
+    if ( $Pokemon_Gender != $Pokemon_Info['Gender'] )
+    {
+      $Update_Query .= '`Gender` = ?, ';
+      $Update_Params[] = $Pokemon_Gender;
+    }
+
+    if ( $Pokemon_Nature != $Pokemon_Info['Nature'] )
+    {
+      $Update_Query .= '`Nature` = ?, ';
+      $Update_Params[] = $Pokemon_Nature;
+    }
+
+    if ( $Pokemon_Ability != $Pokemon_Info['Ability'] )
+    {
+      $Update_Query .= '`Ability` = ?, ';
+      $Update_Params[] = $Pokemon_Ability;
+    }
+
+    $Update_Query = trim($Update_Query, ', ');
+    $Update_Query .= ' WHERE `ID` = ? LIMIT 1';
+    $Update_Params[] = $Pokemon_ID;
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Update_Pokemon = $PDO->prepare($Update_Query);
+      $Update_Pokemon->execute( $Update_Params );
+
+      $PDO->commit();
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+    }
+
+    return [
+      'Success' => true,
+      'Message' => "You have successfully updated {$Pokemon_Info['Display_Name']}",
+      'Modification_Table' => ShowPokemonModTable($Pokemon_ID)
+    ];
   }
 
   /**
