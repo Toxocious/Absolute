@@ -43,6 +43,7 @@ a:hover
 input
 {
   &[type='text'],
+  &[type='number'],
   &[type='password']
   {
     background: var(--color-secondary);
