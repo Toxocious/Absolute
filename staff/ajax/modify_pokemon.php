@@ -58,39 +58,10 @@
   if ( !empty($_GET['Pokemon_Ability']) )
     $Pokemon_Ability = Purify($_GET['Pokemon_Ability']);
 
-  try
-  {
-    $Check_Pokemon_Existence = $PDO->prepare("
-      SELECT `ID`
-      FROM `pokemon`
-      WHERE `ID` = ?
-      LIMIT 1
-    ");
-    $Check_Pokemon_Existence->execute([
-      $Pokemon_Value
-    ]);
-    $Check_Pokemon_Existence->setFetchMode(PDO::FETCH_ASSOC);
-    $Pokemon_Existence = $Check_Pokemon_Existence->fetch();
-  }
-  catch ( PDOException $e )
-  {
-    HandleError($e);
-  }
-
-  if ( empty($Pokemon_Existence) )
-  {
-    echo json_encode([
-      'Success' => false,
-      'Message' => 'This Pok&eacute;mon does not exist.',
-    ]);
-
-    exit;
-  }
-
   switch ( $Pokemon_Action )
   {
     case 'Delete':
-      $Delete_Pokemon = DeletePokemon($Pokemon_Existence['ID']);
+      $Delete_Pokemon = DeletePokemon($Pokemon_Info['ID']);
 
       echo json_encode([
         'Success' => $Delete_Pokemon['Success'],
@@ -99,7 +70,7 @@
       break;
 
     case 'Freeze':
-      $Toggle_Pokemon_Freeze = ToggleFreeze($Pokemon_Existence['ID'], $Pokemon_Frozen_Status);
+      $Toggle_Pokemon_Freeze = ToggleFreeze($Pokemon_Info['ID'], $Pokemon_Frozen_Status);
 
       echo json_encode([
         'Success' => $Toggle_Pokemon_Freeze['Success'],
@@ -109,7 +80,7 @@
       break;
 
     case 'Move_List':
-      $Move_List = ShowMoveList($Pokemon_Existence['ID'], $Pokemon_Move_Slot);
+      $Move_List = ShowMoveList($Pokemon_Info['ID'], $Pokemon_Move_Slot);
 
       echo json_encode([
         'Move_List' => $Move_List,
@@ -117,7 +88,7 @@
       break;
 
     case 'Show':
-      $Modification_Table = ShowPokemonModTable($Pokemon_Existence['ID']);
+      $Modification_Table = ShowPokemonModTable($Pokemon_Info['ID']);
 
       echo json_encode([
         'Modification_Table' => $Modification_Table,
@@ -125,7 +96,7 @@
       break;
 
     case 'Update_Pokemon':
-      $Update_Pokemon = UpdatePokemon($Pokemon_Existence['ID'], $Pokemon_Level, $Pokemon_Gender, $Pokemon_Nature, $Pokemon_Ability);
+      $Update_Pokemon = UpdatePokemon($Pokemon_Info['ID'], $Pokemon_Level, $Pokemon_Gender, $Pokemon_Nature, $Pokemon_Ability);
 
       echo json_encode([
         'Success' => $Update_Pokemon['Success'],
@@ -135,7 +106,7 @@
       break;
 
     case 'Update_Move':
-      $Update_Move = UpdateMove($Pokemon_Existence['ID'], $Pokemon_Move_Slot, $Pokemon_Move_Value);
+      $Update_Move = UpdateMove($Pokemon_Info['ID'], $Pokemon_Move_Slot, $Pokemon_Move_Value);
 
       echo json_encode([
         'Success' => $Update_Move['Success'],
