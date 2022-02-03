@@ -19,17 +19,22 @@
 
 <div style='display: flex; flex-wrap: wrap; flex-direction: column; gap: 10px; justify-content: center;'>
   <div style='flex-basis: 100%; width: 100%;'>
-    <h3>Manage Pok&eacute;mon</h3>
+    <h3>Transfer Pok&eacute;mon</h3>
   </div>
 
   <table class='border-gradient' style='width: 300px;'>
     <tbody>
       <tr>
         <td>
-          <input type='text' name='Pokemon_Search' placeholder='Pok&eacute;mon ID' />
+          <input
+            type='number'
+            name='Pokemon_Search'
+            placeholder='Pok&eacute;mon ID'
+            onkeydown='return event.keyCode !== 69'
+          />
         </td>
         <td>
-          <button style='width: 130px;' onclick='ShowPokemon();'>Select Pok&eacute;mon</button>
+          <button style='width: 130px;' onclick='ShowPokemon("transfer_pokemon");'>Select Pok&eacute;mon</button>
         </td>
       </tr>
     </tbody>
