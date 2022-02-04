@@ -16,7 +16,7 @@
     exit;
   }
 
-  require_once 'functions/online_list.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/online_list.php';
 ?>
 
 <div class='panel content'>
