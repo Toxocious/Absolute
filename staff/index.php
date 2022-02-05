@@ -42,6 +42,7 @@
 <script type='text/javascript' src='js/modify_user.js'></script>
 <script type='text/javascript' src='js/modify_pokemon.js'></script>
 <script type='text/javascript' src='js/transfer_pokemon.js'></script>
+<script type='text/javascript' src='js/maintenance.js'></script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
