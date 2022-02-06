@@ -72,7 +72,7 @@
 
       try
       {
-        $Fetch_Shop_Objects = $PDO->prepare("SELECT * FROM `shop_pokemon` WHERE `obtained_place` = ?");
+        $Fetch_Shop_Objects = $PDO->prepare("SELECT * FROM `shop_pokemon` WHERE `obtained_place` = ? AND `Active` = 1");
         $Fetch_Shop_Objects->execute([ $Shop_Data['Obtained_Place'] ]);
         $Fetch_Shop_Objects->setFetchMode(PDO::FETCH_ASSOC);
         $Shop_Objects = $Fetch_Shop_Objects->fetchAll();
@@ -209,7 +209,7 @@
       (
         !$Object ||
         !$Object['Prices'] ||
-        $Object['Active'] == 'No' ||
+        !$Object['Active'] ||
         $Object['Remaining'] < 1
       )
         return false;
