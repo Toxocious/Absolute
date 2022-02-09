@@ -14,7 +14,8 @@ function ShowObtainablePokemonByTable(Database_Table)
       const Obtainable_Pokemon_Data = JSON.parse(Obtainable_Pokemon);
 
       document.getElementById('Set_Pokemon_Table').innerHTML = Obtainable_Pokemon_Data.Obtainable_Table;
-    });
+    })
+    .catch((Error) => console.error('[Absolute] An error occurred while displaying Pokemon by their table:', Error));
 }
 
 /**
@@ -35,5 +36,28 @@ function ShowObtainablePokemonByLocation(Database_Table, Obtainable_Location)
       const Obtainable_Pokemon_Data = JSON.parse(Obtainable_Pokemon);
 
       document.getElementById('Set_Pokemon_Table').innerHTML = Obtainable_Pokemon_Data.Obtainable_Table;
-    });
+    })
+    .catch((Error) => console.error('[Absolute] An error occurred while displaying Pokemon by their table and location:', Error));
+}
+
+/**
+ * Edit the specified Pokemon from the specified table.
+ *
+ * @param Database_Table
+ * @param Pokemon_Database_ID
+ */
+function EditSetPokemon(Database_Table, Pokemon_Database_ID)
+{
+  let Form_Data = new FormData();
+  Form_Data.append('Database_Table', Database_Table);
+  Form_Data.append('Pokemon_Database_ID', Pokemon_Database_ID);
+  Form_Data.append('Action', 'Edit_Pokemon_Entry');
+
+  SendRequest('set_pokemon', Form_Data)
+    .then((Edit_Pokemon) => {
+      const Edit_Pokemon_Data = JSON.parse(Edit_Pokemon);
+
+      document.getElementById('Set_Pokemon_Table').innerHTML = Edit_Pokemon_Data.Edit_Table;
+    })
+    .catch((Error) => console.error('[Absolute] An error occurred while editing this Pokemon\'s entry:', Error));
 }

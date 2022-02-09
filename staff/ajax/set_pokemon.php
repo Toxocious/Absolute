@@ -15,7 +15,7 @@
     exit;
   }
 
-  if ( !empty($_GET['Action']) && in_array($_GET['Action'], ['Show', 'Show_Location']) )
+  if ( !empty($_GET['Action']) && in_array($_GET['Action'], ['Edit_Pokemon_Entry', 'Finalize_Pokemon_Edit', 'Show', 'Show_Location']) )
     $Action = Purify($_GET['Action']);
 
   if ( empty($Action) )
@@ -32,8 +32,19 @@
   if ( !empty($_GET['Obtainable_Location']) )
     $Obtainable_Location = Purify($_GET['Obtainable_Location']);
 
+  $Pokemon_Database_ID = null;
+  if ( !empty($_GET['Pokemon_Database_ID']) )
+    $Pokemon_Database_ID = Purify($_GET['Pokemon_Database_ID']);
+
   switch ( $Action )
   {
+    case 'Edit_Pokemon_Entry':
+      $Edit_Table = ShowPokemonEditTable($Database_Table, $Pokemon_Database_ID);
+
+      echo json_encode([
+        'Edit_Table' => $Edit_Table,
+      ]);
+      break;
     case 'Show':
       $Obtainable_Table = ShowObtainablePokemonTable($Database_Table);
 

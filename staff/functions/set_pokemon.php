@@ -436,3 +436,289 @@
       </table>
     ";
   }
+
+  /**
+   * Show an editable table for the specified Pokemon.
+   *
+   * @param $Database_Table
+   * @param $Obtainable_Pokemon_Database_ID
+   */
+  function ShowPokemonEditTable
+  (
+    $Database_Table,
+    $Obtainable_Pokemon_Database_ID
+  )
+  {
+    global $PDO, $Poke_Class;
+
+    switch ( $Database_Table )
+    {
+      case 'map_encounters':
+        $Table_Name = 'Map Encounters';
+        $Pokemon_Entry_Query = "SELECT * FROM `map_encounters` WHERE `ID` = ? LIMIT 1";
+        break;
+
+      case 'shop_pokemon':
+        $Table_Name = 'Shop Pok&eacute;mon';
+        $Pokemon_Entry_Query = "SELECT * FROM `shop_pokemon` WHERE `ID` = ? LIMIT 1";
+        break;
+    }
+
+    try
+    {
+      $Get_Pokemon_Entry = $PDO->prepare($Pokemon_Entry_Query);
+      $Get_Pokemon_Entry->execute([
+        $Obtainable_Pokemon_Database_ID
+      ]);
+      $Get_Pokemon_Entry->setFetchMode(PDO::FETCH_ASSOC);
+      $Pokemon_Entry = $Get_Pokemon_Entry->fetch();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError($e);
+    }
+
+    if ( empty($Pokemon_Entry) )
+    {
+      return "
+        <table class='border-gradient' style='width: 600px;'>
+          <tbody>
+            <tr>
+              <td colspan='1' style='padding: 10px;'>
+                The Pok&eacute;mon that you selected to edit doesn't exist.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      ";
+    }
+
+    $Pokedex_Info = $Poke_Class->FetchPokedexData($Pokemon_Entry['Pokedex_ID'], $Pokemon_Entry['Alt_ID'], $Pokemon_Entry['Type'] ?? 'Normal');
+
+    switch ( $Database_Table )
+    {
+      case 'map_encounters':
+        $Additional_Table_Rows = "
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Encounter Weight / Odds</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <input type='number' name='Encounter_Weight' value='{$Pokemon_Entry['Weight']}' style='width: 100px;' />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='1' style='width: 25%;'>
+              <b>Minimum Level</b>
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <input type='number' name='Min_Level' value='{$Pokemon_Entry['Min_Level']}' style='width: 100px;' />
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <b>Maximum Level</b>
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <input type='number' name='Max_Level' value='{$Pokemon_Entry['Max_Level']}' style='width: 100px;' />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='1' style='width: 25%;'>
+              <b>Minimum Map Exp.</b>
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <input type='number' name='Min_Map_Exp' value='{$Pokemon_Entry['Min_Exp_Yield']}' style='width: 100px;' />
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <b>Maximum Map Exp.</b>
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <input type='number' name='Max_Map_Exp' value='{$Pokemon_Entry['Max_Exp_Yield']}' style='width: 100px;' />
+            </td>
+          </tr>
+        ";
+        break;
+
+      case 'shop_pokemon':
+        $Price_List = json_decode($Pokemon_Entry['Prices'], true);
+
+        $Pokemon_Cost_Text = '';
+        foreach ( $Price_List[0] as $Currency => $Amount )
+        {
+          $Pokemon_Cost_Text .= "
+            <tr>
+              <td colspan='2'>
+                <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />
+              </td>
+              <td colspan='2'>
+                <input type='number' name='{$Currency}_Cost' value='{$Amount}' />
+              </td>
+            </tr>
+          ";
+        }
+
+        $Type_Text = '';
+        $Type_Options = ['Normal', 'Shiny'];
+        foreach ( $Type_Options as $Type )
+        {
+          $Type_Text .= "
+            <option value='{$Type}' " . ($Pokemon_Entry['Type'] === $Type ? 'selected' : '') . ">
+              {$Type}
+            </option>
+          ";
+        }
+
+        $Additional_Table_Rows = "
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Pok&eacute;mon Type</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Pokemon_Type'>
+                {$Type_Text}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Pok&eacute;mon Remaining</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <input type='number' name='Pokemon_Remaining' value='{$Pokemon_Entry['Remaining']}' />
+            </td>
+          </tr>
+
+          {$Pokemon_Cost_Text}
+        ";
+        break;
+    }
+
+    $Active_Text = '';
+    $Active_Options = ['Yes', 'No'];
+    foreach ( $Active_Options as $Active )
+    {
+      $Active_Text .= "
+        <option value='{$Active}' " . ($Pokemon_Entry['Active'] === $Active ? 'selected' : '') . ">
+          {$Active}
+        </option>
+      ";
+    }
+
+    try
+    {
+      $Fetch_Pokedex = $PDO->prepare("
+        SELECT `ID`, `Pokedex_ID`, `Alt_ID`, `Pokemon`, `Forme`
+        FROM `pokedex`
+        ORDER BY `Pokedex_ID` ASC, `Alt_ID` ASC
+      ");
+      $Fetch_Pokedex->execute();
+      $Fetch_Pokedex->setFetchMode(PDO::FETCH_ASSOC);
+      $Pokedex = $Fetch_Pokedex->fetchAll();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError( $e->getMessage() );
+    }
+
+    $Pokedex_Dropdown_List = '';
+    foreach ( $Pokedex as $Pokedex_Entry )
+    {
+      $Pokemon_Display_Name = $Pokedex_Entry['Pokemon'];
+      if ( !empty($Pokedex_Entry['Forme']) )
+        $Pokemon_Display_Name .= " {$Pokedex_Entry['Forme']}";
+
+      $Pokemon_Display_Name .= " - #{$Pokedex_Entry['Pokedex_ID']}";
+      if ( !empty($Pokedex_Entry['Alt_ID']) && $Pokedex_Entry['Alt_ID'] > 0 )
+        $Pokemon_Display_Name .= ".{$Pokedex_Entry['Alt_ID']}";
+
+      $Active_Selection = $Pokemon_Entry['Pokedex_ID'] === $Pokedex_Entry['Pokedex_ID'] && $Pokemon_Entry['Alt_ID'] === $Pokedex_Entry['Alt_ID'];
+
+      $Pokedex_Dropdown_List .= "
+        <option value='{$Pokedex_Entry['ID']}' " . ($Active_Selection ? 'selected' : '') . ">
+          {$Pokemon_Display_Name}
+        </option>
+      ";
+    }
+
+    return "
+      <div style='width: 100%;'>
+        <h2>{$Table_Name}</h2>
+        <h3>Editing Pok&eacute;mon</h3>
+      </div>
+
+      <table class='border-gradient' style='width: 600px;'>
+        <thead>
+          <tr>
+            <th colspan='4' style='width: 100%;'>
+              Configure `{$Table_Name}` Pok&eacute;mon #{$Pokemon_Entry['ID']}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td colspan='4'>
+              <img src='{$Pokedex_Info['Sprite']}' />
+              <br />
+              <b>{$Pokedex_Info['Display_Name']}</b>
+            </td>
+          </tr>
+        </tbody>
+
+        <thead>
+          <tr>
+            <th colspan='4'>
+              Configuration Options
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Active</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Is_Pokemon_Active'>
+                {$Active_Text}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Pok&eacute;mon Species</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Pokemon_Species'>
+                {$Pokedex_Dropdown_List}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Obtained Text</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <input type='text' name='Obtained_Text' value='{$Pokemon_Entry['Obtained_Text']}' />
+            </td>
+          </tr>
+
+          {$Additional_Table_Rows}
+        </tbody>
+
+        <tbody>
+          <tr>
+            <td colspan='4'>
+              <button onclick='FinalizePokemonEdit(\"{$Database_Table}\", {$Pokemon_Entry['ID']});'>
+                Update Pok&eacute;mon
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    ";
+  }

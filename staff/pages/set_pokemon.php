@@ -17,7 +17,7 @@
   }
 ?>
 
-<div style='display: flex; flex-wrap: wrap; gap: 10px; justify-content: center;'>
+<div style='display: flex; flex-direction: column; flex-wrap: wrap; gap: 10px; justify-content: center;'>
   <div style='flex-basis: 100%; width: 100%;'>
     <h3>Set Pok&eacute;mon</h3>
   </div>
