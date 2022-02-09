@@ -544,8 +544,14 @@
         $Price_List = json_decode($Pokemon_Entry['Prices'], true);
 
         $Pokemon_Cost_Text = '';
-        foreach ( $Price_List[0] as $Currency => $Amount )
+
+        $Available_Currencies = ['Money', 'Abso_Coins'];
+        foreach ( $Available_Currencies as $Currency )
         {
+          $Amount = 0;
+          if ( !empty($Price_List[0][$Currency]) )
+            $Amount = $Price_List[0][$Currency];
+
           $Pokemon_Cost_Text .= "
             <tr>
               <td colspan='2'>
@@ -721,4 +727,118 @@
         </tbody>
       </table>
     ";
+  }
+
+  /**
+   * Finalize the edited Pokemon.
+   *
+   * @param $Database_Table
+   * @param $Obtainable_Pokemon_Database_ID
+   * @param $Database_Table
+   * @param $Pokemon_Database_ID
+   * @param $Pokemon_Active
+   * @param $Pokemon_Dex_ID
+   * @param $Obtained_Text
+   * @param $Encounter_Weight
+   * @param $Min_Level
+   * @param $Max_Level
+   * @param $Min_Map_Exp
+   * @param $Max_Map_Exp
+   * @param $Pokemon_Type
+   * @param $Pokemon_Remaining
+   * @param $Money_Cost
+   * @param $Abso_Coins_Cost
+   */
+  function FinalizePokemonEdit
+  (
+    $Database_Table,
+    $Obtainable_Pokemon_Database_ID,
+    $Pokemon_Active,
+    $Pokemon_Dex_ID,
+    $Obtained_Text,
+    $Encounter_Weight,
+    $Min_Level,
+    $Max_Level,
+    $Min_Map_Exp,
+    $Max_Map_Exp,
+    $Pokemon_Type,
+    $Pokemon_Remaining,
+    $Money_Cost,
+    $Abso_Coins_Cost
+  )
+  {
+    global $PDO, $Poke_Class;
+
+    $Pokedex_Info = $Poke_Class->FetchPokedexData(null, null, null, $Pokemon_Dex_ID);
+    $Pokemon_Active = $Pokemon_Active == 'Yes' ? 1 : 0;
+
+    switch ( $Database_Table )
+    {
+      case 'map_encounters':
+        $Update_Query = "
+          UPDATE `map_encounters`
+          SET `Pokedex_ID` = ?, `Alt_ID` = ?, `Obtained_Text` = ?, `Weight` = ?, `Min_Level` = ?, `Max_Level` = ?, `Min_Exp_Yield` = ?, `Max_Exp_Yield` = ?, `Active` = ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ";
+        $Update_Query_Params = [
+          $Pokedex_Info['Pokedex_ID'],
+          $Pokedex_Info['Alt_ID'],
+          $Obtained_Text,
+          $Encounter_Weight,
+          $Min_Level,
+          $Max_Level,
+          $Min_Map_Exp,
+          $Max_Map_Exp,
+          $Pokemon_Active,
+          $Obtainable_Pokemon_Database_ID
+        ];
+        break;
+
+      case 'shop_pokemon':
+        $Pokemon_Price_JSON = json_encode([
+          'Money' => $Money_Cost,
+          'Abso_Coins' => $Abso_Coins_Cost
+        ]);
+
+        $Update_Query = "
+          UPDATE `shop_pokemon`
+          SET `Pokedex_ID` = ?, `Alt_ID` = ?, `Obtained_Text` = ?, `Active` = ?, `Type` = ?, `Remaining` = ?, `Prices` = ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ";
+        $Update_Query_Params = [
+          $Pokedex_Info['Pokedex_ID'],
+          $Pokedex_Info['Alt_ID'],
+          $Obtained_Text,
+          $Pokemon_Active,
+          $Pokemon_Type,
+          $Pokemon_Remaining,
+          "[{$Pokemon_Price_JSON}]",
+          $Obtainable_Pokemon_Database_ID
+        ];
+        break;
+    }
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Update_Pokemon_Entry = $PDO->prepare($Update_Query);
+      $Update_Pokemon_Entry->execute($Update_Query_Params);
+
+      $PDO->commit();
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+    }
+
+    return [
+      'Success' => true,
+      'Message' => 'You have updated this Pok&eacute;mon',
+      'Finalized_Edit_Table' => ShowPokemonEditTable($Database_Table, $Obtainable_Pokemon_Database_ID),
+    ];
   }

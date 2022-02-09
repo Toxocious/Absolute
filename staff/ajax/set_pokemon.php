@@ -36,6 +36,54 @@
   if ( !empty($_GET['Pokemon_Database_ID']) )
     $Pokemon_Database_ID = Purify($_GET['Pokemon_Database_ID']);
 
+  $Pokemon_Active = null;
+  if ( !empty($_GET['Pokemon_Active']) )
+    $Pokemon_Active = Purify($_GET['Pokemon_Active']);
+
+  $Pokemon_Dex_ID = null;
+  if ( !empty($_GET['Pokemon_Dex_ID']) )
+    $Pokemon_Dex_ID = Purify($_GET['Pokemon_Dex_ID']);
+
+  $Obtained_Text = null;
+  if ( !empty($_GET['Obtained_Text']) )
+    $Obtained_Text = Purify($_GET['Obtained_Text']);
+
+  $Encounter_Weight = null;
+  if ( !empty($_GET['Encounter_Weight']) )
+    $Encounter_Weight = Purify($_GET['Encounter_Weight']);
+
+  $Min_Level = null;
+  if ( !empty($_GET['Min_Level']) )
+    $Min_Level = Purify($_GET['Min_Level']);
+
+  $Max_Level = null;
+  if ( !empty($_GET['Max_Level']) )
+    $Max_Level = Purify($_GET['Max_Level']);
+
+  $Min_Map_Exp = null;
+  if ( !empty($_GET['Min_Map_Exp']) )
+    $Min_Map_Exp = Purify($_GET['Min_Map_Exp']);
+
+  $Max_Map_Exp = null;
+  if ( !empty($_GET['Max_Map_Exp']) )
+    $Max_Map_Exp = Purify($_GET['Max_Map_Exp']);
+
+  $Pokemon_Type = null;
+  if ( !empty($_GET['Pokemon_Type']) )
+    $Pokemon_Type = Purify($_GET['Pokemon_Type']);
+
+  $Pokemon_Remaining = null;
+  if ( !empty($_GET['Pokemon_Remaining']) )
+    $Pokemon_Remaining = Purify($_GET['Pokemon_Remaining']);
+
+  $Money_Cost = null;
+  if ( !empty($_GET['Money_Cost']) )
+    $Money_Cost = Purify($_GET['Money_Cost']);
+
+  $Abso_Coins_Cost = null;
+  if ( !empty($_GET['Abso_Coins_Cost']) )
+    $Abso_Coins_Cost = Purify($_GET['Abso_Coins_Cost']);
+
   switch ( $Action )
   {
     case 'Edit_Pokemon_Entry':
@@ -45,6 +93,32 @@
         'Edit_Table' => $Edit_Table,
       ]);
       break;
+
+    case 'Finalize_Pokemon_Edit':
+      $Finalize_Pokemon_Edit = FinalizePokemonEdit(
+        $Database_Table,
+        $Pokemon_Database_ID,
+        $Pokemon_Active,
+        $Pokemon_Dex_ID,
+        $Obtained_Text,
+        $Encounter_Weight,
+        $Min_Level,
+        $Max_Level,
+        $Min_Map_Exp,
+        $Max_Map_Exp,
+        $Pokemon_Type,
+        $Pokemon_Remaining,
+        $Money_Cost,
+        $Abso_Coins_Cost
+      );
+
+      echo json_encode([
+        'Success' => $Finalize_Pokemon_Edit['Success'],
+        'Message' => $Finalize_Pokemon_Edit['Message'],
+        'Finalized_Edit_Table' => $Finalize_Pokemon_Edit['Finalized_Edit_Table']
+      ]);
+      break;
+
     case 'Show':
       $Obtainable_Table = ShowObtainablePokemonTable($Database_Table);
 
