@@ -242,7 +242,7 @@
         $Get_Area_Pokemon = $PDO->prepare("
           SELECT *
           FROM `map_encounters`
-          WHERE `Map_Name` = ? AND `Zone` = ?
+          WHERE `Map_Name` = ? AND (`Zone` = ? OR `ZONE` IS NULL)
         ");
         $Get_Area_Pokemon->execute([
           $Obtainable_Location,
@@ -256,7 +256,7 @@
         HandleError($e);
       }
 
-      if ( empty($Area_Pokemon) )
+      if ( empty($Area_Pokemon) || empty($Area['Zone']) )
         continue;
 
       $Total_Weight = 0;
@@ -274,6 +274,10 @@
         $Pokemon_Type = $Pokemon['Type'] ?? 'Normal';
         $Pokedex_Data = $Poke_Class->FetchPokedexData($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon_Type);
 
+        $Global_Encounter_Text = '';
+        if ( empty($Pokemon['Zone']) )
+          $Global_Encounter_Text = '<i>This Pok&eacute;mon is a global encounter</i>';
+
         $Area_Table_Row_Text .= "
           <tr>
             <td colspan='1' style='width: 50px;'>
@@ -285,6 +289,7 @@
                   {$Pokedex_Data['Display_Name']}
                 </b>
               </a>
+              {$Global_Encounter_Text}
             </td>
             <td colspan='1' style='width: 300px;'>
               <b>Encounter Odds:</b> " . number_format(($Pokemon['Weight'] / $Total_Weight) * 100, 2) . "%
