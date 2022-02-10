@@ -874,6 +874,15 @@
           </tr>
 
           <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Encounter Zone</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <input type='number' name='Encounter_Zone' value='' style='width: 100px;' />
+            </td>
+          </tr>
+
+          <tr>
             <td colspan='1' style='width: 25%;'>
               <b>Minimum Level</b>
             </td>
