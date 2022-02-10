@@ -1077,3 +1077,83 @@
       </table>
     ";
   }
+
+  /**
+   * Finalize creating a new Pokemon for an area.
+   *
+   * @param $Database_Table
+   * @param $Obtainable_Pokemon_Database_ID
+   * @param $Database_Table
+   * @param $Pokemon_Database_ID
+   * @param $Pokemon_Active
+   * @param $Pokemon_Dex_ID
+   * @param $Obtained_Text
+   * @param $Encounter_Weight
+   * @param $Min_Level
+   * @param $Max_Level
+   * @param $Min_Map_Exp
+   * @param $Max_Map_Exp
+   * @param $Pokemon_Type
+   * @param $Pokemon_Remaining
+   * @param $Money_Cost
+   * @param $Abso_Coins_Cost
+   */
+  function FinalizePokemonCreation
+  (
+    $Database_Table,
+    $Obtainable_Pokemon_Database_ID,
+    $Pokemon_Active,
+    $Pokemon_Dex_ID,
+    $Obtained_Text,
+    $Encounter_Weight,
+    $Encounter_Zone,
+    $Min_Level,
+    $Max_Level,
+    $Min_Map_Exp,
+    $Max_Map_Exp,
+    $Pokemon_Type,
+    $Pokemon_Remaining,
+    $Money_Cost,
+    $Abso_Coins_Cost
+  )
+  {
+    global $PDO;
+
+    $Pokemon_Active = $Pokemon_Active == 'Yes' ? 1 : 0;
+
+    switch ( $Database_Table )
+    {
+      case 'map_encounters':
+        $Creation_Query = "INSERT INTO `map_encounters` (`Map_Name`, `Pokedex_ID`, `Alt_ID`, `Min_Level`, `Max_Level`, `Min_Exp_Yield`, `Max_Exp_Yield`, `Weight`, `Zone`, `Active`, `Obtained_Text`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )";
+        $Creation_Params = [$Obtainable_Pokemon_Database_ID, $Pokemon_Dex_ID, 0, $Min_Level, $Max_Level, $Min_Map_Exp, $Max_Map_Exp, $Encounter_Weight, $Encounter_Zone, $Pokemon_Active, $Obtained_Text];
+        break;
+
+      case 'shop_pokemon':
+        $Pokemon_Prices = json_encode([ 'Money' => $Money_Cost, 'Abso_Coins' => $Abso_Coins_Cost ]);
+
+        $Creation_Query = "INSERT INTO `shop_pokemon` (`Obtained_Place`, `Obtained_Text`, `Pokedex_ID`, `Alt_ID`, `Type`, `Active`, `Remaining`, `Prices`) VALUES ( ?, ?, ?, ?, ?, ?, ?, ? )";
+        $Creation_Params = [$Obtainable_Pokemon_Database_ID, $Obtained_Text, $Pokemon_Dex_ID, 0, $Pokemon_Type, $Pokemon_Active, $Pokemon_Remaining, "[{$Pokemon_Prices}]"];
+        break;
+    }
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Create_Pokemon = $PDO->prepare($Creation_Query);
+      $Create_Pokemon->execute($Creation_Params);
+
+      $PDO->commit();
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+    }
+
+    return [
+      'Success' => true,
+      'Message' => "You have successfully added a Pok&eacute;mon to {$Obtained_Text}."
+    ];
+  }

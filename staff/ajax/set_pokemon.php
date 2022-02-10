@@ -56,6 +56,10 @@
   if ( !empty($_GET['Encounter_Weight']) )
     $Encounter_Weight = Purify($_GET['Encounter_Weight']);
 
+  $Encounter_Zone = null;
+  if ( !empty($_GET['Encounter_Zone']) )
+    $Encounter_Zone = Purify($_GET['Encounter_Zone']);
+
   $Min_Level = null;
   if ( !empty($_GET['Min_Level']) )
     $Min_Level = Purify($_GET['Min_Level']);
@@ -103,6 +107,31 @@
 
       echo json_encode([
         'Edit_Table' => $Edit_Table,
+      ]);
+      break;
+
+    case 'Finalize_Pokemon_Creation':
+      $Finalize_Pokemon_Creation = FinalizePokemonCreation(
+        $Database_Table,
+        $Pokemon_Database_ID,
+        $Pokemon_Active,
+        $Pokemon_Dex_ID,
+        $Obtained_Text,
+        $Encounter_Weight,
+        $Encounter_Zone,
+        $Min_Level,
+        $Max_Level,
+        $Min_Map_Exp,
+        $Max_Map_Exp,
+        $Pokemon_Type,
+        $Pokemon_Remaining,
+        $Money_Cost,
+        $Abso_Coins_Cost
+      );
+
+      echo json_encode([
+        'Success' => $Finalize_Pokemon_Creation['Success'],
+        'Message' => $Finalize_Pokemon_Creation['Message']
       ]);
       break;
 
