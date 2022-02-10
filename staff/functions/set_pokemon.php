@@ -211,7 +211,7 @@
       <div style='width: 100%;'>
         <h2>Map Encounters</h2>
         <h3>{$Obtainable_Location}</h3>
-        <button onclick='AddPokemonToArea(\"{$Database_Table}\", \"{$Obtainable_Location}\");'>
+        <button onclick='ShowPokemonCreationTable(\"{$Database_Table}\", \"{$Obtainable_Location}\");'>
           Add New Pok&eacute;mon
         </button>
       </div>
@@ -361,7 +361,7 @@
       <div style='width: 100%;'>
         <h2>Shop Pok&eacute;mon</h2>
         <h3>{$Obtainable_Location}</h3>
-        <button onclick='AddPokemonToArea(\"{$Database_Table}\", \"{$Obtainable_Location}\");'>
+        <button onclick='ShowPokemonCreationTable(\"{$Database_Table}\", \"{$Obtainable_Location}\");'>
           Add New Pok&eacute;mon
         </button>
       </div>
@@ -841,4 +841,230 @@
       'Message' => 'You have updated this Pok&eacute;mon',
       'Finalized_Edit_Table' => ShowPokemonEditTable($Database_Table, $Obtainable_Pokemon_Database_ID),
     ];
+  }
+
+  /**
+   * Show a table that allows customization and creation of a new Pokemon.
+   *
+   * @param $Database_Table
+   * @param $Obtainable_Location
+   */
+  function ShowPokemonCreationTable
+  (
+    $Database_Table,
+    $Obtainable_Location
+  )
+  {
+    global $PDO;
+
+    $Location_Name = ucwords(str_replace('_', ' ', $Obtainable_Location));
+
+    switch ( $Database_Table )
+    {
+      case 'map_encounters':
+        $Table_Name = 'Map Encounters';
+        $Additional_Table_Rows = "
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Encounter Weight / Odds</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <input type='number' name='Encounter_Weight' value='' style='width: 100px;' />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='1' style='width: 25%;'>
+              <b>Minimum Level</b>
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <input type='number' name='Min_Level' value='' style='width: 100px;' />
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <b>Maximum Level</b>
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <input type='number' name='Max_Level' value='' style='width: 100px;' />
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='1' style='width: 25%;'>
+              <b>Minimum Map Exp.</b>
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <input type='number' name='Min_Map_Exp' value='' style='width: 100px;' />
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <b>Maximum Map Exp.</b>
+            </td>
+            <td colspan='1' style='width: 25%;'>
+              <input type='number' name='Max_Map_Exp' value='' style='width: 100px;' />
+            </td>
+          </tr>
+        ";
+        break;
+
+      case 'shop_pokemon':
+        $Table_Name = 'Shop Pok&eacute;mon';
+        $Pokemon_Cost_Text = '';
+
+        $Available_Currencies = ['Money', 'Abso_Coins'];
+        foreach ( $Available_Currencies as $Currency )
+        {
+          $Pokemon_Cost_Text .= "
+            <tr>
+              <td colspan='2'>
+                <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />
+              </td>
+              <td colspan='2'>
+                <input type='number' name='{$Currency}_Cost' value='' />
+              </td>
+            </tr>
+          ";
+        }
+
+        $Type_Text = '';
+        $Type_Options = ['Normal', 'Shiny'];
+        foreach ( $Type_Options as $Type )
+        {
+          $Type_Text .= "
+            <option value='{$Type}'>
+              {$Type}
+            </option>
+          ";
+        }
+
+        $Additional_Table_Rows = "
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Pok&eacute;mon Type</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Pokemon_Type'>
+                {$Type_Text}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Pok&eacute;mon Remaining</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <input type='number' name='Pokemon_Remaining' value='' />
+            </td>
+          </tr>
+
+          {$Pokemon_Cost_Text}
+        ";
+        break;
+    }
+
+    $Active_Text = '';
+    $Active_Options = ['Yes', 'No'];
+    foreach ( $Active_Options as $Active )
+    {
+      $Active_Text .= "
+        <option value='{$Active}'>
+          {$Active}
+        </option>
+      ";
+    }
+
+    try
+    {
+      $Fetch_Pokedex = $PDO->prepare("
+        SELECT `ID`, `Pokedex_ID`, `Alt_ID`, `Pokemon`, `Forme`
+        FROM `pokedex`
+        ORDER BY `Pokedex_ID` ASC, `Alt_ID` ASC
+      ");
+      $Fetch_Pokedex->execute();
+      $Fetch_Pokedex->setFetchMode(PDO::FETCH_ASSOC);
+      $Pokedex = $Fetch_Pokedex->fetchAll();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError($e);
+    }
+
+    $Pokedex_Dropdown_List = '';
+    foreach ( $Pokedex as $Pokedex_Entry )
+    {
+      $Pokemon_Display_Name = $Pokedex_Entry['Pokemon'];
+      if ( !empty($Pokedex_Entry['Forme']) )
+        $Pokemon_Display_Name .= " {$Pokedex_Entry['Forme']}";
+
+      $Pokemon_Display_Name .= " - #{$Pokedex_Entry['Pokedex_ID']}";
+      if ( !empty($Pokedex_Entry['Alt_ID']) && $Pokedex_Entry['Alt_ID'] > 0 )
+        $Pokemon_Display_Name .= ".{$Pokedex_Entry['Alt_ID']}";
+
+      $Pokedex_Dropdown_List .= "
+        <option value='{$Pokedex_Entry['ID']}'>
+          {$Pokemon_Display_Name}
+        </option>
+      ";
+    }
+
+    return "
+      <div style='width: 100%;'>
+        <h2>{$Table_Name}</h2>
+        <h3>Adding Pok&eacute;mon</h3>
+      </div>
+
+      <table class='border-gradient' style='width: 600px;'>
+        <thead>
+          <tr>
+            <th colspan='4' style='width: 100%;'>
+              {$Location_Name}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Active</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Is_Pokemon_Active'>
+                {$Active_Text}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Pok&eacute;mon Species</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Pokemon_Species'>
+                {$Pokedex_Dropdown_List}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Obtained Text</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <input type='text' name='Obtained_Text' value='{$Location_Name}' />
+            </td>
+          </tr>
+
+          {$Additional_Table_Rows}
+        </tbody>
+
+        <tbody>
+          <tr>
+            <td colspan='4'>
+              <button onclick='FinalizePokemonCreation(\"{$Database_Table}\", \"{$Obtainable_Location}\");'>
+                Create Pok&eacute;mon
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    ";
   }

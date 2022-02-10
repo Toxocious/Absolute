@@ -149,3 +149,25 @@ function FinalizePokemonEdit(Database_Table, Pokemon_Database_ID)
     })
     .catch((Error) => console.error('[Absolute] An error occurred while editing this Pokemon\'s entry:', Error));
 }
+
+/**
+ * Show a table to allow cutomization of a new Pokemon for the selected location.
+ *
+ * @param Database_Table
+ * @param Obtainable_Location
+ */
+function ShowPokemonCreationTable(Database_Table, Obtainable_Location)
+{
+  let Form_Data = new FormData();
+  Form_Data.append('Database_Table', Database_Table);
+  Form_Data.append('Obtainable_Location', Obtainable_Location);
+  Form_Data.append('Action', 'Create_New_Pokemon');
+
+  SendRequest('set_pokemon', Form_Data)
+    .then((Create_New_Pokemon) => {
+      const Create_New_Pokemon_Data = JSON.parse(Create_New_Pokemon);
+
+      document.getElementById('Set_Pokemon_Table').innerHTML = Create_New_Pokemon_Data.Creation_Table;
+    })
+    .catch((Error) => console.error('[Absolute] An error occurred while displaying the create a Pokemon table:', Error));
+}
