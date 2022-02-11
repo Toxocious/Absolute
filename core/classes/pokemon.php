@@ -714,9 +714,9 @@
 			$Weighter = new Weighter();
 			foreach (['Female', 'Male', 'Genderless'] as $Key)
 			{
-				$Weighter->add($Key, $Pokemon[$Key]);
+				$Weighter->AddObject($Key, $Pokemon[$Key]);
 			}
-			$Gender = $Weighter->get();
+			$Gender = $Weighter->GetObject();
 
 			return $Gender;
 		}
