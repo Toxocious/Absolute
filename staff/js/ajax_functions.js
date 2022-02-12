@@ -1,5 +1,11 @@
 function LoadPage(Page_URL)
 {
+  document.getElementById('Staff_Content').innerHTML = `
+    <div style='display: flex; align-items: center; justify-content: center; padding: 10px;'>
+      <div class='loading-element'></div>
+    </div>
+  `;
+
   return new Promise((resolve, reject) =>
   {
     const req = new XMLHttpRequest();
