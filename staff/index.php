@@ -44,6 +44,7 @@
 <script type='text/javascript' src='js/transfer_pokemon.js'></script>
 <script type='text/javascript' src='js/maintenance.js'></script>
 <script type='text/javascript' src='js/set_pokemon.js'></script>
+<script type='text/javascript' src='js/set_items.js'></script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
