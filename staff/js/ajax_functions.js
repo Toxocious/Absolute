@@ -42,25 +42,6 @@ function SendRequest(Page, Data, HTTP_TYPE = 'GET')
         req.send();
         break;
 
-      case 'POST':
-        const Data_Val = new FormData();
-        Data_Val.append('Action', Data.Action);
-
-        if ( typeof Data.x !== 'undefined' )
-          Data_Val.append('x', Data.x);
-        if ( typeof Data.y !== 'undefined' )
-          Data_Val.append('y', Data.y);
-        if ( typeof Data.z !== 'undefined' )
-          Data_Val.append('z', Data.z);
-        if ( typeof Data.Encounter_Tile !== 'undefined' )
-          Data_Val.append('Encounter_Tile', Data.Encounter_Tile);
-        if ( typeof Data.Warp_Tile !== 'undefined' )
-          Data_Val.append('Warp_Tile', Data.Warp_Tile);
-
-        req.open('POST', AJAX_URL);
-        req.send(Data_Val);
-        break;
-
       default:
         console.error(`Unable to process request of HTTP type '${HTTP_TYPE}'.`);
         break;
@@ -70,21 +51,7 @@ function SendRequest(Page, Data, HTTP_TYPE = 'GET')
     req.onload = () =>
     {
       if ( req.status === 200 )
-      {
-        setTimeout(() =>
-        {
-          [].forEach.call(document.getElementsByName("iFrame_Handler"), function(el)
-          {
-            el.lightbox = new IframeLightbox(el, {
-              scrolling: true,
-              rate: 500,
-              touch: true,
-            });
-          });
-        }, 250);
-
         resolve(req.response);
-      }
       else
         reject(Error(req.statusText));
     };
