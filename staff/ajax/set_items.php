@@ -18,7 +18,7 @@
   if
   (
     !empty($_GET['Action']) &&
-    in_array($_GET['Action'], ['Edit_Item_Entry', 'Finalize_Item_Edit', 'Show', 'Show_Location'])
+    in_array($_GET['Action'], ['Create_Item_Entry', 'Edit_Item_Entry', 'Finalize_Item_Creation', 'Finalize_Item_Edit', 'Show', 'Show_Location'])
   )
     $Action = Purify($_GET['Action']);
 
@@ -62,6 +62,14 @@
 
   switch ( $Action )
   {
+    case 'Create_Item_Entry':
+      $Create_Item_Table = ShowItemCreationTable($Database_Table, $Obtainable_Location);
+
+      echo json_encode([
+        'Creation_Table' => $Create_Item_Table,
+      ]);
+      break;
+
     case 'Edit_Item_Entry':
       $Edit_Table = ShowItemEditTable($Database_Table, $Item_Database_ID);
 

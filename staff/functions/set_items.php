@@ -161,6 +161,137 @@
   }
 
   /**
+   * Show a table that allows creation of a new obtainable item.
+   *
+   * @param $Database_Table
+   * @param $Obtainable_Location
+   */
+  function ShowItemCreationTable
+  (
+    $Database_Table,
+    $Obtainable_Location
+  )
+  {
+    global $PDO;
+
+    $Item_Cost_Text = '';
+    $Available_Currencies = ['Money', 'Abso_Coins'];
+    foreach ( $Available_Currencies as $Currency )
+    {
+      $Item_Cost_Text .= "
+        <tr>
+          <td colspan='2'>
+            <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />
+          </td>
+          <td colspan='2'>
+            <input type='number' name='{$Currency}_Cost' value='0' />
+          </td>
+        </tr>
+      ";
+    }
+
+    $Active_Text = '';
+    $Active_Options = [ 'Yes', 'No' ];
+    foreach ( $Active_Options as $Active )
+    {
+      $Active_Text .= "
+        <option value='{$Active}'>
+          {$Active}
+        </option>
+      ";
+    }
+
+    try
+    {
+      $Fetch_Item_Dex = $PDO->prepare("
+        SELECT `Item_ID`, `Item_Name`
+        FROM `item_dex`
+        ORDER BY `Item_Name` ASC, `Item_ID` ASC
+      ");
+      $Fetch_Item_Dex->execute();
+      $Fetch_Item_Dex->setFetchMode(PDO::FETCH_ASSOC);
+      $Item_Dex = $Fetch_Item_Dex->fetchAll();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError( $e->getMessage() );
+    }
+
+    $Item_Dex_Dropdown_List = '';
+    foreach ( $Item_Dex as $Item_Dex_Entry )
+    {
+      $Item_Dex_Dropdown_List .= "
+        <option value='{$Item_Dex_Entry['Item_ID']}'>
+          {$Item_Dex_Entry['Item_Name']}
+        </option>
+      ";
+    }
+
+    return "
+      <div style='width: 100%;'>
+        <h2>{$Database_Table}</h2>
+        <h3>Creating An Item</h3>
+      </div>
+
+      <input type='hidden' name='Obtainable_Location' value='{$Obtainable_Location}' />
+      <table class='border-gradient' style='width: 600px;'>
+        <thead>
+          <tr>
+            <th colspan='4' style='width: 100%;'>
+              {$Obtainable_Location}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Active</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Is_Item_Active'>
+                {$Active_Text}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Item</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Item_ID'>
+                {$Item_Dex_Dropdown_List}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Items Remaining</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <input type='number' name='Items_Remaining' value='0' />
+            </td>
+          </tr>
+
+          {$Item_Cost_Text}
+        </tbody>
+
+        <tbody>
+          <tr>
+            <td colspan='4'>
+              <button onclick='FinalizeItemCreation(\"{$Database_Table}\", \"{$Obtainable_Location}\");'>
+                Create Item
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    ";
+  }
+
+  /**
    * Show an editable table for the specified item.
    *
    * @param $Database_Table

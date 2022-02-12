@@ -41,6 +41,28 @@ function ShowObtainableItemsByLocation(Database_Table, Obtainable_Location)
 }
 
 /**
+ * Show a table to allow cutomization of a new item for the selected location.
+ *
+ * @param Database_Table
+ * @param Obtainable_Location
+ */
+function ShowItemCreationTable(Database_Table, Obtainable_Location)
+{
+  let Form_Data = new FormData();
+  Form_Data.append('Database_Table', Database_Table);
+  Form_Data.append('Obtainable_Location', Obtainable_Location);
+  Form_Data.append('Action', 'Create_Item_Entry');
+
+  SendRequest('set_items', Form_Data)
+    .then((Create_New_Item) => {
+      const Create_New_Item_Data = JSON.parse(Create_New_Item);
+
+      document.getElementById('Set_Items_Table').innerHTML = Create_New_Item_Data.Creation_Table;
+    })
+    .catch((Error) => console.error('[Absolute] An error occurred while displaying the create a item table:', Error));
+}
+
+/**
  * Edit the specified Pokemon from the specified table.
  *
  * @param Database_Table
@@ -97,5 +119,6 @@ function FinalizeItemEdit(Database_Table, Item_Database_ID)
       document.getElementById('Set_Items_AJAX').innerHTML = Finalize_Item_Edit_Data.Message;
 
       document.getElementById('Set_Items_Table').innerHTML = Finalize_Item_Edit_Data.Finalized_Edit_Table;
-    });
+    })
+    .catch((Error) => console.error('[Absolute] An error occurred while editing this item\'s entry:', Error));
 }
