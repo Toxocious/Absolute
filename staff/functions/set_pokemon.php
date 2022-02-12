@@ -396,7 +396,7 @@
       foreach ( $Price_List[0] as $Currency => $Amount )
       {
         $Pokemon_Cost_Text .= "
-          <div style='align-items: center; display: flex; gap: 10px; justify-content: center; width: 100%;'>
+          <div style='align-items: center; display: flex; gap: 10px; justify-content: left; width: 50%;'>
             <div>
               <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />
             </div>
@@ -419,7 +419,7 @@
               </b>
             </a>
           </td>
-          <td colspan='1' style='width: 300px;'>
+          <td colspan='1' style='display: flex; flex-wrap: wrap; width: 300px;'>
             {$Pokemon_Cost_Text}
           </td>
         </tr>
