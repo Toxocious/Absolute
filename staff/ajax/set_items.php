@@ -42,4 +42,12 @@
         'Obtainable_Table' => $Obtainable_Table,
       ]);
       break;
+
+    case 'Show_Location':
+      $Obtainable_Table = ShowAreaObtainableItems($Database_Table, $Obtainable_Location);
+
+      echo json_encode([
+        'Obtainable_Table' => $Obtainable_Table,
+      ]);
+      break;
   }
