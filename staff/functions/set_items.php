@@ -161,6 +161,205 @@
   }
 
   /**
+   * Show an editable table for the specified item.
+   *
+   * @param $Database_Table
+   * @param $Obtainable_Item_Database_ID
+   */
+  function ShowItemEditTable
+  (
+    $Database_Table,
+    $Obtainable_Item_Database_ID
+  )
+  {
+    global $PDO, $Item_Class;
+
+    switch ( $Database_Table )
+    {
+      case 'shop_items':
+        $Table_Name = 'Shop Items';
+        $Item_Entry_Query = "SELECT * FROM `shop_items` WHERE `ID` = ? LIMIT 1";
+        break;
+    }
+
+    try
+    {
+      $Get_Item_Entry = $PDO->prepare($Item_Entry_Query);
+      $Get_Item_Entry->execute([
+        $Obtainable_Item_Database_ID
+      ]);
+      $Get_Item_Entry->setFetchMode(PDO::FETCH_ASSOC);
+      $Item_Entry = $Get_Item_Entry->fetch();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError($e);
+    }
+
+    if ( empty($Item_Entry) )
+    {
+      return "
+        <table class='border-gradient' style='width: 600px;'>
+          <tbody>
+            <tr>
+              <td colspan='1' style='padding: 10px;'>
+                The item that you selected to edit doesn't exist.
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      ";
+    }
+
+    $Item_Info = $Item_Class->FetchItemData($Item_Entry['Item_ID']);
+
+    $Price_List = json_decode($Item_Entry['Prices'], true);
+
+    $Item_Cost_Text = '';
+    $Available_Currencies = ['Money', 'Abso_Coins'];
+    foreach ( $Available_Currencies as $Currency )
+    {
+      $Amount = 0;
+      if ( !empty($Price_List[0][$Currency]) )
+        $Amount = $Price_List[0][$Currency];
+
+      $Item_Cost_Text .= "
+        <tr>
+          <td colspan='2'>
+            <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />
+          </td>
+          <td colspan='2'>
+            <input type='number' name='{$Currency}_Cost' value='{$Amount}' />
+          </td>
+        </tr>
+      ";
+    }
+
+    $Additional_Table_Rows = "
+      <tr>
+        <td colspan='2' style='width: 50%;'>
+          <b>Items Remaining</b>
+        </td>
+        <td colspan='2' style='width: 50%;'>
+          <input type='number' name='Items_Remaining' value='{$Item_Entry['Remaining']}' />
+        </td>
+      </tr>
+
+      {$Item_Cost_Text}
+    ";
+
+    $Active_Text = '';
+    $Active_Options = ['Yes', 'No'];
+    foreach ( $Active_Options as $Active )
+    {
+      $Active_Text .= "
+        <option value='{$Active}' " . ($Item_Entry['Active'] === $Active ? 'selected' : '') . ">
+          {$Active}
+        </option>
+      ";
+    }
+
+    try
+    {
+      $Fetch_Item_Dex = $PDO->prepare("
+        SELECT `Item_ID`, `Item_Name`
+        FROM `item_dex`
+        ORDER BY `Item_Name` ASC, `Item_ID` ASC
+      ");
+      $Fetch_Item_Dex->execute();
+      $Fetch_Item_Dex->setFetchMode(PDO::FETCH_ASSOC);
+      $Item_Dex = $Fetch_Item_Dex->fetchAll();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError( $e->getMessage() );
+    }
+
+    $Item_Dex_Dropdown_List = '';
+    foreach ( $Item_Dex as $Item_Dex_Entry )
+    {
+      $Active_Selection = $Item_Entry['Item_ID'] === $Item_Dex_Entry['Item_ID'];
+
+      $Item_Dex_Dropdown_List .= "
+        <option value='{$Item_Dex_Entry['Item_ID']}' " . ($Active_Selection ? 'selected' : '') . ">
+          {$Item_Dex_Entry['Item_Name']}
+        </option>
+      ";
+    }
+
+    return "
+      <div style='width: 100%;'>
+        <h2>{$Table_Name}</h2>
+        <h3>Editing Item</h3>
+      </div>
+
+      <table class='border-gradient' style='width: 600px;'>
+        <thead>
+          <tr>
+            <th colspan='4' style='width: 100%;'>
+              Configure `{$Table_Name}` Item #{$Item_Entry['ID']}
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td colspan='4'>
+              <img src='{$Item_Info['Icon']}' />
+              <br />
+              <b>{$Item_Info['Name']}</b>
+            </td>
+          </tr>
+        </tbody>
+
+        <thead>
+          <tr>
+            <th colspan='4'>
+              Configuration Options
+            </th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Active</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Is_Item_Active'>
+                {$Active_Text}
+              </select>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan='2' style='width: 50%;'>
+              <b>Item Name</b>
+            </td>
+            <td colspan='2' style='width: 50%;'>
+              <select name='Item_Name'>
+                {$Item_Dex_Dropdown_List}
+              </select>
+            </td>
+          </tr>
+
+          {$Additional_Table_Rows}
+        </tbody>
+
+        <tbody>
+          <tr>
+            <td colspan='4'>
+              <button onclick='FinalizeItemEdit(\"{$Database_Table}\", {$Item_Entry['ID']});'>
+                Update Item
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    ";
+  }
+
+  /**
    * Get all obtainable items from the specified location.
    *
    * @param $Database_Table

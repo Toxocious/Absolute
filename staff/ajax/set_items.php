@@ -32,8 +32,35 @@
     exit;
   }
 
+  $Obtainable_Location = null;
+  if ( !empty($_GET['Obtainable_Location']) )
+    $Obtainable_Location = Purify($_GET['Obtainable_Location']);
+
+  $Item_Database_ID = null;
+  if ( !empty($_GET['Item_Database_ID']) )
+    $Item_Database_ID = Purify($_GET['Item_Database_ID']);
+
+  $Items_Remaining = null;
+  if ( !empty($_GET['Items_Remaining']) )
+    $Items_Remaining = Purify($_GET['Items_Remaining']);
+
+  $Money_Cost = null;
+  if ( !empty($_GET['Money_Cost']) )
+    $Money_Cost = Purify($_GET['Money_Cost']);
+
+  $Abso_Coins_Cost = null;
+  if ( !empty($_GET['Abso_Coins_Cost']) )
+    $Abso_Coins_Cost = Purify($_GET['Abso_Coins_Cost']);
+
   switch ( $Action )
   {
+    case 'Edit_Item_Entry':
+      $Edit_Table = ShowItemEditTable($Database_Table, $Item_Database_ID);
+
+      echo json_encode([
+        'Edit_Table' => $Edit_Table,
+      ]);
+      break;
 
     case 'Show':
       $Obtainable_Table = ShowObtainableItemsTable($Database_Table);

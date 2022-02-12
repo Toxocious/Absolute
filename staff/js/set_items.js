@@ -39,3 +39,24 @@ function ShowObtainableItemsByLocation(Database_Table, Obtainable_Location)
     })
     .catch((Error) => console.error('[Absolute] An error occurred while showing obtainable items by location:', Error));
 }
+
+/**
+ * Edit the specified Pokemon from the specified table.
+ *
+ * @param Database_Table
+ * @param Pokemon_Database_ID
+ */
+function EditSetItem(Database_Table, Item_Database_ID)
+{
+  let Form_Data = new FormData();
+  Form_Data.append('Database_Table', Database_Table);
+  Form_Data.append('Item_Database_ID', Item_Database_ID);
+  Form_Data.append('Action', 'Edit_Item_Entry');
+
+  SendRequest('set_items', Form_Data)
+    .then((Edit_Item) => {
+      const Edit_Item_Data = JSON.parse(Edit_Item);
+
+      document.getElementById('Set_Items_Table').innerHTML = Edit_Item_Data.Edit_Table;
+    });
+}
