@@ -44,10 +44,13 @@
 			$Selling_Pokemon = $Shop_Class->FetchShopPokemon($Shop_ID);
 			if ( $Selling_Pokemon )
 			{
-		?>
+        echo "
+          <div class='flex wrap' style='justify-content: center;'>
+          <div style='width: 100%;'>
+            <h3>Shop Pok&eacute;mon</h3>
+          </div>
+        ";
 
-		<div class='flex wrap' style='justify-content: center;'>
-			<?php
 				foreach ( $Selling_Pokemon as $Shop_Pokemon )
 				{
 					if ( !$Shop_Pokemon['Prices'] )
@@ -57,7 +60,7 @@
 					$Price_String = '';
 
 					$Pokedex_Data = $Poke_Class->FetchPokedexData($Shop_Pokemon['Pokedex_ID'], $Shop_Pokemon['Alt_ID'], $Shop_Pokemon['Type']);
-						
+
 					$Price_Array = $Shop_Class->FetchPriceList($Shop_Pokemon['Prices']);
 					foreach ( $Price_Array[0] as $Currency => $Amount )
 					{
@@ -139,23 +142,26 @@
 						</table>
 					";
 				}
-			?>
-		</div>
 
-		<?php
+        echo "</div>";
 			}
 
 			$Selling_Items = $Shop_Class->FetchShopItems($Shop_ID);
 			if ( $Selling_Items )
 			{
-		?>
+        echo "
+          <div class='flex wrap' style='justify-content: center;'>
+          <div style='width: 100%;'>
+            <h3>Shop Items</h3>
+          </div>
+        ";
 
-		<div class='flex wrap' style='justify-content: center;'>
-			<?php
-				foreach ( $Selling_Items as $Shop_Items )
+        foreach ( $Selling_Items as $Shop_Items )
 				{
 					if ( !$Shop_Items['Prices'] )
 						continue;
+
+          $Item_Data = $Item_Class->FetchItemData($Shop_Items['Item_ID']);
 
 					$Can_Afford = true;
 					$Price_String = '';
@@ -209,7 +215,7 @@
 							<thead>
 								<tr>
 									<th colspan='2'>
-										{$Pokedex_Data['Display_Name']}
+										{$Item_Data['Name']}
 									</th>
 								</tr>
 							</thead>
@@ -217,7 +223,7 @@
 							<tbody>
 								<tr>
 									<td colspan='1'>
-										<img src='{$Pokedex_Data['Sprite']}' />
+										<img src='{$Item_Data['Icon']}' item_id='{$Item_Data['ID']}' />
 									</td>
 									<td colspan='1'>
 										{$Price_String}
@@ -234,13 +240,10 @@
 						</table>
 					";
 				}
-			?>
-		</div>
 
-		<?php
+        echo "</div>";
 			}
 		?>
-
 	</div>
 </div>
 
