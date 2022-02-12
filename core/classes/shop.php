@@ -3,16 +3,6 @@
 	{
 		public $PDO;
 
-		/**
-		 * Constructor function.
-		 */
-		public function __contruct()
-		{
-			global $PDO;
-
-			$this->PDO = $PDO;
-		}
-
     /**
      * Fetch specific shop data.
      * @param int|string $Shop_ID
@@ -328,11 +318,25 @@
     }
 
     /**
+     * Parse a given string of prices.
+     * @param string $Prices
+     */
+    public function FetchPriceList
+    (
+      string $Prices
+    )
+    {
+      $Price_List = json_decode($Prices, true);
+
+      return $Price_List;
+    }
+
+    /**
      * Reduce the available amount of objects remaining by one.
      * @param int $Object_ID
      * @param string $Object_Type
      */
-    public function ReduceRemaining
+    private function ReduceRemaining
     (
       int $Object_ID,
       string $Object_Type
@@ -365,24 +369,10 @@
     }
 
     /**
-     * Parse a given string of prices.
-     * @param string $Prices
-     */
-    public function FetchPriceList
-    (
-      string $Prices
-    )
-    {
-      $Price_List = json_decode($Prices, true);
-
-      return $Price_List;
-    }
-
-    /**
      * Determine if the purchased object is shiny.
      * @param int $Object_ID
      */
-    public function ShinyCheck
+    private function ShinyCheck
     (
       int $Object_ID,
       int $Shiny_Odds
@@ -401,7 +391,7 @@
      * Determine if the purchased object is ungendered.
      * @param int $Object_ID
      */
-    public function UngenderedCheck
+    private function UngenderedCheck
     (
       int $Object_ID,
       int $Ungendered_Odds
