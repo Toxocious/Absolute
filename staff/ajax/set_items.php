@@ -18,7 +18,7 @@
   if
   (
     !empty($_GET['Action']) &&
-    in_array($_GET['Action'], ['Edit_Item_Entry', 'Show', 'Show_Location'])
+    in_array($_GET['Action'], ['Edit_Item_Entry', 'Finalize_Item_Edit', 'Show', 'Show_Location'])
   )
     $Action = Purify($_GET['Action']);
 
@@ -40,6 +40,14 @@
   if ( !empty($_GET['Item_Database_ID']) )
     $Item_Database_ID = Purify($_GET['Item_Database_ID']);
 
+  $Item_ID = null;
+  if ( !empty($_GET['Item_ID']) )
+    $Item_ID = Purify($_GET['Item_ID']);
+
+  $Is_Item_Active = null;
+  if ( !empty($_GET['Is_Item_Active']) )
+    $Is_Item_Active = Purify($_GET['Is_Item_Active']);
+
   $Items_Remaining = null;
   if ( !empty($_GET['Items_Remaining']) )
     $Items_Remaining = Purify($_GET['Items_Remaining']);
@@ -59,6 +67,24 @@
 
       echo json_encode([
         'Edit_Table' => $Edit_Table,
+      ]);
+      break;
+
+    case 'Finalize_Item_Edit':
+      $Finalize_Item_Edit = FinalizeItemEdit(
+        $Database_Table,
+        $Item_Database_ID,
+        $Item_ID,
+        $Is_Item_Active,
+        $Items_Remaining,
+        $Money_Cost,
+        $Abso_Coins_Cost
+      );
+
+      echo json_encode([
+        'Success' => $Finalize_Item_Edit['Success'],
+        'Message' => $Finalize_Item_Edit['Message'],
+        'Finalized_Edit_Table' => $Finalize_Item_Edit['Finalized_Edit_Table']
       ]);
       break;
 

@@ -60,3 +60,42 @@ function EditSetItem(Database_Table, Item_Database_ID)
       document.getElementById('Set_Items_Table').innerHTML = Edit_Item_Data.Edit_Table;
     });
 }
+
+/**
+ * Finalize editing the specified item.
+ *
+ * @param Database_Table
+ * @param Pokemon_Database_ID
+ */
+function FinalizeItemEdit(Database_Table, Item_Database_ID)
+{
+  let Form_Data = new FormData();
+  Form_Data.append('Database_Table', Database_Table);
+  Form_Data.append('Item_Database_ID', Item_Database_ID);
+  Form_Data.append('Action', 'Finalize_Item_Edit');
+
+  const Is_Item_Active = document.getElementsByName('Is_Item_Active')[0].value;
+  Form_Data.append('Is_Item_Active', Is_Item_Active);
+
+  const Item_ID = document.getElementsByName('Item_ID')[0].value;
+  Form_Data.append('Item_ID', Item_ID);
+
+  const Items_Remaining = document.getElementsByName('Items_Remaining')[0].value;
+  Form_Data.append('Items_Remaining', Items_Remaining);
+
+  const Money_Cost = document.getElementsByName('Money_Cost')[0].value;
+  Form_Data.append('Money_Cost', Money_Cost);
+
+  const Abso_Coins_Cost = document.getElementsByName('Abso_Coins_Cost')[0].value;
+  Form_Data.append('Abso_Coins_Cost', Abso_Coins_Cost);
+
+  SendRequest('set_items', Form_Data)
+    .then((Finalize_Item_Edit) => {
+      const Finalize_Item_Edit_Data = JSON.parse(Finalize_Item_Edit);
+
+      document.getElementById('Set_Items_AJAX').className = Finalize_Item_Edit_Data.Success ? 'success' : 'error';
+      document.getElementById('Set_Items_AJAX').innerHTML = Finalize_Item_Edit_Data.Message;
+
+      document.getElementById('Set_Items_Table').innerHTML = Finalize_Item_Edit_Data.Finalized_Edit_Table;
+    });
+}

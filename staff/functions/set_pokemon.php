@@ -734,7 +734,6 @@
    *
    * @param $Database_Table
    * @param $Obtainable_Pokemon_Database_ID
-   * @param $Database_Table
    * @param $Pokemon_Database_ID
    * @param $Pokemon_Active
    * @param $Pokemon_Dex_ID

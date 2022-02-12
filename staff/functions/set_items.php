@@ -249,11 +249,11 @@
     ";
 
     $Active_Text = '';
-    $Active_Options = ['Yes', 'No'];
-    foreach ( $Active_Options as $Active )
+    $Active_Options = [ 'Yes' => 1, 'No' => 0 ];
+    foreach ( $Active_Options as $Active => $Bool )
     {
       $Active_Text .= "
-        <option value='{$Active}' " . ($Item_Entry['Active'] === $Active ? 'selected' : '') . ">
+        <option value='{$Active}' " . ($Item_Entry['Active'] === $Bool ? 'selected' : '') . ">
           {$Active}
         </option>
       ";
@@ -337,7 +337,7 @@
               <b>Item Name</b>
             </td>
             <td colspan='2' style='width: 50%;'>
-              <select name='Item_Name'>
+              <select name='Item_ID'>
                 {$Item_Dex_Dropdown_List}
               </select>
             </td>
@@ -468,4 +468,64 @@
         </tbody>
       </table>
     ";
+  }
+
+  /**
+   * Finalize the edited item.
+   *
+   * @param $Database_Table
+   * @param $Obtainable_Item_Database_ID
+   * @param $Item_Active
+   * @param $Item_Remaining
+   * @param $Money_Cost
+   * @param $Abso_Coins_Cost
+   */
+  function FinalizeItemEdit
+  (
+    $Database_Table,
+    $Obtainable_Item_Database_ID,
+    $Item_ID,
+    $Item_Active,
+    $Items_Remaining,
+    $Money_Cost,
+    $Abso_Coins_Cost
+  )
+  {
+    global $PDO;
+
+    $Item_Active = $Item_Active == 'Yes' ? 1 : 0;
+    $Price_JSON = json_encode([
+      'Money' => $Money_Cost,
+      'Abso_Coins' => $Abso_Coins_Cost
+    ]);
+
+    switch ( $Database_Table )
+    {
+      case 'shop_items':
+        $Item_Update_Query = "UPDATE `shop_items` SET `Item_ID` = ?, `Active` = ?, `Remaining` = ?, `Prices` = ? WHERE `ID` = ? LIMIT 1";
+        $Item_Update_Query_Params = [ $Item_ID, $Item_Active, $Items_Remaining, "[{$Price_JSON}]", $Obtainable_Item_Database_ID ];
+        break;
+    }
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Update_Item_Entry = $PDO->prepare($Item_Update_Query);
+      $Update_Item_Entry->execute($Item_Update_Query_Params);
+
+      $PDO->commit();
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+    }
+
+    return [
+      'Success' => true,
+      'Message' => 'You have updated this item.',
+      'Finalized_Edit_Table' => ShowItemEditTable($Database_Table, $Obtainable_Item_Database_ID),
+    ];
   }
