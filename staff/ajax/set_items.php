@@ -78,6 +78,23 @@
       ]);
       break;
 
+    case 'Finalize_Item_Creation':
+      $Finalize_Item_Creation = FinalizeItemCreation(
+        $Database_Table,
+        $Obtainable_Location,
+        $Item_ID,
+        $Is_Item_Active,
+        $Items_Remaining,
+        $Money_Cost,
+        $Abso_Coins_Cost
+      );
+
+      echo json_encode([
+        'Success' => $Finalize_Item_Creation['Success'],
+        'Message' => $Finalize_Item_Creation['Message'],
+      ]);
+      break;
+
     case 'Finalize_Item_Edit':
       $Finalize_Item_Edit = FinalizeItemEdit(
         $Database_Table,

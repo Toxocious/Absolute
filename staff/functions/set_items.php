@@ -602,6 +602,66 @@
   }
 
   /**
+   * Finalize creating a new obtainable item.
+   *
+   * @param $Database_Table
+   * @param $Obtainable_Location
+   * @param $Item_ID
+   * @param $Item_Active
+   * @param $Items_Remaining
+   * @param $Money_Cost
+   * @param $Abso_Coins_Cost
+   */
+  function FinalizeItemCreation
+  (
+    $Database_Table,
+    $Obtainable_Location,
+    $Item_ID,
+    $Item_Active,
+    $Items_Remaining,
+    $Money_Cost,
+    $Abso_Coins_Cost
+  )
+  {
+    global $PDO;
+
+    $Item_Active = $Item_Active == 'Yes' ? 1 : 0;
+    $Price_JSON = json_encode([
+      'Money' => $Money_Cost,
+      'Abso_Coins' => $Abso_Coins_Cost
+    ]);
+
+    switch ( $Database_Table )
+    {
+      case 'shop_items':
+        $Item_Creation_Query = "INSERT INTO `shop_items` (`Obtained_Place`, `Item_ID`, `Active`, `Remaining`, `Prices`) VALUES (?, ?, ?, ?, ?)";
+        $Item_Creation_Query_Params = [ $Obtainable_Location, $Item_ID, $Item_Active, $Items_Remaining, "[{$Price_JSON}]" ];
+        break;
+    }
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Update_Item_Entry = $PDO->prepare($Item_Creation_Query);
+      $Update_Item_Entry->execute($Item_Creation_Query_Params);
+
+      $PDO->commit();
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+    }
+
+    return [
+      'Success' => true,
+      'Message' => 'You have made this item obtainable.'
+    ];
+  }
+
+  /**
    * Finalize the edited item.
    *
    * @param $Database_Table
