@@ -235,11 +235,8 @@ div
 
   .loading-element
   {
-    animation: 1.5s loadingAnimation linear infinite;
-    background: var(--color-tertiary);
-    background: linear-gradient(110deg, var(--color-tertiary) 8%, var(--color-secondary) 18%, var(--color-tertiary) 33%);
-    background-size: 200% 100%;
-    box-shadow: var(--box-shadow);
+    border: 3px solid var(--color-primary);
+    border-top-color: var(--color-tertiary);
   }
 }
 
@@ -581,8 +578,8 @@ footer
   }
 }
 
-@keyframes loadingAnimation {
+@keyframes loadspinner {
   to {
-    background-position-x: -200%;
+    transform: rotate(360deg);
   }
 }

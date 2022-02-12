@@ -129,7 +129,10 @@ div
 
   .loading-element
   {
-    border-radius: 8px;
+    border-radius: 50%;
+    width: 3em;
+    height: 3em;
+    animation: loadspinner 1s linear infinite;
   }
 
   &#map_canvas
