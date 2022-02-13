@@ -28,7 +28,7 @@
     Select an item below to edit its item entry.
   </div>
 
-  <div id='Edit_item_AJAX'></div>
+  <div id='Edit_Item_AJAX'></div>
 
   <table class='border-gradient' style='width: 300px;'>
     <tbody>
@@ -42,5 +42,5 @@
     </tbody>
   </table>
 
-  <div id='Edit_item_Table'></div>
+  <div id='Edit_Item_Table'></div>
 </div>

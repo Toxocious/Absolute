@@ -104,6 +104,10 @@
         ],
       ],
       'Stat Boosts' => [
+        'Attack' => [
+          'Field_Name' => 'Attack_Boost',
+          'Field_Type' => 'Number'
+        ],
         'Defense' => [
           'Field_Name' => 'Defense_Boost',
           'Field_Type' => 'Number'
@@ -196,7 +200,9 @@
             break;
 
           case 'Textarea':
-            $Input_HTML = "<textarea cols='80' rows='5'>{$Item_Entry_Data[$Child_Fields['Field_Name']]}</textarea>";
+            $Input_HTML = "
+              <textarea cols='80' rows='5' name='{$Child_Fields['Field_Name']}'>{$Item_Entry_Data[$Child_Fields['Field_Name']]}</textarea>
+            ";
             break;
         }
 
@@ -251,4 +257,81 @@
         </tbody>
       </table>
     ";
+  }
+
+  /**
+   * Update the specified item's database entry.
+   *
+   * @param $Item_ID
+   * @param $Item_Description
+   * @param $Can_Take_Item
+   * @param $Natural_Gift_Power
+   * @param $Natural_Gift_Type
+   * @param $Fling_Power
+   * @param $Attack_Boost
+   * @param $Defense_Boost
+   * @param $Sp_Attack_Boost
+   * @param $Sp_Defense_Boost
+   * @param $Speed_Boost
+   * @param $Accuracy_Boost
+   * @param $Evasion_Boost
+   */
+  function UpdateItemEntry
+  (
+    $Item_ID,
+    $Item_Description,
+    $Can_Take_Item,
+    $Natural_Gift_Power,
+    $Natural_Gift_Type,
+    $Fling_Power,
+    $Attack_Boost,
+    $Defense_Boost,
+    $Sp_Attack_Boost,
+    $Sp_Defense_Boost,
+    $Speed_Boost,
+    $Accuracy_Boost,
+    $Evasion_Boost
+  )
+  {
+    global $PDO;
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Update_Item_Dex_Entry = $PDO->prepare("
+        UPDATE `item_dex`
+        SET `Item_Description` = ?, `Can_Take_Item` = ?, `Natural_Gift_Power` = ?, `Natural_Gift_Type` = ?, `Fling_Power` = ?, `Attack_Boost` = ?, `Defense_Boost` = ?, `Sp_Attack_Boost` = ?, `Sp_Defense_Boost` = ?, `Speed_Boost` = ?, `Accuracy_Boost` = ?, `Evasion_Boost` = ?
+        WHERE `Item_ID` = ?
+        LIMIT 1
+      ");
+      $Update_Item_Dex_Entry->execute([
+        $Item_Description,
+        $Can_Take_Item,
+        $Natural_Gift_Power,
+        $Natural_Gift_Type,
+        $Fling_Power,
+        $Attack_Boost,
+        $Defense_Boost,
+        $Sp_Attack_Boost,
+        $Sp_Defense_Boost,
+        $Speed_Boost,
+        $Accuracy_Boost,
+        $Evasion_Boost,
+        $Item_ID
+      ]);
+
+      $PDO->commit();
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+    }
+
+    return [
+      'Success' => true,
+      'Message' => 'This item\'s database entry has been updated.',
+    ];
   }
