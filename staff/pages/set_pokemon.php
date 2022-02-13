@@ -22,6 +22,10 @@
     <h3>Set Pok&eacute;mon</h3>
   </div>
 
+  <div class='description'>
+    All currently obtainable Pok&eacute;mon are found here, and more may be added if desired.
+  </div>
+
   <table class='border-gradient' style='width: 400px;'>
     <thead>
       <tr>

@@ -22,6 +22,10 @@
     <h3>Set Items</h3>
   </div>
 
+  <div class='description'>
+    All currently obtainable items are found here, and more may be added if desired.
+  </div>
+
   <table class='border-gradient' style='width: 200px;'>
     <thead>
       <tr>
