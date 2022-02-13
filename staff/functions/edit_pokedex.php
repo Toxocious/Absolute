@@ -259,3 +259,119 @@
       </table>
     ";
   }
+
+  /**
+   * Update the specified Pokedex entry.
+   *
+   * @param $Pokedex_ID
+   * @param $Pokemon
+   * @param $Forme
+   * @param $Type_Primary
+   * @param $Type_Secondary
+   * @param $Base_HP
+   * @param $Base_Attack
+   * @param $Base_Defense
+   * @param $Base_Sp_Attack
+   * @param $Base_Sp_Defense
+   * @param $Base_Speed
+   * @param $HP_EV
+   * @param $Attack_EV
+   * @param $Defense_EV
+   * @param $Sp_Attack_EV
+   * @param $Sp_Defense_EV
+   * @param $Speed_EV
+   * @param $Female_Odds
+   * @param $Male_Odds
+   * @param $Genderless_Odds
+   * @param $Height
+   * @param $Weight
+   * @param $Exp_Yield
+   * @param $Is_Baby
+   * @param $Is_Mythical
+   * @param $Is_Legendary
+   */
+  function UpdatePokedexEntry
+  (
+    $Pokedex_ID,
+    $Pokemon,
+    $Forme,
+    $Type_Primary,
+    $Type_Secondary,
+    $Base_HP,
+    $Base_Attack,
+    $Base_Defense,
+    $Base_Sp_Attack,
+    $Base_Sp_Defense,
+    $Base_Speed,
+    $HP_EV,
+    $Attack_EV,
+    $Defense_EV,
+    $Sp_Attack_EV,
+    $Sp_Defense_EV,
+    $Speed_EV,
+    $Female_Odds,
+    $Male_Odds,
+    $Genderless_Odds,
+    $Height,
+    $Weight,
+    $Exp_Yield,
+    $Is_Baby,
+    $Is_Mythical,
+    $Is_Legendary
+  )
+  {
+    global $PDO;
+
+    try
+    {
+      $PDO->beginTransaction();
+
+      $Update_Pokedex_Entry = $PDO->prepare("
+        UPDATE `pokedex`
+        SET `Pokemon` = ?, `Forme` = ?, `Type_Primary` = ?, `Type_Secondary` = ?, `HP` = ?, `Attack` = ?, `Defense` = ?, `SpAttack` = ?, `SpDefense` = ?, `Speed` = ?, `EV_HP` = ?, `EV_Attack` = ?, `EV_Defense` = ?, `EV_SpAttack` = ?, `EV_SpDefense` = ?, `EV_Speed` = ?, `Female` = ?, `Male` = ?, `Genderless` = ?, `Height` = ?, `Weight` = ?, `Exp_Yield` = ?, `Is_Baby` = ?, `Is_Mythical` = ?, `Is_Legendary` = ?
+        WHERE `ID` = ?
+        LIMIT 1
+      ");
+      $Update_Pokedex_Entry->execute([
+        $Pokemon,
+        $Forme,
+        $Type_Primary,
+        $Type_Secondary,
+        $Base_HP,
+        $Base_Attack,
+        $Base_Defense,
+        $Base_Sp_Attack,
+        $Base_Sp_Defense,
+        $Base_Speed,
+        $HP_EV,
+        $Attack_EV,
+        $Defense_EV,
+        $Sp_Attack_EV,
+        $Sp_Defense_EV,
+        $Speed_EV,
+        $Female_Odds,
+        $Male_Odds,
+        $Genderless_Odds,
+        $Height,
+        $Weight,
+        $Exp_Yield,
+        $Is_Baby,
+        $Is_Mythical,
+        $Is_Legendary,
+        $Pokedex_ID
+      ]);
+
+      $PDO->commit();
+    }
+    catch ( PDOException $e )
+    {
+      $PDO->rollBack();
+
+      HandleError($e);
+    }
+
+    return [
+      'Success' => true,
+      'Message' => 'This Pok&eacute;mon\'s pok&eacute;dex entry has been updated.',
+    ];
+  }
