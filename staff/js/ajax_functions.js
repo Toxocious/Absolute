@@ -1,3 +1,8 @@
+/**
+ * Load a given page through an ajax request.
+ *
+ * @param Page_URL
+ */
 function LoadPage(Page_URL)
 {
   document.getElementById('Staff_Content').innerHTML = `
@@ -26,6 +31,13 @@ function LoadPage(Page_URL)
   });
 }
 
+/**
+ * Send an ajax request and handle the response.
+ *
+ * @param Page
+ * @param Data
+ * @param HTTP_TYPE
+ */
 function SendRequest(Page, Data, HTTP_TYPE = 'GET')
 {
   const AJAX_URL = `/staff/ajax/${Page}.php`;
