@@ -9,7 +9,7 @@
   try
   {
     $Get_Pokedex_Entry_Data = $PDO->prepare("
-      SELECT *
+      SELECT `ID`
       FROM `pokedex`
       WHERE `ID` = ?
       LIMIT 1

@@ -1,7 +1,5 @@
 /**
- * Show a table for all unique areas where Pokemon can be obtained, given the specified database table.
- *
- * @param Pokedex_ID
+ * Show a table allowing for edits to the specified Pokemon's database fields.
  */
 function ShowPokedexEntry()
 {
