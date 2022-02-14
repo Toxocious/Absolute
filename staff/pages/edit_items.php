@@ -35,7 +35,7 @@
       <tr>
         <td>
           <?php
-            echo ShowitemDropdown();
+            echo ShowItemDropdown();
           ?>
         </td>
       </tr>
