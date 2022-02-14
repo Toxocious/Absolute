@@ -9,7 +9,7 @@ function ShowItemEntry()
   const Selected_Item_ID = document.getElementsByName('item_entries')[0].value;
   Form_Data.append('Item_ID', Selected_Item_ID);
 
-  SendRequest('edit_item', Form_Data)
+  SendRequest('edit_items', Form_Data)
     .then((Item_Entry) => {
       const Item_Entry_Data = JSON.parse(Item_Entry);
 
@@ -58,7 +58,7 @@ function UpdateItemEntry(Item_ID)
   Form_Data.append('Sp_Defense_Boost', Sp_Defense_Boost);
   Form_Data.append('Speed_Boost', Speed_Boost);
 
-  SendRequest('edit_item', Form_Data)
+  SendRequest('edit_items', Form_Data)
     .then((Update_Item_Entry) => {
       const Update_Item_Entry_Data = JSON.parse(Update_Item_Entry);
 

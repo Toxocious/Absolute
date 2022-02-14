@@ -1,6 +1,6 @@
 <?php
   require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/edit_item.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/edit_items.php';
 
   $Item_ID = null;
   if ( !empty($_GET['Item_ID']) )

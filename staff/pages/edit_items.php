@@ -16,7 +16,7 @@
     exit;
   }
 
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/edit_item.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/edit_items.php';
 ?>
 
 <div style='display: flex; flex-direction: column; flex-wrap: wrap; gap: 10px; justify-content: center;'>
