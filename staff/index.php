@@ -42,6 +42,7 @@
     case 7:
     case 6:
       echo "<script type='text/javascript' src='js/edit_pokedex.js'></script>";
+      echo "<script type='text/javascript' src='js/edit_moves.js'></script>";
       echo "<script type='text/javascript' src='js/edit_items.js'></script>";
 
     case 5:
