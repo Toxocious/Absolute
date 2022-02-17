@@ -617,35 +617,48 @@
         $Nature = $this->GenerateNature();
 			}
 
-			$Pokemon_Create = $PDO->prepare("
-				INSERT INTO `pokemon` (
-					`Pokedex_ID`,
-					`Alt_ID`,
-					`Name`,
-					`Forme`,
-					`Type`,
-					`Experience`,
-					`Location`,
-					`Slot`,
-					`Owner_Current`,
-					`Owner_Original`,
-					`Gender`,
-					`IVs`,
-					`EVs`,
-					`Nature`,
-					`Creation_Date`,
-					`Creation_Location`,
-					`Ability`
-				)
-				VALUES
-				(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-			");
-			$Pokemon_Create->execute([
-				$Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'],
-				$Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender,
-				$IVs, $EVs, $Nature, time(), $Obtained_At, $Ability
-			]);
-			$Poke_DB_ID = $PDO->lastInsertId();
+      try
+      {
+        $PDO->beginTransaction();
+
+        $Pokemon_Create = $PDO->prepare("
+          INSERT INTO `pokemon` (
+            `Pokedex_ID`,
+            `Alt_ID`,
+            `Name`,
+            `Forme`,
+            `Type`,
+            `Experience`,
+            `Location`,
+            `Slot`,
+            `Owner_Current`,
+            `Owner_Original`,
+            `Gender`,
+            `IVs`,
+            `EVs`,
+            `Nature`,
+            `Creation_Date`,
+            `Creation_Location`,
+            `Ability`
+          )
+          VALUES
+          (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ");
+        $Pokemon_Create->execute([
+          $Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'],
+          $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender,
+          $IVs, $EVs, $Nature, time(), $Obtained_At, $Ability
+        ]);
+        $Poke_DB_ID = $PDO->lastInsertId();
+
+        $PDO->commit();
+      }
+      catch ( PDOException $e )
+      {
+        $PDO->rollBack();
+
+        HandleError($e);
+      }
 
 			// Have to wait until the Pokemon has been created to fetch it's icon and sprite.
 			$Poke_Images = $this->FetchImages($Pokedex_ID, $Alt_ID, $Type);
