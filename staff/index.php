@@ -45,6 +45,7 @@
       echo "<script type='text/javascript' src='js/edit_moves.js'></script>";
       echo "<script type='text/javascript' src='js/edit_items.js'></script>";
       echo "<script type='text/javascript' src='js/spawn_pokemon.js'></script>";
+      echo "<script type='text/javascript' src='js/spawn_items.js'></script>";
 
     case 5:
       echo "<script type='text/javascript' src='js/modify_user.js'></script>";

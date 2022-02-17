@@ -16,7 +16,6 @@
     exit;
   }
 
-  // Contains the 'ShowPokedexDropdown' function that the Pokemon spawner uses.
   require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/spawn_pokemon.php';
 ?>
 
