@@ -14,11 +14,11 @@ const DATABASE = new Sequelize(DATABASE_CONFIG.DATABASE, DATABASE_CONFIG.USERNAM
 exports.FetchUser = (User_ID) =>
 {
   const USER = FETCH_USER_MODEL(DATABASE, Sequelize);
-  
+
   return new Promise((resolve, reject) =>
   {
     let User_Data = [];
-    
+
     if ( User_ID )
     {
       USER.findAll({
@@ -28,7 +28,7 @@ exports.FetchUser = (User_ID) =>
           'Username',
           'Avatar',
           'Rank',
-          'Power',
+          'Is_Staff',
           'Chat_Ban',
           'Chat_Ban_Data',
           'Auth_Code'
@@ -71,7 +71,7 @@ exports.FetchUser = (User_ID) =>
 
             User_Data.push(user_item.dataValues);
           });
-          
+
           resolve(User_Data);
         }
       })
@@ -79,7 +79,7 @@ exports.FetchUser = (User_ID) =>
       {
         User_Data.push(error);
 
-        resolve(User_Data);    
+        resolve(User_Data);
       });
     }
     else

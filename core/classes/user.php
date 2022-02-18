@@ -116,7 +116,7 @@
         'Gender' => $User['Gender'],
 				'Status' => $User['Status'],
 				'Staff_Message' => $User['Staff_Message'],
-				'Power' => $User['Power'],
+				'Is_Staff' => $User['Is_Staff'],
 				'Rank' => $User['Rank'],
 				'Mastery_Points_Total' => $User['Mastery_Points_Total'],
 				'Mastery_Points_Used' => $User['Mastery_Points_Used'],

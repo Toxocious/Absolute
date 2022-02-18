@@ -50,7 +50,6 @@
 										<td>
 											<a href='/profile.php?id=<?= $Value['id']; ?>'><b><?= $Value['Username']; ?></b></a><br />
 											<b><?= $Rank; ?></b><br />
-											<b>Power Level:</b> <?= $Value['Power']; ?>
 										</td>
 										<td>
 											<a href='javascript:void(0);' onclick="LoadContent('ajax/manage_staff.php', 'AJAX', { Fetch: <?= $Value['id']; ?>});">Edit Position</a>
@@ -73,5 +72,5 @@
 		</div>
 	</div>
 
-	
+
 </div>

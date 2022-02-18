@@ -1,20 +1,9 @@
 <?php
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/permissions.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/report.php';
 
 	Class Navigation
 	{
-		public $PDO;
-		public $User_Data;
-
-		public function __construct()
-		{
-			global $PDO;
-			global $User_Data;
-
-			$this->PDO = $PDO;
-			$this->User_Data = $User_Data;
-		}
-
 		/**
 		 * Render the nav bar.
 		 */
@@ -53,7 +42,7 @@
 			";
 
 			// Display the Staff Panel button/Index button, given the user is a staff member.
-			if ( $User_Data['Power'] > 1 )
+			if ( $User_Data['Is_Staff'] )
 			{
 				$Nav_Width = " style='width: calc(100% - 203px);'";
 
@@ -116,7 +105,7 @@
 					 */
 					if ( $Class == 'Staff' )
 					{
-						if ( $Link['Menu'] === $Head['Menu'] && $Link['Power'] <= $User_Data['Power'] )
+						if ( $Link['Menu'] === $Head['Menu'] && CheckUserPermission($Link['Required_Permission']) )
 						{
               $Notification_Amount = '';
 
@@ -142,7 +131,7 @@
 					 */
 					else
 					{
-						if ( $Link['Menu'] === $Head['Menu'] && $Link['Power'] <= $User_Data['Power'] )
+						if ( $Link['Menu'] === $Head['Menu'] && CheckUserPermission($Link['Required_Permission']) )
 						{
 							$Display_Links .= "
 								<div class='dropdown-item'>

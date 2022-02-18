@@ -13,7 +13,7 @@
       $Get_Staff_Members = $PDO->prepare("
         SELECT `ID`, `Rank`
         FROM `users`
-        WHERE `Power` > 1
+        WHERE `Is_Staff` = 1
       ");
       $Get_Staff_Members->execute([ ]);
       $Get_Staff_Members->setFetchMode(PDO::FETCH_ASSOC);
@@ -134,20 +134,6 @@
       ";
     }
 
-    $Power_Level_Options = '';
-    $Power_Levels = [1, 2, 3, 4, 5, 6, 7];
-    foreach ( $Power_Levels as $Power_Level )
-    {
-      $Power_Level_Options .= "
-        <option
-          value='{$Power_Level}'
-          " . ($Managing_User_Info['Power'] == $Power_Level ? 'selected' : '') . "
-        >
-          {$Power_Level}
-        </option>
-      ";
-    }
-
     $Permissions_Table_Rows = '';
     foreach ( PERMISSIONS as $Permission_Name => $Permission_Description )
     {
@@ -187,15 +173,6 @@
               <h3>Position</h3>
               <select name='position'>
                 {$Position_Options}
-              </select>
-            </td>
-          </tr>
-
-          <tr>
-            <td colspan='4'>
-              <h3>Power Level</h3>
-              <select name='power_level'>
-                {$Power_Level_Options}
               </select>
             </td>
           </tr>

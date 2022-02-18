@@ -131,7 +131,7 @@
         {
           if ( !$User_Data['RPG_Ban'] )
           {
-            if ( strpos($Parse_URL['path'], '/staff/') !== false && $User_Data['Power'] !== 1 )
+            if ( strpos($Parse_URL['path'], '/staff/') !== false && $User_Data['Is_Staff'] )
             {
               $Navigation->Render("Staff");
             }
@@ -249,11 +249,11 @@
            */
           if ( $Current_Page['Maintenance'] === 'yes' )
           {
-            if ( $User_Data['Power'] >= 7 )
+            if ( $User_Data['Is_Staff'] >= 7 )
             {
               echo "
                 <div class='warning' style='margin: 5px auto 0px;'>
-                  Despite this page being down for maintenance, you seem to be authorized to be here.
+                  Despite this page being down for maintenance, you are authorized to be here.
                 </div>
               ";
             }

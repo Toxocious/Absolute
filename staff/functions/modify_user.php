@@ -14,7 +14,7 @@
     $User_Info = $User_Class->FetchUserData($User_Value);
 
     $Admin_Modification_Options = '';
-    if ( $User_Data['Power'] >= 7 )
+    if ( CheckUserPermission('Staff Management') )
     {
       $Admin_Modification_Options = "
         <tbody>
@@ -105,8 +105,6 @@
     $New_User_Password = null
   )
   {
-    global $User_Data;
-
     if ( empty($New_User_Avatar) && empty($New_User_Password) )
     {
       return [
@@ -121,7 +119,7 @@
       UpdateAvatar($User_Value, $Avatar_Source);
     }
 
-    if ( !empty($New_User_Password) && $User_Data['Power'] >= 7 )
+    if ( !empty($New_User_Password) && CheckUserPermission('Staff Management') )
     {
       UpdatePassword($User_Value, $New_User_Password);
     }

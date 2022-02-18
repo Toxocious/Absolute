@@ -2,30 +2,12 @@
 	require_once 'core/required/layout_top.php';
 
 	$Staff_Categories = [
-		[
-			'Power' => 7,
-			'Rank' => 'Administrator',
-		],
-		[
-			'Power' => 6,
-			'Rank' => 'Developer',
-		],
-		[
-			'Power' => 5,
-			'Rank' => 'Super Moderator',
-		],
-		[
-			'Power' => 4,
-			'Rank' => 'Moderator',
-		],
-		[
-			'Power' => 3,
-			'Rank' => 'Bot',
-		],
-		[
-			'Power' => 2,
-			'Rank' => 'Chat Moderator',
-		],
+		[ 'Rank' => 'Administrator' ],
+		[ 'Rank' => 'Developer' ],
+		[ 'Rank' => 'Super Moderator' ],
+		[ 'Rank' => 'Moderator' ],
+		[ 'Rank' => 'Bot' ],
+		[ 'Rank' => 'Chat Moderator' ],
 	];
 ?>
 
@@ -43,8 +25,8 @@
 				{
 					try
 					{
-						$Fetch_Staff = $PDO->prepare("SELECT `ID`, `Username`, `Avatar`, `Rank`, `Last_Active`, `Staff_Message` FROM `users` WHERE `Power` = ? ORDER BY `id` ASC");
-						$Fetch_Staff->execute([ $Staff_Category['Power'] ]);
+						$Fetch_Staff = $PDO->prepare("SELECT `ID`, `Username`, `Avatar`, `Rank`, `Last_Active`, `Staff_Message` FROM `users` WHERE `Rank` = ? ORDER BY `id` ASC");
+						$Fetch_Staff->execute([ $Staff_Category['Rank'] ]);
 						$Fetch_Staff->setFetchMode(PDO::FETCH_ASSOC);
 						$Staff_Members = $Fetch_Staff->fetchAll();
 					}
@@ -66,7 +48,7 @@
 					{
 						$Staff_Data = $User_Class->FetchUserData($User_Val['ID']);
 						$Staff_Username = $User_Class->DisplayUsername($User_Val['ID'], true, true, true);
-	
+
 						echo "
 							<table class='border-gradient'  style='flex-basis: 280px; margin: 3px;'>
 								<tbody>
