@@ -4,13 +4,9 @@
 
   if ( !AuthorizeUser() )
   {
-
     echo "
-      <div class='panel content'>
-        <div class='head'>Staff Panel</div>
-        <div class='body' style='padding: 5px'>
-          You aren't authorized to be here.
-        </div>
+      <div style='padding: 5px;'>
+        You aren't authorized to be here.
       </div>
     ";
 
