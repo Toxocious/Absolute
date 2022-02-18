@@ -44,6 +44,7 @@
       echo "<script type='text/javascript' src='js/edit_pokedex.js'></script>";
       echo "<script type='text/javascript' src='js/edit_moves.js'></script>";
       echo "<script type='text/javascript' src='js/edit_items.js'></script>";
+      echo "<script type='text/javascript' src='js/manage_staff.js'></script>";
       echo "<script type='text/javascript' src='js/spawn_pokemon.js'></script>";
       echo "<script type='text/javascript' src='js/spawn_items.js'></script>";
 
