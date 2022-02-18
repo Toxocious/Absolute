@@ -23,10 +23,24 @@ function LoadPage(Page_URL)
       if ( req.status === 200 )
       {
         document.getElementById('Staff_Content').innerHTML = req.response;
+
         resolve(req.response);
       }
       else
+      {
+        switch ( req.status )
+        {
+          case 404:
+            document.getElementById('Staff_Content').innerHTML = 'The page you\'re trying to access doesn\'t exist.';
+            break;
+
+          default:
+            document.getElementById('Staff_Content').innerHTML = req.statusText;
+            break;
+        }
+
         reject(Error(req.statusText));
+      }
     };
   });
 }
