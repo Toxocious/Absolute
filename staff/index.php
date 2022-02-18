@@ -34,38 +34,75 @@
 	</div>
 </div>
 
-<script type='text/javascript' src='js/ajax_functions.js'></script>
 
 <?php
-  switch ( $User_Data['Power'] )
+  if ( CheckUserPermission('Staff') )
   {
-    case 7:
-    case 6:
-      echo "<script type='text/javascript' src='js/edit_pokedex.js'></script>";
-      echo "<script type='text/javascript' src='js/edit_moves.js'></script>";
-      echo "<script type='text/javascript' src='js/edit_items.js'></script>";
-      echo "<script type='text/javascript' src='js/manage_staff.js'></script>";
-      echo "<script type='text/javascript' src='js/spawn_pokemon.js'></script>";
-      echo "<script type='text/javascript' src='js/spawn_items.js'></script>";
+    echo "<script type='text/javascript' src='js/ajax_functions.js'></script>";
+  }
 
-    case 5:
-      echo "<script type='text/javascript' src='js/modify_user.js'></script>";
-      echo "<script type='text/javascript' src='js/modify_pokemon.js'></script>";
-      echo "<script type='text/javascript' src='js/transfer_pokemon.js'></script>";
-      echo "<script type='text/javascript' src='js/set_pokemon.js'></script>";
-      echo "<script type='text/javascript' src='js/set_items.js'></script>";
+  if ( CheckUserPermission('Graphics') )
+  {
+    echo "<script type='text/javascript' src='js/sprite_list.js'></script>";
+  }
 
-    case 4:
-      echo "<script type='text/javascript' src='js/maintenance.js'></script>";
+  if ( CheckUserPermission('Logs') )
+  {
+    echo "<script type='text/javascript' src='js/log_system.js'></script>";
+  }
 
-    case 3:
-      echo "<script type='text/javascript' src='js/log_system.js'></script>";
-      echo "<script type='text/javascript' src='js/report.js'></script>";
-      echo "<script type='text/javascript' src='js/ban.js'></script>";
+  if ( CheckUserPermission('Reports') )
+  {
+    echo "<script type='text/javascript' src='js/report.js'></script>";
+  }
 
-    case 2:
-      echo "<script type='text/javascript' src='js/sprite_list.js'></script>";
-      break;
+  if ( CheckUserPermission('Bans') )
+  {
+    echo "<script type='text/javascript' src='js/ban.js'></script>";
+  }
+
+  if ( CheckUserPermission('User Management') )
+  {
+    echo "<script type='text/javascript' src='js/modify_user.js'></script>";
+  }
+
+  if ( CheckUserPermission('Pokemon Management') )
+  {
+    echo "<script type='text/javascript' src='js/modify_pokemon.js'></script>";
+  }
+
+  if ( CheckUserPermission('Transfer Pokemon') )
+  {
+    echo "<script type='text/javascript' src='js/transfer_pokemon.js'></script>";
+  }
+
+  if ( CheckUserPermission('Maintenance') )
+  {
+    echo "<script type='text/javascript' src='js/maintenance.js'></script>";
+  }
+
+  if ( CheckUserPermission('Set Obtainables') )
+  {
+    echo "<script type='text/javascript' src='js/set_pokemon.js'></script>";
+    echo "<script type='text/javascript' src='js/set_items.js'></script>";
+  }
+
+  if ( CheckUserPermission('Database Edits') )
+  {
+    echo "<script type='text/javascript' src='js/edit_pokedex.js'></script>";
+    echo "<script type='text/javascript' src='js/edit_moves.js'></script>";
+    echo "<script type='text/javascript' src='js/edit_items.js'></script>";
+  }
+
+  if ( CheckUserPermission('Spawn') )
+  {
+    echo "<script type='text/javascript' src='js/spawn_pokemon.js'></script>";
+    echo "<script type='text/javascript' src='js/spawn_items.js'></script>";
+  }
+
+  if ( CheckUserPermission('Staff Management') )
+  {
+    echo "<script type='text/javascript' src='js/manage_staff.js'></script>";
   }
 
   require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

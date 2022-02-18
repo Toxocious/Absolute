@@ -17,15 +17,23 @@
 
   /**
    * Check if the user has the required permission for the page.
+   *
+   * @param $Permission_Name
    */
-  function CheckUserPermission()
+  function CheckUserPermission
+  (
+    $Permission_Name = null
+  )
   {
     global $Current_Page, $PDO, $User_Data;
 
-    if ( empty($Current_Page['Required_Permission']) && $Current_Page['Staff_Only'] == 'No' )
+    if ( empty($Permission_Name) )
+      $Permission_Name = $Current_Page['Required_Permission'];
+
+    if ( empty($Permission_Name) && $Current_Page['Staff_Only'] == 'No' )
       return true;
 
-    if ( empty($Current_Page['Required_Permission']) && $Current_Page['Staff_Only'] == 'Yes' )
+    if ( empty($Permission_Name) && $Current_Page['Staff_Only'] == 'Yes' )
       return false;
 
     try
@@ -38,7 +46,7 @@
       ");
       $Check_User_Permission->execute([
         $User_Data['ID'],
-        $Current_Page['Required_Permission']
+        $Permission_Name
       ]);
       $Check_User_Permission->setFetchMode(PDO::FETCH_ASSOC);
       $User_Permission = $Check_User_Permission->rowCount();
