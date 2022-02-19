@@ -13,6 +13,13 @@
   $_SESSION['Absolute']['Direct_Message']['users'][] = [
     'User_ID' => $User_Data['ID'],
   ];
+
+  if ( !empty($_SESSION['Absolute']['Direct_Message']['Message_Recipient']) )
+  {
+    $_SESSION['Absolute']['Direct_Message']['users'][] = [
+      'User_ID' => $_SESSION['Absolute']['Direct_Message']['Message_Recipient'],
+    ];
+  }
 ?>
 
 <div style='display: flex; flex-direction: column; justify-content: flex-start;'>
@@ -99,7 +106,24 @@
       <h3>Added Users</h3>
 
       <div id='added-users'>
-        <i>No users have been added.</i>
+        <?php
+          if ( empty( $_SESSION['Absolute']['Direct_Message']['users']) )
+          {
+            echo '<i>No users have been added to this group.</i>';
+          }
+          else
+          {
+            foreach ( $_SESSION['Absolute']['Direct_Message']['users'] as $Key => $Included_User )
+            {
+              if ( $Included_User['User_ID'] == $User_Data['ID'] )
+                continue;
+
+              $Included_User_Name = $User_Class->DisplayUserName($Included_User['User_ID']);
+
+              echo "&bull; {$Included_User_Name}<br />";
+            }
+          }
+        ?>
       </div>
     </div>
   </div>

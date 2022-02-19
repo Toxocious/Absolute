@@ -213,6 +213,16 @@
       }
     });
   }
+
+  <?php
+    if ( !empty($_GET['Message_Recipient']) )
+    {
+      $Recipient_ID = Purify($_GET['Message_Recipient']);
+      $_SESSION['Absolute']['Direct_Message']['Message_Recipient'] = $Recipient_ID;
+
+      echo 'DisplayComposeMessage();';
+    }
+  ?>
 </script>
 
 <?php
