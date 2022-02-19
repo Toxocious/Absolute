@@ -21,7 +21,7 @@
 	}
 	else
 	{
-		$style = " style='margin: 5px 5px;'";
+		$style = " style='margin: 0px 5px;'";
 	}
 ?>
 
