@@ -27,9 +27,6 @@ before_script:
 compile:
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      changes:
-        - themes/sass
-      when: always
   stage: compile
   script:
     - echo "-- Compiling Stylesheets --"
@@ -51,5 +48,5 @@ stage_deploy:
     #   .json:      package.json & map.json files
     #   .scss:      layout system
     #   .tmx:       map system files
-    - rsync -azhP --filter=':- .gitignore' --include='*/' --include='*.'{php,js,scss,png,tmx} --exclude='*' ./ absolute@absoluterpg.com:/var/www/html/absoluterpg.com/public_html/
+    - rsync -azhP --filter=':- .gitignore' --include='*/' --include='*.'{php,js,json,scss,png,tmx} --exclude='*' ./ absolute@absoluterpg.com:/var/www/html/absoluterpg.com/public_html/
     - echo "Deployment has completed."
