@@ -766,7 +766,7 @@
     $Abso_Coins_Cost
   )
   {
-    global $PDO, $Poke_Class;
+    global $PDO, $Poke_Class, $User_Data;
 
     $Pokedex_Info = $Poke_Class->FetchPokedexData(null, null, null, $Pokemon_Dex_ID);
     $Pokemon_Active = $Pokemon_Active == 'Yes' ? 1 : 0;
@@ -827,6 +827,8 @@
       $Update_Pokemon_Entry->execute($Update_Query_Params);
 
       $PDO->commit();
+
+      LogStaffAction('Obtainable Pokemon Update', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {
@@ -1116,7 +1118,7 @@
     $Abso_Coins_Cost
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     $Pokemon_Active = $Pokemon_Active == 'Yes' ? 1 : 0;
 
@@ -1143,6 +1145,8 @@
       $Create_Pokemon->execute($Creation_Params);
 
       $PDO->commit();
+
+      LogStaffAction('Obtainable Pokemon Created', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {

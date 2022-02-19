@@ -79,7 +79,7 @@
     $User_ID
   )
   {
-    global $PDO, $User_Class;
+    global $PDO, $User_Class, $User_Data;
 
     $User_Existence = $User_Class->FetchUserData($User_ID);
     if ( !$User_Existence )
@@ -114,6 +114,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Pokemon Transferred', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {

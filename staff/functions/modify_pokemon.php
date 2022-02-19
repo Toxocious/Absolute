@@ -245,7 +245,7 @@
     $Move_ID
   )
   {
-    global $PDO, $Poke_Class;
+    global $PDO, $Poke_Class, $User_Data;
 
     $Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
 
@@ -281,6 +281,8 @@
         ]);
 
         $PDO->commit();
+
+        LogStaffAction('Pokemon Move Update', $User_Data['ID']);
       }
       catch( PDOException $e )
       {
@@ -314,7 +316,7 @@
     $Pokemon_Ability
   )
   {
-    global $PDO, $Poke_Class;
+    global $PDO, $Poke_Class, $User_Data;
 
     $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
     if ( !$Pokemon_Info )
@@ -365,6 +367,8 @@
       $Update_Pokemon->execute( $Update_Params );
 
       $PDO->commit();
+
+      LogStaffAction('Pokemon Update', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {
@@ -392,7 +396,7 @@
     $Frozen_Status
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     $Opposite_Status = $Frozen_Status ? 0 : 1;
     if ( $Opposite_Status )
@@ -416,6 +420,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Pokemon Freeze Toggle', $User_Data['ID']);
 
       return [
         'Success' => true,
@@ -447,7 +453,7 @@
     $Pokemon_ID
   )
   {
-    global $Poke_Class;
+    global $Poke_Class, $User_Data;
 
     $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
     if ( !$Pokemon_Info )
@@ -459,6 +465,8 @@
     }
 
     $Release_Pokemon = $Poke_Class->ReleasePokemon($Pokemon_ID, $Pokemon_Info['Owner_Current'], true);
+
+    LogStaffAction('Release Pokemon', $User_Data['ID']);
 
     return [
       'Success' => $Release_Pokemon['Type'] == 'success' ? true : false,

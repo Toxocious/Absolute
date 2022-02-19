@@ -125,7 +125,7 @@
     $Report_ID
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     try
     {
@@ -141,6 +141,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Report Deletion', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {

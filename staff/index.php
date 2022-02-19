@@ -16,6 +16,7 @@
     exit;
   }
 
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/staff_logs.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/online_list.php';
 ?>
 

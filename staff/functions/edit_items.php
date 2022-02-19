@@ -293,7 +293,7 @@
     $Evasion_Boost
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     try
     {
@@ -322,6 +322,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Itemdex Update', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {

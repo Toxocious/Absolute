@@ -68,7 +68,7 @@
     $Amount
   )
   {
-    global $Item_Class, $User_Class;
+    global $Item_Class, $User_Class, $User_Data;
 
     $Recipient_Data = $User_Class->FetchUserData($Recipient);
     if ( !$Recipient_Data )
@@ -83,6 +83,8 @@
       $Amount = 1;
 
     $Item_Class->SpawnItem($Recipient_Data['ID'], $Item_ID, $Amount);
+
+    LogStaffAction('Item Spawned', $User_Data['ID']);
 
     return [
       'Success' => true,

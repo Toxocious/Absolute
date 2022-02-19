@@ -143,7 +143,7 @@
     $Avatar_Source
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     try
     {
@@ -162,6 +162,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('User Avatar Update', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {
@@ -183,7 +185,7 @@
     $New_Password
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     $New_Password_Hash = password_hash($New_Password, PASSWORD_DEFAULT);
 
@@ -204,6 +206,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('User Password Update', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {

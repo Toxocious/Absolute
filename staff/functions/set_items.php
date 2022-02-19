@@ -623,7 +623,7 @@
     $Abso_Coins_Cost
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     $Item_Active = $Item_Active == 'Yes' ? 1 : 0;
     $Price_JSON = json_encode([
@@ -647,6 +647,8 @@
       $Update_Item_Entry->execute($Item_Creation_Query_Params);
 
       $PDO->commit();
+
+      LogStaffAction('Obtainable Item Created', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {
@@ -682,7 +684,7 @@
     $Abso_Coins_Cost
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     $Item_Active = $Item_Active == 'Yes' ? 1 : 0;
     $Price_JSON = json_encode([
@@ -706,6 +708,8 @@
       $Update_Item_Entry->execute($Item_Update_Query_Params);
 
       $PDO->commit();
+
+      LogStaffAction('Obainable Item Edit', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {

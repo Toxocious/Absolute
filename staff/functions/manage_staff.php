@@ -230,7 +230,7 @@
     $Staff_Management_Perm
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     try
     {
@@ -290,6 +290,8 @@
         HandleError($e);
       }
     }
+
+    LogStaffAction('Staff Management', $User_Data['ID']);
 
     return [
       'Success' => true,

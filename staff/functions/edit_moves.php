@@ -394,7 +394,7 @@
     $Move_ID, $Name, $Class_Name, $Accuracy, $Power, $Priority, $PP, $Damage_Type, $Move_Type, $Category, $Ailment, $Flinch_Chance, $Crit_Chance, $Effect_Chance, $Ailment_Chance, $HP_Boost, $Attack_Boost, $Defense_Boost, $Sp_Attack_Boost, $Sp_Defense_Boost, $Speed_Boost, $Accuracy_Boost, $Evasion_Boost, $Min_Hits, $Max_Hits, $Min_Turns, $Max_Turns, $Recoil, $Drain, $Healing, $Stat_Chance, $authentic, $bite, $bullet, $charge, $contact, $dance, $defrost, $distance, $gravity, $heal, $mirror, $mystery, $nonsky, $powder, $protect, $pulse, $punch, $recharge, $reflectable, $snatch, $sound
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     try
     {
@@ -423,6 +423,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Movedex Update', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {

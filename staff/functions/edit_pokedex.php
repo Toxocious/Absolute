@@ -320,7 +320,7 @@
     $Is_Legendary
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     try
     {
@@ -362,6 +362,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Pokedex Update', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {

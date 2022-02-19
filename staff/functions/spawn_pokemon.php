@@ -338,7 +338,7 @@
     $EV_Speed
   )
   {
-    global $Poke_Class, $User_Class;
+    global $Poke_Class, $User_Class, $User_Data;
 
     $User_Info = $User_Class->FetchUserData($Recipient);
     if ( empty($Recipient) || !$User_Info )
@@ -388,6 +388,8 @@
       $IVs,
       $EVs
     );
+
+    LogStaffAction('Pokemon Spawned', $User_Data['ID']);
 
     if ( !$Spawn_Pokemon )
     {

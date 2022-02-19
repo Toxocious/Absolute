@@ -47,6 +47,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('RPG Ban', $User_ID);
     }
     catch ( PDOException $e )
     {
@@ -104,6 +106,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Chat Ban', $User_ID);
     }
     catch ( PDOException $e )
     {
@@ -141,6 +145,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Unban', $User_ID);
     }
     catch ( PDOException $e )
     {

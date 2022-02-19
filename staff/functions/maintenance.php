@@ -80,7 +80,7 @@
     $Page_ID
   )
   {
-    global $PDO;
+    global $PDO, $User_Data;
 
     try
     {
@@ -97,6 +97,8 @@
       ]);
 
       $PDO->commit();
+
+      LogStaffAction('Maintenance Toggle', $User_Data['ID']);
     }
     catch ( PDOException $e )
     {
