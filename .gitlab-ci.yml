@@ -27,8 +27,12 @@ before_script:
 compile:
   rules:
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes:
+        - themes/sass
+      when: always
   stage: compile
   script:
+    - cd /var/www/html/absoluterpg.com/public_html/
     - echo "-- Compiling Stylesheets --"
     - sass themes/sass:themes/css --style compressed
     - echo "-- Finished Compiling --"
