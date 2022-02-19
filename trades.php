@@ -23,7 +23,7 @@
 				if ( !isset($_GET['Action']) && !isset($_GET['id']) )
 				{
 			?>
-			
+
 				<div data-id='left-col' style='flex-basis: 49%; margin: 5px 3px;'>
 					<div class='description'>Enter another user's ID to begin a trade with them.</div>
 
@@ -58,17 +58,21 @@
 					<?php
 						try
 						{
-							$Pending_Query = $PDO->prepare("SELECT `ID`, `Sender`, `Receiver`, `Status` FROM `trades` WHERE (`Sender` = ? OR `Receiver` = ?) AND `Status` = ?");
+							$Pending_Query = $PDO->prepare("
+                SELECT `ID`, `Sender`, `Recipient`, `Status`
+                FROM `trades`
+                WHERE (`Sender` = ? OR `Recipient` = ?) AND `Status` = ?
+              ");
 							$Pending_Query->execute([ $User_Data['ID'], $User_Data['ID'], 'Pending' ]);
 							$Pending_Query->setFetchMode(PDO::FETCH_ASSOC);
 							$Pending_Trades = $Pending_Query->fetchAll();
 						}
-						catch( PDOException $e )
+						catch ( PDOException $e )
 						{
-							HandleError( $e->getMessage() );
+							HandleError($e);
 						}
 
-						if ( count($Pending_Trades) === 0 )
+						if ( empty($Pending_Trades) )
 						{
 							$Trade_Text = "
 								<tr>
@@ -138,7 +142,7 @@
 				else
 				{
 			?>
-				
+
 				<div class='description' style='margin-bottom: 5px;'>Preparing your trade!</div>
 				<div style='padding: 5px;'>
 					<div class='spinner' style='left: 48%; position: relative;'></div><br />
@@ -160,7 +164,7 @@
 		{
 			$Action = $Purify->Cleanse($_GET['Action']);
 			$User_ID = $Purify->Cleanse($_GET['ID']);
-			
+
 			if ( $Action == "Create" )
 			{
 				echo "TradePrepare($User_ID);";
@@ -356,4 +360,3 @@
 
 <?php
 	require_once 'core/required/layout_bottom.php';
-	
