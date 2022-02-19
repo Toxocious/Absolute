@@ -77,14 +77,12 @@ exports.FetchUser = (User_ID) =>
       })
       .catch(error =>
       {
-        User_Data.push(error);
-
-        reject(User_Data);
+        reject(error);
       });
     }
     else
     {
-      resolve(User_Data);
+      reject(User_Data);
     }
   });
 }
