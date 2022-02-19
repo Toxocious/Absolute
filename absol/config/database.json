@@ -1,7 +1,0 @@
-{
-  "HOST": "localhost",
-  "DATABASE": "absolute",
-  "USERNAME": "absolute",
-  "PASSWORD": "qwerty",
-  "DIALECT": "mysql"
-}

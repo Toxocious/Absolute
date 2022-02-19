@@ -4,6 +4,7 @@
 # Not necessary to push */node_modules to a repo.
 # Chatlog also doesn't need pushed.
 absol/node_modules
+absol/config
 absol/chatlog.txt
 
 # CSS files are compiled from SCSS files on successful push via a pipeline.
