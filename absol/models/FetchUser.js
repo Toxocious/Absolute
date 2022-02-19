@@ -5,7 +5,7 @@ module.exports = (sequelize, type) =>
     ID: type.INTEGER,
     Username: type.STRING,
     Avatar: type.STRING,
-    Power: type.INTEGER,
+    Is_Staff: type.INTEGER,
     Rank: type.STRING,
   });
 }

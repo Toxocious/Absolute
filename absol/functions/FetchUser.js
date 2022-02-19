@@ -79,7 +79,7 @@ exports.FetchUser = (User_ID) =>
       {
         User_Data.push(error);
 
-        resolve(User_Data);
+        reject(User_Data);
       });
     }
     else
