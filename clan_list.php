@@ -6,7 +6,7 @@
 		$Clan_Query = $PDO->prepare("SELECT * FROM `clans` ORDER BY `Experience` DESC");
 		$Clan_Query->execute([ ]);
 		$Clan_Query->setFetchMode(PDO::FETCH_ASSOC);
-		$Clan = $Clan_Query->fetchAll();
+		$Clans = $Clan_Query->fetchAll();
 	}
 	catch ( PDOException $e )
 	{
@@ -34,23 +34,36 @@
 			</thead>
 			<tbody>
 				<?php
-					foreach( $Clan as $Key => $Value )
-					{
-						$Key++;
-						
-						echo "
-							<tr>
-								<td>#" . number_format($Key) . "</td>
-								<td>
-									<a href='" . DOMAIN_ROOT . "/clan.php?clan_id={$Key}'>
-										{$Value['Name']}
-									</a>
-								</td>
-								<td>" . number_format(FetchLevel($Value['Experience'], 'Clan')) . "</td>
-								<td>$" . number_format($Value['Money']) . "</td>
-							</tr>
-						";
-					}
+          if ( empty($Clans) )
+          {
+            echo "
+              <tr>
+                <td colspan='4' style='padding: 10px;'>
+                  There are currently no registered clans.
+                </td>
+              </tr>
+            ";
+          }
+          else
+          {
+            foreach ( $Clans as $Key => $Value )
+            {
+              $Key++;
+
+              echo "
+                <tr>
+                  <td>#" . number_format($Key) . "</td>
+                  <td>
+                    <a href='" . DOMAIN_ROOT . "/clan.php?clan_id={$Key}'>
+                      {$Value['Name']}
+                    </a>
+                  </td>
+                  <td>" . number_format(FetchLevel($Value['Experience'], 'Clan')) . "</td>
+                  <td>$" . number_format($Value['Money']) . "</td>
+                </tr>
+              ";
+            }
+          }
 				?>
 			</tbody>
 		</table>
@@ -59,4 +72,3 @@
 
 <?php
   require_once 'core/required/layout_bottom.php';
-  
