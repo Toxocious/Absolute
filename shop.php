@@ -65,7 +65,14 @@
 					foreach ( $Price_Array[0] as $Currency => $Amount )
 					{
 						$Price_String .= "
-							<img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />" . number_format($Amount) . "<br />
+            <div style='display: flex; align-items: center; justify-content: flex-start; gap: 5px;'>
+              <div>
+                <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />
+              </div>
+              <div>
+                " . number_format($Amount) . "
+              </div>
+            </div>
 						";
 
 						if ( $User_Data[$Currency] < $Amount )
@@ -170,7 +177,14 @@
 					foreach ( $Price_Array[0] as $Currency => $Amount )
 					{
 						$Price_String .= "
-							<img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />" . number_format($Amount) . "<br />
+              <div style='display: flex; align-items: center; gap: 5px;'>
+                <div>
+							    <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />
+                </div>
+                <div>
+                  " . number_format($Amount) . "
+                </div>
+              </div>
 						";
 
 						if ( $User_Data[$Currency] < $Amount )
