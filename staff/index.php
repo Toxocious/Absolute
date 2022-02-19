@@ -80,6 +80,7 @@
   if ( CheckUserPermission('Maintenance') )
   {
     echo "<script type='text/javascript' src='js/maintenance.js'></script>";
+    echo "<script type='text/javascript' src='js/news_post.js'></script>";
   }
 
   if ( CheckUserPermission('Set Obtainables') )
