@@ -43,7 +43,7 @@
 				?>
 			</td>
 
-			<td>
+			<td style='padding: 10px;'>
 				<?= html_entity_decode($News_Post['News_Text']); ?>
 			</td>
 		</tr>
