@@ -8,7 +8,7 @@
 <div class='panel content'>
   <div class='head'>Direct Messages</div>
   <div class='body flex' style='padding: 5px;'>
-    <table class='border-gradient' style='flex-basis: 200px; margin-left: 0; max-height: 660px; width: 208px;'>
+    <table class='border-gradient' style='margin-left: 0; height: 120px; width: 208px;'>
       <tbody>
         <tr>
           <td colspan='2'>
@@ -54,7 +54,7 @@
     </table>
 
     <div class='border-gradient' style='flex-basis: 660px; height: 660px; width: 660px;'>
-      <div id='direct-messages'>
+      <div id='direct-messages' style='display: inline-block;'>
         <div class='flex' style='align-items: center; height: -webkit-fill-available; justify-content: center;'>
           <div>
             <h2>Message History</h2>
@@ -184,7 +184,7 @@
       {
         if ( data.indexOf('error') > -1)
           alert("There was an error while attempting to send your message.\n", data);
-          
+
         $('#dm-message').val('');
         $('#dm-message').focus();
         DisplayDirectMessage(Group_ID);
