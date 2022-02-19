@@ -53,7 +53,7 @@
 				}
 				else
 				{
-					$Link_URL = DOMAIN_ROOT . '/index.php';
+					$Link_URL = DOMAIN_ROOT . '/news.php';
 					$Link_Name = 'Index';
 				}
 
