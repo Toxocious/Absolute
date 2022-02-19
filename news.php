@@ -6,8 +6,8 @@
 		$Fetch_News = $PDO->query("SELECT * FROM `news` ORDER BY `id` DESC LIMIT 1");
 		$News_Post = $Fetch_News->fetch();
 
-		$Fetch_News_Poster = $PDO->prepare("SELECT `Username`, `id`, `Avatar`, `Rank` FROM `users` WHERE `id` = ? LIMIT 1");
-		$Fetch_News_Poster->execute([$News_Post['Poster_ID']]);
+		$Fetch_News_Poster = $PDO->prepare("SELECT `ID`, `Username`, `Avatar`, `Rank` FROM `users` WHERE `ID` = ? LIMIT 1");
+		$Fetch_News_Poster->execute([ $News_Post['Poster_ID'] ]);
 		$News_Poster = $Fetch_News_Poster->fetch();
 	}
 	catch ( PDOException $e )
@@ -21,7 +21,7 @@
 	}
 	else
 	{
-		$style = " style='margin: 0px 5px;'";
+		$style = " style='margin: 0px 5px; width: 100%;'";
 	}
 ?>
 
@@ -35,17 +35,16 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td style='padding: 5px 30px;'>
+			<td style='padding: 5px 30px; width: 150px;'>
 				<img src='<?= DOMAIN_SPRITES . '/' . $News_Poster['Avatar']; ?>' /><br />
 				<?php
-					echo $User_Class->DisplayUserName($News_Post['Poster_ID']);
-					echo "<br />";
+					echo '<h3>' . $User_Class->DisplayUserName($News_Post['Poster_ID'], false, false, true) . '</h3>';
 					echo $News_Post['News_Date'];
 				?>
 			</td>
 
 			<td>
-				<?= nl2br($News_Post['News_Text']); ?>
+				<?= html_entity_decode($News_Post['News_Text']); ?>
 			</td>
 		</tr>
 	</tbody>
