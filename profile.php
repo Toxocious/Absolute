@@ -5,7 +5,7 @@
     $Profile_ID = Purify($_GET['id']);
   else
     $Profile_ID = 0;
-  
+
   $Profile_User = $User_Class->FetchUserData($Profile_ID);
 
   if ( $Profile_User )
@@ -27,12 +27,14 @@
                 <?= ( $Profile_User['Avatar'] ? "<img src='{$Profile_User['Avatar']}' />" : 'This user has no avatar set.' ); ?>
               </td>
             </tr>
+          </tbody>
+          <tbody>
             <tr>
               <td colspan='4'>
                 <?= $User_Class->DisplayUserRank($Profile_User['ID']); ?>
               </td>
             </tr>
-              
+
             <thead>
               <tr>
                 <td colspan='4'>
@@ -74,7 +76,7 @@
                 </td>
               </tr>
             </tbody>
-            
+
             <thead>
               <tr>
                 <th colspan='4'>
@@ -115,31 +117,31 @@
           <thead>
             <tr>
               <th colspan='4'>
-                Interactions 
+                Interactions
               </th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td colspan='2' style='width: 50%;'>
-                <a href=''>
+                <a href='<?= DOMAIN_ROOT; ?>/direct_messages.php?Message_Recipient=<?= $Profile_User['ID']; ?>'>
                   Message <?= $Profile_User['Username']; ?>
                 </a>
               </td>
               <td colspan='2' style='width: 50%;'>
-                <a href=''>
+                <a href='<?= DOMAIN_ROOT; ?>/trades.php?Action=Create&ID=<?= $Profile_User['ID']; ?>'>
                   Trade With <?= $Profile_User['Username']; ?>
                 </a>
               </td>
             </tr>
             <tr>
               <td colspan='2' style='width: 50%;'>
-                <a href=''>
+                <a href='<?= DOMAIN_ROOT; ?>/battle_create.php?Battle_Type=Trainer&Foe=<?= $Profile_User['ID']; ?>'>
                   Battle <?= $Profile_User['Username']; ?>
                 </a>
               </td>
               <td colspan='2' style='width: 50%;'>
-                <a href=''>
+                <a href='<?= DOMAIN_ROOT; ?>/report.php?Reporting_User=<?= $Profile_User['ID']; ?>'>
                   Report <?= $Profile_User['Username']; ?>
                 </a>
               </td>
