@@ -12,7 +12,7 @@
 		return;
 	}
 
-	$Recipient_ID = $Purify->Cleanse($_POST['ID']);
+	$Recipient_ID = Purify($_POST['ID']);
 	$Recipient = $User_Class->FetchUserData($Recipient_ID);
 
 	if ( $Recipient_ID == 0 || !$Recipient )
@@ -21,7 +21,7 @@
 
 		return;
 	}
-	else if ( $User_Data['ID'] === $Recipient_ID )
+	else if ( $User_Data['ID'] !== $Recipient['ID'] )
 	{
 		echo "<div class='error'>You may not trade with yourself.</div>";
 
