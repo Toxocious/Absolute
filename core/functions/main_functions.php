@@ -49,24 +49,3 @@
 
 		return false;
 	}
-
-	/**
-	 * Performs a check to see if the current date is between two dates.
-	 */
-	function isBetweenDates($date1, $date2)
-	{
-		$paymentDate = new DateTime(); // Today
-		$contractDateBegin = new DateTime($date1);
-		$contractDateEnd = new DateTime($date2);
-
-		if
-    (
-      $paymentDate->getTimestamp() > $contractDateBegin->getTimestamp() &&
-      $paymentDate->getTimestamp() < $contractDateEnd->getTimestamp()
-    )
-		{
-			return true;
-		}
-
-		return false;
-	}
