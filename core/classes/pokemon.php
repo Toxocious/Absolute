@@ -53,7 +53,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			if ( !isset($Pokemon) || !$Pokemon )
@@ -201,7 +201,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			$BaseStats = [
@@ -275,7 +275,7 @@
       }
       catch ( PDOException $e )
       {
-        HandleError( $e->getMessage() );
+        HandleError($e);
       }
 
       if ( !isset($Pokemon) )
@@ -364,7 +364,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			if ( $Slot == 7 )
@@ -378,7 +378,7 @@
 				}
 				catch ( PDOException $e )
 				{
-					HandleError( $e->getMessage() );
+					HandleError($e);
 				}
 
 				return [
@@ -402,7 +402,7 @@
 					}
 					catch ( PDOException $e )
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 				}
 				else
@@ -414,7 +414,7 @@
 					}
 					catch (PDOException $e)
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 				}
 
@@ -477,7 +477,7 @@
 			{
         $PDO->rollBack();
 
-				HandleError( $e );
+				HandleError($e);
 			}
 
 			return [
@@ -552,7 +552,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			if ( $Location != "Box" )
@@ -718,7 +718,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			if ( !$Pokemon )
@@ -780,7 +780,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			$List = "<option>-------</option>";
@@ -892,7 +892,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			return [
@@ -924,7 +924,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			return [

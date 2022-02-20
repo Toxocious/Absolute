@@ -92,7 +92,7 @@
       }
       catch ( PDOException $e )
       {
-        HandleError( $e );
+        HandleError($e);
       }
 
       $Sprite_Dialogue .= "
@@ -154,7 +154,7 @@
       }
       catch ( PDOException $e )
       {
-        HandleError( $e );
+        HandleError($e);
       }
 
       $Sprite_Dialogue .= "

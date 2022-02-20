@@ -17,7 +17,7 @@
 	}
 	catch( PDOException $e )
 	{
-		HandleError( $e->getMessage() );
+		HandleError($e);
 	}
 
 	if ( count($Shop_Purchases) === 0 )

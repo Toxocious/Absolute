@@ -32,7 +32,7 @@
 					}
 					catch( PDOException $e )
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 
 					if ( !$Staff_Members )

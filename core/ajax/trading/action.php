@@ -289,7 +289,7 @@
 			}
 			catch( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			if ( $Currency_Data['Amount'] <= 0 )

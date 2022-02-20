@@ -177,7 +177,7 @@
     }
     catch( PDOException $e )
     {
-      HandleError( $e );
+      HandleError($e);
     }
 
     return $Banned_Users;

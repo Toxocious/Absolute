@@ -13,7 +13,7 @@
   }
   catch ( PDOException $e )
   {
-    HandleError( $e->getMessage() );
+    HandleError($e);
   }
 
   /**
@@ -59,7 +59,7 @@
           }
           catch( PDOException $e )
           {
-            HandleError( $e->getMessage() );
+            HandleError($e);
           }
 
           echo "

@@ -41,7 +41,7 @@
 				}
 				catch( PDOException $e )
 				{
-					HandleError( $e->getMessage() );
+					HandleError($e);
 				}
 
 				$Sender_Pokemon .= $Pokemon_1['ID'] . ",";
@@ -70,7 +70,7 @@
 				}
 				catch( PDOException $e )
 				{
-					HandleError( $e->getMessage() );
+					HandleError($e);
 				}
 
 				$Recipient_Pokemon .= $Pokemon_2['ID'] . ",";
@@ -115,7 +115,7 @@
 			}
 			catch( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 		}
 	}
@@ -166,7 +166,7 @@
 	}
 	catch( PDOException $e )
 	{
-		HandleError( $e->getMessage() );
+		HandleError($e);
 	}
 
 	if ( count($Pending_Trades) === 0 )

@@ -10,7 +10,7 @@
 	}
 	catch( PDOException $e )
 	{
-		HandleError( $e->getMessage() );
+		HandleError($e);
 	}
 
 	if ( count($Pending_Trades) === 0 )
@@ -33,7 +33,7 @@
 			$Sender_Username = $User_Class->DisplayUserName($Sender['ID']);
 			$Recipient = $User_Class->FetchUserData($Value['Recipient']);
 			$Recipient_Username = $User_Class->DisplayUserName($Recipient['ID']);
-			
+
 			switch( $Value['Status'] )
 			{
 				case 'Accepted':

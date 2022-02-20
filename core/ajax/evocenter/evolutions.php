@@ -50,7 +50,7 @@
 				}
 				catch ( PDOException $e )
 				{
-					HandleError( $e );
+					HandleError($e);
 				}
 
 				$Time_Of_Day = (date('G') > 7 && date('G') < 19) ? 'Day' : 'Night';
@@ -310,7 +310,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution_ID, $Evolution_Alt_ID, $Pokemon['Type']);

@@ -23,7 +23,7 @@
     $Display_Limit = Purify($Display_Limit);
     $Colspan = $Colspan > 0 ? Purify($Colspan) : $Colspan = 3;
     $Onclick_Link = Purify($Onclick_Link);
-    
+
     $Temp_Link = $Onclick_Link;
 
     try
@@ -34,7 +34,7 @@
     }
     catch ( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 
     $Total_Pages = ceil($Total_Results / $Display_Limit);
@@ -197,7 +197,7 @@
       {
         $Links['Pages'] .= "
           <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-            
+
           </td>
         ";
       }
@@ -240,7 +240,7 @@
       {
         $Links['Pages'] .= "
           <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-            
+
           </td>
         ";
       }
@@ -258,8 +258,8 @@
     ";
   }
 
-  
-  
+
+
 
 
 
@@ -275,7 +275,7 @@
     }
     catch ( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
 		}
 
 		$Pages = ceil($Total / $Limit);
@@ -284,7 +284,7 @@
     {
       $Page = 1;
     }
-    
+
     /**
      * Render pagination navigation links.
      */

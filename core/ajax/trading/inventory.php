@@ -14,7 +14,7 @@
 
     return;
   }
-	
+
 	$User_ID = $Purify->Cleanse($_POST['id']);
 	$User = $User_Class->FetchUserData($User_ID);
 
@@ -27,7 +27,7 @@
 	}
 	catch ( PDOException $e )
 	{
-		HandleError( $e->getMessage() );
+		HandleError($e);
 	}
 
 	if ( count($Items) === 0 )
@@ -60,7 +60,7 @@
 					x{$Item_Data['Quantity']}
 				</td>
 			";
-			
+
 			if ( $Key % 3 === 0 && $Key !== 18 )
 				echo "</tr><tr>";
 		}
@@ -68,7 +68,7 @@
 		if ( $Total_Rendered <= 18 )
 		{
 			$Total_Rendered++;
-			
+
 			for ( $Total_Rendered; $Total_Rendered <= 18; $Total_Rendered++ )
 			{
 				echo "
@@ -81,6 +81,5 @@
 		}
 
 		echo "</tr>";
-	}			
+	}
 	echo "</div>";
-		

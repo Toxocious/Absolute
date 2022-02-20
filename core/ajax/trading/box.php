@@ -36,16 +36,16 @@
 
   switch ($Filter_Gender)
   {
-		case 'm': 
+		case 'm':
 			$Query .= " AND `Gender` = 'Male'";
 			break;
-		case 'f': 
+		case 'f':
 			$Query .= " AND `Gender` = 'Female'";
 			break;
-		case 'g': 
+		case 'g':
 			$Query .= " AND `Gender` = 'Genderless'";
 			break;
-		case '?': 
+		case '?':
 			$Query .= " AND `Gender` = '(?)'";
 			break;
   }
@@ -70,9 +70,9 @@
   }
   catch ( PDOException $e )
   {
-    HandleError( $e->getMessage() );
+    HandleError($e);
 	}
-  
+
   if ( count($Box_Pokemon) == 0 )
   {
     echo "
@@ -112,7 +112,7 @@
     if ( $Total_Rendered <= 35 )
     {
       $Total_Rendered++;
-      
+
       for ( $Total_Rendered; $Total_Rendered <= 35; $Total_Rendered++ )
       {
         echo "

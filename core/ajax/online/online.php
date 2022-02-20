@@ -18,7 +18,7 @@
     }
     catch( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 
     $Online_List_Text = '';
@@ -82,7 +82,7 @@
     }
     catch( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 
     $Online_List_Text .= "

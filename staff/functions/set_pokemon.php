@@ -625,7 +625,7 @@
     }
     catch ( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 
     $Pokedex_Dropdown_List = '';

@@ -61,7 +61,7 @@
     }
     catch ( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 ?>
 

@@ -28,7 +28,7 @@
     }
     catch ( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 
     if ( !$User_Info )

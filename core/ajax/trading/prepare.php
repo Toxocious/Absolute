@@ -106,7 +106,7 @@
           }
           catch ( PDOException $e )
           {
-            HandleError( $e->getMessage() );
+            HandleError($e);
           }
 
           if ( count($Sender_Box) == 0 )
@@ -227,7 +227,7 @@
           }
           catch ( PDOException $e )
           {
-            HandleError( $e->getMessage() );
+            HandleError($e);
           }
 
           if ( count($Recipient_Box) == 0 )

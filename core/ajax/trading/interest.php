@@ -37,7 +37,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			echo "
@@ -55,7 +55,7 @@
 			";
 		}
 	}
-	
+
 	/**
 	 * Display the user's Pokemon, given the selected Pokemon type.
 	 */
@@ -66,7 +66,7 @@
 		$User_ID = $User_Data['ID'];
 
 		$Display_Limit = 50;
-		
+
 		$Begin = ($Page - 1) * $Display_Limit;
 		if ( $Begin < 0 )
 			$Begin = 1;
@@ -83,7 +83,7 @@
 		}
 		catch( PDOException $e )
 		{
-			HandleError( $e->getMessage() );
+			HandleError($e);
 		}
 
 		$Pagination = Pagination(str_replace('`ID`, `Name`, `Type`, `Trade_Interest`', 'COUNT(*)', $Query), $Inputs, $User_ID, $Page, $Display_Limit, 2);
@@ -153,7 +153,7 @@
 					</div>
 				</td>
 			";
-			
+
 			$Pokemon_Count++;
 		}
 

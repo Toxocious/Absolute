@@ -50,7 +50,7 @@
 			{
 				$Item_ID = Purify($_POST['id']);
 				$Pokemon_ID = Purify($_POST['pokeid']);
-		
+
 				$Item_Data = $Item_Class->FetchOwnedItem($User_Data['ID'], $Item_ID);
 				$Poke_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
 
@@ -156,7 +156,7 @@
 			}
 			catch( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			foreach( $Items as $Key => $Value )
@@ -296,7 +296,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			if ( count($Items) == 0 )
@@ -391,7 +391,7 @@
 	}
 	catch ( PDOException $e )
 	{
-		HandleError( $e->getMessage() );
+		HandleError($e);
 	}
 
 	/**

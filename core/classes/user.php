@@ -52,7 +52,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			if ( !$User )
@@ -229,7 +229,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			switch($Rank['Rank'])
@@ -271,7 +271,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			if ( $Display_ID )

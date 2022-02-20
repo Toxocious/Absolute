@@ -81,10 +81,13 @@
 
 	// Require some files.
 	require_once $Dir_Root . '/core/required/domains.php';
+	require_once $Dir_Root . '/core/required/database.php';
 	require_once $Dir_Root . '/core/functions/formulas.php';
 	require_once $Dir_Root . '/core/functions/pagination.php';
 	require_once $Dir_Root . '/core/functions/main_functions.php';
   require_once $Dir_Root . '/core/functions/user_agent.php';
+
+  $PDO = DatabaseConnect();
 
 	// Proxies sometimes send the X-Forwarded-For header to indicate the actual
 	// IP address of the client. This cannot really be trusted, because the header
@@ -143,7 +146,7 @@
 		}
 		catch ( PDOException $e )
 		{
-			HandleError( $e->getMessage() );
+			HandleError($e);
 		}
 	}
 

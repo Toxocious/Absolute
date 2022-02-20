@@ -17,7 +17,7 @@
 	}
 	catch( PDOException $e )
 	{
-		HandleError( $e->getMessage() );
+		HandleError($e);
 	}
 
 	if ( count($Map_Catches) === 0 )

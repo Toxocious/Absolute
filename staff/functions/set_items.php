@@ -214,7 +214,7 @@
     }
     catch ( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 
     $Item_Dex_Dropdown_List = '';
@@ -403,7 +403,7 @@
     }
     catch ( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 
     $Item_Dex_Dropdown_List = '';

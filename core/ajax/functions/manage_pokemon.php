@@ -12,7 +12,7 @@
 		}
 		catch ( PDOException $e )
 		{
-			HandleError( $e->getMessage() );
+			HandleError($e);
 		}
 
 		$Roster_Count = count($Roster);
@@ -45,7 +45,7 @@
 			}
 			catch( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			echo "
@@ -200,7 +200,7 @@
 			}
 			catch (PDOException $e)
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			echo "

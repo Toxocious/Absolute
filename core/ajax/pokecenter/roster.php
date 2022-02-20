@@ -62,7 +62,7 @@
     }
     catch ( PDOException $e )
     {
-      HandleError( $e->getMessage() );
+      HandleError($e);
     }
 ?>
 
@@ -186,7 +186,7 @@
       }
       catch (PDOException $e)
       {
-        HandleError( $e->getMessage() );
+        HandleError($e);
       }
 
       if ( count($Box_Pokemon) == 0 )

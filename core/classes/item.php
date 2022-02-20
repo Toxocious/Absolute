@@ -28,7 +28,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			return [
@@ -63,13 +63,13 @@
 					$Fetch_Item = $PDO->prepare("SELECT * FROM `items` WHERE `Owner_Current` = ? AND `Item_ID` = ? LIMIT $Limit");
 					$Fetch_Item->execute([$Owner_ID, $Item_ID]);
 				}
-				
+
 				$Fetch_Item->setFetchMode(PDO::FETCH_ASSOC);
 				$Item = $Fetch_Item->fetch();
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 
 			return [
@@ -134,7 +134,7 @@
 		{
 			global $PDO;
 			global $Poke_Class;
-			
+
 			$Owner_ID = Purify($User_ID);
 			$Pokemon_ID = Purify($Poke_ID);
 
@@ -181,13 +181,13 @@
 				}
 				catch ( PDOException $e )
 				{
-					HandleError( $e->getMessage() );
+					HandleError($e);
 				}
 
 				return [
 					'Message' => "You have detached your <b>{$Item_Data['Name']}</b> from <b>{$Pokemon['Display_Name']}</b>.",
 					'Type' => 'success',
-				]; 
+				];
 			}
 		}
 
@@ -239,7 +239,7 @@
 				}
 				catch( PDOException $e )
 				{
-					HandleError( $e->getMessage() );
+					HandleError($e);
 				}
 			}
 		}

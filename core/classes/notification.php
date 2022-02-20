@@ -37,7 +37,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 		}
 
@@ -82,7 +82,7 @@
 										<b>x</b>
 									</a>
 								</div>
-								
+
 								{$Value['Message']}
 							</div>
 						";
@@ -91,7 +91,7 @@
 			}
 			catch ( PDOException $e )
 			{
-				HandleError( $e->getMessage() );
+				HandleError($e);
 			}
 		}
 	}

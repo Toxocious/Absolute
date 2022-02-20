@@ -30,7 +30,7 @@
       }
       catch ( PDOException $e )
       {
-        HandleError( $e );
+        HandleError($e);
       }
 
       if ( empty($Item_Data) )

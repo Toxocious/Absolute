@@ -14,7 +14,7 @@
     }
     catch( PDOException $e )
     {
-      HandleError( $e );
+      HandleError($e);
     }
 
     $Online_List_Text = "

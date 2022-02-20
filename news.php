@@ -12,7 +12,7 @@
 	}
 	catch ( PDOException $e )
 	{
-		HandleError( $e->getMessage() );
+		HandleError($e);
 	}
 
 	if ( !isset($_SESSION['Absolute']) )

@@ -38,7 +38,7 @@
       }
       catch( PDOException $e )
       {
-        HandleError( $e->getMessage() );
+        HandleError($e);
       }
 
       if ( count($Trade_Data) === 0 )
@@ -105,7 +105,7 @@
             }
             catch( PDOException $e )
             {
-              HandleError( $e->getMessage() );
+              HandleError($e);
             }
 
             if
@@ -224,7 +224,7 @@
             }
             catch( PDOException $e )
             {
-              HandleError( $e->getMessage() );
+              HandleError($e);
             }
 
             if

@@ -21,7 +21,7 @@
 		}
 		catch( PDOException $e )
 		{
-			HandleError( $e->getMessage() );
+			HandleError($e);
 		}
 
 		echo "
@@ -55,7 +55,7 @@
 					}
 					catch( PDOException $e )
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 				}
 			}
@@ -93,7 +93,7 @@
 					}
 					catch( PDOException $e )
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 				}
 			}
@@ -115,7 +115,7 @@
 					}
 					catch( PDOException $e )
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 				}
 			}
@@ -142,18 +142,18 @@
 				{
 					$Currency_Info = explode('-', $Currency);
 					$Currency_Data = $Constants->Currency[$Currency_Info[0]];
-					
+
 					try
 					{
 						$Update_Recipient_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` - ? WHERE `id` = ? LIMIT 1");
 						$Update_Recipient_Currency->execute([ $Currency_Info[1], $Recipient['ID'] ]);
-						
+
 						$Update_Sender_Currency = $PDO->prepare("UPDATE `users` SET `{$Currency_Data['Value']}` = `{$Currency_Data['Value']}` + ? WHERE `id` = ? LIMIT 1");
 						$Update_Sender_Currency->execute([ $Currency_Info[1], $Sender['ID'] ]);
 					}
 					catch( PDOException $e )
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 				}
 			}
@@ -181,7 +181,7 @@
 					}
 					catch( PDOException $e )
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 				}
 			}
@@ -203,7 +203,7 @@
 					}
 					catch( PDOException $e )
 					{
-						HandleError( $e->getMessage() );
+						HandleError($e);
 					}
 				}
 			}
@@ -251,7 +251,7 @@
 	}
 	catch( PDOException $e )
 	{
-		HandleError( $e->getMessage() );
+		HandleError($e);
 	}
 
 	if ( count($Pending_Trades) === 0 )
@@ -284,7 +284,7 @@
 		{
 			$Sender = $User_Class->FetchUserData($Value['Sender']);
 			$Sender_Username = $User_Class->DisplayUserName($Sender['ID']);
-			
+
 			$Recipient = $User_Class->FetchUserData($Value['Recipient']);
 			$Recipient_Username = $User_Class->DisplayUserName($Recipient['ID']);
 

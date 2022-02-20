@@ -188,7 +188,7 @@
       }
       catch ( PDOException $e )
       {
-        HandleError( $e->getMessage() );
+        HandleError($e);
       }
 
       $Shop_Data = $this->FetchShopData($Object['Obtained_Place']);
