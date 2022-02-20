@@ -51,29 +51,6 @@
 	}
 
 	/**
-   * Determine the current power level of the user.
-   * !! Should move this to the user class file once it's made. (/core/classes/user.php)
-   */
-  function checkUserPower($User_Power, $Required_Power)
-  {
-    if ( $User_Power < $Required_Power )
-    {
-      echo "
-        <div class='panel content'>
-          <div class='head'>Unauthorized Access</div>
-          <div class='body'>
-            You do not have the appropriate power to access this page.
-          </div>
-        </div>
-      ";
-
-      require_once 'core/required/layout_bottom.php';
-
-      exit();
-    }
-  }
-
-	/**
 	 * Performs a check to see if the current date is between two dates.
 	 */
 	function isBetweenDates($date1, $date2)
