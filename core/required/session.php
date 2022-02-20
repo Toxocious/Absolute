@@ -1,139 +1,138 @@
 <?php
   // Set the timezone that Absolute is based on.
-	date_default_timezone_set('America/Los_Angeles');
-	$Date = date("M dS, Y g:i:s A");
-	$Absolute_Time = date('m/d/y&\nb\sp;&\nb\sp;h:i A');
-	$Time = time();
+  date_default_timezone_set('America/Los_Angeles');
+  $Date = date("M dS, Y g:i:s A");
+  $Absolute_Time = date('m/d/y&\nb\sp;&\nb\sp;h:i A');
+  $Time = time();
 
-	// Deal with the $_SERVER const.
-	if ( isset($_SERVER['HTTP_HOST']) && session_status() !== PHP_SESSION_ACTIVE )
-	{
-		if ( $_SERVER['HTTP_HOST'] == "localhost" )
-		{
-			session_set_cookie_params(0, '/', 'localhost');
-		}
-		else
-		{
-			session_set_cookie_params(0, '/', 'absoluterpg.com');
-		}
-	}
+  // Deal with the $_SERVER const.
+  if ( isset($_SERVER['HTTP_HOST']) && session_status() !== PHP_SESSION_ACTIVE )
+  {
+    if ( $_SERVER['HTTP_HOST'] == "localhost" )
+    {
+      session_set_cookie_params(0, '/', 'localhost');
+    }
+    else
+    {
+      session_set_cookie_params(0, '/', 'absoluterpg.com');
+    }
+  }
 
-	// No cache.
-	header("Content-Type: text/html; charset=UTF-8");
-	header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
-	header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
-	header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-	header("Pragma: no-cache");
+  // No cache.
+  header("Content-Type: text/html; charset=UTF-8");
+  header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
+  header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+  header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+  header("Pragma: no-cache");
 
-	// Start the session before doing anything else.
-	if ( session_status() !== PHP_SESSION_ACTIVE )
-	{
-		session_start();
-	}
+  if ( session_status() !== PHP_SESSION_ACTIVE )
+    session_start();
 
-	// Directory Root
-	if ( !isset($Dir_Root) )
-	{
-		$Dir_Root = realpath($_SERVER["DOCUMENT_ROOT"]);
-	}
+  if ( !isset($Dir_Root) )
+    $Dir_Root = realpath($_SERVER["DOCUMENT_ROOT"]);
 
-	// Require all necessary classes.
-	require_once $Dir_Root . '/core/classes/constants.php';
-	$Constants = new Constants();
-	require_once $Dir_Root . '/core/classes/pokemon.php';
-	$Poke_Class = new Pokemon();
-	require_once $Dir_Root . '/core/classes/user.php';
-	$User_Class = new User();
-	require_once $Dir_Root . '/core/classes/clan.php';
-	$Clan_Class = new Clan();
-	require_once $Dir_Root . '/core/classes/item.php';
-	$Item_Class = new Item();
-	require_once $Dir_Root . '/core/classes/purify.php';
-	$Purify = new Purify();
-	require_once $Dir_Root . '/core/classes/shop.php';
-	$Shop_Class = new Shop();
-	require_once $Dir_Root . '/core/classes/navigation.php';
-	$Navigation = new Navigation();
-	require_once $Dir_Root . '/core/classes/notification.php';
-	$Notification = new Notification();
+  /**
+   * Get all necessary classes.
+   */
+  require_once $Dir_Root . '/core/classes/constants.php';
+  $Constants = new Constants();
+  require_once $Dir_Root . '/core/classes/pokemon.php';
+  $Poke_Class = new Pokemon();
+  require_once $Dir_Root . '/core/classes/user.php';
+  $User_Class = new User();
+  require_once $Dir_Root . '/core/classes/clan.php';
+  $Clan_Class = new Clan();
+  require_once $Dir_Root . '/core/classes/item.php';
+  $Item_Class = new Item();
+  require_once $Dir_Root . '/core/classes/purify.php';
+  $Purify = new Purify();
+  require_once $Dir_Root . '/core/classes/shop.php';
+  $Shop_Class = new Shop();
+  require_once $Dir_Root . '/core/classes/navigation.php';
+  $Navigation = new Navigation();
+  require_once $Dir_Root . '/core/classes/notification.php';
+  $Notification = new Notification();
   require_once $Dir_Root . '/core/classes/timer.php';
-	require_once $Dir_Root . '/core/classes/weighter.php';
-	require_once $Dir_Root . '/core/classes/direct_message.php';
+  require_once $Dir_Root . '/core/classes/weighter.php';
+  require_once $Dir_Root . '/core/classes/direct_message.php';
 
-	// Require necessary functions.
-	require_once $Dir_Root . '/core/required/domains.php';
-	require_once $Dir_Root . '/core/required/database.php';
-	require_once $Dir_Root . '/core/functions/formulas.php';
-	require_once $Dir_Root . '/core/functions/pagination.php';
-	require_once $Dir_Root . '/core/functions/main_functions.php';
+  /**
+   * Get all necessary functions and constants.
+   */
+  require_once $Dir_Root . '/core/required/domains.php';
+  require_once $Dir_Root . '/core/required/database.php';
+  require_once $Dir_Root . '/core/functions/formulas.php';
+  require_once $Dir_Root . '/core/functions/pagination.php';
+  require_once $Dir_Root . '/core/functions/main_functions.php';
   require_once $Dir_Root . '/core/functions/user_agent.php';
 
   $PDO = DatabaseConnect();
 
-	// Proxies sometimes send the X-Forwarded-For header to indicate the actual
-	// IP address of the client. This cannot really be trusted, because the header
-	// could potentially be forged. As such, we use a whitelist of proxy IPs that
-	// we can trust.
-	if ( in_array($_SERVER['REMOTE_ADDR'], []) )
-	{
-	  $IP_List = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
+  /**
+   * Get the client's IP address.
+   */
+  if ( in_array($_SERVER['REMOTE_ADDR'], []) )
+  {
+    $IP_List = explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']);
 
-		if ( $IP_List[0] != '127.0.0.1' )
-		{
-	    $_SERVER['REMOTE_ADDR'] = $IP_List[0]; // The first proxy in the list is the client IP.
-	  }
-	}
-
-	/**
-	 * Get page data.
-	 */
-	$Parse_URL = parse_url((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
-	$Fetch_Page = $PDO->prepare("SELECT * FROM `pages` WHERE `URL` = ? LIMIT 1");
-	$Fetch_Page->execute([$Parse_URL['path']]);
-	$Fetch_Page->setFetchMode(PDO::FETCH_ASSOC);
-	$Current_Page = $Fetch_Page->fetch();
+    if ( $IP_List[0] != '127.0.0.1' )
+    {
+      $_SERVER['REMOTE_ADDR'] = $IP_List[0]; // The first proxy in the list is the client IP.
+    }
+  }
 
   /**
-	 * If the user is currently in a session, run the following code at the start of every page load.
-	 */
-	if ( isset($_SESSION['Absolute']) )
-	{
+   * Get data about the page the client is on.
+   */
+  try
+  {
+    $Parse_URL = parse_url((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
+
+    $Fetch_Page = $PDO->prepare("SELECT * FROM `pages` WHERE `URL` = ? LIMIT 1");
+    $Fetch_Page->execute([ $Parse_URL['path'] ]);
+    $Fetch_Page->setFetchMode(PDO::FETCH_ASSOC);
+    $Current_Page = $Fetch_Page->fetch();
+  }
+  catch ( PDOException $e )
+  {
+    HandleError($e);
+  }
+
+  if ( !$Current_Page )
+  {
+    $Current_Page['Name'] = 'Index';
+    $Current_Page['Maintenance'] = 'no';
+    $Current_Page['Logged_In'] = 'no';
+  }
+
+  /**
+   * Handle active session logic at the start of page loads.
+   *  - Get active user data
+   *  - Update active user page info, playtime, and last page active on
+   */
+  if ( isset($_SESSION['Absolute']) )
+  {
     $User_Data = $User_Class->FetchUserData($_SESSION['Absolute']['Logged_In_As']);
 
-		if ( !isset($_SESSION['Absolute']['Playtime']) )
-		{
-			$_SESSION['Absolute']['Playtime'] = $Time;
-		}
+    if ( !isset($_SESSION['Absolute']['Playtime']) )
+    {
+      $_SESSION['Absolute']['Playtime'] = $Time;
+    }
 
-		$Playtime = $Time - $_SESSION['Absolute']['Playtime'];
-		$Playtime = $Playtime > 20 ? 20 : $Playtime;
-		$_SESSION['Absolute']['Playtime'] = $Time;
+    $Playtime = $Time - $_SESSION['Absolute']['Playtime'];
+    $Playtime = $Playtime > 20 ? 20 : $Playtime;
+    $_SESSION['Absolute']['Playtime'] = $Time;
 
-		try
-		{
-			if ( $Current_Page )
-			{
-				$Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Page`, `Data`, `User_ID`) VALUES ('pageview', ?, ?, ?)");
-				$Update_Activity->execute([ $Current_Page['Name'], $Parse_URL['path'], $User_Data['ID'] ]);
+    try
+    {
+      $Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Page`, `Data`, `User_ID`) VALUES ('pageview', ?, ?, ?)");
+      $Update_Activity->execute([ $Current_Page['Name'], $Parse_URL['path'], $User_Data['ID'] ]);
 
-				$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
-				$Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['ID'] ]);
-			}
-			else
-			{
-				$Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `id` = ? LIMIT 1");
-				$Update_User->execute([ $Time, 'Unknown', $Playtime, $User_Data['ID'] ]);
-			}
-		}
-		catch ( PDOException $e )
-		{
-			HandleError($e);
-		}
-	}
-
-	if ( !$Current_Page )
-	{
-		$Current_Page['Name'] = 'Index';
-		$Current_Page['Maintenance'] = 'no';
-		$Current_Page['Logged_In'] = 'no';
-	}
+      $Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `ID` = ? LIMIT 1");
+      $Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['ID'] ]);
+    }
+    catch ( PDOException $e )
+    {
+      HandleError($e);
+    }
+  }
