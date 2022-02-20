@@ -63,7 +63,7 @@
               <b>{$User_Username}</b>
             </td>
             <td colspan='1'>
-              " . lastseen($User_Val['Last_Active'], 'week') . "
+              " . LastSeenDate($User_Val['Last_Active'], 'week') . "
             </td>
             <td colspan='1'>
               {$User_Val['Last_Page']}

@@ -64,7 +64,7 @@
                   <b>Last Online</b>
                 </td>
                 <td colspan='2'>
-                  <?= lastseen($Profile_User['Last_Active'], 'week'); ?>
+                  <?= LastSeenDate($Profile_User['Last_Active'], 'week'); ?>
                 </td>
               </tr>
               <tr>
