@@ -58,10 +58,10 @@
 	}
 
 
-	$Action = $Purify->Cleanse($_POST['Action']);
-	$Type = $Purify->Cleanse($_POST['Type']);
-	$Data = $Purify->Cleanse($_POST['Data']);
-	$User_ID = $Purify->Cleanse($_POST['ID']);
+	$Action = Purify($_POST['Action']);
+	$Type = Purify($_POST['Type']);
+	$Data = Purify($_POST['Data']);
+	$User_ID = Purify($_POST['ID']);
 
 	$User = $User_Class->FetchUserData($User_ID);
 

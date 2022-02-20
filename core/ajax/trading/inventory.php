@@ -15,7 +15,7 @@
     return;
   }
 
-	$User_ID = $Purify->Cleanse($_POST['id']);
+	$User_ID = Purify($_POST['id']);
 	$User = $User_Class->FetchUserData($User_ID);
 
 	try

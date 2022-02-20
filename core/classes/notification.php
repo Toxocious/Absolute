@@ -26,9 +26,9 @@
 			global $Purify;
 			global $User_Data;
 
-			$Sent_By = $Purify->Cleanse($Sent_By);
-			$Sent_To = $Purify->Cleanse($Sent_To);
-			$Message = $Purify->Cleanse($Message);
+			$Sent_By = Purify($Sent_By);
+			$Sent_To = Purify($Sent_To);
+			$Message = Purify($Message);
 
 			try
 			{
@@ -49,7 +49,7 @@
 			global $PDO;
 			global $Purify;
 
-			$User = $Purify->Cleanse($User_ID);
+			$User = Purify($User_ID);
 
 			/**
 			 * Fetch all unseen notifications so that they may be displayed.

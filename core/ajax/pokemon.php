@@ -2,7 +2,7 @@
 	require_once '../required/session.php';
 
 	if ( isset($_GET['id']) )
-		$Poke_ID = $Purify->Cleanse($_GET['id']);
+		$Poke_ID = Purify($_GET['id']);
 	else
 		$Poke_ID = 0;
 

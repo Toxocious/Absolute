@@ -29,7 +29,7 @@
 
 		if ( isset($_GET['clan_id']) )
 		{
-			$Clan_ID = $Purify->Cleanse($_GET['clan_id']);
+			$Clan_ID = Purify($_GET['clan_id']);
 			$Clan_Data = $Clan_Class->FetchClanData($Clan_ID);
 		}
 

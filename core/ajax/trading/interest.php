@@ -6,8 +6,8 @@
 	 */
 	if ( isset($_POST['Update']) )
 	{
-		$Poke_ID = $Purify->Cleanse($_POST['Update'][0]);
-		$Interest = $Purify->Cleanse($_POST['Update'][1]);
+		$Poke_ID = Purify($_POST['Update'][0]);
+		$Interest = Purify($_POST['Update'][1]);
 
 		switch($Interest)
 		{
@@ -61,8 +61,8 @@
 	 */
 	else if ( isset($_POST['Type']) )
 	{
-		$Page = isset($_POST['Page']) ? $Purify->Cleanse($_POST['Page']) : 1;
-		$Type = isset($_POST['Type']) ? $Purify->Cleanse($_POST['Type']) : 'Normal';
+		$Page = isset($_POST['Page']) ? Purify($_POST['Page']) : 1;
+		$Type = isset($_POST['Type']) ? Purify($_POST['Type']) : 'Normal';
 		$User_ID = $User_Data['ID'];
 
 		$Display_Limit = 50;

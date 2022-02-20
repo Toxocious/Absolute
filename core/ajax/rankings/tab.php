@@ -14,8 +14,8 @@
     return;
   }
 
-  $Tab = $Purify->Cleanse($_POST['Tab']);
-  $Current_Page = isset($_POST['Page']) ? $Purify->Cleanse($_POST['Page']) : 1;
+  $Tab = Purify($_POST['Tab']);
+  $Current_Page = isset($_POST['Page']) ? Purify($_POST['Page']) : 1;
   $Display_Limit = 20;
 
   $Begin = ($Current_Page - 1) * $Display_Limit;

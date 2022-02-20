@@ -6,8 +6,8 @@
 	 */
 	if ( isset($_POST['Trade_ID']) && isset($_POST['Action']) )
 	{
-		$Trade_ID = $Purify->Cleanse($_POST['Trade_ID']);
-		$Action = $Purify->Cleanse($_POST['Action']);
+		$Trade_ID = Purify($_POST['Trade_ID']);
+		$Action = Purify($_POST['Action']);
 
 		try
 		{

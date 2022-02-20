@@ -12,7 +12,7 @@
 		return;
 	}
 
-	$Trade_ID = $Purify->Cleanse($_POST['Trade_ID']);
+	$Trade_ID = Purify($_POST['Trade_ID']);
 
 	try
 	{

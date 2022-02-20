@@ -162,8 +162,8 @@
 		 */
 		if ( isset($_GET['Action']) && isset($_GET['ID']) )
 		{
-			$Action = $Purify->Cleanse($_GET['Action']);
-			$User_ID = $Purify->Cleanse($_GET['ID']);
+			$Action = Purify($_GET['Action']);
+			$User_ID = Purify($_GET['ID']);
 
 			if ( $Action == "Create" )
 			{

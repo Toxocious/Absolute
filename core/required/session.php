@@ -63,7 +63,7 @@
   require_once $Dir_Root . '/core/required/database.php';
   require_once $Dir_Root . '/core/functions/formulas.php';
   require_once $Dir_Root . '/core/functions/pagination.php';
-  require_once $Dir_Root . '/core/functions/main_functions.php';
+  require_once $Dir_Root . '/core/functions/purify.php';
   require_once $Dir_Root . '/core/functions/last_seen.php';
   require_once $Dir_Root . '/core/functions/is_between_dates.php';
   require_once $Dir_Root . '/core/functions/user_agent.php';
