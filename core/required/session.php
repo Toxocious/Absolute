@@ -1,24 +1,4 @@
 <?php
-	// Timer function.
-	function timer()
-	{
-		static $Timer_Start;
-
-		if ( is_null($Timer_Start) )
-		{
-			$Timer_Start = microtime(true);
-		}
-		else
-		{
-			$Difference = round((microtime(true) - $Timer_Start), 4);
-			$Timer_Start = null;
-
-			return $Difference;
-		}
-	}
-
-	timer();
-
   // Set the timezone that Absolute is based on.
 	date_default_timezone_set('America/Los_Angeles');
 	$Date = date("M dS, Y g:i:s A");
@@ -76,10 +56,11 @@
 	$Navigation = new Navigation();
 	require_once $Dir_Root . '/core/classes/notification.php';
 	$Notification = new Notification();
+  require_once $Dir_Root . '/core/classes/timer.php';
 	require_once $Dir_Root . '/core/classes/weighter.php';
 	require_once $Dir_Root . '/core/classes/direct_message.php';
 
-	// Require some files.
+	// Require necessary functions.
 	require_once $Dir_Root . '/core/required/domains.php';
 	require_once $Dir_Root . '/core/required/database.php';
 	require_once $Dir_Root . '/core/functions/formulas.php';
