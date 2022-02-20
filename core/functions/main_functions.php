@@ -60,30 +60,15 @@
 		$contractDateEnd = new DateTime($date2);
 
 		if
-			(
-				$paymentDate->getTimestamp() > $contractDateBegin->getTimestamp() &&
-				$paymentDate->getTimestamp() < $contractDateEnd->getTimestamp()
-			)
+    (
+      $paymentDate->getTimestamp() > $contractDateBegin->getTimestamp() &&
+      $paymentDate->getTimestamp() < $contractDateEnd->getTimestamp()
+    )
 		{
 			return true;
 		}
 
 		return false;
-	}
-
-	/**
-	 * Generate a randomly salted key.
-	 */
-	function RandSalt($Length)
-	{
-		$Characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
-		$Salt = '';
-		for ( $i = 0; $i < $Length; ++$i )
-		{
-			$Salt .= substr($Characters, mt_rand(0, strlen($Characters) - 1), 1);
-		}
-
-		return $Salt;
 	}
 
 	/**
