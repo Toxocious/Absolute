@@ -1,22 +1,10 @@
 <?php
   require_once 'core/required/layout_top.php';
-
-  try
-  {
-    $Fetch_Pokemon = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' ORDER BY `Slot` ASC LIMIT 6");
-    $Fetch_Pokemon->execute([$User_Data['ID']]);
-    $Fetch_Pokemon->setFetchMode(PDO::FETCH_ASSOC);
-    $Fetch_Roster = $Fetch_Pokemon->fetchAll();
-  }
-  catch ( PDOException $e )
-  {
-    HandleError($e);
-  }
 ?>
 
 <div class='panel content'>
   <div class='head'>Pok&eacute;mon Center</div>
-  <div class='body pokecenter'>
+  <div class='body'>
     <div class='nav'>
       <div>
         <a href='javascript:void(0);' onclick="showTab('roster');">
