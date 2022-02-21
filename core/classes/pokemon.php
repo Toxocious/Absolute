@@ -357,7 +357,7 @@
 
 			try
 			{
-				$Roster_Fetch = $PDO->prepare("SELECT * FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6 ORDER BY `Slot` ASC LIMIT 6");
+				$Roster_Fetch = $PDO->prepare("SELECT `ID` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6 ORDER BY `Slot` ASC LIMIT 6");
 				$Roster_Fetch->execute([ $User_Data['ID'] ]);
 				$Roster_Fetch->setFetchMode(PDO::FETCH_ASSOC);
 				$Roster = $Roster_Fetch->fetchAll();
@@ -369,8 +369,6 @@
 
 			if ( $Slot == 7 )
 			{
-				$Location = 'Box';
-
 				try
 				{
 					$Box_Move = $PDO->prepare("UPDATE `pokemon` SET `Location` = 'Box', `Slot` = 7 WHERE `ID` = ? LIMIT 1");
@@ -382,14 +380,12 @@
 				}
 
 				return [
-					'Message' => "You have moved your <b>{$Poke_Data['Display_Name']}</b> to your box.",
+					'Message' => "<b>{$Poke_Data['Display_Name']}</b> has been sent to your box.",
 					'Type' => 'success',
 				];
 			}
 			else
 			{
-				$Location = 'Roster';
-
 				if ( isset($Roster[$Slot - 1]) )
 				{
 					try
@@ -419,7 +415,7 @@
 				}
 
 				return [
-					'Message' => "You have moved your <b>{$Poke_Data['Display_Name']}</b> to your roster.",
+					'Message' => "<b>{$Poke_Data['Display_Name']}</b> has been added to your roster.",
 					'Type' => 'success',
 				];
 			}
