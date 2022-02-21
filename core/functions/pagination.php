@@ -11,7 +11,8 @@
     int $Current_Page,
     int $Display_Limit,
     int $Colspan = 3,
-    string $Onclick_Link = null
+    string $Onclick_Link = null,
+    bool $Return = false
   )
   {
     global $PDO;
@@ -246,16 +247,21 @@
       }
     }
 
-    /**
-     * Display the pages to the user.
-     */
-    echo "
+    $Pagination_HTML = "
       <tr data-current-page='{$Current_Page}' data-total-pages='{$Total_Pages}'>
         {$Links['Previous']}
         {$Links['Pages']}
         {$Links['Next']}
       </tr>
     ";
+
+    if ( $Return )
+      return $Pagination_HTML;
+
+    /**
+     * Display the pages to the user.
+     */
+    echo $Pagination_HTML;
   }
 
 

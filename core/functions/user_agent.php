@@ -1,5 +1,5 @@
 <?php
-function GetUserAgent()
+  function GetUserAgent()
   {
     $User_Agent = $_SERVER['HTTP_USER_AGENT'];
     $Browser = [ 'Unknown', 'Unknown' ];
