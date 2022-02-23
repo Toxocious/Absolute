@@ -95,10 +95,10 @@
       $Encounter_Pool = new Weighter();
       foreach ( $Possible_Encounters as $Encounter_Key => $Encounter )
       {
-        $Encounter_Pool->add($Encounter_Key, $Encounter['Weight']);
+        $Encounter_Pool->AddObject($Encounter_Key, $Encounter['Weight']);
       }
 
-      $Get_Random_Encounter = $Encounter_Pool->get();
+      $Get_Random_Encounter = $Encounter_Pool->GetObject();
       if ( $Get_Random_Encounter === false )
         return false;
 
