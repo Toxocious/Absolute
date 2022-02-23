@@ -5,7 +5,7 @@
   if ( !empty($_GET['Pokemon_Value']) )
     $Pokemon_Value = Purify($_GET['Pokemon_Value']);
 
-  $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_Value);
+  $Pokemon_Info = GetPokemonData($Pokemon_Value);
 
   if ( empty($Pokemon_Value) || !$Pokemon_Info )
   {

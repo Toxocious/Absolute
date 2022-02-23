@@ -16,7 +16,7 @@
 			if ( isset($_POST['Pokemon_ID']) )
 			{
 				$Pokemon_ID = Purify($_POST['Pokemon_ID']);
-				$Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
+				$Pokemon = GetPokemonData($Pokemon_ID);
 
 				if ( !$Pokemon )
 				{
@@ -71,7 +71,7 @@
 
 					while ( $Evolution = $Fetch_Evolutions->fetch() )
 					{
-						$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution['to_poke_id'], $Evolution['to_alt_id'], $Pokemon['Type']);
+						$Evolution_Data = GetPokedexData($Evolution['to_poke_id'], $Evolution['to_alt_id'], $Pokemon['Type']);
 
 						/**
 						 * Check to if the Pokemon meets all of the requirements needed to evolve.
@@ -299,7 +299,7 @@
 			$Evolution_ID = Purify($_POST['Evolution_ID']);
 			$Evolution_Alt_ID = Purify($_POST['Evolution_Alt_ID']);
 
-			$Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
+			$Pokemon = GetPokemonData($Pokemon_ID);
 
 			try
 			{
@@ -313,7 +313,7 @@
 				HandleError($e);
 			}
 
-			$Evolution_Data = $Poke_Class->FetchPokedexData($Evolution_ID, $Evolution_Alt_ID, $Pokemon['Type']);
+			$Evolution_Data = GetPokedexData($Evolution_ID, $Evolution_Alt_ID, $Pokemon['Type']);
 
 			$Time = (date('G') > 7 && date('G') < 19) ? 'day' : 'night';
 

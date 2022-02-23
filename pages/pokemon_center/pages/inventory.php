@@ -52,7 +52,7 @@
 				$Pokemon_ID = Purify($_POST['pokeid']);
 
 				$Item_Data = $Item_Class->FetchOwnedItem($User_Data['ID'], $Item_ID);
-				$Poke_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
+				$Poke_Data = GetPokemonData($Pokemon_ID);
 
 				if ( $Item_Data['Quantity'] < 1 )
 				{

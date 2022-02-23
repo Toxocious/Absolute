@@ -42,7 +42,7 @@
       break;
 
     case 'Move_Pokemon':
-      $Move_Pokemon = $Poke_Class->MovePokemon($Pokemon_ID, $Slot);
+      $Move_Pokemon = MovePokemon($Pokemon_ID, $Slot);
 
       echo json_encode([
         'Success' => $Move_Pokemon['Type'],

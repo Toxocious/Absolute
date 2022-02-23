@@ -141,7 +141,7 @@
 					$Sender_Pokemon = explode(',', $Sender_Content['Sender_Pokemon']);
 					foreach ( $Sender_Pokemon as $Key => $Pokemon )
 					{
-						$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon);
+						$Pokemon_Data = GetPokemonData($Pokemon);
 
 						echo "
 							<tr>
@@ -254,7 +254,7 @@
 					$Recipient_Pokemon = explode(',', $Recipient_Content['Recipient_Pokemon']);
 					foreach ( $Recipient_Pokemon as $Key => $Pokemon )
 					{
-						$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon);
+						$Pokemon_Data = GetPokemonData($Pokemon);
 
 						echo "
 							<tr>

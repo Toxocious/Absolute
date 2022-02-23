@@ -93,7 +93,7 @@
     {
       $Index++;
       $Total_Rendered++;
-      $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+      $Pokemon = GetPokemonData($Pokemon['ID']);
 
       echo "
         <td colspan='3' data-poke-id='{$Pokemon['ID']}'>

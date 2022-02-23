@@ -59,7 +59,7 @@
 					$Can_Afford = true;
 					$Price_String = '';
 
-					$Pokedex_Data = $Poke_Class->FetchPokedexData($Shop_Pokemon['Pokedex_ID'], $Shop_Pokemon['Alt_ID'], $Shop_Pokemon['Type']);
+					$Pokedex_Data = GetPokedexData($Shop_Pokemon['Pokedex_ID'], $Shop_Pokemon['Alt_ID'], $Shop_Pokemon['Type']);
 
 					$Price_Array = $Shop_Class->FetchPriceList($Shop_Pokemon['Prices']);
 					foreach ( $Price_Array[0] as $Currency => $Amount )

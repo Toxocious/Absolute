@@ -31,7 +31,7 @@
   {
     if ( !empty($Purchase['Pokemon_ID']) )
     {
-      $Pokemon_Data = $Poke_Class->FetchPokedexData($Purchase['Pokemon_Pokedex_ID'], $Purchase['Pokemon_Alt_ID'], $Purchase['Pokemon_Type']);
+      $Pokemon_Data = GetPokedexData($Purchase['Pokemon_Pokedex_ID'], $Purchase['Pokemon_Alt_ID'], $Purchase['Pokemon_Type']);
       $Purchase_Object_Text = "
         <td>
           <img src='{$Pokemon_Data['Icon']}' />

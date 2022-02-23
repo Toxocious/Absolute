@@ -90,8 +90,6 @@ async function UpdateMoveSlot(Pokemon_ID, Move_Slot)
   if ( !Changing_Move )
     return false;
 
-  Changing_Move = false;
-
   const Move_ID = document.getElementsByName(`${Pokemon_ID}_Move_${Move_Slot}`)[0].value;
 
   let Form_Data = new FormData();
@@ -108,6 +106,8 @@ async function UpdateMoveSlot(Pokemon_ID, Move_Slot)
       document.getElementById('Pokemon_Center_Moves_AJAX').innerHTML = Move_Data.Message;
 
       GetMoveTabRoster();
+
+      Changing_Move = false;
     })
     .catch((Error) => console.error('Error:', Error));
 }

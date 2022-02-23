@@ -4,7 +4,7 @@
    */
   function GetRosterJSON()
   {
-    global $PDO, $User_Data, $Poke_Class;
+    global $PDO, $User_Data;
 
     try
     {
@@ -28,12 +28,12 @@
 
     foreach ( $Roster_Pokemon as $Slot => $Pokemon )
     {
-      $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+      $Pokemon_Info = GetPokemonData($Pokemon['ID']);
       $Moves = [
-        '1' => $Poke_Class->FetchMoveData($Pokemon_Info['Move_1']),
-        '2' => $Poke_Class->FetchMoveData($Pokemon_Info['Move_2']),
-        '3' => $Poke_Class->FetchMoveData($Pokemon_Info['Move_3']),
-        '4' => $Poke_Class->FetchMoveData($Pokemon_Info['Move_4']),
+        '1' => GetMoveData($Pokemon_Info['Move_1']),
+        '2' => GetMoveData($Pokemon_Info['Move_2']),
+        '3' => GetMoveData($Pokemon_Info['Move_3']),
+        '4' => GetMoveData($Pokemon_Info['Move_4']),
       ];
 
       $Roster_Pokemon[$Slot]['Move_Data'] = $Moves;
@@ -113,7 +113,7 @@
     $Pokemon_ID
   )
   {
-    global $PDO, $Poke_Class, $User_Data;
+    global $PDO, $User_Data;
 
     if ( empty($Pokemon_ID) )
     {
@@ -149,7 +149,7 @@
       ];
     }
 
-    $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_Data['ID']);
+    $Pokemon_Info = GetPokemonData($Pokemon_Data['ID']);
     $Pokemon_Level = number_format(FetchLevel($Pokemon_Info['Experience_Raw'], 'Pokemon'));
 
     $Item_Icon = '';
@@ -169,7 +169,7 @@
     {
       if ( isset($User_Data['Roster'][$i]['ID'])  )
       {
-        $Roster_Slot[$i] = $Poke_Class->FetchPokemonData($User_Data['Roster'][$i]['ID']);
+        $Roster_Slot[$i] = GetPokemonData($User_Data['Roster'][$i]['ID']);
 
         $Roster_Slots .= "
           <div class='border-gradient hover' style='height: 32px; width: 42px;'>

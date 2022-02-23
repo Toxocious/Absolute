@@ -9,9 +9,9 @@
     $Pokemon_ID
   )
   {
-    global $Poke_Class, $User_Class;
+    global $User_Class;
 
-    $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    $Pokemon_Info = GetPokemonData($Pokemon_ID);
     $Current_Owner = $User_Class->DisplayUserName($Pokemon_Info['Owner_Current'], true, true, true);
 
     return "

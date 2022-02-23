@@ -6,7 +6,7 @@
 	else
 		$Poke_ID = 0;
 
-	$Pokemon = $Poke_Class->FetchPokemonData($Poke_ID);
+	$Pokemon = GetPokemonData($Poke_ID);
 
 	if ( !$Pokemon )
 	{
@@ -21,10 +21,10 @@
 	if ( !$Pokemon['Item'] )
 		$Pokemon['Item'] = "None";
 
-	$Move_1 = $Poke_Class->FetchMoveData($Pokemon['Move_1']);
-  $Move_2 = $Poke_Class->FetchMoveData($Pokemon['Move_2']);
-  $Move_3 = $Poke_Class->FetchMoveData($Pokemon['Move_3']);
-  $Move_4 = $Poke_Class->FetchMoveData($Pokemon['Move_4']);
+	$Move_1 = GetMoveData($Pokemon['Move_1']);
+  $Move_2 = GetMoveData($Pokemon['Move_2']);
+  $Move_3 = GetMoveData($Pokemon['Move_3']);
+  $Move_4 = GetMoveData($Pokemon['Move_4']);
 ?>
 
 <!DOCTYPE html>

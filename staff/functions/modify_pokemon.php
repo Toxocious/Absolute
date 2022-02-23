@@ -9,9 +9,7 @@
     $Pokemon_ID
   )
   {
-    global $Poke_Class;
-
-    $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    $Pokemon_Info = GetPokemonData($Pokemon_ID);
 
     $Frozen_Status = false;
     $Frozen_Text = '';
@@ -22,18 +20,18 @@
     }
 
     $Pokemon_Moves = [
-      '1' => $Poke_Class->FetchMoveData($Pokemon_Info['Move_1']),
-      '2' => $Poke_Class->FetchMoveData($Pokemon_Info['Move_2']),
-      '3' => $Poke_Class->FetchMoveData($Pokemon_Info['Move_3']),
-      '4' => $Poke_Class->FetchMoveData($Pokemon_Info['Move_4']),
+      '1' => GetMoveData($Pokemon_Info['Move_1']),
+      '2' => GetMoveData($Pokemon_Info['Move_2']),
+      '3' => GetMoveData($Pokemon_Info['Move_3']),
+      '4' => GetMoveData($Pokemon_Info['Move_4']),
     ];
 
-    $Nature_Keys = array_keys($Poke_Class->Natures());
+    $Nature_Keys = array_keys(Natures());
     $Nature_Options = '';
     foreach ( $Nature_Keys as $Nature )
       $Nature_Options .= "<option value='{$Nature}'>{$Nature}</option>";
 
-    $Abilities = $Poke_Class->FetchAbilities($Pokemon_Info['Pokedex_ID'], $Pokemon_Info['Alt_ID']);
+    $Abilities = GetAbilities($Pokemon_Info['Pokedex_ID'], $Pokemon_Info['Alt_ID']);
     $Ability_Options = '';
     foreach ( $Abilities as $Ability )
       if ( !empty($Ability) )
@@ -245,9 +243,9 @@
     $Move_ID
   )
   {
-    global $PDO, $Poke_Class, $User_Data;
+    global $PDO, $User_Data;
 
-    $Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    $Pokemon_Data = GetPokemonData($Pokemon_ID);
 
     $Current_Moves = [
       $Pokemon_Data['Move_1'],
@@ -316,9 +314,9 @@
     $Pokemon_Ability
   )
   {
-    global $PDO, $Poke_Class, $User_Data;
+    global $PDO, $User_Data;
 
-    $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    $Pokemon_Info = GetPokemonData($Pokemon_ID);
     if ( !$Pokemon_Info )
     {
       return [
@@ -453,9 +451,9 @@
     $Pokemon_ID
   )
   {
-    global $Poke_Class, $User_Data;
+    global $User_Data;
 
-    $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    $Pokemon_Info = GetPokemonData($Pokemon_ID);
     if ( !$Pokemon_Info )
     {
       return [
@@ -464,7 +462,7 @@
       ];
     }
 
-    $Release_Pokemon = $Poke_Class->ReleasePokemon($Pokemon_ID, $Pokemon_Info['Owner_Current'], true);
+    $Release_Pokemon = ReleasePokemon($Pokemon_ID, $Pokemon_Info['Owner_Current'], true);
 
     LogStaffAction('Release Pokemon', $User_Data['ID']);
 

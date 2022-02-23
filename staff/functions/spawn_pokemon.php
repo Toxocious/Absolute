@@ -68,25 +68,31 @@
     $Pokedex_ID
   )
   {
-    global $PDO, $Poke_Class;
-
-    $Pokemon_Info = $Poke_Class->FetchPokedexData(null, null, null, $Pokedex_ID);
+    global $PDO;
 
     try
     {
-      $Get_Move_Entries = $PDO->prepare("
-        SELECT *
-        FROM `moves`
-        ORDER BY `Name` ASC, `ID` ASC
+      $Get_Pokedex_Info = $PDO->prepare("
+        SELECT `Pokedex_ID`, `Alt_ID`
+        FROM `pokedex`
+        WHERE `ID` = ?
+        LIMIT 1
       ");
-      $Get_Move_Entries->execute([ ]);
-      $Get_Move_Entries->setFetchMode(PDO::FETCH_ASSOC);
-      $Move_Entries = $Get_Move_Entries->fetchAll();
+      $Get_Pokedex_Info->execute([
+        $Pokedex_ID
+      ]);
+      $Get_Pokedex_Info->setFetchMode(PDO::FETCH_ASSOC);
+      $Pokedex_Info = $Get_Pokedex_Info->fetch();
     }
     catch ( PDOException $e )
     {
       HandleError($e);
     }
+
+    if ( !$Pokedex_Info )
+      return 'This Pok&eacute;mon does not exist.';
+
+    $Pokemon_Info = GetPokedexData($Pokedex_Info['Pokedex_ID'], $Pokedex_Info['Alt_ID']);
 
     $Config_Options = [
       'Primary Data' => [
@@ -167,7 +173,7 @@
                 break;
 
               case 'Nature':
-                $Options = array_keys($Poke_Class->Natures());
+                $Options = array_keys(Natures());
                 break;
 
               case 'Gender':
@@ -175,7 +181,7 @@
                 break;
 
               case 'Ability':
-                $Options = $Poke_Class->FetchAbilities($Pokemon_Info['Pokedex_ID'], $Pokemon_Info['Alt_ID']);
+                $Options = GetAbilities($Pokemon_Info['Pokedex_ID'], $Pokemon_Info['Alt_ID']);
                 break;
             }
 
@@ -338,7 +344,7 @@
     $EV_Speed
   )
   {
-    global $Poke_Class, $User_Class, $User_Data;
+    global $PDO, $User_Class, $User_Data;
 
     $User_Info = $User_Class->FetchUserData($Recipient);
     if ( empty($Recipient) || !$User_Info )
@@ -347,6 +353,25 @@
         'Success' => false,
         'Message' => 'An invalid recipient has been chosen.',
       ];
+    }
+
+    try
+    {
+      $Get_Pokedex_Data = $PDO->prepare("
+        SELECT `Pokedex_ID`, `Alt_ID`
+        FROM `pokedex`
+        WHERE `ID` = ?
+        LIMIT 1
+      ");
+      $Get_Pokedex_Data->execute([
+        $Pokedex_ID
+      ]);
+      $Get_Pokedex_Data->setFetchMode(PDO::FETCH_ASSOC);
+      $Pokedex_Data = $Get_Pokedex_Data->fetch();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError($e);
     }
 
     if ( empty($Creation_Location) )
@@ -369,20 +394,17 @@
     $EV_Sp_Defense = $EV_Sp_Defense ?? 0;
     $EV_Speed = $EV_Speed ?? 0;
 
-    $Gender = $Poke_Class->GenerateGender($Pokedex_ID);
+    $Gender = GenerateGender($Pokedex_Data['Pokedex_ID'], $Pokedex_Data['Alt_ID']);
     $IVs = join(',', [$IV_HP, $IV_Attack, $IV_Defense, $IV_Sp_Attack, $IV_Sp_Defense, $IV_Speed]);
     $EVs = join(',', [$EV_HP, $EV_Attack, $EV_Defense, $EV_Sp_Attack, $EV_Sp_Defense, $EV_Speed]);
 
-    $Pokedex_Info = $Poke_Class->FetchPokedexData(null, null, null, $Pokedex_ID);
-    $Spawn_Pokemon = $Poke_Class->CreatePokemon(
-      $Pokedex_Info['Pokedex_ID'],
-      $Pokedex_Info['Alt_ID'],
+    $Spawn_Pokemon = CreatePokemon(
+      $Pokedex_Data['Pokedex_ID'],
+      $Pokedex_Data['Alt_ID'],
       $Level,
       $Type,
       $Gender,
       $Creation_Location,
-      'Box',
-      7,
       $User_Info['ID'],
       $Nature,
       $IVs,

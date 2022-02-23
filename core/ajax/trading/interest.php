@@ -26,7 +26,7 @@
 		}
 
 		$Poke_ID = substr($Poke_ID, 3, -1);
-		$Poke_Data = $Poke_Class->FetchPokemonData($Poke_ID);
+		$Poke_Data = GetPokemonData($Poke_ID);
 
 		if ( $Poke_Data )
 		{
@@ -107,7 +107,7 @@
 		$Pokemon_Count = 0;
 		foreach( $Poke_List as $Key => $Value )
 		{
-			$Poke_Data = $Poke_Class->FetchPokemonData($Value['ID']);
+			$Poke_Data = GetPokemonData($Value['ID']);
 
       if ( $Pokemon_Count % 2 == 0 )
       {

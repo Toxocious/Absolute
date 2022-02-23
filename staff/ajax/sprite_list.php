@@ -111,10 +111,10 @@
 
       foreach ( $Pokedex as $Index => $Poke_Data )
       {
-        $Pokemon = $Poke_Class->FetchPokedexData($Poke_Data['Pokedex_ID'], $Poke_Data['Alt_ID']);
+        $Pokemon = GetPokedexData($Poke_Data['Pokedex_ID'], $Poke_Data['Alt_ID']);
 
-        $Normal_Sprites = $Poke_Class->FetchImages($Poke_Data['Pokedex_ID'], $Poke_Data['Alt_ID']);
-        $Shiny_Sprites = $Poke_Class->FetchImages($Poke_Data['Pokedex_ID'], $Poke_Data['Alt_ID'], 'Shiny');
+        $Normal_Sprites = GetSprites($Poke_Data['Pokedex_ID'], $Poke_Data['Alt_ID']);
+        $Shiny_Sprites = GetSprites($Poke_Data['Pokedex_ID'], $Poke_Data['Alt_ID'], 'Shiny');
 
         $Sprite_Dialogue .= "
           <tr>

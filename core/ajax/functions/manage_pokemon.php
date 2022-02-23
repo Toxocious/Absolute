@@ -24,8 +24,8 @@
 		{
 			$Slot = Purify($_POST['Slot']);
 			$Poke_ID = Purify($_POST['PokeID']);
-			$Pokemon_Data = $Poke_Class->FetchPokemonData($Poke_ID);
-			$Pokemon_Move = $Poke_Class->MovePokemon($Pokemon_Data['ID'], $Slot);
+			$Pokemon_Data = GetPokemonData($Poke_ID);
+			$Pokemon_Move = MovePokemon($Pokemon_Data['ID'], $Slot);
 
 			try
 			{
@@ -67,7 +67,7 @@
 			{
 				if ( isset($Roster_Pokemon[$Slot]) )
 				{
-					$Pokemon = $Poke_Class->FetchPokemonData($Roster_Pokemon[$Slot]['ID']);
+					$Pokemon = GetPokemonData($Roster_Pokemon[$Slot]['ID']);
 
 					$Sprites .= "
 						<td colspan='3'>
@@ -230,7 +230,7 @@
 
         foreach ( $Box_Pokemon as $Index => $Pokemon )
         {
-          $Pokemon = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+          $Pokemon = GetPokemonData($Pokemon['ID']);
           echo "<img class='spricon' src='{$Pokemon['Icon']}' onclick='displayPokeData({$Pokemon['ID']});'/>";
         }
 
@@ -267,7 +267,7 @@
 				{
 					if ( isset($Roster[$i]['ID']) )
 					{
-						$Roster_Slot[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
+						$Roster_Slot[$i] = GetPokemonData($Roster[$i]['ID']);
 
 						if ( $Roster_Slot[$i]['Item'] != null )
 						{
@@ -367,7 +367,7 @@
 					{
 						if ( isset($Roster[$i]['ID']) )
 						{
-							$RosterPoke[$i] = $Poke_Class->FetchPokemonData($Roster[$i]['ID']);
+							$RosterPoke[$i] = GetPokemonData($Roster[$i]['ID']);
 						}
 						else
 						{

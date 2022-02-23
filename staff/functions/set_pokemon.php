@@ -9,7 +9,7 @@
     $Database_Table
   )
   {
-    global $PDO, $Poke_Class;
+    global $PDO;
 
     switch ( $Database_Table )
     {
@@ -121,7 +121,7 @@
         foreach ( $Obtainable_Pokemon as $Pokemon )
         {
           $Pokemon_Type = $Pokemon['Type'] ?? 'Normal';
-          $Pokemon_Icon = $Poke_Class->FetchImages($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon_Type);
+          $Pokemon_Icon = GetSprites($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon_Type);
           $Obtainable_Pokemon_Table_Row_Text .= "<img src='{$Pokemon_Icon['Icon']}' pokedex_id='{$Pokemon['Pokedex_ID']}' alt_id='{$Pokemon['Alt_ID']}' type='{$Pokemon_Type}' />";
         }
 
@@ -187,7 +187,7 @@
     $Obtainable_Location
   )
   {
-    global $PDO, $Poke_Class;
+    global $PDO;
 
     try
     {
@@ -272,7 +272,7 @@
       foreach ( $Area_Pokemon as $Pokemon )
       {
         $Pokemon_Type = $Pokemon['Type'] ?? 'Normal';
-        $Pokedex_Data = $Poke_Class->FetchPokedexData($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon_Type);
+        $Pokedex_Data = GetPokedexData($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon_Type);
 
         $Global_Encounter_Text = '';
         if ( empty($Pokemon['Zone']) )
@@ -337,7 +337,7 @@
     $Obtainable_Location
   )
   {
-    global $PDO, $Poke_Class;
+    global $PDO;
 
     try
     {
@@ -388,7 +388,7 @@
     foreach ( $Shop_Pokemon as $Pokemon )
     {
       $Pokemon_Type = $Pokemon['Type'] ?? 'Normal';
-      $Pokedex_Data = $Poke_Class->FetchPokedexData($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon_Type);
+      $Pokedex_Data = GetPokedexData($Pokemon['Pokedex_ID'], $Pokemon['Alt_ID'], $Pokemon_Type);
 
       $Price_List = json_decode($Pokemon['Prices'], true);
 
@@ -449,7 +449,7 @@
     $Obtainable_Pokemon_Database_ID
   )
   {
-    global $PDO, $Poke_Class;
+    global $PDO;
 
     switch ( $Database_Table )
     {
@@ -493,7 +493,7 @@
       ";
     }
 
-    $Pokedex_Info = $Poke_Class->FetchPokedexData($Pokemon_Entry['Pokedex_ID'], $Pokemon_Entry['Alt_ID'], $Pokemon_Entry['Type'] ?? 'Normal');
+    $Pokedex_Info = GetPokedexData($Pokemon_Entry['Pokedex_ID'], $Pokemon_Entry['Alt_ID'], $Pokemon_Entry['Type'] ?? 'Normal');
 
     switch ( $Database_Table )
     {
@@ -766,9 +766,36 @@
     $Abso_Coins_Cost
   )
   {
-    global $PDO, $Poke_Class, $User_Data;
+    global $PDO, $User_Data;
 
-    $Pokedex_Info = $Poke_Class->FetchPokedexData(null, null, null, $Pokemon_Dex_ID);
+    try
+    {
+      $Get_Pokedex_Info = $PDO->prepare("
+        SELECT `Pokedex_ID`, `Alt_ID`
+        FROM `pokedex`
+        WHERE `ID` = ?
+        LIMIT 1
+      ");
+      $Get_Pokedex_Info->execute([
+        $Obtainable_Pokemon_Database_ID
+      ]);
+      $Get_Pokedex_Info->setFetchMode(PDO::FETCH_ASSOC);
+      $Pokedex_Info = $Get_Pokedex_Info->fetch();
+    }
+    catch ( PDOException $e )
+    {
+      HandleError($e);
+    }
+
+    if ( !$Pokedex_Info )
+    {
+      return [
+        'Success' => false,
+        'Message' => 'This Pok&eacute;mon does not exist.',
+        'Finalized_Edit_Table' => ShowPokemonEditTable($Database_Table, $Obtainable_Pokemon_Database_ID),
+      ];
+    }
+
     $Pokemon_Active = $Pokemon_Active == 'Yes' ? 1 : 0;
 
     switch ( $Database_Table )

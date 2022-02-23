@@ -17,8 +17,6 @@
       string $Encounter_Zone
     )
     {
-      global $Poke_Class;
-
       $Shiny_Chance = 4192 - $Player_Map_Level;
       if ( $Shiny_Chance < 2096 )
         $Shiny_Chance = 2096;
@@ -31,7 +29,7 @@
       if ( mt_rand(1, $Shiny_Chance) === 1 )
         $Encounter_Type = 'Shiny';
 
-      $Pokedex_Data = $Poke_Class->FetchPokedexData($Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID'], $Encounter_Type);
+      $Pokedex_Data = GetPokedexData($Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID'], $Encounter_Type);
 
       $Page_Alert = null;
       if ( in_array($Encounter_Type, self::ALERT_POKEMON_TYPES) )
@@ -51,7 +49,7 @@
         'Pokedex_Data' => $Pokedex_Data,
         'Level' => mt_rand($Generated_Encounter['Min_Level'], $Generated_Encounter['Max_Level']),
         'Map_Exp_Yield' => mt_rand($Generated_Encounter['Min_Exp_Yield'], $Generated_Encounter['Max_Exp_Yield']),
-        'Gender' => $Poke_Class->GenerateGender(null, $Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID']),
+        'Gender' => GenerateGender($Generated_Encounter['Pokedex_ID'], $Generated_Encounter['Alt_ID']),
         'Type' => $Encounter_Type,
         'Obtained_Text' => $Generated_Encounter['Obtained_Text'],
         'Generated_On' => time()
@@ -110,7 +108,7 @@
      */
     public static function Catch()
     {
-      global $Poke_Class, $User_Data;
+      global $User_Data;
 
       if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
         return false;
@@ -127,16 +125,13 @@
       User::UpdateStat($User_Data['ID'], 'Map_Exp_Earned', $_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
       User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Caught', 1);
 
-      $Generate_Gender = $Poke_Class->GenerateGender($Encounter_Data['Pokedex_Data']['Pokedex_ID'], $Encounter_Data['Pokedex_Data']['Alt_ID']);
-      $Spawn_Pokemon = $Poke_Class->CreatePokemon(
+      $Spawn_Pokemon = CreatePokemon(
         $Encounter_Data['Pokedex_Data']['Pokedex_ID'],
         $Encounter_Data['Pokedex_Data']['Alt_ID'],
         $Encounter_Data['Level'],
         $Encounter_Data['Type'],
-        $Generate_Gender,
+        $Encounter_Data['Gender'],
         $Encounter_Data['Obtained_Text'],
-        null,
-        null,
         $User_Data['ID']
       );
 

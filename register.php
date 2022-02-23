@@ -133,11 +133,11 @@
           $Created_User_ID
         ]);
 
-        $Starter_Gender = $Poke_Class->GenerateGender(null, $Selected_Starter, 0);
+        $Starter_Gender = GenerateGender($Selected_Starter);
         $IVs = mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31);
-        $Nature_Keys = array_keys($Poke_Class->Natures());
+        $Nature_Keys = array_keys(Natures());
         $Nature = $Nature_Keys[mt_rand(0, count($Nature_Keys) - 1)];
-        $Starter_Data = $Poke_Class->FetchPokedexData($Selected_Starter);
+        $Starter_Data = GetPokedexData($Selected_Starter);
 
         $Create_Starter = $PDO->prepare("
           INSERT INTO `pokemon` (

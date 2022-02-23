@@ -89,7 +89,7 @@
 		 */
 		if ( $Type == 'Pokemon' )
 		{
-			$Pokemon = $Poke_Class->FetchPokemonData($Data);
+			$Pokemon = GetPokemonData($Data);
 
 			if ( isset($_SESSION['Absolute']['Trade'][$Side]['Pokemon']) )
 			{
@@ -364,7 +364,7 @@
 				{
 					if ( $Pokemon['ID'] == $Data )
 					{
-						$Poke_Data = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+						$Poke_Data = GetPokemonData($Pokemon['ID']);
 
 						array_splice(
 							$_SESSION['Absolute']['Trade'][$Side]['Pokemon'],
@@ -512,7 +512,7 @@
 	{
 		foreach ( $_SESSION['Absolute']['Trade'][$Side]['Pokemon'] as $Key => $Pokemon )
 		{
-			$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+			$Pokemon_Data = GetPokemonData($Pokemon['ID']);
 
 			echo "
 				<tr>

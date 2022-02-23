@@ -64,7 +64,7 @@
     $Pokedex_ID
   )
   {
-    global $PDO, $Poke_Class;
+    global $PDO;
 
     try
     {
@@ -88,7 +88,7 @@
     else
       $Display_Name = $Pokedex_Entry_Data['Pokemon'];
 
-    $Pokemon_Sprite = $Poke_Class->FetchImages($Pokedex_Entry_Data['Pokedex_ID'], $Pokedex_Entry_Data['Alt_ID']);
+    $Pokemon_Sprite = GetSprites($Pokedex_Entry_Data['Pokedex_ID'], $Pokedex_Entry_Data['Alt_ID']);
 
     $Config_Options = [
       'Pok&eacute;mon Species' => [

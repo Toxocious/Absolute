@@ -103,7 +103,7 @@
             {
               foreach ( $User_Data['Roster'] as $Roster_Pokemon )
               {
-                $Roster_Pokemon = $Poke_Class->FetchPokemonData($Roster_Pokemon['ID']);
+                $Roster_Pokemon = GetPokemonData($Roster_Pokemon['ID']);
 
                 echo "
                   <div class='slot popup border-gradient hover' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Pokemon['ID']}'>

@@ -166,7 +166,7 @@
       string $Object_Type
     )
     {
-      global $PDO, $User_Class, $User_Data, $Poke_Class, $Item_Class;
+      global $PDO, $User_Class, $User_Data, $Item_Class;
 
       if ( !$Object_ID || !$Object_Type )
         return false;
@@ -246,17 +246,15 @@
           $Object['Gender'] = '(?)';
         }
         else
-          $Object['Gender'] = $Poke_Class->GenerateGender($Object['Pokedex_ID'], $Object['Alt_ID']);
+          $Object['Gender'] = GenerateGender($Object['Pokedex_ID'], $Object['Alt_ID']);
 
-        $Spawn_Pokemon = $Poke_Class->CreatePokemon(
+        $Spawn_Pokemon = CreatePokemon(
           $Object['Pokedex_ID'],
           $Object['Alt_ID'],
           5,
           $Object['Type'],
           $Object['Gender'],
           $Shop_Data['Name'],
-          null,
-          null,
           $User_Data['ID']
         );
 

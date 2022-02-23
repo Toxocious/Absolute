@@ -83,9 +83,7 @@
      */
     public function SetupPokemon()
     {
-      global $Poke_Class;
-
-      $Pokemon = $Poke_Class->FetchPokemonData($this->Pokemon_ID);
+      $Pokemon = GetPokemonData($this->Pokemon_ID);
       if ( !$Pokemon )
         return false;
 
@@ -176,15 +174,13 @@
       $Gender
     )
     {
-      global $PDO, $Poke_Class;
-
-      $Pokedex_Data = $Poke_Class->FetchPokedexData($Pokedex_ID, $Alt_ID, $Type);
+      $Pokedex_Data = GetPokedexData($Pokedex_ID, $Alt_ID, $Type);
       if ( empty($Pokedex_Data) )
         return false;
 
-      $Pokemon_Ability = $Poke_Class->GenerateAbility($Pokedex_ID, $Alt_ID);
+      $Pokemon_Ability = GenerateAbility($Pokedex_ID, $Alt_ID);
       $Pokemon_Exp = FetchExperience($Level, 'Pokemon');
-      $Nature = $Poke_Class->GenerateNature();
+      $Nature = GenerateNature();
       $IVs = $this->GenerateIVs();
       $EVs = $this->GenerateEVs();
 
@@ -218,23 +214,23 @@
       $this->Height = $Pokedex_Data['Height'];
       $this->Weight = $Pokedex_Data['Weight'];
       $this->Weight_Original = $Pokedex_Data['Weight'];
-      $this->HP = $Poke_Class->CalcStat('HP', $Pokedex_Data['Base_Stats'][0], $Level, $IVs[0], $EVs[0], $Nature);
-      $this->Max_HP = $Poke_Class->CalcStat('HP', $Pokedex_Data['Base_Stats'][0], $Level, $IVs[0], $EVs[0], $Nature);
+      $this->HP = CalculateStat('HP', $Pokedex_Data['Base_Stats'][0], $Level, $IVs[0], $EVs[0], $Nature);
+      $this->Max_HP = CalculateStat('HP', $Pokedex_Data['Base_Stats'][0], $Level, $IVs[0], $EVs[0], $Nature);
       $this->Stats = [
-        'Attack' => new Stat('Attack', $Poke_Class->CalcStat('Attack', $Pokedex_Data['Base_Stats'][1], $Level, $IVs[1], $EVs[1], $Nature)),
-        'Defense' => new Stat('Defense', $Poke_Class->CalcStat('Defense', $Pokedex_Data['Base_Stats'][2], $Level, $IVs[2], $EVs[2], $Nature)),
-        'Sp_Attack' => new Stat('Sp_Attack', $Poke_Class->CalcStat('Sp_Attack', $Pokedex_Data['Base_Stats'][3], $Level, $IVs[3], $EVs[3], $Nature)),
-        'Sp_Defense' => new Stat('Sp_Defense', $Poke_Class->CalcStat('Sp_Defense', $Pokedex_Data['Base_Stats'][4], $Level, $IVs[4], $EVs[4], $Nature)),
-        'Speed' => new Stat('Speed', $Poke_Class->CalcStat('Speed', $Pokedex_Data['Base_Stats'][5], $Level, $IVs[5], $EVs[5], $Nature)),
+        'Attack' => new Stat('Attack', CalculateStat('Attack', $Pokedex_Data['Base_Stats'][1], $Level, $IVs[1], $EVs[1], $Nature)),
+        'Defense' => new Stat('Defense', CalculateStat('Defense', $Pokedex_Data['Base_Stats'][2], $Level, $IVs[2], $EVs[2], $Nature)),
+        'Sp_Attack' => new Stat('Sp_Attack', CalculateStat('Sp_Attack', $Pokedex_Data['Base_Stats'][3], $Level, $IVs[3], $EVs[3], $Nature)),
+        'Sp_Defense' => new Stat('Sp_Defense', CalculateStat('Sp_Defense', $Pokedex_Data['Base_Stats'][4], $Level, $IVs[4], $EVs[4], $Nature)),
+        'Speed' => new Stat('Speed', CalculateStat('Speed', $Pokedex_Data['Base_Stats'][5], $Level, $IVs[5], $EVs[5], $Nature)),
         'Accuracy' => new Stat('Accuracy', 100),
         'Evasion' => new Stat('Evasion', 100),
       ];
       $this->Stats_Original = [
-        'Attack' => new Stat('Attack', $Poke_Class->CalcStat('Attack', $Pokedex_Data['Base_Stats'][1], $Level, $IVs[1], $EVs[1], $Nature)),
-        'Defense' => new Stat('Defense', $Poke_Class->CalcStat('Defense', $Pokedex_Data['Base_Stats'][2], $Level, $IVs[2], $EVs[2], $Nature)),
-        'Sp_Attack' => new Stat('Sp_Attack', $Poke_Class->CalcStat('Sp_Attack', $Pokedex_Data['Base_Stats'][3], $Level, $IVs[3], $EVs[3], $Nature)),
-        'Sp_Defense' => new Stat('Sp_Defense', $Poke_Class->CalcStat('Sp_Defense', $Pokedex_Data['Base_Stats'][4], $Level, $IVs[4], $EVs[4], $Nature)),
-        'Speed' => new Stat('Speed', $Poke_Class->CalcStat('Speed', $Pokedex_Data['Base_Stats'][5], $Level, $IVs[5], $EVs[5], $Nature)),
+        'Attack' => new Stat('Attack', CalculateStat('Attack', $Pokedex_Data['Base_Stats'][1], $Level, $IVs[1], $EVs[1], $Nature)),
+        'Defense' => new Stat('Defense', CalculateStat('Defense', $Pokedex_Data['Base_Stats'][2], $Level, $IVs[2], $EVs[2], $Nature)),
+        'Sp_Attack' => new Stat('Sp_Attack', CalculateStat('Sp_Attack', $Pokedex_Data['Base_Stats'][3], $Level, $IVs[3], $EVs[3], $Nature)),
+        'Sp_Defense' => new Stat('Sp_Defense', CalculateStat('Sp_Defense', $Pokedex_Data['Base_Stats'][4], $Level, $IVs[4], $EVs[4], $Nature)),
+        'Speed' => new Stat('Speed', CalculateStat('Speed', $Pokedex_Data['Base_Stats'][5], $Level, $IVs[5], $EVs[5], $Nature)),
         'Accuracy' => new Stat('Accuracy', 100),
         'Evasion' => new Stat('Evasion', 100),
       ];
@@ -1589,9 +1585,7 @@
      */
     public function ResetStats()
     {
-      global $Poke_Class;
-
-      $Fetch_Stats = $Poke_Class->FetchCurrentStats($this->Pokemon_ID, $this->Pokedex_ID, $this->Alt_ID);
+      $Fetch_Stats = GetCurrentStats($this->Pokemon_ID, $this->Pokedex_ID, $this->Alt_ID);
       if ( !$Fetch_Stats )
         return false;
 

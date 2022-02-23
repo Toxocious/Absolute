@@ -143,6 +143,6 @@ async function MovePokemon(Pokemon_ID, Slot)
 
       GetRoster();
       GetBoxedPokemon();
-    })
-    .catch((Error) => console.error('Error:', Error));
+    });
+    //.catch((Error) => console.error('Error:', Error));
 }

@@ -11,9 +11,9 @@
     $Nickname
   )
   {
-    global $PDO, $Poke_Class, $User_Data;
+    global $PDO, $User_Data;
 
-    $Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    $Pokemon = GetPokemonData($Pokemon_ID);
 
     if ( $Pokemon['Owner_Current'] != $User_Data['ID'] )
     {

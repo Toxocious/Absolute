@@ -4,7 +4,7 @@
    */
   function GetReleasablePokemon()
   {
-    global $PDO, $Poke_Class, $User_Data;
+    global $PDO, $User_Data;
 
     try
     {
@@ -28,7 +28,7 @@
     {
       foreach ( $Releasable_Pokemon as $Index => $Pokemon )
       {
-        $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+        $Pokemon_Info = GetPokemonData($Pokemon['ID']);
 
         $Releasable_Pokemon[$Index] = [
           'ID' => $Pokemon_Info['ID'],
@@ -55,7 +55,7 @@
     $Selected_Pokemon
   )
   {
-    global $PDO, $Poke_Class, $User_Data;
+    global $PDO, $User_Data;
 
     if ( empty($Selected_Pokemon) )
     {
@@ -94,7 +94,7 @@
       if ( empty($Pokemon_Ownership) )
         continue;
 
-      $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon);
+      $Pokemon_Info = GetPokemonData($Pokemon);
 
       $_SESSION['Absolute']['Release']['Releasable_Pokemon'][] = [
         'ID' => $Pokemon,
@@ -114,11 +114,11 @@
    */
   function FinalizeRelease()
   {
-    global $Poke_Class, $User_Data;
+    global $User_Data;
 
     foreach ( $_SESSION['Absolute']['Release']['Releasable_Pokemon'] as $Pokemon )
     {
-      $Poke_Class->ReleasePokemon($Pokemon['ID'], $User_Data['ID']);
+      ReleasePokemon($Pokemon['ID'], $User_Data['ID']);
     }
 
     return [

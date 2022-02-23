@@ -85,7 +85,7 @@
       $Pokemon_Count = 0;
       foreach ( $Box_Pokemon as $Index => $Pokemon )
       {
-        $Poke_Data = $Poke_Class->FetchPokemonData($Pokemon['ID']);
+        $Poke_Data = GetPokemonData($Pokemon['ID']);
 
         if ( $Pokemon_Count % 2 == 0 )
           echo "</tr><tr>";

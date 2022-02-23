@@ -39,7 +39,7 @@
    */
   function GetEquippedItems()
   {
-    global $PDO, $User_Data, $Poke_Class, $Item_Class;
+    global $PDO, $User_Data, $Item_Class;
 
     try
     {
@@ -63,7 +63,7 @@
     {
       foreach ( $Equipped_Items as $Index => $Equipped_Item )
       {
-        $Equipped_Pokemon = $Poke_Class->FetchPokemonData($Equipped_Item['ID']);
+        $Equipped_Pokemon = GetPokemonData($Equipped_Item['ID']);
 			  $Equipped_Item = $Item_Class->FetchItemData($Equipped_Item['Item']);
 
         $Equipped_Items[$Index] = [
@@ -94,7 +94,7 @@
     $Item_ID
   )
   {
-    global $Item_Class, $Poke_Class, $User_Data;
+    global $Item_Class, $User_Data;
 
     $Item_Data = $Item_Class->FetchItemData($Item_ID);
 
@@ -105,7 +105,7 @@
       {
         if ( isset($User_Data['Roster'][$i]['ID']) )
         {
-          $Pokemon = $Poke_Class->FetchPokemonData($User_Data['Roster'][$i]['ID']);
+          $Pokemon = GetPokemonData($User_Data['Roster'][$i]['ID']);
 
           if ( !$Pokemon['Item'] )
           {
@@ -180,10 +180,10 @@
     $Pokemon_ID
   )
   {
-    global $Item_Class, $Poke_Class, $User_Data;
+    global $Item_Class, $User_Data;
 
     $Item_Data = $Item_Class->FetchOwnedItem($User_Data['ID'], $Item_ID);
-    $Poke_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    $Poke_Data = GetPokemonData($Pokemon_ID);
 
     if ( $Item_Data['Quantity'] < 1 )
     {
@@ -227,9 +227,9 @@
     $Pokemon_ID
   )
   {
-    global $Item_Class, $Poke_Class, $User_Data;
+    global $Item_Class, $User_Data;
 
-    $Pokemon_Info = $Poke_Class->FetchPokemonData($Pokemon_ID);
+    $Pokemon_Info = GetPokemonData($Pokemon_ID);
     if ( !$Pokemon_Info || $Pokemon_Info['Owner_Current'] != $User_Data['ID'] )
     {
       return [

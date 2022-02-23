@@ -29,7 +29,7 @@
   $Map_Catch_Text = '';
   foreach ( $Map_Catches as $Caught )
   {
-    $Pokemon_Data = $Poke_Class->FetchPokedexData($Caught['Pokemon_Pokedex_ID'], $Caught['Pokemon_Alt_ID'], $Caught['Pokemon_Type']);
+    $Pokemon_Data = GetPokedexData($Caught['Pokemon_Pokedex_ID'], $Caught['Pokemon_Alt_ID'], $Caught['Pokemon_Type']);
     $Caught_Pokemon_Text = "
       <td>
         <img src='{$Pokemon_Data['Icon']}' />

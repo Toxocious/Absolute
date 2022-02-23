@@ -7,7 +7,7 @@
     {
       if ( isset($User_Data['Roster'][$i]['ID']) )
       {
-        $Roster_Slot[$i] = $Poke_Class->FetchPokemonData($User_Data['Roster'][$i]['ID']);
+        $Roster_Slot[$i] = GetPokemonData($User_Data['Roster'][$i]['ID']);
 
         echo "
           <td style='width: calc(100% / 6);' onclick='Display_Evos({$Roster_Slot[$i]['ID']});'>

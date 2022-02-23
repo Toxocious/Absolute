@@ -94,11 +94,11 @@
 			if ( !isset($Item_ID) || !isset($Pokemon_ID) )
 				return false;
 
-			global $PDO, $Poke_Class, $User_Class;
+			global $PDO, $User_Class;
 
 			$Item_Data = $this->FetchOwnedItem($Owner_ID, $Item_ID);
 			$Owner_Data = $User_Class->FetchUserData($Owner_ID);
-			$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_ID);
+			$Pokemon_Data = GetPokemonData($Pokemon_ID);
 
 			if ( $Item_Data['Quantity'] < 1 )
 				return false;
@@ -133,12 +133,11 @@
 		public function Unequip($Poke_ID, $User_ID)
 		{
 			global $PDO;
-			global $Poke_Class;
 
 			$Owner_ID = Purify($User_ID);
 			$Pokemon_ID = Purify($Poke_ID);
 
-			$Pokemon = $Poke_Class->FetchPokemonData($Pokemon_ID);
+			$Pokemon = GetPokemonData($Pokemon_ID);
 			$Item_Data = $this->FetchOwnedItem($Owner_ID, $Pokemon['Item_ID']);
 
 			if ( !$Pokemon )

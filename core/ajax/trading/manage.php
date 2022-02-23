@@ -46,7 +46,7 @@
 				$Sender_Pokemon = explode(',', $Trade_Content[0]['Sender_Pokemon']);
 				foreach( $Sender_Pokemon as $Key => $Pokemon_1 )
 				{
-					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_1);
+					$Pokemon_Data = GetPokemonData($Pokemon_1);
 
 					try
 					{
@@ -106,7 +106,7 @@
 				$Recipient_Pokemon = explode(',', $Trade_Content[0]['Recipient_Pokemon']);
 				foreach( $Recipient_Pokemon as $Key => $Pokemon_2 )
 				{
-					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_2);
+					$Pokemon_Data = GetPokemonData($Pokemon_2);
 
 					try
 					{
@@ -172,7 +172,7 @@
 				$Sender_Pokemon = explode(',', $Trade_Content[0]['Sender_Pokemon']);
 				foreach( $Sender_Pokemon as $Key => $Pokemon_1 )
 				{
-					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_1);
+					$Pokemon_Data = GetPokemonData($Pokemon_1);
 
 					try
 					{
@@ -194,7 +194,7 @@
 				$Recipient_Pokemon = explode(',', $Trade_Content[0]['Recipient_Pokemon']);
 				foreach( $Recipient_Pokemon as $Key => $Pokemon_2 )
 				{
-					$Pokemon_Data = $Poke_Class->FetchPokemonData($Pokemon_2);
+					$Pokemon_Data = GetPokemonData($Pokemon_2);
 
 					try
 					{

@@ -76,7 +76,7 @@
   switch($Tab)
   {
     case 'Pokemon':
-      $First_Place = $Poke_Class->FetchPokemonData($First_Place['ID']);
+      $First_Place = GetPokemonData($First_Place['ID']);
       $First_Place_User = $User_Class->DisplayUserName($First_Place['Owner_Current'], false, true, true);
       break;
 
@@ -86,7 +86,7 @@
       break;
 
     default:
-      $First_Place = $Poke_Class->FetchPokemonData($First_Place['ID']);
+      $First_Place = GetPokemonData($First_Place['ID']);
       $First_Place_User = $User_Class->DisplayUserName($First_Place['Owner_Current'], false, true, true);
       break;
   }
@@ -168,7 +168,7 @@
 
         if ( $Tab === 'Pokemon' )
         {
-          $Poke_Rank_Data = $Poke_Class->FetchPokemonData($Rank_Val['ID']);
+          $Poke_Rank_Data = GetPokemonData($Rank_Val['ID']);
           $Username = $User_Class->DisplayUserName($Poke_Rank_Data['Owner_Current'], false, false, true);
         }
         else

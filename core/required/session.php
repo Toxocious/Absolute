@@ -36,8 +36,6 @@
    */
   require_once $Dir_Root . '/core/classes/constants.php';
   $Constants = new Constants();
-  require_once $Dir_Root . '/core/classes/pokemon.php';
-  $Poke_Class = new Pokemon();
   require_once $Dir_Root . '/core/classes/user.php';
   $User_Class = new User();
   require_once $Dir_Root . '/core/classes/clan.php';
@@ -65,6 +63,8 @@
   require_once $Dir_Root . '/core/functions/last_seen.php';
   require_once $Dir_Root . '/core/functions/is_between_dates.php';
   require_once $Dir_Root . '/core/functions/user_agent.php';
+
+  require_once $Dir_Root . '/core/functions/pokemon.php';
 
   $PDO = DatabaseConnect();
 
