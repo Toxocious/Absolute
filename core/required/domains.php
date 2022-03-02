@@ -7,8 +7,8 @@
   // Localhost domains.
   if ( $_SERVER['HTTP_HOST'] === 'localhost' )
   {
-    define("DOMAIN_ROOT", "https://localhost");
-    define("DOMAIN_SPRITES", "https://localhost/images");
+    define("DOMAIN_ROOT", "http://localhost");
+    define("DOMAIN_SPRITES", "http://localhost/images");
   }
   // Live server domains.
   else
@@ -24,4 +24,4 @@
       define("DOMAIN_SPRITES", "http://absoluterpg.com/images");
     }
   }
-  
+
