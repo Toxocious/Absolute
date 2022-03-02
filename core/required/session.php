@@ -2,7 +2,7 @@
   // Set the timezone that Absolute is based on.
   date_default_timezone_set('America/Los_Angeles');
   $Date = date("M dS, Y g:i:s A");
-  $Absolute_Time = date('m/d/y&\nb\sp;&\nb\sp;h:i A');
+  $Absolute_Time = date('m/d/y h:i A');
   $Time = time();
 
   // Deal with the $_SERVER const.
