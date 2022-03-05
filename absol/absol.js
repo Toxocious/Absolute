@@ -3,8 +3,6 @@ const HTTPS = require('https');
 const FS = require('fs');
 const MESSAGEHANDLER = require('./Handler');
 
-const PATH_ROOT = PATH.resolve('../').indexOf('xampp') ? 'https://localhost' : PATH.resolve('../');
-
 /**
  * Fetch all of our function files, and set them dynamically.
  */
@@ -361,7 +359,7 @@ setTimeout(function()
         rank: 'bot',
         avatar: `/Avatars/Custom/3.png`,
       },
-      'Welcome to Pok&eacute;mon Absolute.',
+      'Welcome to Absolute.',
       {
         isPrivate: false,
         Private_To: null,
