@@ -40,7 +40,7 @@
 	</head>
 
 	<body>
-		<div class='flex' style='flex-direction: row; flex-wrap: wrap; justify-content: center; padding: 5px;'>
+		<div style='align-items: center; display: flex; flex-direction: row; flex-wrap: wrap; gap: 15px; justify-content: center; padding: 5px;'>
 			<table class='border-gradient' style='flex-basis: 200px;'>
 				<tbody>
 					<tr>
@@ -61,7 +61,7 @@
 			<table class='border-gradient' style='flex-basis: 442px;'>
 				<thead>
 					<tr>
-						<th style='width: 25%;'>Stat</th>
+						<th style='width: 25%;'></th>
 						<th style='width: 25%;'>Base</th>
 						<th style='width: 25%;'>IVs</th>
 						<th style='width: 25%;'>EVs</th>
@@ -107,7 +107,7 @@
 				</tbody>
 			</table>
 
-			<table class='border-gradient' style='flex-basis: 100%; margin: 15px; width: 656px;'>
+			<table class='border-gradient' style='width: 97%;'>
 				<thead>
 					<tr>
 						<th colspan='4'>Details</th>
@@ -157,7 +157,7 @@
 				</tbody>
 			</table>
 
-			<table class='border-gradient' style='flex-basis: 100%; margin: 0px 15px; width: 656px;'>
+			<table class='border-gradient' style='width: 97%;'>
 				<thead>
 					<tr>
 						<th colspan='4'>Moves</th>
@@ -165,18 +165,16 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td colspan='2' style='width: 50%;'>
+						<td colspan='1' style='width: 25%;'>
               <?= $Move_1['Name']; ?>
             </td>
-						<td colspan='2' style='width: 50%;'>
+						<td colspan='1' style='width: 25%;'>
               <?= $Move_2['Name']; ?>
             </td>
-					</tr>
-					<tr>
-						<td colspan='2' style='width: 50%;'>
+						<td colspan='1' style='width: 25%;'>
               <?= $Move_3['Name']; ?>
             </td>
-						<td colspan='2' style='width: 50%;'>
+						<td colspan='1' style='width: 25%;'>
               <?= $Move_4['Name']; ?>
             </td>
 					</tr>
