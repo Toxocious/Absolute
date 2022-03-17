@@ -22,7 +22,7 @@
         return;
       }
 
-      $Roster_Text = "<div class='flex wrap' style='font-size: 12px;'>";
+      $Roster_Text = "<div class='flex wrap' style='font-size: 12px; gap: 5px;'>";
       for ( $i = 0; $i <= 5; $i++ )
       {
         if ( isset($Fetch_Roster[$i]['ID']) )
@@ -75,7 +75,7 @@
         }
 
         $Roster_Text .= "
-          <div style='flex-basis: 165px; margin-left: 2px; position: relative;'>
+          <div style='flex-basis: 150px; position: relative;'>
             {$Gender}
             {$Item}
 
@@ -98,9 +98,6 @@
             </div>
           </div>
         ";
-
-        if ( $i == 2 )
-          $Roster_Text .= "<div style='flex-basis: 100%; height: 15px;'></div>";
       }
       $Roster_Text .= '</div>';
 
