@@ -1143,3 +1143,73 @@ footer
     }
   }
 }
+
+/**
+ * Phones
+ */
+@media screen and (min-width: 1px) and (max-width: 767px)
+{
+  header
+  {
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    height: 40px;
+    max-width: 100%;
+  }
+
+  footer
+  {
+    height: auto;
+    width: 96.5%;
+  }
+
+  table
+  {
+    background: none;
+    box-shadow: none;
+    width: 90% !important;
+    max-width: 90% !important;
+
+    thead, tbody, tr, td, th
+    {
+      display: block;
+    }
+
+    td
+    {
+      border: none;
+      position: relative;
+      margin: 0 auto;
+      text-align: center;
+      width: 100% !important;
+
+      &::before
+      {
+        position: absolute;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  div
+  {
+    .description
+    {
+      width: 80% !important;
+    }
+
+    .nav
+    {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      height: auto !important;
+      justify-content: center;
+
+      div
+      {
+        margin: 0 !important;
+      }
+    }
+  }
+}

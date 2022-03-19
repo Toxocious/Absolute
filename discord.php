@@ -27,10 +27,10 @@
     <br />
 		<div class='description' style='background: #334364; margin-bottom: 5px; padding: 5px 20px; width: 70%;'>
 			While you're here, please take a look at Absolute's Discord server.
-			A lot goes on here, including announcing updates to Absolute, as well as general conversation between it's users.
+			A lot goes on here, including announcing updates to Absolute, as well as general conversation between its users.
 		</div>
 
-		<iframe src="https://discordapp.com/widget?id=269182206621122560&theme=dark" width="500" height="500" allowtransparency="true" frameborder="0"></iframe>
+		<iframe src="https://discordapp.com/widget?id=269182206621122560&theme=dark" height='300' allowtransparency="true" frameborder="0"></iframe>
 	</div>
 </div>
 
