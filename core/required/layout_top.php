@@ -150,7 +150,7 @@
           if ( $Current_Page['Logged_In'] == 'yes' )
           {
             echo "
-              <main style='width: 100%;'>
+              <main style='margin: 0 auto;'>
                 <div class='panel content'>
                   <div class='head'>Error</div>
                   <div class='body' style='padding: 5px;'>
