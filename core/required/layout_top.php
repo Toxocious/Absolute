@@ -249,7 +249,7 @@
            */
           if ( $Current_Page['Maintenance'] === 'yes' )
           {
-            if ( $User_Data['Is_Staff'] >= 7 )
+            if ( $User_Data['Is_Staff'] )
             {
               echo "
                 <div class='warning' style='margin: 5px auto 0px;'>
