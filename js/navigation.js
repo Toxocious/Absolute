@@ -1,13 +1,40 @@
+const openChatButton = document.getElementById('chatButton');
+const chatOverlay = document.getElementsByTagName('aside')[0];
+const chatContainer = document.getElementById('AbsoChat');
+const chatMessageInput = document.querySelector('#AbsoChat .foot');
+
 const openNavButton = document.getElementById('navButton');
 const navOverlay = document.getElementsByTagName('nav')[0];
 const navContainer = document.getElementsByClassName('nav-container')[0];
 
+let chatIsOpen = false;
 let navIsOpen = false;
+
+chatContainer.addEventListener('click', (e) => {
+  e.stopPropagation();
+});
+
+openChatButton.addEventListener('click', (e) => {
+  if ( chatIsOpen )
+    return;
+
+  OpenChat();
+  chatIsOpen = true;
+  e.stopImmediatePropagation();
+});
+
+chatOverlay.addEventListener('click', (e) => {
+  if ( !chatIsOpen )
+    return;
+
+  CloseChat();
+  chatIsOpen = false;
+});
+
 openNavButton.addEventListener('click', (e) => {
   if ( navIsOpen )
     return;
 
-  console.log('Opening nav');
   OpenNav();
   navIsOpen = true;
   e.stopImmediatePropagation();
@@ -17,7 +44,6 @@ navOverlay.addEventListener('click', (e) => {
   if ( !navIsOpen )
     return;
 
-  console.log('Closing nav');
   CloseNav();
   navIsOpen = false;
 });
@@ -28,7 +54,7 @@ function OpenNav()
     { propName: 'width', propValue: '100%' },
     { propName: 'height', propValue: '100vh' },
     { propName: 'backgroundColor', propValue: 'rgba(0, 0, 0, 0.5)' }
-  ]
+  ];
 
   const navContainerStyles = [
     { propName: 'zIndex', propValue: '5' },
@@ -36,9 +62,9 @@ function OpenNav()
     { propName: 'position', propValue: 'absolute' },
     { propName: 'height', propValue: '100vh' },
     { propName: 'display', propValue: 'flex' },
-    { propName: 'borderRight', propValue: '2px solid var(--color-primary)', isCssVar: false },
+    { propName: 'borderRight', propValue: '2px solid var(--color-primary)' },
     { propName: 'backgroundColor', propValue: '--color-sexary', isCssVar: true }
-  ]
+  ];
 
   for ( const navStyle of navOverlayStyles )
   {
@@ -83,4 +109,65 @@ function CloseNav()
   navOverlay.style.width = '0px';
 
   navContainer.style.display = 'none';
+}
+
+function OpenChat()
+{
+  const chatOverlayStyles = [
+    { propName: 'width', propValue: '100%' },
+    { propName: 'height', propValue: '99vh' },
+    { propName: 'backgroundColor', propValue: 'rgba(0, 0, 0, 0.5)' }
+  ];
+
+  const chatContainerStyles = [
+    { propName: 'zIndex', propValue: '5' },
+    { propName: 'width', propValue: '184px' },
+    { propName: 'right', propValue: '0' },
+    { propName: 'position', propValue: 'absolute' },
+    { propName: 'height', propValue: '99vh' },
+    { propName: 'flexDirection', propValue: 'column' },
+    { propName: 'display', propValue: 'flex' },
+  ];
+
+  for ( const chatStyle of chatOverlayStyles )
+  {
+    const styleName = chatStyle.propName;
+
+    if ( chatStyle.isCssVar )
+    {
+      cssVarValue = getComputedStyle(document.documentElement).getPropertyValue(chatStyle.propValue);
+      chatOverlay.style[styleName] = cssVarValue;
+    }
+    else
+    {
+      chatOverlay.style[styleName] = chatStyle.propValue;
+    }
+  }
+
+  for ( const chatStyle of chatContainerStyles )
+  {
+    const styleName = chatStyle.propName;
+
+    if ( chatStyle.isCssVar )
+    {
+      cssVarValue = getComputedStyle(document.documentElement).getPropertyValue(chatStyle.propValue);
+      chatContainer.style[styleName] = cssVarValue;
+    }
+    else
+    {
+      chatContainer.style[styleName] = chatStyle.propValue;
+    }
+  }
+
+  chatOverlay.style.display = 'flex';
+  chatMessageInput.style.position = 'absolute';
+  chatMessageInput.style.bottom = '0';
+}
+
+function CloseChat()
+{
+  chatOverlay.style.background = '';
+  chatOverlay.style.width = '0px';
+
+  chatContainer.style.display = 'none';
 }

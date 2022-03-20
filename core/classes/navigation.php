@@ -46,6 +46,10 @@
               </g>
             </svg>
           </button>
+
+          <button id='chatButton'>
+            <img src='" . DOMAIN_SPRITES . "/Pokemon/Icons/Normal/359.png' />
+          </button>
 			";
 
 			// Display the Staff Panel button/Index button, given the user is a staff member.

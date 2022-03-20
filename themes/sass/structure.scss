@@ -1002,11 +1002,6 @@ footer
 
   /**
    * Header
-   * -- Banner
-   * -- User Name/Avatar
-   * -- Currencies
-   * -- Current Time
-   * -- Roster
    */
   header
   {
@@ -1046,6 +1041,106 @@ footer
   aside
   {
     display: none;
+
+    height: 99vh;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    z-index: 3;
+
+    * > .panel
+    {
+      border-radius: 0px;
+      width: 210px;
+    }
+
+    #chatContent
+    {
+      height: 93vh;
+      padding: 2px;
+
+      & > .message
+      {
+        font-size: 12px;
+
+        & > .avatar
+        {
+          border-radius: var(--border-radius-tl-tr);
+          height: 42px;
+          padding: 2px;
+          width: 42px;
+
+          & > a
+          {
+            display: block;
+            border-radius: var(--border-radius-tl-tr);
+
+            & > img
+            {
+              border-radius: var(--border-radius-tl-tr);
+              height: 42px;
+              width: 42px;
+            }
+          }
+        }
+
+        & > .username
+        {
+          float: left;
+          margin-left: 50px;
+          margin-top: -40px;
+          text-align: left;
+
+          & > a
+          {
+            & > b
+            {
+              font-size: 12px;
+            }
+          }
+        }
+
+        & > .master-title
+        {
+          float: right;
+          margin-top: -36px;
+          opacity: 0.5;
+        }
+
+        & > .text
+        {
+          border-radius: var(--border-radius-tr-br-bl);
+          padding: 2px;
+          margin-top: -2px;
+
+          & > div
+          {
+            border-radius: var(--border-radius-tr-br-bl);
+            padding: 3px;
+            text-align: center;
+          }
+        }
+
+        &.private
+        {
+          & > .text
+          {
+            & > div
+            {
+              border-radius: var(--border-radius-tr-br-bl);
+              padding: 3px;
+              text-align: center;
+            }
+          }
+        }
+
+        &:not(:last-child)
+        {
+          margin-bottom: 3px;
+        }
+      }
+    }
   }
 
   /**
@@ -1074,6 +1169,12 @@ footer
       pointer-events: auto;
       text-align: center;
       width: 40px;
+
+      &#chatButton
+      {
+        position: absolute;
+        top: -46px;
+      }
 
       &:active,
       &:focus,
