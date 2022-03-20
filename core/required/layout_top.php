@@ -16,7 +16,7 @@
     <meta property='og:title' content='The Pok&eacute;mon Absolute RPG' />
     <meta property='og:site_name' content='The Pok&eacute;mon Absolute' />
     <meta property='og:image' content='<?= DOMAIN_SPRITES; ?>/Pokemon/Icons/Normal/359-mega.png' />
-    <meta property='og:url' content='https://absoluterpg.net' />
+    <meta property='og:url' content='https://absoluterpg.com' />
 
 		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= (isset($User_Data['Theme']) ? $User_Data['Theme'] : 'absol'); ?>.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/root.css' />
@@ -32,6 +32,7 @@
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/toastify.min.js'></script>
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/perfect-scrollbar.min.js'></script>
 		<script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/dependencies/iframe-lightbox.min.js'></script>
+    <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/navigation.js' defer></script>
 		<?php
 			/**
 			 * Adds snowstorm.js if the current month is December.
