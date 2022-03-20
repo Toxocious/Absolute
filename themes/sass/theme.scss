@@ -287,6 +287,8 @@ div
  */
 nav
 {
+  background: var(--color-sexary);
+
   & > .button
   {
     &:hover
@@ -306,6 +308,7 @@ nav
 
       & > .dropdown
       {
+        background-color: var(--color-quadternary);
         border-color: var(--color-primary);
         box-shadow: var(--box-shadow-nav);
       }

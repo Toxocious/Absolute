@@ -733,44 +733,61 @@ footer
     margin: 5px 5px 1px;
     text-align: center;
 
-    & > .button
+    & > button
     {
-      border-radius: 6px;
-      float: left;
-      font-weight: bold;
-      transition: all 150ms;
-      width: 195px;
-
-      &:hover
-      {
-        cursor: pointer;
-      }
-
-      & > a
-      {
-        display: block;
-        padding: var(--padding-5px);
-        transition: background 0.15s;
-      }
+      display: none;
     }
 
     & > .nav-container
     {
       display: flex;
-      width: 1086px;
+
+      & > .button
+      {
+        border-radius: 6px;
+        float: left;
+        font-weight: bold;
+        transition: all 150ms;
+        width: 210px;
+
+        &:hover
+        {
+          cursor: pointer;
+        }
+
+        & > a
+        {
+          display: block;
+          padding: var(--padding-5px);
+          transition: background 0.15s;
+        }
+      }
 
       & > .nav-item
       {
+        display: block;
+        height: auto;
         text-align: center;
-        width: calc(100% / 6);
+        width: calc(100% / 7);
 
         & > a
         {
           border-radius: var(--border-radius);
           display: block;
           font-weight: bold;
+          height: auto;
           padding: var(--padding-5px);
           transition: background 0.15s;
+
+          &:hover
+          {
+            background: none;
+          }
+
+          & > img
+          {
+            display: none;
+          }
         }
 
         & > .dropdown
@@ -970,15 +987,55 @@ footer
 /**
  * Tablets
  */
-@media screen and (min-width: 768px) and (max-width: 1099px)
+@media screen and (min-width: 480px) and (max-width: 1099px)
 {
   div.BODY-CONTAINER
   {
     align-content: baseline;
     display: var(--display-flex);
     flex-wrap: wrap;
+    justify-content: center;
     margin: 0 auto;
     min-height: 100%;
+    width: 100%;
+  }
+
+  /**
+   * Header
+   * -- Banner
+   * -- User Name/Avatar
+   * -- Currencies
+   * -- Current Time
+   * -- Roster
+   */
+  header
+  {
+    display: flex;
+    justify-content: center;
+
+    .stats
+    {
+      order: 1;
+    }
+
+    .user
+    {
+      order: 2;
+    }
+
+    .roster
+    {
+      order: 3;
+    }
+  }
+
+  /**
+   * Footer
+   *
+   */
+  footer
+  {
+    height: auto;
     width: 100%;
   }
 
@@ -996,10 +1053,117 @@ footer
    */
   nav
   {
-    border-right: var(--border-style);
-    height: calc(100% - 127px);
-    width: 50px;
-    top: 127px;
+    align-content: center;
+    height: var(--banner-height);
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 0px;
+    z-index: 3;
+
+    & > button
+    {
+      background: var(--color-sexary);
+      border-radius: 6px;
+      border: none;
+      margin-left: 4px;
+      margin-top: 80px;
+      pointer-events: auto;
+      text-align: center;
+      width: 40px;
+
+      &:active,
+      &:focus,
+      &:hover
+      {
+        background: var(--color-sexary) !important;
+      }
+
+      & > svg
+      {
+        fill: var(--color-white);
+        height: 2em;
+        padding-top: 3px;
+        width: 2em;
+        transition: 150ms ease-in-out;
+
+        &:hover
+        {
+          fill: var(--color-primary);
+        }
+      }
+    }
+
+    & > .nav-container
+    {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      transition: width 150ms;
+
+      & > .button
+      {
+        display: none;
+        font-weight: bold;
+        font-size: 18px;
+
+        & > a
+        {
+          display: block;
+        }
+      }
+
+      .nav-item
+      {
+        display: none;
+        text-align: center;
+
+        & > a
+        {
+          display: block;
+          font-weight: bold;
+          font-size: 18px;
+
+          &:hover
+          {
+            background: none;
+          }
+        }
+
+        & > .dropdown
+        {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          width: 100%;
+
+          & > .dropdown-item
+          {
+            & > a
+            {
+              display: block;
+              padding: 3px;
+            }
+          }
+        }
+
+        &.has-dropdown
+        {
+          &:focus-within
+          {
+            & > .dropdown
+            {
+              opacity: 1;
+              pointer-events: auto;
+            }
+          }
+        }
+      }
+    }
   }
 
   /**
@@ -1007,7 +1171,8 @@ footer
    */
   main
   {
-    width: calc(100% - 60px);
+    margin: 5px 0px;
+    width: 98%;
   }
 
   /**
@@ -1147,7 +1312,7 @@ footer
 /**
  * Phones
  */
-@media screen and (min-width: 1px) and (max-width: 767px)
+@media screen and (max-width: 479px)
 {
   header
   {

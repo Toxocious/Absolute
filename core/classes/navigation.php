@@ -39,13 +39,18 @@
 
 			echo "
 				<nav>
+          <button id='navButton'>
+            <svg viewBox='0 0 22 22' preserveAspectRatio='xMidYMid meet'>
+              <g>
+                <path d='M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z'></path>
+              </g>
+            </svg>
+          </button>
 			";
 
 			// Display the Staff Panel button/Index button, given the user is a staff member.
 			if ( $User_Data['Is_Staff'] )
 			{
-				$Nav_Width = " style='width: calc(100% - 203px);'";
-
 				if ( strpos($URL['path'], '/staff/') === false )
 				{
 					$Link_URL = DOMAIN_ROOT . '/staff/';
@@ -68,11 +73,10 @@
           $Notification_Text = " (<b style='color: red;'> {$Notification_Amount} </b>)";
 
 				echo "
-					<div class='button' style='margin-right: 5px;'>
-						<a href='{$Link_URL}'>{$Link_Name}{$Notification_Text}</a>
-					</div>
-
-					<div class='nav-container'{$Nav_Width}>
+					<div class='nav-container'>
+            <div class='button'>
+              <a href='{$Link_URL}'>{$Link_Name}{$Notification_Text}</a>
+            </div>
 				";
 			}
 			else
@@ -147,8 +151,8 @@
 				 */
 				echo "
 					<div class='nav-item has-dropdown'>
-						<a href='javascript:void(0);'>
-							{$Head['Name']}
+            <a href='javascript:void(0);'>
+							<span>{$Head['Name']}</span>
 						</a>
 						<ul class='dropdown'>
 							{$Display_Links}
