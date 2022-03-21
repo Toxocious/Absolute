@@ -471,7 +471,7 @@
       $STAB = $this->CalculateSTAB($Side);
 
       if ( class_exists($this->Class_Name) )
-        $Move_Class = new $this->Class_Name($this);
+        $Move_Class = new $this->Class_Name($this->ID, $this->Slot);
 
       /**
        * Use class specific DoesMoveHit() method
