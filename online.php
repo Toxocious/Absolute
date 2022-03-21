@@ -1,6 +1,6 @@
 <?php
 	require_once 'core/required/layout_top.php';
-  require_once 'core/ajax/online/online.php';
+  require_once 'core/functions/online_list/online_list.php';
 ?>
 
 <div class='panel content'>
