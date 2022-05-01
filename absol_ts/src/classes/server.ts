@@ -4,27 +4,27 @@ import { Server, Socket } from 'socket.io';
 
 import MySQL from '../classes/mysql';
 
-class Absol {
+export default class Absol {
   server: Server | undefined;
   messages: [] | undefined;
 
-  start(server: http.Server, initType: string) {
+  start(server: http.Server, initType: string): void {
     this.server = new Server(server, {
       cors: {
         origin: '*',
       },
     });
 
-    this.server.on('connection', (socket: Socket) => {
-      socket.on('auth', (authData: any) => {
+    this.server.on('connection', (socket: Socket): void => {
+      socket.on('auth', (authData: any): void => {
         console.log('[Server] Client Auth:', authData);
       });
 
-      socket.on('disconnect', () => {
+      socket.on('disconnect', (): void => {
         console.log('[Server] Client Disconnected.');
       });
 
-      socket.on('input', async (inputData: any) => {
+      socket.on('input', async (inputData: any): Promise<void> => {
         console.log('[Server] Client Input', inputData);
       });
     });
@@ -44,5 +44,3 @@ class Absol {
     }
   }
 }
-
-export default Absol;

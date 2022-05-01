@@ -12,7 +12,10 @@ export default class MySQL {
     return this.connection !== null;
   }
 
-  public static async doQuery(queryString: string, queryParams: any[]) {
+  public static async doQuery(
+    queryString: string,
+    queryParams: any[]
+  ): Promise<any[] | undefined> {
     try {
       const [rows, fields]: any = await this._instance.connection?.execute(
         queryString,
@@ -32,7 +35,7 @@ export default class MySQL {
     }
   }
 
-  public async connectDatabase() {
+  public async connectDatabase(): Promise<void> {
     return mysql
       .createConnection({
         host: 'localhost',
@@ -40,10 +43,10 @@ export default class MySQL {
         password: process.env.DATABASE_PASSWORD ?? 'qwerty',
         database: process.env.DATABASE_TABLE ?? 'absolute',
       })
-      .then((connection) => {
+      .then((connection): void => {
         this.connection = connection;
       })
-      .catch((error) => {
+      .catch((error): void => {
         console.log(
           '[Chat | Connection] Failed to create MySQL connection for Absolute Chat. [Error]:',
           error
