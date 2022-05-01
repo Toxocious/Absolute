@@ -1,0 +1,24 @@
+{
+  "name": "absol_ts",
+  "version": "1.0.0",
+  "description": "Real-time socket-based chat system for Pokemon Absolute",
+  "main": "./src/index.js",
+  "scripts": {
+    "dev_test": "nodemon ./src/index.ts",
+    "dev": "tsc && nodemon ./build/index.js",
+    "start": "node ./build/index.js"
+  },
+  "author": "toxocious",
+  "license": "ISC",
+  "private": true,
+  "dependencies": {
+    "mysql2": "^2.3.3",
+    "nodemon": "^2.0.16",
+    "socket.io": "^4.5.0",
+    "ts-node": "^10.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.30",
+    "typescript": "^4.6.4"
+  }
+}
