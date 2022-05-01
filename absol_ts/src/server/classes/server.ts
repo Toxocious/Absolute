@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import * as http from 'http';
 import { Server, Socket } from 'socket.io';
 
-import MySQL from '../classes/mysql';
+import MySQL from './mysql';
 
 export default class Absol {
   server: Server | undefined;
