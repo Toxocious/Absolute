@@ -3,6 +3,8 @@
 
 # Not necessary to push */node_modules to a repo.
 # Chatlog also doesn't need pushed.
+node_modules
+build
 absol/node_modules
 absol/config
 absol/chatlog.txt
