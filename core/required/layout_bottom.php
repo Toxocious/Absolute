@@ -8,15 +8,9 @@
 
 
 				<div class='social-links'>
-					<a href='https://github.com/toxocious' target='_blank' rel='noopener noreferrer' style='color: rgb(250, 250, 250);'>
-            <svg xmlns='http://www.w3.org/2000/svg' width='38' height='38' preserveAspectRatio='xMinYMin meet' viewBox='0 0 256 236'>
-              <path fill='#E24329' d='M128.075 236.075l47.104-144.97H80.97l47.104 144.97z'/>
-              <path fill='#FC6D26' d='M128.075 236.074L80.97 91.104H14.956l113.119 144.97z'/>
-              <path fill='#FCA326' d='M14.956 91.104L.642 135.16a9.752 9.752 0 0 0 3.542 10.903l123.891 90.012-113.12-144.97z'/>
-              <path fill='#E24329' d='M14.956 91.105H80.97L52.601 3.79c-1.46-4.493-7.816-4.492-9.275 0l-28.37 87.315z'/>
-              <path fill='#FC6D26' d='M128.075 236.074l47.104-144.97h66.015l-113.12 144.97z'/>
-              <path fill='#FCA326' d='M241.194 91.104l14.314 44.056a9.752 9.752 0 0 1-3.543 10.903l-123.89 90.012 113.119-144.97z'/>
-              <path fill='#E24329' d='M241.194 91.105h-66.015l28.37-87.315c1.46-4.493 7.816-4.492 9.275 0l28.37 87.315z'/>
+					<a href='https://github.com/toxocious' target='_blank' rel='noopener noreferrer' style='color: rgb(250, 250, 250); font-size: 3em;'>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="icon" viewBox="0 0 16 16" style='height: 1em; width: 1em;'>
+              <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
             </svg>
 					</a>
 				</div>
@@ -30,8 +24,19 @@
       if ( isset($_SESSION['Absolute']) )
       {
     ?>
+      <!--
+      <script type='module' src='<?= DOMAIN_ROOT; ?>/absolute-chat/build/client/classes/client.js'></script>
+      <script type='module'>
+        import { ChatClient } from '<?= DOMAIN_ROOT; ?>/absolute-chat/build/client/classes/client.js';
+
+        console.log(ChatClient);
+      </script>
+      -->
+
+      <!-- -->
       <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/absochat.js'></script>
       <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/Handler.js'></script>
+
       <script type='text/javascript'>
         (function()
         {
@@ -67,6 +72,7 @@
           });
         })();
       </script>
+      <!-- -->
     <?php
       }
     ?>

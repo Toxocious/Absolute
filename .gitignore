@@ -5,6 +5,9 @@
 # Chatlog also doesn't need pushed.
 node_modules
 build
+
+absolute-chat
+
 absol/node_modules
 absol/config
 absol/chatlog.txt

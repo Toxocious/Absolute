@@ -638,13 +638,17 @@ footer
 
   & > .social-links
   {
+    display: flex;
+    flex-direction: row;
     flex-grow: 1;
+    height: 100%;
+    justify-content: flex-end;
 
     & > a
     {
-      float: right;
       height: 34px;
       max-height: 34px;
+      margin-top: -5px;
       transition: all 150ms;
 
       .icon
@@ -1030,7 +1034,6 @@ footer
    */
   footer
   {
-    height: auto;
     width: 100%;
   }
 
