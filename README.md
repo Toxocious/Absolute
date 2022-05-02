@@ -191,24 +191,9 @@ export DATABASE_PASSWORD="_PASSWORD_"
 ```
 
 ### Chat Setup
-Absolute's chat system requires Node v16.x+ to be installed.
-- https://github.com/nodesource/distributions/blob/master/README.md
+The source code used for Absolute's chat system can be found [HERE](https://github.com/Toxocious/Absolute-Chat).
 
-**NOTE :: Absolute's chat system requires valid SSL certification which needs to be set in ``./absol/absol.js``.**
-
-Once Node is installed, proceed with setting up Absolute's chat system.
-
-```bash
-## Change your active directory to that of the chat.
-cd ./Absolute/absol
-
-## Install the dependencies.
-npm install
-
-## Start the chat script.
-## NOTE :: Officially, Absolute makes use of the 'forever' npm module to keep the chat running.
-npm start
-```
+A separate, in-depth README with set-up documentation is included.
 
 
 
