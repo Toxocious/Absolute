@@ -22,6 +22,7 @@
   - [Installation](#installation)
   - [Project Setup](#project-setup)
   - [Chat Setup](#chat-setup)
+  - [Discord Bot Setup](#discord-bot-setup)
 - [Contributing](#contributing)
   - [General Stance](#general-stance)
   - [Code Standards](#code-standards)
@@ -192,6 +193,13 @@ export DATABASE_PASSWORD="_PASSWORD_"
 
 ### Chat Setup
 The source code used for Absolute's chat system can be found [HERE](https://github.com/Toxocious/Absolute-Chat).
+
+A separate, in-depth README with set-up documentation is included.
+
+
+
+### Discord Bot Setup
+The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/Toxocious/Absolute-Discord-Bot).
 
 A separate, in-depth README with set-up documentation is included.
 
