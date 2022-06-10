@@ -27,6 +27,7 @@
   - [Project Setup](#project-setup)
   - [Chat Setup](#chat-setup)
   - [Discord Bot Setup](#discord-bot-setup)
+  - [CI/CD Pipeline Setup](#cicd-pipeline-setup)
 - [Contributing](#contributing)
   - [General Stance](#general-stance)
   - [Code Standards](#code-standards)
@@ -44,6 +45,8 @@
 - Socket.io
 - MySQL
 - MariaDB
+- CI/CD
+- xDebug
 
 ### Features
 - Dedicated Battles
@@ -200,12 +203,54 @@ The source code used for Absolute's chat system can be found [HERE](https://gith
 
 A separate, in-depth README with set-up documentation is included.
 
-
-
 ### Discord Bot Setup
 The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/Toxocious/Absolute-Discord-Bot).
 
 A separate, in-depth README with set-up documentation is included.
+
+### CI/CD Pipeline Setup
+Absolute uses a continue integration and deployment pipeline to automatically sync the repository ``main`` branch with the remote server.
+
+To set up a CI/CD pipeline for your local and remote Absolute environment, continue reading on.
+
+**NOTE :: For Windows users, this will require SSH to be installed on your local machine.**
+
+**NOTE :: The pipeline will fail if a layout/theme change has been pushed and SASS is not properly configured on the remote server.**
+
+1. SSH into your remote server.
+```bash
+## SSH into the remote server.
+## This will require a password.
+ssh USERNAME@HOSTNAME
+```
+
+2. Generate a SSH keypair.
+```bash
+## Generate an SSH public:private key pair.
+## This will ask you additional questions before generating the key pair.
+## Take careful note of where the files are placed for generation. (usually in ~/.ssh)
+## Also take careful note of what you have named the SSH key pair.
+ssh-keygen
+```
+
+3. Copy the public SSH key and add it as a repository CI/CD settings variable.
+```bash
+## Print out the public SSH key.
+## Highlight it and copy it via CTRL + SHIFT + C
+cat ~/.ssh/absolute_key.pub
+
+## In a browser on your local machine, navigate to your repository's CI/CD settings.
+## https://gitlab.com/USER_NAME/REPOSITORY_NAME/-/settings/ci_cd
+
+## Expand the ``Variables`` section.
+
+## Add a new variable with the name of ``ABSOLUTE_PRIVATE_KEY``
+## Paste in the public key that you previously copied.
+## Save the variable.
+```
+
+4. Update the CI/CD script in the repository (``/.gitlab-ci.yml``) to reflect your remote server.
+5. Run the pipeline.
 
 
 
