@@ -4,13 +4,21 @@
 
   **Pok&eacute;mon Absolute** is an online text-based Pok&eacute;mon RPG, comprised of numerous features adapted from the official Pok&eacute;mon games, as well as entirely new features that enhance the playing experience of Pok&eacute;mon.
 
-  <img src="https://img.shields.io/github/issues/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
-  <img src="https://img.shields.io/github/forks/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
-  <img src="https://img.shields.io/github/stars/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
-  <img src="https://img.shields.io/github/license/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
-  <a href="https://hits.seeyoufarm.com">
-    <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FToxocious%2FAbsolute&count_bg=%234A618F&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
-  </a>
+  <div align="center">
+    <img alt="Issue Count" src="https://img.shields.io/github/issues/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
+    <img alt="Fork Count" src="https://img.shields.io/github/forks/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
+    <img alt="Star Count" src="https://img.shields.io/github/stars/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
+    <img alt="License" src="https://img.shields.io/github/license/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
+    <img alt="Lines Of Code" src="https://img.shields.io/tokei/lines/github/toxocious/absolute?style=for-the-badge" />
+  </div>
+
+  <br />
+
+  <div align="center">
+    <a href="https://hits.seeyoufarm.com">
+      <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FToxocious%2FAbsolute&count_bg=%234A618F&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
+    </a>
+  </div>
 
   [View Game](https://absoluterpg.com/) &bull;
   [Report Bug](https://github.com/Toxocious/Absolute/issues/new?assignees=&labels=&template=bug-report.md&title=) &bull;
