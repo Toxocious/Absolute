@@ -27,7 +27,17 @@
 
 
 
+## Disclaimer
+Pok&eacute;mon Absolute is undergoing a massive update, wherein the code-base is being ported to React.
+
+The repository containing the updated source-code can be found [HERE](https://github.com/Toxocious/Absolute-React-Dev).
+
+**NOTE :: There is no current estimate on how long this will take.**
+
+
+
 ## Table of Contents
+- [Disclaimer](#disclaimer)
 - [Table of Contents](#table-of-contents)
 - [About The Project](#about-the-project)
   - [Screenshot](#screenshot)
@@ -268,9 +278,13 @@ cat ~/.ssh/absolute_key.pub
 
 ## Contributing
 ### General Stance
-In general, we welcome pull requests that fix bugs.
+Any contributions you make are greatly appreciated.
 
-For feature additions and medium to large projects or changes, we ask that you first create a [Feature Request](https://github.com/Toxocious/Absolute/issues/new?assignees=&labels=&template=feature-request.md&title=) issue. We'd hate to reject a pull request that was worked on for an extensive period of time.
+1. Fork the Project
+2. Create your Feature Branch (``git checkout -b feature/AmazingFeature``)
+3. Commit your Changes (``git commit -m 'Add some AmazingFeature'``)
+4. Push to the Branch (``git push origin feature/AmazingFeature``)
+5. Open a Pull Request
 
 ### Code Standards
 We aren't too picky on what your code looks like as long as it's easy to read and filter through; keep it clean.
