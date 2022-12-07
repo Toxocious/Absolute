@@ -29,8 +29,8 @@
 				$Fetch_User = $PDO->prepare("
 					SELECT *
 					FROM `users`
-					INNER JOIN `user_currency`
-					ON `users`.`ID` = `user_currency`.`ID`
+					  INNER JOIN `user_currency`
+            ON `users`.`ID` = `user_currency`.`ID`
 					WHERE `users`.`ID` = ?
 					LIMIT 1
 				");
@@ -65,12 +65,12 @@
 			if ( !isset($User) || !$User )
 				return false;
 
-			if ( $User_Ban['RPG_Ban'] )
+			if ( isset($User_Ban['RPG_Ban']) && $User_Ban['RPG_Ban'] )
 				$Banned_RPG = true;
 			else
 				$Banned_RPG = false;
 
-			if ( $User_Ban['Chat_Ban'] )
+			if ( isset($User_Ban['Chat_Ban']) && $User_Ban['Chat_Ban'] )
 				$Banned_Chat = true;
 			else
 				$Banned_Chat = false;

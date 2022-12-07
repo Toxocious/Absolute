@@ -6,12 +6,6 @@
 node_modules
 build
 
-absolute-chat
-
-absol/node_modules
-absol/config
-absol/chatlog.txt
-
 # CSS files are compiled from SCSS files on successful push via a pipeline.
 themes/css/*
 !themes/css/lib
@@ -22,5 +16,5 @@ scripts/*
 # Misc. tools that were used during development and don't need pushed.
 tools/*
 
-# Misc. log files.
-misc/
+# PDO Log files.
+_logs

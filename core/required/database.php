@@ -85,7 +85,7 @@
       $User_Dialogue = ' No User Data ||';
 
 		file_put_contents(
-      '_logs/pdo_errors.txt',
+      __DIR__ . '/../../_logs/pdo_errors.txt',
       "[ {$Fetch_Date} ] {$User_Dialogue} {$Error_Message}\n",
       FILE_APPEND | LOCK_EX
     );
@@ -113,6 +113,7 @@
     $TRIGGERED_ON_LINE = $PDOException->getLine();  // Line       :: 111
     $ERROR_MESSAGE = $PDOException->getMessage();   // Error Msg  :: Return a string of the error message
     $TRACE_INFO = $PDOException->getTrace();        // Trace      :: Returns an array including filename, line number, function, and function args
+    $ORIGINATED_IN = $TRACE_INFO[count($TRACE_INFO) - 1];
 
     $Custom_Error = $ERROR_MESSAGE;
     switch ( $SQL_ERROR_CODE )
@@ -127,6 +128,6 @@
     }
 
     return "
-      [SQL Error Code: {$SQL_ERROR_CODE}] {$Custom_Error} in {$TRIGGERED_BY_FILE} on line {$TRIGGERED_ON_LINE}
+      [SQL Error: {$SQL_ERROR_CODE}] {$Custom_Error} in {$TRIGGERED_BY_FILE} on line {$TRIGGERED_ON_LINE} (Originated In: {$ORIGINATED_IN['file']})
     ";
   }
