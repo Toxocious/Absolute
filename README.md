@@ -47,6 +47,7 @@ The repository containing the updated source-code can be found [HERE](https://gi
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Project Setup](#project-setup)
+  - [Stylesheet Setup](#stylesheet-setup)
   - [Chat Setup](#chat-setup)
   - [Discord Bot Setup](#discord-bot-setup)
   - [CI/CD Pipeline Setup](#cicd-pipeline-setup)
@@ -101,7 +102,7 @@ The repository containing the updated source-code can be found [HERE](https://gi
 
 ## Getting Started
 ### Prerequisites
-This project makes uses of Node.js for the live in-game chat system, and PHP for everything else.
+This project makes uses of Node.js for the live in-game chat system, SASS for compiling the SCSS stylesheets to CSS, and PHP for everything else.
 
 Make sure that you have Node.js installed, as well as PHP 7.2+, Apache or Nginx, and PHPMyAdmin.
 
@@ -219,6 +220,19 @@ export DATABASE_USER="absolute"
 # This should match the password used when the `absolute` MySQL user was created earlier.
 export DATABASE_PASSWORD="_PASSWORD_"
 ```
+
+### Stylesheet Setup
+When you have gotten the database set-up, you'll notice that - after navigating to your hosted copy of this repository - the stylesheets fail to load.
+
+This is because Absolute's stylesheets are done in SCSS, which need compiled to CSS before they can be used for this project.
+
+Install (SASS)[https://sass-lang.com/install] for your operating system, add it to your PATH variables, open a terminal into this directory, and run the following command:
+
+```sh
+sass themes/sass:themes/css
+```
+
+This will compile the stylesheets a single time. If you wish to do numerous changes back-to-back - such as a layout overhaul or what have you - then use the ``--watch`` flag appended to the command, which will have SASS watch for changes in the ``themes/sass`` directory, and will automatically compile all changes into the ``themes/css`` directory while the sass watch command is active.
 
 ### Chat Setup
 The source code used for Absolute's chat system can be found [HERE](https://github.com/Toxocious/Absolute-Chat).
