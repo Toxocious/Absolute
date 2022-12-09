@@ -52,8 +52,6 @@ The repository containing the updated source-code can be found [HERE](https://gi
   - [Discord Bot Setup](#discord-bot-setup)
   - [CI/CD Pipeline Setup](#cicd-pipeline-setup)
 - [Contributing](#contributing)
-  - [General Stance](#general-stance)
-  - [Code Standards](#code-standards)
 - [License](#license)
 
 
@@ -291,17 +289,7 @@ cat ~/.ssh/absolute_key.pub
 
 
 ## Contributing
-### General Stance
-Any contributions you make are greatly appreciated.
-
-1. Fork the Project
-2. Create your Feature Branch (``git checkout -b feature/AmazingFeature``)
-3. Commit your Changes (``git commit -m 'Add some AmazingFeature'``)
-4. Push to the Branch (``git push origin feature/AmazingFeature``)
-5. Open a Pull Request
-
-### Code Standards
-We aren't too picky on what your code looks like as long as it's easy to read and filter through; keep it clean.
+If you're interested in contributing to Absolute, please check out [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
 
 
 
