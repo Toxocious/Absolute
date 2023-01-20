@@ -11,7 +11,6 @@
     <img alt="License" src="https://img.shields.io/github/license/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
     <img alt="Lines Of Code" src="https://img.shields.io/tokei/lines/github/toxocious/absolute?style=for-the-badge" />
   </div>
-
   <br />
 
   <div align="center">
@@ -19,18 +18,19 @@
       <img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FToxocious%2FAbsolute&count_bg=%234A618F&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=hits&edge_flat=false"/>
     </a>
   </div>
+  <br /><br />
 
-  [View Game](https://absoluterpg.com/) &bull;
-  [Report Bug](https://github.com/Toxocious/Absolute/issues/new?assignees=&labels=&template=bug-report.md&title=) &bull;
-  [Request Feature](https://github.com/Toxocious/Absolute/issues/new?assignees=&labels=&template=feature-request.md&title=)
+  Check us out on Discord and consider starring the repository if you liked it!
+
+  <a href="https://discord.gg/Km6btPhs" target="_blank">
+    <img src="https://discord.com/api/guilds/1002005327555862620/widget.png?style=banner2" alt="Discord Banner" />
+  </a>
 </div>
 
 
 
 ## Disclaimer
 Pok&eacute;mon Absolute is undergoing a massive update, wherein the code-base is being ported to React.
-
-The repository containing the updated source-code can be found [HERE](https://github.com/Toxocious/Absolute-React-Dev).
 
 **NOTE :: There is no current estimate on how long this will take.**
 
