@@ -21,13 +21,16 @@
   sort($migrations);
 
   // Create new PDO instance.
-  try {
+  try
+  {
     $pdo = new PDO(
       "mysql:host={$host};dbname={$db};charset={$charset}",
       $user,
       $pass
     );
-  } catch ( PDOException $e ) {
+  }
+  catch ( PDOException $e )
+  {
     echo "[ERROR] Unable to create PDO instance. Killing script.\n";
     echo "{$e->getMessage()} (Line {$e->getLine()})\n";
     echo "[INFO] Verify environment variables.\n";
@@ -41,7 +44,6 @@
   foreach ( $migrations as $migration )
   {
     $migration_name = basename($migration, '.sql');
-    var_dump($migration_name);
 
     $stmt = $pdo->prepare("SELECT * FROM `{$db}`.`{$table}` WHERE name = :name");
     $stmt->execute([ 'name' => $migration_name ]);
@@ -49,17 +51,16 @@
 
     // Check if this migration has already been executed.
     // Move on to the next file if it has been.
-    if ( $result ) {
+    if ( $result )
+    {
       echo "[INFO] Migration {$migration_name} already executed.\n";
       continue;
     }
 
     $migration_sql = file_get_contents($migrations_directory . '/' . $migration);
-    echo "--------------------\n";
-    var_dump($migration_sql);
-    echo "--------------------\n";
 
-    try {
+    try
+    {
       $pdo->beginTransaction();
 
       $pdo->exec($migration_sql);
