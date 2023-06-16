@@ -1,0 +1,15 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        // Start XDebug session for debugging.
+        {
+            "name": "XDebug",
+            "type": "php",
+            "request": "launch",
+            "port": 9003,
+            "pathMappings": {
+                "/app/": "${workspaceRoot}/app/"
+            }
+        }
+    ]
+}

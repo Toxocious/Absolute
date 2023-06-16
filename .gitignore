@@ -1,20 +1,13 @@
-# No need to include the .vscode directory.
-.vscode
+# Environment variables
+.env
 
-# Not necessary to push */node_modules to a repo.
-# Chatlog also doesn't need pushed.
-node_modules
-build
+# Log files
+logs/
 
-# CSS files are compiled from SCSS files on successful push via a pipeline.
-themes/css/*
-!themes/css/lib
+# SSL certificates
+ssl/conf
+ssl/www
 
-# Misc. script files that were used during development and don't need pushed.
-scripts/*
-
-# Misc. tools that were used during development and don't need pushed.
-tools/*
-
-# PDO Log files.
-_logs
+# Compiled CSS files
+app/themes/css/**/*.css
+app/themes/css/**/*.css.map

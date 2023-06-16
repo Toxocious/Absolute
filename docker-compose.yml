@@ -1,0 +1,85 @@
+version: '3'
+services:
+    web:
+        image: nginx:latest
+        ports:
+            - 80:80
+            - 443:443
+        volumes:
+            - ./config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+            - ./certbot/www:/var/www/certbot
+            - ./certbot/conf:/etc/nginx/ssl
+            - ./app:/app
+            - ./logs:/logs
+        depends_on:
+            - mysql
+        networks:
+            - absolute
+
+    php:
+        build:
+            context: .
+            dockerfile: absolute.dockerfile
+        env_file:
+            - .env
+        volumes:
+            - ./app:/app
+            - ./logs:/logs
+            - ./migrations:/migrations:ro
+            - ./config/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+            - ./config/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
+            - ./config/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        depends_on:
+            - mysql
+        networks:
+            - absolute
+
+    mysql:
+        image: mariadb:10.11.4
+        env_file:
+            - .env
+        volumes:
+            - absolute-mysqldata:/var/lib/mysql
+            - ./migrations/000_create_migrations_db.sql:/data/application/init.sql:ro
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-file /data/application/init.sql
+        ports:
+            - 3306:3306
+        networks:
+            - absolute
+
+
+    phpmyadmin:
+        image: phpmyadmin:latest
+        environment:
+            PMA_HOST: mysql
+            PMA_ABSOLUTE_URI: '/db/'
+        ports:
+            - 8080:80
+        depends_on:
+            - mysql
+        networks:
+            - absolute
+
+    certbot:
+        image: certbot/certbot:latest
+        volumes:
+            - ./certbot/www:/var/www/certbot
+            - ./certbot/conf:/etc/letsencrypt
+        networks:
+            - absolute
+
+    themes:
+        build:
+            context: .
+            dockerfile: themes.dockerfile
+        volumes:
+            - ./app/themes:/app/themes
+
+volumes:
+    absolute-mysqldata: {}
+
+networks:
+    absolute:
+        name: absolute
