@@ -5,8 +5,8 @@
 logs/
 
 # SSL certificates
-ssl/conf
-ssl/www
+certbot/conf
+certbot/www
 
 # Compiled CSS files
 app/themes/css/**/*.css
