@@ -1,0 +1,15 @@
+.github
+.vscode
+.editorconfig
+.env.local
+.gitignore
+.prettierrc.json
+
+LICENSE
+README.md
+
+docker-compose.yml
+
+dockerfiles
+docs
+

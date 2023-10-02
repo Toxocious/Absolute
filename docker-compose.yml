@@ -1,6 +1,8 @@
 version: '3'
+
 services:
     web:
+        container_name: absolute-web
         image: nginx:latest
         ports:
             - 80:80
@@ -16,10 +18,51 @@ services:
         networks:
             - absolute
 
+
+    mysql:
+        container_name: absolute-mysql
+        image: mariadb:latest
+        volumes:
+            - absolute-mysqldata:/var/lib/mysql
+            - ./migrations/sql:/data/application/sql
+            - ./migrations/migrate.sh:/data/application/migrate.sh
+            - ./.env:/data/application/.env
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-file /data/application/migrate.sh
+        ports:
+            - 3306:3306
+        networks:
+            - absolute
+
+
+    phpmyadmin:
+        container_name: absolute-phpmyadmin
+        image: phpmyadmin:latest
+        environment:
+            PMA_HOST: mysql
+            PMA_ABSOLUTE_URI: '/db/'
+            UPLOAD_LIMIT: 512M
+        ports:
+            - 8080:80
+        depends_on:
+            - mysql
+        networks:
+            - absolute
+
+
+    certbot:
+        image: certbot/certbot:latest
+        volumes:
+            - ./certbot/www:/var/www/certbot
+            - ./certbot/conf:/etc/letsencrypt
+        networks:
+            - absolute
+
+
     php:
+        container_name: absolute-php
         build:
             context: .
-            dockerfile: absolute.dockerfile
+            dockerfile: dockerfiles/absolute.dockerfile
         env_file:
             - .env
         volumes:
@@ -36,44 +79,12 @@ services:
         networks:
             - absolute
 
-    mysql:
-        image: mariadb:10.11.4
-        env_file:
-            - .env
-        volumes:
-            - absolute-mysqldata:/var/lib/mysql
-            - ./migrations/000_create_migrations_db.sql:/data/application/init.sql:ro
-        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-file /data/application/init.sql
-        ports:
-            - 3306:3306
-        networks:
-            - absolute
-
-
-    phpmyadmin:
-        image: phpmyadmin:latest
-        environment:
-            PMA_HOST: mysql
-            PMA_ABSOLUTE_URI: '/db/'
-        ports:
-            - 8080:80
-        depends_on:
-            - mysql
-        networks:
-            - absolute
-
-    certbot:
-        image: certbot/certbot:latest
-        volumes:
-            - ./certbot/www:/var/www/certbot
-            - ./certbot/conf:/etc/letsencrypt
-        networks:
-            - absolute
 
     themes:
+        container_name: absolute-themes
         build:
             context: .
-            dockerfile: themes.dockerfile
+            dockerfile: dockerfiles/themes.dockerfile
         volumes:
             - ./app/themes:/app/themes
 
