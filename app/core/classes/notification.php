@@ -1,7 +1,4 @@
 <?php
-	/**
-	 * Dedicated to class to handle sending notifications to the user on the front-end.
-	 */
 	Class Notification
 	{
 		public $PDO;
@@ -14,7 +11,7 @@
 			$this->PDO = $PDO;
 
 			global $User_Data;
-			$this->User = $User_Data;
+			$this->User_Data = $User_Data;
 		}
 
 		/**
@@ -23,8 +20,6 @@
 		public function SendNotification($Sent_By, $Sent_To, $Message)
 		{
 			global $PDO;
-			global $Purify;
-			global $User_Data;
 
 			$Sent_By = Purify($Sent_By);
 			$Sent_To = Purify($Sent_To);
@@ -47,7 +42,6 @@
 		public function ShowNotification($User_ID)
 		{
 			global $PDO;
-			global $Purify;
 
 			$User = Purify($User_ID);
 

@@ -4,42 +4,44 @@
 	/**
    * Setup the connection to our database.
    */
-	function DatabaseConnect()
+	function connect_database( string $database ) : PDOWrapper
 	{
     global $database_connections;
 
-    try {
+    if ( in_array($database, $database_connections) )
+    {
+      return $database_connections[$database];
+    }
+
+    try
+    {
       $mysql_host = getenv('MYSQL_HOST');
       $mysql_user = getenv('MYSQL_USER');
       $mysql_password = getenv('MYSQL_PASSWORD');
       $database = getenv('MYSQL_GAME_DATABASE');
       $charset = getenv('MYSQL_CHARSET');
 
-      $DBH = new PDOWrapper(
+      $database_connection = new PDOWrapper(
         "mysql:host={$mysql_host};dbname={$database};charset={$charset}",
         $mysql_user,
         $mysql_password
       );
-    } catch (PDOException $e) {
-      // echo "<b>[ERROR]</b> Unable to create PDO instance.<br />";
-      // echo "<b>[INFO]</b> Verify environment variables.<br />";
-      // echo "<b>[MIGRATIONS / DEBUG]</b> host = {$mysql_host}, user = {$mysql_user}, pass = {$mysql_password}<br />";
-      // echo "<b>[MIGRATIONS / DEBUG]</b> database = {$database}<br />";
-      // echo "PDOException Message (Line {$e->getLine()}) -><br />";
-      // echo '&nbsp;&nbsp;&nbsp;&nbsp;' . $e;
-
-      // http_response_code(503);
-      // header("Location: /503.php");
-      // exit;
+    }
+    catch (PDOException $e)
+    {
+      // var_dump($e);
+      http_response_code(503);
+      header("Location: /503.php");
+      exit;
     }
 
-    $DBH->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
-    $DBH->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    $DBH->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    $database_connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    $database_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $database_connection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
-    $database_connections['absolute'] = $DBH;
+    $database_connections[$database] = $database_connection;
 
-    return $DBH;
+    return $database_connection;
 	}
 
 	/**
@@ -117,7 +119,7 @@
   class PDOWrapper extends PDO
   {
     private $queryCount = 0;
-    private $querys = [];
+    private $queries = [];
     public $runtime = [];
 
     public function __construct($dsn, $username = '', $password = '', $driver_options = array())
@@ -126,37 +128,27 @@
       $this->setAttribute(PDO::ATTR_STATEMENT_CLASS, array('PDOStatementWrapper', array($this)));
     }
 
-    public function query($query)
+    // public function query($query)
+    public function query( $query, $fetchMode = null, ...$fetchModeArgs ): PDOStatement | false
     {
-      ++$this->queryCount;
-
-      $this->querys[] = $query;
+      $this->queries[] = $query;
+      $this->queryCount++;
 
       return parent::query($query);
     }
 
-    public function prepare($query, $options = null)
+    // public function prepare($query, $options = null)
+    public function prepare( $query, $fetchMode = null, mixed ...$fetchModeArgs ): PDOStatement | false
     {
-      ++$this->queryCount;
-      $this->querys[] = $query;
+      $this->queries[] = $query;
+      $this->queryCount++;
 
       return parent::prepare($query);
     }
 
-    public function GetCount()
+    public function get_count()
     {
       return $this->queryCount;
-    }
-
-    public function GetQuerys()
-    {
-      $text = '';
-
-      foreach ($this->querys as $x => $v) {
-        $text .= '#' . ($x + 1) .' - (' . number_format($this->runtime[$x], 3) . 's)<br>' . trim($v) . '<br><br>';
-      }
-
-      return $text;
     }
 }
 
@@ -169,7 +161,7 @@ class PDOStatementWrapper extends PDOStatement
     $this->pdo = $pdo;
   }
 
-  public function execute($args = null)
+  public function execute($args = null) : bool
   {
     $time_start = microtime(true);
 

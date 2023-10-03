@@ -19,14 +19,9 @@
     $Pokemon_Nature
   )
   {
-    if ( $Pokemon_Level < 1 )
-      $Pokemon_Level = 1;
-
-    if ( $Pokemon_Stat_IV > 31 )
-      $Pokemon_Stat_IV = 31;
-
-    if ( $Pokemon_Stat_EV > 252 )
-      $Pokemon_Stat_EV = 252;
+    $Pokemon_Level = $Pokemon_Level < 1 ? 1 : $Pokemon_Level;
+    $Pokemon_Stat_IV = $Pokemon_Stat_IV > 31 ? 31 : $Pokemon_Stat_IV;
+    $Pokemon_Stat_EV = $Pokemon_Stat_EV > 252 ? 252 : $Pokemon_Stat_EV;
 
     if ( $Stat_Name == 'HP' )
     {
@@ -704,7 +699,7 @@
       return false;
 
     $Pokedex_ID = str_pad($Pokedex_Data['Pokedex_ID'], 3, "0", STR_PAD_LEFT);
-    $Pokemon_Forme = strtolower(preg_replace('/(^\s*\()|(\)\s*$)/', '', $Pokedex_Data['Forme']));
+    $Pokemon_Forme = isset($Pokemon_Forme) ? strtolower(preg_replace('/(^\s*\()|(\)\s*$)/', '', $Pokedex_Data['Forme'])) : null;
 
     switch($Pokemon_Forme)
     {

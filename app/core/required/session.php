@@ -68,7 +68,7 @@
 
   require_once $Dir_Root . '/core/functions/pokemon.php';
 
-  $PDO = DatabaseConnect();
+  $PDO = connect_database('absolute');
 
   /**
    * Get the client's IP address.

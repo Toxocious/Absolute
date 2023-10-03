@@ -9,8 +9,6 @@
 	<div class='head'>Index</div>
 	<div class='body'>
 		Welcome back to Absolute, <?= $User_Data['Username']; ?>.
-		<br /><br />
-		<i>misc user statistics here and stuff</i>
 	</div>
 </div>
 
@@ -22,14 +20,14 @@
 
 		try
 		{
-			$Online_Query = $PDO->query("SELECT COUNT(`id`) FROM `users` WHERE `last_active` > $Last_Active");
-			$Online_Count = $Online_Query->fetchColumn();
-
-			$Fetch_User_Count = $PDO->query("SELECT COUNT(`id`) FROM `users`");
-      $User_Count = $Fetch_User_Count->fetchColumn();
-
-			$Fetch_Pokemon_Count = $PDO->query("SELECT COUNT(`ID`) FROM `pokemon`");
-      $Pokemon_Count = $Fetch_Pokemon_Count->fetchColumn();
+      $Misc_Count_Query = $PDO->prepare("
+        SELECT
+          (SELECT COUNT(*) FROM `users` WHERE `last_active` > ?) as online_count,
+          (SELECT COUNT(*) FROM `users`) as user_count,
+          (SELECT COUNT(*) FROM `pokemon`) as pokemon_count;
+      ");
+      $Misc_Count_Query->execute([ $Last_Active ]);
+      $Count_Data = $Misc_Count_Query->fetch();
 		}
 		catch ( PDOException $e )
 		{
@@ -48,7 +46,7 @@
 		</div>
 
 		<div class='description' style='width: 70%;'>
-			The Pok&eacute;mon Absolute is home to <b><?= number_format($User_Count); ?></b> trainers and <b><?= number_format($Pokemon_Count); ?></b> Pok&eacute;mon!
+			The Pok&eacute;mon Absolute is home to <b><?= number_format($Count_Data['user_count']); ?></b> trainers and <b><?= number_format($Count_Data['pokemon_count']); ?></b> Pok&eacute;mon!
 		</div>
 
     <div>

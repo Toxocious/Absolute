@@ -4,7 +4,7 @@
         <?php
           if (defined('LOCAL'))
           {
-            $Query_Count = $database_connections['absolute']->GetCount();
+            $Query_Count = $database_connections['absolute']->get_count();
 
             echo "
               <div>
