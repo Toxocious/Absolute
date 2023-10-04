@@ -86,7 +86,29 @@ services:
             context: .
             dockerfile: dockerfiles/themes.dockerfile
         volumes:
-            - ./app/themes:/app/themes
+            - ./app/themes:/discord
+        depends_on:
+            - mysql
+        networks:
+            - absolute
+
+
+    discord:
+        container_name: absolute-discord
+        restart: on-failure
+        init: true
+        build:
+            context: .
+            dockerfile: dockerfiles/discord.dockerfile
+        volumes:
+            - ./absolute/discord:/app/discord
+        ports:
+            - 3000:3306
+        depends_on:
+            - mysql
+        networks:
+            - absolute
+
 
 volumes:
     absolute-mysqldata: {}
