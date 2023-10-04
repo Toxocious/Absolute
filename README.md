@@ -92,8 +92,10 @@ This project spins up [Docker](https://www.docker.com/get-started/) containers t
 ### Installation
 Clone the repository to the necessary directory.
 
+If you would like to also install Absolute's chat system and discord bot, clone this repository recursively. If you do not want them, do not clone it recursively.
+
 ```bash
-git clone https://github.com/Toxocious/Absolute.git
+git clone --recursive https://github.com/Toxocious/Absolute.git
 ```
 
 ### Project Setup
@@ -122,16 +124,12 @@ This will compile the stylesheets a single time. If you wish to do numerous chan
 > Docker does not currently handle watching and automatically compiling our stylesheets, but will in a future update.
 
 ### Chat Setup
-The source code used for Absolute's chat system can be found [HERE](https://github.com/Toxocious/Absolute-Chat).
-
-A separate, in-depth README with set-up documentation is included.
+The source code used for Absolute's chat system can be found [HERE](https://github.com/Toxocious/Absolute-Chat) and includes a separate, in-depth README with set-up documentation.
 
 > Docker has not yet been configured to set-up the chat system for you, but will in a future update.
 
 ### Discord Bot Setup
-The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/Toxocious/Absolute-Discord-Bot).
-
-A separate, in-depth README with set-up documentation is included.
+The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/Toxocious/Absolute-Discord-Bot) and includes a separate, in-depth README with set-up documentation.
 
 > Docker has not yet been configured to set-up the discord bot for you, but will in a future update.
 

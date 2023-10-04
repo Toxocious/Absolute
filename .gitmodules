@@ -1,0 +1,6 @@
+[submodule "absolute/discord"]
+	path = absolute/discord
+	url = git@github.com:toxocious/absolute-discord-bot.git
+[submodule "absolute/chat"]
+	path = absolute/chat
+	url = git@github.com:toxocious/absolute-chat.git
