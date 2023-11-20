@@ -32,6 +32,7 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Project Setup](#project-setup)
+  - [Setting The Root User's MySQL Password](#setting-the-root-users-mysql-password)
   - [Stylesheet Setup](#stylesheet-setup)
   - [Chat Setup](#chat-setup)
   - [Discord Bot Setup](#discord-bot-setup)
@@ -92,6 +93,16 @@ This script does a few things in order to set-up the game on your machine:
 3. Sets up your database by running all necessary migrations
 
 If you're intending on running this project on a dedicated server with your own domain name, you will need to manually set the domain name for the SSL certificates. This can be done in [./certbot/generate.sh](certbot/generate.sh).
+
+### Setting The Root User's MySQL Password
+When you first setup Absolute, the root MySQL password is an empty string. It is highly suggested that you change this to a very secure password with the following CLI command, where `'NEW_PASSWORD'` is the password that you want the root MySQL account to have.
+
+```sh
+docker exec -it absolute-mysql bash
+mariadb -u root -p'' password 'NEW_PASSWORD'
+```
+
+Do make sure to update the `MYSQL_ROOT_PASSWORD` `.env` value to reflect the new password that you've set.
 
 ### Stylesheet Setup
 When you have gotten the database set-up, you'll notice that - after navigating to your hosted copy of this repository - the stylesheets fail to load.
