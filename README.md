@@ -32,6 +32,7 @@
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Project Setup](#project-setup)
+  - [Setting The Root User's MySQL Password](#setting-the-root-users-mysql-password)
   - [Stylesheet Setup](#stylesheet-setup)
   - [Chat Setup](#chat-setup)
   - [Discord Bot Setup](#discord-bot-setup)
@@ -55,31 +56,16 @@
 - xDebug
 
 ### Features
+Absolute has been developed from the ground up with love, and thus comes with a wide variety of features, such as:
+
 - Dedicated Battles
-  - Use over 800 unique Pok&eacute;mon in battle
-  - Utilizes field-effects and terrains
-  - Includes over 800+ unique moves
-  - Includes over 200+ unique Pok&eacute;mon abilities
-  - Includes over 150+ unique items
 - Open World Mapping
-  - Explore large and open hand-crafted maps
-  - Includes many unique wild Pok&eacute;mon
 - Come Together With Clans
-  - Create your own clan, or join someone else's
-  - Earn experience and resources for your clan
-  - Level up Clan Upgrades for more progress
 - Real Time In-Game Chat
-  - Instantly message other players
-  - Includes logic and functionality for handling chat bans
 - Live Trading
-  - Instantly trade your currencies, items, and Pok&eacute;mon with other players
 - Staff Panel
-  - Check the logs of user activity on macro-discouraged features
-  - Ban and unban any user
-  - Put pages into and out of 'maintenance mode'
-  - Manage obtainable items and Pok&eacute;mon for any location
-  - Spawn in items and Pok&eacute;mon to any player
-  - Quick update database information of any item or Pok&eacute;mon
+
+You may read about Absolute's features in further detail in our [FEATURES.md](docs/FEATURES.md) documentation.
 
 
 
@@ -108,12 +94,22 @@ This script does a few things in order to set-up the game on your machine:
 
 If you're intending on running this project on a dedicated server with your own domain name, you will need to manually set the domain name for the SSL certificates. This can be done in [./certbot/generate.sh](certbot/generate.sh).
 
+### Setting The Root User's MySQL Password
+When you first setup Absolute, the root MySQL password is an empty string. It is highly suggested that you change this to a very secure password with the following CLI command, where `'NEW_PASSWORD'` is the password that you want the root MySQL account to have.
+
+```sh
+docker exec -it absolute-mysql bash
+mariadb -u root -p'' password 'NEW_PASSWORD'
+```
+
+Do make sure to update the `MYSQL_ROOT_PASSWORD` `.env` value to reflect the new password that you've set.
+
 ### Stylesheet Setup
 When you have gotten the database set-up, you'll notice that - after navigating to your hosted copy of this repository - the stylesheets fail to load.
 
 This is because Absolute's stylesheets are done in SCSS, which need compiled to CSS before they can be used for this project.
 
-Install (SASS)[https://sass-lang.com/install] for your operating system, add it to your PATH variables, open a terminal into this directory, and run the following command:
+Install [SASS](https://sass-lang.com/install) for your operating system, add it to your PATH variables, open a terminal into this directory, and run the following command:
 
 ```sh
 sass themes/sass:themes/css
@@ -131,10 +127,12 @@ The source code used for Absolute's chat system can be found [HERE](https://gith
 ### Discord Bot Setup
 The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/Toxocious/Absolute-Discord-Bot) and includes a separate, in-depth README with set-up documentation.
 
-> Docker has not yet been configured to set-up the discord bot for you, but will in a future update.
+Absolute's docker configuration includes the necessary dockerfile to automatically build and run the Discord bot for you.
 
 ### CI/CD Pipeline Setup
 Absolute uses a continue integration and deployment pipeline to automatically sync the repository ``main`` branch with the remote server.
+
+We used to use a CI/CD pipeline through Gitlab to synchronize our code with a remote server, but since moving to Github and using Docker for development, we do not currently have a working Github CI/CD workflow configuration.
 
 > This project does not yet dedicated hosting and thus doesn't have a valid github workflow configuration.
 
@@ -146,6 +144,6 @@ If you're interested in contributing to Absolute, please check out [CONTRIBUTING
 
 
 ## License
-This project is licensed under GNU GPL 3.
+This project is licensed under MIT.
 
 For more information about the license, check out the [LICENSE](LICENSE).

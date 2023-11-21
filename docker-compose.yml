@@ -69,9 +69,9 @@ services:
             - ./app:/app
             - ./logs:/logs
             - ./migrations:/migrations:ro
+            - ./config/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
             - ./config/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
             - ./config/error_reporting.ini:/usr/local/etc/php/conf.d/error_reporting.ini
-            - ./config/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
         extra_hosts:
             - "host.docker.internal:host-gateway"
         depends_on:
@@ -86,7 +86,7 @@ services:
             context: .
             dockerfile: dockerfiles/themes.dockerfile
         volumes:
-            - ./app/themes:/discord
+            - ./app/themes:/app/themes
         depends_on:
             - mysql
         networks:
