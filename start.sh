@@ -28,7 +28,13 @@ build_docker_containers() {
 
   if [ "$1" = "--build" ] || [ ! -f "$file" ] || [ "$current_commit" != "$(cat $file)" ]; then
     echo "[INFO] Building Docker containers."
-    docker-compose build
+  
+    if ! type "docker-compose" > /dev/null; then
+      podman-compose build
+    else
+      docker-compose build
+    fi
+
     echo "$current_commit" > "$file"
   else
     echo "[NOTICE] Already built, not running build script."
@@ -38,7 +44,12 @@ build_docker_containers() {
 # Function to start Docker containers
 start_docker_containers() {
   echo "[INFO] Starting Docker containers in the background."
-  docker-compose up -d
+
+  if ! type "docker-compose" > /dev/null; then
+    podman-compose up -d
+  else
+    docker-compose up -d
+  fi
 
   if [ $? -ne 0 ]; then
     error_exit "Docker compose build failed."
