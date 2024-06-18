@@ -16,8 +16,8 @@
 
   Check us out on Discord and consider starring the repository if you liked it!
 
-  <a href="https://discord.gg/Km6btPhs" target="_blank">
-    <img src="https://discord.com/api/guilds/1002005327555862620/widget.png?style=banner2" alt="Discord Banner" />
+  <a href="https://discord.gg/SHnvbsS" target="_blank">
+    <img src="https://discord.com/api/guilds/269182206621122560/widget.png?style=banner2" alt="Discord Banner" />
   </a>
 </div>
 
