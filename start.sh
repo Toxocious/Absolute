@@ -2,6 +2,7 @@
 
 # CLI flags
 verbose_migrations=false
+force_build=false
 
 # Function to display an error message and exit
 error_exit() {
@@ -23,13 +24,13 @@ generate_dev_certs() {
 
 # Function to build Docker containers
 build_docker_containers() {
-  file="logs/last-commit"
+  commit_file="logs/last-commit"
   current_commit=$(git rev-parse --short HEAD)
 
-  if [ "$1" = "--build" ] || [ ! -f "$file" ] || [ "$current_commit" != "$(cat $file)" ]; then
+  if [ "$force_build" = true ] || [ ! -f "$file" ] || [ "$current_commit" != "$(cat $commit_file)" ]; then
     echo "[INFO] Building Docker containers."
     docker-compose build
-    echo "$current_commit" > "$file"
+    echo "$current_commit" > "$commit_file"
   else
     echo "[NOTICE] Already built, not running build script."
   fi
@@ -62,9 +63,10 @@ execute_sql_migrations() {
 }
 
 # Parse command-line flags
-while getopts "m" flag; do
+while getopts "bv" flag; do
   case $flag in
-    m) verbose_migrations=true ;;
+    v) verbose_migrations=true ;;
+    b) force_build=true ;;
     *) exit 1 ;;
   esac
 done

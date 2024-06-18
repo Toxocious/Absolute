@@ -23,7 +23,7 @@
 
 
 
-## Table of Contents
+# Table of Contents
 - [Table of Contents](#table-of-contents)
 - [About The Project](#about-the-project)
   - [Tech Stack](#tech-stack)
@@ -42,8 +42,8 @@
 
 
 
-## About The Project
-### Tech Stack
+# About The Project
+## Tech Stack
 - PHP
 - Node.js
 - JavaScript
@@ -55,7 +55,7 @@
 - CI/CD
 - xDebug
 
-### Features
+## Features
 Absolute has been developed from the ground up with love, and thus comes with a wide variety of features, such as:
 
 - Dedicated Battles
@@ -69,13 +69,13 @@ You may read about Absolute's features in further detail in our [FEATURES.md](do
 
 
 
-## Getting Started
-### Prerequisites
+# Getting Started
+## Prerequisites
 This project spins up [Docker](https://www.docker.com/get-started/) containers to set up the environment, so you will need that installed and configured on the machine that you're setting up this project on.
 
 > It is possible to set-up this project without Docker, but the steps to do so are not currently documented.
 
-### Installation
+## Installation
 Clone the repository to the necessary directory.
 
 If you would like to also install Absolute's chat system and discord bot, clone this repository recursively. If you do not want them, do not clone it recursively.
@@ -84,8 +84,20 @@ If you would like to also install Absolute's chat system and discord bot, clone 
 git clone --recursive https://github.com/Toxocious/Absolute.git
 ```
 
-### Project Setup
-Once you have Docker installed and have cloned this repository, all you need to do is run the [./start.sh](start.sh) script.
+## Project Setup
+Once you have Docker installed and have cloned this repository, all you need to do is run the [./start.sh](start.sh) script inside of your terminal.
+
+You can do so as such:
+
+**Windows**
+```sh
+bash ./start.sh
+```
+
+**Linux/MacOS**
+```sh
+./start.sh
+```
 
 This script does a few things in order to set-up the game on your machine:
 1. Generates SSL certificates
@@ -94,7 +106,7 @@ This script does a few things in order to set-up the game on your machine:
 
 If you're intending on running this project on a dedicated server with your own domain name, you will need to manually set the domain name for the SSL certificates. This can be done in [./certbot/generate.sh](certbot/generate.sh).
 
-### Setting The Root User's MySQL Password
+## Setting The Root User's MySQL Password
 When you first setup Absolute, the root MySQL password is an empty string. It is highly suggested that you change this to a very secure password with the following CLI command, where `'NEW_PASSWORD'` is the password that you want the root MySQL account to have.
 
 ```sh
@@ -104,7 +116,7 @@ mariadb -u root -p'' password 'NEW_PASSWORD'
 
 Do make sure to update the `MYSQL_ROOT_PASSWORD` `.env` value to reflect the new password that you've set.
 
-### Stylesheet Setup
+## Stylesheet Setup
 When you have gotten the database set-up, you'll notice that - after navigating to your hosted copy of this repository - the stylesheets fail to load.
 
 This is because Absolute's stylesheets are done in SCSS, which need compiled to CSS before they can be used for this project.
@@ -119,17 +131,17 @@ This will compile the stylesheets a single time. If you wish to do numerous chan
 
 > Docker does not currently handle watching and automatically compiling our stylesheets, but will in a future update.
 
-### Chat Setup
+## Chat Setup
 The source code used for Absolute's chat system can be found [HERE](https://github.com/Toxocious/Absolute-Chat) and includes a separate, in-depth README with set-up documentation.
 
 > Docker has not yet been configured to set-up the chat system for you, but will in a future update.
 
-### Discord Bot Setup
+## Discord Bot Setup
 The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/Toxocious/Absolute-Discord-Bot) and includes a separate, in-depth README with set-up documentation.
 
 Absolute's docker configuration includes the necessary dockerfile to automatically build and run the Discord bot for you.
 
-### CI/CD Pipeline Setup
+## CI/CD Pipeline Setup
 Absolute uses a continue integration and deployment pipeline to automatically sync the repository ``main`` branch with the remote server.
 
 We used to use a CI/CD pipeline through Gitlab to synchronize our code with a remote server, but since moving to Github and using Docker for development, we do not currently have a working Github CI/CD workflow configuration.
@@ -138,12 +150,12 @@ We used to use a CI/CD pipeline through Gitlab to synchronize our code with a re
 
 
 
-## Contributing
+# Contributing
 If you're interested in contributing to Absolute, please check out [CONTRIBUTING.md](docs/CONTRIBUTING.md) for more information.
 
 
 
-## License
+# License
 This project is licensed under MIT.
 
 For more information about the license, check out the [LICENSE](LICENSE).
