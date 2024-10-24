@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     web:
         container_name: absolute-web
@@ -21,13 +19,17 @@ services:
 
     mysql:
         container_name: absolute-mysql
-        image: mariadb:latest
+        image: mariadb:10.7
+        env_file:
+            - .env
         volumes:
-            - absolute-mysqldata:/var/lib/mysql
+            # - absolute-mysqldata:/var/lib/mysql
+            - ./.env:/data/application/.env
+            - ./config/my.cnf:/etc/mysql/my.cnf
             - ./migrations/sql:/data/application/sql
             - ./migrations/migrate.sh:/data/application/migrate.sh
-            - ./.env:/data/application/.env
-        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --init-file /data/application/migrate.sh
+            - ./logs/mysql-errors.log:/var/log/mysql/error.log
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         ports:
             - 3306:3306
         networks:
@@ -80,17 +82,17 @@ services:
             - absolute
 
 
-    themes:
-        container_name: absolute-themes
-        build:
-            context: .
-            dockerfile: dockerfiles/themes.dockerfile
-        volumes:
-            - ./app/themes:/app/themes
-        depends_on:
-            - mysql
-        networks:
-            - absolute
+    # themes:
+    #     container_name: absolute-themes
+    #     build:
+    #         context: .
+    #         dockerfile: dockerfiles/themes.dockerfile
+    #     volumes:
+    #         - ./app/themes:/app/themes
+    #     depends_on:
+    #         - mysql
+    #     networks:
+    #         - absolute
 
 
     discord:
@@ -103,7 +105,7 @@ services:
         volumes:
             - ./absolute/discord:/app/discord
         ports:
-            - 3000:3306
+            - 3000:3000
         depends_on:
             - mysql
         networks:
@@ -116,3 +118,4 @@ volumes:
 networks:
     absolute:
         name: absolute
+        driver: bridge

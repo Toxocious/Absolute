@@ -11,15 +11,33 @@ fi
 
 source "$env_file"
 
+# Wait for the MySQL service to finish initializing.
+# This sucks and used to not be necessary, but I can't figure out any alternative solutions.
+until mysqladmin ping -h "$MYSQL_HOST" -u "$MYSQL_ROOT_USER" -p"$MYSQL_ROOT_PASSWORD" --silent; do
+    sleep 1
+done
+
 # Start a timer to track total execution time
 start_time=$(date +%s%3N)
 
-# Establish a MariaDB connection
+# Establish a database connection\
+echo "[INFO] Establishing database connection."
 mysql_cmd="mariadb -h $MYSQL_HOST -u $MYSQL_ROOT_USER -p$MYSQL_ROOT_PASSWORD"
 
 # Create the migrations database and the migration table if they do not exist
 if ! $mysql_cmd -e "USE $MYSQL_MIGRATION_DATABASE" 2>/dev/null; then
+  # Update user privileges.
+  $mysql_cmd -e "REVOKE ALL PRIVILEGES ON *.* FROM 'absolute'@'%';
+    REVOKE GRANT OPTION ON *.* FROM 'absolute'@'%';
+    GRANT SELECT, INSERT, UPDATE, DELETE, FILE ON *.* TO 'absolute'@'%' REQUIRE NONE WITH MAX_QUERIES_PER_HOUR 0 MAX_CONNECTIONS_PER_HOUR 0 MAX_UPDATES_PER_HOUR 0 MAX_USER_CONNECTIONS 0;
+    FLUSH PRIVILEGES;
+  "
+
+  echo "[SUCCESS] Updated user privileges for user 'absolute'@'%'."
+
+  # Create game and migration databases/tables.
   $mysql_cmd -e "CREATE DATABASE $MYSQL_GAME_DATABASE; CREATE DATABASE $MYSQL_MIGRATION_DATABASE; CREATE TABLE $MYSQL_MIGRATION_DATABASE.$MYSQL_MIGRATION_TABLE (id INT AUTO_INCREMENT PRIMARY KEY, name VARCHAR(255));"
+
   echo "[SUCCESS] Database $MYSQL_MIGRATION_DATABASE created with table $MYSQL_MIGRATION_TABLE."
 else
   echo "[NOTICE] Database $MYSQL_MIGRATION_DATABASE already exists."

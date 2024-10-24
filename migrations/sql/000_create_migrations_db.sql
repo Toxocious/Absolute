@@ -1,5 +1,7 @@
 START TRANSACTION;
+
 CREATE DATABASE IF NOT EXISTS `migrations`;
+
 USE `migrations`;
 
 CREATE TABLE IF NOT EXISTS `absolute` (
@@ -7,4 +9,5 @@ CREATE TABLE IF NOT EXISTS `absolute` (
   `name` VARCHAR(255) NOT NULL,
   `executed_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 COMMIT;
