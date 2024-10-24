@@ -27,6 +27,9 @@ build_docker_containers() {
   commit_file="logs/last-commit"
   current_commit=$(git rev-parse --short HEAD)
 
+  mkdir -p logs && [ ! -f "$commit_file" ] && touch "$commit_file"
+
+  #                                      "$commit_file"
   if [ "$force_build" = true ] || [ ! -f "$file" ] || [ "$current_commit" != "$(cat $commit_file)" ]; then
     echo "[INFO] Building Docker containers."
     docker-compose build
@@ -49,6 +52,8 @@ start_docker_containers() {
   if [ $? -ne 0 ]; then
     error_exit "Docker compose build failed."
   fi
+
+  echo "[INFO] Docker containers successfully started."
 }
 
 # Function to execute SQL migrations inside the MySQL Docker container

@@ -22,8 +22,10 @@ services:
         image: mariadb:10.7
         env_file:
             - .env
+        environment:
+            MARIADB_AUTO_UPGRADE: 1
         volumes:
-            # - absolute-mysqldata:/var/lib/mysql
+            - absolute-mysqldata:/var/lib/mysql
             - ./.env:/data/application/.env
             - ./config/my.cnf:/etc/mysql/my.cnf
             - ./migrations/sql:/data/application/sql
@@ -80,19 +82,6 @@ services:
             - mysql
         networks:
             - absolute
-
-
-    # themes:
-    #     container_name: absolute-themes
-    #     build:
-    #         context: .
-    #         dockerfile: dockerfiles/themes.dockerfile
-    #     volumes:
-    #         - ./app/themes:/app/themes
-    #     depends_on:
-    #         - mysql
-    #     networks:
-    #         - absolute
 
 
     discord:

@@ -3,9 +3,9 @@ FROM node:18-alpine
 COPY /absolute/discord /discord
 WORKDIR /discord
 
-RUN yarn install
-RUN yarn build
+RUN npm install
+RUN npm run build
 
 EXPOSE 3000 3306
 
-CMD [ "yarn", "start:prod", "mysql:3306" ]
+CMD [ "npm", "run", "start:dev", "mysql:3306" ]
