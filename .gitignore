@@ -9,5 +9,5 @@ certbot/conf
 certbot/www
 
 # Compiled CSS files
-app/themes/css/**/*.css
-app/themes/css/**/*.css.map
+app/themes/sass/**/*.css
+app/themes/sass/**/*.css.map
