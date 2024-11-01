@@ -3,6 +3,7 @@
 # CLI flags
 verbose_migrations=false
 force_build=false
+no_cache=false
 
 # Function to display an error message and exit
 error_exit() {
@@ -31,8 +32,16 @@ build_docker_containers() {
 
   #                                      "$commit_file"
   if [ "$force_build" = true ] || [ ! -f "$file" ] || [ "$current_commit" != "$(cat $commit_file)" ]; then
-    echo "[INFO] Building Docker containers."
-    docker-compose build
+    if [ "$no_cache" = true ]; then
+        echo "[INFO] Building Docker containers with no cache."
+
+        docker-compose build --no-cache
+    else
+         echo "[INFO] Building Docker containers from cache."
+
+        docker-compose build
+    fi
+
     echo "$current_commit" > "$commit_file"
   else
     echo "[NOTICE] Already built, not running build script."
@@ -77,9 +86,10 @@ execute_sql_migrations() {
 }
 
 # Parse command-line flags
-while getopts "bv" flag; do
+while getopts "bcv" flag; do
   case $flag in
     v) verbose_migrations=true ;;
+    c) no_cache=true ;;
     b) force_build=true ;;
     *) exit 1 ;;
   esac
