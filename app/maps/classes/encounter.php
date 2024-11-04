@@ -126,13 +126,13 @@
       User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Caught', 1);
 
       $Spawn_Pokemon = CreatePokemon(
+        $User_Data['ID'],
         $Encounter_Data['Pokedex_Data']['Pokedex_ID'],
         $Encounter_Data['Pokedex_Data']['Alt_ID'],
         $Encounter_Data['Level'],
         $Encounter_Data['Type'],
         $Encounter_Data['Gender'],
         $Encounter_Data['Obtained_Text'],
-        $User_Data['ID']
       );
 
       $Catch_Text = "

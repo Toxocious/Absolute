@@ -399,13 +399,13 @@
     $EVs = join(',', [$EV_HP, $EV_Attack, $EV_Defense, $EV_Sp_Attack, $EV_Sp_Defense, $EV_Speed]);
 
     $Spawn_Pokemon = CreatePokemon(
+      $User_Info['ID'],
       $Pokedex_Data['Pokedex_ID'],
       $Pokedex_Data['Alt_ID'],
       $Level,
       $Type,
       $Gender,
       $Creation_Location,
-      $User_Info['ID'],
       $Nature,
       $IVs,
       $EVs

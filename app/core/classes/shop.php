@@ -249,13 +249,13 @@
           $Object['Gender'] = GenerateGender($Object['Pokedex_ID'], $Object['Alt_ID']);
 
         $Spawn_Pokemon = CreatePokemon(
+          $User_Data['ID'],
           $Object['Pokedex_ID'],
           $Object['Alt_ID'],
           5,
           $Object['Type'],
           $Object['Gender'],
           $Shop_Data['Name'],
-          $User_Data['ID']
         );
 
         if ( !$Spawn_Pokemon )

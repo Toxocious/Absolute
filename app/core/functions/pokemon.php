@@ -56,20 +56,20 @@
    * @param $Obtained_At
    * @param $Location
    * @param $Slot
-   * @param $Owner
+   * @param $Owner_ID
    * @param $Nature
    * @param $IVs
    * @param $EVs
    */
   function CreatePokemon
   (
+    $Owner_ID,
     $Pokedex_ID,
     $Alt_ID,
     $Level = 5,
     $Type = "Normal",
     $Gender = null,
     $Obtained_At = "Unknown",
-    $Owner,
     $Nature = null,
     $IVs = null,
     $EVs = null
@@ -105,7 +105,7 @@
         LIMIT 6
       ");
       $Query_Party->execute([
-        $Owner
+        $Owner_ID
       ]);
       $Query_Party->setFetchMode(PDO::FETCH_ASSOC);
     }
@@ -174,7 +174,7 @@
       ");
       $Pokemon_Create->execute([
         $Pokedex_ID, $Alt_ID, $Pokemon['Name'], $Pokemon['Forme'],
-        $Type, $Experience, $Location, $Slot, $Owner, $Owner, $Gender,
+        $Type, $Experience, $Location, $Slot, $Owner_ID, $Owner_ID, $Gender,
         $IVs, $EVs, $Nature, time(), $Obtained_At, $Ability
       ]);
       $Poke_DB_ID = $PDO->lastInsertId();
