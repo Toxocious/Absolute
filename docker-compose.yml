@@ -30,7 +30,7 @@ services:
             - ./config/my.cnf:/etc/mysql/my.cnf
             - ./migrations/sql:/data/application/sql
             - ./migrations/migrate.sh:/data/application/migrate.sh
-            - ./logs/mysql-errors.log:/var/log/mysql/error.log
+            - ./logs/mysql_errors.log:/var/log/mysql/error.log
         command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         ports:
             - 3306:3306

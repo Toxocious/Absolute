@@ -11,6 +11,19 @@ error_exit() {
   exit 1
 }
 
+# Generate required log files if they don't already exist.
+generate_log_files() {
+    commit_file="logs/last-commit"
+    pdo_errors="logs/pdo_errors.log"
+    mysql_errors="logs/mysql_errors.log"
+
+    mkdir -p logs
+
+    [ ! -f "$commit_file" ] && touch "$commit_file"
+    [ ! -f "$pdo_errors" ] && touch "$pdo_errors"
+    [ ! -f "$mysql_errors" ] && touch "$mysql_errors"
+}
+
 # Function to generate development certificates using Certbot
 generate_dev_certs() {
   if [ ! -f "certbot/conf/live/absoluterpg.com/fullchain.pem" ]; then
@@ -28,9 +41,6 @@ build_docker_containers() {
   commit_file="logs/last-commit"
   current_commit=$(git rev-parse --short HEAD)
 
-  mkdir -p logs && [ ! -f "$commit_file" ] && touch "$commit_file"
-
-  #                                      "$commit_file"
   if [ "$force_build" = true ] || [ ! -f "$file" ] || [ "$current_commit" != "$(cat $commit_file)" ]; then
     if [ "$no_cache" = true ]; then
         echo "[INFO] Building Docker containers with no cache."
@@ -94,6 +104,9 @@ while getopts "bcv" flag; do
     *) exit 1 ;;
   esac
 done
+
+# Generate log files
+generate_log_files
 
 # Check for development server certificates
 generate_dev_certs

@@ -114,7 +114,7 @@
             else if ( $Can_Afford )
             {
               $Purchase_Button = "
-                <button onclick='Purchase({\"ID\": {$Shop_Pokemon['ID']}, \"Type\": \"{$Shop_Catalog}\"});'>
+                <button onclick='Purchase({\"ID\": {$Shop_Object['ID']}, \"Type\": \"{$Shop_Catalog}\"});'>
                   Purchase
                 </button>
               ";

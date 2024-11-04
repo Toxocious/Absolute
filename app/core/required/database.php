@@ -69,7 +69,7 @@
       $User_Dialogue = ' No User Data ||';
 
 		file_put_contents(
-      __DIR__ . '/../../_logs/pdo_errors.txt',
+      '/logs/pdo_errors.log',
       "[ {$Fetch_Date} ] {$User_Dialogue} {$Error_Message}\n",
       FILE_APPEND | LOCK_EX
     );
