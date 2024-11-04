@@ -33,7 +33,7 @@ services:
             - ./logs/mysql_errors.log:/var/log/mysql/error.log
         command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
         ports:
-            - 3306:3306
+            - 3307:3306
         networks:
             - absolute
 
@@ -45,8 +45,6 @@ services:
             PMA_HOST: mysql
             PMA_ABSOLUTE_URI: '/db/'
             UPLOAD_LIMIT: 512M
-        ports:
-            - 8080:80
         depends_on:
             - mysql
         networks:
