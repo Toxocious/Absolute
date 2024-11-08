@@ -98,6 +98,22 @@ services:
         networks:
             - absolute
 
+    chat:
+        container_name: absolute-chat
+        restart: on-failure
+        init: true
+        build:
+            context: .
+            dockerfile: dockerfiles/chat.dockerfile
+        volumes:
+            - ./absolute/chat:/app/chat
+        ports:
+            - 8080:8080
+        depends_on:
+            - mysql
+        networks:
+            - absolute
+
 
 volumes:
     absolute-mysqldata: {}

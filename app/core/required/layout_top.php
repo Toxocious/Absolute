@@ -28,7 +28,7 @@
       {
         echo "
           <link type='text/css' rel='stylesheet' href='" . DOMAIN_ROOT . "/themes/css/lib/toastify.min.css' />
-          <link type='text/css' rel='stylesheet' href='" . DOMAIN_ROOT . "/themes/css/lib/perfect-scrollbar.css' />
+          <link type='text/css' rel='stylesheet' href='" . DOMAIN_ROOT . "/themes/css/lib/perfect-scrollbar.min.css' />
           <link type='text/css' rel='stylesheet' href='" . DOMAIN_ROOT . "/themes/css/lib/iframe-lightbox.min.css' />
 
           <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/dependencies/jquery.min.js'></script>
