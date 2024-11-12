@@ -58,20 +58,20 @@ const Handler = {
          * Display that Absol is likely offline.
          */
 
-        if (typeof Absolute.user.connected === 'undefined') {
+        if (typeof Absolute.user.Connected === 'undefined') {
             Handler.Message = `
-        <table style="width: 100%; height: 100%;">
-          <tr>
-            <td style="width: 100%; height: 100%;" valign="middle">
-              <img src='https://${location.hostname}/images/Pokemon/Sprites/Normal/359.png' />
-              <br />
-              <b style="color: #ff0000; font-size: 14px;">Absolute Chat is offline.</b>
-              <br /><br />
-              Absol is currently offline for one reason or another.
-            </td>
-          </tr>
-        </table>
-      `;
+                <table style="width: 100%; height: 100%;">
+                  <tr>
+                    <td style="width: 100%; height: 100%;" valign="middle">
+                      <img src='https://${location.hostname}/images/Pokemon/Sprites/Normal/359.png' />
+                      <br />
+                      <b style="color: #ff0000; font-size: 14px;">Absolute Chat is offline.</b>
+                      <br /><br />
+                      Absol is currently offline for one reason or another.
+                    </td>
+                  </tr>
+                </table>
+            `;
         }
 
         /**
@@ -120,7 +120,7 @@ const Handler = {
             if (
                 !Message_Data.Message.Private.isPrivate ||
                 (Message_Data.Message.Private.isPrivate &&
-                    Message_Data.Message.Private.Private_To === Absolute.user.user_id)
+                    Message_Data.Message.Private.Private_To === Absolute.user.UserID)
             ) {
                 Handler.Message += `
           <div class="message${

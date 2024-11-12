@@ -61,8 +61,8 @@
         (function()
         {
           Absolute.user = {
-            user_id: <?= $User_Data['ID']; ?>,
-            postcode: '<?= $User_Data['Auth_Code']; ?>',
+            UserID: <?= $User_Data['ID']; ?>,
+            Auth_Code: '<?= $User_Data['Auth_Code']; ?>',
           }
 
           Absolute.Enable();
@@ -76,7 +76,7 @@
               event.preventDefault();
 
               const Chat_Message = Chat_Input.value.trim();
-              if ( Chat_Message !== '' && Absolute.user.connected )
+              if ( Chat_Message !== '' && Absolute.user.Connected )
               {
                 socket.emit('chat-message',
                 {
