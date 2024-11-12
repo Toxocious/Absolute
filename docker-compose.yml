@@ -11,8 +11,10 @@ services:
             - ./certbot/conf:/etc/nginx/ssl
             - ./app:/app
             - ./logs:/logs
+            - chat-build:/app/js/chat
         depends_on:
             - mysql
+            - chat
         networks:
             - absolute
 
@@ -106,7 +108,7 @@ services:
             context: .
             dockerfile: dockerfiles/chat.dockerfile
         volumes:
-            - ./absolute/chat:/app/chat
+            - chat-build:/chat/build/client
         ports:
             - 8080:8080
         depends_on:
@@ -117,6 +119,7 @@ services:
 
 volumes:
     absolute-mysqldata: {}
+    chat-build: {}
 
 networks:
     absolute:
