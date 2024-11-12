@@ -53,7 +53,7 @@
 			";
 
 			// Display the Staff Panel button/Index button, given the user is a staff member.
-			if ( $User_Data['Is_Staff'] )
+			if ( $User_Data['Is_Staff']  )
 			{
 				if ( strpos($URL['path'], '/staff/') === false )
 				{
@@ -94,6 +94,10 @@
 			$Display_Links = '';
 			foreach ( $Headers as $Key => $Head )
 			{
+        if ( $Class == 'Staff' && (!isset($Head['Required_Permission']) || !CheckUserPermission($Head['Required_Permission'])) ) {
+          continue;
+        }
+
 				/**
 				 * Loop through the appropriate links.
 				 * Only display if it's under the proper menu, and you have the sufficient power level.

@@ -601,6 +601,7 @@ footer>.social-links>a .icon {
 
   nav>.nav-container {
     display: flex;
+    justify-content: center;
   }
 
   nav>.nav-container>.button {
