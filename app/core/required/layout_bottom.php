@@ -44,29 +44,29 @@
       if ( isset($_SESSION['Absolute']) )
       {
     ?>
-      <!--
-      <script type='module' src='<?= DOMAIN_ROOT; ?>/absolute-chat/build/client/classes/client.js'></script>
-      <script type='module'>
-        import { ChatClient } from '<?= DOMAIN_ROOT; ?>/absolute-chat/build/client/classes/client.js';
-
-        console.log(ChatClient);
-      </script>
-      -->
-
-      <!-- -->
-      <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/absochat.js'></script>
-      <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/AbsoChat/Handler.js'></script>
-
+      <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/chat/client.js'></script>
       <script type='text/javascript'>
-        (function()
-        {
-          Absolute.user = {
-            UserID: <?= $User_Data['ID']; ?>,
-            Auth_Code: '<?= $User_Data['Auth_Code']; ?>',
+          /**
+           * Set up the user object that the socket will send.
+           */
+          let User = {
+              User_ID: <?= $User_Data['ID']; ?>,
+              Username: '<?= $User_Data['Username']; ?>',
+              Rank: '<?= $User_Data['Rank']; ?>',
+              Auth_Code: '<?= $User_Data['Auth_Code']; ?>',
+              Avatar: '<?= $User_Data['Avatar']; ?>',
+              Connected: false,
           }
 
-          Absolute.Enable();
+          /**
+           * Set up a new instance of the chat client socket.
+           */
+          const ChatClient = new AbsoluteChatClient.Absolute(User);
+          ChatClient.Initialize();
 
+          /**
+           * Handle sent chat messages.
+           */
           const Chat_Element = document.querySelector('#chatContent');
           const Perfect_Scrollbar = new PerfectScrollbar(Chat_Element);
           const Chat_Input = document.getElementById('chatMessage');
@@ -76,12 +76,15 @@
               event.preventDefault();
 
               const Chat_Message = Chat_Input.value.trim();
-              if ( Chat_Message !== '' && Absolute.user.Connected )
+              if ( Chat_Message !== '' && User.Connected )
               {
-                socket.emit('chat-message',
+
+                ChatClient.socket.emit('chat-message',
                 {
-                  user: Absolute.user,
-                  text: Chat_Message
+                  User: User,
+                  Message: {
+                    Text: Chat_Message,
+                  }
                 });
 
                 Chat_Input.value = '';
@@ -90,9 +93,7 @@
               }
             }
           });
-        })();
       </script>
-      <!-- -->
     <?php
       }
     ?>
