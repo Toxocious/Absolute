@@ -127,8 +127,7 @@ Once you have successfully built all Docker containers, you can access PHPMyAdmi
 ## Chat Setup
 The source code used for Absolute's chat system can be found [HERE](https://github.com/Toxocious/Absolute-Chat) and includes a separate, in-depth README with set-up documentation.
 
-> [!NOTE]
-> Docker has not yet been configured to set-up the chat system for you, but will in a future update.
+Absolute's docker configuration includes the necessary dockerfile to automatically build and run the RPG's chat server for you.
 
 ## Discord Bot Setup
 The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/Toxocious/Absolute-Discord-Bot) and includes a separate, in-depth README with documentation regarding included features.
