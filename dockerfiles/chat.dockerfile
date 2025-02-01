@@ -3,8 +3,8 @@ FROM node:18-alpine
 COPY /absolute/chat /chat
 WORKDIR /chat
 
-RUN npm install
-RUN npm run build
+RUN npm install && \
+    npm run build
 
 EXPOSE 8080 8080
 

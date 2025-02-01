@@ -15,3 +15,5 @@ docs
 docker-compose.yml
 dockerfiles
 
+# JavaScript node dependencies
+node_modules
