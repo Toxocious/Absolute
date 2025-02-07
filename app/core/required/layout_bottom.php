@@ -4,14 +4,31 @@
         <?php
           if (defined('LOCAL'))
           {
-            $Query_Count = $database_connections['absolute']->get_count();
+                  try {
+                      $db = DatabaseConnectionPool::getConnection('absolute');
+                      $queryCount = $db->getQueryCount();
+                      $queryTimes = $db->getRuntime();
+                      $totalTime = array_sum($queryTimes);
+                      $totalTimeMs = $totalTime * 1000; // Convert to milliseconds
 
-            echo "
-              <div>
-                Page generated in " . round(microtime(true) - $page_script_start_time, 4) . "s<br />
-                <b>Total SQL Queries</b>: " . number_format($Query_Count) . "
-              </div>
-            ";
+                      $stats = $PDO->getQueryStats();
+
+                      echo "
+                          <div class='debug-info flex flex-row'>
+                              Generation Time: " . round(microtime(true) - $page_script_start_time, 4) . "s<br>
+                              SQL Queries: " . number_format($queryCount) . "<br>
+                              " . sprintf(
+                                "Queries: %d | Total: %.4fms | Avg: %.4fms | Max: %.4fms",
+                                $stats['count'],
+                                $stats['total_time'] * 1000,
+                                $stats['average_time'] * 1000,
+                                $stats['max_time'] * 1000
+                            ) . "
+                          </div>
+                      ";
+                  } catch (Exception $e) {
+                      error_log("Failed to get query stats: " . $e->getMessage());
+                  }
           }
           else
           {

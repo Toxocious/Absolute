@@ -68,7 +68,17 @@
 
   require_once $Dir_Root . '/core/functions/pokemon.php';
 
-  $PDO = connect_database('absolute');
+  // $PDO = connect_database('absolute');
+  try
+  {
+    $PDO = DatabaseConnectionPool::getConnection('absolute');
+  }
+  catch (Exception $e)
+  {
+      HandleError($e);
+      header("Location: /503.php");
+      exit;
+  }
 
   /**
    * Get the client's IP address.
