@@ -182,9 +182,6 @@ class PDOWrapper extends PDO
             $this->queryCount++;
 
             $stmt = parent::prepare($query);
-            if ($stmt) {
-                $this->logQuery($query);
-            }
 
             $this->preparedStatements[$key] = $stmt;
         }
@@ -194,12 +191,14 @@ class PDOWrapper extends PDO
 
     public function execute(PDOStatement $statement, ?array $params = null): bool {
         $startTime = microtime(true);
+
         // Call execute directly on PDOStatement to avoid recursion
         if ($statement instanceof PDOStatementWrapper) {
             $result = $statement->parentExecute($params);
         } else {
             $result = $statement->execute($params);
         }
+
         $duration = microtime(true) - $startTime;
 
         $this->logQueryExecution($statement->queryString, $params, $duration);
@@ -215,11 +214,6 @@ class PDOWrapper extends PDO
         return $result;
     }
 
-    private function logQuery(string $query): void {
-        $this->queryCount++;
-        $this->queries[] = $query;
-    }
-
     private function logQueryExecution(string $query, ?array $params, float $duration): void {
         $this->queryStats[] = [
             'query' => $query,
@@ -227,7 +221,6 @@ class PDOWrapper extends PDO
             'duration' => $duration,
             'time' => microtime(true) - $this->pageLoadStart
         ];
-        $this->runtime[] = $duration;
     }
 
     public function getQueryStats(): array {
@@ -259,16 +252,6 @@ class PDOWrapper extends PDO
     public function getQueries(): array
     {
         return $this->queries;
-    }
-
-    public function getRuntime(): array
-    {
-        return $this->runtime;
-    }
-
-    public function addRuntime(float $time): void
-    {
-        $this->runtime[] = $time;
     }
 }
 

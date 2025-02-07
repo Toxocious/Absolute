@@ -5,18 +5,11 @@
           if (defined('LOCAL'))
           {
                   try {
-                      $db = DatabaseConnectionPool::getConnection('absolute');
-                      $queryCount = $db->getQueryCount();
-                      $queryTimes = $db->getRuntime();
-                      $totalTime = array_sum($queryTimes);
-                      $totalTimeMs = $totalTime * 1000; // Convert to milliseconds
-
                       $stats = $PDO->getQueryStats();
 
                       echo "
                           <div class='debug-info flex flex-row'>
-                              Generation Time: " . round(microtime(true) - $page_script_start_time, 4) . "s<br>
-                              SQL Queries: " . number_format($queryCount) . "<br>
+                              Generation Time: " . round(microtime(true) - $page_script_start_time, 4) * 1000 . "ms<br>
                               " . sprintf(
                                 "Queries: %d | Total: %.4fms | Avg: %.4fms | Max: %.4fms",
                                 $stats['count'],
