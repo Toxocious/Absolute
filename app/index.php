@@ -35,7 +35,7 @@
 		}
 ?>
 
-<div class='panel content' style='margin: 5px; width: calc(100% - 14px);'>
+<div class='panel content' style='margin: 5px auto 0px;'>
 	<div class='head'>Index</div>
 	<div class='body'>
 		<div class='nav'>
@@ -62,13 +62,13 @@
       <br />
       <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/Normal/359.png' />
       <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/Shiny/359.png' />
-
-      <div style='font-size: 12px; margin-top: 20px;'>
-        This website is designed and optimized for Chromium based browsers.<br />
-        It's recommended to use a Chromium based browser such as Google Chrome or Brave while browsing this website.
-      </div>
     </div>
 	</div>
+</div>
+
+<div style='margin: 0 auto; text-align: center; font-size: 12px; margin-top: 10px;'>
+  This website is designed and optimized for Chromium based browsers.<br />
+  It's recommended to use a Chromium based browser such as Google Chrome or Brave while browsing this website.
 </div>
 
 <?php

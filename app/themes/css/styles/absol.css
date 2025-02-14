@@ -19,14 +19,17 @@
   --border-color-error: #c90e0e;
   --border-color-warning: #fcbc19;
   --border-color-description: #4A618F;
+  --border-color-notice: #4A618F;
   --bg-success: #2c3a55;
   --bg-error: #2c3a55;
   --bg-warning: #2c3a55;
   --bg-description: #2c3a55;
+  --bg-notice: #2c3a55;
   --color-success: #fff;
   --color-error: #fff;
   --color-warning: #fff;
   --color-description: #fff;
+  --color-notice: #fff;
 
   --border-color: #4a618f;
   --border-color-secondary: #000;

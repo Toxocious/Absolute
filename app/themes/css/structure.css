@@ -419,6 +419,9 @@ header {
   background-position: center;
   background-size: var(--banner-bg-size);
   border-bottom: var(--border-style);
+  border-left: var(--border-style);
+  border-right: var(--border-style);
+  border-radius: 0 0 6px 6px;
   display: var(--display-flex);
   flex-basis: 100%;
   height: var(--banner-height);
@@ -482,12 +485,44 @@ header>.direct-message {
   margin-top: auto;
 }
 
+header > .social-media
+{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  margin-top: 0.5em;
+  margin-left: auto;
+  margin-right: -39px;
+}
+
+header > .social-media > div
+{
+  border-top: var(--border-style);
+  border-right: var(--border-style);
+  border-bottom: var(--border-style);
+  border-left: none;
+  border-radius: 0px 6px 6px 0;
+
+
+  height: auto;
+}
+
+header > .social-media > div > a {
+  display: block;
+
+  padding: 5px 7px 0px;
+}
+
 /**
  * Footer
  */
 footer {
   bottom: 0;
   border-top: var(--border-style);
+  border-left: var(--border-style);
+  border-right: var(--border-style);
+  border-radius: 6px 6px 0 0;
   height: 46px;
   padding: 5px;
   position: sticky;
@@ -509,35 +544,14 @@ footer>.copyright {
   flex-grow: 3;
 }
 
-footer>.social-links {
-  display: flex;
-  flex-direction: row;
-  flex-grow: 1;
-  height: 100%;
-  justify-content: flex-end;
-}
-
-footer>.social-links>a {
-  height: 34px;
-  max-height: 34px;
-  margin-top: -5px;
-  transition: all 150ms;
-}
-
-footer>.social-links>a .icon {
-  height: 34px;
-  transition: all 150ms;
-  width: 34px;
-}
-
 /**
  * Desktop
  */
 @media screen and (min-width: 1100px) {
   div.BODY-CONTAINER {
     align-content: baseline;
-    border-left: var(--border-style);
-    border-right: var(--border-style);
+    /* border-left: var(--border-style); */
+    /* border-right: var(--border-style); */
     display: var(--display-flex);
     flex-wrap: wrap;
     margin: 0 auto;
@@ -548,7 +562,9 @@ footer>.social-links>a .icon {
   div.description,
   div.error,
   div.success,
-  div.warning {
+  div.warning,
+  div.notice
+  {
     border: var(--border-style);
     border-radius: var(--border-radius);
     flex-basis: calc(100% - 26px);
