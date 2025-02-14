@@ -152,7 +152,6 @@ select {
  */
 div.BODY-CONTAINER {
   border-color: var(--border-color);
-  /* background: var(--color-sexary); */
 }
 
 div.notice {
@@ -370,14 +369,6 @@ aside>.panel.chat .message.private>.text>div {
  */
 table>tbody {
   background: var(--color-quadternary);
-}
-
-/**
- * Footer
- */
-footer {
-  background: var(--color-quadternary);
-  border-color: var(--color-primary);
 }
 
 /**

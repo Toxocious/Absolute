@@ -8,10 +8,10 @@
                       $stats = $PDO->getQueryStats();
 
                       echo "
-                          <div class='debug-info flex flex-row'>
-                              Generation Time: " . round(microtime(true) - $page_script_start_time, 4) * 1000 . "ms<br>
+                          <div>
+                              Page Generation Time: " . round(microtime(true) - $page_script_start_time, 4) * 1000 . "ms<br>
                               " . sprintf(
-                                "Queries: %d | Total: %.4fms | Avg: %.4fms | Max: %.4fms",
+                                "Database Queries: %d | Total: %.4fms | Avg: %.4fms | Max: %.4fms",
                                 $stats['count'],
                                 $stats['total_time'] * 1000,
                                 $stats['average_time'] * 1000,
@@ -27,7 +27,7 @@
           {
         ?>
 
-				<div class='copyright'>
+				<div>
 					Pok&eacute;mon Absolute &copy; 2018 - <?= date('Y'); ?> Toxocious<br />
 					Pok&eacute;mon &copy; 1995 - <?= date('Y'); ?> Nintendo/Creatures Inc./Game Freak Inc, please support the <a href='http://pokemon.com' target='_blank' rel='noopener noreferrer'>official release.</a>
 				</div>

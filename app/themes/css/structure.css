@@ -271,7 +271,6 @@ div#map_canvas>canvas {
 
 .panel.content {
   float: left;
-  margin: 0px 5px 5px;
   width: 100%;
 }
 
@@ -519,29 +518,30 @@ header > .social-media > div > a {
  */
 footer {
   bottom: 0;
-  border-top: var(--border-style);
-  border-left: var(--border-style);
-  border-right: var(--border-style);
-  border-radius: 6px 6px 0 0;
+
+  font-size: 12px;
+
   height: 46px;
   padding: 5px;
+
   position: sticky;
   top: calc(100% - 46px);
   width: 100%;
   z-index: 2;
+
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+
+  text-align: center;
 }
 
 footer>div {
   flex-basis: auto;
-  padding: 2px;
-}
-
-footer>.copyright {
   flex-grow: 3;
+
+  padding: 2px;
 }
 
 /**
@@ -550,8 +550,6 @@ footer>.copyright {
 @media screen and (min-width: 1100px) {
   div.BODY-CONTAINER {
     align-content: baseline;
-    /* border-left: var(--border-style); */
-    /* border-right: var(--border-style); */
     display: var(--display-flex);
     flex-wrap: wrap;
     margin: 0 auto;
@@ -707,7 +705,6 @@ footer>.copyright {
   * Sidebar
   */
   aside {
-    margin: 0px 0px 5px 5px;
     max-width: 194px;
     min-width: 194px;
   }
@@ -793,15 +790,20 @@ footer>.copyright {
   * Main
   */
   main {
-    align-content: baseline;
-    flex-basis: auto;
-    width: calc(100% - 199px);
-    min-height: 100%;
-    z-index: 2;
-    position: relative;
-    align-items: flex-start;
     display: flex;
+    flex-basis: auto;
+    flex-grow: 1;
     flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: baseline;
+
+    margin-left: 10px;
+
+    min-height: 100%;
+
+    position: relative;
+
+    z-index: 2;
   }
 }
 
