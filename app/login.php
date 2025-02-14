@@ -75,20 +75,23 @@
   require_once 'core/required/layout_top.php';
 ?>
 
-<div class='panel content' style='margin: 5px; width: calc(100% - 14px);'>
+<nav>
+  <div class='nav-container'>
+    <div class='button'>
+      <a href='index.php'>Home</a>
+    </div>
+    <div class='button'>
+      <a href='login.php'>Login</a>
+    </div>
+    <div class='button'>
+      <a href='register.php'>Register</a>
+    </div>
+  </div>
+</nav>
+
+<div class='panel content' style='margin: 0 auto;'>
 	<div class='head'>Login</div>
-	<div class='body' style='padding-bottom: 5px;'>
-		<div class='nav'>
-			<div><a href='index.php' style='display: block;'>Home</a></div>
-			<div><a href='login.php' style='display: block;'>Login</a></div>
-			<div><a href='register.php' style='display: block;'>Register</a></div>
-			<div><a href='discord.php' style='display: block;'>Discord</a></div>
-		</div>
-
-		<div class='description' style='background: #334364; margin-bottom: 5px; width: 70%;'>
-			Fill in the form below if you wish to login to Absolute.
-		</div>
-
+	<div class='body' style='padding: 10px 0;'>
     <?php
       if ( !empty($Login_Message) )
       {
@@ -100,14 +103,16 @@
       }
     ?>
 
-		<div class='description' style='background: #334364; width: 50%;'>
+		<div style=' margin: 0 auto; width: 50%;'>
 			<form method="POST">
 				<b>Username/ID</b><br />
 				<input autofocus type='text' name='username' placeholder='Username/ID' style='text-align: center;' />
-				<br />
+				<br /><br />
+
 				<b>Password</b><br />
 				<input type='password' name='password' placeholder='Password' style='text-align: center;' />
 				<br /><br />
+
 				<input type='submit' name='action' value='Login to Absolute' style='margin-left: -3px; width: 180px;' />
 			</form>
 		</div>

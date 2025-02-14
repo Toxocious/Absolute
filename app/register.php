@@ -203,16 +203,23 @@
   }
 ?>
 
-<div class="panel content" style="margin: 5px; width: calc(100% - 14px);">
-	<div class='head'>Register</div>
-	<div class='body' style='padding-bottom: 10px;'>
-		<div class='nav'>
-			<div><a href='index.php' style='display: block;'>Home</a></div>
-			<div><a href='login.php' style='display: block;'>Login</a></div>
-			<div><a href='register.php' style='display: block;'>Register</a></div>
-			<div><a href='discord.php' style='display: block;'>Discord</a></div>
-		</div>
+<nav>
+  <div class='nav-container'>
+    <div class='button'>
+      <a href='index.php'>Home</a>
+    </div>
+    <div class='button'>
+      <a href='login.php'>Login</a>
+    </div>
+    <div class='button'>
+      <a href='register.php'>Register</a>
+    </div>
+  </div>
+</nav>
 
+<div class="panel content" style="margin: 0 auto;">
+	<div class='head'>Register</div>
+	<div class='body' style='padding: 10px 0;'>
     <div class='description'>
       Please fill out the form below in order to begin your journey as a Pokemon Trainer.
     </div>
@@ -304,7 +311,7 @@
 
         <tbody>
           <tr>
-            <td colspan='2' style='padding: 10px;'>
+            <td colspan='2' style='padding: 5px;'>
               <input type='submit' name='Register' value='Register' />
             </td>
           </tr>

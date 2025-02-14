@@ -35,16 +35,23 @@
 		}
 ?>
 
-<div class='panel content' style='margin: 5px auto 0px;'>
-	<div class='head'>Index</div>
-	<div class='body'>
-		<div class='nav'>
-			<div><a href='index.php' style='display: block;'>Home</a></div>
-			<div><a href='login.php' style='display: block;'>Login</a></div>
-			<div><a href='register.php' style='display: block;'>Register</a></div>
-			<div><a href='discord.php' style='display: block;'>Discord</a></div>
-		</div>
+<nav>
+  <div class='nav-container'>
+    <div class='button'>
+      <a href='index.php'>Home</a>
+    </div>
+    <div class='button'>
+      <a href='login.php'>Login</a>
+    </div>
+    <div class='button'>
+      <a href='register.php'>Register</a>
+    </div>
+  </div>
+</nav>
 
+<div class='panel content' style='margin: 0 auto;'>
+	<div class='head'>Home</div>
+	<div class='body' style='padding: 10px 10px 0;'>
 		<div class='description' style='width: 70%;'>
 			The Pok&eacute;mon Absolute is home to <b><?= number_format($Count_Data['user_count']); ?></b> trainers and <b><?= number_format($Count_Data['pokemon_count']); ?></b> Pok&eacute;mon!
 		</div>
