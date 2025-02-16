@@ -2,7 +2,8 @@
   use BattleHandler\Battle;
 
   $Battle_Directory = dirname(__DIR__, 1);
-  require_once $Battle_Directory . "\\classes\\log.php";
+  if ( file_exists($Battle_Directory . "\\classes\\log.php") )
+    require_once $Battle_Directory . "\\classes\\log.php";
 
   class Trainer extends Battle
   {
