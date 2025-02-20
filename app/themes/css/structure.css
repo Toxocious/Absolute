@@ -800,6 +800,7 @@ footer>div {
     margin-left: 10px;
 
     min-height: 100%;
+    max-width: calc(100% - 204px);
 
     position: relative;
 
