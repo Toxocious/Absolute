@@ -600,6 +600,41 @@ footer>div {
   }
 
   /**
+   * Profile Nav Bar
+   */
+  .profile-nav-container {
+    display: flex;
+    justify-content: center;
+
+    flex-basis: 100%;
+    text-align: center;
+
+    & > .profile-nav-item {
+      display: block;
+      height: auto;
+      text-align: center;
+      width: calc(100% / 4);
+    }
+
+    & > .profile-nav-item>a {
+      border-radius: var(--border-radius);
+      display: block;
+      font-weight: bold;
+      height: auto;
+      padding: var(--padding-5px);
+      transition: background 0.15s;
+    }
+
+    & > .profile-nav-item>a:hover {
+      background: none;
+    }
+
+    & > .profile-nav-item>a>img {
+      display: none;
+    }
+  }
+
+  /**
   * Navigation Bar
   */
   nav {

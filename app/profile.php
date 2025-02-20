@@ -19,22 +19,27 @@
   <div class='body' style='padding: 5px;'>
     <div class='flex'>
       <div style='flex-basis: 350px; margin-right: 5px;'>
-        <table class='border-gradient' style='width: 350px;'>
-          <thead></thead>
+        <table style='width: 350px;'>
           <tbody>
             <tr>
-              <td colspan='4'>
-                <?= ( $Profile_User['Avatar'] ? "<img src='{$Profile_User['Avatar']}' />" : 'This user has no avatar set.' ); ?>
+              <td style='width: 96px;' rowspan='2'><?= ( $Profile_User['Avatar'] ? "<img src='{$Profile_User['Avatar']}' />" : 'This user has no avatar set.' ); ?></td>
+              <td>
+                <div style='font-size: 1.5em;'>
+                  <?= $Profile_User['Username']; ?>
+                </div>
               </td>
             </tr>
-          </tbody>
-          <tbody>
             <tr>
-              <td colspan='4'>
+              <td>
                 <?= $User_Class->DisplayUserRank($Profile_User['ID']); ?>
               </td>
             </tr>
+          </tbody>
+        </table>
 
+        <table class='border-gradient' style='width: 350px;'>
+          <thead></thead>
+          <tbody>
             <thead>
               <tr>
                 <td colspan='4'>
@@ -151,24 +156,28 @@
       </div>
 
       <div style='flex: 1;'>
-        <table class='border-gradient' style='width: calc(100% - 5px);'>
-          <tbody>
-            <tr>
-              <td colspan='1' style='width: 25%;' onclick="HandleTab('roster');">
-                <b>Roster</b>
-              </td>
-              <td colspan='1' style='width: 25%;' onclick="HandleTab('box');">
-                <b>Box</b>
-              </td>
-              <td colspan='1' style='width: 25%;' onclick="HandleTab('inventory');">
-                <b>Inventory</b>
-              </td>
-              <td colspan='1' style='width: 25%;' onclick="HandleTab('stats');">
-                <b>Stats</b>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+        <div class='profile-nav-container'>
+          <div class='profile-nav-item'>
+            <a href='javascript:void(0);' onclick="HandleTab('roster');">
+              Roster
+            </a>
+          </div>
+          <div class='profile-nav-item'>
+            <a href='javascript:void(0);' onclick="HandleTab('box');">
+              Box
+            </a>
+          </div>
+          <div class='profile-nav-item'>
+            <a href='javascript:void(0);' onclick="HandleTab('inventory');">
+              Inventory
+            </a>
+          </div>
+          <div class='profile-nav-item'>
+            <a href='javascript:void(0);' onclick="HandleTab('stats');">
+              Stats
+            </a>
+          </div>
+        </div>
 
         <table class='border-gradient' id='ProfileAJAX' style='margin-top: 5px; width: calc(100% - 5px);'>
           <tbody>
