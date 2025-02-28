@@ -37,6 +37,7 @@
       ];
 
       $Roster_Pokemon[$Slot]['Move_Data'] = $Moves;
+      $Roster_Pokemon[$Slot]['Level'] = $Pokemon_Info['Level'];
     }
 
     return $Roster_Pokemon;
