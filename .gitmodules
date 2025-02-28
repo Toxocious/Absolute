@@ -4,3 +4,6 @@
 [submodule "absolute/chat"]
 	path = absolute/chat
 	url = git@github.com:toxocious/absolute-chat.git
+[submodule "absolute/battle-server"]
+	path = absolute/battle-server
+	url = git@github.com:PokemonAbsolute/Absolute-Battle-Server.git
