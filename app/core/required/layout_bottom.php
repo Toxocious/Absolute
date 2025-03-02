@@ -55,7 +55,7 @@
               Username: '<?= $User_Data['Username']; ?>',
               Rank: '<?= $User_Data['Rank']; ?>',
               Auth_Code: '<?= $User_Data['Auth_Code']; ?>',
-              Avatar: '<?= $User_Data['Avatar']; ?>',
+              Avatar: '<?= str_replace('https://localhost/', '../', $User_Data['Avatar']); ?>',
               Connected: false,
           }
 
