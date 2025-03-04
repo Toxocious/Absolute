@@ -353,7 +353,7 @@ div#map_canvas>canvas {
   margin-bottom: 0px;
   padding: 0px;
   text-align: center;
-  width: 186px;
+  width: 100%;
 }
 
 /**
@@ -1183,7 +1183,7 @@ footer>div {
     margin-bottom: 0px;
     padding: 0px;
     text-align: center;
-    width: 186px;
+    width: 100%;
   }
 }
 
