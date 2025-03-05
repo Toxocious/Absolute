@@ -112,6 +112,10 @@ div .flex.wrap {
   flex-wrap: wrap;
 }
 
+div .flex.row {
+  flex-direction: row;
+}
+
 div .loading-element {
   border-radius: 50%;
   width: 3em;

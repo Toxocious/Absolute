@@ -5,48 +5,37 @@
 <div class='panel content'>
 	<div class='head'>Evolution Center</div>
 	<div class='body padding-5px'>
-		<div class='description'>
-			Select one of the Pok&eacute;mon in your roster, and you'll be given a list of Pok&eacute;mon that it may evolve into.
-		</div>
+    <div class='flex row'>
+        <?php
+            for ( $i = 0; $i <= 5; $i++ )
+            {
+              if ( isset($User_Data['Roster'][$i]['ID']) )
+              {
+                $Roster_Slot[$i] = GetPokemonData($User_Data['Roster'][$i]['ID']);
 
-		<table class='border-gradient' style='margin-bottom: 5px;'>
-			<thead>
-				<th colspan='6'>Roster</th>
-			</thead>
+                echo "
+                  <div style='width: calc(100% / 6);' onclick='Display_Evos({$Roster_Slot[$i]['ID']});'>
+                    <img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' ?><br />
+                    <b>{$Roster_Slot[$i]['Display_Name']}</b><br />
+                  </div>
+                ";
+              }
+              else
+              {
+                $Roster_Slot[$i]['Sprite'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0.png';
+                $Roster_Slot[$i]['Display_Name'] = 'Empty';
 
-			<tbody>
-				<tr id='Evo_Roster'>
-					<?php
-						for ( $i = 0; $i <= 5; $i++ )
-						{
-							if ( isset($User_Data['Roster'][$i]['ID']) )
-							{
-								$Roster_Slot[$i] = GetPokemonData($User_Data['Roster'][$i]['ID']);
-
-								echo "
-									<td style='width: calc(100% / 6);' onclick='Display_Evos({$Roster_Slot[$i]['ID']});'>
-										<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' ?><br />
-										<b>{$Roster_Slot[$i]['Display_Name']}</b><br />
-									</td>
-								";
-							}
-							else
-							{
-								$Roster_Slot[$i]['Icon'] = DOMAIN_SPRITES . '/Pokemon/Sprites/0_mini.png';
-								$Roster_Slot[$i]['Display_Name'] = 'Empty';
-
-								echo "
-									<td style='width: calc(100% / 6);'>
-										<img class='spricon' src='{$Roster_Slot[$i]['Icon']}' ?><br />
-										<b>{$Roster_Slot[$i]['Display_Name']}</b>
-									</td>
-								";
-							}
-						}
-					?>
-				</tr>
-			</tbody>
-		</table>
+                echo "
+                  <div style='width: calc(100% / 6);'>
+                    <img class='spricon' src='{$Roster_Slot[$i]['Sprite']}' ?><br />
+                    <b>{$Roster_Slot[$i]['Display_Name']}</b>
+                  </div>
+                ";
+              }
+            }
+        ?>
+    </div>
+    <br />
 
 		<table class='border-gradient' id='Evo_Data' style='width: 750px;'>
 			<thead>
