@@ -5,32 +5,34 @@
 <div class='panel content'>
   <div class='head'>Pok&eacute;mon Center</div>
   <div class='body'>
-    <div class='nav'>
-      <div>
-        <a href='javascript:void(0);' onclick="ShowTab('roster');">
-          Roster
-        </a>
-      </div>
-      <div>
-        <a href='javascript:void(0);' onclick="ShowTab('moves');">
-          Moves
-        </a>
-      </div>
-      <div>
-        <a href='javascript:void(0);' onclick="ShowTab('inventory');">
-          Inventory
-        </a>
-      </div>
-      <div>
-        <a href='javascript:void(0);' onclick="ShowTab('nickname');">
-          Nickname
-        </a>
-      </div>
-      <div>
-        <a href='javascript:void(0);' onclick="ShowTab('release');">
-          Release
-        </a>
-      </div>
+    <div style='padding: 0.5em; flex: 1;'>
+        <div class='page-nav-container'>
+          <div class='page-nav-item'>
+            <a href='javascript:void(0);' id='rosterButton' onclick="ShowTab('roster');">
+              Roster
+            </a>
+          </div>
+          <div class='page-nav-item'>
+            <a href='javascript:void(0);' id='movesButton' onclick="ShowTab('moves');">
+              Moves
+            </a>
+          </div>
+          <div class='page-nav-item'>
+            <a href='javascript:void(0);' id='inventoryButton' onclick="ShowTab('inventory');">
+              Inventory
+            </a>
+          </div>
+          <div class='page-nav-item'>
+            <a href='javascript:void(0);' id='nicknameButton' onclick="ShowTab('nickname');">
+              Nickname
+            </a>
+          </div>
+          <div class='page-nav-item'>
+            <a href='javascript:void(0);' id='releaseButton' onclick="ShowTab('release');">
+              Release
+            </a>
+          </div>
+        </div>
     </div>
 
     <div class='flex wrap' id='Pokemon_Center_Page' style='justify-content: center;'>
@@ -46,7 +48,6 @@
 <script src='<?= DOMAIN_ROOT; ?>/pages/pokemon_center/js/nickname.js'></script>
 <script src='<?= DOMAIN_ROOT; ?>/pages/pokemon_center/js/roster.js'></script>
 <script src='<?= DOMAIN_ROOT; ?>/pages/pokemon_center/js/moves.js'></script>
-
 <script src='<?= DOMAIN_ROOT; ?>/pages/pokemon_center/js/release.js'></script>
 
 <script>
