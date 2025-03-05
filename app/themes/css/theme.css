@@ -260,8 +260,11 @@ nav>.nav-container>.nav-item>a:hover {
   background: var(--color-tertiary);
 }
 
-.profile-nav-container>.profile-nav-item>a:hover {
+.page-nav-container>.page-nav-item>a:hover {
   background: var(--color-primary);
+}
+.page-nav-container>.page-nav-item.active>a {
+  color: var(--color-white);
 }
 
 nav>.nav-container>.nav-item>.dropdown {

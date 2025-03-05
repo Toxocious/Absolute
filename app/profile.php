@@ -156,23 +156,23 @@
       </div>
 
       <div style='flex: 1;'>
-        <div class='profile-nav-container'>
-          <div class='profile-nav-item'>
+        <div class='page-nav-container'>
+          <div class='page-nav-item'>
             <a href='javascript:void(0);' onclick="HandleTab('roster');">
               Roster
             </a>
           </div>
-          <div class='profile-nav-item'>
+          <div class='page-nav-item'>
             <a href='javascript:void(0);' onclick="HandleTab('box');">
               Box
             </a>
           </div>
-          <div class='profile-nav-item'>
+          <div class='page-nav-item'>
             <a href='javascript:void(0);' onclick="HandleTab('inventory');">
               Inventory
             </a>
           </div>
-          <div class='profile-nav-item'>
+          <div class='page-nav-item'>
             <a href='javascript:void(0);' onclick="HandleTab('stats');">
               Stats
             </a>

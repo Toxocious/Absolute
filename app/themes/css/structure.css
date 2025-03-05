@@ -602,21 +602,27 @@ footer>div {
   /**
    * Profile Nav Bar
    */
-  .profile-nav-container {
+  .page-nav-container {
     display: flex;
     justify-content: center;
+    gap: 0.25em;
 
     flex-basis: 100%;
     text-align: center;
 
-    & > .profile-nav-item {
+    & > .page-nav-item {
       display: block;
       height: auto;
       text-align: center;
       width: calc(100% / 4);
     }
 
-    & > .profile-nav-item>a {
+    & > .page-nav-item.active > a {
+      background: var(--color-primary);
+      border-radius: var(--border-radius);
+    }
+
+    & > .page-nav-item>a {
       border-radius: var(--border-radius);
       display: block;
       font-weight: bold;
@@ -625,11 +631,11 @@ footer>div {
       transition: background 0.15s;
     }
 
-    & > .profile-nav-item>a:hover {
+    & > .page-nav-item>a:hover {
       background: none;
     }
 
-    & > .profile-nav-item>a>img {
+    & > .page-nav-item>a>img {
       display: none;
     }
   }
