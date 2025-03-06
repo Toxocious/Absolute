@@ -4,24 +4,24 @@
         <?php
           if (defined('LOCAL'))
           {
-                  try {
-                      $stats = $PDO->getQueryStats();
+              try {
+                  $stats = $PDO->getQueryStats();
 
-                      echo "
-                          <div>
-                              Page Generation Time: " . round(microtime(true) - $page_script_start_time, 4) * 1000 . "ms<br>
-                              " . sprintf(
-                                "Database Queries: %d | Total: %.4fms | Avg: %.4fms | Max: %.4fms",
-                                $stats['count'],
-                                $stats['total_time'] * 1000,
-                                $stats['average_time'] * 1000,
-                                $stats['max_time'] * 1000
-                            ) . "
-                          </div>
-                      ";
-                  } catch (Exception $e) {
-                      error_log("Failed to get query stats: " . $e->getMessage());
-                  }
+                  echo "
+                      <div>
+                          Page Generation Time: " . round(microtime(true) - $page_script_start_time, 4) * 1000 . "ms<br>
+                          " . sprintf(
+                            "Database Queries: %d &mdash; Total: %.4fms &mdash; Avg: %.4fms &mdash; Max: %.4fms",
+                            $stats['count'],
+                            $stats['total_time'] * 1000,
+                            $stats['average_time'] * 1000,
+                            $stats['max_time'] * 1000
+                        ) . "
+                      </div>
+                  ";
+              } catch (Exception $e) {
+                  error_log("Failed to get query stats: " . $e->getMessage());
+              }
           }
           else
           {
