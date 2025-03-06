@@ -70,6 +70,7 @@ async function GetBoxedPokemon(Page = 1) {
             Boxed_Pokemon = JSON.parse(Boxed_Pokemon)[0];
 
             if (Boxed_Pokemon.Boxed_Pokemon.length === 0) {
+                document.querySelector('#Box_Pagination > tr > td').innerHTML = 'No Pages';
                 document.querySelector('#Boxed_Pokemon > tr > td').innerHTML =
                     'You have no Pok&eacute;mon in your box.';
             } else {
