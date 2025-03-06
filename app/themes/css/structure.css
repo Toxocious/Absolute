@@ -116,6 +116,10 @@ div .flex.row {
   flex-direction: row;
 }
 
+div .flex.column {
+  flex-direction: column;
+}
+
 div .loading-element {
   border-radius: 50%;
   width: 3em;

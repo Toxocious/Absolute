@@ -71,7 +71,7 @@
     try
     {
       $Fetch_Online_Users = $PDO->prepare("
-        SELECT `ID`, `Avatar`, `Last_Page`, `Last_Active`
+        SELECT COUNT(*) as `Online_User_Count`, `ID`, `Avatar`, `Last_Page`, `Last_Active`
         FROM `users`
         WHERE `Is_Staff` = 0 AND `Last_Active` >= ?
         ORDER BY `Last_Active` DESC, `ID` ASC
@@ -85,8 +85,14 @@
       HandleError($e);
     }
 
+    $Online_List_Count_Text = '';
+    if ( $Online_Users[0]['Online_User_Count'] > 0 ) {
+      $Online_List_Count_Text = "<div>There's currently {$Online_Users[0]['Online_User_Count']} trainer(s) online.</div>";
+    }
+
     $Online_List_Text .= "
-      <div style='flex-basis: 100%; margin-top: 5px;'>
+      <div class='flex column' style='gap: 0.5em; flex-basis: 100%; margin-top: 1em;'>
+        {$Online_List_Count_Text}
         <table class='border-gradient' style='width: 500px;'>
           <thead>
             <th colspan='3'>
@@ -109,7 +115,7 @@
           <tbody>
     ";
 
-    if ( $Online_Users )
+    if ( $Online_Users[0]['Online_User_Count'] > 0 )
     {
       foreach ( $Online_Users as $User_Key => $User_Val )
       {
