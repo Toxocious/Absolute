@@ -1,5 +1,10 @@
 <?php
-	require_once 'session.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+
+  if (isset($_SESSION['Absolute']))
+  {
+      require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/user_session.php';
+  }
 ?>
 
 <!DOCTYPE html>

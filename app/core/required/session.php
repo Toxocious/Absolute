@@ -5,7 +5,6 @@
   date_default_timezone_set('America/Los_Angeles');
   $Date = date("M dS, Y g:i:s A");
   $Absolute_Time = date('m/d/y h:i A');
-  $Time = time();
 
   // Deal with the $_SERVER const.
   if ( isset($_SERVER['HTTP_HOST']) && session_status() !== PHP_SESSION_ACTIVE )
@@ -68,7 +67,6 @@
 
   require_once $Dir_Root . '/core/functions/pokemon.php';
 
-  // $PDO = connect_database('absolute');
   try
   {
     $PDO = DatabaseConnectionPool::getConnection('absolute');
@@ -115,36 +113,4 @@
     $Current_Page['Name'] = 'Index';
     $Current_Page['Maintenance'] = 'no';
     $Current_Page['Logged_In'] = 'no';
-  }
-
-  /**
-   * Handle active session logic at the start of page loads.
-   *  - Get active user data
-   *  - Update active user page info, playtime, and last page active on
-   */
-  if ( isset($_SESSION['Absolute']) )
-  {
-    $User_Data = $User_Class->FetchUserData($_SESSION['Absolute']['Logged_In_As']);
-
-    if ( !isset($_SESSION['Absolute']['Playtime']) )
-    {
-      $_SESSION['Absolute']['Playtime'] = $Time;
-    }
-
-    $Playtime = $Time - $_SESSION['Absolute']['Playtime'];
-    $Playtime = $Playtime > 20 ? 20 : $Playtime;
-    $_SESSION['Absolute']['Playtime'] = $Time;
-
-    try
-    {
-      $Update_Activity = $PDO->prepare("INSERT INTO `logs` (`Type`, `Page`, `Data`, `User_ID`) VALUES ('pageview', ?, ?, ?)");
-      $Update_Activity->execute([ $Current_Page['Name'], $Parse_URL['path'], $User_Data['ID'] ]);
-
-      $Update_User = $PDO->prepare("UPDATE `users` SET `Last_Active` = ?, `Last_Page` = ?, `Playtime` = `Playtime` + ? WHERE `ID` = ? LIMIT 1");
-      $Update_User->execute([ $Time, $Current_Page['Name'], $Playtime, $User_Data['ID'] ]);
-    }
-    catch ( PDOException $e )
-    {
-      HandleError($e);
-    }
   }
