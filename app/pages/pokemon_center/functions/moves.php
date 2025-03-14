@@ -90,7 +90,7 @@
       $Pokemon_Ownership['Move_4']
     ];
 
-    $Pokemon_Moves[$Move_Slot] = (int) $Move_ID;
+    $Pokemon_Moves[$Move_Slot - 1] = (int) $Move_ID;
 
     if ( count(array_unique($Pokemon_Moves)) !== 4 )
     {
