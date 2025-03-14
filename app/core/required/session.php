@@ -99,7 +99,7 @@
     $Parse_URL = parse_url((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]");
 
     $Fetch_Page = $PDO->prepare("SELECT * FROM `pages` WHERE `URL` = ? LIMIT 1");
-    $Fetch_Page->execute([ $Parse_URL['path'] ]);
+    $Fetch_Page->execute([ TransformPath($Parse_URL['path']) ]);
     $Fetch_Page->setFetchMode(PDO::FETCH_ASSOC);
     $Current_Page = $Fetch_Page->fetch();
   }

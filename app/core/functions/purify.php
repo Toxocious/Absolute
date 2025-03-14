@@ -51,3 +51,26 @@
 
     return false;
   }
+
+  /**
+   * Transforms AJAX strings into base page strings.
+   * Example: '/pages/pokemon_center/pages/roster.php' -> '/pokemon_center.php'
+   *
+   * @param {$Url_Path}
+   */
+  function TransformPath($Url_Path)
+  {
+      if ( !$Url_Path )
+          return '/index.php';
+
+      // Match the pattern between /pages/ and /pages/
+      preg_match('/\/pages\/([^\/]+)\/pages\//', $Url_Path, $matches);
+
+      if (!empty($matches[1])) {
+          // Return the extracted section with .php extension
+          return '/' . $matches[1] . '.php';
+      }
+
+      // Return original path if pattern doesn't match
+      return $Url_Path;
+  }
