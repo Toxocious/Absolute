@@ -65,6 +65,7 @@
 
       // Match the pattern between /pages/ and /pages/
       preg_match('/\/pages\/([^\/]+)\/pages\//', $Url_Path, $matches);
+      preg_match('/\/pages\/([^\/]+)\/ajax\//', $Url_Path, $matches);
 
       if (!empty($matches[1])) {
           // Return the extracted section with .php extension

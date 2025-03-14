@@ -1,10 +1,10 @@
 <?php
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
 
 	/**
 	 * Check for any AJAX requests.
 	 */
-	if ( isset($_POST['request']) )
+	if ( IS_AJAX_REQUEST && isset($_SESSION['Absolute']) && isset($_POST['request']) )
 	{
 		$Request = Purify($_POST['request']);
 

@@ -10,7 +10,6 @@ async function RefreshOnlineList() {
     await SendRequest('online_list', Form_Data)
         .then((Online_Users) => {
             Online_Users = JSON.parse(Online_Users);
-            console.log(Online_Users);
 
             document.getElementById('Online_List_Container').innerHTML = Online_Users.Online_List;
         })

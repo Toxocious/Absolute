@@ -1,4 +1,6 @@
 <?php
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
+
   /**
    * Get and return all releasable Pokemon that the user has.
    */

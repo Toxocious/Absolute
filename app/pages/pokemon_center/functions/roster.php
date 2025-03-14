@@ -1,4 +1,6 @@
 <?php
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
+
   /**
    * Return the user's roster as a JSON object.
    */
