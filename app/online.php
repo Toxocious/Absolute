@@ -1,6 +1,7 @@
 <?php
-	require_once 'core/required/layout_top.php';
-  require_once 'core/functions/online_list/online_list.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
+
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/online_list/functions/online_list.php';
 ?>
 
 <div class='panel content'>
@@ -18,5 +19,14 @@
 	</div>
 </div>
 
+<script src='<?= DOMAIN_ROOT; ?>/pages/online_list/js/ajax_functions.js'></script>
+
+<script>
+  setInterval(() =>
+  {
+    RefreshOnlineList();
+  }, 2000);
+  </script>
+
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

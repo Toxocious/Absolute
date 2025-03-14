@@ -1,4 +1,6 @@
 <?php
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+
   function GetOnlineUsersTable()
   {
     global $PDO, $User_Class;
