@@ -71,10 +71,14 @@
 
         $Reported_Users = count(GetActiveReports());
         if ( $Reported_Users > 0 )
+        {
           $Notification_Amount += $Reported_Users;
+        }
 
         if ( $Notification_Amount > 0 && $Link_Name == 'Staff Panel' )
+        {
           $Notification_Text = " (<b style='color: red;'> {$Notification_Amount} </b>)";
+        }
 
 				echo "
 					<div class='nav-container'>
@@ -94,13 +98,19 @@
 			$Display_Links = '';
 			foreach ( $Headers as $Key => $Head )
 			{
-        if ( $Class == 'Staff' && (!isset($Head['Required_Permission']) || !CheckUserPermission($Head['Required_Permission'])) ) {
-          continue;
-        }
+        /**
+         * Ideally, we don't want to display header sections where the user doesn't have the required permission.
+         * For now, though, it's fine if they can see the header - the links themselves will be hidden and not rendered.
+         */
+        // if ( $Class == 'Staff' && (empty($Head['Required_Permission']) || !CheckUserPermission($Head['Required_Permission'])) )
+        // {
+        //   echo '<b>req perm:</b>' . $Head['Required_Permission'] . '<br />';
+        //   continue;
+        // }
 
 				/**
 				 * Loop through the appropriate links.
-				 * Only display if it's under the proper menu, and you have the sufficient power level.
+				 * Only display if it's under the proper menu, and you have the required permission.
 				 */
 				foreach ( $Links as $Key => $Link )
 				{
@@ -123,11 +133,13 @@
 
               switch ( $Link['Name'] )
               {
-                case 'Reported Users':
-                  $Reported_Users = count(GetActiveReports());
-                  if ( $Reported_Users > 0 )
-                    $Notification_Amount = " (<b style='color: red;'> {$Reported_Users} </b>)";
-                  break;
+                  case 'Reported Users':
+                      $Reported_Users = count(GetActiveReports());
+                      if ( $Reported_Users > 0 )
+                      {
+                          $Notification_Amount = " (<b style='color: red;'> {$Reported_Users} </b>)";
+                      }
+                      break;
               }
 
 							$Display_Links .= "
