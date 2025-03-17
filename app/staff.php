@@ -49,6 +49,16 @@
 						$Staff_Data = $User_Class->FetchUserData($User_Val['ID']);
 						$Staff_Username = $User_Class->DisplayUsername($User_Val['ID'], true, true, true);
 
+            $Staff_Message = '';
+            if ( $Staff_Data['Staff_Message'] )
+            {
+              $Staff_Message = "
+                  <tr>
+                      <td colspan='3' style='padding: 5px;'>{$Staff_Data['Staff_Message']}</td>
+                  </tr>
+              ";
+            }
+
 						echo "
 							<table class='border-gradient'  style='flex-basis: 280px; margin: 3px;'>
 								<tbody>
@@ -69,11 +79,7 @@
 											</a>
 										</td>
 									</tr>
-									<tr>
-										<td colspan='3' style='padding: 5px;'>
-											" . ($Staff_Data['Staff_Message'] ? $Staff_Data['Staff_Message'] : 'This user has yet to set their staff message.') . "
-										</td>
-									</tr>
+									{$Staff_Message}
 								</tbody>
 							</table>
 						";
