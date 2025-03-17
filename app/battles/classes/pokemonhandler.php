@@ -1210,6 +1210,10 @@
         )
         {
           $Exp = $this->CalcExp($Exp_Divisor);
+          if ( $_SESSION['Absolute']['Battle']['Ally']->Staff_Rank == 'Administrator' )
+          {
+              $Exp *= $this->Pokemon_Exp_Staff_Mult;
+          }
 
           try
           {

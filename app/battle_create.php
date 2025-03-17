@@ -21,7 +21,8 @@
   require_once 'battles/classes/userhandler.php';
   require_once 'battles/classes/weather.php';
 
-	require_once 'core/required/session.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/user_session.php';
 
 	if
 	(

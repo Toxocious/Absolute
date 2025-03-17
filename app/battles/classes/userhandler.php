@@ -18,6 +18,11 @@
     public $Money = null;
     public $Abso_Coins = null;
 
+    public $Trainer_Level = 1;
+    public $Trainer_Exp = 0;
+
+    public $Staff_Rank = 'Member';
+
     public function __construct
     (
       int $User_ID,
@@ -51,6 +56,7 @@
       $this->Roster = $Roster;
       $this->Money = $User['Money'];
       $this->Abso_Coins = $User['Abso_Coins'];
+      $this->Staff_Rank = $User['Rank'];
 
       $Clan = new ClanHandler($User['Clan']);
       $Clan = $Clan->Initialize();

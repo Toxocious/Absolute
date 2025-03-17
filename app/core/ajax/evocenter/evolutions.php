@@ -1,5 +1,6 @@
 <?php
-	require_once '../../required/session.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+  require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/user_session.php';
 
 	/**
 	 * Check for any AJAX requests.

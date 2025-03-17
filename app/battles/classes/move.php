@@ -816,7 +816,7 @@
         }
       }
 
-      if ( $this->hasFlag('contact') )
+      if (false && $this->hasFlag('contact') )
       {
         $Handle_Contact = $this->HandleContact($Side);
         if ( isset($Handle_Contact['Damage']) && $Handle_Contact['Damage'] == 0 )
@@ -928,7 +928,7 @@
                     (!empty($Ability_Change_Dialogue) ? $Ability_Change_Dialogue : '') .
                     ($this->Recoil > 0 ? "<br />{$Attacker->Display_Name} took " . number_format($Recoil) . ' damage from the recoil!' : '') .
                     ($Healing > 0 ? "<br />{$Attacker->Display_Name} restored " . number_format($Healing) . ' health!' : '') .
-                    ($this->hasFlag('contact') ? $this->HandleContact($Side)['Text'] : '') .
+                    ($this->hasFlag('contact') && isset($this->HandleContact($Side)['Text']) ? $this->HandleContact($Side)['Text'] : '') .
                     (!empty($Ailment_Text) ? "<br />{$Ailment_Text}" : '') .
                     (!empty($Stat_Change_Text) ? "<br />{$Stat_Change_Text}" : '');
       }
@@ -1363,7 +1363,7 @@
         ];
       }
 
-      if ( $Defender->Last_Move['Name'] == 'Baneful Bunker' )
+      if ( isset($Defender->Last_Move['Name']) && $Defender->Last_Move['Name'] == 'Baneful Bunker' )
       {
         if
         (
@@ -1386,12 +1386,12 @@
         ];
       }
 
-      if ( $Defender->Last_Move['Name'] == 'Beak Blast')
+      if ( isset($Defender->Last_Move['Name']) && $Defender->Last_Move['Name'] == 'Beak Blast' )
         if ( $Defender->HasStatus('Charging') )
           if ( $Attacker->Item->Name != 'Protective Pads' )
             $Attacker->SetStatus('Burn');
 
-      if ( $Defender->Last_Move['Name'] == "King's Shield" )
+      if ( isset($Defender->Last_Move['Name']) && $Defender->Last_Move['Name'] == "King's Shield" )
       {
         if ( $this->Damage_Type != 'Status' )
         {
@@ -1410,7 +1410,7 @@
         }
       }
 
-      if ( $Defender->Last_Move['Name'] == 'Obstruct' )
+      if ( isset($Defender->Last_Move['Name']) && $Defender->Last_Move['Name'] == 'Obstruct' )
       {
         if ( $this->Damage_Type != 'Status' )
         {
@@ -1430,7 +1430,7 @@
         }
       }
 
-      if ( $Defender->Last_Move['Name'] == 'Spiky Shield' )
+      if ( isset($Defender->Last_Move['Name']) && $Defender->Last_Move['Name'] == 'Spiky Shield' )
       {
         if ( $Attacker->Item->Name != 'Protective Pads' )
         {

@@ -22,6 +22,7 @@
     private $Battle_Sim = false;
     private $Battle_Sim_Difficulty = false;
 
+    public $Pokemon_Exp_Staff_Mult = 1000;
     public $Earn_Pokemon_Exp = true;
     public $Earn_Trainer_Exp = true;
     public $Earn_Clan_Exp = true;
