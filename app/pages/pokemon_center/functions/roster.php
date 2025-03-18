@@ -217,8 +217,7 @@
               </div>
 
               <div style='flex-basis: 100%;'>
-                <b>Level</b><br />
-                " . $Pokemon_Level . "<br />
+                Level " . $Pokemon_Level . "<br />
                 <i style='font-size: 12px;'>(" . $Pokemon_Info['Experience'] . " Exp)</i>
               </div>
             </div>
@@ -232,7 +231,7 @@
               <table class='border-gradient' style='width: 100%;'>
                 <thead>
                   <tr>
-                    <th style='width: 25%;'>Stat</th>
+                    <th style='width: 25%;'></th>
                     <th style='width: 25%;'>Base</th>
                     <th style='width: 25%;'>IV</th>
                     <th style='width: 25%;'>EV</th>

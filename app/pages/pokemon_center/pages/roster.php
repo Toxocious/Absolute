@@ -292,7 +292,7 @@
       </tbody>
     </table>
 
-    <table class='border-gradient' style='min-height: 215px; max-height: 215px; width: 550px;'>
+    <table style='min-height: 215px; max-height: 215px; width: 550px;'>
       <tbody id='Pokemon_Preview'>
         <tr>
           <td>
