@@ -891,7 +891,7 @@
     try
     {
       $Get_User_Roster = $PDO->prepare("
-        SELECT DISTINCT(`Slot`)
+        SELECT *
         FROM `pokemon`
         WHERE `Owner_Current` = ? AND `Location` = 'Roster' AND `Slot` <= 6
         ORDER BY `Slot` ASC
@@ -910,6 +910,7 @@
 
     $Poke_Data = GetPokemonData($Pokemon_ID);
 
+    // Sending directly to the user's box.
     if ( $Slot == 7 )
     {
       try
@@ -938,10 +939,11 @@
 
       $Move_Message = "<b>{$Poke_Data['Display_Name']}</b> has been sent to your box.";
     }
-    else
+    // There is a Pokemon to swap slots with.
+    else if ( isset($User_Roster[$Slot - 1]) )
     {
-      if ( isset($Roster[$Slot - 1]) )
-      {
+        $New_Slot = $Slot - 1;
+
         try
         {
           $PDO->beginTransaction();
@@ -966,7 +968,7 @@
           $Update_Roster->execute([
             $Poke_Data['Location'],
             $Poke_Data['Slot'],
-            $Roster[$Slot - 1]['ID']
+            $User_Roster[$New_Slot]['ID']
           ]);
 
           $PDO->commit();
@@ -978,36 +980,36 @@
           HandleError($e);
         }
 
-        $Move_Message = "<b>{$Poke_Data['Display_Name']}</b> has been added to your roster.";
-      }
-      else
+        $Move_Message = "<b>{$Poke_Data['Display_Name']}</b> has been moved to slot {$Slot}.";
+    }
+    // There is no Pokemon to swap slots with.
+    else
+    {
+      try
       {
-        try
-        {
-          $PDO->beginTransaction();
+        $PDO->beginTransaction();
 
-          $Update_Roster = $PDO->prepare("
-            UPDATE `pokemon`
-            SET `Location` = 'Roster', `Slot` = ?
-            WHERE `ID` = ?
-            LIMIT 1
-          ");
-          $Update_Roster->execute([
-            count($User_Roster) + 1,
-            $Poke_Data['ID']
-          ]);
+        $Update_Roster = $PDO->prepare("
+          UPDATE `pokemon`
+          SET `Location` = 'Roster', `Slot` = ?
+          WHERE `ID` = ?
+          LIMIT 1
+        ");
+        $Update_Roster->execute([
+          count($User_Roster) + 1,
+          $Poke_Data['ID']
+        ]);
 
-          $PDO->commit();
-        }
-        catch (PDOException $e)
-        {
-          $PDO->rollBack();
-
-          HandleError($e);
-        }
-
-        $Move_Message = "<b>{$Poke_Data['Display_Name']}</b> has been added to your roster.";
+        $PDO->commit();
       }
+      catch (PDOException $e)
+      {
+        $PDO->rollBack();
+
+        HandleError($e);
+      }
+
+      $Move_Message = "<b>{$Poke_Data['Display_Name']}</b> has been added to your roster.";
     }
 
     return [

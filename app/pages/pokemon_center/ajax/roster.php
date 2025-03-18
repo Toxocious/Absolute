@@ -24,7 +24,7 @@
     $Pokemon_ID = Purify($_GET['Pokemon_ID']);
 
   $Slot = 1;
-  if ( !empty($_GET['Slot']) )
+  if ( isset($_GET['Slot']) )
     $Slot = Purify($_GET['Slot']);
 
   switch ( $Action )
