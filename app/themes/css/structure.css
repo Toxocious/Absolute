@@ -475,6 +475,8 @@ header>.roster {
   display: var(--display-flex);
   flex-direction: row;
   flex-wrap: wrap;
+
+  height: 0;
   width: 108px;
 }
 
