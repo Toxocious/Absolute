@@ -1,7 +1,5 @@
 /**
- * Load content from the specified tab.
- *
- * @param Tab_Name
+ * Refresh the online list's online users.
  */
 async function RefreshOnlineList() {
     let Form_Data = new FormData();

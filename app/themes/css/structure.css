@@ -120,6 +120,11 @@ div .flex.column {
   flex-direction: column;
 }
 
+div .flex.center {
+  align-items: center;
+  justify-content: center;
+}
+
 div .loading-element {
   border-radius: 50%;
   width: 3em;

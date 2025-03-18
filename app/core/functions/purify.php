@@ -5,12 +5,16 @@
    *
    * @param {$Input}
    */
-  function Purify($Input)
+  function Purify($Input, $Forced_Type = null)
   {
     if ( !$Input )
       return false;
 
     $Input_Type = gettype($Input);
+    if ( isset($Forced_Type) ) {
+      $Input_Type = $Forced_Type;
+    }
+
     $Input_As_Text = $Input;
 
     if ( is_array($Input_As_Text) )
