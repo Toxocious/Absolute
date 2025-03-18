@@ -60,15 +60,15 @@
     $Page = (int) Purify($Page);
 
     $Limit_Start = ($Page - 1) * 48;
-    if ( $Limit_Start < 1 )
-      $Limit_Start = 1;
+    if ( $Limit_Start < 0 )
+      $Limit_Start = 0;
 
     try
     {
       $Get_Boxed_Pokemon = $PDO->prepare("
         SELECT `ID`, `Pokedex_ID`, `Forme`, `Type`
         FROM `pokemon`
-        WHERE `Owner_Current` = ? AND `Location` = 'Box'
+        WHERE `Owner_Current` = ? AND `Location` = 'Box' AND `Slot` = 7
         ORDER BY `ID` ASC, `Pokedex_ID` ASC, `Alt_ID` ASC
         LIMIT ?,48
       ");
