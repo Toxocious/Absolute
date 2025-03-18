@@ -295,9 +295,7 @@
     <table style='min-height: 215px; max-height: 215px; width: 550px;'>
       <tbody id='Pokemon_Preview'>
         <tr>
-          <td>
-            Click on a Pok&eacute;mon to view more information.
-          </td>
+          <td></td>
         </tr>
       </tbody>
     </table>

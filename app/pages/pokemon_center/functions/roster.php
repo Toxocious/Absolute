@@ -194,6 +194,8 @@
       }
     }
 
+    $Pokemon_Abilities = GetAbilities($Pokemon_Info['Pokedex_ID'], $Pokemon_Info['Alt_ID']);
+
     return [
         'Pokemon_Data' => "
           <div class='flex' style='flex-basis: 100%; gap: 6px;'>
@@ -216,9 +218,10 @@
                 </div>
               </div>
 
-              <div style='flex-basis: 100%;'>
-                Level " . $Pokemon_Level . "<br />
-                <i style='font-size: 12px;'>(" . $Pokemon_Info['Experience'] . " Exp)</i>
+              <div style='display: flex; flex-direction: column; gap: 0.35em; flex-basis: 100%;'>
+                <div title='(" . $Pokemon_Info['Experience'] . " Exp)'>Level " . $Pokemon_Level . "</div>
+                <div>{$Pokemon_Info['Nature']}</div>
+                <div" . ($Pokemon_Info['Ability'] == $Pokemon_Abilities['Hidden_Ability'] ? ' class="administrator"' : '') . ">{$Pokemon_Info['Ability']}</div>
               </div>
             </div>
 
