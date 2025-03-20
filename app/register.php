@@ -194,6 +194,12 @@
                     $Created_User_ID
                 ]);
 
+                SendSystemNotification("A new trainer has joined Absolute! Welcome {$Username}!", [
+                    'event_type' => 'user_registration',
+                    'user_id' => $Created_User_ID,
+                    'username' => $Username
+                ]);
+
                 $PDO->commit();
             }
             catch ( PDOException $e )
