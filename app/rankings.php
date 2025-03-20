@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 ?>
 
 <div class='panel content'>
@@ -24,13 +24,8 @@
 			</table>
 
 			<div class='flex' id='Rankings_AJAX' style='flex-basis: 100%; flex-wrap: wrap; gap: 10px; justify-content: center;'>
-        <div class='flex' style='flex-basis: 100%; justify-content: center; width: 100%;'>
-          <h3 class='loading-element' style='height: 42px; margin: 0; width: 200px;'></h3>
-        </div>
-
-        <div class='loading-element' style='flex-basis: 35%; height: 170px; width: 35%;'></div>
-
-        <div class='loading-element' style='flex-basis: 70%; height: 250px; width: 700px;'></div>
+                <div class='flex' style='flex-basis: 100%; justify-content: center; width: 100%;'>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -82,4 +77,4 @@
 </script>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

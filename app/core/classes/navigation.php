@@ -1,6 +1,6 @@
 <?php
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/permissions.php';
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/report.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/permissions.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/report.php';
 
 	Class Navigation
 	{
@@ -39,17 +39,17 @@
 
 			echo "
 				<nav>
-          <button id='navButton'>
-            <svg viewBox='0 0 22 22' preserveAspectRatio='xMidYMid meet'>
-              <g>
-                <path d='M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z'></path>
-              </g>
-            </svg>
-          </button>
+                    <button id='navButton'>
+                        <svg viewBox='0 0 22 22' preserveAspectRatio='xMidYMid meet'>
+                        <g>
+                            <path d='M21,6H3V5h18V6z M21,11H3v1h18V11z M21,17H3v1h18V17z'></path>
+                        </g>
+                        </svg>
+                    </button>
 
-          <button id='chatButton'>
-            <img src='" . DOMAIN_SPRITES . "/Pokemon/Icons/Normal/359.png' />
-          </button>
+                    <button id='chatButton'>
+                        <img src='" . DOMAIN_SPRITES . "/Pokemon/Icons/Normal/359.png' />
+                    </button>
 			";
 
 			// Display the Staff Panel button/Index button, given the user is a staff member.
@@ -66,25 +66,25 @@
 					$Link_Name = 'Index';
 				}
 
-        $Notification_Amount = 0;
-        $Notification_Text = '';
+                $Notification_Amount = 0;
+                $Notification_Text = '';
 
-        $Reported_Users = count(GetActiveReports());
-        if ( $Reported_Users > 0 )
-        {
-          $Notification_Amount += $Reported_Users;
-        }
+                $Reported_Users = count(GetActiveReports());
+                if ( $Reported_Users > 0 )
+                {
+                    $Notification_Amount += $Reported_Users;
+                }
 
-        if ( $Notification_Amount > 0 && $Link_Name == 'Staff Panel' )
-        {
-          $Notification_Text = " (<b style='color: red;'> {$Notification_Amount} </b>)";
-        }
+                if ( $Notification_Amount > 0 && $Link_Name == 'Staff Panel' )
+                {
+                    $Notification_Text = " (<b style='color: red;'> {$Notification_Amount} </b>)";
+                }
 
 				echo "
 					<div class='nav-container'>
-            <div class='button'>
-              <a href='{$Link_URL}'>{$Link_Name}{$Notification_Text}</a>
-            </div>
+                        <div class='button'>
+                        <a href='{$Link_URL}'>{$Link_Name}{$Notification_Text}</a>
+                        </div>
 				";
 			}
 			else
@@ -98,15 +98,15 @@
 			$Display_Links = '';
 			foreach ( $Headers as $Key => $Head )
 			{
-        /**
-         * Ideally, we don't want to display header sections where the user doesn't have the required permission.
-         * For now, though, it's fine if they can see the header - the links themselves will be hidden and not rendered.
-         */
-        // if ( $Class == 'Staff' && (empty($Head['Required_Permission']) || !CheckUserPermission($Head['Required_Permission'])) )
-        // {
-        //   echo '<b>req perm:</b>' . $Head['Required_Permission'] . '<br />';
-        //   continue;
-        // }
+                /**
+                 * Ideally, we don't want to display header sections where the user doesn't have the required permission.
+                 * For now, though, it's fine if they can see the header - the links themselves will be hidden and not rendered.
+                 */
+                // if ( $Class == 'Staff' && (empty($Head['Required_Permission']) || !CheckUserPermission($Head['Required_Permission'])) )
+                // {
+                //   echo '<b>req perm:</b>' . $Head['Required_Permission'] . '<br />';
+                //   continue;
+                // }
 
 				/**
 				 * Loop through the appropriate links.
@@ -129,18 +129,18 @@
 					{
 						if ( $Link['Menu'] === $Head['Menu'] && CheckUserPermission($Link['Required_Permission']) )
 						{
-              $Notification_Amount = '';
+                            $Notification_Amount = '';
 
-              switch ( $Link['Name'] )
-              {
-                  case 'Reported Users':
-                      $Reported_Users = count(GetActiveReports());
-                      if ( $Reported_Users > 0 )
-                      {
-                          $Notification_Amount = " (<b style='color: red;'> {$Reported_Users} </b>)";
-                      }
-                      break;
-              }
+                            switch ( $Link['Name'] )
+                            {
+                                case 'Reported Users':
+                                    $Reported_Users = count(GetActiveReports());
+                                    if ( $Reported_Users > 0 )
+                                    {
+                                        $Notification_Amount = " (<b style='color: red;'> {$Reported_Users} </b>)";
+                                    }
+                                    break;
+                            }
 
 							$Display_Links .= "
 								<div class='dropdown-item'>
@@ -171,7 +171,7 @@
 				 */
 				echo "
 					<div class='nav-item has-dropdown'>
-            <a href='javascript:void(0);'>
+                        <a href='javascript:void(0);'>
 							<span>{$Head['Name']}</span>
 						</a>
 						<ul class='dropdown'>

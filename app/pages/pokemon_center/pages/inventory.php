@@ -99,75 +99,73 @@
 ?>
 
 <div class='description'>
-  Handle equipping and using your items here.
-  <br />
-  Clicking on an attached item will prompt you to unequip it from the Pok&eacute;mon.
+    Handle equipping and using your items here.
+    <br />
+    Clicking on an attached item will prompt you to unequip it from the Pok&eacute;mon.
 </div>
 
 <div id='Pokemon_Center_Moves_AJAX'></div>
 
 <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
-  <table class='border-gradient' style='width: 400px;'>
-    <thead>
-      <tr>
-        <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('Battle Item');">
-          <img src='images/Assets/bag_battle.png' />
-        </th>
-        <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('General Item');">
-          <img src='images/Assets/bag_general.png' />
-        </th>
-        <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('Held Item');">
-          <img src='images/Assets/bag_held.png' />
-        </th>
-        <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('Medicine');">
-          <img src='images/Assets/bag_medicine.png' />
-        </th>
-        <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('Berries');">
-          <img src='images/Assets/bag_berries.png' />
-        </th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <tr>
-        <td colspan='5' id='Inventory_Items'>
-          <div style='display: flex; align-items: center; justify-content: center; padding: 10px;'>
-            <div class='loading-element'></div>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div style='display: flex; flex-direction: column; gap: 10px;'>
     <table class='border-gradient' style='width: 400px;'>
-      <tbody id='Item_Preview'>
-        <tr>
-          <td style='padding: 10px;'>
-            Click on an item to view more information.
-          </td>
-        </tr>
-      </tbody>
+        <thead>
+            <tr>
+                <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('Battle Item');">
+                    <img src='images/Assets/bag_battle.png' />
+                </th>
+                <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('General Item');">
+                    <img src='images/Assets/bag_general.png' />
+                </th>
+                <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('Held Item');">
+                    <img src='images/Assets/bag_held.png' />
+                </th>
+                <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('Medicine');">
+                    <img src='images/Assets/bag_medicine.png' />
+                </th>
+                <th style='padding: 5px 5px 0px; width: 20%;' onclick="ShowInventoryTab('Berries');">
+                    <img src='images/Assets/bag_berries.png' />
+                </th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr>
+                <td colspan='5' id='Inventory_Items'>
+                    <div style='display: flex; align-items: center; justify-content: center; padding: 10px;'>
+                        <div class='loading-element'></div>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
     </table>
 
-    <table class='border-gradient' style='width: 400px;'>
-      <thead>
-        <tr>
-          <th colspan='3'>
-            Equipped Items
-          </th>
-        </tr>
-      </thead>
+    <div style='display: flex; flex-direction: column; gap: 10px;'>
+        <table class='border-gradient' style='width: 400px;'>
+            <tbody id='Item_Preview'>
+                <tr>
+                    <td style='padding: 10px;'>
+                        Click on an item to view more information.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
-      <tbody>
-        <tr>
-          <td colspan='3' id='Equipped_Items'>
-            <div style='display: flex; align-items: center; justify-content: center; padding: 10px;'>
-              <div class='loading-element'></div>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+        <table class='border-gradient' style='width: 400px;'>
+            <thead>
+                <tr>
+                    <th colspan='3'>Equipped Items</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr>
+                    <td colspan='3' id='Equipped_Items'>
+                        <div style='display: flex; align-items: center; justify-content: center; padding: 10px;'>
+                            <div class='loading-element'></div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

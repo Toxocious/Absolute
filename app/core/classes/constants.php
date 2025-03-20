@@ -19,13 +19,13 @@
 		 * Currencies
 		 */
 		public $Currency = [
-			'Money'				=> [ 
+			'Money' => [
 				'Value' => 'Money',
 				'Name' => 'Money',
 				'Icon' => 'images/Assets/Money.png',
 				'Tradeable' => true
 			],
-			'Abso_Coins'	=> [ 
+			'Abso_Coins' => [
 				'Value' => 'Abso_Coins',
 				'Name' => 'Absolute Coins',
 				'Icon' => 'images/Assets/Abso_Coins.png',
@@ -50,17 +50,17 @@
 		public $Clan = [
 			"Creation_Cost" => 69420,
 		];
-		
+
 		/**
 		 * Achievements
 		 */
 		public $Achievements = [
 			[
 				'Name' 				=> 'Trainer Level',
-				'Description' => 'Aquire Trainer Level *.',
+				'Description'       => 'Aquire Trainer Level *.',
 				'Tiers' 			=> [ 7, 8, 9, 10, 11, 12 ],
 				'Stat' 				=> 'trainer_exp',
-				'Display' 		=> '* Exp.',
+				'Display' 		    => '* Exp.',
 			],
 		];
 	}

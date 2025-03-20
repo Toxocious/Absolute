@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 ?>
 
 <div class='panel content'>
@@ -12,7 +12,7 @@
 		</div>
 
 		<table class='border-gradient' style='width: 700px;'>
-			<thead>	
+			<thead>
 				<tr>
 					<th colspan='14'>Pok&eacute;mon Type</th>
 				</tr>
@@ -31,9 +31,8 @@
 					</td>
 				</tr>
 			</tbody>
-			<tbody id='PokeList'>
-				
-			</tbody>
+
+			<tbody id='PokeList'></tbody>
 		</table>
 	</div>
 </div>
@@ -79,5 +78,4 @@
 </script>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
-?>
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

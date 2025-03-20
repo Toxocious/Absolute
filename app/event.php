@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 ?>
 
 <div class='panel content'>
@@ -9,10 +9,10 @@
 			Welcome to the main page for any and all events that are held on Absolute!
 		</div>
 
-		There are currently no events being held.
+		There is currently no active event.
 	</div>
 </div>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
 ?>

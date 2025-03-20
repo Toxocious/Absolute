@@ -1,81 +1,87 @@
 <?php
-  /**
-   * Filters user inputs.
-   * Add more parameters later on for more diversity.
-   *
-   * @param {$Input}
-   */
-  function Purify($Input, $Forced_Type = null)
-  {
-    if ( !$Input )
-      return false;
-
-    $Input_Type = gettype($Input);
-    if ( isset($Forced_Type) ) {
-      $Input_Type = $Forced_Type;
-    }
-
-    $Input_As_Text = $Input;
-
-    if ( is_array($Input_As_Text) )
+    /**
+     * Filters user inputs.
+     * Add more parameters later on for more diversity.
+     *
+     * @param {$Input}
+     */
+    function Purify($Input, $Forced_Type = null)
     {
-      foreach ( $Input_As_Text as $K => $V )
-      {
-        $V = htmlentities($V, ENT_NOQUOTES, "UTF-8");
-        $V = nl2br($V, false);
-        $Input_As_Text[$K] = $V;
-      }
-    }
-    else
-    {
-      $Input_As_Text = htmlentities($Input_As_Text, ENT_NOQUOTES, "UTF-8");
-      $Input_As_Text = nl2br($Input_As_Text, false);
+        if ( !$Input )
+        {
+            return false;
+        }
+
+        $Input_Type = gettype($Input);
+        if ( isset($Forced_Type) )
+        {
+            $Input_Type = $Forced_Type;
+        }
+
+        $Input_As_Text = $Input;
+
+        if ( is_array($Input_As_Text) )
+        {
+            foreach ( $Input_As_Text as $K => $V )
+            {
+                $V = htmlentities($V, ENT_NOQUOTES, "UTF-8");
+                $V = nl2br($V, false);
+                $Input_As_Text[$K] = $V;
+            }
+        }
+        else
+        {
+            $Input_As_Text = htmlentities($Input_As_Text, ENT_NOQUOTES, "UTF-8");
+            $Input_As_Text = nl2br($Input_As_Text, false);
+        }
+
+        /**
+         * Return the variable as it's original type.
+         */
+        switch ( $Input_Type )
+        {
+            case 'boolean':
+                return (bool) $Input_As_Text;
+            case 'integer':
+                return (integer) $Input_As_Text;
+            case 'double':
+                return (double) $Input_As_Text;
+            case 'string':
+                return (string) $Input_As_Text;
+            case 'array':
+                return (array) $Input_As_Text;
+            case 'object':
+                return (object) $Input_As_Text;
+            case 'NULL':
+                return null;
+        }
+
+        return false;
     }
 
     /**
-     * Return the variable as it's original type.
+     * Transforms AJAX strings into base page strings.
+     * Example: '/pages/pokemon_center/pages/roster.php' -> '/pokemon_center.php'
+     *
+     * @param {$Url_Path}
      */
-    switch ( $Input_Type )
+    function TransformPath($Url_Path)
     {
-      case 'boolean':
-        return (bool) $Input_As_Text;
-      case 'integer':
-        return (integer) $Input_As_Text;
-      case 'double':
-        return (double) $Input_As_Text;
-      case 'string':
-        return (string) $Input_As_Text;
-      case 'array':
-        return (array) $Input_As_Text;
-      case 'object':
-        return (object) $Input_As_Text;
-      case 'NULL':
-        return null;
+        if ( !$Url_Path )
+        {
+            return '/index.php';
+        }
+
+        // Match the pattern between /pages/ and /pages/
+        preg_match('/\/pages\/([^\/]+)\/pages\//', $Url_Path, $matches);
+        preg_match('/\/pages\/([^\/]+)\/ajax\//', $Url_Path, $matches);
+
+        // Return the extracted section with .php extension
+        if (!empty($matches[1]))
+        {
+            return '/' . $matches[1] . '.php';
+        }
+
+        // Return original path if pattern doesn't match
+        return $Url_Path;
     }
-
-    return false;
-  }
-
-  /**
-   * Transforms AJAX strings into base page strings.
-   * Example: '/pages/pokemon_center/pages/roster.php' -> '/pokemon_center.php'
-   *
-   * @param {$Url_Path}
-   */
-  function TransformPath($Url_Path)
-  {
-      if ( !$Url_Path )
-          return '/index.php';
-
-      // Match the pattern between /pages/ and /pages/
-      preg_match('/\/pages\/([^\/]+)\/pages\//', $Url_Path, $matches);
-      preg_match('/\/pages\/([^\/]+)\/ajax\//', $Url_Path, $matches);
-
-      if (!empty($matches[1])) {
-          // Return the extracted section with .php extension
-          return '/' . $matches[1] . '.php';
-      }
-
-      // Return original path if pattern doesn't match
-      return $Url_Path;
-  }

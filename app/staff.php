@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 
 	$Staff_Categories = [
 		[ 'Rank' => 'Administrator' ],
@@ -16,7 +16,7 @@
 	<div class='body' style='padding: 5px;'>
 		<div class='description' style='margin: 0px auto 5px'>
 			All members of Absolute's staff team are listed below.<br />
-			If you require_once assistance with something, please don't hesitate to contact one of them.
+			If you require assistance with something, please don't hesitate to contact one of them.
 		</div>
 
 		<div class='row' style='display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;'>
@@ -36,7 +36,9 @@
 					}
 
 					if ( !$Staff_Members )
-						continue;
+                    {
+                        continue;
+                    }
 
 					echo "
 						<div style='flex-basis: 100%;'>
@@ -49,15 +51,15 @@
 						$Staff_Data = $User_Class->FetchUserData($User_Val['ID']);
 						$Staff_Username = $User_Class->DisplayUsername($User_Val['ID'], true, true, true);
 
-            $Staff_Message = '';
-            if ( $Staff_Data['Staff_Message'] )
-            {
-              $Staff_Message = "
-                  <tr>
-                      <td colspan='3' style='padding: 5px;'>{$Staff_Data['Staff_Message']}</td>
-                  </tr>
-              ";
-            }
+                        $Staff_Message = '';
+                        if ( $Staff_Data['Staff_Message'] )
+                        {
+                            $Staff_Message = "
+                                <tr>
+                                    <td colspan='3' style='padding: 5px;'>{$Staff_Data['Staff_Message']}</td>
+                                </tr>
+                            ";
+                        }
 
 						echo "
 							<table class='border-gradient'  style='flex-basis: 280px; margin: 3px;'>
@@ -93,4 +95,4 @@
 </div>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

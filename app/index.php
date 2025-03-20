@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 
 	if ( isset($_SESSION['Absolute']) )
 	{
@@ -20,14 +20,14 @@
 
 		try
 		{
-      $Misc_Count_Query = $PDO->prepare("
-        SELECT
-          (SELECT COUNT(*) FROM `users` WHERE `last_active` > ?) as online_count,
-          (SELECT COUNT(*) FROM `users`) as user_count,
-          (SELECT COUNT(*) FROM `pokemon`) as pokemon_count;
-      ");
-      $Misc_Count_Query->execute([ $Last_Active ]);
-      $Count_Data = $Misc_Count_Query->fetch();
+            $Misc_Count_Query = $PDO->prepare("
+                SELECT
+                (SELECT COUNT(*) FROM `users` WHERE `last_active` > ?) as online_count,
+                (SELECT COUNT(*) FROM `users`) as user_count,
+                (SELECT COUNT(*) FROM `pokemon`) as pokemon_count;
+            ");
+            $Misc_Count_Query->execute([ $Last_Active ]);
+            $Count_Data = $Misc_Count_Query->fetch();
 		}
 		catch ( PDOException $e )
 		{
@@ -36,49 +36,53 @@
 ?>
 
 <nav>
-  <div class='nav-container'>
-    <div class='button'>
-      <a href='index.php'>Home</a>
+    <div class='nav-container'>
+        <div class='button'>
+            <a href='index.php'>Home</a>
+        </div>
+        <div class='button'>
+            <a href='login.php'>Login</a>
+        </div>
+        <div class='button'>
+            <a href='register.php'>Register</a>
+        </div>
     </div>
-    <div class='button'>
-      <a href='login.php'>Login</a>
-    </div>
-    <div class='button'>
-      <a href='register.php'>Register</a>
-    </div>
-  </div>
 </nav>
 
 <div class='panel content' style='margin: 0 auto;'>
-	<div class='head'>Home</div>
-	<div class='body' style='padding: 10px 10px 0;'>
-		<div class='description' style='width: 70%;'>
-			The Pok&eacute;mon Absolute is home to <b><?= number_format($Count_Data['user_count']); ?></b> trainers and <b><?= number_format($Count_Data['pokemon_count']); ?></b> Pok&eacute;mon!
-		</div>
+    <div class='head'>Home</div>
+    <div class='body' style='padding: 10px 10px 0;'>
+        <div class='description' style='width: 70%;'>
+            The Pok&eacute;mon Absolute is home to <b><?= number_format($Count_Data['user_count']); ?></b> trainers and <b><?= number_format($Count_Data['pokemon_count']); ?></b> Pok&eacute;mon!
+        </div>
 
-    <div>
-      The Pok&eacute;mon Absolute is an up-to-date multiplayer Pok&eacute;mon RPG, featuring all currently released canonical Pok&eacute;mon
-      from the main Pok&eacute;mon games!
-      <br /><br />
-      Among featuring a plethora of unique gameplay content to explore, we offer content that will appeal to all
-      trainers, new and old, including content that Pok&eacute;mon veterans will find nostalgic.
-      <br /><br />
-      Sign up, catch and train brand new Pok&eacute;mon, and initiate trades with other users so that you can rise to the top!
-      <br /><br />
-      We have all sorts of Pok&eacute;mon, including Normal and Shiny ones!
-      <br />
-      <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/Normal/359.png' />
-      <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/Shiny/359.png' />
+        <div>
+            The Pok&eacute;mon Absolute is an up-to-date multiplayer Pok&eacute;mon RPG, featuring all currently released canonical Pok&eacute;mon
+            from the main Pok&eacute;mon games!
+            <br /><br />
+
+            Among featuring a plethora of unique gameplay content to explore, we offer content that will appeal to all
+            trainers, new and old, including content that Pok&eacute;mon veterans will find nostalgic.
+            <br /><br />
+
+            Sign up, catch and train brand new Pok&eacute;mon, and initiate trades with other users so that you can rise to the top!
+            <br /><br />
+
+            We have all sorts of Pok&eacute;mon, including Normal and Shiny ones!
+            <br />
+
+            <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/Normal/359.png' />
+            <img src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/Shiny/359.png' />
+        </div>
     </div>
-	</div>
 </div>
 
 <div style='margin: 0 auto; text-align: center; font-size: 12px; margin-top: 10px;'>
-  This website is designed and optimized for Chromium based browsers.<br />
-  It's recommended to use a Chromium based browser such as Google Chrome or Brave while browsing this website.
+    This website is designed and optimized for Chromium based browsers.<br />
+    It's recommended to use a Chromium based browser such as Google Chrome or Brave while browsing this website.
 </div>
 
 <?php
 	}
 
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

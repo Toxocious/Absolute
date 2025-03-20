@@ -20,7 +20,9 @@
 			global $PDO;
 
 			if ( !$User_Query )
-				return false;
+            {
+                return false;
+            }
 
 			$User_Query = Purify($User_Query);
 
@@ -29,8 +31,8 @@
 				$Fetch_User = $PDO->prepare("
 					SELECT *
 					FROM `users`
-					  INNER JOIN `user_currency`
-            ON `users`.`ID` = `user_currency`.`ID`
+                    INNER JOIN `user_currency`
+                    ON `users`.`ID` = `user_currency`.`ID`
 					WHERE `users`.`ID` = ?
 					LIMIT 1
 				");
@@ -38,17 +40,17 @@
 				$Fetch_User->setFetchMode(PDO::FETCH_ASSOC);
 				$User = $Fetch_User->fetch();
 
-        $Check_User_Ban = $PDO->prepare("
-          SELECT *
-          FROM `user_bans`
-          WHERE `User_ID` = ?
-          LIMIT 1
-        ");
-        $Check_User_Ban->execute([
-          $User_Query
-        ]);
-        $Check_User_Ban->setFetchMode(PDO::FETCH_ASSOC);
-        $User_Ban = $Check_User_Ban->fetch();
+                $Check_User_Ban = $PDO->prepare("
+                    SELECT *
+                    FROM `user_bans`
+                    WHERE `User_ID` = ?
+                    LIMIT 1
+                ");
+                $Check_User_Ban->execute([
+                    $User_Query
+                ]);
+                $Check_User_Ban->setFetchMode(PDO::FETCH_ASSOC);
+                $User_Ban = $Check_User_Ban->fetch();
 			}
 			catch ( PDOException $e )
 			{
@@ -56,35 +58,59 @@
 			}
 
 			if ( !$User )
+            {
 				return false;
+            }
 
 			$Roster = $this->FetchRoster($User['ID']);
 			if ( !$Roster )
+            {
 				$Roster = null;
+            }
 
 			if ( !isset($User) || !$User )
+            {
 				return false;
+            }
 
 			if ( isset($User_Ban['RPG_Ban']) && $User_Ban['RPG_Ban'] )
+            {
 				$Banned_RPG = true;
+            }
 			else
-				$Banned_RPG = false;
+            {
+                $Banned_RPG = false;
+            }
 
 			if ( isset($User_Ban['Chat_Ban']) && $User_Ban['Chat_Ban'] )
+            {
 				$Banned_Chat = true;
+            }
 			else
-				$Banned_Chat = false;
+            {
+                $Banned_Chat = false;
+            }
 
 			if ( $User['Playtime'] == 0 )
+            {
 				$Playtime = "None";
-			elseif ( $User['Playtime'] <= 59 )
+            }
+			else if ( $User['Playtime'] <= 59 )
+            {
 				$Playtime = $User['Playtime']." Second(s)";
-			elseif ( $User['Playtime'] >= 60 && $User['Playtime'] <= 3599 )
+            }
+			else if ( $User['Playtime'] >= 60 && $User['Playtime'] <= 3599 )
+            {
 				$Playtime = floor($User['Playtime'] / 60)." Minute(s)";
-			elseif ( $User['Playtime'] >= 3600 && $User['Playtime'] <= 86399 )
+            }
+			else if ( $User['Playtime'] >= 3600 && $User['Playtime'] <= 86399 )
+            {
 				$Playtime = round($User['Playtime'] / 3600, 1)." Hour(s)";
+            }
 			else
+            {
 				$Playtime = round($User['Playtime'] / 86400, 2)." Day(s)";
+            }
 
 			return [
 				'ID' => $User['ID'],
@@ -95,25 +121,25 @@
 				'RPG_Ban' => $Banned_RPG,
 				'Chat_Ban' => $Banned_Chat,
 				'Money' => $User['Money'],
-        'Abso_Coins' => $User['Abso_Coins'],
-        'Trainer_Level' => number_format(FetchLevel($User['TrainerExp'], 'Trainer')),
-        'Trainer_Level_Raw' => FetchLevel($User['TrainerExp'], 'Trainer'),
-        'Trainer_Exp' => number_format($User['TrainerExp']),
+                'Abso_Coins' => $User['Abso_Coins'],
+                'Trainer_Level' => number_format(FetchLevel($User['TrainerExp'], 'Trainer')),
+                'Trainer_Level_Raw' => FetchLevel($User['TrainerExp'], 'Trainer'),
+                'Trainer_Exp' => number_format($User['TrainerExp']),
 				'Trainer_Exp_Raw' => $User['TrainerExp'],
 				'Clan' => $User['Clan'],
 				'Clan_Exp' => number_format($User['Clan_Exp']),
 				'Clan_Exp_Raw' => $User['Clan_Exp'],
 				'Clan_Rank' => $User['Clan_Rank'],
 				'Clan_Title' => $User['Clan_Title'],
-        'Map_Experience' => $User['Map_Experience'],
-        'Map_ID' => $User['Map_ID'],
-        'Map_Position' => [
-          'Map_X' => $User['Map_X'],
-          'Map_Y' => $User['Map_Y'],
-          'Map_Z' => $User['Map_Z'],
-        ],
-        'Map_Steps_To_Encounter' => $User['Map_Steps_To_Encounter'],
-        'Gender' => $User['Gender'],
+                'Map_Experience' => $User['Map_Experience'],
+                'Map_ID' => $User['Map_ID'],
+                'Map_Position' => [
+                    'Map_X' => $User['Map_X'],
+                    'Map_Y' => $User['Map_Y'],
+                    'Map_Z' => $User['Map_Z'],
+                ],
+                'Map_Steps_To_Encounter' => $User['Map_Steps_To_Encounter'],
+                'Gender' => $User['Gender'],
 				'Status' => $User['Status'],
 				'Staff_Message' => $User['Staff_Message'],
 				'Is_Staff' => $User['Is_Staff'],
@@ -142,7 +168,9 @@
 			global $PDO;
 
 			if ( !$User_ID )
+            {
 				return false;
+            }
 
 			try
 			{
@@ -157,7 +185,9 @@
 			}
 
 			if ( !$User )
+            {
 				return false;
+            }
 
 			try
 			{
@@ -185,32 +215,26 @@
 			global $PDO;
 
 			if ( !$User_ID || !$Currency || !$Amount )
-				return false;
+            {
+                return false;
+            }
 
 			try
 			{
-        $PDO->beginTransaction();
+                $PDO->beginTransaction();
 
 				$Select_Query = $PDO->prepare("UPDATE `user_currency` SET `{$Currency}` = `{$Currency}` - ? WHERE `ID` = ? LIMIT 1");
 				$Select_Query->execute([ $Amount, $User_ID ]);
 
-        $PDO->commit();
+                $PDO->commit();
 			}
 			catch ( PDOException $e )
 			{
-        $PDO->rollBack();
+                $PDO->rollBack();
 				HandleError($e);
 			}
 
 			return true;
-		}
-
-		/**
-		 * Fetch the user's masteries.
-		 */
-		public function FetchMasteries($User_ID)
-		{
-
 		}
 
 		/**
@@ -326,39 +350,41 @@
 			}
 		}
 
-    /**
-     * Create and/or update the desired stat of a user.
-     *
-     * @param {int} $User_ID
-     * @param {string} $Stat_Name
-     * @param {int} $Stat_Value
-     */
-    public static function UpdateStat
-    (
-      int $User_ID,
-      string $Stat_Name,
-      int $Stat_Value
-    )
-    {
-      global $PDO;
+        /**
+         * Create and/or update the desired stat of a user.
+         *
+         * @param {int} $User_ID
+         * @param {string} $Stat_Name
+         * @param {int} $Stat_Value
+         */
+        public static function UpdateStat
+        (
+            int $User_ID,
+            string $Stat_Name,
+            int $Stat_Value
+        )
+        {
+            global $PDO;
 
-      if ( empty($Stat_Value) || $Stat_Value == 0 )
-        return false;
+            if ( empty($Stat_Value) || $Stat_Value == 0 )
+            {
+                return false;
+            }
 
-      try
-      {
-        $Stat = $PDO->prepare("
-          INSERT INTO `user_stats` (`User_ID`, `Stat_Name`, `Stat_Value`)
-          VALUES (?, ?, ?)
-          ON DUPLICATE KEY UPDATE `Stat_Value` = `Stat_Value` + VALUES(`Stat_Value`)
-        ");
-        $Stat->execute([ $User_ID, $Stat_Name, $Stat_Value ]);
-      }
-      catch ( PDOException $e )
-      {
-        HandleError($e);
-      }
+            try
+            {
+                $Stat = $PDO->prepare("
+                    INSERT INTO `user_stats` (`User_ID`, `Stat_Name`, `Stat_Value`)
+                    VALUES (?, ?, ?)
+                    ON DUPLICATE KEY UPDATE `Stat_Value` = `Stat_Value` + VALUES(`Stat_Value`)
+                ");
+                $Stat->execute([ $User_ID, $Stat_Name, $Stat_Value ]);
+            }
+            catch ( PDOException $e )
+            {
+                HandleError($e);
+            }
 
-      return true;
-    }
+            return true;
+        }
 	}

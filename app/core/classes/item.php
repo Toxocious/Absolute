@@ -47,7 +47,9 @@
 		public function FetchOwnedItem($Owner_ID, $Item_ID = null, $Limit = 1)
 		{
 			if ( !isset($Owner_ID) || !$Owner_ID )
-				return false;
+            {
+                return false;
+            }
 
 			global $PDO;
 
@@ -92,7 +94,9 @@
 		public function Attach($Item_ID, $Pokemon_ID, $Owner_ID)
 		{
 			if ( !isset($Item_ID) || !isset($Pokemon_ID) )
-				return false;
+            {
+                return false;
+            }
 
 			global $PDO, $User_Class;
 
@@ -101,13 +105,19 @@
 			$Pokemon_Data = GetPokemonData($Pokemon_ID);
 
 			if ( $Item_Data['Quantity'] < 1 )
-				return false;
+            {
+                return false;
+            }
 
 			if ( $Item_Data['Owner'] != $Owner_Data['ID'] )
-				return false;
+            {
+                return false;
+            }
 
 			if ( $Pokemon_Data['Owner_Current'] != $Owner_Data['ID'] )
-				return false;
+            {
+                return false;
+            }
 
 			try
 			{

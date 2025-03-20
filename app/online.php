@@ -1,7 +1,7 @@
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 
-  require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/online_list/functions/online_list.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/online_list/functions/online_list.php';
 ?>
 
 <div class='panel content'>
@@ -13,8 +13,8 @@
 
 		<div class='row' style='display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center;' id='Online_List_Container'>
 			<?php
-        echo GetOnlineUsersTable();
-      ?>
+                echo GetOnlineUsersTable();
+            ?>
 		</div>
 	</div>
 </div>
@@ -22,11 +22,11 @@
 <script src='<?= DOMAIN_ROOT; ?>/pages/online_list/js/ajax_functions.js'></script>
 
 <script>
-  setInterval(() =>
-  {
-    RefreshOnlineList();
-  }, 2000);
-  </script>
+    setInterval(() =>
+    {
+        RefreshOnlineList();
+    }, 2000);
+</script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

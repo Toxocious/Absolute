@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 
 	if ( !isset($_GET['clan_id']) && $User_Data['Clan'] == 0 )
 	{
@@ -175,7 +175,7 @@
 						</tr>
 					</thead>
 					<tbody>
-            <tr>
+                        <tr>
 							<td colspan='1' style='width: 50%;'>
 								<a href='<?= DOMAIN_ROOT; ?>/clan/manage_applications.php'>Manage Applications</a>
 							</td>
@@ -293,4 +293,4 @@
 <?php
 	}
 
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

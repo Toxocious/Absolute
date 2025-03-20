@@ -1,30 +1,31 @@
 			</main>
 
 			<footer>
-        <?php
-          if (defined('LOCAL'))
-          {
-              try {
-                  $stats = $PDO->getQueryStats();
 
-                  echo "
-                      <div>
-                          Page Generation Time: " . round(microtime(true) - $page_script_start_time, 4) * 1000 . "ms<br>
-                          " . sprintf(
+        <?php
+            if (defined('LOCAL'))
+            {
+                try {
+                    $stats = $PDO->getQueryStats();
+
+                    echo "
+                        <div>
+                            Page Generation Time: " . round(microtime(true) - $page_script_start_time, 4) * 1000 . "ms<br>
+                            " . sprintf(
                             "Database Queries: %d &mdash; Total: %.4fms &mdash; Avg: %.4fms &mdash; Max: %.4fms",
                             $stats['count'],
                             $stats['total_time'] * 1000,
                             $stats['average_time'] * 1000,
                             $stats['max_time'] * 1000
                         ) . "
-                      </div>
-                  ";
-              } catch (Exception $e) {
-                  error_log("Failed to get query stats: " . $e->getMessage());
-              }
-          }
-          else
-          {
+                        </div>
+                    ";
+                } catch (Exception $e) {
+                    error_log("Failed to get query stats: " . $e->getMessage());
+                }
+            }
+            else
+            {
         ?>
 
 				<div>
@@ -33,17 +34,18 @@
 				</div>
 
         <?php
-          }
+            }
         ?>
+
 			</footer>
 		</div>
 
     <?php
-      /**
-       * Include the necessary Absolute Chat scripts.
-       */
-      if ( isset($_SESSION['Absolute']) )
-      {
+        /**
+         * Include the necessary Absolute Chat scripts.
+         */
+        if ( isset($_SESSION['Absolute']) )
+        {
     ?>
       <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/chat/client.js'></script>
       <script type='text/javascript'>
@@ -72,45 +74,44 @@
           const Perfect_Scrollbar = new PerfectScrollbar(Chat_Element);
           const Chat_Input = document.getElementById('chatMessage');
           Chat_Input.addEventListener('keydown', (event) => {
-            if ( event.keyCode === 13 )
-            {
-              event.preventDefault();
-
-              const Chat_Message = Chat_Input.value.trim();
-              if ( Chat_Message !== '' && User.Connected )
-              {
-
-                ChatClient.socket.emit('chat-message',
+                if ( event.keyCode === 13 )
                 {
-                  User: User,
-                  Message: {
-                    Text: Chat_Message,
-                  }
-                });
+                    event.preventDefault();
 
-                Chat_Input.value = '';
+                    const Chat_Message = Chat_Input.value.trim();
+                    if ( Chat_Message !== '' && User.Connected )
+                    {
+                        ChatClient.socket.emit('chat-message',
+                        {
+                            User: User,
+                            Message: {
+                                Text: Chat_Message,
+                            }
+                        });
 
-                Perfect_Scrollbar.update();
-              }
-            }
+                        Chat_Input.value = '';
+
+                        Perfect_Scrollbar.update();
+                    }
+                }
           });
       </script>
     <?php
-      }
+        }
     ?>
 
 		<script type='text/javascript'>
-      (function(root, document) {
-        "use strict";
+            (function(root, document) {
+                "use strict";
 
-        [].forEach.call(document.getElementsByClassName("popup"), function(el) {
-          el.lightbox = new IframeLightbox(el, {
-            scrolling: false,
-            rate: 500,
-            touch: false,
-          });
-        });
-      })("undefined" !== typeof window ? window : this, document);
+                [].forEach.call(document.getElementsByClassName("popup"), function(el) {
+                    el.lightbox = new IframeLightbox(el, {
+                        scrolling: false,
+                        rate: 500,
+                        touch: false,
+                    });
+                });
+            })("undefined" !== typeof window ? window : this, document);
 		</script>
 	</body>
 </html>

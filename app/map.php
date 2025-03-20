@@ -1,76 +1,75 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 
-  unset($_SESSION['Absolute']['Maps']);
+    unset($_SESSION['Absolute']['Maps']);
 ?>
 
 <div class='panel content'>
 	<div class='head'>Maps</div>
 	<div class='body' style='align-items: center; display: flex; flex-flow: column; gap: 10px; justify-content: center; padding: 5px;'>
-    <div style='display: flex; flex-basis: 280px; flex-wrap: wrap; width: 600px;'>
-      <div class='border-gradient' style='height: 280px; width: 280px;'>
-        <div
-          id='map_canvas'
-          style='height: 280px; width: 280px;'
-        >
-        </div>
-      </div>
-
-      <table class='border-gradient' style='min-height: 240px; width: 300px;'>
-        <thead>
-          <tr>
-            <th id='map_name'>
-              Unknown Map
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td id='map_dialogue'>
-              You wander around aimlessly.
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <table class='border-gradient' style='min-width: 485px; max-width: 485px;'>
-      <thead>
-        <tr>
-          <th colspan='2'>
-            Map Stats
-          </th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td style='width: 50%;'>
-            <b>Map Level</b>
-          </td>
-          <td style='width: 50%;'>
-            <span id='map_level'>-1</span>
-          </td>
-        </tr>
-        <tr>
-          <td colspan='2'>
-            <b>Next Level In</b>: <span id='map_exp_to_level'>-1</span> Exp
-            <div class='progress-container' style='margin: 0 auto; width: 200px;'>
-              <div class='progress-bar exp' id='map_exp_bar' style='width: 100%;'></div>
+        <div style='display: flex; flex-basis: 280px; flex-wrap: wrap; width: 600px;'>
+            <div class='border-gradient' style='height: 280px; width: 280px;'>
+                <div
+                id='map_canvas'
+                style='height: 280px; width: 280px;'
+                ></div>
             </div>
-          </td>
-        </tr>
 
-        <tr>
-          <td style='width: 50%;'>
-            <b>Shiny Odds</b>
-          </td>
-          <td style='width: 50%;'>
-            <span id='map_shiny_odds'>1 / 8192 (0.0122%)</span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <table class='border-gradient' style='min-height: 240px; width: 300px;'>
+                <thead>
+                    <tr>
+                        <th id='map_name'>
+                            Unknown Map
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id='map_dialogue'>
+                            You wander around aimlessly.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
+        <table class='border-gradient' style='min-width: 485px; max-width: 485px;'>
+            <thead>
+                <tr>
+                    <th colspan='2'>
+                        Map Stats
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style='width: 50%;'>
+                        <b>Map Level</b>
+                    </td>
+                    <td style='width: 50%;'>
+                        <span id='map_level'>-1</span>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan='2'>
+                        <b>Next Level In</b>: <span id='map_exp_to_level'>-1</span> Exp
+                        <div class='progress-container' style='margin: 0 auto; width: 200px;'>
+                            <div class='progress-bar exp' id='map_exp_bar' style='width: 100%;'></div>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td style='width: 50%;'>
+                        <b>Shiny Odds</b>
+                    </td>
+                    <td style='width: 50%;'>
+                        <span id='map_shiny_odds'>1 / 8192 (0.0122%)</span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 	</div>
 </div>
 
@@ -95,4 +94,4 @@
 <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/maps/js/init.js'></script>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

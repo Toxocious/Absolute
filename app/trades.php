@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 ?>
 
 <div class='panel content'>
@@ -59,10 +59,10 @@
 						try
 						{
 							$Pending_Query = $PDO->prepare("
-                SELECT `ID`, `Sender`, `Recipient`, `Status`
-                FROM `trades`
-                WHERE (`Sender` = ? OR `Recipient` = ?) AND `Status` = ?
-              ");
+                                SELECT `ID`, `Sender`, `Recipient`, `Status`
+                                FROM `trades`
+                                WHERE (`Sender` = ? OR `Recipient` = ?) AND `Status` = ?
+                            ");
 							$Pending_Query->execute([ $User_Data['ID'], $User_Data['ID'], 'Pending' ]);
 							$Pending_Query->setFetchMode(PDO::FETCH_ASSOC);
 							$Pending_Trades = $Pending_Query->fetchAll();
@@ -283,8 +283,8 @@
 		}
 
 		$.ajax({
-      url: 'core/ajax/trading/action.php',
-      type: 'POST',
+            url: 'core/ajax/trading/action.php',
+            type: 'POST',
 			data: { ID: User_ID, Action: Action, Type: Type, Data: Data },
 			success: function(data)
 			{
@@ -303,8 +303,8 @@
 	function Remove_From_Trade(User_ID, Type, Name)
 	{
 		$.ajax({
-      url: 'core/ajax/trading/action.php',
-      type: 'POST',
+            url: 'core/ajax/trading/action.php',
+            type: 'POST',
 			data: { Action: 'Remove', ID: User_ID, Type: Type, Data: Name },
 			success: function(data)
 			{
@@ -323,8 +323,8 @@
 	function Change_Tab(Tab, User_ID)
 	{
 		$.ajax({
-      url: 'core/ajax/trading/' + Tab + '.php',
-      type: 'POST',
+            url: 'core/ajax/trading/' + Tab + '.php',
+            type: 'POST',
 			data: { tab: Tab, id: User_ID },
 			success: function(data)
 			{
@@ -338,25 +338,25 @@
 	}
 
 	function Update_Box(Page = 1, User_ID)
-  {
-    $.ajax({
-      url: 'core/ajax/trading/box.php',
-      type: 'POST',
-      data: {
-        id: User_ID,
-        Page: Page
-      },
-      success: function(data)
-      {
-        $('#TabContent' + User_ID).html(data);
-      },
-      error: function(data)
-      {
-        $('#TabContent' + User_ID).html(data);
-      }
-    });
-  }
+    {
+        $.ajax({
+            url: 'core/ajax/trading/box.php',
+            type: 'POST',
+            data: {
+                    id: User_ID,
+                    Page: Page
+            },
+            success: function(data)
+            {
+                $('#TabContent' + User_ID).html(data);
+            },
+            error: function(data)
+            {
+                $('#TabContent' + User_ID).html(data);
+            }
+        });
+    }
 </script>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

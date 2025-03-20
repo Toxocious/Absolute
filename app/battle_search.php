@@ -1,5 +1,5 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 ?>
 
 <div class='panel content'>
@@ -11,6 +11,7 @@
 
 		<form action='battle_create.php'>
 			<input type='hidden' name='Battle_Type' value='trainer' />
+
 			<input type='text' name='Foe' placeholder='User ID' /><br />
 			<input type='submit' value='Battle!' />
 		</form>
@@ -18,4 +19,4 @@
 </div>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

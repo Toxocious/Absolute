@@ -1,27 +1,31 @@
 <?php
-	require_once 'core/required/layout_top.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 
 	if ( !isset($_SESSION['Absolute']) )
-		$Content_Style = " style='margin: 5px; width: calc(100% - 14px)'";
-  else
-    $Content_Style = " style='margin: 0px 5px; width: 100%;'";
+    {
+        $Content_Style = " style='margin: 5px; width: calc(100% - 14px)'";
+    }
+    else
+    {
+        $Content_Style = " style='margin: 0px 5px; width: 100%;'";
+    }
 ?>
 
 <div class='panel content' <?= $Content_Style; ?>>
 	<div class='head'>Discord</div>
 	<div class='body'>
     <?php
-      if ( empty($_SESSION['Absolute']) )
-      {
-        echo "
-          <div class='nav'>
-            <div><a href='index.php' style='display: block;'>Home</a></div>
-            <div><a href='login.php' style='display: block;'>Login</a></div>
-            <div><a href='register.php' style='display: block;'>Register</a></div>
-            <div><a href='discord.php' style='display: block;'>Discord</a></div>
-          </div>
-        ";
-      }
+        if ( empty($_SESSION['Absolute']) )
+        {
+            echo "
+                <div class='nav'>
+                    <div><a href='index.php' style='display: block;'>Home</a></div>
+                    <div><a href='login.php' style='display: block;'>Login</a></div>
+                    <div><a href='register.php' style='display: block;'>Register</a></div>
+                    <div><a href='discord.php' style='display: block;'>Discord</a></div>
+                </div>
+            ";
+        }
     ?>
 
     <br />
@@ -35,4 +39,4 @@
 </div>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

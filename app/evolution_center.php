@@ -37,4 +37,4 @@
 <script src='<?= DOMAIN_ROOT; ?>/pages/evolution_center/js/ajax_functions.js'></script>
 
 <?php
-	require_once 'core/required/layout_bottom.php';
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
