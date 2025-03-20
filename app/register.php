@@ -194,10 +194,10 @@
                     $Created_User_ID
                 ]);
 
-                SendSystemNotification("A new trainer has joined Absolute! Welcome {$Username}!", [
+                SendSystemNotification("Welcome to Absolute, {$Registrant_Data['Username']}!", [
                     'event_type' => 'user_registration',
                     'user_id' => $Created_User_ID,
-                    'username' => $Username
+                    'username' => $Registrant_Data['Username'],
                 ]);
 
                 $PDO->commit();

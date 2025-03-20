@@ -68,11 +68,13 @@
      */
     require_once $Dir_Root . '/core/required/domains.php';
     require_once $Dir_Root . '/core/required/database.php';
+
     require_once $Dir_Root . '/core/functions/formulas.php';
     require_once $Dir_Root . '/core/functions/pagination.php';
     require_once $Dir_Root . '/core/functions/purify.php';
     require_once $Dir_Root . '/core/functions/last_seen.php';
     require_once $Dir_Root . '/core/functions/is_between_dates.php';
+    require_once $Dir_Root . '/core/functions/system_notification.php';
     require_once $Dir_Root . '/core/functions/user_agent.php';
 
     require_once $Dir_Root . '/core/functions/pokemon.php';
