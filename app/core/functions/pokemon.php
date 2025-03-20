@@ -197,7 +197,7 @@
                 $Type, $Experience, $Location, $Slot, $Owner_ID, $Owner_ID, $Gender,
                 $IVs, $EVs, $Nature, time(), $Obtained_At, $Ability
             ]);
-            $Poke_DB_ID = $PDO->lastInsertId();
+            $Pokemon_Creation_ID = $PDO->lastInsertId();
 
             $PDO->commit();
         }
@@ -209,6 +209,7 @@
         }
 
         return [
+            'ID' => $Pokemon_Creation_ID,
             'Name' => $Pokemon['Name'],
             'Forme' => $Pokemon['Forme'],
             'Display_Name' => $Display_Name,
@@ -216,7 +217,6 @@
             'Gender' => $Gender,
             'Location' => $Location,
             'Slot' => $Slot,
-            'PokeID' => $Poke_DB_ID,
             'Stats' => $Pokemon['Base_Stats'],
             'IVs' => explode(',', $IVs),
             'EVs' => explode(',', $EVs),

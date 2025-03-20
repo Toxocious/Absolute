@@ -317,7 +317,7 @@
                 $this->InsertLog(
                     $Shop_Data['Name'],
                     null,
-                    $Spawn_Pokemon['PokeID'],
+                    $Spawn_Pokemon['ID'],
                     $Object['Pokedex_ID'],
                     $Object['Alt_ID'],
                     $Object['Type'],

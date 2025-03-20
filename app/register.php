@@ -87,6 +87,8 @@
                 $Selected_Starter = 1;
             }
 
+            $Starter_Data = GetPokedexData($Selected_Starter);
+
             $Password_Hash = password_hash($Registrant_Data['Password'], PASSWORD_DEFAULT);
             $Signed_Up_Timestamp = time();
             $User_Auth_Code = bin2hex(random_bytes(10));
@@ -140,10 +142,10 @@
                 ]);
 
                 $Starter_Gender = GenerateGender($Selected_Starter);
+                $Ability = GenerateAbility($Starter_Data['Pokedex_ID'], $Starter_Data['Alt_ID']);
                 $IVs = mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31) . "," . mt_rand(0, 31);
                 $Nature_Keys = array_keys(Natures());
                 $Nature = $Nature_Keys[mt_rand(0, count($Nature_Keys) - 1)];
-                $Starter_Data = GetPokedexData($Selected_Starter);
 
                 $Create_Starter = $PDO->prepare("
                     INSERT INTO `pokemon` (
@@ -157,10 +159,11 @@
                         `Gender`,
                         `IVs`,
                         `Nature`,
+                        `Ability`,
                         `Creation_Date`,
                         `Creation_Location`
                     )
-                    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
+                    VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )
                 ");
                 $Create_Starter->execute([
                     $Starter_Data['Pokedex_ID'],
@@ -173,6 +176,7 @@
                     $Starter_Gender,
                     $IVs,
                     $Nature,
+                    $Ability,
                     time(),
                     'Starter Pokemon'
                 ]);
@@ -186,7 +190,7 @@
                     LIMIT 1
                 ");
                 $User_Roster_Update->execute([
-                    $Created_Starter_ID,
+                    $Starter_Data['ID'],
                     $Created_User_ID
                 ]);
 
