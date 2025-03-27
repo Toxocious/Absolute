@@ -155,7 +155,7 @@
 					 */
 					else
 					{
-						if ( $Link['Menu'] === $Head['Menu'] && CheckUserPermission($Link['Required_Permission']) )
+						if ( $Link['Menu'] === $Head['Menu'] )
 						{
 							$Display_Links .= "
 								<div class='dropdown-item'>
