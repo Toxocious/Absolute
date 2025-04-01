@@ -1,5 +1,7 @@
 <?php
-  require_once '../../required/session.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/user_session.php';
+
 
   if ( !isset($_POST['Tab']) )
   {
@@ -194,7 +196,7 @@
             <td colspan='5' style='width: 100px;'>
               <img src='{$Display['Sprite']}' />
             </td>
-            <td colspan='9' style='width: 150px;'" . ($Tab === 'Pokemon' ? " data-src='" .DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Rank_Val['ID']}' class='popup'" : '') . ">
+            <td colspan='9' style='width: 150px;'" . ($Tab === 'Pokemon' ? " onclick='PokemonViewer.open(\"{$Rank_Val['ID']}\")'" : '') . ">
                 {$Display['Display_Name']}
                 {$Display['Nickname']}
             </td>
@@ -212,13 +214,3 @@
     ?>
   </tbody>
 </table>
-
-<script type='text/javascript'>
-  [].forEach.call(document.getElementsByClassName("popup"), function(el) {
-    el.lightbox = new IframeLightbox(el, {
-      scrolling: false,
-      rate: 500,
-      touch: false,
-    });
-  });
-</script>

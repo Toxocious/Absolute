@@ -116,9 +116,9 @@
                                 $Roster_Pokemon = GetPokemonData($Roster_Pokemon['ID']);
 
                                 echo "
-                                    <div class='slot popup border-gradient hover' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Pokemon['ID']}'>
+                                    <div class='slot border-gradient hover' onclick='PokemonViewer.open(\"{$Roster_Pokemon['ID']}\")'>
                                         <div>
-                                        <img src='{$Roster_Pokemon['Icon']}' />
+                                            <img src='{$Roster_Pokemon['Icon']}' />
                                         </div>
                                     </div>
                                 ";

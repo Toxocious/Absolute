@@ -99,19 +99,5 @@
     <?php
         }
     ?>
-
-		<script type='text/javascript'>
-            (function(root, document) {
-                "use strict";
-
-                [].forEach.call(document.getElementsByClassName("popup"), function(el) {
-                    el.lightbox = new IframeLightbox(el, {
-                        scrolling: false,
-                        rate: 500,
-                        touch: false,
-                    });
-                });
-            })("undefined" !== typeof window ? window : this, document);
-		</script>
 	</body>
 </html>

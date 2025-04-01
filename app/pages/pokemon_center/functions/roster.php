@@ -205,7 +205,7 @@
                         <div class='flex' style='align-items: center; gap: 10px; justify-content: center;'>
                             <div class='border-gradient hover hw-96px padding-0px'>
                                 <div>
-                                    <img class='popup' src='" . $Pokemon_Info['Sprite'] . "' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id=" . $Pokemon_Info['ID'] . "' />
+                                    <img src='" . $Pokemon_Info['Sprite'] . "' onclick=\"PokemonViewer.open('{$Pokemon_Info['ID']}')\" />
                                 </div>
                             </div>
 

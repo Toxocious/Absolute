@@ -54,14 +54,6 @@ async function ShowTab(Tab_Name) {
 
                 document.getElementById(`${Tab_Name}Button`).parentElement.classList.add('active');
 
-                [].forEach.call(document.getElementsByClassName('popup'), function (el) {
-                    el.lightbox = new IframeLightbox(el, {
-                        scrolling: false,
-                        rate: 500,
-                        touch: false,
-                    });
-                });
-
                 resolve(req.response);
             } else {
                 reject(Error(req.statusText));

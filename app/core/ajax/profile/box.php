@@ -91,7 +91,7 @@
           echo "</tr><tr>";
 
         echo "
-          <td colspan='7' class='popup' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Poke_Data['ID']}' style='width: 171px;'>
+            <td colspan='7' style='width: 171px;' onclick='PokemonViewer.open(\"{$Poke_Data['ID']}\")'>
             <div style='float: left;'>
               <img src='{$Poke_Data['Icon']}' />
             </div>

@@ -29,7 +29,7 @@
         {
           $Roster_Slot[$i] = GetPokemonData($Fetch_Roster[$i]['ID']);
 
-          $Popup = "popup' data-src='" . DOMAIN_ROOT . "/core/ajax/pokemon.php?id={$Roster_Slot[$i]['ID']}'";
+          $Popup = "onclick='PokemonViewer.open(\"{$Roster_Slot[$i]['ID']}\")'";
         }
         else
         {
@@ -40,6 +40,7 @@
           $Roster_Slot[$i]['Experience'] = '0';
           $Roster_Slot[$i]['Item'] = null;
           $Roster_Slot[$i]['Gender_Icon'] = null;
+          $Roster_Slot[$i]['Gender_Short'] = null;
 
           $Popup = '';
         }
@@ -59,7 +60,7 @@
           $Item = '';
         }
 
-        if ( $Roster_Slot[$i]['Gender_Icon'] != null )
+        if ( in_array($Roster_Slot[$i]['Gender_Short'], ['F', 'M']) && $Roster_Slot[$i]['Gender_Icon'] != null )
         {
           $Gender = "
             <div class='border-gradient' style='position: absolute; left: 0; height: 30px; width: 30px; z-index: 1;'>
@@ -74,14 +75,28 @@
           $Gender = '';
         }
 
+        $Level = '';
+        if ( $Roster_Slot[$i]['Level'] > 0 )
+        {
+          $Level = $Roster_Slot[$i]['Level'];
+
+          $Level = "
+                <div class='border-gradient'>
+                    <div>
+                        <b>Lv.</b> {$Roster_Slot[$i]['Level']}
+                    </div>
+                </div>
+            ";
+        }
+
         $Roster_Text .= "
           <div style='flex-basis: 150px; position: relative;'>
             {$Gender}
             {$Item}
 
-            <div class='border-gradient hover' style='margin-bottom: 5px;'>
+            <div style='margin-bottom: 5px; padding-top: 0.5em;' {$Popup}>
               <div>
-                <img class='{$Popup}' src='{$Roster_Slot[$i]['Sprite']}' />
+                <img  src='{$Roster_Slot[$i]['Sprite']}' />
               </div>
             </div>
 
@@ -91,11 +106,7 @@
               </div>
             </div>
 
-            <div class='border-gradient'>
-              <div>
-                <b>Lv.</b> {$Roster_Slot[$i]['Level']}
-              </div>
-            </div>
+            {$Level}
           </div>
         ";
       }
