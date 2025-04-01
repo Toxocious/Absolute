@@ -679,6 +679,7 @@
             'Type_Secondary' => $Pokedex_Data['Type_Secondary'],
             'Ability' => $Pokemon_Data['Ability'],
             'Nature' => $Pokemon_Data['Nature'],
+            'Nature_Modifiers' => Natures()[$Pokemon_Data['Nature']],
             'Stats' => $Stats,
             'IVs' => $IVs,
             'EVs' => $EVs,

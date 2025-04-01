@@ -42,6 +42,7 @@
 
                     <!-- Our custom scripts -->
                     <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/navigation.js' defer></script>
+                    <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/PokeView.js' defer></script>
                 ";
             }
 

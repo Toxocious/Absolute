@@ -343,6 +343,29 @@ nav>.nav-container>.nav-item.has-dropdown>.dropdown>.dropdown-item>a:hover {
 }
 
 /**
+ * Pokemon Modal
+ */
+.floating-window {
+    transition: box-shadow 0.3s;
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 12px;
+
+    & .floating-window-title {
+        background-color: var(--color-secondary);
+
+        & > button {
+            background: none;
+        }
+    }
+
+    & .floating-window-iframe {
+        & iframe {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+    }
+}
+
+/**
  * Sidebar
  */
 aside>.panel>.head {
