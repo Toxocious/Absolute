@@ -1007,6 +1007,10 @@ footer>div {
   aside #chatContent {
     height: 93vh;
     padding: 2px;
+
+    position: relative;
+    max-height: 400px;
+    overflow-y: auto;
   }
 
   aside #chatContent>.message {

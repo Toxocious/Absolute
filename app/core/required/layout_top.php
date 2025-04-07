@@ -37,8 +37,6 @@
                     <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/dependencies/jquery.min.js'></script>
                     <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/dependencies/socket-io.min.js'></script>
                     <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/dependencies/toastify.min.js'></script>
-                    <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/dependencies/perfect-scrollbar.min.js'></script>
-                    <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/dependencies/iframe-lightbox.min.js'></script>
 
                     <!-- Our custom scripts -->
                     <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/navigation.js' defer></script>

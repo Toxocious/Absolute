@@ -49,31 +49,30 @@
     ?>
       <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/chat/client.js'></script>
       <script type='text/javascript'>
-          /**
-           * Set up the user object that the socket will send.
-           */
-          let User = {
-              User_ID: <?= $User_Data['ID']; ?>,
-              Username: '<?= $User_Data['Username']; ?>',
-              Rank: '<?= $User_Data['Rank']; ?>',
-              Auth_Code: '<?= $User_Data['Auth_Code']; ?>',
-              Avatar: '<?= str_replace('https://localhost/', '../', $User_Data['Avatar']); ?>',
-              Connected: true,
-          }
+            /**
+             * Set up the user object that the socket will send.
+             */
+            let User = {
+                User_ID: <?= $User_Data['ID']; ?>,
+                Username: '<?= $User_Data['Username']; ?>',
+                Rank: '<?= $User_Data['Rank']; ?>',
+                Auth_Code: '<?= $User_Data['Auth_Code']; ?>',
+                Avatar: '<?= str_replace('https://localhost/', '../', $User_Data['Avatar']); ?>',
+                Connected: true,
+            }
 
-          /**
-           * Set up a new instance of the chat client socket.
-           */
-          const ChatClient = new AbsoluteChatClient.Absolute(User);
-          ChatClient.Initialize();
+            /**
+             * Set up a new instance of the chat client socket.
+             */
+            const ChatClient = new AbsoluteChatClient.Absolute(User);
+            ChatClient.Initialize();
 
-          /**
-           * Handle sent chat messages.
-           */
-          const Chat_Element = document.querySelector('#chatContent');
-          const Perfect_Scrollbar = new PerfectScrollbar(Chat_Element);
-          const Chat_Input = document.getElementById('chatMessage');
-          Chat_Input.addEventListener('keydown', (event) => {
+            /**
+             * Handle sent chat messages.
+             */
+            const Chat_Element = document.querySelector('#chatContent');
+            const Chat_Input = document.getElementById('chatMessage');
+            Chat_Input.addEventListener('keydown', (event) => {
                 if ( event.keyCode === 13 )
                 {
                     event.preventDefault();
@@ -90,11 +89,9 @@
                         });
 
                         Chat_Input.value = '';
-
-                        Perfect_Scrollbar.update();
                     }
                 }
-          });
+            });
       </script>
     <?php
         }
