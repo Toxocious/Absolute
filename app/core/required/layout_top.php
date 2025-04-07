@@ -30,8 +30,6 @@
                 echo "
                     <!-- CSS Dependencies -->
                     <link type='text/css' rel='stylesheet' href='" . DOMAIN_ROOT . "/themes/css/lib/toastify.min.css' />
-                    <link type='text/css' rel='stylesheet' href='" . DOMAIN_ROOT . "/themes/css/lib/perfect-scrollbar.min.css' />
-                    <link type='text/css' rel='stylesheet' href='" . DOMAIN_ROOT . "/themes/css/lib/iframe-lightbox.min.css' />
 
                     <!-- JS Dependencies -->
                     <script type='text/javascript' src='" . DOMAIN_ROOT . "/js/dependencies/jquery.min.js'></script>
