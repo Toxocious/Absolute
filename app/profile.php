@@ -158,22 +158,22 @@
             <div style='flex: 1;'>
                 <div class='page-nav-container'>
                     <div class='page-nav-item'>
-                        <a href='javascript:void(0);' onclick="HandleTab('roster');">
+                        <a href='javascript:void(0);' id='rosterButton' onclick="HandleTab('roster');">
                             Roster
                         </a>
                     </div>
                     <div class='page-nav-item'>
-                        <a href='javascript:void(0);' onclick="HandleTab('box');">
+                        <a href='javascript:void(0);' id='boxButton' onclick="HandleTab('box');">
                             Box
                         </a>
                     </div>
                     <div class='page-nav-item'>
-                        <a href='javascript:void(0);' onclick="HandleTab('inventory');">
+                        <a href='javascript:void(0);' id='inventoryButton' onclick="HandleTab('inventory');">
                             Inventory
                         </a>
                     </div>
                     <div class='page-nav-item'>
-                        <a href='javascript:void(0);' onclick="HandleTab('stats');">
+                        <a href='javascript:void(0);' id='statsButton' onclick="HandleTab('stats');">
                             Stats
                         </a>
                     </div>
@@ -204,6 +204,8 @@
             return;
         }
 
+        const tabList = ['roster', 'box', 'stats', 'inventory'];
+
         return new Promise((resolve, reject) =>
         {
             const req = new XMLHttpRequest();
@@ -212,6 +214,14 @@
             req.onerror = (error) => reject(Error(`Network Error: ${error}`));
             req.onload = () =>
             {
+                for (let i = 0; i < tabList.length; i++) {
+                    document
+                        .getElementById(`${tabList[i]}Button`)
+                        .parentElement.classList.remove('active');
+                }
+
+                document.getElementById(`${Tab}Button`).parentElement.classList.add('active');
+
                 if ( req.status === 200 )
                 {
                     document.querySelector('#ProfileAJAX').innerHTML = req.responseText;
