@@ -2,9 +2,13 @@
     require_once '../required/session.php';
 
     if ( isset($_GET['id']) )
+    {
         $Poke_ID = Purify($_GET['id']);
+    }
     else
+    {
         $Poke_ID = 0;
+    }
 
     $Pokemon = GetPokemonData($Poke_ID);
 
@@ -155,42 +159,6 @@
                                 ";
                             }
                         ?>
-                        <!-- <tr>
-                            <td><b style='<?= ($Pokemon['Nature_Modifiers']['Plus'] == '' ? 'color: green;' : ''); ?>'>HP</b></td>
-                            <td><?= number_format($Pokemon['Stats'][0]); ?></td>
-                            <td style='<?= ($Pokemon['IVs'][0] == 31 ? "color: gold;" : "") ?>'><?= number_format($Pokemon['IVs'][0]); ?></td>
-                            <td><?= number_format($Pokemon['EVs'][0]); ?></td>
-                        </tr>
-                        <tr>
-                            <td><b style='<?= ($Pokemon['Nature_Modifiers']['Plus'] == '' ? 'color: green;' : ''); ?>'>Attack</b></td>
-                            <td><?= number_format($Pokemon['Stats'][1]); ?></td>
-                            <td style='<?= ($Pokemon['IVs'][1] == 31 ? "color: gold;" : "") ?>'><?= number_format($Pokemon['IVs'][1]); ?></td>
-                            <td><?= number_format($Pokemon['EVs'][1]); ?></td>
-                        </tr>
-                        <tr>
-                            <td><b style='<?= ($Pokemon['Nature_Modifiers']['Plus'] == '' ? 'color: green;' : ''); ?>'>Defense</b></td>
-                            <td><?= number_format($Pokemon['Stats'][2]); ?></td>
-                            <td style='<?= ($Pokemon['IVs'][2] == 31 ? "color: gold;" : "") ?>'><?= number_format($Pokemon['IVs'][2]); ?></td>
-                            <td><?= number_format($Pokemon['EVs'][2]); ?></td>
-                        </tr>
-                        <tr>
-                            <td><b style='<?= ($Pokemon['Nature_Modifiers']['Plus'] == '' ? 'color: green;' : ''); ?>'>Sp. Attack</b></td>
-                            <td><?= number_format($Pokemon['Stats'][3]); ?></td>
-                            <td style='<?= ($Pokemon['IVs'][3] == 31 ? "color: gold;" : "") ?>'><?= number_format($Pokemon['IVs'][3]); ?></td>
-                            <td><?= number_format($Pokemon['EVs'][3]); ?></td>
-                        </tr>
-                        <tr>
-                            <td><b style='<?= ($Pokemon['Nature_Modifiers']['Plus'] == '' ? 'color: green;' : ''); ?>'>Sp. Defense</b></td>
-                            <td><?= number_format($Pokemon['Stats'][4]); ?></td>
-                            <td style='<?= ($Pokemon['IVs'][4] == 31 ? "color: gold;" : "") ?>'><?= number_format($Pokemon['IVs'][4]); ?></td>
-                            <td><?= number_format($Pokemon['EVs'][4]); ?></td>
-                        </tr>
-                        <tr>
-                            <td><b style='<?= ($Pokemon['Nature_Modifiers']['Plus'] == '' ? 'color: green;' : ''); ?>'>Speed</b></td>
-                            <td><?= number_format($Pokemon['Stats'][5]); ?></td>
-                            <td style='<?= ($Pokemon['IVs'][5] == 31 ? "color: gold;" : "") ?>'><?= number_format($Pokemon['IVs'][5]); ?></td>
-                            <td><?= number_format($Pokemon['EVs'][5]); ?></td>
-                        </tr> -->
                     </tbody>
                 </table>
             </div>
@@ -207,18 +175,18 @@
                         <tr>
                             <td style='width: 25%;'><b>Owner</b></td>
                             <td style='width: 25%;'><?= $Owner_Current_Username; ?></td>
-                            <td colspan='1'>
+                            <td style='width: 25%;'>
                                 <b>Original Owner</b>
                             </td>
-                            <td colspan='1'>
+                            <td style='width: 25%;'>
                                 <?= $Owner_Original_Username; ?>
                             </td>
                         </tr>
                         <tr>
                             <td><b>Nature</b></td>
                             <td><?= $Pokemon['Nature']; ?></td>
-                            <td style='width: 25%;'><b>Location</b></td>
-                            <td style='width: 25%;'><?= $Pokemon['Location']; ?></td>
+                            <td><b>Ability</b></td>
+                            <td><?= $Pokemon['Ability']; ?></td>
                         </tr>
                         <tr>
                             <td><b>Level</b></td>
@@ -227,16 +195,18 @@
                             <td><?= $Pokemon['Experience']; ?></td>
                         </tr>
                         <tr>
+                            <td><b>Location</b></td>
+                            <td><?= $Pokemon['Location']; ?></td>
                             <td><b>Trade Interest</b></td>
                             <td><?= $Pokemon['Trade_Interest']; ?></td>
-                            <td colspan='1'><b>Obtained On</b></td>
-                            <td colspan='1'>
-                                <?= $Pokemon['Creation_Date']; ?>
-                            </td>
                         </tr>
                         <tr>
-                            <td colspan='1'><b>Place Obtained</b></td>
-                            <td colspan='3'><?= $Pokemon['Creation_Location']; ?></td>
+                            <td><b>Obtained On</b></td>
+                            <td>
+                                <?= $Pokemon['Creation_Date']; ?>
+                            </td>
+                            <td><b>Place Obtained</b></td>
+                            <td><?= $Pokemon['Creation_Location']; ?></td>
                         </tr>
                     </tbody>
                 </table>
