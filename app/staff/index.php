@@ -1,5 +1,6 @@
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
+
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/auth.php';
 
   if ( !AuthorizeUser() )
@@ -12,6 +13,8 @@
         </div>
       </div>
     ";
+
+	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
 
     exit;
   }

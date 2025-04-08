@@ -2,7 +2,7 @@
   require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
   require_once $_SERVER['DOCUMENT_ROOT'] . '/staff/functions/auth.php';
 
-  if ( !AuthorizeUser() )
+  if ( !AuthorizeUser() || !CheckUserPermission('Maintenance') )
   {
     echo "
       <div style='padding: 5px;'>
