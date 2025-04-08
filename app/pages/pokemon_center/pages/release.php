@@ -2,10 +2,9 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
 ?>
 
-<div class='description'>
-    Any Pok&eacute;mon that you no longer want to keep are able to be released here.
-    <br />
-    You will have multiple chances to deny the releasing of your Pok&eacute;mon before they are released.
+<div style="margin: 0.5em 1em 1em;">
+    Any Pok&eacute;mon that you no longer want to keep are able to be released here.<br />
+    You will have multiple chances to stop the process of releasing of your Pok&eacute;mon if you change your mind.
 </div>
 
 <div id='Pokemon_Center_Release_AJAX'></div>

@@ -4,8 +4,8 @@
 
 <div id='Pokemon_Center_Moves_AJAX'></div>
 
-<div class='description'>
-    To change the move of a Pokemon, simply click on the move that you wish to change, and a dropdown menu will appear in it's place, allowing you to select the move that you desire.
+<div style="margin: 0.5em 1em 1em;">
+    Click on a Pokemon's move to spawn a menu allowing you to change its move.
 </div>
 
 <div style='display: flex; flex-wrap: wrap; gap: 10px;'>

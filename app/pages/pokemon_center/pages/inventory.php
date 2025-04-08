@@ -98,9 +98,8 @@
 	}
 ?>
 
-<div class='description'>
-    Handle equipping and using your items here.
-    <br />
+<div style="margin: 0.5em 1em 1em;">
+    Handle equipping and using your items here.<br />
     Clicking on an attached item will prompt you to unequip it from the Pok&eacute;mon.
 </div>
 

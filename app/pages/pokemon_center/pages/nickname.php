@@ -2,6 +2,10 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
 ?>
 
+<div style="margin: 0.5em 1em 1em;">
+    Nicknaming your Pok&eacute;mon is free! Nicknames are not permanent, and you can change them at any time.
+</div>
+
 <div id='Pokemon_Center_Nickname_AJAX'></div>
 
 <div style='display: flex; flex-wrap: wrap; gap: 10px;'>
