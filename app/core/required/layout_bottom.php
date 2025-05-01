@@ -1,10 +1,9 @@
 			</main>
 
-			<footer>
-
         <?php
             if (defined('LOCAL'))
             {
+                echo "<footer style='display: flex; flex-direction: column;'>";
                 try {
                     $stats = $PDO->getQueryStats();
 
@@ -20,24 +19,38 @@
                         ) . "
                         </div>
                     ";
+
+                    // Render all SQL queries that were executed for the page load.
+                    if ( false )
+                    {
+                        foreach ( $stats['queries'] as $query )
+                        {
+                            echo "<hr class='faded' /><div>" . htmlspecialchars($query['query']) . "</div>";
+                            if ( !empty($query['params']) )
+                            {
+                                echo "<div>Params: " . json_encode($query['params']) . "</div>";
+                            }
+                            echo "<div>Duration: " . round($query['duration'] * 1000, 4) . "ms</div>";
+                        }
+                    }
                 } catch (Exception $e) {
                     error_log("Failed to get query stats: " . $e->getMessage());
                 }
+                echo "</footer>";
             }
             else
             {
         ?>
-
+			<footer>
 				<div>
 					Pok&eacute;mon Absolute &copy; 2018 - <?= date('Y'); ?> Toxocious<br />
 					Pok&eacute;mon &copy; 1995 - <?= date('Y'); ?> Nintendo/Creatures Inc./Game Freak Inc, please support the <a href='http://pokemon.com' target='_blank' rel='noopener noreferrer'>official release.</a>
 				</div>
-
+            </footer>
         <?php
             }
         ?>
 
-			</footer>
 		</div>
 
     <?php
