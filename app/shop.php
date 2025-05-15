@@ -104,7 +104,6 @@
                             if ( $User_Data[$Currency] < $Amount )
                             {
                                 $Can_Afford = false;
-                                break;
                             }
                         }
 
