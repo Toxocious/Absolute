@@ -1,6 +1,7 @@
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
-	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/classes/shop.php';
+
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/shop/functions/fetch_stock.php';
 
 	if ( isset($_GET['Shop']) )
     {
@@ -11,19 +12,21 @@
         $Shop_ID = 1;
     }
 
-	$Shop = $Shop_Class->FetchShopData($Shop_ID);
+	$Shop = FetchShopData($Shop_ID);
 ?>
 
 <div class='panel content'>
 	<div class='head'><?= ($Shop ? $Shop['Name'] : 'Shop'); ?></div>
-	<div class='body'>
+	<div class='body' style='padding: 5px;'>
 		<?php
 			if ( !$Shop )
 			{
 				echo "
-					<div style='margin: auto; padding: 10px;'>
-						An error occurred while loading the shop.
-					</div>
+                            <div style='margin: auto; padding: 1em;'>
+                                The shop you're trying to access does not exist.
+                            </div>
+                        </div>
+                    </div>
 				";
 
 				require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
@@ -31,13 +34,18 @@
 			}
 		?>
 
-		<div class='nav'>
-			<div>
-				<a href='<?= DOMAIN_ROOT; ?>/shop.php?Shop=1' style='display: block;'>Pokemon</a>
-			</div>
-		</div>
+         <div style='flex: 1;'>
+            <div class='page-nav-container'>
+                <div class='page-nav-item <?= ($Shop_ID == 1 ? 'active' : '') ;?>'>
+                    <a href='<?= DOMAIN_ROOT; ?>/shop.php?Shop=1' style='display: block;'>Pokemon Shop</a>
+                </div>
+                <div class='page-nav-item <?= ($Shop_ID == 2 ? 'active' : '') ;?>'>
+                    <a href='<?= DOMAIN_ROOT; ?>/shop.php?Shop=2' style='display: block;'>Item Shop</a>
+                </div>
+            </div>
+         </div>
 
-		<div class='description'>
+		<div style='margin: 0.5em 0;'>
 			<?= $Shop['Description']; ?>
 		</div>
 
@@ -49,18 +57,18 @@
                 switch ( $Shop_Catalog )
                 {
                     case 'Pokemon':
-                        $Shop_Objects = $Shop_Class->FetchShopPokemon($Shop_ID);
+                        $Shop_Objects = FetchShopPokemon($Shop_ID);
                         break;
 
                     case 'Items':
-                        $Shop_Objects = $Shop_Class->FetchShopItems($Shop_ID);
+                        $Shop_Objects = FetchShopItems($Shop_ID);
                         break;
                 }
 
                 if ( $Shop_Objects )
                 {
                     echo "
-                        <div class='flex wrap' style='justify-content: center;'>
+                        <div class='flex wrap' style='justify-content: center; gap: 1em 0;'>
                         <div style='width: 100%;'>
                             <h3>Shop {$Shop_Catalog}</h3>
                         </div>
@@ -87,7 +95,7 @@
                         $Can_Afford = true;
                         $Price_String = '';
 
-                        $Price_Array = $Shop_Class->FetchPriceList($Shop_Object['Prices']);
+                        $Price_Array = FetchPriceList($Shop_Object['Prices']);
                         foreach ( $Price_Array[0] as $Currency => $Amount )
                         {
                             $Price_String .= "
@@ -118,7 +126,7 @@
                         else if ( $Can_Afford )
                         {
                             $Purchase_Button = "
-                                <button onclick='Purchase({\"ID\": {$Shop_Object['ID']}, \"Type\": \"{$Shop_Catalog}\"});'>
+                                <button onclick='PurchaseShopObject({\"Shop_ID\": \"{$Shop_ID}\", \"Object_ID\": {$Shop_Object['ID']}, \"Object_Type\": \"{$Shop_Catalog}\"});'>
                                     Purchase
                                 </button>
                             ";
@@ -136,7 +144,7 @@
                         $Object_Image = $Object_Data['Sprite'] ?? $Object_Data['Icon'];
 
                         echo "
-                            <table class='border-gradient' style='flex-basis: 200px; margin: 5px 5px;'>
+                            <table class='border-gradient' style='flex-basis: 250px;'>
                                 <thead>
                                     <tr>
                                         <th colspan='2'>
@@ -175,57 +183,8 @@
 	</div>
 </div>
 
-<script type='text/javascript'>
-	const Purchase = (Object) =>
-	{
-		return new Promise((resolve, reject) =>
-        {
-            const req = new XMLHttpRequest();
-            req.open('GET', `<?= DOMAIN_ROOT; ?>/core/ajax/shop/purchase.php?Shop=<?= $Shop['ID']; ?>&Object_ID=${Object.ID}&Object_Type=${Object.Type}`);
-            req.send(null);
-            req.onerror = (error) => reject(`Network Error: ${error}`);
-            req.onload = () =>
-            {
-                if ( req.status === 200 )
-                {
-                    document.querySelector('#ShopAJAX').innerHTML = req.responseText;
-                    FetchStock(Object);
-                    resolve(req.response);
-                }
-                else
-                {
-                    document.querySelector('#ShopAJAX').innerHTML = req.statusText;
-                    FetchStock(Object);
-                    reject(req.statusText);
-                }
-            };
-        });
-	}
-
-	const FetchStock = (Object) =>
-	{
-		return new Promise((resolve, reject) =>
-        {
-            const req = new XMLHttpRequest();
-            req.open('GET', `<?= DOMAIN_ROOT; ?>/core/ajax/shop/fetch_stock.php?Object_ID=${Object.ID}&Object_Type=${Object.Type}`);
-            req.send(null);
-            req.onerror = (error) => reject(`Network Error: ${error}`);
-            req.onload = () =>
-            {
-                if ( req.status === 200 )
-                {
-                    document.querySelector(`#${Object.Type}_${Object.ID}`).innerHTML = req.responseText;
-                    resolve(req.response);
-                }
-                else
-                {
-                    document.querySelector(`#${Object.Type}_${Object.ID}`).innerHTML = req.statusText;
-                    reject(req.statusText);
-                }
-            };
-        });
-	}
-</script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/shop/js/ajax_functions.js'></script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/shop/js/shop.js'></script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

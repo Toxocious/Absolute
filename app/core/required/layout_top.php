@@ -88,7 +88,7 @@
 						<div>
 							<img src='<?= DOMAIN_SPRITES; ?>/Assets/Money.png' />
 						</div>
-						<div id='user_money'>$<?= number_format($User_Data['Money']); ?></div>
+						<div id='user_money'><?= number_format($User_Data['Money']); ?></div>
 					</div>
 
 					<div class='stat border-gradient w-150px'>

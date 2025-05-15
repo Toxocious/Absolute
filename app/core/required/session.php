@@ -51,9 +51,6 @@
     require_once $Dir_Root . '/core/classes/item.php';
     $Item_Class = new Item();
 
-    require_once $Dir_Root . '/core/classes/shop.php';
-    $Shop_Class = new Shop();
-
     require_once $Dir_Root . '/core/classes/navigation.php';
     $Navigation = new Navigation();
 
