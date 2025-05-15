@@ -1,8 +1,10 @@
 html {
-  background: var(--color-septary);
+    background: var(--color-septary);
+    background-image: var(--background-gradient);
 }
 
 body {
+  /* background-image: var(--background-gradient); */
   color: var(--color-white);
 }
 
@@ -399,6 +401,13 @@ aside>.panel.chat .message.private>.text>div {
  */
 table>tbody {
   background: var(--color-quadternary);
+}
+
+/**
+ * Footer
+ */
+.footer-peeker > img {
+    filter: drop-shadow(0 35px 35px var(--footer-peeker-shadow));
 }
 
 /**

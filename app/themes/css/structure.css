@@ -568,6 +568,17 @@ footer>div {
   padding: 2px;
 }
 
+/**
+ * Footer
+ */
+.footer-peeker {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin-bottom: -100px;
+    margin-right: -100px;
+}
+
 .floating-window {
     position: fixed;
     width: 700px;

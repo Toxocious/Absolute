@@ -51,6 +51,13 @@
             }
         ?>
 
+        <!-- absol peeker -->
+        <div class="footer-peeker">
+            <img src="<?= DOMAIN_SPRITES; ?>/Assets/Layout/Peekers/<?= (isset($User_Data['Theme']) ? $User_Data['Theme'] : 'absol'); ?>.png" alt="<?= (isset($User_Data['Theme']) ? $User_Data['Theme'] : 'absol'); ?>" class="" width="200" height="244" loading="lazy" decoding="async">
+        </div>
+
+        <!-- -->
+
 		</div>
 
     <?php

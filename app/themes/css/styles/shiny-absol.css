@@ -1,7 +1,7 @@
 :root {
-    --background-color-start: #1f2937;
-    --background-color-mid: #111827;
-    --background-color-end: #000000;
+    --background-color-start: #c7d2fe;
+    --background-color-mid: #fecaca;
+    --background-color-end: #fef9c3;
 
     --background-gradient: radial-gradient(ellipse at top right, var(--background-color-start), var(--background-color-mid), var(--background-color-end));
 
@@ -26,11 +26,13 @@
     --border-color-warning: #fcbc19;
     --border-color-description: #4A618F;
     --border-color-notice: #4A618F;
+
     --bg-success: #2c3a55;
     --bg-error: #2c3a55;
     --bg-warning: #2c3a55;
     --bg-description: #2c3a55;
     --bg-notice: #2c3a55;
+
     --color-success: #fff;
     --color-error: #fff;
     --color-warning: #fff;
@@ -44,7 +46,7 @@
     --box-shadow: 0px 1px 5px #000;
     --box-shadow-nav: rgba(2, 8, 20, 1) 1px 1px 1em 0px;
 
-    --footer-peeker-shadow: rgba(255, 255, 255, .33);
+    --footer-peeker-shadow: rgba(0, 0, 0, 0.33);
 
     --rank-member: #fff;
     --rank-chat-mod: #5519fc;
