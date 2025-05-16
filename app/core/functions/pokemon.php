@@ -508,6 +508,7 @@
             "Name" => $Name,
             "Forme" => $Pokedex_Data['Forme'],
             "Display_Name" => $Display_Name,
+            "Type" => $Type,
             "Type_Primary" => $Pokedex_Data['Type_Primary'],
             "Type_Secondary" => $Pokedex_Data['Type_Secondary'],
             "Base_Stats" => $BaseStats,

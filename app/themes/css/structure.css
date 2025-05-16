@@ -568,9 +568,6 @@ footer>div {
   padding: 2px;
 }
 
-/**
- * Footer
- */
 .footer-peeker {
     position: fixed;
     bottom: 0;
@@ -645,6 +642,122 @@ footer>div {
             height: 100%;
             width: 100%;
 
+        }
+    }
+}
+
+.shop-card
+{
+    border-radius: 1em;
+    padding: 0.25em;
+
+    max-width: 230px;
+    width: 100%;
+
+    & > .shop-card-content
+    {
+        & > .shop-card-image
+        {
+            border-radius: 0.75em;
+
+            padding: 25px 0;
+        }
+
+        & > .shop-card-title
+        {
+            display: flex;
+            flex-direction: row;
+            justify-content:space-between;
+            gap: 0em;
+            padding: 0.5em;
+
+            & > .shop-card-badge
+            {
+                padding: 0.5em 0;
+
+                & > img
+                {
+                    height: 24px;
+                    width: 24px;
+                }
+            }
+
+            & > .shop-card-info
+            {
+                display: flex;
+                flex-direction: column;
+                gap: 0em;
+                padding: 0.5em 0;
+
+                & > .shop-card-name
+                {
+                    font-size: 1.25em;
+                    font-weight: bold;
+                    text-align: left;
+                }
+
+                & > .shop-card-type
+                {
+                    font-size: 1em;
+                    font-style: italic;
+                    font-weight: lighter;
+                    text-align: left;
+                }
+            }
+        }
+
+        & > .shop-card-prices
+        {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 1em;
+            justify-content: space-between;
+            padding: 0 0.33em 0.33em;
+
+            & > div
+            {
+                display: flex;
+                flex-direction: row;
+                gap: 0.5em;
+                align-items: center;
+                width: calc(50% - 0.5em);
+            }
+        }
+
+        & > .shop-card-footer
+        {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.5em;
+
+            & > .shop-card-time-remaining
+            {
+                display: flex;
+                flex-direction: row;
+                gap: 0.33em;
+                align-items: center;
+
+                font-size: 1em;
+                font-style: italic;
+                font-weight: lighter;
+                text-align: left;
+            }
+
+            & > .shop-card-button
+            {
+                & > button
+                {
+                    border-radius: 1em;
+                    padding: 0.5em 1em;
+
+                    font-weight: bold;
+
+                    max-width: 110px;
+                }
+            }
         }
     }
 }

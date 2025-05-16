@@ -45,7 +45,7 @@
             </div>
          </div>
 
-		<div style='margin: 0.5em 0;'>
+		<div style='margin: 1em auto;'>
 			<?= $Shop['Description']; ?>
 		</div>
 
@@ -68,10 +68,7 @@
                 if ( $Shop_Objects )
                 {
                     echo "
-                        <div class='flex wrap' style='justify-content: center; gap: 1em 0;'>
-                        <div style='width: 100%;'>
-                            <h3>Shop {$Shop_Catalog}</h3>
-                        </div>
+                        <div class='flex flex-row wrap' style='gap: 1em; justify-content: center; width: 100%;'>
                     ";
 
                     foreach ( $Shop_Objects as $Shop_Object )
@@ -99,13 +96,8 @@
                         foreach ( $Price_Array[0] as $Currency => $Amount )
                         {
                             $Price_String .= "
-                                <div style='display: flex; align-items: center; justify-content: flex-start; gap: 5px;'>
-                                    <div>
-                                        <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' />
-                                    </div>
-                                    <div>
-                                        " . number_format($Amount) . "
-                                    </div>
+                                <div>
+                                    <img src='" . DOMAIN_SPRITES . "/Assets/{$Currency}.png' /> " . number_format($Amount) . "
                                 </div>
                             ";
 
@@ -115,15 +107,7 @@
                             }
                         }
 
-                        if ( $Shop_Object['Remaining'] < 1 )
-                        {
-                            $Purchase_Button = "
-                                <button class='disabled'>
-                                    Not In Stock
-                                </button>
-                            ";
-                        }
-                        else if ( $Can_Afford )
+                        if ( $Can_Afford )
                         {
                             $Purchase_Button = "
                                 <button onclick='PurchaseShopObject({\"Shop_ID\": \"{$Shop_ID}\", \"Object_ID\": {$Shop_Object['ID']}, \"Object_Type\": \"{$Shop_Catalog}\"});'>
@@ -144,33 +128,34 @@
                         $Object_Image = $Object_Data['Sprite'] ?? $Object_Data['Icon'];
 
                         echo "
-                            <table class='border-gradient' style='flex-basis: 250px;'>
-                                <thead>
-                                    <tr>
-                                        <th colspan='2'>
-                                            {$Object_Name}
-                                        </th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                    <tr>
-                                        <td colspan='1' style='width: 96px;'>
-                                            <img src='{$Object_Image}' />
-                                        </td>
-                                        <td colspan='1'>
-                                            {$Price_String}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tbody>
-                                    <tr>
-                                        <td colspan='2'>
+                            <div class='shop-card'>
+                                <div class='shop-card-content'>
+                                    <div class='shop-card-image'>
+                                        <img src='{$Object_Image}' alt='{$Object_Name}' />
+                                    </div>
+                                    <div class='shop-card-title'>
+                                        <div class='shop-card-info'>
+                                            <div class='shop-card-name'>{$Object_Data['Name']}</div>
+                                            <div class='shop-card-type'>" . ($Object_Data['Type'] ?? '') . "</div>
+                                        </div>
+                                        <div class='shop-card-badge'>
+                                            " . ($Object_Data['Type'] == "Shiny" ? "<img src='https://archives.bulbagarden.net/media/upload/8/82/ShinyLGPEStar.png' />" : '') . "
+                                        </div>
+                                    </div>
+                                    <div class='shop-card-prices'>
+                                        {$Price_String}
+                                    </div>
+                                    <div class='shop-card-footer'>
+                                        <div class='shop-card-time-remaining'>
+                                            <svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='#e3e3e3'><path d='m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z'/></svg>
+                                            4hr 20m
+                                        </div>
+                                        <div class='shop-card-button'>
                                             {$Purchase_Button}
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         ";
                     }
 

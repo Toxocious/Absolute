@@ -411,6 +411,39 @@ table>tbody {
 }
 
 /**
+ * Shop page cards
+ */
+.shop-card {
+    background: var(--color-primary);
+    box-shadow: var(--box-shadow-nav);
+
+    & > .shop-card-content {
+        & > .shop-card-image {
+            background: var(--color-tertiary);
+        }
+
+        & > .shop-card-footer {
+            & > .shop-card-button {
+                & > button {
+                    border: 2px solid var(--color-secondary);
+                    background: var(--color-tertiary);
+                    box-shadow: var(--box-shadow);
+
+                    &:hover {
+                        background: var(--color-quinary);
+                    }
+
+                    &.disabled {
+                        background: var(--color-mid-grey);
+                        border: 2px solid var(--color-dark-grey);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/**
  * Specific coloring for each member rank category.
  */
 .member {
