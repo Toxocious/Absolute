@@ -108,7 +108,7 @@
 
         try
         {
-            $Fetch_Shop_Objects = $PDO->prepare("SELECT * FROM `shop_items` WHERE `obtained_place` = ?");
+            $Fetch_Shop_Objects = $PDO->prepare("SELECT * FROM `shop_items` WHERE `obtained_place` = ? AND `Active` = 1");
             $Fetch_Shop_Objects->execute([ $Shop_Data['Obtained_Place'] ]);
             $Fetch_Shop_Objects->setFetchMode(PDO::FETCH_ASSOC);
             $Shop_Objects = $Fetch_Shop_Objects->fetchAll();

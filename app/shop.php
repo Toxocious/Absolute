@@ -2,6 +2,7 @@
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/shop/functions/fetch_stock.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/shop/functions/expiration_time.php';
 
 	if ( isset($_GET['Shop']) )
     {
@@ -107,7 +108,15 @@
                             }
                         }
 
-                        if ( $Can_Afford )
+                        if ( $Shop_Object['Expires_On'] < $Time )
+                        {
+                            $Purchase_Button = "
+                                <button class='disabled'>
+                                    Expired
+                                </button>
+                            ";
+                        }
+                        else if ( $Can_Afford )
                         {
                             $Purchase_Button = "
                                 <button onclick='PurchaseShopObject({\"Shop_ID\": \"{$Shop_ID}\", \"Object_ID\": {$Shop_Object['ID']}, \"Object_Type\": \"{$Shop_Catalog}\"});'>
@@ -148,7 +157,7 @@
                                     <div class='shop-card-footer'>
                                         <div class='shop-card-time-remaining'>
                                             <svg xmlns='http://www.w3.org/2000/svg' height='24px' viewBox='0 -960 960 960' width='24px' fill='#e3e3e3'><path d='m612-292 56-56-148-148v-184h-80v216l172 172ZM480-80q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-400Zm0 320q133 0 226.5-93.5T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 133 93.5 226.5T480-160Z'/></svg>
-                                            4hr 20m
+                                            " . (format_expiration_time($Shop_Object['Expires_On'])) . "
                                         </div>
                                         <div class='shop-card-button'>
                                             {$Purchase_Button}
