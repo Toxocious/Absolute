@@ -6,6 +6,10 @@
  * @param Object_Type
  */
 async function PurchaseShopObject({ Shop_ID, Object_ID, Object_Type }) {
+    if (!confirm('Are you sure you want to purchase this object?')) {
+        return;
+    }
+
     let Form_Data = new FormData();
     Form_Data.append('Action', 'Purchase_Object');
     Form_Data.append('Shop_ID', Shop_ID);
