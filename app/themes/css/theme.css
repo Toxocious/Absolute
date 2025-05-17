@@ -444,6 +444,34 @@ table>tbody {
 }
 
 /**
+ * Card displayed when obtaining a new Pokemon.
+ */
+ .obtained-pokemon-card-notice {
+     background: var(--color-primary);
+ }
+.obtained-pokemon-card
+{
+    background: var(--color-primary);
+    box-shadow: var(--box-shadow-nav);
+
+    & > .obtained-pokemon-card-content
+    {
+        & > .obtained-pokemon-card-image
+        {
+            background: var(--color-tertiary);
+        }
+
+        & > .obtained-pokemon-card-info
+        {
+            & > .obtained-pokemon-card-stats
+            {
+                background: var(--color-tertiary);
+            }
+        }
+    }
+}
+
+/**
  * Specific coloring for each member rank category.
  */
 .member {

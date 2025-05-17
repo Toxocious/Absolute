@@ -15,6 +15,7 @@ async function PurchaseShopObject({ Shop_ID, Object_ID, Object_Type }) {
     await SendRequest('shop', Form_Data)
         .then((Purchase_Data) => {
             Purchase_Data = JSON.parse(Purchase_Data);
+            console.log(Purchase_Data);
 
             if (
                 Purchase_Data.Object_Data.Shiny_Alert &&
@@ -27,69 +28,89 @@ async function PurchaseShopObject({ Shop_ID, Object_ID, Object_Type }) {
                 alert('Woah! You just bought an ungendered Pokémon!');
             }
 
-            const Total_IVs = Purchase_Data.Object_Data.IVs.reduce(
-                (a, b) => Number(a) + Number(b),
-                0
-            );
-            const Total_Base_Stats = Purchase_Data.Object_Data.Stats.reduce((a, b) => a + b, 0);
+            document.getElementById('ShopAJAX').style.display = 'flex';
+            document.getElementById('ShopAJAX').style.flexDirection = 'column';
+            document.getElementById('ShopAJAX').style.alignItems = 'center';
+            document.getElementById('ShopAJAX').style.justifyContent = 'center';
+            document.getElementById('ShopAJAX').style.marginBottom = '1em';
 
             document.getElementById('ShopAJAX').innerHTML = `
-                <table class='border-gradient' style='width: 475px; margin: 1em auto;'>
-                    <tbody>
-                        <tr>
-                            <td colspan='2' rowspan='3'>
-                                <img src='${Purchase_Data.Object_Data.Sprite}' />
-                            </td>
-                            <td></td>
-                            <td style='width: 39px;'>
-                                <b>HP</b>
-                            </td>
-                            <td style='width: 39px;'>
-                                <b>Att</b>
-                            </td>
-                            <td style='width: 39px;'>
-                                <b>Def</b>
-                            </td>
-                            <td style='width: 39px;'>
-                                <b>Sp.A</b>
-                            </td>
-                            <td style='width: 39px;'>
-                                <b>Sp.D</b>
-                            </td>
-                            <td style='width: 39px;'>
-                                <b>Spe</b>
-                            </td>
-                            <td style='width: 39px;'>
-                                <b>Total</b>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><b>Base</b></td>
-                            <td>${Purchase_Data.Object_Data.Stats[0]}</td>
-                            <td>${Purchase_Data.Object_Data.Stats[1]}</td>
-                            <td>${Purchase_Data.Object_Data.Stats[2]}</td>
-                            <td>${Purchase_Data.Object_Data.Stats[3]}</td>
-                            <td>${Purchase_Data.Object_Data.Stats[4]}</td>
-                            <td>${Purchase_Data.Object_Data.Stats[5]}</td>
-                            <td>${Total_Base_Stats}</td>
-                        </tr>
-                        <tr>
-                            <td><b>IVs</b></td>
-                            <td>${Purchase_Data.Object_Data.IVs[0]}</td>
-                            <td>${Purchase_Data.Object_Data.IVs[1]}</td>
-                            <td>${Purchase_Data.Object_Data.IVs[2]}</td>
-                            <td>${Purchase_Data.Object_Data.IVs[3]}</td>
-                            <td>${Purchase_Data.Object_Data.IVs[4]}</td>
-                            <td>${Purchase_Data.Object_Data.IVs[5]}</td>
-                            <td>${Total_IVs}</td>
-                        </tr>
-                        <tr>
-                            <td colspan='10' style='padding: 0.5em;'>
-                                <b>You have successfully purchased a(n) ${Purchase_Data.Object_Data.Display_Name}.</b>
-                            </td>
-                        </tr>
-                    <tbody>
-                </table>
+                <h3 class='obtained-pokemon-card-notice'>Thanks for your purchase!</h3>
+                <div class='obtained-pokemon-card'>
+                    <div class='obtained-pokemon-card-content'>
+                        <div class='obtained-pokemon-card-image'>
+                            <img src='${Purchase_Data.Object_Data.Sprite}' />
+                        </div>
+                        <div class='obtained-pokemon-card-info'>
+                            <div class='obtained-pokemon-card-title'>
+                                <div>
+                                    ${Purchase_Data.Object_Data.Display_Name}
+                                    <div class='obtained-pokemon-card-title-data'>
+                                        ${Purchase_Data.Object_Data.Nature} &mdash;
+                                        ${Purchase_Data.Object_Data.Gender} &mdash;
+                                        ${Purchase_Data.Object_Data.Ability} &mdash;
+                                        Lv. 5
+                                    </div>
+                                </div>
+                                <div>
+                                    ${
+                                        Purchase_Data.Object_Data.Shiny_Alert
+                                            ? "<img src='https://archives.bulbagarden.net/media/upload/8/82/ShinyLGPEStar.png' />"
+                                            : ''
+                                    }
+                                </div>
+                            </div>
+
+                            <div class='obtained-pokemon-card-stats'>
+                                <h3>IVs</h3>
+                                <table class='border-gradient'>
+                                    <tbody>
+                                        <tr>
+                                            <td style='width: calc(100% / 6);'><b>HP</b></td>
+                                            <td style='width: calc(100% / 6);'><b>Attack</b></td>
+                                            <td style='width: calc(100% / 6);'><b>Sp. Atk</b></td>
+                                            <td style='width: calc(100% / 6);'><b>Defense</b></td>
+                                            <td style='width: calc(100% / 6);'><b>Sp. Def</b></td>
+                                            <td style='width: calc(100% / 6);'><b>Speed</b></td>
+                                        </tr>
+                                        <tr>
+                                            <td style='${
+                                                Purchase_Data.Object_Data.IVs[0] == 31
+                                                    ? 'color: green; font-weight: bold;'
+                                                    : ''
+                                            }'>${Purchase_Data.Object_Data.IVs[0]}</td>
+                                            <td style='${
+                                                Purchase_Data.Object_Data.IVs[1] == 31
+                                                    ? 'color: green; font-weight: bold;'
+                                                    : ''
+                                            }'>${Purchase_Data.Object_Data.IVs[1]}</td>
+                                            <td style='${
+                                                Purchase_Data.Object_Data.IVs[2] == 31
+                                                    ? 'color: green; font-weight: bold;'
+                                                    : ''
+                                            }'>${Purchase_Data.Object_Data.IVs[2]}</td>
+                                            <td style='${
+                                                Purchase_Data.Object_Data.IVs[3] == 31
+                                                    ? 'color: green; font-weight: bold;'
+                                                    : ''
+                                            }'>${Purchase_Data.Object_Data.IVs[3]}</td>
+                                            <td style='${
+                                                Purchase_Data.Object_Data.IVs[4] == 31
+                                                    ? 'color: green; font-weight: bold;'
+                                                    : ''
+                                            }'>${Purchase_Data.Object_Data.IVs[4]}</td>
+                                            <td style='${
+                                                Purchase_Data.Object_Data.IVs[5] == 31
+                                                    ? 'color: green; font-weight: bold;'
+                                                    : ''
+                                            }'>${Purchase_Data.Object_Data.IVs[5]}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `;
         })
         .catch((Error) => console.error('Error:', Error));

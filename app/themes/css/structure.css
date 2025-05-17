@@ -646,6 +646,87 @@ footer>div {
     }
 }
 
+.obtained-pokemon-card-notice
+{
+    padding: 0.25em 3em;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    margin-bottom: 0;
+}
+.obtained-pokemon-card
+{
+    border-radius: 1em;
+    padding: 0.25em;
+
+    max-width: 500px;
+    width: 100%;
+
+    & > .obtained-pokemon-card-content
+    {
+        display: flex;
+        flex-direction: row;
+        gap: 0.25em;
+
+        & > .obtained-pokemon-card-image
+        {
+            border-radius: 0.75em;
+
+            padding: 25px;
+        }
+
+        & > .obtained-pokemon-card-info
+        {
+            display: flex;
+            flex-direction: column;
+
+            width: 100%;
+
+            & > .obtained-pokemon-card-title
+            {
+                display: flex;
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+
+                font-size: 1.25em;
+                padding: 0.25em;
+
+                font-weight: bold;
+                text-align: left;
+
+                & .obtained-pokemon-card-title-data
+                {
+                    font-size: 0.75em;
+                    font-weight: lighter;
+                }
+
+                & img
+                {
+                    height: 24px;
+                    width: 24px;
+                }
+            }
+
+            & > .obtained-pokemon-card-stats
+            {
+                border-radius: 0.75em;
+                height: 100%;
+
+                padding: 0 0.5em;
+
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+
+                & > table
+                {
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
 .shop-card
 {
     border-radius: 1em;
