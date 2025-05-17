@@ -211,11 +211,11 @@
 
 			if ( !isset($User_ID) || !isset($Item_ID) || !isset($Quantity) )
 			{
-				die("Please specify the receiver's User ID, the Item ID, and Quantity of the item.");
+                return false;
 			}
-			else if ( $User_ID < 1 || $Item_ID < 1 || $Quantity < 1 )
+			else if ( $User_ID < 1 || $Item_ID < 1 || ( !$Subtract && $Quantity < 1 ) )
 			{
-				die("Please specify a User ID, Item ID, and Quantity that are greater than 0.");
+                return false;
 			}
 			else
 			{
@@ -232,6 +232,8 @@
 					{
 						$Create_Row = $PDO->prepare("INSERT INTO `items` (`Item_ID`, `Item_Name`, `Item_Type`, `Owner_Current`, `Quantity`) VALUES (?, ?, ?, ?, ?)");
 						$Create_Row->execute([ $Item_ID, $Item_Data['Name'], $Item_Data['Category'], $User_ID, $Quantity ]);
+
+                        return true;
 					}
 					else
 					{
@@ -244,12 +246,16 @@
 							$Update_Row = $PDO->prepare("UPDATE `items` SET `Quantity` = `Quantity` + ? WHERE `Item_ID` = ? AND `Owner_Current` = ?");
 						}
 						$Update_Row->execute([ $Quantity, $Item_ID, $User_ID ]);
+
+                        return true;
 					}
 				}
 				catch( PDOException $e )
 				{
 					HandleError($e);
 				}
+
+                return false;
 			}
 		}
 	}

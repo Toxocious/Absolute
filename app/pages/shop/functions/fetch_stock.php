@@ -144,14 +144,14 @@
             return false;
         }
 
-        if ( !in_array($Object_Type, ['Item', 'Pokemon']) )
+        if ( !in_array($Object_Type, ['Items', 'Pokemon']) )
         {
             return false;
         }
 
         try
         {
-            if ( $Object_Type == 'Item' )
+            if ( $Object_Type == 'Items' )
             {
                 $Fetch_Object_Data = $PDO->prepare("SELECT * FROM `shop_items` WHERE `ID` = ? LIMIT 1");
             }

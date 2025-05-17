@@ -34,7 +34,7 @@
 
         try
         {
-            if ( $Object_Type == 'Item' )
+            if ( $Object_Type == 'Items' )
             {
                 $Fetch_Object = $PDO->prepare("SELECT * FROM `shop_items` WHERE `ID` = ? LIMIT 1");
             }
@@ -167,7 +167,7 @@
         }
         else
         {
-            $Spawn_Item = $Item_Class->SpawnItem($User_Data['ID'], $Object['ID'], 1);
+            $Spawn_Item = $Item_Class->SpawnItem($User_Data['ID'], $Object['Item_ID'], 1);
             if ( !$Spawn_Item )
             {
                 return false;
@@ -187,7 +187,14 @@
                 time()
             );
 
-            return true;
+            $Item_Data = $Item_Class->FetchItemData($Object['Item_ID']);
+
+            return [
+                'Display_Name' => $Item_Data['Name'],
+                'Description' => $Item_Data['Description'] ?? 'No description is set for this item.',
+                'Category' => $Item_Data['Category'] ?? 'Unknown',
+                'Icon' => $Item_Data['Icon'],
+            ];
         }
     }
 

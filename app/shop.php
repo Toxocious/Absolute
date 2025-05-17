@@ -139,7 +139,7 @@
                                             <div class='shop-card-type'>" . ($Object_Data['Type'] ?? '') . "</div>
                                         </div>
                                         <div class='shop-card-badge'>
-                                            " . ($Object_Data['Type'] == "Shiny" ? "<img src='https://archives.bulbagarden.net/media/upload/8/82/ShinyLGPEStar.png' />" : '') . "
+                                            " . (isset($Object_Data['Type']) && $Object_Data['Type'] == "Shiny" ? "<img src='https://archives.bulbagarden.net/media/upload/8/82/ShinyLGPEStar.png' />" : '') . "
                                         </div>
                                     </div>
                                     <div class='shop-card-prices'>
