@@ -132,7 +132,7 @@
             HandleError($e);
         }
 
-        $Slots_Used = [0, 0, 0, 0, 0, 0, 0];
+        $Slots_Used = [1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0];
         while ( $Party = $Query_Party->fetch() )
         {
             $Slots_Used[$Party['Slot']] = 1;
