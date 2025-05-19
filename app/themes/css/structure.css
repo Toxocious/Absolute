@@ -653,6 +653,11 @@ footer>div {
 {
     text-align: left;
 
+    h1, h2, h3, h4, h5, h6
+    {
+        margin-top: 0.5em;
+    }
+
     code
     {
         display: block;
@@ -670,6 +675,11 @@ footer>div {
     ol
     {
         padding: 0;
+    }
+
+    ul, ol
+    {
+        margin-bottom: 1em;
     }
 
     ol, ol li
