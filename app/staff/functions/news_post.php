@@ -1,4 +1,6 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
+
   /**
    * Create a new news post.
    *
@@ -28,7 +30,7 @@
       $Create_News_Post->execute([
         $News_Title,
         $News_Content,
-        date('m/d/y&\nb\sp;&\nb\sp;h:i A', time()),
+        time(),
         $User_Data['ID']
       ]);
 

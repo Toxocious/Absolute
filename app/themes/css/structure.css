@@ -646,6 +646,69 @@ footer>div {
     }
 }
 
+/**
+ * News post styling
+ */
+.news-post
+{
+    text-align: left;
+
+    code
+    {
+        display: block;
+        border-radius: 6px;
+        padding: 0.5em;
+        text-align: left;
+    }
+
+    ul, ul li
+    {
+        margin-left: 1em;
+        list-style-type: circle;
+    }
+
+    ol
+    {
+        padding: 0;
+    }
+
+    ol, ol li
+    {
+        margin-left: 1em;
+        list-style-type: decimal;
+    }
+
+    ol li,
+    ul li
+    {
+        float: none;
+    }
+
+    li.task-list-item
+    {
+        margin-left: 1em;
+    }
+
+    blockquote
+    {
+        border-radius: 0px 6px 6px 0px;
+        border-left: 2px solid;
+
+        & > p
+        {
+            padding: 0.5em;
+        }
+    }
+
+    table, table *
+    {
+        text-align: left;
+    }
+}
+
+/**
+ * Shop-related styling
+ */
 .obtained-pokemon-card-notice
 {
     padding: 0.25em 3em;

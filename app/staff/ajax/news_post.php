@@ -21,7 +21,7 @@
 
   $News_Content = null;
   if ( !empty($_GET['News_Content']) )
-    $News_Content = Purify($_GET['News_Content']);
+    $News_Content = $_GET['News_Content'];
 
   if ( empty($News_Title) || empty($News_Content) )
   {

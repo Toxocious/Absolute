@@ -1,5 +1,6 @@
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/functions/markdown_parsing.php';
 
 	try
 	{
@@ -59,12 +60,12 @@
                             <img src='<?= DOMAIN_SPRITES . '/' . $News_Post['Avatar']; ?>' /><br />
                             <?php
                                 echo '<h3>' . $User_Class->DisplayUserName($News_Post['Poster_ID'], false, false, true) . '</h3>';
-                                echo $News_Post['News_Date'];
+                                echo date('F j, Y g:i A', $News_Post['News_Date']);
                             ?>
                         </td>
 
-                        <td style='padding: 10px;'>
-                            <?= html_entity_decode($News_Post['News_Text']); ?>
+                        <td class='news-post' style='padding: 10px;'>
+                            <?= convert_markdown_to_html($News_Post['News_Text']); ?>
                         </td>
                     </tr>
                 </tbody>

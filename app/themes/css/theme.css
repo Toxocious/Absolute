@@ -33,6 +33,18 @@ a:hover {
   color: var(--color-white);
 }
 
+.news-post
+{
+    code {
+        background: var(--color-tertiary);
+    }
+
+    blockquote {
+        background: var(--color-tertiary);
+        border-color: var(--color-primary);
+    }
+}
+
 input[type='text'],
 input[type='number'],
 input[type='password'] {
