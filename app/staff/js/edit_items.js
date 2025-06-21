@@ -22,7 +22,7 @@ function ShowItemEntry()
       if ( typeof Item_Entry_Data.Item_Edit_Table !== 'undefined' )
         document.getElementById('Edit_Item_Table').innerHTML = Item_Entry_Data.Item_Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] There was en error while displaying the editable table for the selected item.', Error));
+    .catch((Error) => console.error('[ECRPG] There was en error while displaying the editable table for the selected item.', Error));
 }
 
 /**
@@ -71,5 +71,5 @@ function UpdateItemEntry(Item_ID)
       if ( typeof Update_Item_Entry_Data.Item_Edit_Table !== 'undefined' )
         document.getElementById('Edit_Item_Table').innerHTML = Update_Item_Entry_Data.Item_Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] There was en error while updating the selected item.', Error));
+    .catch((Error) => console.error('[ECRPG] There was en error while updating the selected item.', Error));
 }

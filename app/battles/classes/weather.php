@@ -19,7 +19,7 @@
 
       foreach (['Ally', 'Foe'] as $Side)
       {
-        $Active_Pokemon = $_SESSION['Absolute']['Battle'][$Side]->Active;
+        $Active_Pokemon = $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active;
 
         switch ($this->Name)
         {
@@ -80,7 +80,7 @@
     {
       foreach (['Ally', 'Foe'] as $Side)
       {
-        $Active_Pokemon = $_SESSION['Absolute']['Battle'][$Side]->Active;
+        $Active_Pokemon = $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active;
 
         switch ($this->Name)
         {

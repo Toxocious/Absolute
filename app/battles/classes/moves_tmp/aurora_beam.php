@@ -89,12 +89,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 
@@ -143,12 +143,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 

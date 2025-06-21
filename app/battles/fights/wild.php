@@ -32,7 +32,7 @@
 
     public function CreateBattle()
     {
-      if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']) )
         return false;
 
       $Ally = new UserHandler($this->Ally_ID, 'Ally');
@@ -50,15 +50,15 @@
       $this->Time_Started = time();
       $this->Started = true;
 
-      $_SESSION['Absolute']['Battle']['Battle_ID'] = $this->Battle_ID;
-      $_SESSION['Absolute']['Battle']['Battle_Type'] = $this->Battle_Type;
-      $_SESSION['Absolute']['Battle']['Time_Started'] = $this->Time_Started;
-      $_SESSION['Absolute']['Battle']['Started'] = $this->Started;
-      $_SESSION['Absolute']['Battle']['Turn_ID'] = 1;
-      $_SESSION['Absolute']['Battle']['Ally'] = $this->Ally;
-      $_SESSION['Absolute']['Battle']['Ally_ID'] = $this->Ally_ID;
-      $_SESSION['Absolute']['Battle']['Foe'] = $this->Foe;
-      $_SESSION['Absolute']['Battle']['Foe_ID'] = -1;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Battle_ID'] = $this->Battle_ID;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Battle_Type'] = $this->Battle_Type;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Time_Started'] = $this->Time_Started;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Started'] = $this->Started;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Turn_ID'] = 1;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Ally'] = $this->Ally;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Ally_ID'] = $this->Ally_ID;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Foe'] = $this->Foe;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Foe_ID'] = -1;
 
       $Creation_Dialogue = '';
       foreach(['Ally', 'Foe'] as $Side)
@@ -83,14 +83,14 @@
 
       if ( $Creation_Dialogue == '' )
       {
-        $_SESSION['Absolute']['Battle']['Dialogue'] = [
+        $_SESSION['EvoChroniclesRPG']['Battle']['Dialogue'] = [
           'Type' => 'Success',
           'Text' => 'The battle has begun.',
         ];
       }
       else
       {
-        $_SESSION['Absolute']['Battle']['Dialogue'] = [
+        $_SESSION['EvoChroniclesRPG']['Battle']['Dialogue'] = [
           'Type' => 'Success',
           'Text' => 'The battle has begun.' . $Creation_Dialogue,
         ];

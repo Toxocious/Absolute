@@ -22,7 +22,7 @@ function ShowPokedexEntry()
       if ( typeof Pokedex_Entry_Data.Edit_Table !== 'undefined' )
         document.getElementById('Edit_Pokedex_Table').innerHTML = Pokedex_Entry_Data.Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying this Pokemon\'s dex entry:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying this Pokemon\'s dex entry:', Error));
 }
 
 /**
@@ -101,5 +101,5 @@ function UpdatePokedexEntry(Pokedex_ID)
       if ( typeof Update_Pokedex_Entry_Data.Pokedex_Edit_Table !== 'undefined' )
         document.getElementById('Edit_Pokedex_Table').innerHTML = Update_Pokedex_Entry_Data.Pokedex_Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while updating this Pokemon\'s dex entry:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while updating this Pokemon\'s dex entry:', Error));
 }

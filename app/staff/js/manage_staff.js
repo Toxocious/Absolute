@@ -23,7 +23,7 @@ function ShowSelectedUsersPermissions(User_ID)
       if ( typeof Manage_Staff_Data.User_Perm_Table !== 'undefined' )
         document.getElementById('Manage_Staff_Table').innerHTML = Manage_Staff_Data.User_Perm_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying this user\'s staff permissions:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying this user\'s staff permissions:', Error));
 }
 
 /**
@@ -78,5 +78,5 @@ function UpdateUserStaffPerms(User_ID)
       if ( typeof Manage_Staff_Data.User_Perm_Table !== 'undefined' )
         document.getElementById('Manage_Staff_Table').innerHTML = Manage_Staff_Data.User_Perm_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while updating this user\'s staff permissions:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while updating this user\'s staff permissions:', Error));
 }

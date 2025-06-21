@@ -1,7 +1,7 @@
 <?php
   require_once 'core/required/layout_top.php';
 
-  if ( !isset($_SESSION['Absolute']) )
+  if ( !isset($_SESSION['EvoChroniclesRPG']) )
   {
     $width = " style='margin: 5px; width: calc(100% - 10px);'";
   }

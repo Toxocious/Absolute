@@ -49,7 +49,7 @@
             <b>Money</b>
           </th>
           <th colspan='1' style='width: calc(100% / 3);'>
-            <b>Absolute Coins</b>
+            <b>ECRPG Coins</b>
           </th>
         </tr>
       </thead>

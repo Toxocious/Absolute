@@ -25,5 +25,5 @@ function CreateNewsPost()
       document.getElementsByName('News_Post_Title')[0].value = '';
       document.getElementsByName('News_Post_Content')[0].value = '';
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while creating the news post:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while creating the news post:', Error));
 }

@@ -22,7 +22,7 @@
 
       foreach (['Ally', 'Foe'] as $Side)
       {
-        $Active_Pokemon = $_SESSION['Absolute']['Battle'][$Side]->Active;
+        $Active_Pokemon = $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active;
 
         switch ($this->Name)
         {
@@ -46,8 +46,8 @@
       $this->Turns_Left = $Terrain_Turns;
       $this->Dialogue = $Terrain_Data['Dialogue'];
 
-      unset($_SESSION['Absolute']['Battle']['Terrain']);
-      $_SESSION['Absolute']['Battle']['Terrain'] = $this;
+      unset($_SESSION['EvoChroniclesRPG']['Battle']['Terrain']);
+      $_SESSION['EvoChroniclesRPG']['Battle']['Terrain'] = $this;
 
       return $this;
     }
@@ -70,7 +70,7 @@
     {
       foreach (['Ally', 'Foe'] as $Side)
       {
-        $Active_Pokemon = $_SESSION['Absolute']['Battle'][$Side]->Active;
+        $Active_Pokemon = $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active;
 
         switch ($this->Name)
         {

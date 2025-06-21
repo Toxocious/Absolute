@@ -39,9 +39,9 @@
     ";
   }
 
-  if ( isset( $_SESSION['Absolute']['Direct_Message']['users']) )
+  if ( isset( $_SESSION['EvoChroniclesRPG']['Direct_Message']['users']) )
   {
-    foreach ( $_SESSION['Absolute']['Direct_Message']['users'] as $Key => $Value )
+    foreach ( $_SESSION['EvoChroniclesRPG']['Direct_Message']['users'] as $Key => $Value )
     {
       if ( $Value['User_ID'] == $Added_User_Data['ID'] )
       {
@@ -58,7 +58,7 @@
 
   if ( !$Error )
   {
-    $_SESSION['Absolute']['Direct_Message']['users'][] = [
+    $_SESSION['EvoChroniclesRPG']['Direct_Message']['users'][] = [
       'User_ID' => $Added_User_Data['ID'],
     ];
 
@@ -69,7 +69,7 @@
     ";
   }
 
-  foreach ( $_SESSION['Absolute']['Direct_Message']['users'] as $Key => $Included_User )
+  foreach ( $_SESSION['EvoChroniclesRPG']['Direct_Message']['users'] as $Key => $Included_User )
   {
     if ( $Included_User['User_ID'] == $User_Data['ID'] )
       continue;

@@ -1,10 +1,10 @@
-			</main>
+</main>
 
 			<footer>
         <?php
           if (defined('LOCAL'))
           {
-            $Query_Count = $database_connections['absolute']->get_count();
+            $Query_Count = $database_connections['evo_chronicles_rpg']->get_count();
 
             echo "
               <div>
@@ -18,7 +18,7 @@
         ?>
 
 				<div class='copyright'>
-					Pok&eacute;mon Absolute &copy; 2018 - <?= date('Y'); ?> Toxocious<br />
+					Pokémon Evo-Chronicles RPG © 2018 - <?= date('Y'); ?> Toxocious<br />
 					Pok&eacute;mon &copy; 1995 - <?= date('Y'); ?> Nintendo/Creatures Inc./Game Freak Inc, please support the <a href='http://pokemon.com' target='_blank' rel='noopener noreferrer'>official release.</a>
 				</div>
 
@@ -39,9 +39,9 @@
 
     <?php
       /**
-       * Include the necessary Absolute Chat scripts.
+       * Include the necessary Evo-Chronicles RPG Chat scripts.
        */
-      if ( isset($_SESSION['Absolute']) )
+      if ( isset($_SESSION['EvoChroniclesRPG']) )
       {
     ?>
       <script type='text/javascript' src='<?= DOMAIN_ROOT; ?>/js/chat/client.js'></script>
@@ -61,7 +61,7 @@
           /**
            * Set up a new instance of the chat client socket.
            */
-          const ChatClient = new AbsoluteChatClient.Absolute(User);
+          const ChatClient = new ECRPGChatClient.ECRPG(User);
           ChatClient.Initialize();
 
           /**

@@ -152,5 +152,5 @@ function UpdateMoveData(Move_ID)
       if ( typeof Update_Move_Data.Move_Edit_Table !== 'undefined' )
         document.getElementById('Edit_Move_Table').innerHTML = Update_Move_Data.Move_Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] There was en error while updating the selected move.', Error));
+    .catch((Error) => console.error('[ECRPG] There was en error while updating the selected move.', Error));
 }

@@ -1,7 +1,7 @@
 <?php
 	require_once 'core/required/layout_top.php';
 
-  unset($_SESSION['Absolute']['Maps']);
+  unset($_SESSION['EvoChroniclesRPG']['Maps']);
 ?>
 
 <div class='panel content'>

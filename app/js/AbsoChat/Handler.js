@@ -17,7 +17,7 @@ const Handler = {
         /**
          * Only works if the socket and server are currently active.
          */
-        if (Absolute.active) {
+        if (ECRPGClient.active) {
             let Message_Data;
 
             Message_Data = {
@@ -45,8 +45,8 @@ const Handler = {
      * Display messages in the chat window.
      */
     Display: function () {
-        console.log(Absolute);
-        console.log(Absolute.user);
+        console.log(ECRPGClient);
+        console.log(ECRPGClient.user);
 
         /**
          * Reset the currently stored message HTML so that we don't get repeated chat messages.
@@ -58,14 +58,14 @@ const Handler = {
          * Display that Absol is likely offline.
          */
 
-        if (typeof Absolute.user.Connected === 'undefined') {
+        if (typeof ECRPGClient.user.Connected === 'undefined') {
             Handler.Message = `
                 <table style="width: 100%; height: 100%;">
                   <tr>
                     <td style="width: 100%; height: 100%;" valign="middle">
                       <img src='https://${location.hostname}/images/Pokemon/Sprites/Normal/359.png' />
                       <br />
-                      <b style="color: #ff0000; font-size: 14px;">Absolute Chat is offline.</b>
+                      <b style="color: #ff0000; font-size: 14px;">Evo-Chronicles RPG Chat is offline.</b>
                       <br /><br />
                       Absol is currently offline for one reason or another.
                     </td>
@@ -120,7 +120,7 @@ const Handler = {
             if (
                 !Message_Data.Message.Private.isPrivate ||
                 (Message_Data.Message.Private.isPrivate &&
-                    Message_Data.Message.Private.Private_To === Absolute.user.UserID)
+                    Message_Data.Message.Private.Private_To === ECRPGClient.user.UserID)
             ) {
                 Handler.Message += `
           <div class="message${

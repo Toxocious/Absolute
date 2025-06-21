@@ -1,7 +1,7 @@
 <?php
 	require_once '../../required/session.php';
 
-	if ( isset($_SESSION['Absolute']['Trade']) )
+	if ( isset($_SESSION['EvoChroniclesRPG']['Trade']) )
 	{
 		/**
 		 * If both sides of the trade are empty, throw an error.
@@ -9,15 +9,15 @@
 		 */
 		if
 		(
-			empty($_SESSION['Absolute']['Trade']['Sender']['Pokemon']) && empty($_SESSION['Absolute']['Trade']['Sender']['Currency']) && empty($_SESSION['Absolute']['Trade']['Sender']['Items']) &&
-			empty($_SESSION['Absolute']['Trade']['Recipient']['Pokemon']) && empty($_SESSION['Absolute']['Trade']['Recipient']['Currency']) && empty($_SESSION['Absolute']['Trade']['Recipient']['Items'])
+			empty($_SESSION['EvoChroniclesRPG']['Trade']['Sender']['Pokemon']) && empty($_SESSION['EvoChroniclesRPG']['Trade']['Sender']['Currency']) && empty($_SESSION['EvoChroniclesRPG']['Trade']['Sender']['Items']) &&
+			empty($_SESSION['EvoChroniclesRPG']['Trade']['Recipient']['Pokemon']) && empty($_SESSION['EvoChroniclesRPG']['Trade']['Recipient']['Currency']) && empty($_SESSION['EvoChroniclesRPG']['Trade']['Recipient']['Items'])
 		)
 		{
 			echo "<div class='error'>Both sides of the trade may not be empty.</div>";
 		}
 		else
 		{
-			$Recipient_Data = $User_Class->FetchUserData( $_SESSION['Absolute']['Trade']['Recipient']['User'] );
+			$Recipient_Data = $User_Class->FetchUserData( $_SESSION['EvoChroniclesRPG']['Trade']['Recipient']['User'] );
 			$Recipient_Username = $User_Class->DisplayUserName($Recipient_Data['ID']);
 
 			echo "
@@ -32,7 +32,7 @@
 			$Sender_Pokemon = '';
 			$Sender_Currency = '';
 			$Sender_Items = '';
-			foreach( $_SESSION['Absolute']['Trade']['Sender']['Pokemon'] as $Key => $Pokemon_1 )
+			foreach( $_SESSION['EvoChroniclesRPG']['Trade']['Sender']['Pokemon'] as $Key => $Pokemon_1 )
 			{
 				try
 				{
@@ -46,11 +46,11 @@
 
 				$Sender_Pokemon .= $Pokemon_1['ID'] . ",";
 			}
-			foreach( $_SESSION['Absolute']['Trade']['Sender']['Currency'] as $Key => $Currency_1 )
+			foreach( $_SESSION['EvoChroniclesRPG']['Trade']['Sender']['Currency'] as $Key => $Currency_1 )
 			{
 				$Sender_Currency .= $Currency_1['Currency'] . "-" . $Currency_1['Quantity'] . ",";
 			}
-			foreach( $_SESSION['Absolute']['Trade']['Sender']['Items'] as $Key => $Items_1 )
+			foreach( $_SESSION['EvoChroniclesRPG']['Trade']['Sender']['Items'] as $Key => $Items_1 )
 			{
 				$Sender_Items .= $Items_1['Row'] . "-" . $Items_1['ID'] . "-" . $Items_1['Quantity'] . "-" . $Items_1['Owner'] . ",";
 			}
@@ -61,7 +61,7 @@
 			$Recipient_Pokemon = '';
 			$Recipient_Currency = '';
 			$Recipient_Items = '';
-			foreach( $_SESSION['Absolute']['Trade']['Recipient']['Pokemon'] as $Key => $Pokemon_2 )
+			foreach( $_SESSION['EvoChroniclesRPG']['Trade']['Recipient']['Pokemon'] as $Key => $Pokemon_2 )
 			{
 				try
 				{
@@ -75,11 +75,11 @@
 
 				$Recipient_Pokemon .= $Pokemon_2['ID'] . ",";
 			}
-			foreach( $_SESSION['Absolute']['Trade']['Recipient']['Currency'] as $Key => $Currency_2 )
+			foreach( $_SESSION['EvoChroniclesRPG']['Trade']['Recipient']['Currency'] as $Key => $Currency_2 )
 			{
 				$Recipient_Currency .= $Currency_2['Currency'] . "-" . $Currency_2['Quantity'] . ",";
 			}
-			foreach( $_SESSION['Absolute']['Trade']['Recipient']['Items'] as $Key => $Items_2 )
+			foreach( $_SESSION['EvoChroniclesRPG']['Trade']['Recipient']['Items'] as $Key => $Items_2 )
 			{
 				$Recipient_Items .= $Items_2['Row'] . "-" . $Items_2['ID'] . "-" . $Items_2['Quantity'] . "-" . $Items_2['Owner'] . ",";
 			}
@@ -103,11 +103,11 @@
 					VALUES (?, ?, ?, ?, ?, ?, ?, ?)
 				");
 				$Create_Query->execute([
-					$_SESSION['Absolute']['Trade']['Sender']['User'],
+					$_SESSION['EvoChroniclesRPG']['Trade']['Sender']['User'],
 					substr($Sender_Pokemon, 0, -1),
 					substr($Sender_Items, 0, -1),
 					substr($Sender_Currency, 0, -1),
-					$_SESSION['Absolute']['Trade']['Recipient']['User'],
+					$_SESSION['EvoChroniclesRPG']['Trade']['Recipient']['User'],
 					substr($Recipient_Pokemon, 0, -1),
 					substr($Recipient_Items, 0, -1),
 					substr($Recipient_Currency, 0, -1)

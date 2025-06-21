@@ -5,16 +5,16 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title><?= $Current_Page['Name']; ?> &mdash; The Pok&eacute;mon Absolute</title>
+		<title><?= $Current_Page['Name']; ?> — Pokémon Evo-Chronicles RPG</title>
 		<link href='<?= DOMAIN_SPRITES; ?>/Pokemon/Icons/Normal/359-mega.png' rel='shortcut icon'>
 
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
     <meta name='robots' content='index' />
-    <meta name='description' content='The Pok&eacute;mon Absolute is an exciting and free way to enjoy spending your time. We have a vast community of members of all ages and ethnicities who all enjoy Pok&eacute;mon. Sign up now and begin your own adventure as a Pok&eacute;mon trainer!' />
+    <meta name='description' content='Pokémon Evo-Chronicles RPG is an exciting and free way to enjoy spending your time. We have a vast community of members of all ages and ethnicities who all enjoy Pokémon. Sign up now and begin your own adventure as a Pokémon trainer!' />
     <meta property='og:type' content='rpg' />
-    <meta property='og:title' content='The Pok&eacute;mon Absolute RPG' />
-    <meta property='og:site_name' content='The Pok&eacute;mon Absolute' />
+    <meta property='og:title' content='Pokémon Evo-Chronicles RPG' />
+    <meta property='og:site_name' content='Pokémon Evo-Chronicles RPG' />
     <meta property='og:image' content='<?= DOMAIN_SPRITES; ?>/Pokemon/Icons/Normal/359-mega.png' />
     <meta property='og:url' content='https://absoluterpg.com' />
 
@@ -51,7 +51,7 @@
 		<div class='BODY-CONTAINER'>
 			<header>
 				<?php
-					if ( isset($_SESSION['Absolute']) )
+					if ( isset($_SESSION['EvoChroniclesRPG']) )
 					{
 				?>
 
@@ -97,7 +97,7 @@
 					</div>
 
 					<div class='stat border-gradient w-150px'>
-						<div><?= $Absolute_Time; ?></div>
+						<div><?= $EvoChroniclesRPG_Time; ?></div>
 					</div>
 				</div>
 
@@ -237,7 +237,7 @@
             {
               echo "
                 <div class='warning' style='margin: 5px auto 0px'>
-                  While you have an empty roster, much of Absolute will be unavailable to you.
+                  While you have an empty roster, much of Evo-Chronicles RPG will be unavailable to you.
                 </div>
               ";
             }

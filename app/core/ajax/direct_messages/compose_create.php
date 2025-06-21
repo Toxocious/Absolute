@@ -18,15 +18,15 @@
   /**
    * If a clan message is being sent, don't check to see if the message is being sent to anyone.
    */
-  if ( !isset($_SESSION['Absolute']['Direct_Message']['clan_data']) )
+  if ( !isset($_SESSION['EvoChroniclesRPG']['Direct_Message']['clan_data']) )
   {
     /**
      * Check to see if the message is being sent to at least one user.
      */
     if
     (
-      !isset($_SESSION['Absolute']['Direct_Message']['users']) ||
-      count($_SESSION['Absolute']['Direct_Message']['users']) < 1
+      !isset($_SESSION['EvoChroniclesRPG']['Direct_Message']['users']) ||
+      count($_SESSION['EvoChroniclesRPG']['Direct_Message']['users']) < 1
     )
     {
       $Error = true;
@@ -44,10 +44,10 @@
    */
   if ( !isset($_POST['Title']) )
   {
-    if ( isset($_SESSION['Absolute']['Direct_Message']['clan_data']) )
+    if ( isset($_SESSION['EvoChroniclesRPG']['Direct_Message']['clan_data']) )
     {
       $Clan_ID = $User_Data['Clan'];
-      $_POST['Title'] = $_SESSION['Absolute']['Direct_Message']['clan_data']['Name'] . ": Clan Announcement";
+      $_POST['Title'] = $_SESSION['EvoChroniclesRPG']['Direct_Message']['clan_data']['Name'] . ": Clan Announcement";
     }
     else
     {
@@ -62,7 +62,7 @@
     $Message = Purify($_POST['Message']);
 
     $Direct_Message = new DirectMessage();
-    $Group_ID = $Direct_Message->ComposeMessage($Title, $Message, $_SESSION['Absolute']['Direct_Message']['users'], $Clan_ID);
+    $Group_ID = $Direct_Message->ComposeMessage($Title, $Message, $_SESSION['EvoChroniclesRPG']['Direct_Message']['users'], $Clan_ID);
 
     if ( $Group_ID )
       $Text = "You have successfully started a new direct message.";

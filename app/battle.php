@@ -1,7 +1,7 @@
 <?php
   require_once 'core/required/session.php';
 
-  if ( empty($_SESSION['Absolute']['Battle']) )
+  if ( empty($_SESSION['EvoChroniclesRPG']['Battle']) )
   {
     require_once 'core/required/layout_top.php';
 
@@ -20,8 +20,8 @@
     exit;
   }
 
-  if ( isset($_SESSION['Absolute']['Battle']['Battle_Layout']) )
-    $User_Data['Battle_Theme'] = $_SESSION['Absolute']['Battle']['Battle_Layout'];
+  if ( isset($_SESSION['EvoChroniclesRPG']['Battle']['Battle_Layout']) )
+    $User_Data['Battle_Theme'] = $_SESSION['EvoChroniclesRPG']['Battle']['Battle_Layout'];
 
   switch ($User_Data['Battle_Theme'])
   {
@@ -324,7 +324,7 @@
     {
       if ( !Battle.Loading )
       {
-        Battle.ID = '<?= $_SESSION['Absolute']['Battle']['Battle_ID']; ?>';
+        Battle.ID = '<?= $_SESSION['EvoChroniclesRPG']['Battle']['Battle_ID']; ?>';
         Battle.Loading = true;
 
         const Data_Val = new FormData();

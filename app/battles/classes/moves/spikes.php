@@ -22,13 +22,13 @@
       {
         case 'Ally':
           $Target = 'Foe';
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally'];
-          $Defender = $_SESSION['Absolute']['Battle']['Foe'];
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
           break;
         case 'Foe':
           $Target = 'Ally';
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe'];
-          $Defender = $_SESSION['Absolute']['Battle']['Ally'];
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
           break;
       }
 

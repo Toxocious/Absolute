@@ -67,7 +67,7 @@
 
     $Selected_Pokemon_Array = json_decode($Selected_Pokemon);
 
-    $_SESSION['Absolute']['Release']['Releasable_Pokemon'] = [];
+    $_SESSION['EvoChroniclesRPG']['Release']['Releasable_Pokemon'] = [];
 
     foreach ( $Selected_Pokemon_Array as $Pokemon )
     {
@@ -96,7 +96,7 @@
 
       $Pokemon_Info = GetPokemonData($Pokemon);
 
-      $_SESSION['Absolute']['Release']['Releasable_Pokemon'][] = [
+      $_SESSION['EvoChroniclesRPG']['Release']['Releasable_Pokemon'][] = [
         'ID' => $Pokemon,
         'Display_Name' => $Pokemon_Info['Display_Name'],
         'Gender' => $Pokemon_Info['Gender'],
@@ -105,7 +105,7 @@
     }
 
     return [
-      'Pokemon' => $_SESSION['Absolute']['Release']['Releasable_Pokemon']
+      'Pokemon' => $_SESSION['EvoChroniclesRPG']['Release']['Releasable_Pokemon']
     ];
   }
 
@@ -116,7 +116,7 @@
   {
     global $User_Data;
 
-    foreach ( $_SESSION['Absolute']['Release']['Releasable_Pokemon'] as $Pokemon )
+    foreach ( $_SESSION['EvoChroniclesRPG']['Release']['Releasable_Pokemon'] as $Pokemon )
     {
       ReleasePokemon($Pokemon['ID'], $User_Data['ID']);
     }

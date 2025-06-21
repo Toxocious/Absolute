@@ -27,12 +27,12 @@
     public function Initialize()
     {
       $Roster = new Roster();
-      $Roster = $Roster->CreateFakeRoster($_SESSION['Absolute']['Maps']['Encounter'], 'Foe');
+      $Roster = $Roster->CreateFakeRoster($_SESSION['EvoChroniclesRPG']['Maps']['Encounter'], 'Foe');
 
       if ( !$Roster )
         return false;
 
-      $this->Username = $_SESSION['Absolute']['Maps']['Encounter']['Obtained_Text'];
+      $this->Username = $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Obtained_Text'];
       $this->Active = $Roster[0];
       $this->Roster = $Roster;
 

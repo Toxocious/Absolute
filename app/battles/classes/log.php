@@ -44,19 +44,19 @@
           VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
         ");
         $Initialize_Battle_Log->execute([
-          $_SESSION['Absolute']['Battle']['Ally_ID'],
-          $_SESSION['Absolute']['Battle']['Foe_ID'],
-          $_SESSION['Absolute']['Battle']['Battle_ID'],
-          $_SESSION['Absolute']['Battle']['Battle_Type'],
-          empty($_SESSION['Absolute']['Battle']['Battle_Layout']) ? $User_Data['Battle_Theme'] : $_SESSION['Absolute']['Battle']['Battle_Layout'],
-          $_SESSION['Absolute']['Battle']['Time_Started'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Ally_ID'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Foe_ID'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Battle_ID'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Battle_Type'],
+          empty($_SESSION['EvoChroniclesRPG']['Battle']['Battle_Layout']) ? $User_Data['Battle_Theme'] : $_SESSION['EvoChroniclesRPG']['Battle']['Battle_Layout'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Time_Started'],
           true,
           $_SERVER['REMOTE_ADDR'],
           $Client_User_Agent['User_Agent']
         ]);
 
-        $_SESSION['Absolute']['Battle']['Logging']['Actions'] = [];
-        $_SESSION['Absolute']['Battle']['Logging']['Log_ID'] = $PDO->lastInsertId();
+        $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Actions'] = [];
+        $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Log_ID'] = $PDO->lastInsertId();
 
         $PDO->commit();
       }
@@ -67,9 +67,9 @@
         HandleError($e);
       }
 
-      $_SESSION['Absolute']['Battle']['Logging']['All_Inputs_Trusted'] = true;
-      $_SESSION['Absolute']['Battle']['Logging']['All_Postcodes_Matched'] = true;
-      $_SESSION['Absolute']['Battle']['Logging']['Page_Always_In_Focus'] = true;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['All_Inputs_Trusted'] = true;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['All_Postcodes_Matched'] = true;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Page_Always_In_Focus'] = true;
     }
 
     /**
@@ -89,27 +89,27 @@
         $Get_Action = 0;
 
       $Action = $Get_Action << 13;
-      $Action = $Action + (int) $_SESSION['Absolute']['Battle']['Logging']['Input']['Client_X'];
+      $Action = $Action + (int) $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Input']['Client_X'];
       $Action = $Action << 13;
-      $Action = $Action + (int) $_SESSION['Absolute']['Battle']['Logging']['Input']['Client_Y'];
+      $Action = $Action + (int) $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Input']['Client_Y'];
 
-      $_SESSION['Absolute']['Battle']['Logging']['Actions'][] = $Action;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Actions'][] = $Action;
 
-      if ( !$_SESSION['Absolute']['Battle']['Logging']['Input']['Is_Trusted'] )
-        $_SESSION['Absolute']['Battle']['Logging']['All_Inputs_Trusted'] = false;
+      if ( !$_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Input']['Is_Trusted'] )
+        $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['All_Inputs_Trusted'] = false;
 
-      if ( !$_SESSION['Absolute']['Battle']['Logging']['In_Focus'] )
-        $_SESSION['Absolute']['Battle']['Logging']['Page_Always_In_Focus'] = false;
+      if ( !$_SESSION['EvoChroniclesRPG']['Battle']['Logging']['In_Focus'] )
+        $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Page_Always_In_Focus'] = false;
 
       if
       (
-        !empty($_SESSION['Absolute']['Battle']['Logging']['Postcode']) &&
-        count($_SESSION['Absolute']['Battle']['Logging']['Postcode']) == 2
+        !empty($_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Postcode']) &&
+        count($_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Postcode']) == 2
       )
       {
-        $Postcode_Match = $_SESSION['Absolute']['Battle']['Logging']['Postcode']['Expected'] == $_SESSION['Absolute']['Battle']['Logging']['Postcode']['Received'];
+        $Postcode_Match = $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Postcode']['Expected'] == $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Postcode']['Received'];
         if ( !$Postcode_Match )
-          $_SESSION['Absolute']['Battle']['Logging']['All_Postcodes_Matched'] = false;
+          $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['All_Postcodes_Matched'] = false;
       }
     }
 
@@ -120,14 +120,14 @@
     {
       global $PDO;
 
-      if ( empty($_SESSION['Absolute']['Battle']['Logging']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Battle']['Logging']) )
         return false;
 
-      $_SESSION['Absolute']['Battle']['Last_Action_Time'] = (microtime(true) - $_SESSION['Absolute']['Battle']['Time_Started']) * 1000;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Last_Action_Time'] = (microtime(true) - $_SESSION['EvoChroniclesRPG']['Battle']['Time_Started']) * 1000;
 
       $Actions = '';
-      if ( !empty($_SESSION['Absolute']['Battle']['Logging']['Actions']) )
-        $Actions = pack('l*', ...$_SESSION['Absolute']['Battle']['Logging']['Actions']);
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Actions']) )
+        $Actions = pack('l*', ...$_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Actions']);
 
       try
       {
@@ -146,13 +146,13 @@
           LIMIT 1
         ");
         $Update_Battle_Log->execute([
-          $_SESSION['Absolute']['Battle']['Last_Action_Time'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Last_Action_Time'],
           $Actions,
-          $_SESSION['Absolute']['Battle']['Turn_ID'],
-          $_SESSION['Absolute']['Battle']['Logging']['All_Inputs_Trusted'],
-          $_SESSION['Absolute']['Battle']['Logging']['Page_Always_In_Focus'],
-          $_SESSION['Absolute']['Battle']['Logging']['All_Postcodes_Matched'],
-          $_SESSION['Absolute']['Battle']['Logging']['Log_ID']
+          $_SESSION['EvoChroniclesRPG']['Battle']['Turn_ID'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['All_Inputs_Trusted'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Page_Always_In_Focus'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['All_Postcodes_Matched'],
+          $_SESSION['EvoChroniclesRPG']['Battle']['Logging']['Log_ID']
         ]);
 
         $PDO->commit();

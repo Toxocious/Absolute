@@ -38,5 +38,5 @@ function SpawnItem()
       document.getElementById('Spawn_Item_AJAX').className = Spawn_Item_Data.Success ? 'success' : 'error';
       document.getElementById('Spawn_Item_AJAX').innerHTML = Spawn_Item_Data.Message;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while spawning the specified item:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while spawning the specified item:', Error));
 }

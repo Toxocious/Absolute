@@ -40,7 +40,7 @@
 		exit;
 	}
 
-  unset($_SESSION['Absolute']['Battle']);
+  unset($_SESSION['EvoChroniclesRPG']['Battle']);
 
 	$Battle_Type = strtolower(Purify($_GET['Battle_Type']));
 
@@ -48,11 +48,11 @@
 	  $Foe = Purify($_GET['Foe']);
 
   if ( isset($_GET['iFrame']) )
-	  $_SESSION['Absolute']['Battle']['Battle_Layout'] = 'iFrame';
+	  $_SESSION['EvoChroniclesRPG']['Battle']['Battle_Layout'] = 'iFrame';
   else
-	  $_SESSION['Absolute']['Battle']['Battle_Layout'] = $User_Data['Battle_Theme'];
+	  $_SESSION['EvoChroniclesRPG']['Battle']['Battle_Layout'] = $User_Data['Battle_Theme'];
 
-	$_SESSION['Absolute']['Battle']['Battle_Type'] = $Battle_Type;
+	$_SESSION['EvoChroniclesRPG']['Battle']['Battle_Type'] = $Battle_Type;
 
 	switch ($Battle_Type)
 	{
@@ -80,7 +80,7 @@
 	}
 	else
 	{
-		unset($_SESSION['Absolute']['Battle']);
+		unset($_SESSION['EvoChroniclesRPG']['Battle']);
 		header("Location: /battle_search.php");
 
 		exit;

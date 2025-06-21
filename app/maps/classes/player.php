@@ -6,9 +6,9 @@
 
     public function __construct()
     {
-      if ( empty($_SESSION['Absolute']['Maps']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Maps']) )
       {
-        $_SESSION['Absolute']['Maps'] = [];
+        $_SESSION['EvoChroniclesRPG']['Maps'] = [];
         $this->LoadLastMap();
       }
     }
@@ -38,7 +38,7 @@
       int $z = null
     )
     {
-      $Map_Objects = $_SESSION['Absolute']['Maps']['Objects'];
+      $Map_Objects = $_SESSION['EvoChroniclesRPG']['Maps']['Objects'];
       if ( empty($Map_Objects) )
         return false;
 
@@ -70,7 +70,7 @@
       if ( !$this->IsNextToTile($Tile_X, $Tile_Y + 1, $Tile_Z) )
         return false;
 
-      $Map_Objects = $_SESSION['Absolute']['Maps']['Objects'];
+      $Map_Objects = $_SESSION['EvoChroniclesRPG']['Maps']['Objects'];
       $Get_Warp_Object = MapObject::GetObjectAtTile($Map_Objects, $Tile_X, $Tile_Y, $Tile_Z, 'warp');
       if ( !$Get_Warp_Object )
         return false;
@@ -99,7 +99,7 @@
       int $z = null
     )
     {
-      $Player_Position = $_SESSION['Absolute']['Maps']['Position'];
+      $Player_Position = $_SESSION['EvoChroniclesRPG']['Maps']['Position'];
 
       $Adjacent_Coords = [
         [0, -1],
@@ -129,7 +129,7 @@
     {
       global $PDO, $User_Data;
 
-      if ( empty($_SESSION['Absolute']['Maps']['Position']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Maps']['Position']) )
       {
         try
         {
@@ -148,11 +148,11 @@
           HandleError($e);
         }
 
-        $_SESSION['Absolute']['Maps']['Position'] = $Map_Position;
+        $_SESSION['EvoChroniclesRPG']['Maps']['Position'] = $Map_Position;
         return $Map_Position;
       }
 
-      return $_SESSION['Absolute']['Maps']['Position'];
+      return $_SESSION['EvoChroniclesRPG']['Maps']['Position'];
     }
 
     /**
@@ -190,7 +190,7 @@
         return true;
       }
 
-      $_SESSION['Absolute']['Maps']['Position'] = [
+      $_SESSION['EvoChroniclesRPG']['Maps']['Position'] = [
         'Map_X' => $x,
         'Map_Y' => $y,
         'Map_Z' => $z,
@@ -226,10 +226,10 @@
     {
       global $User_Data;
 
-      if ( empty($_SESSION['Absolute']['Maps']['Map_Steps_To_Encounter']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Maps']['Map_Steps_To_Encounter']) )
         return $User_Data['Map_Steps_To_Encounter'];
 
-      return $_SESSION['Absolute']['Maps']['Map_Steps_To_Encounter'];
+      return $_SESSION['EvoChroniclesRPG']['Maps']['Map_Steps_To_Encounter'];
     }
 
     /**
@@ -264,8 +264,8 @@
 
       $PDO->commit();
 
-      $_SESSION['Absolute']['Maps']['Map_Steps_To_Encounter'] = $User_Data['Map_Steps_To_Encounter'];
-      return $_SESSION['Absolute']['Maps']['Map_Steps_To_Encounter'];
+      $_SESSION['EvoChroniclesRPG']['Maps']['Map_Steps_To_Encounter'] = $User_Data['Map_Steps_To_Encounter'];
+      return $_SESSION['EvoChroniclesRPG']['Maps']['Map_Steps_To_Encounter'];
     }
 
     /**
@@ -273,7 +273,7 @@
      */
     public function GetMap()
     {
-      return $_SESSION['Absolute']['Maps']['Map_ID'];
+      return $_SESSION['EvoChroniclesRPG']['Maps']['Map_ID'];
     }
 
     /**
@@ -289,10 +289,10 @@
       global $User_Data, $PDO;
 
       $this->Map_ID = $Map_ID;
-      $_SESSION['Absolute']['Maps']['Map_ID'] = $Map_ID;
+      $_SESSION['EvoChroniclesRPG']['Maps']['Map_ID'] = $Map_ID;
 
-      if ( !empty($_SESSION['Absolute']['Maps']['Steps_To_Next_Encounter']) )
-        unset($_SESSION['Absolute']['Maps']['Steps_To_Next_Encounter']);
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Maps']['Steps_To_Next_Encounter']) )
+        unset($_SESSION['EvoChroniclesRPG']['Maps']['Steps_To_Next_Encounter']);
 
       if ( $User_Data['Map_ID'] == $Map_ID )
         return true;

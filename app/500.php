@@ -1,7 +1,7 @@
 <?php
   require_once 'core/required/layout_top.php';
 
-  if ( !isset($_SESSION['Absolute']) )
+  if ( !isset($_SESSION['EvoChroniclesRPG']) )
   {
     $width = " style='margin: 5px; width: calc(100% - 10px);'";
   }
@@ -14,7 +14,7 @@
 <div class='panel content'<?= $width; ?>>
   <div class='head'>500 INTERNAL SERVER ERROR</div>
   <div class='body' style='padding: 5px;'>
-    Absolute has suffered from internal server errors.
+    Evo-Chronicles RPG has suffered from internal server errors.
     <br /><br />
 
     <a href="javascript:history.go(-1);">Go Back A Page?</a>

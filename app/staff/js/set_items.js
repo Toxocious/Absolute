@@ -15,7 +15,7 @@ function ShowObtainableItemsByTable(Database_Table)
 
       document.getElementById('Set_Items_Table').innerHTML = Obtainable_Items_Data.Obtainable_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying items by their table:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying items by their table:', Error));
 }
 
 /**
@@ -37,7 +37,7 @@ function ShowObtainableItemsByLocation(Database_Table, Obtainable_Location)
 
       document.getElementById('Set_Items_Table').innerHTML = Obtainable_Items_Data.Obtainable_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while showing obtainable items by location:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while showing obtainable items by location:', Error));
 }
 
 /**
@@ -59,7 +59,7 @@ function ShowItemCreationTable(Database_Table, Obtainable_Location)
 
       document.getElementById('Set_Items_Table').innerHTML = Create_New_Item_Data.Creation_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying the create a item table:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying the create a item table:', Error));
 }
 
 /**
@@ -81,7 +81,7 @@ function EditSetItem(Database_Table, Item_Database_ID)
 
       document.getElementById('Set_Items_Table').innerHTML = Edit_Item_Data.Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying this item\'s edit table:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying this item\'s edit table:', Error));
 }
 
 /**
@@ -122,7 +122,7 @@ function FinalizeItemCreation(Database_Table, Item_Database_ID)
       document.getElementById('Set_Items_AJAX').className = Finalize_Item_Creation_Data.Success ? 'success' : 'error';
       document.getElementById('Set_Items_AJAX').innerHTML = Finalize_Item_Creation_Data.Message;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while creating the specified item:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while creating the specified item:', Error));
 }
 
 /**
@@ -162,5 +162,5 @@ function FinalizeItemEdit(Database_Table, Item_Database_ID)
 
       document.getElementById('Set_Items_Table').innerHTML = Finalize_Item_Edit_Data.Finalized_Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while editing this item\'s entry:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while editing this item\'s entry:', Error));
 }

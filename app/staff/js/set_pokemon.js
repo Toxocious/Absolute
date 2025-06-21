@@ -15,7 +15,7 @@ function ShowObtainablePokemonByTable(Database_Table)
 
       document.getElementById('Set_Pokemon_Table').innerHTML = Obtainable_Pokemon_Data.Obtainable_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying Pokemon by their table:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying Pokemon by their table:', Error));
 }
 
 /**
@@ -37,7 +37,7 @@ function ShowObtainablePokemonByLocation(Database_Table, Obtainable_Location)
 
       document.getElementById('Set_Pokemon_Table').innerHTML = Obtainable_Pokemon_Data.Obtainable_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying Pokemon by their table and location:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying Pokemon by their table and location:', Error));
 }
 
 /**
@@ -59,7 +59,7 @@ function EditSetPokemon(Database_Table, Pokemon_Database_ID)
 
       document.getElementById('Set_Pokemon_Table').innerHTML = Edit_Pokemon_Data.Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while editing this Pokemon\'s entry:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while editing this Pokemon\'s entry:', Error));
 }
 
 /**
@@ -147,7 +147,7 @@ function FinalizePokemonEdit(Database_Table, Pokemon_Database_ID)
 
       document.getElementById('Set_Pokemon_Table').innerHTML = Finalize_Pokemon_Edit_Data.Finalized_Edit_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while editing this Pokemon\'s entry:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while editing this Pokemon\'s entry:', Error));
 }
 
 /**
@@ -169,7 +169,7 @@ function ShowPokemonCreationTable(Database_Table, Obtainable_Location)
 
       document.getElementById('Set_Pokemon_Table').innerHTML = Create_New_Pokemon_Data.Creation_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying the create a Pokemon table:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying the create a Pokemon table:', Error));
 }
 
 
@@ -262,5 +262,5 @@ function FinalizePokemonCreation(Database_Table, Pokemon_Database_ID)
       document.getElementById('Set_Pokemon_AJAX').className = Finalize_Pokemon_Creation_Data.Success ? 'success' : 'error';
       document.getElementById('Set_Pokemon_AJAX').innerHTML = Finalize_Pokemon_Creation_Data.Message;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while creating this Pokemon\'s entry:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while creating this Pokemon\'s entry:', Error));
 }

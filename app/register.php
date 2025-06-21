@@ -1,7 +1,7 @@
 <?php
 	require_once 'core/required/layout_top.php';
 
-  if ( isset($_SESSION['Absolute']) )
+  if ( isset($_SESSION['EvoChroniclesRPG']) )
   {
     echo "
       <div class='panel content'>
@@ -195,7 +195,7 @@
 
       $Register_Prompt = "
         <div class='success'>
-          You've successfully registered an account on The Pok&eacute;mon Absolute!<br />
+          You've successfully registered an account on Pokémon Evo-Chronicles RPG!<br />
           <a href='login.php'><b>Click Here To Login</b></a>
         </div>
       ";

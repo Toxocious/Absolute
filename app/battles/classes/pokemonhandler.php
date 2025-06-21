@@ -342,16 +342,16 @@
         switch ($this->Side)
         {
           case 'Ally':
-            $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-            $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+            $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+            $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
             break;
           case 'Foe';
-            $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-            $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+            $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+            $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
             break;
         }
 
-        $Previous_Attacker = $_SESSION['Absolute']['Battle'][$this->Side]->Active;
+        $Previous_Attacker = $_SESSION['EvoChroniclesRPG']['Battle'][$this->Side]->Active;
 
         switch ($this->Ability)
         {
@@ -372,7 +372,7 @@
         if ( $this->Ability_Original != $this->Ability )
           $this->Ability == $this->Ability_Original;
 
-        foreach ($_SESSION['Absolute']['Battle'][$this->Side]->Roster as $Roster_Pokemon)
+        foreach ($_SESSION['EvoChroniclesRPG']['Battle'][$this->Side]->Roster as $Roster_Pokemon)
         {
           $Roster_Pokemon->Active = false;
 
@@ -386,10 +386,10 @@
         }
 
         $this->Participated = true;
-        $_SESSION['Absolute']['Battle'][$this->Side]->Active = $this;
+        $_SESSION['EvoChroniclesRPG']['Battle'][$this->Side]->Active = $this;
       }
 
-      $New_Active = $_SESSION['Absolute']['Battle'][$this->Side]->Active;
+      $New_Active = $_SESSION['EvoChroniclesRPG']['Battle'][$this->Side]->Active;
       $this->RevertCopy();
 
       $Effect_Text = '';
@@ -529,12 +529,12 @@
       switch ( $this->Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally'];
-          $Defender = $_SESSION['Absolute']['Battle']['Foe'];
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe'];
-          $Defender = $_SESSION['Absolute']['Battle']['Ally'];
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
           break;
       }
 
@@ -658,8 +658,8 @@
 
       $New_Active = $this;
 
-      $Attacker_Owner = $_SESSION['Absolute']['Battle'][$Attacker->Side];
-      $Defender_Owner = $_SESSION['Absolute']['Battle'][$Defender->Side];
+      $Attacker_Owner = $_SESSION['EvoChroniclesRPG']['Battle'][$Attacker->Side];
+      $Defender_Owner = $_SESSION['EvoChroniclesRPG']['Battle'][$Defender->Side];
 
       switch ($New_Active->Ability->Name)
       {
@@ -854,7 +854,7 @@
           $Attacker_Roster_Slots = count($Attacker_Owner->Roster);
           for ( $i = $Attacker_Roster_Slots - 1; $i >= $this->Slot; $i-- )
           {
-            $Checking_Ally = $_SESSION['Absolute']['Battle'][$this->Side]->Roster[$i];
+            $Checking_Ally = $_SESSION['EvoChroniclesRPG']['Battle'][$this->Side]->Roster[$i];
             if ( !$Checking_Ally->Fainted )
             {
               $this->CopyPokemon($Checking_Ally);
@@ -1181,7 +1181,7 @@
       global $PDO;
 
       $Exp_Divisor = 0;
-      foreach ( $_SESSION['Absolute']['Battle']['Ally']->Roster as $Pokemon )
+      foreach ( $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster as $Pokemon )
       {
         if
         (
@@ -1200,7 +1200,7 @@
         'Text' => ''
       ];
 
-      foreach ( $_SESSION['Absolute']['Battle']['Ally']->Roster as $Pokemon )
+      foreach ( $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster as $Pokemon )
       {
         if
         (
@@ -1263,9 +1263,9 @@
       if ( $this->Active )
         $Ally_Active = $this;
       else
-        $Ally_Active = $_SESSION['Absolute']['Battle']['Ally']->Active;
+        $Ally_Active = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
 
-      $Foe_Active = $_SESSION['Absolute']['Battle']['Foe']->Active;
+      $Foe_Active = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
 
       if ( $this->Item->Name == 'Exp Share' )
         $s = 2;

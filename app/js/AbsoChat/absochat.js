@@ -1,6 +1,6 @@
 let socket;
 
-const Absolute = {
+const ECRPGClient = {
     port: 8080,
     active: false,
     user: {},
@@ -11,7 +11,7 @@ const Absolute = {
     },
 
     handleInputBox: function () {
-        if (!Absolute.user.Connected) {
+        if (!ECRPGClient.user.Connected) {
             $('#chatMessage').css('background', '#666').attr('disabled', true);
         } else {
             $('#chatMessage').css('background', '').attr('disabled', false);
@@ -19,7 +19,7 @@ const Absolute = {
     },
 
     /**
-     * Initialization of Absolute Chat.
+     * Initialization of Evo-Chronicles RPG Chat.
      */
     Enable: function () {
         /**
@@ -34,7 +34,7 @@ const Absolute = {
             /**
              * Start the connection to the server.
              */
-            // socket = io('https://www.absoluterpg.com:' + Absolute.port,
+            // socket = io('https://www.evochronicles.com:' + ECRPGClient.port,
             socket = io('http://localhost:8080', {
                 withCredentials: true,
                 reconnectionDelay: 2000,
@@ -47,18 +47,18 @@ const Absolute = {
              * Handle the connection of the user.
              */
             socket.on('connect', function () {
-                Absolute.active = true;
-                Absolute.user.Connected = true;
+                ECRPGClient.active = true;
+                ECRPGClient.user.Connected = true;
 
                 console.log('[Chat | Client] Connected to socket.');
 
                 Handler.Clear();
-                Absolute.handleInputBox();
+                ECRPGClient.handleInputBox();
 
                 socket.emit('auth', {
-                    UserID: Absolute.user.UserID,
-                    Auth_Code: Absolute.user.Auth_Code,
-                    Connected: Absolute.user.Connected,
+                    UserID: ECRPGClient.user.UserID,
+                    Auth_Code: ECRPGClient.user.Auth_Code,
+                    Connected: ECRPGClient.user.Connected,
                 });
             });
 
@@ -66,7 +66,7 @@ const Absolute = {
              * Handle the user upon disconnecting.
              */
             socket.on('disconnect', function () {
-                Absolute.handleInputBox();
+                ECRPGClient.handleInputBox();
                 Handler.AddMessage({
                     User: {
                         ID: 3,
@@ -76,10 +76,10 @@ const Absolute = {
                     },
                     Message: {
                         Content:
-                            'You have been disconnected from Absolute Chat. Please refresh the page.',
+                            'You have been disconnected from Evo-Chronicles RPG Chat. Please refresh the page.',
                         Private: {
                             isPrivate: true,
-                            Private_To: Absolute.user.UserID,
+                            Private_To: ECRPGClient.user.UserID,
                         },
                     },
                 });
@@ -97,9 +97,9 @@ const Absolute = {
     },
 
     /**
-     * Disabling of Absolute Chat.
+     * Disabling of Evo-Chronicles RPG Chat.
      */
     Disable: function () {
-        Absolute.active = false;
+        ECRPGClient.active = false;
     },
 };

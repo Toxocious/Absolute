@@ -22,7 +22,7 @@ function ShowSpawnPokemonTable()
       if ( typeof Spawn_Pokemon_Data.Spawn_Table !== 'undefined' )
         document.getElementById('Spawn_Pokemon_Table').innerHTML = Spawn_Pokemon_Data.Spawn_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while displaying this Pokemon\'s spawn table:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while displaying this Pokemon\'s spawn table:', Error));
 }
 
 /**
@@ -93,5 +93,5 @@ function SpawnPokemon(Pokedex_ID)
 
       document.getElementById('Spawn_Pokemon_Table').innerHTML = Spawn_Pokemon_Data.Spawn_Pokemon_Table;
     })
-    .catch((Error) => console.error('[Absolute] An error occurred while spawning the specified Pokemon:', Error));
+    .catch((Error) => console.error('[ECRPG] An error occurred while spawning the specified Pokemon:', Error));
 }

@@ -35,7 +35,7 @@
 	}
 	else
 	{
-		$_SESSION['Absolute']['Trade'] = [
+		$_SESSION['EvoChroniclesRPG']['Trade'] = [
 			'Sender' => [
 				'User' => $User_Data['ID'],
 				'Pokemon' => [],

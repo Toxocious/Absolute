@@ -1,7 +1,7 @@
 <?php
   require_once 'core/required/session.php';
 
-  if ( empty($_SESSION['Absolute']['Battle']) )
+  if ( empty($_SESSION['EvoChroniclesRPG']['Battle']) )
   {
     echo "
       <div class='panel content'>

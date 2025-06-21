@@ -191,12 +191,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 
@@ -553,19 +553,19 @@
         case 'Ally':
           $Ally = 'Ally';
           $Foe = 'Foe';
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
         case 'Foe':
           $Ally = 'Foe';
           $Foe = 'Ally';
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 
-      if ( isset($_SESSION['Absolute']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
-        $Turn_First_Attacker = $_SESSION['Absolute']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
+      if ( isset($_SESSION['EvoChroniclesRPG']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
       else
         $Turn_First_Attacker = $Side;
 
@@ -587,10 +587,10 @@
       switch ( $this->Target )
       {
         case 'Ally':
-          $Target = $_SESSION['Absolute']['Battle'][$Ally];
+          $Target = $_SESSION['EvoChroniclesRPG']['Battle'][$Ally];
           break;
         case 'Foe':
-          $Target = $_SESSION['Absolute']['Battle'][$Foe];
+          $Target = $_SESSION['EvoChroniclesRPG']['Battle'][$Foe];
           break;
       }
 
@@ -953,10 +953,10 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
       }
 
@@ -1085,17 +1085,17 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 
-      if ( isset($_SESSION['Absolute']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
-        $Turn_First_Attacker = $_SESSION['Absolute']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
+      if ( isset($_SESSION['EvoChroniclesRPG']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
       else
         $Turn_First_Attacker = $Side;
 
@@ -1231,12 +1231,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 
@@ -1323,10 +1323,10 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 
@@ -1347,12 +1347,12 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 
@@ -1425,7 +1425,7 @@
             'Text' => "
               <br />
               {$Defender->Display_Name} was protected from the attack!<br />" .
-              (isset($Effect_Text) ? $Effect_Text : ''),
+            (isset($Effect_Text) ? $Effect_Text : ''),
           ];
         }
       }
@@ -2236,7 +2236,7 @@
               }
               break;
             case 'Emergency Exit':
-              $Trainer = $_SESSION['Absolute']['Battle'][$Defender->Side];
+              $Trainer = $_SESSION['EvoChroniclesRPG']['Battle'][$Defender->Side];
               if ( $Trainer->NextPokemon() && $Defender->HP <= $Defender->Max_HP / 2 )
               {
                 // How do we handle swapping out mid turn?
@@ -3042,7 +3042,7 @@
       string $Side
     )
     {
-      $Attacker = $_SESSION['Absolute']['Battle'][$Side]->Active;
+      $Attacker = $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active;
 
       if ( $Attacker->HasTyping([ $this->Move_Type ]) )
       {
@@ -3090,19 +3090,19 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           $Foe = 'Foe';
           break;
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           $Foe = 'Ally';
           break;
       }
 
-      if ( isset($_SESSION['Absolute']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
-        $Turn_First_Attacker = $_SESSION['Absolute']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
+      if ( isset($_SESSION['EvoChroniclesRPG']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker']) )
+        $Turn_First_Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'];
       else
         $Turn_First_Attacker = $Side;
 

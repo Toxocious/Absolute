@@ -44,7 +44,7 @@
         ];
       }
 
-      $_SESSION['Absolute']['Maps']['Encounter'] = [
+      $_SESSION['EvoChroniclesRPG']['Maps']['Encounter'] = [
         'Page_Alert' => $Page_Alert,
         'Pokedex_Data' => $Pokedex_Data,
         'Level' => mt_rand($Generated_Encounter['Min_Level'], $Generated_Encounter['Max_Level']),
@@ -55,7 +55,7 @@
         'Generated_On' => time()
       ];
 
-      return $_SESSION['Absolute']['Maps']['Encounter'];
+      return $_SESSION['EvoChroniclesRPG']['Maps']['Encounter'];
     }
 
     /**
@@ -110,10 +110,10 @@
     {
       global $User_Data;
 
-      if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']) )
         return false;
 
-      $Encounter_Data = $_SESSION['Absolute']['Maps']['Encounter'];
+      $Encounter_Data = $_SESSION['EvoChroniclesRPG']['Maps']['Encounter'];
 
       $Player_Instance = Player::GetInstance();
 
@@ -121,8 +121,8 @@
       $Player_Instance->SetStepsTillEncounter($New_Steps_Till_Encounter);
       $Get_Steps_Till_Encounter = $Player_Instance->GetStepsTillEncounter();
 
-      $Player_Instance->UpdateMapExperience($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
-      User::UpdateStat($User_Data['ID'], 'Map_Exp_Earned', $_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
+      $Player_Instance->UpdateMapExperience($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Map_Exp_Yield']);
+      User::UpdateStat($User_Data['ID'], 'Map_Exp_Earned', $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Map_Exp_Yield']);
       User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Caught', 1);
 
       $Spawn_Pokemon = CreatePokemon(
@@ -140,7 +140,7 @@
         <br />
         <img src='{$Spawn_Pokemon['Sprite']}' />
         <br />
-        +<b>" . number_format($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']) . " Map Exp.</b>
+        +<b>" . number_format($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Map_Exp_Yield']) . " Map Exp.</b>
         <br />
         <table class='border-gradient' style='width: 210px;'>
           <tbody>
@@ -189,7 +189,7 @@
 
       self::LogEncounter();
 
-      unset($_SESSION['Absolute']['Maps']['Encounter']);
+      unset($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']);
 
       return [
         'Catch_Text' => $Catch_Text,
@@ -204,7 +204,7 @@
     {
       global $User_Data;
 
-      if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']) )
         return false;
 
       $Player_Instance = Player::GetInstance();
@@ -213,19 +213,19 @@
       $Player_Instance->SetStepsTillEncounter($New_Steps_Till_Encounter);
       $Get_Steps_Till_Encounter = $Player_Instance->GetStepsTillEncounter();
 
-      $Player_Instance->UpdateMapExperience($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
-      User::UpdateStat($User_Data['ID'], 'Map_Exp_Earned', $_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']);
+      $Player_Instance->UpdateMapExperience($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Map_Exp_Yield']);
+      User::UpdateStat($User_Data['ID'], 'Map_Exp_Earned', $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Map_Exp_Yield']);
       User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Released', 1);
 
       $Release_Text = "
-        You caught and released a(n) {$_SESSION['Absolute']['Maps']['Encounter']['Pokedex_Data']['Display_Name']}!
+        You caught and released a(n) {$_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Pokedex_Data']['Display_Name']}!
         <br /><br />
-        +" . number_format($_SESSION['Absolute']['Maps']['Encounter']['Map_Exp_Yield']) . " Map Exp.
+        +" . number_format($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Map_Exp_Yield']) . " Map Exp.
       ";
 
       self::LogEncounter();
 
-      unset($_SESSION['Absolute']['Maps']['Encounter']);
+      unset($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']);
 
       return [
         'Release_Text' => $Release_Text,
@@ -240,7 +240,7 @@
     {
       global $User_Data;
 
-      if ( empty($_SESSION['Absolute']['Maps']['Encounter']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']) )
         return false;
 
       $Player_Instance = Player::GetInstance();
@@ -251,9 +251,9 @@
 
       User::UpdateStat($User_Data['ID'], 'Map_Pokemon_Fled_From', 1);
 
-      $Run_Text = "You ran away from the wild {$_SESSION['Absolute']['Maps']['Encounter']['Pokedex_Data']['Display_Name']}.";
+      $Run_Text = "You ran away from the wild {$_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Pokedex_Data']['Display_Name']}.";
 
-      unset($_SESSION['Absolute']['Maps']['Encounter']);
+      unset($_SESSION['EvoChroniclesRPG']['Maps']['Encounter']);
 
       return [
         'Run_Text' => $Run_Text,
@@ -286,13 +286,13 @@
           ) VALUES ( ?, ?, ?, ?, ?, ?, ?, ?, ? )
         ");
         $Log_Map_Encounter->execute([
-          $_SESSION['Absolute']['Maps']['Encounter']['Obtained_Text'],
-          $_SESSION['Absolute']['Maps']['Encounter']['Pokedex_Data']['Pokedex_ID'],
-          $_SESSION['Absolute']['Maps']['Encounter']['Pokedex_Data']['Alt_ID'],
-          $_SESSION['Absolute']['Maps']['Encounter']['Type'],
-          $_SESSION['Absolute']['Maps']['Encounter']['Level'],
-          $_SESSION['Absolute']['Maps']['Encounter']['Gender'],
-          $_SESSION['Absolute']['Maps']['Encounter']['Generated_On'],
+          $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Obtained_Text'],
+          $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Pokedex_Data']['Pokedex_ID'],
+          $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Pokedex_Data']['Alt_ID'],
+          $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Type'],
+          $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Level'],
+          $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Gender'],
+          $_SESSION['EvoChroniclesRPG']['Maps']['Encounter']['Generated_On'],
           $User_Data['ID'],
           time()
         ]);

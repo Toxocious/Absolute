@@ -1,10 +1,10 @@
 <?php
   $page_script_start_time = microtime(true);
 
-  // Set the timezone that Absolute is based on.
+  // Set the timezone that Evo-Chronicles RPG is based on.
   date_default_timezone_set('America/Los_Angeles');
   $Date = date("M dS, Y g:i:s A");
-  $Absolute_Time = date('m/d/y h:i A');
+  $EvoChroniclesRPG_Time = date('m/d/y h:i A');
   $Time = time();
 
   // Deal with the $_SERVER const.
@@ -68,7 +68,7 @@
 
   require_once $Dir_Root . '/core/functions/pokemon.php';
 
-  $PDO = connect_database('absolute');
+  $PDO = connect_database('evo_chronicles_rpg');
 
   /**
    * Get the client's IP address.
@@ -112,18 +112,18 @@
    *  - Get active user data
    *  - Update active user page info, playtime, and last page active on
    */
-  if ( isset($_SESSION['Absolute']) )
+  if ( isset($_SESSION['EvoChroniclesRPG']) )
   {
-    $User_Data = $User_Class->FetchUserData($_SESSION['Absolute']['Logged_In_As']);
+    $User_Data = $User_Class->FetchUserData($_SESSION['EvoChroniclesRPG']['Logged_In_As']);
 
-    if ( !isset($_SESSION['Absolute']['Playtime']) )
+    if ( !isset($_SESSION['EvoChroniclesRPG']['Playtime']) )
     {
-      $_SESSION['Absolute']['Playtime'] = $Time;
+      $_SESSION['EvoChroniclesRPG']['Playtime'] = $Time;
     }
 
-    $Playtime = $Time - $_SESSION['Absolute']['Playtime'];
+    $Playtime = $Time - $_SESSION['EvoChroniclesRPG']['Playtime'];
     $Playtime = $Playtime > 20 ? 20 : $Playtime;
-    $_SESSION['Absolute']['Playtime'] = $Time;
+    $_SESSION['EvoChroniclesRPG']['Playtime'] = $Time;
 
     try
     {

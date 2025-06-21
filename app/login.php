@@ -8,14 +8,14 @@
   if
   (
     session_status() === PHP_SESSION_ACTIVE &&
-    !empty($_SESSION['Absolute'])
+    !empty($_SESSION['EvoChroniclesRPG'])
   )
   {
     echo "
 			<div class='panel content'>
 				<div class='head'>Login</div>
 				<div class='body' style='padding: 5px;'>
-					You're already logged in to Absolute.
+					You're already logged in to Evo-Chronicles RPG.
 				</div>
 			</div>
 		";
@@ -66,7 +66,7 @@
     {
       TrackLoginAttempt($User_Info['ID'], $IP, true);
 
-      $_SESSION['Absolute']['Logged_In_As'] = $User_Info['ID'];
+      $_SESSION['EvoChroniclesRPG']['Logged_In_As'] = $User_Info['ID'];
       header('Location: /news.php');
       exit;
     }
@@ -86,7 +86,7 @@
 		</div>
 
 		<div class='description' style='background: #334364; margin-bottom: 5px; width: 70%;'>
-			Fill in the form below if you wish to login to Absolute.
+			Fill in the form below if you wish to login to Evo-Chronicles RPG.
 		</div>
 
     <?php
@@ -108,7 +108,7 @@
 				<b>Password</b><br />
 				<input type='password' name='password' placeholder='Password' style='text-align: center;' />
 				<br /><br />
-				<input type='submit' name='action' value='Login to Absolute' style='margin-left: -3px; width: 180px;' />
+				<input type='submit' name='action' value='Login to Evo-Chronicles RPG' style='margin-left: -3px; width: 180px;' />
 			</form>
 		</div>
 	</div>

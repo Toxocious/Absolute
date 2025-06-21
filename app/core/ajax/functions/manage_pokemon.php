@@ -1,7 +1,7 @@
 <?php
 	require_once '../../required/session.php';
 
-	if ( isset($_SESSION['Absolute']) )
+	if ( isset($_SESSION['EvoChroniclesRPG']) )
 	{
 		try
 		{

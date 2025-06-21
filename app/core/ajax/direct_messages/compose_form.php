@@ -4,20 +4,20 @@
   /**
    * Reset the compose session data.
    */
-  if ( isset($_SESSION['Absolute']['Direct_Message']['users']) )
+  if ( isset($_SESSION['EvoChroniclesRPG']['Direct_Message']['users']) )
   {
-    $_SESSION['Absolute']['Direct_Message']['users'] = [];
-    unset($_SESSION['Absolute']['Direct_Message']['users']);
+    $_SESSION['EvoChroniclesRPG']['Direct_Message']['users'] = [];
+    unset($_SESSION['EvoChroniclesRPG']['Direct_Message']['users']);
   }
 
-  $_SESSION['Absolute']['Direct_Message']['users'][] = [
+  $_SESSION['EvoChroniclesRPG']['Direct_Message']['users'][] = [
     'User_ID' => $User_Data['ID'],
   ];
 
-  if ( !empty($_SESSION['Absolute']['Direct_Message']['Message_Recipient']) )
+  if ( !empty($_SESSION['EvoChroniclesRPG']['Direct_Message']['Message_Recipient']) )
   {
-    $_SESSION['Absolute']['Direct_Message']['users'][] = [
-      'User_ID' => $_SESSION['Absolute']['Direct_Message']['Message_Recipient'],
+    $_SESSION['EvoChroniclesRPG']['Direct_Message']['users'][] = [
+      'User_ID' => $_SESSION['EvoChroniclesRPG']['Direct_Message']['Message_Recipient'],
     ];
   }
 ?>
@@ -107,13 +107,13 @@
 
       <div id='added-users'>
         <?php
-          if ( empty( $_SESSION['Absolute']['Direct_Message']['users']) )
+          if ( empty( $_SESSION['EvoChroniclesRPG']['Direct_Message']['users']) )
           {
             echo '<i>No users have been added to this group.</i>';
           }
           else
           {
-            foreach ( $_SESSION['Absolute']['Direct_Message']['users'] as $Key => $Included_User )
+            foreach ( $_SESSION['EvoChroniclesRPG']['Direct_Message']['users'] as $Key => $Included_User )
             {
               if ( $Included_User['User_ID'] == $User_Data['ID'] )
                 continue;

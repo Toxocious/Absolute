@@ -27,7 +27,7 @@
 			],
 			'Abso_Coins'	=> [ 
 				'Value' => 'Abso_Coins',
-				'Name' => 'Absolute Coins',
+				'Name' => 'ECRPG Coins',
 				'Icon' => 'images/Assets/Abso_Coins.png',
 				'Tradeable' => true
 			],

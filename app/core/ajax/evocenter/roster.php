@@ -1,7 +1,7 @@
 <?php
   require_once '../../required/session.php';
 
-  if ( isset($_SESSION['Absolute']) )
+  if ( isset($_SESSION['EvoChroniclesRPG']) )
   {
     for ( $i = 0; $i <= 5; $i++ )
     {
@@ -32,5 +32,5 @@
   }
   else
   {
-    echo "Your Absolute login session is invalid.";
+    echo "Your Evo-Chronicles RPG login session is invalid.";
   }

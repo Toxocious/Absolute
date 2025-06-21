@@ -65,7 +65,7 @@
       $Data
     )
     {
-      if ( !isset($_SESSION['Absolute']['Battle']) )
+      if ( !isset($_SESSION['EvoChroniclesRPG']['Battle']) )
       {
         return [
           'Type' => 'Error',
@@ -86,8 +86,8 @@
         ];
       }
 
-      $_SESSION['Absolute']['Battle']['Turn_ID']++;
-      $this->Turn_ID = $_SESSION['Absolute']['Battle']['Turn_ID'];
+      $_SESSION['EvoChroniclesRPG']['Battle']['Turn_ID']++;
+      $this->Turn_ID = $_SESSION['EvoChroniclesRPG']['Battle']['Turn_ID'];
 
       $Data = json_decode($Data);
 
@@ -183,13 +183,13 @@
         switch ($Side)
         {
           case 'Ally':
-            $Active_Ally = $_SESSION['Absolute']['Battle']['Ally'];
-            $Active_Foe = $_SESSION['Absolute']['Battle']['Foe'];
+            $Active_Ally = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
+            $Active_Foe = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
             break;
 
           case 'Foe':
-            $Active_Ally = $_SESSION['Absolute']['Battle']['Foe'];
-            $Active_Foe = $_SESSION['Absolute']['Battle']['Ally'];
+            $Active_Ally = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
+            $Active_Foe = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
             break;
         }
 
@@ -199,7 +199,7 @@
         /**
          * Process active Weather effects.
          */
-        if ( !empty($_SESSION['Absolute']['Battle']['Weather']) )
+        if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Weather']) )
         {
           if
           (
@@ -207,7 +207,7 @@
             $Active_Ally->Active->Item->Name != 'Safety Goggles'
           )
           {
-            switch ($_SESSION['Absolute']['Battle']['Weather']->Name)
+            switch ($_SESSION['EvoChroniclesRPG']['Battle']['Weather']->Name)
             {
               case 'Hail':
                 if ( $Active_Ally->Active->Ability->Name == 'Ice Body' )
@@ -563,34 +563,34 @@
       /**
        * Process active terrain effects.
        */
-      if ( !empty($_SESSION['Absolute']['Battle']['Terrain']->Terrain) )
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Terrain']->Terrain) )
       {
-        $_SESSION['Absolute']['Battle']['Terrain']->Terrain->TickTerrain();
+        $_SESSION['EvoChroniclesRPG']['Battle']['Terrain']->Terrain->TickTerrain();
 
-        if ( $_SESSION['Absolute']['Battle']['Terrain']->Terrain->Turns_Left === 0 )
-          $_SESSION['Absolute']['Battle']['Terrain']->Terrain->EndTerrain();
+        if ( $_SESSION['EvoChroniclesRPG']['Battle']['Terrain']->Terrain->Turns_Left === 0 )
+          $_SESSION['EvoChroniclesRPG']['Battle']['Terrain']->Terrain->EndTerrain();
       }
 
       /**
        * Decrement Weather turn count, and end the weather if necessary.
        */
-      if ( !empty($_SESSION['Absolute']['Battle']['Weather']) )
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Weather']) )
       {
-        $_SESSION['Absolute']['Battle']['Weather']->TickWeather();
+        $_SESSION['EvoChroniclesRPG']['Battle']['Weather']->TickWeather();
 
-        if ( $_SESSION['Absolute']['Battle']['Weather']->Turns_Left == 0 )
+        if ( $_SESSION['EvoChroniclesRPG']['Battle']['Weather']->Turns_Left == 0 )
         {
-          $_SESSION['Absolute']['Battle']['Weather']->EndWeather();
-          unset($_SESSION['Absolute']['Battle']['Weather']);
+          $_SESSION['EvoChroniclesRPG']['Battle']['Weather']->EndWeather();
+          unset($_SESSION['EvoChroniclesRPG']['Battle']['Weather']);
         }
       }
 
       /**
        * Process field effects.
        */
-      if ( !empty($_SESSION['Absolute']['Battle']['Field_Effects']) )
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Field_Effects']) )
       {
-        foreach ( $_SESSION['Absolute']['Battle']['Field_Effects'] as $Field_Side => $Field_Effects )
+        foreach ( $_SESSION['EvoChroniclesRPG']['Battle']['Field_Effects'] as $Field_Side => $Field_Effects )
         {
           foreach ( $Field_Effects as $Index => $Field_Effect )
           {
@@ -602,8 +602,8 @@
             }
           }
 
-          if ( empty($_SESSION['Absolute']['Battle']['Field_Effects'][$Field_Side]) )
-            unset($_SESSION['Absolute']['Battle']['Field_Effects'][$Field_Side]);
+          if ( empty($_SESSION['EvoChroniclesRPG']['Battle']['Field_Effects'][$Field_Side]) )
+            unset($_SESSION['EvoChroniclesRPG']['Battle']['Field_Effects'][$Field_Side]);
         }
       }
 
@@ -632,33 +632,33 @@
 
       $Dialogue = '';
 
-      if ( $_SESSION['Absolute']['Battle']['Ally']->Active->HP <= 0 )
+      if ( $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active->HP <= 0 )
       {
-        $Ally_Next_Pokemon = $_SESSION['Absolute']['Battle']['Ally']->NextPokemon();
+        $Ally_Next_Pokemon = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->NextPokemon();
         if ( $Ally_Next_Pokemon )
         {
-          $Ally_Switch_Into = $_SESSION['Absolute']['Battle']['Ally']->Roster[$Ally_Next_Pokemon]->SwitchInto();
+          $Ally_Switch_Into = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster[$Ally_Next_Pokemon]->SwitchInto();
 
           $Dialogue .= $Ally_Switch_Into['Text'];
         }
       }
 
-      if ( $_SESSION['Absolute']['Battle']['Foe']->Active->HP <= 0 )
+      if ( $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active->HP <= 0 )
       {
-        $Foe_Next_Pokemon = $_SESSION['Absolute']['Battle']['Foe']->NextPokemon();
+        $Foe_Next_Pokemon = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->NextPokemon();
         if ( $Foe_Next_Pokemon )
         {
-          $Foe_Switch_Into = $_SESSION['Absolute']['Battle']['Foe']->Roster[$Foe_Next_Pokemon]->SwitchInto();
-          $_SESSION['Absolute']['Battle']['Foe']->Active->EnableMoves();
+          $Foe_Switch_Into = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Roster[$Foe_Next_Pokemon]->SwitchInto();
+          $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active->EnableMoves();
 
           $Dialogue .= $Foe_Switch_Into['Text'];
         }
       }
 
-      $_SESSION['Absolute']['Battle']['Ally']->Active->EnableMoves();
+      $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active->EnableMoves();
 
-      if ( isset($_SESSION['Absolute']['Battle']['Postcodes']['Continue']) )
-        unset($_SESSION['Absolute']['Battle']['Postcodes']['Continue']);
+      if ( isset($_SESSION['EvoChroniclesRPG']['Battle']['Postcodes']['Continue']) )
+        unset($_SESSION['EvoChroniclesRPG']['Battle']['Postcodes']['Continue']);
 
       return [
         'Type' => 'Success',
@@ -680,11 +680,11 @@
 
       }
 
-      $Ally_ID = $_SESSION['Absolute']['Battle']['Ally']->ID;
-      $Foe_ID = $_SESSION['Absolute']['Battle']['Foe']->ID;
-      $Fight = $_SESSION['Absolute']['Battle']['Battle_Type'];
+      $Ally_ID = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->ID;
+      $Foe_ID = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->ID;
+      $Fight = $_SESSION['EvoChroniclesRPG']['Battle']['Battle_Type'];
 
-      unset($_SESSION['Absolute']['Battle']);
+      unset($_SESSION['EvoChroniclesRPG']['Battle']);
 
       $Battle = new $Fight($Ally_ID, $Foe_ID);
       $Restart = $Battle->CreateBattle();
@@ -720,18 +720,18 @@
       switch ( $Side )
       {
         case 'Ally':
-          $Loser = $_SESSION['Absolute']['Battle']['Ally'];
-          $Winner = $_SESSION['Absolute']['Battle']['Foe'];
+          $Loser = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
+          $Winner = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
           break;
         case 'Foe':
-          $Loser = $_SESSION['Absolute']['Battle']['Foe'];
-          $Winner = $_SESSION['Absolute']['Battle']['Ally'];
+          $Loser = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
+          $Winner = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
           break;
       }
 
       foreach ( ['Ally', 'Foe'] as $Side )
       {
-        $_SESSION['Absolute']['Battle'][$Side]->Active->DisableMoves();
+        $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active->DisableMoves();
       }
 
       $Dialogue = "
@@ -757,8 +757,8 @@
       int $Move_Slot
     )
     {
-      $Ally_Active = $_SESSION['Absolute']['Battle']['Ally']->Active;
-      $Foe_Active = $_SESSION['Absolute']['Battle']['Foe']->Active;
+      $Ally_Active = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+      $Foe_Active = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
 
       if
       (
@@ -796,7 +796,7 @@
         $First_Attacker = $this->DetermineFirstAttacker($this->Ally_Move, $this->Foe_Move);
       }
 
-      $_SESSION['Absolute']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'] = $First_Attacker;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Turn_Data']['Turn_' . $this->Turn_ID]['First_Attacker'] = $First_Attacker;
 
       $Attack_Dialogue = '';
 
@@ -864,13 +864,13 @@
       switch ( $Attacker )
       {
         case 'Ally':
-          $Attacker = $_SESSION['Absolute']['Battle']['Ally']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Foe']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
           break;
 
         case 'Foe':
-          $Attacker = $_SESSION['Absolute']['Battle']['Foe']->Active;
-          $Defender = $_SESSION['Absolute']['Battle']['Ally']->Active;
+          $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
+          $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
           break;
       }
 
@@ -913,8 +913,8 @@
       if ( empty($Foe_Damage_Dealt) )
         $Foe_Damage_Dealt = 0;
 
-      $Attacker = $_SESSION['Absolute']['Battle']['Ally'];
-      $Defender = $_SESSION['Absolute']['Battle']['Foe'];
+      $Attacker = $_SESSION['EvoChroniclesRPG']['Battle']['Ally'];
+      $Defender = $_SESSION['EvoChroniclesRPG']['Battle']['Foe'];
 
       $Continue = false;
       $Faint_Dialogue = '';
@@ -983,11 +983,11 @@
       int $Roster_Slot
     )
     {
-      $Ally_Active = $_SESSION['Absolute']['Battle']['Ally']->Active;
-      $Foe_Active = $_SESSION['Absolute']['Battle']['Foe']->Active;
+      $Ally_Active = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+      $Foe_Active = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
 
       $Slot = Purify($Roster_Slot) - 1;
-      if ( !isset($_SESSION['Absolute']['Battle']['Ally']->Roster[$Slot]) )
+      if ( !isset($_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster[$Slot]) )
       {
         return [
           'Type' => 'Error',
@@ -1056,12 +1056,12 @@
           $Switch_Dialogue .= '<br /><br />';
         }
 
-        $Perform_Switch = $_SESSION['Absolute']['Battle']['Ally']->Roster[$Slot]->SwitchInto();
+        $Perform_Switch = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster[$Slot]->SwitchInto();
         $Switch_Dialogue .= $Perform_Switch['Text'];
       }
       else
       {
-        $Perform_Switch = $_SESSION['Absolute']['Battle']['Ally']->Roster[$Slot]->SwitchInto();
+        $Perform_Switch = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster[$Slot]->SwitchInto();
         $Switch_Dialogue .= $Perform_Switch['Text'];
 
         if
@@ -1100,7 +1100,7 @@
           FROM `items`
           WHERE `Owner_Current` = ? AND `Quantity` > 0
         ");
-        $Fetch_Items->execute([ $_SESSION['Absolute']['Battle']['Ally']->ID ]);
+        $Fetch_Items->execute([ $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->ID ]);
         $Fetch_Items->setFetchMode(\PDO::FETCH_ASSOC);
         $Bag_Items = $Fetch_Items->fetchAll();
       }
@@ -1140,7 +1140,7 @@
           <select name='use_item_on' id='use_item_on'>
       ";
 
-      foreach ($_SESSION['Absolute']['Battle']['Ally']->Roster as $Pokemon)
+      foreach ($_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster as $Pokemon)
       {
         $Bag_Dialogue .= "
           <option value='{$Pokemon->Slot}'>{$Pokemon->Display_Name} (Slot: {$Pokemon->Slot})</option>
@@ -1171,7 +1171,7 @@
     {
       global $PDO;
 
-      if ( !in_array($Roster_Slot, ['1', '2', '3', '4', '5', '6']) || empty($_SESSION['Absolute']['Battle']['Ally']->Roster[$Roster_Slot]) )
+      if ( !in_array($Roster_Slot, ['1', '2', '3', '4', '5', '6']) || empty($_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster[$Roster_Slot]) )
         return 'An invalid roster slot was selected.';
 
       if ( empty($Item_ID) )
@@ -1185,7 +1185,7 @@
           WHERE `id` = ? AND `Owner_Current` = ?
           LIMIT 1
         ");
-        $Fetch_Item->execute([ $Item_ID, $_SESSION['Absolute']['Battle']['Ally']->ID ]);
+        $Fetch_Item->execute([ $Item_ID, $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->ID ]);
         $Fetch_Item->setFetchMode(\PDO::FETCH_ASSOC);
         $Item = $Fetch_Item->fetch();
       }
@@ -1200,7 +1200,7 @@
       if ( $Item['Quantity'] < 1 )
         return 'You do not have enough of this item.';
 
-      $Item_Target = $_SESSION['Absolute']['Battle']['Ally']->Roster[$Roster_Slot];
+      $Item_Target = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster[$Roster_Slot];
 
       $Use_Item_Dialogue = '';
 
@@ -1394,7 +1394,7 @@
 
         case 'Sacred Ash':
           $Revives = [];
-          foreach ( $_SESSION['Absolute']['Battle']['Ally']->Roster as $Current_Pokemon )
+          foreach ( $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Roster as $Current_Pokemon )
           {
             if ( !$Current_Pokemon->Fainted )
               continue;
@@ -1685,7 +1685,7 @@
        */
       if ( !empty($Stats) )
       {
-        $Active_Pokemon = $_SESSION['Absolute']['Battle']['Ally']->Active;
+        $Active_Pokemon = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
 
         foreach ($Stats as $Stat)
         {
@@ -1716,7 +1716,7 @@
       string $Dialogue
     )
     {
-      if ( !empty($_SESSION['Absolute']['Battle']['Postcodes']['Continue']) )
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Postcodes']['Continue']) )
         return;
 
       $this->GeneratePostcode('Continue');
@@ -1726,7 +1726,7 @@
           type='button'
           value='Continue Battle'
           style='font-weight: bold; padding: 5px 0px;'
-          onmousedown='Battle.Continue(\"{$_SESSION['Absolute']['Battle']['Postcodes']['Continue']}\", event);'
+          onmousedown='Battle.Continue(\"{$_SESSION['EvoChroniclesRPG']['Battle']['Postcodes']['Continue']}\", event);'
         />
         <br /><br />
         {$Dialogue}
@@ -1743,10 +1743,10 @@
       string $Dialogue
     )
     {
-      if ( !empty($_SESSION['Absolute']['Battle']['Postcodes']['Restart']) )
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Postcodes']['Restart']) )
         return;
 
-      if ( $_SESSION['Absolute']['Battle']['Battle_Type'] == 'Wild' )
+      if ( $_SESSION['EvoChroniclesRPG']['Battle']['Battle_Type'] == 'Wild' )
         return $Dialogue;
 
       $this->GeneratePostcode('Restart');
@@ -1756,7 +1756,7 @@
           type='button'
           value='Restart Battle'
           style='font-weight: bold; padding: 5px 0px;'
-          onmousedown='Battle.Restart(\"{$_SESSION['Absolute']['Battle']['Postcodes']['Restart']}\", event);'
+          onmousedown='Battle.Restart(\"{$_SESSION['EvoChroniclesRPG']['Battle']['Postcodes']['Restart']}\", event);'
         />
         <br /><br />
         {$Dialogue}
@@ -1772,7 +1772,7 @@
       string $Codename
     )
     {
-      $_SESSION['Absolute']['Battle']['Postcodes'][$Codename] = bin2hex(random_bytes(10));
+      $_SESSION['EvoChroniclesRPG']['Battle']['Postcodes'][$Codename] = bin2hex(random_bytes(10));
     }
 
     /**
@@ -1790,8 +1790,8 @@
       if ( !isset($Ally_Move) || !isset($Foe_Move) )
         return false;
 
-      $Ally = $_SESSION['Absolute']['Battle']['Ally']->Active;
-      $Foe = $_SESSION['Absolute']['Battle']['Foe']->Active;
+      $Ally = $_SESSION['EvoChroniclesRPG']['Battle']['Ally']->Active;
+      $Foe = $_SESSION['EvoChroniclesRPG']['Battle']['Foe']->Active;
 
       $Move_Data = [
         'Ally' => [
@@ -1810,9 +1810,9 @@
 
       foreach (['Ally', 'Foe'] as $Side)
       {
-        if ( in_array($_SESSION['Absolute']['Battle'][$Side]->Active->Ability->Name, ['Gale Wings', 'Prankster']) )
+        if ( in_array($_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active->Ability->Name, ['Gale Wings', 'Prankster']) )
         {
-          if ( $_SESSION['Absolute']['Battle'][$Side]->Active->HP == $_SESSION['Absolute']['Battle'][$Side]->Active->Max_HP )
+          if ( $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active->HP == $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active->Max_HP )
           {
             if
             (
@@ -1825,7 +1825,7 @@
           }
         }
 
-        if ( $_SESSION['Absolute']['Battle'][$Side]->Active->Ability->Name == 'Triage' )
+        if ( $_SESSION['EvoChroniclesRPG']['Battle'][$Side]->Active->Ability->Name == 'Triage' )
         {
           if
           (
@@ -1940,7 +1940,7 @@
       );
 
       $this->Field_Effects[$Side][] = $Set_Field;
-      $_SESSION['Absolute']['Battle']['Field_Effects'][$Side][] = $Set_Field;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Field_Effects'][$Side][] = $Set_Field;
 
       return $Set_Field;
     }
@@ -1980,10 +1980,10 @@
       string $Field_Effect
     )
     {
-      if ( empty($_SESSION['Absolute']['Battle']['Field_Effects']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Battle']['Field_Effects']) )
         return false;
 
-      foreach ( $_SESSION['Absolute']['Battle']['Field_Effects'] as $Current_Side => $Active_Fields )
+      foreach ( $_SESSION['EvoChroniclesRPG']['Battle']['Field_Effects'] as $Current_Side => $Active_Fields )
       {
         if ( $Side != $Current_Side )
           continue;
@@ -2007,25 +2007,25 @@
       $Turns = 5
     )
     {
-      if ( !empty($_SESSION['Absolute']['Battle']['Weather']) && $_SESSION['Absolute']['Battle']['Weather']->Name == $Weather )
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Weather']) && $_SESSION['EvoChroniclesRPG']['Battle']['Weather']->Name == $Weather )
         return false;
 
       $Weather_Data = \Weather::WeatherList()[$Weather];
       if ( empty($Weather_Data) )
         return false;
 
-      if ( !empty($_SESSION['Absolute']['Battle']['Weather']) )
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Battle']['Weather']) )
       {
         switch ( $Weather )
         {
           case 'Harsh Sunlight':
-            if ( in_array($_SESSION['Absolute']['Battle']['Weather']->Name, ['Strong Winds', 'Heavy Rain', 'Harsh Sunlight', 'Extremely Harsh Sunlight']) )
+            if ( in_array($_SESSION['EvoChroniclesRPG']['Battle']['Weather']->Name, ['Strong Winds', 'Heavy Rain', 'Harsh Sunlight', 'Extremely Harsh Sunlight']) )
               return false;
 
             break;
 
           case 'Rain':
-            if ( in_array($_SESSION['Absolute']['Battle']['Weather']->Name, ['Strong Winds', 'Rain', 'Heavy Rain', 'Extremely Harsh Sunlight']) )
+            if ( in_array($_SESSION['EvoChroniclesRPG']['Battle']['Weather']->Name, ['Strong Winds', 'Rain', 'Heavy Rain', 'Extremely Harsh Sunlight']) )
               return false;
 
             break;
@@ -2035,7 +2035,7 @@
       $Set_Weather = new \Weather($Weather, $Turns);
 
       $this->Weather = $Set_Weather;
-      $_SESSION['Absolute']['Battle']['Weather'] = $this->Weather;
+      $_SESSION['EvoChroniclesRPG']['Battle']['Weather'] = $this->Weather;
 
       return $Set_Weather;
     }

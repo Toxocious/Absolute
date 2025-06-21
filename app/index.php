@@ -1,14 +1,14 @@
 <?php
 	require_once 'core/required/layout_top.php';
 
-	if ( isset($_SESSION['Absolute']) )
+	if ( isset($_SESSION['EvoChroniclesRPG']) )
 	{
 ?>
 
 <div class='panel content'>
 	<div class='head'>Index</div>
 	<div class='body'>
-		Welcome back to Absolute, <?= $User_Data['Username']; ?>.
+		Welcome back to Evo-Chronicles RPG, <?= $User_Data['Username']; ?>.
 	</div>
 </div>
 
@@ -46,12 +46,12 @@
 		</div>
 
 		<div class='description' style='width: 70%;'>
-			The Pok&eacute;mon Absolute is home to <b><?= number_format($Count_Data['user_count']); ?></b> trainers and <b><?= number_format($Count_Data['pokemon_count']); ?></b> Pok&eacute;mon!
+			Pokémon Evo-Chronicles RPG is home to <b><?= number_format($Count_Data['user_count']); ?></b> trainers and <b><?= number_format($Count_Data['pokemon_count']); ?></b> Pokémon!
 		</div>
 
     <div>
-      The Pok&eacute;mon Absolute is an up-to-date multiplayer Pok&eacute;mon RPG, featuring all currently released canonical Pok&eacute;mon
-      from the main Pok&eacute;mon games!
+      Pokémon Evo-Chronicles RPG is an up-to-date multiplayer Pokémon RPG, featuring all currently released canonical Pokémon
+      from the main Pokémon games!
       <br /><br />
       Among featuring a plethora of unique gameplay content to explore, we offer content that will appeal to all
       trainers, new and old, including content that Pok&eacute;mon veterans will find nostalgic.

@@ -12,10 +12,10 @@ START TRANSACTION;
 SET time_zone = "+00:00";
 
 --
--- Database: `absolute`
+-- Database: `evo_chronicles_rpg`
 --
-CREATE DATABASE IF NOT EXISTS `absolute` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `absolute`;
+CREATE DATABASE IF NOT EXISTS `evo_chronicles_rpg` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE `evo_chronicles_rpg`;
 
 -- --------------------------------------------------------
 
@@ -118,7 +118,7 @@ INSERT INTO `clan_upgrades_data` (`ID`, `Name`, `Description`, `Suffix`, `Clan_P
 (2, 'Pokemon Exp.', 'Each time this upgrade is leveled up, all earned Pok&eacute;mon Exp. is increased by 1%.', '&percnt;', 1, 100000, 0),
 (3, 'Trainer Exp.', 'Each time this upgrade is leveled up, all earned Trainer Exp. increases by 1%.', '&percnt;', 1, 100000, 0),
 (4, 'Money', 'Each time this upgrade is leveled up, all earned Money in battle is increased by 1%.', '&percnt;', 2, 200000, 20),
-(5, 'Absolute Coins', 'Each time this upgrade is leveled up, all earned Absolute Coins increases by 1.', '', 3, 300000, 30);
+(5, 'ECRPG Coins', 'Each time this upgrade is leveled up, all earned ECRPG Coins increases by 1.', '', 3, 300000, 30);
 
 -- --------------------------------------------------------
 

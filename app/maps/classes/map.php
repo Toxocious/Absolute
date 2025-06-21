@@ -12,8 +12,8 @@
       string $Map_ID = null
     )
     {
-      if ( !empty($_SESSION['Absolute']['Maps']['Cache']) )
-        unset($_SESSION['Absolute']['Maps']['Cache']);
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Maps']['Cache']) )
+        unset($_SESSION['EvoChroniclesRPG']['Maps']['Cache']);
 
       if ( empty($Map_ID) )
       {
@@ -72,8 +72,8 @@
      */
     public function GetMapObjects()
     {
-      if ( !empty($_SESSION['Absolute']['Maps']['Objects']) )
-        unset($_SESSION['Absolute']['Maps']['Objects']);
+      if ( !empty($_SESSION['EvoChroniclesRPG']['Maps']['Objects']) )
+        unset($_SESSION['EvoChroniclesRPG']['Maps']['Objects']);
 
       foreach ( $this->Map_Data->layers as $Layer )
       {
@@ -81,7 +81,7 @@
         {
           case 'Objects':
           case 'Warps':
-            $_SESSION['Absolute']['Maps']['Objects'][] = $Layer->objects;
+            $_SESSION['EvoChroniclesRPG']['Maps']['Objects'][] = $Layer->objects;
             break;
 
           default:
@@ -89,7 +89,7 @@
         }
       }
 
-      return $_SESSION['Absolute']['Maps']['Objects'];
+      return $_SESSION['EvoChroniclesRPG']['Maps']['Objects'];
     }
 
     /**
@@ -97,7 +97,7 @@
      */
     public function GetSpawnCoords()
     {
-      if ( empty($_SESSION['Absolute']['Maps']['Objects']) )
+      if ( empty($_SESSION['EvoChroniclesRPG']['Maps']['Objects']) )
       {
         return [
           'x' => -1,
@@ -106,7 +106,7 @@
         ];
       }
 
-      $Map_Objects = $_SESSION['Absolute']['Maps']['Objects'];
+      $Map_Objects = $_SESSION['EvoChroniclesRPG']['Maps']['Objects'];
       foreach ( $Map_Objects as $Objects )
       {
         foreach ( $Objects as $Object )
