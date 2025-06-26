@@ -1,10 +1,13 @@
 html {
     background: var(--color-septary);
     background-image: var(--background-gradient);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 100vh;
 }
 
 body {
-  /* background-image: var(--background-gradient); */
   color: var(--color-white);
 }
 
