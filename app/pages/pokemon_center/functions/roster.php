@@ -65,45 +65,18 @@
             $Limit_Start = 0;
         }
 
-        try
-        {
-            $Get_Boxed_Pokemon = $PDO->prepare("
-                SELECT `ID`, `Pokedex_ID`, `Forme`, `Type`
-                FROM `pokemon`
-                WHERE `Owner_Current` = ? AND `Location` = 'Box' AND `Slot` = 7
-                ORDER BY `ID` ASC, `Pokedex_ID` ASC, `Alt_ID` ASC
-                LIMIT ?,48
-            ");
-            $Get_Boxed_Pokemon->execute([
-                $User_Data['ID'],
-                $Limit_Start
-            ]);
-            $Get_Boxed_Pokemon->setFetchMode(PDO::FETCH_ASSOC);
-            $Boxed_Pokemon = $Get_Boxed_Pokemon->fetchAll();
-        }
-        catch ( PDOException $e )
-        {
-            HandleError($e);
-        }
-
         $Pagination = Pagination(
-            str_replace(
-                'SELECT `ID`, `Pokedex_ID`, `Forme`, `Type`',
-                'SELECT COUNT(*)',
-                'SELECT `ID`, `Pokedex_ID`, `Forme`, `Type` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = "Box" ORDER BY `ID` ASC, `Pokedex_ID` ASC, `Alt_ID` ASC'
-            ),
+            'SELECT `ID`, `Pokedex_ID`, `Forme`, `Type` FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = "Box" ORDER BY `ID` ASC, `Pokedex_ID` ASC, `Alt_ID` ASC',
+            'SELECT COUNT(*) FROM `pokemon` WHERE `Owner_Current` = ? AND `Location` = "Box"',
             [ $User_Data['ID'] ],
-            $User_Data['ID'],
             $Page,
-            48,
+            60,
             3,
-            'onclick="GetBoxedPokemon([PAGE]); return false;"',
-            true
+            'GetBoxedPokemon([PAGE]); return false;'
         );
 
         return [
             'Pagination' => $Pagination,
-            'Boxed_Pokemon' => $Boxed_Pokemon,
             'Page' => $Page
         ];
     }

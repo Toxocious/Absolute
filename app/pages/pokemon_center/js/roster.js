@@ -69,16 +69,17 @@ async function GetBoxedPokemon(Page = 1) {
         .then((Boxed_Pokemon) => {
             Boxed_Pokemon = JSON.parse(Boxed_Pokemon)[0];
 
-            if (Boxed_Pokemon.Boxed_Pokemon.length === 0) {
+            if (Boxed_Pokemon.Pagination.Data.length === 0) {
                 document.querySelector('#Box_Pagination > tr > td').innerHTML = 'No Pages';
                 document.querySelector('#Boxed_Pokemon > tr > td').innerHTML =
                     'You have no Pok&eacute;mon in your box.';
             } else {
-                document.getElementById('Box_Pagination').innerHTML = Boxed_Pokemon.Pagination;
+                document.getElementById('Box_Pagination').innerHTML =
+                    Boxed_Pokemon.Pagination.Pagination;
 
                 document.querySelector('#Boxed_Pokemon > tr > td').innerHTML = '';
 
-                for (const Pokemon of Boxed_Pokemon.Boxed_Pokemon) {
+                for (const Pokemon of Boxed_Pokemon.Pagination.Data) {
                     Icon_Path = `/images/Pokemon/Icons/Normal`;
                     Icon_Name = String(Pokemon.Pokedex_ID).padStart(3, '0');
                     if (Pokemon.Forme) Icon_Name += `-${Pokemon.Forme}`;

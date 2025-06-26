@@ -92,6 +92,16 @@
       $First_Place_User = $User_Class->DisplayUserName($First_Place['Owner_Current'], false, true, true);
       break;
   }
+
+    $Pagination = Pagination(
+        $Rankings_Query,
+        str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Rankings_Query),
+        $Rankings_Parameters,
+        $Current_Page,
+        $Display_Limit,
+        5,
+        "Update_Page([PAGE]);"
+    );
 ?>
 
 <div style='flex-basis: 100%; width: 100%;'>
@@ -155,13 +165,13 @@
 
 <table class='border-gradient' style='margin: 5px auto; flex-basis: 70%; width: 700px;'>
   <tbody>
-    <?php
-      Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Rankings_Query), $Rankings_Parameters, $User_Data['ID'], $Current_Page, $Display_Limit, 5, "onclick='Update_Page([PAGE]);'");
-    ?>
+        <?php
+            echo $Pagination['Pagination'];
+        ?>
   </tbody>
   <tbody>
     <?php
-      foreach ( $Rankings as $Rank_Key => $Rank_Val )
+      foreach ( $Pagination['Data'] as $Rank_Key => $Rank_Val )
       {
         if ( $Rank_Key + $Begin === 0 )
           continue;

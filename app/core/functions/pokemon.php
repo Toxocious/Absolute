@@ -649,7 +649,7 @@
 
         if ( $Pokemon_Data['Forme'] )
         {
-            $Display_Name .= " {$Pokemon_Data['Forme']}";
+            $Display_Name .= " ({$Pokemon_Data['Forme']})";
         }
 
         $Poke_Images = GetSprites($Pokemon_Data['Pokedex_ID'], $Pokemon_Data['Alt_ID'], $Pokemon_Data['Type']);

@@ -63,57 +63,71 @@
     {
       HandleError($e);
     }
+
+    $Pagination = Pagination(
+        $Query,
+        str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query),
+        $Inputs,
+        $Current_Page,
+        $Display_Limit,
+        2,
+        "UpdateBox([PAGE]);"
+    );
 ?>
 
 <tbody>
-  <?= Pagination(str_replace('SELECT `ID`', 'SELECT COUNT(*)', $Query), $Inputs, $User_ID, $Current_Page, $Display_Limit, 2, "onclick='UpdateBox([PAGE]);'"); ?>
+    <?php
+        echo $Pagination['Pagination'];
+    ?>
 </tbody>
 <tbody>
-  <?php
-    if ( count($Box_Pokemon) == 0 )
-    {
-      echo "
-        <tr>
-          <td colspan='10' style='padding: 5px;'>
-            No Pokemon have been found given your search parameters.
-          </td>
-        </tr>
-      ";
-    }
-    else
-    {
-      $Pokemon_Count = 0;
-      foreach ( $Box_Pokemon as $Index => $Pokemon )
-      {
-        $Poke_Data = GetPokemonData($Pokemon['ID']);
+    <?php
+        if ( count($Pagination['Data']) == 0 )
+        {
+            echo "
+                <tr>
+                    <td colspan='10' style='padding: 5px;'>
+                        No Pokemon have been found given your search parameters.
+                    </td>
+                </tr>
+            ";
+        }
+        else
+        {
+            $Pokemon_Count = 0;
+            foreach ( $Pagination['Data'] as $Index => $Pokemon )
+            {
+                $Poke_Data = GetPokemonData($Pokemon['ID']);
 
-        if ( $Pokemon_Count % 2 == 0 )
-          echo "</tr><tr>";
+                if ( $Pokemon_Count % 2 == 0 )
+                {
+                    echo "</tr><tr>";
+                }
 
-        echo "
-            <td colspan='7' style='width: 171px;' onclick='PokemonViewer.open(\"{$Poke_Data['ID']}\")'>
-            <div style='float: left;'>
-              <img src='{$Poke_Data['Icon']}' />
-            </div>
-            <div>
-              <span style='font-size: 12px; padding-top: 0px;'>
-                {$Poke_Data['Display_Name']}
-                <br />
-                (Level: {$Poke_Data['Level']})
-              </span>
-            </div>
-          </td>
-        ";
+                echo "
+                    <td colspan='7' style='width: 171px;' onclick='PokemonViewer.open(\"{$Poke_Data['ID']}\")'>
+                        <div style='float: left;'>
+                            <img src='{$Poke_Data['Icon']}' />
+                        </div>
+                        <div>
+                            <span style='font-size: 12px; padding-top: 0px;'>
+                                {$Poke_Data['Display_Name']}
+                                <br />
+                                (Level: {$Poke_Data['Level']})
+                            </span>
+                        </div>
+                    </td>
+                ";
 
-        $Pokemon_Count++;
-      }
+                $Pokemon_Count++;
+            }
 
-      if ( $Pokemon_Count % 2 == 1 )
-      {
-        echo "<td colspan='7'></td>";
-      }
-    }
-  ?>
+            if ( $Pokemon_Count % 2 == 1 )
+            {
+                echo "<td colspan='7'></td>";
+            }
+        }
+    ?>
 </tbody>
 
 <script type='text/javascript'>
@@ -138,7 +152,7 @@
     switch (row)
     {
       case 1: var Cells = ['normal', 'shiny', 'sunset', 'shinysunset']; break;
-      //case 2: var Cells = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','s3']; break; //thats Shift+3, noobs
+      //case 2: var Cells = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z']; break;
       case 2: var Cells = ['female','male','genderless','q']; break;
       //case 3: var Cells = ['level','pokedex','id','abc','iv','item']; break;
       case 3: var Cells = ['ASC','DESC']; break;
