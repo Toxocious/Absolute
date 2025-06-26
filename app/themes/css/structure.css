@@ -918,6 +918,22 @@ footer>div {
 }
 
 /**
+ * Trade interest pokemon card
+ */
+.pokemon_trade_interest_card {
+    border-radius: 1em;
+    padding: 0.5em 1em;
+
+    width: calc(calc(100% / 3) - 3em);
+
+    & > div:first-child {
+        display: flex;
+        flex-wrap: wrap;
+        align-content: center;
+    }
+}
+
+/**
  * Desktop
  */
 @media screen and (min-width: 1100px) {

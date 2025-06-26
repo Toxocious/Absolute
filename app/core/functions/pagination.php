@@ -1,275 +1,206 @@
 <?php
-    /**
-     * Used to handle the processing and displayment of content
-     * that is loaded via AJAX across multiple pages.
-     */
-    function Pagination
-    (
-        string $SQL_Query,
-        array $SQL_Parameters,
-        int $User_ID,
-        int $Current_Page,
-        int $Display_Limit,
-        int $Colspan = 3,
-        string $Onclick_Link = null,
-        bool $Return = false
-    )
-    {
-        global $PDO;
 
-        $SQL_Query = Purify($SQL_Query);
-        $SQL_Parameters = count($SQL_Parameters) > 0 ? Purify($SQL_Parameters) : null;
-        $User_ID = Purify($User_ID);
-        $Current_Page = Purify($Current_Page);
-        $Display_Limit = Purify($Display_Limit);
-        $Colspan = $Colspan > 0 ? Purify($Colspan) : $Colspan = 3;
-        $Onclick_Link = Purify($Onclick_Link);
+/**
+ * Improved pagination function that generates table-based pagination controls
+ * and returns data for the current page.
+ *
+ * @param string $base_query The base SQL query for fetching data
+ * @param string $count_query The SQL query for counting total results
+ * @param array $params Parameters for the SQL queries
+ * @param int $current_page Current page number (1-based)
+ * @param int $per_page Number of items per page
+ * @param int $colspan Colspan value for table cells
+ * @param string|null $onclick_template Template for onclick events (use [PAGE] placeholder)
+ *
+ * @return array|null Returns array with 'Data', 'Pagination', 'Total_Results', 'Total_Pages'
+ */
+function Pagination(
+    string $base_query,
+    string $count_query,
+    array $params = [],
+    int $current_page = 1,
+    int $per_page = 10,
+    int $colspan = 3,
+    ?string $onclick_template = null
+): ?array {
+    global $PDO;
 
-        $Temp_Link = $Onclick_Link;
+    try {
+        $count_stmt = $PDO->prepare($count_query);
+        $count_stmt->execute($params);
+        $total_results = (int) $count_stmt->fetchColumn();
 
-        try
-        {
-            $Page_Prepare = $PDO->prepare($SQL_Query);
-            $Page_Prepare->execute($SQL_Parameters);
-            $Total_Results = $Page_Prepare->fetchColumn();
-        }
-        catch ( PDOException $e )
-        {
-            HandleError($e);
-        }
-
-        $Total_Pages = ceil($Total_Results / $Display_Limit);
-
-        if ( $Current_Page < 1 )
-        {
-            $Current_Page = 1;
+        if ($total_results === 0) {
+            return [
+                'Data' => [],
+                'Pagination' => generateEmptyPaginationHtml($colspan),
+                'Total_Results' => 0,
+                'Total_Pages' => 0
+            ];
         }
 
-        $Links = [
-            'Next' => '',
-            'Previous' => '',
-            'Pages' => '',
+        $total_pages = ceil($total_results / $per_page);
+        $current_page = max(1, min($current_page, $total_pages));
+        $offset = ($current_page - 1) * $per_page;
+
+        $data_query = $base_query . " LIMIT ? OFFSET ?";
+        $data_stmt = $PDO->prepare($data_query);
+
+        $all_params = array_merge($params, [$per_page, $offset]);
+        $data_stmt->execute($all_params);
+
+        $data = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        $Pagination = generatePaginationHtml($current_page, $total_pages, $colspan, $onclick_template);
+
+        return [
+            'Data' => $data,
+            'Pagination' => $Pagination,
+            'Total_Results' => $total_results,
+            'Total_Pages' => $total_pages,
+            'Current_Page' => $current_page
         ];
-
-        /**
-         * Display the proper element to go back to page one.
-         */
-        if ( $Current_Page != 1 )
-        {
-            $Temp_Link = $Onclick_Link;
-
-            if ( !$Temp_Link )
-            {
-                $Temp_Link = "onclick='Update_Box(1, {$User_ID});'";
-            }
-            else
-            {
-                $Temp_Link = str_replace('[PAGE]', 1, $Temp_Link);
-            }
-
-            $Links['Previous'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <a href='javascript:void(0);' {$Temp_Link}>
-                        &lt;&lt;
-                    </a>
-                </td>
-            ";
-        }
-        else
-        {
-        $Links['Previous'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <span>
-                        &lt;&lt;
-                    </span>
-                </td>
-            ";
-        }
-
-        /**
-         * Display the proper element to go back a single page.
-         */
-        if ( $Current_Page > 1 )
-        {
-            $Temp_Link = $Onclick_Link;
-
-            if ( !$Temp_Link )
-            {
-                $Temp_Link = "onclick='Update_Box(" . ( $Current_Page - 1 ) . ", {$User_ID});'";
-            }
-            else
-            {
-                $Temp_Link = str_replace('[PAGE]', ( $Current_Page - 1 ), $Temp_Link);
-            }
-
-            $Links['Previous'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <a href='javascript:void(0);' {$Temp_Link}>
-                        &lt;
-                    </a>
-                </td>
-            ";
-        }
-        else
-        {
-            $Links['Previous'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <span>
-                        &lt;
-                    </span>
-                </td>
-            ";
-        }
-
-        /**
-         * Display the proper element to go forward a single page.
-         */
-        if ( $Current_Page < $Total_Pages )
-        {
-            $Temp_Link = $Onclick_Link;
-
-            if ( !$Temp_Link )
-            {
-                $Temp_Link = "onclick='Update_Box(" . ( $Current_Page + 1 ) . ", {$User_ID});'";
-            }
-            else
-            {
-                $Temp_Link = str_replace('[PAGE]', ( $Current_Page + 1 ), $Temp_Link);
-            }
-
-            $Links['Next'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <a href='javascript:void(0);' {$Temp_Link}>
-                        &gt;
-                    </a>
-                </td>
-            ";
-        }
-        else
-        {
-            $Links['Next'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <span>
-                        &gt;
-                    </span>
-                </td>
-            ";
-        }
-
-        /**
-         * Display the proper element to go to the last page.
-         */
-        if ( $Current_Page != $Total_Pages )
-        {
-            $Temp_Link = $Onclick_Link;
-
-            if ( !$Temp_Link )
-            {
-                $Temp_Link = "onclick='Update_Box({$Total_Pages}, {$User_ID});'";
-            }
-            else
-            {
-                $Temp_Link = str_replace('[PAGE]', $Total_Pages, $Temp_Link);
-            }
-
-            $Links['Next'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <a href='javascript:void(0);' {$Temp_Link}>
-                        &gt;&gt;
-                    </a>
-                </td>
-            ";
-        }
-        else
-        {
-            $Links['Next'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <span>
-                        &gt;&gt;
-                    </span>
-                </td>
-            ";
-        }
-
-        /**
-         * Determine which three page numbers to display to the user.
-         */
-        if ( $Total_Pages == 1 )
-        {
-            $Links['Pages'] .= "
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'></td>
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                    <b>1</b>
-                </td>
-                <td colspan='{$Colspan}' style='width: calc(100% / 7);'></td>
-            ";
-        }
-        else
-        {
-            if ( $Current_Page == 1 )
-            {
-                $Links['Pages'] .= "
-                    <td colspan='{$Colspan}' style='width: calc(100% / 7);'></td>
-                ";
-            }
-
-            for ( $x = ( $Current_Page - 1 ); $x < ( ( $Current_Page + 1 ) + 1 ); $x++ )
-            {
-                if ( ( $x > 0 ) && ( $x <= $Total_Pages ) )
-                {
-                    if ( $x == $Current_Page )
-                    {
-                        $Links['Pages'] .= "
-                            <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                                <b>{$x}</b>
-                            </td>
-                        ";
-                    }
-                    else
-                    {
-                        $Temp_Link = $Onclick_Link;
-
-                        if ( !$Temp_Link )
-                        {
-                            $Temp_Link = "onclick='Update_Box({$x}, {$User_ID});'";
-                        }
-                        else
-                        {
-                            $Temp_Link = str_replace('[PAGE]', $x, $Temp_Link);
-                        }
-
-                        $Links['Pages'] .= "
-                            <td colspan='{$Colspan}' style='width: calc(100% / 7);'>
-                                <a href='javascript:void(0);' {$Temp_Link}>{$x}</a>
-                            </td>
-                        ";
-                    }
-                }
-            }
-
-            if ( $Current_Page == $Total_Pages )
-            {
-                $Links['Pages'] .= "
-                    <td colspan='{$Colspan}' style='width: calc(100% / 7);'></td>
-                ";
-            }
-        }
-
-        $Pagination_HTML = "
-            <tr data-current-page='{$Current_Page}' data-total-pages='{$Total_Pages}'>
-                {$Links['Previous']}
-                {$Links['Pages']}
-                {$Links['Next']}
-            </tr>
-        ";
-
-        if ( $Return )
-        {
-            return $Pagination_HTML;
-        }
-
-        /**
-         * Display the pages to the user.
-         */
-        echo $Pagination_HTML;
+    } catch (PDOException $e) {
+        HandleError($e);
+        return null;
     }
+}
+
+/**
+ * Generate the HTML for pagination controls in table format
+ */
+function generatePaginationHtml(int $current_page, int $total_pages, int $colspan, ?string $onclick_template): string
+{
+    $html = '<tr>';
+
+    if ($current_page > 1) {
+        $onclick = generateOnclick($onclick_template, 1);
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; cursor: pointer;'>
+                <a href='javascript:void();' {$onclick}>&lt;&lt;</a>
+            </td>
+        ";
+    } else {
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; color: #ccc;'>
+                &lt;&lt;
+            </td>
+        ";
+    }
+
+    if ($current_page > 1) {
+        $onclick = generateOnclick($onclick_template, $current_page - 1);
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; cursor: pointer;'>
+                <a href='javascript:void();' {$onclick}>&lt;</a>
+            </td>
+        ";
+    } else {
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; color: #ccc;'>
+                &lt;
+            </td>
+        ";
+    }
+
+    if ($current_page > 1) {
+        $prev_page = $current_page - 1;
+        $onclick = generateOnclick($onclick_template, $prev_page);
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; cursor: pointer;'>
+                <a href='javascript:void();' {$onclick}>{$prev_page}</a>
+            </td>
+        ";
+    } else {
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center;'>
+                &nbsp;
+            </td>
+        ";
+    }
+
+    $html .= "
+        <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; font-weight: bold;'>
+            {$current_page}
+        </td>
+    ";
+
+    if ($current_page < $total_pages) {
+        $next_page = $current_page + 1;
+        $onclick = generateOnclick($onclick_template, $next_page);
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; cursor: pointer;'>
+                <a href='javascript:void();' {$onclick}>{$next_page}</a>
+            </td>
+        ";
+    } else {
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center;'>
+                &nbsp;
+            </td>
+        ";
+    }
+
+    if ($current_page < $total_pages) {
+        $onclick = generateOnclick($onclick_template, $current_page + 1);
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; cursor: pointer;'>
+                <a href='javascript:void();' {$onclick}>&gt;</a>
+            </td>
+        ";
+    } else {
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; color: #ccc;'>
+                &gt;
+            </td>
+        ";
+    }
+
+    if ($current_page < $total_pages) {
+        $onclick = generateOnclick($onclick_template, $total_pages);
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; cursor: pointer;'>
+                <a href='javascript:void();' {$onclick}>&gt;&gt;</a>
+            </td>
+        ";
+    } else {
+        $html .= "
+            <td colspan='{$colspan}' style='width: calc(100% / 7); text-align: center; color: #ccc;'>
+                &gt;&gt;
+            </td>
+        ";
+    }
+
+    $html .= '</tr>';
+
+    return $html;
+}
+
+/**
+ * Generate onclick attribute or default Update_Box call
+ */
+function generateOnclick(?string $onclick_template, int $page): string
+{
+    if ($onclick_template) {
+        $onclick_content = str_replace('[PAGE]', $page, $onclick_template);
+        return "onclick=\"{$onclick_content}\"";
+    } else {
+        global $User_ID;
+        $user_id = $User_ID ?? 0;
+        return "onclick=\"Update_Box({$page}, {$user_id});\"";
+    }
+}
+
+/**
+ * Generate empty pagination HTML when no results
+ */
+function generateEmptyPaginationHtml(int $colspan): string
+{
+    return "
+        <tr>
+            <td colspan='" . ($colspan * 7) . "' style='text-align: center; padding: 20px;'>
+                No results found.
+            </td>
+        </tr>
+    ";
+}

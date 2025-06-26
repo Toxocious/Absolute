@@ -484,6 +484,15 @@ table>tbody {
 }
 
 /**
+ * Trade interest pokemon card
+ */
+.pokemon_trade_interest_card {
+    background: var(--color-secondary);
+    border-color: var(--color-black);
+    color: var(--color-white);
+}
+
+/**
  * Specific coloring for each member rank category.
  */
 .member {
