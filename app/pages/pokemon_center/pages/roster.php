@@ -13,53 +13,51 @@
             </tr>
         </thead>
 
-        <tbody>
-            <?php
-                for ( $i = 1; $i <= 6; $i++ )
-                {
-                    echo "
-                        <tbody>
-                            <tr>
-                                <td colspan='2' style='width: 72px;'>
-                                    <img
-                                        id='Roster_Slot_{$i}_Icon'
-                                        src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png'
-                                    />
-                                </td>
-                                <td colspan='5' style='width: 200px;'>
-                                    <b id='Roster_Slot_{$i}_Display_Name'>Empty</b>
-                                    <br />
-                                    <span id='Roster_Slot_{$i}_Level'></span>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td colspan='1'>
-                                    <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_1'>1</a>
-                                </td>
-                                <td colspan='1'>
-                                    <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_2'>2</a>
-                                </td>
-                                <td colspan='1'>
-                                    <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_3'>3</a>
-                                </td>
-                                <td colspan='1'>
-                                    <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_4'>4</a>
-                                </td>
-                                <td colspan='1'>
-                                    <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_5'>5</a>
-                                </td>
-                                <td colspan='1'>
-                                    <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_6'>6</a>
-                                </td>
-                                <td colspan='1'>
-                                    <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_7'>x</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    ";
-                }
-            ?>
-        </tbody>
+        <?php
+            for ( $i = 1; $i <= 6; $i++ )
+            {
+                echo "
+                    <tbody>
+                        <tr>
+                            <td colspan='2' style='width: 72px;'>
+                                <img
+                                    id='Roster_Slot_{$i}_Icon'
+                                    src='<?= DOMAIN_SPRITES; ?>/Pokemon/Sprites/0_mini.png'
+                                />
+                            </td>
+                            <td colspan='5' style='width: 200px;'>
+                                <b id='Roster_Slot_{$i}_Display_Name'>Empty</b>
+                                <br />
+                                <span id='Roster_Slot_{$i}_Level'></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan='1'>
+                                <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_1'>1</a>
+                            </td>
+                            <td colspan='1'>
+                                <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_2'>2</a>
+                            </td>
+                            <td colspan='1'>
+                                <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_3'>3</a>
+                            </td>
+                            <td colspan='1'>
+                                <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_4'>4</a>
+                            </td>
+                            <td colspan='1'>
+                                <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_5'>5</a>
+                            </td>
+                            <td colspan='1'>
+                                <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_6'>6</a>
+                            </td>
+                            <td colspan='1'>
+                                <a href='javascript:void(0);' id='Roster_Slot_{$i}_Move_To_7'>x</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                ";
+            }
+        ?>
     </table>
 
     <!-- Boxed Pokemon -->
