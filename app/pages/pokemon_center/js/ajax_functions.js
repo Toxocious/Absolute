@@ -61,36 +61,3 @@ async function ShowTab(Tab_Name) {
         };
     });
 }
-
-/**
- * Send an ajax request and handle the response.
- *
- * @param Page
- * @param Data
- * @param HTTP_TYPE
- */
-async function SendRequest(Page, Data, HTTP_TYPE = 'GET') {
-    const AJAX_URL = `/pages/pokemon_center/ajax/${Page}.php`;
-    const URL_PARAMS = new URLSearchParams(Data).toString().replace(/\=$/, '');
-
-    return new Promise((resolve, reject) => {
-        const req = new XMLHttpRequest();
-
-        switch (HTTP_TYPE) {
-            case 'GET':
-                req.open('GET', `${AJAX_URL}?${URL_PARAMS}`);
-                req.send();
-                break;
-
-            default:
-                console.error(`Unable to process request of HTTP type '${HTTP_TYPE}'.`);
-                break;
-        }
-
-        req.onerror = (error) => reject(Error(`Network Error: ${error}`));
-        req.onload = () => {
-            if (req.status === 200) resolve(req.response);
-            else reject(Error(req.statusText));
-        };
-    });
-}

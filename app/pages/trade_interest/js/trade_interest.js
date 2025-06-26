@@ -22,7 +22,7 @@ async function SetPokemonInterestStatus(Pokemon_ID, Trade_Interest) {
     Form_Data.append('Pokemon_ID', Pokemon_ID);
     Form_Data.append('Trade_Interest', Trade_Interest);
 
-    await SendRequest('trade_interest', Form_Data)
+    await SendRequest('trade_interest', 'trade_interest', Form_Data)
         .then((Updated_Pokemon) => {
             const Updated_Interest = JSON.parse(Updated_Pokemon);
 
@@ -70,7 +70,7 @@ async function GetBoxedPokemon(Pokemon_Type = 'Normal', Page = 1) {
     Form_Data.append('Page', Page);
     Form_Data.append('Pokemon_Type', Pokemon_Type);
 
-    await SendRequest('trade_interest', Form_Data)
+    await SendRequest('trade_interest', 'trade_interest', Form_Data)
         .then((Boxed_Pokemon) => {
             Boxed_Pokemon = JSON.parse(Boxed_Pokemon)[0];
             Current_Boxed_Pokemon = Boxed_Pokemon.Pagination.Data;

@@ -5,11 +5,9 @@ async function GetNicknameTabRoster() {
     let Form_Data = new FormData();
     Form_Data.append('Action', 'Get_Roster');
 
-    await SendRequest('nickname', Form_Data)
+    await SendRequest('pokemon_center', 'nickname', Form_Data)
         .then((Roster_Data) => {
             Roster_Data = JSON.parse(Roster_Data);
-
-            console.log(Roster_Data);
 
             for (let Slot = 0; Slot < Roster_Data.Roster_Pokemon.length; Slot++) {
                 const Pokemon_Slot = Roster_Data.Roster_Pokemon[Slot];
@@ -63,7 +61,7 @@ async function UpdateNickname(Pokemon_ID, Roster_Slot) {
     Form_Data.append('Pokemon_ID', Pokemon_ID);
     Form_Data.append('Nickname', Nickname);
 
-    await SendRequest('nickname', Form_Data)
+    await SendRequest('pokemon_center', 'nickname', Form_Data)
         .then((Nickname_Data) => {
             Nickname_Data = JSON.parse(Nickname_Data);
 

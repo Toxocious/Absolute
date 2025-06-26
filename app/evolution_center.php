@@ -34,6 +34,8 @@
 	</div>
 </div>
 
+<script src='<?= DOMAIN_ROOT; ?>/pages/_shared/js/ajax_functions.js'></script>
+
 <script src='<?= DOMAIN_ROOT; ?>/pages/evolution_center/js/ajax_functions.js'></script>
 
 <?php

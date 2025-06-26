@@ -11,3 +11,6 @@ certbot/www
 # Compiled CSS files
 app/themes/sass/**/*.css
 app/themes/sass/**/*.css.map
+
+# Template directories
+_template

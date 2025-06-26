@@ -16,7 +16,7 @@ async function PurchaseShopObject({ Shop_ID, Object_ID, Object_Type }) {
     Form_Data.append('Object_ID', Object_ID);
     Form_Data.append('Object_Type', Object_Type);
 
-    await SendRequest('shop', Form_Data)
+    await SendRequest('shop', 'shop', Form_Data)
         .then((Purchase_Data) => {
             Purchase_Data = JSON.parse(Purchase_Data);
             console.log(Purchase_Data);

@@ -43,7 +43,10 @@
     </div>
 </div>
 
+<script src='<?= DOMAIN_ROOT; ?>/pages/_shared/js/ajax_functions.js'></script>
+
 <script src='<?= DOMAIN_ROOT; ?>/pages/pokemon_center/js/ajax_functions.js'></script>
+
 <script src='<?= DOMAIN_ROOT; ?>/pages/pokemon_center/js/inventory.js'></script>
 <script src='<?= DOMAIN_ROOT; ?>/pages/pokemon_center/js/nickname.js'></script>
 <script src='<?= DOMAIN_ROOT; ?>/pages/pokemon_center/js/roster.js'></script>

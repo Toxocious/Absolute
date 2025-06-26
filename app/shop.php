@@ -186,7 +186,8 @@
 	</div>
 </div>
 
-<script src='<?= DOMAIN_ROOT; ?>/pages/shop/js/ajax_functions.js'></script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/_shared/js/ajax_functions.js'></script>
+
 <script src='<?= DOMAIN_ROOT; ?>/pages/shop/js/shop.js'></script>
 
 <?php

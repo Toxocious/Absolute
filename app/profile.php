@@ -12,21 +12,38 @@
 
     $Profile_User = $User_Class->FetchUserData($Profile_ID);
 
-    if ( $Profile_User )
+    if ( !$Profile_User )
     {
+        echo "
+            <div class='panel content'>
+                <div class='head'>Profile</div>
+                <div class='body'>
+                    <div style='padding: 0.5em;'>
+                        You are attempting to view the profile of a nonexistent user.
+                    </div>
+                </div>
+            </div>
+        ";
+
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
+        exit;
+    }
 ?>
 
 <div class='panel content'>
     <div class='head'>
         <?= $Profile_User['Username']; ?>'s Profile
     </div>
+
     <div class='body' style='padding: 5px;'>
         <div class='flex'>
             <div style='flex-basis: 350px; margin-right: 5px;'>
                 <table style='width: 350px;'>
                     <tbody>
                         <tr>
-                            <td style='width: 96px;' rowspan='2'><?= ( $Profile_User['Avatar'] ? "<img src='{$Profile_User['Avatar']}' />" : 'This user has no avatar set.' ); ?></td>
+                            <td rowspan='2'>
+                                <?= ( $Profile_User['Avatar'] ? "<img src='{$Profile_User['Avatar']}' />" : 'This user has no avatar set.' ); ?>
+                            </td>
                             <td>
                                 <div style='font-size: 1.5em;'>
                                     <?= $Profile_User['Username']; ?>
@@ -47,7 +64,7 @@
                         <thead>
                             <tr>
                                 <td colspan='4'>
-                                    <b>Activity Information</b>
+                                    <b>User Activity</b>
                                 </td>
                             </tr>
                         </thead>
@@ -191,126 +208,20 @@
     </div>
 </div>
 
-<script type='text/javascript'>
-    window.onload = () =>
+<script src='<?= DOMAIN_ROOT; ?>/pages/_shared/js/ajax_functions.js'></script>
+
+<!-- <script src='<?= DOMAIN_ROOT; ?>/pages/profile/js/inventory.js'></script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/profile/js/nickname.js'></script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/profile/js/roster.js'></script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/profile/js/moves.js'></script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/profile/js/release.js'></script> -->
+
+<script>
+    (function()
     {
-        HandleTab('roster');
-    }
-
-    const HandleTab = (Tab) =>
-    {
-        if ( !Tab )
-        {
-            return;
-        }
-
-        const tabList = ['roster', 'box', 'stats', 'inventory'];
-
-        return new Promise((resolve, reject) =>
-        {
-            const req = new XMLHttpRequest();
-            req.open('GET', `<?= DOMAIN_ROOT; ?>/core/ajax/profile/${Tab}.php?User_ID=<?= $Profile_User['ID']; ?>`);
-            req.send(null);
-            req.onerror = (error) => reject(Error(`Network Error: ${error}`));
-            req.onload = () =>
-            {
-                for (let i = 0; i < tabList.length; i++) {
-                    document
-                        .getElementById(`${tabList[i]}Button`)
-                        .parentElement.classList.remove('active');
-                }
-
-                document.getElementById(`${Tab}Button`).parentElement.classList.add('active');
-
-                if ( req.status === 200 )
-                {
-                    document.querySelector('#ProfileAJAX').innerHTML = req.responseText;
-                    resolve(req.response);
-                }
-                else
-                {
-                    document.querySelector('#ProfileAJAX').innerHTML = req.statusText;
-                    reject(Error(req.statusText))
-                }
-            };
-        });
-    }
-
-    const UpdateBox = (Page) =>
-    {
-        if ( !Page )
-        {
-            return;
-        }
-
-        return new Promise((resolve, reject) =>
-        {
-            const req = new XMLHttpRequest();
-            req.open('GET', `<?= DOMAIN_ROOT; ?>/core/ajax/profile/box.php?User_ID=<?= $Profile_User['ID']; ?>&Page=${Page}`);
-            req.send(null);
-            req.onerror = (error) => reject(Error(`Network Error: ${error}`));
-            req.onload = () =>
-            {
-                if ( req.status === 200 )
-                {
-                    document.querySelector('#ProfileAJAX').innerHTML = req.responseText;
-                    resolve(req.response);
-                }
-                else
-                {
-                    document.querySelector('#ProfileAJAX').innerHTML = req.statusText;
-                    reject(Error(req.statusText))
-                }
-            };
-        });
-    }
-
-    const UpdateInventory = (User_ID, Page) =>
-    {
-        if ( !User_ID || !Page )
-        {
-            return;
-        }
-
-        return new Promise((resolve, reject) =>
-        {
-            const req = new XMLHttpRequest();
-            req.open('GET', `<?= DOMAIN_ROOT; ?>/core/ajax/profile/inventory.php?User_ID=${User_ID}&Category=${Page}`);
-            req.send(null);
-            req.onerror = (error) => reject(Error(`Network Error: ${error}`));
-            req.onload = () =>
-            {
-                if ( req.status === 200 )
-                {
-                    document.querySelector('#ProfileAJAX').innerHTML = req.responseText;
-                    resolve(req.response);
-                }
-                else
-                {
-                    document.querySelector('#ProfileAJAX').innerHTML = req.statusText;
-                    reject(Error(req.statusText))
-                }
-            };
-        });
-    }
+        //ShowTab('roster');
+    })();
 </script>
 
 <?php
-    }
-    else
-    {
-?>
-
-    <div class='panel content'>
-        <div class='head'>Profile</div>
-        <div class='body' style='padding: 5px;'>
-            <div class='error' style='margin-bottom: 0;'>
-                You are attempting to view the profile of a nonexistent user.
-            </div>
-        </div>
-    </div>
-
-<?php
-    }
-
     require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

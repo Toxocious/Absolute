@@ -5,7 +5,7 @@ async function GetRoster() {
     let Form_Data = new FormData();
     Form_Data.append('Action', 'Get_Roster');
 
-    await SendRequest('roster', Form_Data)
+    await SendRequest('pokemon_center', 'roster', Form_Data)
         .then((Roster_Data) => {
             Roster_Data = JSON.parse(Roster_Data)[0];
 
@@ -65,7 +65,7 @@ async function GetBoxedPokemon(Page = 1) {
     Form_Data.append('Action', 'Get_Box');
     Form_Data.append('Page', Page);
 
-    await SendRequest('roster', Form_Data)
+    await SendRequest('pokemon_center', 'roster', Form_Data)
         .then((Boxed_Pokemon) => {
             Boxed_Pokemon = JSON.parse(Boxed_Pokemon)[0];
 
@@ -108,7 +108,7 @@ async function PreviewPokemon(Pokemon_ID) {
     Form_Data.append('Action', 'Preview_Pokemon');
     Form_Data.append('Pokemon_ID', Pokemon_ID);
 
-    await SendRequest('roster', Form_Data)
+    await SendRequest('pokemon_center', 'roster', Form_Data)
         .then((Preview_Pokemon) => {
             Preview_Pokemon = JSON.parse(Preview_Pokemon)[0];
 
@@ -130,7 +130,7 @@ async function MovePokemon(Pokemon_ID, Slot) {
     Form_Data.append('Pokemon_ID', Pokemon_ID);
     Form_Data.append('Slot', Slot);
 
-    await SendRequest('roster', Form_Data).then((Move_Pokemon) => {
+    await SendRequest('pokemon_center', 'roster', Form_Data).then((Move_Pokemon) => {
         Move_Pokemon = JSON.parse(Move_Pokemon);
 
         document.getElementById('Pokemon_Center_Roster_AJAX').className = Move_Pokemon.Success;
