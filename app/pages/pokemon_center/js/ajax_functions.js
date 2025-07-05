@@ -12,52 +12,35 @@ async function ShowTab(Tab_Name) {
 
     const tabList = ['roster', 'release', 'nickname', 'moves', 'inventory'];
 
-    return new Promise((resolve, reject) => {
-        const req = new XMLHttpRequest();
+    await FetchSubPage('pokemon_center', Tab_Name, '#Pokemon_Center_Page');
 
-        req.open('GET', `/pages/pokemon_center/pages/${Tab_Name}.php`);
-        req.send();
-        req.onerror = (error) => reject(Error(`Network Error: ${error}`));
-        req.onload = () => {
-            if (req.status === 200) {
-                document.getElementById('Pokemon_Center_Page').innerHTML = req.response;
+    switch (Tab_Name) {
+        case 'roster':
+            GetRoster();
+            GetBoxedPokemon();
+            break;
 
-                switch (Tab_Name) {
-                    case 'roster':
-                        GetRoster();
-                        GetBoxedPokemon();
-                        break;
+        case 'release':
+            GetReleasablePokemon();
+            break;
 
-                    case 'release':
-                        GetReleasablePokemon();
-                        break;
+        case 'nickname':
+            GetNicknameTabRoster();
+            break;
 
-                    case 'nickname':
-                        GetNicknameTabRoster();
-                        break;
+        case 'moves':
+            GetMoveTabRoster();
+            break;
 
-                    case 'moves':
-                        GetMoveTabRoster();
-                        break;
+        case 'inventory':
+            ShowInventoryTab('Held Item');
+            ShowEquippedItems();
+            break;
+    }
 
-                    case 'inventory':
-                        ShowInventoryTab('Held Item');
-                        ShowEquippedItems();
-                        break;
-                }
+    for (let i = 0; i < tabList.length; i++) {
+        document.getElementById(`${tabList[i]}Button`).parentElement.classList.remove('active');
+    }
 
-                for (let i = 0; i < tabList.length; i++) {
-                    document
-                        .getElementById(`${tabList[i]}Button`)
-                        .parentElement.classList.remove('active');
-                }
-
-                document.getElementById(`${Tab_Name}Button`).parentElement.classList.add('active');
-
-                resolve(req.response);
-            } else {
-                reject(Error(req.statusText));
-            }
-        };
-    });
+    document.getElementById(`${Tab_Name}Button`).parentElement.classList.add('active');
 }

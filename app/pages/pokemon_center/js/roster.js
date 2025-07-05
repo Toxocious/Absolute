@@ -19,14 +19,12 @@ async function GetRoster() {
                 } else {
                     Icon_Path = `/images/Pokemon/Icons/Normal`;
                     Icon_Name = String(Pokemon_Slot.Pokedex_ID).padStart(3, '0');
-                    if (Pokemon_Slot.Forme) Icon_Name += `-${Pokemon_Slot.Forme}`;
 
-                    if (!Pokemon_Slot.Forme) Pokemon_Slot.Forme = '';
+                    if (Pokemon_Slot.Forme) {
+                        Icon_Name += `-${Pokemon_Slot.Forme}`;
+                    }
 
-                    Display_Name =
-                        Pokemon_Slot.Type != 'Normal'
-                            ? `${Pokemon_Slot.Type}${Pokemon_Slot.Name}${Pokemon_Slot.Forme}`
-                            : `${Pokemon_Slot.Name}${Pokemon_Slot.Forme}`;
+                    Display_Name = Pokemon_Slot.Display_Name;
                 }
 
                 document
@@ -87,11 +85,11 @@ async function GetBoxedPokemon(Page = 1) {
                     if (!Pokemon.Forme) Pokemon.Forme = '';
 
                     document.querySelector('#Boxed_Pokemon > tr > td').innerHTML += `
-            <img
-              src='${Icon_Path}/${Icon_Name}.png'
-              onclick='PreviewPokemon(${Pokemon.ID});'
-            />
-          `;
+                        <img
+                            src='${Icon_Path}/${Icon_Name}.png'
+                            onclick='PreviewPokemon(${Pokemon.ID});'
+                        />
+                    `;
                 }
             }
         })

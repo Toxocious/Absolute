@@ -426,6 +426,59 @@ table>tbody {
 }
 
 /**
+ * Pokemon Roster styling
+ *  - Currently used for profiles
+ */
+.pokemon-card {
+    background: linear-gradient(145deg, var(--color-secondary), var(--color-tertiary));
+    border: 2px solid var(--color-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.pokemon-card:hover {
+    border-color: var(--color-white);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.pokemon-card:before {
+    background: linear-gradient(90deg, var(--color-primary), var(--color-quaternary));
+}
+
+.pokemon-sprite {
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
+}
+
+.pokemon-name {
+    font-weight: 600;
+    color: var(--color-white);
+}
+
+.gender-icon {
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.5));
+}
+
+.pokemon-level {
+    color: var(--color-quaternary);
+    font-weight: 500;
+}
+
+.empty-slot {
+    background: rgba(var(--color-secondary-rgb), 0.3);
+    border: 2px dashed var(--color-quaternary);
+    color: var(--color-quaternary);
+    font-style: italic;
+}
+
+.team-header h2 {
+    color: var(--color-white);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.team-count {
+    color: var(--color-quaternary);
+}
+
+/**
  * Shop page cards
  */
 .shop-card {
