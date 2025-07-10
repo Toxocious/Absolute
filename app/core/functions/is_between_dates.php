@@ -8,7 +8,7 @@
      */
     function IsBetweenDates($Date_Start, $Date_End)
     {
-        $Current_Date = new DateTime('03/01/2022');
+        $Current_Date = new DateTime();
         $Current_Timestamp = $Current_Date->format('U');
 
         $Start_Date = new DateTime($Date_Start);
