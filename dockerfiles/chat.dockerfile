@@ -22,7 +22,6 @@ RUN npm prune --production
 # --------------------------
 # ---- Production Stage ----
 # --------------------------
-
 FROM node:18-alpine
 
 WORKDIR /chat
