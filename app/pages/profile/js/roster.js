@@ -23,37 +23,5 @@ async function GetRoster(Profile_ID) {
         return;
     }
 
-    let Roster_HTML = '';
-
-    for (let Slot = 0; Slot < Roster_Data.length; Slot++) {
-        const Pokemon_Slot = Roster_Data[Slot];
-
-        const Pokemon_Sprites = GetPokemonSprites(
-            Pokemon_Slot?.Type ?? 'Normal',
-            Pokemon_Slot.Pokedex_ID,
-            Pokemon_Slot.Forme
-        );
-
-        let Gender_Icon = '';
-        if (Pokemon_Slot.Gender == 'Female' || Pokemon_Slot.Gender == 'Male') {
-            Gender_Icon = `<img src='/images/Assets/${Pokemon_Slot.Gender.toLowerCase()}.svg' class="gender-icon" alt='${
-                Pokemon_Slot.Gender
-            }' />`;
-        }
-
-        Roster_HTML += `
-            <div class='pokemon-card' onclick='PokemonViewer.open(\"${Pokemon_Slot.ID}\")'>
-                <img src='${Pokemon_Sprites.Sprite}' class='pokemon-sprite' alt='${Pokemon_Slot.Display_Name}' />
-                <div class='pokemon-info'>
-                    <h3 class='pokemon-name'>${Pokemon_Slot.Display_Name}</h3>
-                    <div class='pokemon-details'>
-                        ${Gender_Icon}
-                        <span class='pokemon-level'>Lv. ${Pokemon_Slot.Level}</span>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
-
-    Roster_Container.innerHTML = Roster_HTML;
+    Roster_Container.innerHTML = Roster_Data;
 }

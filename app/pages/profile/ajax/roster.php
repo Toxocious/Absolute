@@ -33,7 +33,7 @@
     {
         case 'Get_Roster':
             echo json_encode([
-                GetRosterJSON($User_ID)
+                GetRoster($User_ID)
             ]);
             break;
     }
