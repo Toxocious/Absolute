@@ -1,11 +1,43 @@
-FROM node:18-alpine
+# --------------------------
+# ----    Build Stage   ----
+# --------------------------
+FROM node:18-alpine AS build
 
 COPY /absolute/discord /discord
 WORKDIR /discord
 
-RUN npm install && \
-    npm run build
+# Copy package.json and package-lock.json to leverage Docker cache
+COPY package*.json ./
 
+RUN npm install
+
+# This layer is cached as long as package files don't change
+RUN npm ci
+
+RUN npm run build
+
+# Remove development dependencies
+RUN npm prune --production
+
+# --------------------------
+# ---- Production Stage ----
+# --------------------------
+
+FROM node:18-alpine
+
+WORKDIR /discord
+
+# Create a non-root user and group
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
+
+# Copy only the built application and production node_modules from the build stage
+COPY --from=build --chown=appuser:appgroup /discord/node_modules ./node_modules
+COPY --from=build --chown=appuser:appgroup /discord/package*.json ./
+COPY --from=build --chown=appuser:appgroup /discord/build ./build
+
+# Expose the ports the app runs on
 EXPOSE 3000 3306
 
-CMD [ "npm", "run", "start:dev", "mysql:3306" ]
+# The command to run the application in production
+CMD [ "npm", "run", "start:prod", "mysql:3306" ]

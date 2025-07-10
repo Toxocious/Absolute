@@ -93,6 +93,8 @@ services:
             dockerfile: dockerfiles/discord.dockerfile
         volumes:
             - ./absolute/discord:/app/discord
+        env_file:
+            - ./absolute/discord/.env
         ports:
             - 3000:3000
         depends_on:
@@ -109,6 +111,8 @@ services:
             dockerfile: dockerfiles/chat.dockerfile
         volumes:
             - chat-build:/chat/build/client
+        env_file:
+            - ./absolute/chat/.env
         ports:
             - 8080:8080
         depends_on:
