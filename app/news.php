@@ -46,30 +46,20 @@
                 Stay up to date on the latest news and updates from the staff team.
             </div>
 
-            <table class='border-gradient' style='width: 100%;'>
-                <thead>
-                    <tr>
-                        <th colspan='2'>
-                            <?= $News_Post['News_Title']; ?>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td style='padding: 5px 30px; width: 150px;'>
-                            <img src='<?= DOMAIN_SPRITES . '/' . $News_Post['Avatar']; ?>' /><br />
-                            <?php
-                                echo '<h3>' . $User_Class->DisplayUserName($News_Post['Poster_ID'], false, false, true) . '</h3>';
-                                echo date('F j, Y g:i A', $News_Post['News_Date']);
-                            ?>
-                        </td>
+            <div class='news-container'>
+                <div class='news-poster'>
+                    <img src='<?= DOMAIN_SPRITES . '/' . $News_Post['Avatar']; ?>' /><br />
+                    <?php
+                        echo '<h3>' . $User_Class->DisplayUserName($News_Post['Poster_ID'], false, false, true) . '</h3><br />';
+                        echo '<b style="font-size: 12px;">Posted On</b><br />';
+                        echo "<font style='font-size: 12px;'>" . date('F j, Y g:i A', $News_Post['News_Date']) . "</font>";
+                    ?>
+                </div>
 
-                        <td class='news-post' style='padding: 10px;'>
-                            <?= convert_markdown_to_html($News_Post['News_Text']); ?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                <div class='news-content'>
+                    <?= convert_markdown_to_html($News_Post['News_Text']); ?>
+                </div>
+            </div>
         </div>
     </div>
 

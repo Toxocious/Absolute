@@ -36,15 +36,27 @@ a:hover {
   color: var(--color-white);
 }
 
-.news-post
+.news-container
 {
-    code {
-        background: var(--color-tertiary);
+    & > .news-poster
+    {
+        background: var(--color-quinary);
+        border-color: var(--color-primary);
     }
 
-    blockquote {
-        background: var(--color-tertiary);
+    & > .news-content
+    {
+        background: var(--color-quinary);
         border-color: var(--color-primary);
+
+        & > code {
+            background: var(--color-tertiary);
+        }
+
+        & > blockquote {
+            background: var(--color-tertiary);
+            border-color: var(--color-primary);
+        }
     }
 }
 
