@@ -4,18 +4,18 @@
 
   **Pok&eacute;mon Absolute** is an online text-based Pok&eacute;mon RPG, comprised of numerous features adapted from the official Pok&eacute;mon games, as well as entirely new features that enhance the playing experience of Pok&eacute;mon.
 
-  <img alt="Github Issues" src="https://img.shields.io/github/issues/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
-  <img alt="Github Forks" src="https://img.shields.io/github/forks/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
-  <img alt="Github Stars" src="https://img.shields.io/github/stars/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
+  <img alt="Github Issues" src="https://img.shields.io/github/issues/PokemonAbsolute/Absolute?style=for-the-badge&logo=appveyor" />
+  <img alt="Github Forks" src="https://img.shields.io/github/forks/PokemonAbsolute/Absolute?style=for-the-badge&logo=appveyor" />
+  <img alt="Github Stars" src="https://img.shields.io/github/stars/PokemonAbsolute/Absolute?style=for-the-badge&logo=appveyor" />
   <br />
 
-  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/Toxocious/Absolute?style=for-the-badge">
+  <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/PokemonAbsolute/Absolute?style=for-the-badge">
     <a href="https://visitorbadge.io/status?path=https%3A%2F%2Fgithub.com%2FToxocious%2FAbsolute">
     <img src="https://api.visitorbadge.io/api/visitors?path=https%3A%2F%2Fgithub.com%2FToxocious%2FAbsolute&label=Views&countColor=%234a618f&labelStyle=upper" />
   </a>
   <br />
 
-  <img alt="License" src="https://img.shields.io/github/license/Toxocious/Absolute?style=for-the-badge&logo=appveyor" />
+  <img alt="License" src="https://img.shields.io/github/license/PokemonAbsolute/Absolute?style=for-the-badge&logo=appveyor" />
 
   Come join our comfy community over on Discord!
 
@@ -85,8 +85,12 @@ Clone the repository to the necessary directory.
 If you would like to also install Absolute's chat system and discord bot, clone this repository recursively. If you do not want them, do not clone it recursively.
 
 ```bash
-git clone --recursive https://github.com/Toxocious/Absolute.git
+git clone --recursive https://github.com/PokemonAbsolute/Absolute.git
 ```
+
+After you have cloned this repository and before running the [./start.sh](start.sh) script, you'll want to install Absolute's dependencies with the included [./install_deps.sh](install_deps.sh) script.
+
+This script will fetch the current upstream branch for Absolute's battle server, chat system, and discord bot, and clone them into the required directories.
 
 ## Project Setup
 Once you have Docker installed and have cloned this repository, all you need to do is run the [./start.sh](start.sh) script inside of your terminal.
@@ -117,7 +121,6 @@ A number of flags are included with the start script:
 
 A [./shutdown.sh](./shutdown.sh) script is also included for safely shutting down the Docker environment and should be always be used.
 
-
 ## Accessing PHPMyAdmin
 Once you have successfully built all Docker containers, you can access PHPMyAdmin via [https://localhost/db/](https://localhost/db/) when the environment is running.
 
@@ -125,12 +128,12 @@ Once you have successfully built all Docker containers, you can access PHPMyAdmi
 > The leading / is necessary, otherwise the page will fail to load necessary resources.
 
 ## Chat Setup
-The source code used for Absolute's chat system can be found [HERE](https://github.com/Toxocious/Absolute-Chat) and includes a separate, in-depth README with set-up documentation.
+The source code used for Absolute's chat system can be found [HERE](https://github.com/PokemonAbsolute/Absolute-Chat) and includes a separate, in-depth README with set-up documentation.
 
 Absolute's docker configuration includes the necessary dockerfile to automatically build and run the RPG's chat server for you.
 
 ## Discord Bot Setup
-The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/Toxocious/Absolute-Discord-Bot) and includes a separate, in-depth README with documentation regarding included features.
+The source code used for Absolute's Discord Bot can be found [HERE](https://github.com/PokemonAbsolute/Absolute-Discord-Bot) and includes a separate, in-depth README with documentation regarding included features.
 
 Absolute's docker configuration includes the necessary dockerfile to automatically build and run the Discord bot for you.
 

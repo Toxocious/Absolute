@@ -19,6 +19,22 @@
             ";
         }
     }
+
+    function NamedArgsTest($username, $email = null, $role = 'subscriber', $active = true) {
+        return [
+            'username' => $username,
+            'email'    => $email,
+            'role'     => $role,
+            'active'   => $active
+        ];
+    }
+
+    $NamedArgsOutput = NamedArgsTest(
+        username: "john_doe",
+        role: "admin"
+    );
+
+    var_dump($NamedArgsOutput);
 ?>
 
 <?php
