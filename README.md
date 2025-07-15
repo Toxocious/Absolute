@@ -68,7 +68,7 @@ Absolute has been developed from the ground up with love, and thus comes with a 
 - Live Trading
 - Staff Panel
 
-You may read about Absolute's features in further detail in our [FEATURES.md](docs/FEATURES.md) documentation.
+You may read about Absolute's features in further detail in our [FEATURES.md](.github/FEATURES.md) documentation.
 
 
 
@@ -164,7 +164,7 @@ Do make sure to update the `MYSQL_ROOT_PASSWORD` `.env` value to reflect the new
 
 
 # Contributing
-If you're interested in contributing to Absolute, please check out [CONTRIBUTING.md](docs/CONTRIBUTING.md) for more information.
+If you're interested in contributing to Absolute, please check out [CONTRIBUTING.md](.github/CONTRIBUTING.md) for more information.
 
 
 
