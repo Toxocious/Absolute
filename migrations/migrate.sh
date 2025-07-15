@@ -3,9 +3,9 @@
 echo "[INFO] Executing migrations"
 
 # Load environment variables
-env_file="/data/application/.env"
+env_file="/data/absolute/application/.env"
 if [ ! -f "$env_file" ]; then
-  echo "[ERROR] Couldn't find a .env file in /data/application/. Create it and re-run the script."
+  echo "[ERROR] Couldn't find a .env file in /data/absolute/application/. Create it and re-run the script."
   exit 1
 fi
 
@@ -44,7 +44,7 @@ else
 fi
 
 # Get all *.sql files
-migrations_directory="/data/application/sql"
+migrations_directory="/data/absolute/application/sql"
 migrations=("$migrations_directory"/*.sql)
 sorted_migrations=($(for f in "${migrations[@]}"; do echo "$f"; done | sort))
 

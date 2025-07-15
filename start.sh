@@ -78,7 +78,7 @@ start_docker_containers() {
 # Function to execute SQL migrations inside the MySQL Docker container
 execute_sql_migrations() {
   echo "[INFO] Executing SQL migrations."
-  migrations=$(docker exec -it absolute-mysql bash -c "cd /data/application && ./migrate.sh")
+  migrations=$(docker exec -it absolute-mysql bash -c "cd /data/absolute/application && ./migrate.sh")
 
   if [[ "$migrations" != *"[SUCCESS] All migrations executed successfully."* ]]; then
     if [ "$verbose_migrations" = true ]; then

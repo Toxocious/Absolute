@@ -8,7 +8,7 @@
             "request": "launch",
             "port": 9003,
             "pathMappings": {
-                "/app/": "${workspaceRoot}/app/"
+                "/absolute/rpg/": "${workspaceRoot}/absolute/rpg/"
             }
         }
     ]
