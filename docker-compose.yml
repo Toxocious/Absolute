@@ -26,6 +26,11 @@ services:
             - .env
         environment:
             MARIADB_AUTO_UPGRADE: 1
+        healthcheck:
+            test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost", "-u", "root", "-p$$MYSQL_ROOT_PASSWORD"]
+            interval: 1s
+            timeout: 5s
+            retries: 5
         volumes:
             - absolute-mysqldata:/var/lib/mysql
             - ./.env:/data/absolute/application/.env
@@ -98,7 +103,8 @@ services:
         ports:
             - 3000:3000
         depends_on:
-            - mysql
+            mysql:
+                condition: service_healthy
         networks:
             - absolute
 
@@ -116,7 +122,8 @@ services:
         ports:
             - 8080:8080
         depends_on:
-            - mysql
+            mysql:
+                condition: service_healthy
         networks:
             - absolute
 
