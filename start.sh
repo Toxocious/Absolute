@@ -105,6 +105,8 @@ while getopts "bcv" flag; do
   esac
 done
 
+./install_deps.sh
+
 # Generate log files
 generate_log_files
 

@@ -10,15 +10,21 @@ echo "[INFO] Installing Absolute's dependencies."
 
 for DEP in "${!dependencies[@]}"; do
   echo "[INFO] Processing dependency: $DEP"
+
   if [ -d "absolute/$DEP" ]; then
-    echo "[INFO] absolute/$DEP already exists, skipping clone."
+    echo "[INFO] absolute/$DEP already exists, pulling updates."
+    git submodule update "absolute/$DEP"
     continue
+
+    if [ $? -ne 0 ]; then
+      echo "[ERROR] Failed to update $DEP. Please check your git configuration."
+    fi
   fi
 
   echo "[INFO] Installing Absolute's $DEP (${dependencies[$DEP]})"
-  git clone "${dependencies[$DEP]}" "absolute/$DEP"
+  git submodule add "${dependencies[$DEP]}" "absolute/$DEP"
   if [ $? -ne 0 ]; then
-    echo "[ERROR] Failed to clone $DEP. Please check the repository URL."
+    echo "[ERROR] Failed to add $DEP as a submodule. Please check the repository URL."
     exit 1
   fi
 done
