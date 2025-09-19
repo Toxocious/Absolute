@@ -6,7 +6,6 @@
 		[ 'Rank' => 'Developer' ],
 		[ 'Rank' => 'Super Moderator' ],
 		[ 'Rank' => 'Moderator' ],
-		[ 'Rank' => 'Bot' ],
 		[ 'Rank' => 'Chat Moderator' ],
 	];
 ?>

@@ -12,7 +12,7 @@
         $Fetch_Online_Staff = $PDO->prepare("
                 SELECT `ID`, `Avatar`, `Last_Page`, `Last_Active`
                 FROM `users`
-                WHERE `Is_Staff` = 1 AND `Last_Active` >= ?
+                WHERE `Is_Staff` = 1 AND `Rank` != 'Bot' AND `Last_Active` >= ?
             ");
             $Fetch_Online_Staff->execute([ $Last_Active ]);
             $Fetch_Online_Staff->setFetchMode(PDO::FETCH_ASSOC);
