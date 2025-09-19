@@ -4,6 +4,17 @@
     </div>
 
     <div class='body' style='padding: 5px;'>
+        <?php
+        if ( $Profile_User['Rank'] == 'Bot' )
+            {
+                echo "
+                    <div class='warning' style='padding: 5px;'>
+                        This is an automated bot account.
+                    </div>
+                ";
+            }
+        ?>
+
         <div class='flex'>
             <div style='flex-basis: 350px; margin-right: 5px;'>
                 <table style='width: 350px;'>
@@ -105,7 +116,7 @@
                     </tbody>
                 </table>
 
-                <?php if (!$Is_Own_Profile) { ?>
+                <?php if ( !$Is_Own_Profile && $Profile_User['Rank'] != 'Bot' ) { ?>
                     <table class='border-gradient' style='margin-top: 5px; width: 350px;'>
                         <thead>
                             <tr>
