@@ -21,8 +21,14 @@
 
 		<link type='text/css' rel='stylesheet' href='/themes/css/styles/<?= (isset($User_Data['Theme']) ? $User_Data['Theme'] : 'absol'); ?>.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/css/root.css' />
+
 		<link type='text/css' rel='stylesheet' href='/themes/css/structure.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/structure_desktop.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/structure_tablet.css' />
+		<link type='text/css' rel='stylesheet' href='/themes/css/structure_mobile.css' />
+
 		<link type='text/css' rel='stylesheet' href='/themes/css/theme.css' />
+
 
 		<?php
             if ( isset($User_Data['ID']) )

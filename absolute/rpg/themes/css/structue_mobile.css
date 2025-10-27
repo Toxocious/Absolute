@@ -1,0 +1,62 @@
+/**
+ * Phones
+ *
+ * This CSS file is intended to style the RPG interface for mobile devices.
+ */
+@media screen and (max-width: 479px) {
+    header {
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        height: 40px;
+        max-width: 100%;
+    }
+
+    footer {
+        height: auto;
+        width: 96.5%;
+    }
+
+    table {
+        background: none;
+        box-shadow: none;
+        width: 90% !important;
+        max-width: 90% !important;
+    }
+
+    table thead,
+    table tbody,
+    table tr,
+    table td,
+    table th {
+        display: block;
+    }
+
+    table td {
+        border: none;
+        position: relative;
+        margin: 0 auto;
+        text-align: center;
+        width: 100% !important;
+    }
+
+    table td::before {
+        position: absolute;
+        white-space: nowrap;
+    }
+
+    div .description {
+        width: 80% !important;
+    }
+
+    div .nav {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        height: auto !important;
+        justify-content: center;
+    }
+
+    div .nav div {
+        margin: 0 !important;
+    }
+}
