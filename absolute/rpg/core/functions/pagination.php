@@ -43,10 +43,13 @@ function Pagination(
         $current_page = max(1, min($current_page, $total_pages));
         $offset = ($current_page - 1) * $per_page;
 
-        $data_query = $base_query . " LIMIT ? OFFSET ?";
+        $data_query = $base_query . " LIMIT :limit OFFSET :offset";
         $data_stmt = $PDO->prepare($data_query);
 
-        $all_params = array_merge($params, [$per_page, $offset]);
+        $all_params = $params;
+        $all_params[':limit'] = $per_page;
+        $all_params[':offset'] = $offset;
+
         $data_stmt->execute($all_params);
 
         $data = $data_stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -58,7 +61,8 @@ function Pagination(
             'Pagination' => $Pagination,
             'Total_Results' => $total_results,
             'Total_Pages' => $total_pages,
-            'Current_Page' => $current_page
+            'Current_Page' => $current_page,
+            'Per_Page' => $per_page
         ];
     } catch (PDOException $e) {
         HandleError($e);
