@@ -776,6 +776,13 @@
                 break;
         }
 
+        $Type = ucfirst(strtolower(trim((string)$Type)));
+        $Allowed_Types = ['Normal', 'Shiny', 'Sunset'];
+        if ( !in_array($Type, $Allowed_Types, true) )
+        {
+            $Type = 'Normal';
+        }
+
         $Sprite = DOMAIN_SPRITES . "/Pokemon/Sprites/{$Type}/{$Pokedex_ID}{$Pokemon_Forme}.png";
         $Relative_Sprite = str_replace(DOMAIN_SPRITES, $Dir_Root . '/images', $Sprite);
         if ( !file_exists($Relative_Sprite) )

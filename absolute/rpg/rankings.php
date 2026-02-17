@@ -1,80 +1,75 @@
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_top.php';
+
+    $Valid_Categories = [ 'pokemon', 'trainers' ];
+
+    if ( isset($_GET['Category']) && in_array($_GET['Category'], $Valid_Categories) )
+    {
+        $Category = Purify($_GET['Category']);
+    }
+    else
+    {
+        $Category = 'pokemon';
+    }
+
+    if ( $Category == 'pokemon' )
+    {
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/rankings/functions/fetch_pokemon_rankings.php';
+
+        $Rankings = FetchPokemonRankings(1);
+        $Top_Ranking = FetchTopPokemon();
+    }
+    else
+    {
+        require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/rankings/functions/fetch_trainer_rankings.php';
+
+        $Rankings = [];
+        $Top_Ranking = [];
+    }
 ?>
 
 <div class='panel content'>
 	<div class='head'>Global Rankings</div>
 	<div class='body' style='padding: 5px;'>
-		<div class='flex' style='flex-direction: row; flex-wrap: wrap; gap: 10px; justify-content: center;'>
-			<table class='border-gradient' style='width: 570px;'>
-				<tbody>
-					<tr>
-						<td style='padding: 5px;'>
-							<a href='javascript:void(0);' onclick="Display_Tab('Pokemon');" style='font-size: 14px;'>
-								<b>Pok&eacute;mon</b>
-							</a>
-						</td>
-						<td style='padding: 5px;'>
-							<a href='javascript:void(0);' onclick="Display_Tab('Trainer');" style='font-size: 14px;'>
-								<b>Trainers</b>
-							</a>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+         <div style='flex: 1;'>
+            <div class='page-nav-container'>
+                <?php
+                    foreach ( $Valid_Categories as $Cat )
+                    {
+                        echo "
+                            <div class='page-nav-item " . ($Category == $Cat ? 'active' : '') . "' id='{$Cat}Button'>
+                                <a href='javascript:void(0);' onclick='ShowTab(\"" . strtolower($Cat) .
+                                "\")' style='display: block;'>" . ucfirst($Cat) . "</a>
+                            </div>
+                        ";
+                    }
+                ?>
+            </div>
+         </div>
 
-			<div class='flex' id='Rankings_AJAX' style='flex-basis: 100%; flex-wrap: wrap; gap: 10px; justify-content: center;'>
-                <div class='flex' style='flex-basis: 100%; justify-content: center; width: 100%;'>
-                </div>
-			</div>
-		</div>
+		<section id='rankings-ajax' class='rankings-ajax'>
+            <?php
+                switch ( $Category )
+                {
+                    case 'pokemon':
+                        require $_SERVER['DOCUMENT_ROOT'] . '/pages/rankings/pages/pokemon.php';
+                        break;
+
+                    case 'trainers':
+
+                        break;
+                }
+            ?>
+        </section>
 	</div>
 </div>
 
-<script type='text/javascript'>
-	let Current_Tab = 'Pokemon';
+<script src='<?= DOMAIN_ROOT; ?>/pages/_shared/js/ajax_functions.js'></script>
 
-	function Display_Tab(Tab = Current_Tab)
-	{
-		$.ajax({
-			type: 'POST',
-			url: '<?= DOMAIN_ROOT; ?>/core/ajax/rankings/tab.php',
-			data: { Tab: Tab },
-			success: (data) =>
-			{
-				Current_Tab = Tab;
+<script src='<?= DOMAIN_ROOT; ?>/pages/rankings/js/ajax_functions.js'></script>
 
-				$('#Rankings_AJAX').html(data);
-			},
-			error: (data) =>
-			{
-				$('#Rankings_AJAX').html(data);
-			},
-		});
-	}
-
-	function Update_Page(Page)
-	{
-		$.ajax({
-			type: 'POST',
-			url: '<?= DOMAIN_ROOT; ?>/core/ajax/rankings/tab.php',
-			data: { Tab: Current_Tab, Page: Page },
-			success: (data) =>
-			{
-				$('#Rankings_AJAX').html(data);
-			},
-			error: (data) =>
-			{
-				$('#Rankings_AJAX').html(data);
-			},
-		});
-	}
-
-	$(function()
-	{
-		Display_Tab(Current_Tab);
-	});
-</script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/rankings/js/fetch_pokemon_rankings.js'></script>
+<script src='<?= DOMAIN_ROOT; ?>/pages/rankings/js/fetch_trainer_rankings.js'></script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';

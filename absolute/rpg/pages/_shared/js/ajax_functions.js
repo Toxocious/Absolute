@@ -6,7 +6,7 @@ async function FetchSubPage(Root, Page, AjaxElementSelector) {
         <tbody>
             <tr>
                 <td style='padding: 1em;'>
-                    <div class='loading-element' style='margin: 0 auto;'></div>
+                    <div class='loading-element' style='margin: 1em auto 0.5em;'></div>
                 </td>
             </tr>
         </tbody>
