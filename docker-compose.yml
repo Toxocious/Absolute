@@ -10,6 +10,7 @@ services:
             - ./certbot/www:/var/www/certbot
             - ./certbot/conf:/etc/nginx/ssl
             - ./absolute/rpg:/absolute/rpg
+            - ./absolute/beta_rpg:/absolute/beta_rpg
             - ./logs:/logs
             - chat-build:/absolute/rpg/js/chat
         depends_on:
@@ -76,6 +77,7 @@ services:
             - .env
         volumes:
             - ./absolute/rpg:/absolute/rpg
+            - ./absolute/beta_rpg:/absolute/beta_rpg
             - ./logs:/logs
             - ./migrations:/migrations:ro
             - ./config/opcache.ini:/usr/local/etc/php/conf.d/opcache.ini
