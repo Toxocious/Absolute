@@ -215,3 +215,55 @@ h5,
 h6 {
     margin: 0px;
 }
+
+.tooltip {
+    position: relative;
+    cursor: help;
+}
+
+/* Tooltip box */
+.tooltip::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    /* directly above element */
+    transform: translateX(-50%) translateY(-8px);
+
+    background: #111827;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+    white-space: nowrap;
+
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+
+    z-index: 1000;
+}
+
+/* Arrow */
+.tooltip::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    transform: translateX(-50%) translateY(2px);
+
+    border: 6px solid transparent;
+    border-top-color: #111827;
+
+    opacity: 0;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+
+    pointer-events: none;
+}
+
+/* Show */
+.tooltip:hover::after,
+.tooltip:hover::before {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-12px);
+}

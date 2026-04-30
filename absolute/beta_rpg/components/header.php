@@ -1,13 +1,14 @@
 <?php
-    /** @var string $Avatar - URL to the user's avatar */
-    /** @var string $Username - The user's username */
-    /** @var string $Rank - The user's rank or role */
-
-    date_default_timezone_set('America/Phoenix');
-    $Time = date('h:i A');
+    /**
+     * Header component that displays user information and social links if the user is logged in.
+     *
+     * Props:
+     *  - User_Session ($_SESSION['Absolute_Beta']): The user's $_SESSION['Absolute_Beta'] status or null if not logged in.
+     *  - Absolute_Time: An array containing the current in-game time information.
+     */
 ?>
 
-<section class='user-bar'>
+<section class='user-bar <?= $User_Session ? 'logged-in' : 'logged-out'; ?>'>
     <div class='banner'></div>
 
     <div class='social-links'>
@@ -29,6 +30,7 @@
     </div>
 
     <div class='user-container'>
+        <?php if ( $User_Session ): ?>
         <div class='user-avatar'>
             <img src='<?= $Avatar; ?>' />
         </div>
@@ -70,9 +72,10 @@
                 <span>999,999</span>
             </div>
         </div>
+        <?php endif; ?>
 
         <div class='rpg-time'>
-            <?= $Time; ?>
+            <?= $Absolute_Time['Time']; ?>
         </div>
     </div>
 </section>

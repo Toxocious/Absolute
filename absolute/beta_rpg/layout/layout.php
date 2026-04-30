@@ -1,5 +1,5 @@
 <?php
-    $page_script_start_time = microtime(true);
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/session.php';
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/components/_component.php';
 
@@ -37,12 +37,11 @@
 
     <body>
         <!-- -->
-        <header>
+        <header <?= isset($_SESSION['Absolute_Beta']) ? '' : "class='logged-out'"; ?>>
             <?php
                 $Stylesheets[] = component('header', [
-                    'Avatar'  => $User_Data['Avatar'],
-                    'Username'  => $User_Data['Username'],
-                    'Rank' => $User_Data['Rank'],
+                    'User_Session' => isset($_SESSION['Absolute_Beta']) ? $_SESSION['Absolute_Beta'] : null,
+                    'Absolute_Time' => $Absolute_Time,
                 ]);
             ?>
         </header>
@@ -50,26 +49,18 @@
         <!-- -->
         <nav>
             <?php
-                $Stylesheets[] = component('site_nav', []);
+                $Stylesheets[] = component('site_nav', [
+                    'User_Session' => isset($_SESSION['Absolute_Beta']) ? $_SESSION['Absolute_Beta'] : null,
+                ]);
             ?>
         </nav>
 
         <!-- -->
         <section class='page-container'>
             <!-- Chat -->
-            <aside class='chat panel panel-vertical'>
-                <div class='panel-header'>
-                    Chat
-                </div>
-
-                <div class='panel-content' id='chatContent'>
-                    <p style='text-align: center; color: var(--color-text-secondary);'>Chat functionality will be implemented in a future update.</p>
-                </div>
-
-                <div class='panel-footer'>
-                    <input type='text' id='chatMessage' placeholder='Send a message to chat!' disabled />
-                </div>
-            </aside>
+             <?php
+                $Stylesheets[] = component('chat', []);
+            ?>
 
             <!-- Page Content -->
             <main class='page-content'>
@@ -81,7 +72,7 @@
         <footer>
             <?php
                 $Stylesheets[] = component('footer', [
-                    'Page_Start_Time' => $page_script_start_time,
+                    'Page_Start_Time' => $Page_Start_Time,
                 ]);
             ?>
         </footer>

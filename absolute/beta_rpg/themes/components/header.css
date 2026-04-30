@@ -1,113 +1,40 @@
 header {
-    /* height: calc(var(--banner-height) * 1.5); */
+    &.logged-out {
+        height: calc(var(--banner-height) * 1);
+
+        & > section > .banner {
+            margin-bottom: 0;
+        }
+    }
 
     position: relative;
 
-    /* .rpg-header {
+    .banner {
+        background: var(--banner-image);
+        background-size: var(--banner-bg-size);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+
+        filter: drop-shadow(0px 4px 6px rgba(74, 97, 143, 0.5));
+
         display: flex;
-        flex-direction: row;
-        justify-content: space-between;
 
-        padding: var(--banner-padding);
+        border: none;
+        border-radius: var(--border-radius);
 
-        color: var(--color-white);
-        text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
+        overflow: hidden;
+        position: absolute;
 
-        letter-spacing: 0.25em;
+        bottom: 0px;
+        left: 0px;
 
-        .rpg-name {
-            display: flex;
-            align-self: center;
+        margin-bottom: 3.5em;
+        padding: 0.5em 1em;
 
-            font-family: 'Birthstone', sans-serif;
-            font-weight: bold;
-
-            font-size: 3em;
-
-            width: 128px;
-        }
-
-        .rpg-time {
-            font-family: 'Nunito', monospace;
-            font-weight: bold;
-
-            display: flex;
-            align-self: center;
-        }
-
-        .social-links {
-            display: flex;
-            flex-direction: row;
-            align-self: center;
-            align-items: center;
-            justify-content: right;
-
-            gap: 1em;
-
-            width: 128px;
-
-            div {
-                display: flex;
-
-                height: 24px;
-                width: 24px;
-
-                & > a {
-                    color: var(--color-light-grey);
-                    text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
-                    font-size: 1.5em;
-                    transition: all 200ms ease-in-out;
-
-                    display: flex;
-
-                    height: 24px;
-                    width: 24px;
-
-                    &:hover {
-                        color: var(--color-white) !important;
-
-                        & > svg {
-                            color: var(--color-white) !important;
-
-                            transition: all 200ms ease-in-out;
-                        }
-                    }
-
-                    & > svg {
-                        height: 24px;
-                        width: 24px;
-                    }
-                }
-            }
-        }
-    } */
-
-        .banner {
-            background: var(--banner-image);
-            background-size: var(--banner-bg-size);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-
-            filter: drop-shadow(0px 4px 6px rgba(74, 97, 143, 0.5));
-
-            display: flex;
-
-            border: none;
-            border-radius: var(--border-radius);
-
-            overflow: hidden;
-            position: absolute;
-
-            bottom: 0px;
-            left: 0px;
-
-            margin-bottom: 3.5em;
-            padding: 0.5em 1em;
-
-            height: calc(var(--banner-height) * 0.9);
-            width: 100%;
-        }
+        height: calc(var(--banner-height) * 0.9);
+        width: 100%;
+    }
 
     .user-bar {
         margin: 1em 0;

@@ -71,7 +71,6 @@
         }
     }
 
-
     & > p {
         font-size: 14px;
         line-height: 1.75;
@@ -89,7 +88,7 @@
     gap: 0.5em;
     margin-bottom: 0.75em;
 
-    &>.news-tag {
+    & > .news-tag {
         font-size: 0.6rem;
         letter-spacing: 0.12em;
         text-transform: uppercase;
@@ -100,7 +99,7 @@
         border-radius: 2px;
     }
 
-    &>.news-date {
+    & > .news-date {
         font-size: 0.78rem;
         color: var(--color-gradient-one);
         letter-spacing: 0.04em;

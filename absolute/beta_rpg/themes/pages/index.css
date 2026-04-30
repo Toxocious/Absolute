@@ -1,0 +1,25 @@
+.panel.index-page {
+    & > .panel-content {
+        text-align: center;
+
+        & > .description {
+            background-color: var(--color-secondary);
+
+            border: 2px solid var(--color-primary);
+            border-radius: var(--border-radius);
+
+            padding: 0.5em;
+
+            margin: 0 auto 1em;
+
+            max-width: 600px;
+        }
+    }
+}
+
+.platform-notes {
+    margin: 10px auto 0;
+
+    font-size: 12px;
+    text-align: center;
+}

@@ -1,114 +1,144 @@
 <?php
-    // Dynamically fetch what nav to show depending on if the user is in the staff panel or a regular page.
+    /**
+     * Renders the site's navigation bar.
+     *
+     * If the user is logged in, we'll display the appropriate navigation links.
+     * If the user is logged in and is a staff member, we'll also display the staff panel link.
+     * If the user is logged in, is a staff member, and is in the staff panel, we'll display the staff panel links with a link back to the index page.
+     * If the user is logged in, is a staff member, and is not in the staff panel, we'll display the regular links with a link to the staff panel.
+     *
+     * Props:
+     *  - User_Session ($_SESSION['Absolute_Beta']): The user's $_SESSION['Absolute_Beta'] status or null if not logged in.
+     */
 
-    $Navigation_Links = [
-        [
-            'Header' => 'Staff Panel',
-            'Link' => '/staff/',
-        ],
-        [
-            'Header' => 'Pokemon',
-            'Dropdown_Links' => [
-                [
-                    'Name' => 'Pokemon Center',
-                    'Link' => '/pokemon_center.php',
-                ],
-                [
-                    'Name' => 'Evolution Center',
-                    'Link' => '/evolution_center.php',
-                ],
-            ]
-        ],
-        [
-            'Header' => 'Economy',
-            'Dropdown_Links' => [
-                [
-                    'Name' => 'Shops',
-                    'Link' => '/shops.php',
-                ],
-                [
-                    'Name' => 'Trade Center',
-                    'Link' => 'trade_center.php',
-                ],
-                [
-                    'Name' => 'Trade Interest',
-                    'Link' => '/trade_interest.php',
-                ],
-            ]
-        ],
-        [
-            'Header' => 'Exporation',
-            'Dropdown_Links' => [
-                [
-                    'Name' => 'World Map',
-                    'Link' => '/world_map.php',
-                ],
-                [
-                    'Name' => 'Mystery Dungeons',
-                    'Link' => '/mystery_dungeons.php',
+    if ( $User_Session )
+    {
+        $Navigation_Links = [
+            [
+                'Header' => 'Staff Panel',
+                'Link' => '/staff/',
+            ],
+            [
+                'Header' => 'Pokemon',
+                'Dropdown_Links' => [
+                    [
+                        'Name' => 'Pokemon Center',
+                        'Link' => '/pokemon_center.php',
+                    ],
+                    [
+                        'Name' => 'Evolution Center',
+                        'Link' => '/evolution_center.php',
+                    ],
+                ]
+            ],
+            [
+                'Header' => 'Economy',
+                'Dropdown_Links' => [
+                    [
+                        'Name' => 'Shops',
+                        'Link' => '/shops.php',
+                    ],
+                    [
+                        'Name' => 'Trade Center',
+                        'Link' => 'trade_center.php',
+                    ],
+                    [
+                        'Name' => 'Trade Interest',
+                        'Link' => '/trade_interest.php',
+                    ],
+                ]
+            ],
+            [
+                'Header' => 'Exporation',
+                'Dropdown_Links' => [
+                    [
+                        'Name' => 'World Map',
+                        'Link' => '/world_map.php',
+                    ],
+                    [
+                        'Name' => 'Mystery Dungeons',
+                        'Link' => '/mystery_dungeons.php',
+                    ],
                 ],
             ],
-        ],
-        [
-            'Header' => 'Battle',
-            'Dropdown_Links' => [
-                [
-                    'Name' => 'Battle A Trainer',
-                    'Link' => '/battle_trainer.php',
-                ],
-                [
-                    'Name' => 'Regional Gyms',
-                    'Link' => '/battle_gyms.php',
-                ],
-                [
-                    'Name' => 'Battle Frontier',
-                    'Link' => '/battle_frontier.php',
-                ],
-                [
-                    'Name' => 'Raid Bosses',
-                    'Link' => '/battle_raids.php',
-                ],
-            ],
-        ],
-        [
-            'Header' => 'Clans',
-            'Dropdown_Links' => [
-                [
-                    'Name' => 'Create A Clan',
-                    'Link' => '/clan_creation.php',
-                ],
-                [
-                    'Name' => 'Clan Home',
-                    'Link' => '/clan_home.php',
-                ],
-                [
-                    'Name' => 'Clan Rankings',
-                    'Link' => '/clan_rankings.php',
+            [
+                'Header' => 'Battle',
+                'Dropdown_Links' => [
+                    [
+                        'Name' => 'Battle A Trainer',
+                        'Link' => '/battle_trainer.php',
+                    ],
+                    [
+                        'Name' => 'Regional Gyms',
+                        'Link' => '/battle_gyms.php',
+                    ],
+                    [
+                        'Name' => 'Battle Frontier',
+                        'Link' => '/battle_frontier.php',
+                    ],
+                    [
+                        'Name' => 'Raid Bosses',
+                        'Link' => '/battle_raids.php',
+                    ],
                 ],
             ],
-        ],
-        [
-            'Header' => 'Community',
-            'Dropdown_Links' => [
-                [
-                    'Name' => 'News',
-                    'Link' => '/news.php',
-                ],
-                [
-                    'Name' => 'Global Rankings',
-                    'Link' => '/global_rankings.php',
-                ],
-                [
-                    'Name' => 'Online List',
-                    'Link' => '/online_list.php',
-                ],
-                [
-                    'Name' => 'Staff List',
-                    'Link' => '/staff_list.php',
+            [
+                'Header' => 'Clans',
+                'Dropdown_Links' => [
+                    [
+                        'Name' => 'Create A Clan',
+                        'Link' => '/clan_creation.php',
+                    ],
+                    [
+                        'Name' => 'Clan Home',
+                        'Link' => '/clan_home.php',
+                    ],
+                    [
+                        'Name' => 'Clan Rankings',
+                        'Link' => '/clan_rankings.php',
+                    ],
                 ],
             ],
-        ],
-    ]
+            [
+                'Header' => 'Community',
+                'Dropdown_Links' => [
+                    [
+                        'Name' => 'News',
+                        'Link' => '/news.php',
+                    ],
+                    [
+                        'Name' => 'Global Rankings',
+                        'Link' => '/global_rankings.php',
+                    ],
+                    [
+                        'Name' => 'Online List',
+                        'Link' => '/online_list.php',
+                    ],
+                    [
+                        'Name' => 'Staff List',
+                        'Link' => '/staff_list.php',
+                    ],
+                ],
+            ],
+        ];
+    }
+    else
+    {
+        $Navigation_Links = [
+            [
+                'Header' => 'Index',
+                'Link' => '/index.php',
+            ],
+            [
+                'Header' => 'Login',
+                'Link' => '/login.php',
+            ],
+            [
+                'Header' => 'Register',
+                'Link' => '/register.php',
+            ],
+        ];
+    }
 ?>
 
 <section class='nav-container'>
