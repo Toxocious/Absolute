@@ -1,0 +1,109 @@
+.news-post {
+    border-radius: 5px;
+    padding: 1em;
+
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+}
+
+.news-author {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85em;
+    min-width: 96px;
+    padding: 0.25em 0.5em;
+}
+
+.news-author img {
+    box-shadow:
+        0 0 0 1px rgba(201, 162, 58, 0.2),
+        0 4px 16px rgba(0, 0, 0, 0.6),
+        inset 0 1px 0 rgba(255, 220, 80, 0.2);
+    object-fit: cover;
+}
+
+.news-author-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    color: var(--color-gradient-one);
+    text-align: center;
+    text-shadow: 0 0 10px rgba(58, 89, 201, 0.4);
+}
+
+.author-badge {
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    color: var(--color-gradient-one);
+    background: rgba(58, 89, 201, 0.08);
+    border: 1px solid rgba(58, 89, 201, 0.2);
+    padding: 2px 6px;
+    border-radius: 2px;
+}
+
+.news-content {
+    flex: 1;
+    min-width: 0;
+
+    & > h2 {
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--color-gradient-one);
+        letter-spacing: 0.04em;
+        margin-bottom: 1em;
+        line-height: 1.3;
+        text-shadow: 0 0 30px rgba(58, 89, 201, 0.25), 0 1px 3px rgba(0, 0, 0, 0.8);
+        padding-bottom: 0.65em;
+        border-bottom: 1px solid rgba(58, 89, 201, 0.2);
+        position: relative;
+
+        /* Blue accent underline on the heading */
+        &::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 3em;
+            height: 1px;
+            background: rgba(58, 89, 201, 0.7);
+        }
+    }
+
+
+    & > p {
+        font-size: 14px;
+        line-height: 1.75;
+        margin-bottom: 0.9em;
+    }
+
+    & > p:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.news-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 0.75em;
+
+    &>.news-tag {
+        font-size: 0.6rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--color-gradient-one);
+        background: rgba(58, 89, 201, 0.08);
+        border: 1px solid rgba(58, 89, 201, 0.2);
+        padding: 2px 8px;
+        border-radius: 2px;
+    }
+
+    &>.news-date {
+        font-size: 0.78rem;
+        color: var(--color-gradient-one);
+        letter-spacing: 0.04em;
+        margin-left: auto;
+    }
+}

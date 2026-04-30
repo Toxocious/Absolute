@@ -3,7 +3,8 @@
 ?>
 
 <div>
-    Page Generation Time: <?= round(microtime(true) - $Page_Start_Time, 4) * 1000; ?>ms
+    Pok&eacute;mon Absolute &copy; 2018 - <?= date('Y'); ?> Toxocious<br />
+    Pok&eacute;mon &copy; 1995 - <?= date('Y'); ?> Nintendo/Creatures Inc./Game Freak Inc, please support the <a href='http://pokemon.com' target='_blank' rel='noopener noreferrer'>official release.</a>
 </div>
 
 <hr />

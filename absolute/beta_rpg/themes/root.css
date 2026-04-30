@@ -1,9 +1,10 @@
 :root {
   --banner-bg-size: 1100px 140px;
-  --banner-image: url("../../images/Layout/Banners/test.png");
+  --banner-image: url("../../assets/images/Layout/Banners/absol.png");
   --banner-height: 125px;
 
-  --banner-padding: 5px 3px 0px 0px;
+  --banner-padding: 10px 3px 0px 0px;
+
   --border-radius: 6px;
   --border-radius-tl: 6px 0px 0px 0px;
   --border-radius-tr: 0px 6px 0px 0px;
@@ -13,9 +14,12 @@
   --border-radius-tl-bl: 6px 0px 0px 6px;
   --border-radius-tr-br: 0px 6px 6px 0px;
   --border-radius-bl-br: 0px 0px 6px 6px;
-  --border-radius-tr-br-bl: 0px 6px 6px;
+  --border-radius-tr-br-bl: 0px 6px 6px 6px;
+
   --border-radius-50p: 50%;
+
   --border-gradient-padding: 2px;
+
   --border-style: 2px solid;
 
   --display-flex: flex;
@@ -24,14 +28,5 @@
 
   --margin-center: 0 auto;
 
-  --minus-22px: -22px;
-  --padding-0px: 0px;
-  --padding-3px: 3px;
-  --padding-4px: 4px;
-  --padding-5px: 5px;
-
-  --set-80p: 80%;
-  --set-150px: 150px;
-  --set-100px: 100px;
-  --set-40px: 40px;
+  --base-padding: 4px;
 }

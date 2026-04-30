@@ -6,13 +6,19 @@
     $Stylesheets = [
         '/themes/root.css',
         '/themes/main.css',
+
         '/themes/styles/absol.css',
     ];
 
+    if ( isset($Page_Metadata['styles']) && is_array($Page_Metadata['styles']) )
+    {
+        $Stylesheets = array_merge($Stylesheets, $Page_Metadata['styles']);
+    }
+
     $User_Data = [
-        'Username' => 'Toxocious',
+        'Username' => 'Jess',
         'Rank' => 'Administrator',
-        'Avatar' => '/images/Avatars/Custom/1.png',
+        'Avatar' => '/assets/images/Avatars/Custom/1.png',
     ];
 ?>
 
@@ -24,9 +30,9 @@
 
         <title>Layout Test &mdash; Pok&eacute;mon Absolute</title>
 
-        <!-- <link type='text/css' rel='stylesheet' href='/themes/css/root.css' />
-        <link type='text/css' rel='stylesheet' href='/themes/css/main.css' />
-        <link type='text/css' rel='stylesheet' href='/themes/css/styles/absol.css' /> -->
+        <link href="https://fonts.googleapis.com/css2?family=Birthstone:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     </head>
 
     <body>
@@ -42,9 +48,34 @@
         </header>
 
         <!-- -->
-        <main>
-            <?= $Content; ?>
-        </main>
+        <nav>
+            <?php
+                $Stylesheets[] = component('site_nav', []);
+            ?>
+        </nav>
+
+        <!-- -->
+        <section class='page-container'>
+            <!-- Chat -->
+            <aside class='chat panel panel-vertical'>
+                <div class='panel-header'>
+                    Chat
+                </div>
+
+                <div class='panel-content' id='chatContent'>
+                    <p style='text-align: center; color: var(--color-text-secondary);'>Chat functionality will be implemented in a future update.</p>
+                </div>
+
+                <div class='panel-footer'>
+                    <input type='text' id='chatMessage' placeholder='Send a message to chat!' disabled />
+                </div>
+            </aside>
+
+            <!-- Page Content -->
+            <main class='page-content'>
+                <?= $Content; ?>
+            </main>
+        </section>
 
         <!-- -->
         <footer>
@@ -54,6 +85,11 @@
                 ]);
             ?>
         </footer>
+
+        <!-- -->
+        <?php
+            $Stylesheets[] = component('peeker', []);
+        ?>
 
         <!-- -->
         <?php
