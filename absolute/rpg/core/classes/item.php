@@ -57,7 +57,7 @@
 			{
 				if ( $Item_ID == null )
 				{
-					$Fetch_Item = $PDO->prepare("SELECT * FROM `items` WHERE `Owner_Current` = ? LIMIT $Limit");
+					$Fetch_Item = $PDO->prepare("SELECT * FROM `items` WHERE `Owner_Current` = ? LIMIT " . (int) $Limit);
 					$Fetch_Item->execute([$Owner_ID]);
 				}
 				else

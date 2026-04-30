@@ -64,13 +64,13 @@
         {
             $Registrant_Data = [
                 'Username' => Purify($_POST['Username']),
-                'Password' => Purify($_POST['Password']),
+                'Password' => $_POST['Password'],
             ];
 
             $Selected_Gender = Purify($_POST['Gender']);
             if ( !in_array($Selected_Gender, ['Female', 'Male', 'Ungendered']) )
             {
-                $Selected_Gender = 'Ugendered';
+                $Selected_Gender = 'Ungendered';
             }
 
             $Selected_Avatar = Purify($_POST['Avatar']);

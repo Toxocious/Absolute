@@ -73,11 +73,11 @@
              * Set up the user object that the socket will send.
              */
             let User = {
-                User_ID: <?= $User_Data['ID']; ?>,
-                Username: '<?= $User_Data['Username']; ?>',
-                Rank: '<?= $User_Data['Rank']; ?>',
-                Auth_Code: '<?= $User_Data['Auth_Code']; ?>',
-                Avatar: '<?= str_replace('https://localhost/', '../', $User_Data['Avatar']); ?>',
+                User_ID: <?= (int) $User_Data['ID']; ?>,
+                Username: <?= json_encode($User_Data['Username']); ?>,
+                Rank: <?= json_encode($User_Data['Rank']); ?>,
+                Auth_Code: <?= json_encode($User_Data['Auth_Code']); ?>,
+                Avatar: <?= json_encode(str_replace('https://localhost/', '../', $User_Data['Avatar'])); ?>,
                 Connected: true,
             }
 

@@ -30,7 +30,7 @@
     if ( !empty($_POST['username']) && !empty($_POST['password']) )
     {
         $Username = Purify($_POST['username']);
-        $Password = Purify($_POST['password']);
+        $Password = $_POST['password'];
         $IP = $_SERVER["REMOTE_ADDR"];
 
         $Login_Attempt = false;
@@ -66,6 +66,7 @@
         {
             TrackLoginAttempt($User_Info['ID'], $IP, true);
 
+            session_regenerate_id(true);
             $_SESSION['Absolute']['Logged_In_As'] = $User_Info['ID'];
             header('Location: /news.php');
             exit;

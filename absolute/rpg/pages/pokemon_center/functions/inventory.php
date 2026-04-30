@@ -100,7 +100,7 @@
 
         $Item_Data = $Item_Class->FetchItemData($Item_ID);
 
-        $Slot_Text = '';
+        $Roster_Slots = [];
         if ( $User_Data['Roster'] )
         {
             for ( $i = 0; $i < 6; $i++ )
@@ -109,32 +109,19 @@
                 {
                     $Pokemon = GetPokemonData($User_Data['Roster'][$i]['ID']);
 
-                    if ( !$Pokemon['Item'] )
-                    {
-                        $Slot_Text .= "
-                        <td colspan='1' style='width: calc(100% / 6);'>
-                            <img src='{$Pokemon['Icon']}' onclick=\"EquipItem({$Item_Data['ID']}, {$Pokemon['ID']});\" />
-                        </td>
-                        ";
-                    }
-                    else
-                    {
-                        $Slot_Text .= "
-                        <td colspan='1' style='width: calc(100% / 6);'>
-                            <img src='{$Pokemon['Icon']}' style='filter: grayscale(100%);' />
-                        </td>
-                        ";
-                    }
+                    $Roster_Slots[] = [
+                        'ID' => $Pokemon['ID'],
+                        'Icon' => $Pokemon['Icon'],
+                        'Has_Item' => !empty($Pokemon['Item']),
+                    ];
                 }
                 else
                 {
-                    $Pokemon['Icon'] = DOMAIN_SPRITES . "/Pokemon/Sprites/0_mini.png";
-
-                    $Slot_Text .= "
-                        <td colspan='1' style='width: calc(100% / 6);'>
-                        <img src='{$Pokemon['Icon']}' style='filter: grayscale(100%);' />
-                        </td>
-                    ";
+                    $Roster_Slots[] = [
+                        'ID' => null,
+                        'Icon' => DOMAIN_SPRITES . '/Pokemon/Sprites/0_mini.png',
+                        'Has_Item' => true,
+                    ];
                 }
             }
         }
@@ -142,32 +129,23 @@
         {
             for ( $i = 0; $i < 6; $i++ )
             {
-                $Slot_Text .= "
-                <td colspan='1' style='width: calc(100% / 6);'>
-                    <img src='" . DOMAIN_SPRITES . "/Pokemon/Sprites/0.png' style='filter: grayscale(100%);' />
-                </td>
-                ";
+                $Roster_Slots[] = [
+                    'ID' => null,
+                    'Icon' => DOMAIN_SPRITES . '/Pokemon/Sprites/0.png',
+                    'Has_Item' => true,
+                ];
             }
         }
 
-        return "
-            <tr>
-                <td colspan='3'>
-                    <img src='{$Item_Data['Icon']}' />
-                </td>
-                <td colspan='3'>
-                    <b>{$Item_Data['Name']}</b>
-                </td>
-            </tr>
-            <tr>
-                <td colspan='6' style='padding: 5px;'>
-                    {$Item_Data['Description']}
-                </td>
-            </tr>
-            <tr>
-                {$Slot_Text}
-            </tr>
-        ";
+        return [
+            'Item' => [
+                'ID' => $Item_Data['ID'],
+                'Name' => $Item_Data['Name'],
+                'Icon' => $Item_Data['Icon'],
+                'Description' => $Item_Data['Description'],
+            ],
+            'Roster_Slots' => $Roster_Slots,
+        ];
     }
 
     /**

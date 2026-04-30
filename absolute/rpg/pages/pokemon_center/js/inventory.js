@@ -98,8 +98,18 @@ async function ShowItemPreview(Item_ID) {
     await SendRequest('pokemon_center', 'inventory', Form_Data)
         .then((Item_Preview) => {
             Item_Preview = JSON.parse(Item_Preview);
-
-            document.getElementById('Item_Preview').innerHTML = Item_Preview.Item_Data;
+            // Build item preview from Item_Data array
+            const data = Item_Preview.Item_Data;
+            let html = `<div style='padding:10px;'>`;
+            html += `<div style='display:flex;align-items:center;gap:10px;'>`;
+            html += `<img src='/images/Items/${data.Item_Name}.png' style='width:48px;height:48px;' />`;
+            html += `<div><b>${data.Item_Name}</b><br/>${data.Description || ''}</div>`;
+            html += `</div>`;
+            if (data.Can_Equip) {
+                html += `<button onclick='EquipItem(${data.Item_ID}, ${data.Pokemon_ID})'>Equip</button>`;
+            }
+            html += `</div>`;
+            document.getElementById('Item_Preview').innerHTML = html;
         })
         .catch((Error) => console.error('Error:', Error));
 }

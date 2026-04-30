@@ -75,9 +75,21 @@ async function SelectMoveSlot(Roster_Slot, Pokemon_ID, Move_Slot) {
     await SendRequest('pokemon_center', 'moves', Form_Data)
         .then((Move_Data) => {
             Move_Data = JSON.parse(Move_Data);
-
-            document.getElementById(`Roster_Slot_${Roster_Slot}_Move_${Move_Slot}`).innerHTML =
-                Move_Data.Dropdown_HTML;
+            // Build dropdown from Move_List array
+            const select = document.createElement('select');
+            select.name = `${Pokemon_ID}_Move_${Move_Slot}`;
+            select.style.width = '100%';
+            for (const move of Move_Data.Move_List) {
+                const option = document.createElement('option');
+                option.value = move.Move_ID;
+                option.textContent = move.Name;
+                if (move.Selected) option.selected = true;
+                select.appendChild(option);
+            }
+            document.getElementById(`Roster_Slot_${Roster_Slot}_Move_${Move_Slot}`).innerHTML = '';
+            document
+                .getElementById(`Roster_Slot_${Roster_Slot}_Move_${Move_Slot}`)
+                .appendChild(select);
         })
         .catch((Error) => console.error('Error:', Error));
 }

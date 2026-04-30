@@ -61,14 +61,11 @@
 				 */
 				if ( $Notifications && count($Notifications) > 0 )
 				{
+					$Update_Notifications = $PDO->prepare("UPDATE `notifications` SET `Seen` = 'yes' WHERE `Sent_To` = ? AND `Seen` = 'no'");
+					$Update_Notifications->execute([ $User ]);
+
 					foreach ( $Notifications as $Key => $Value )
 					{
-						/**
-						 * Set the seen status of the notification to 'yes', so it doesn't get displayed anymore.
-						 */
-						$Update_Notification = $PDO->prepare("UPDATE `notifications` SET `Seen` = 'yes' WHERE `ID` = ?");
-						$Update_Notification->execute([ $Value['ID'] ]);
-
 						echo "
 							<div class='notification'>
 								<div style='float: right;'>

@@ -11,11 +11,25 @@
     {
         if ( $_SERVER['HTTP_HOST'] == "localhost" )
         {
-            session_set_cookie_params(0, '/', 'localhost');
+            session_set_cookie_params([
+                'lifetime' => 0,
+                'path'     => '/',
+                'domain'   => 'localhost',
+                'secure'   => false,
+                'httponly' => true,
+                'samesite' => 'Lax',
+            ]);
         }
         else
         {
-            session_set_cookie_params(0, '/', 'absoluterpg.com');
+            session_set_cookie_params([
+                'lifetime' => 0,
+                'path'     => '/',
+                'domain'   => 'absoluterpg.com',
+                'secure'   => true,
+                'httponly' => true,
+                'samesite' => 'Lax',
+            ]);
         }
     }
 

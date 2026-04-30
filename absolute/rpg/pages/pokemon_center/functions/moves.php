@@ -2,16 +2,9 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
 
     /**
-     * Return an HTML select dropdown menu of all available moves.
-     *
-     * @param $Pokemon_ID
-     * @param $Move_Slot
+     * Return an array of all available moves.
      */
-    function GetMoveDropdown
-    (
-        $Pokemon_ID,
-        $Move_Slot
-    )
+    function GetMoveDropdown()
     {
         global $PDO;
 
@@ -27,18 +20,7 @@
             HandleError($e);
         }
 
-        $Move_Options = "";
-        foreach ( $Move_List as $Move_Data )
-        {
-            $Move_Options .= "<option value='{$Move_Data['ID']}'>{$Move_Data['Name']}</i>";
-        }
-
-        return "
-            <select name='{$Pokemon_ID}_Move_{$Move_Slot}' onchange='UpdateMoveSlot({$Pokemon_ID}, {$Move_Slot});'>
-                <option>Select A Move</option>
-                {$Move_Options}
-            </select>
-        ";
+        return $Move_List;
     }
 
     /**
