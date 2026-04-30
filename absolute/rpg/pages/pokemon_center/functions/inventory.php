@@ -1,7 +1,6 @@
 <?php
     require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
 
-
     /**
      * Get the user's items within the specified inventory tab.
      *

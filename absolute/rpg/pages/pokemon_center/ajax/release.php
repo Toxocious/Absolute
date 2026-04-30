@@ -1,5 +1,6 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
+    header('Content-Type: application/json');
     require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/pokemon_center/functions/release.php';
 
     if ( !empty($_GET['Action']) && in_array($_GET['Action'], ['Get_Releasable_Pokemon', 'Process_Selected_Pokemon', 'Release_Pokemon']) )

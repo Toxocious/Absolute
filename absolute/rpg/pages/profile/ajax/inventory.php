@@ -1,5 +1,6 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
+    header('Content-Type: application/json');
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/profile/functions/inventory.php';
 

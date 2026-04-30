@@ -1,4 +1,6 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
+    header('Content-Type: application/json');
     require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/shop/functions/purchase.php';
 
     if ( !empty($_GET['Action']) && in_array($_GET['Action'], ['Purchase_Object']) )

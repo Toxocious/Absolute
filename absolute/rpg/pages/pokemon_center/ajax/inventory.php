@@ -1,5 +1,6 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/session.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
+    header('Content-Type: application/json');
     require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/pokemon_center/functions/inventory.php';
 
     if ( !empty($_GET['Action']) && in_array($_GET['Action'], ['Equip_Item', 'Unequip_Item', 'Show_Inventory', 'Show_Equipped_Items', 'Show_Item_Preview']) )

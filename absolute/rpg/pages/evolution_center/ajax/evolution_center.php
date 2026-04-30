@@ -1,4 +1,6 @@
 <?php
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/ajax_header.php';
+    header('Content-Type: application/json');
     require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/evolution_center/functions/display_pokemon.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/pages/evolution_center/functions/handle_evolution.php';
 

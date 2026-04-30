@@ -8,9 +8,7 @@
 	<div class='head'>Evolution Center</div>
 	<div class='body padding-5px'>
     <div class='flex row center' id='Evolution_Page_Roster'>
-        <?php
-            echo DisplayRoster();
-        ?>
+        <div class='loading-element'></div>
     </div>
     <br />
 
@@ -37,6 +35,12 @@
 <script src='<?= DOMAIN_ROOT; ?>/pages/_shared/js/ajax_functions.js'></script>
 
 <script src='<?= DOMAIN_ROOT; ?>/pages/evolution_center/js/ajax_functions.js'></script>
+
+<script>
+    (function() {
+        UpdateRoster();
+    })();
+</script>
 
 <?php
 	require_once $_SERVER['DOCUMENT_ROOT'] . '/core/required/layout_bottom.php';
