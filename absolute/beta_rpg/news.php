@@ -1,8 +1,8 @@
 <?php
     $Page_Metadata = [
-        'title' => 'News',
-        'styles' => ['/themes/pages/news.css'],
-        'scripts' => [],
+        'Title' => 'News',
+        'Styles' => ['/themes/pages/news.css'],
+        'Scripts' => [],
     ];
 
     ob_start();

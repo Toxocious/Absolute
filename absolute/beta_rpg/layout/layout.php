@@ -10,9 +10,9 @@
         '/themes/styles/absol.css',
     ];
 
-    if ( isset($Page_Metadata['styles']) && is_array($Page_Metadata['styles']) )
+    if ( isset($Page_Metadata['Styles']) && is_array($Page_Metadata['Styles']) )
     {
-        $Stylesheets = array_merge($Stylesheets, $Page_Metadata['styles']);
+        $Stylesheets = array_merge($Stylesheets, $Page_Metadata['Styles']);
     }
 
     $User_Data = [
@@ -28,7 +28,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>Layout Test &mdash; Pok&eacute;mon Absolute</title>
+        <title><?= isset($Page_Metadata['Title']) ? $Page_Metadata['Title'] : 'Layout Test'; ?> &mdash; Pok&eacute;mon Absolute</title>
 
         <link href="https://fonts.googleapis.com/css2?family=Birthstone:wght@400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -95,7 +95,9 @@
         <?php
             foreach ( $Stylesheets as $Stylesheet ) {
                 if ( $Stylesheet ) {
-                    echo "<link type='text/css' rel='stylesheet' href='{$Stylesheet}' />";
+                    $Stylesheet_Update_Time = filemtime($_SERVER['DOCUMENT_ROOT'] . $Stylesheet);
+
+                    echo "<link type='text/css' rel='stylesheet' href='{$Stylesheet}?v={$Stylesheet_Update_Time}' />";
                 }
             }
         ?>
