@@ -1,5 +1,6 @@
 <?php
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/session.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/user_session.php';
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/components/_component.php';
 
@@ -31,10 +32,10 @@
 
     <body>
         <!-- -->
-        <header <?= isset($_SESSION['Absolute_Beta']['Logged_In_As']) ? '' : "class='logged-out'"; ?>>
+        <header <?= isset($User_Data) ? '' : "class='logged-out'"; ?>>
             <?php
-                $Stylesheets[] = component('header', [
-                    'User_Session' => isset($_SESSION['Absolute_Beta']['Logged_In_As']) ? $_SESSION['Absolute_Beta']['Logged_In_As'] : null,
+                component('header', [
+                    'User_Session' => isset($User_Data) ? $User_Data : null,
                     'Absolute_Time' => $Absolute_Time,
                 ]);
             ?>
@@ -43,8 +44,8 @@
         <!-- -->
         <nav>
             <?php
-                $Stylesheets[] = component('site_nav', [
-                    'User_Session' => isset($_SESSION['Absolute_Beta']['Logged_In_As']) ? $_SESSION['Absolute_Beta']['Logged_In_As'] : null,
+                component('site_nav', [
+                    'User_Session' => isset($User_Data) ? $User_Data : null,
                 ]);
             ?>
         </nav>
@@ -53,7 +54,7 @@
         <section class='page-container'>
             <!-- Chat -->
              <?php
-                $Stylesheets[] = component('chat', []);
+                component('chat', []);
             ?>
 
             <!-- Page Content -->
@@ -65,7 +66,7 @@
         <!-- -->
         <footer>
             <?php
-                $Stylesheets[] = component('footer', [
+                component('footer', [
                     'Page_Start_Time' => $Page_Start_Time,
                 ]);
             ?>
@@ -73,11 +74,16 @@
 
         <!-- -->
         <?php
-            $Stylesheets[] = component('peeker', []);
+            component('peeker', []);
         ?>
 
         <!-- -->
         <?php
+            $Stylesheets = array_values(array_unique(array_filter(array_merge(
+                $Stylesheets,
+                Get_Component_Stylesheets()
+            ))));
+
             foreach ( $Stylesheets as $Stylesheet ) {
                 if ( $Stylesheet ) {
                     $Stylesheet_Update_Time = filemtime($_SERVER['DOCUMENT_ROOT'] . $Stylesheet);

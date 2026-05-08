@@ -12,9 +12,30 @@
 
         require __DIR__ . "/{$name}.php";
 
+        $Stylesheet = null;
+
         if ( file_exists($_SERVER['DOCUMENT_ROOT'] . "/themes/components/{$name}.css") ) {
-            return "/themes/components/{$name}.css";
+            $Stylesheet = "/themes/components/{$name}.css";
+            Add_Component_Stylesheet($Stylesheet);
         }
 
-        return null;
+        return $Stylesheet;
+    }
+
+    function Add_Component_Stylesheet(?string $path): void {
+        if (!$path) {
+            return;
+        }
+
+        if (!isset($GLOBALS['Absolute_Beta_Component_Stylesheets'])) {
+            $GLOBALS['Absolute_Beta_Component_Stylesheets'] = [];
+        }
+
+        if (!in_array($path, $GLOBALS['Absolute_Beta_Component_Stylesheets'], true)) {
+            $GLOBALS['Absolute_Beta_Component_Stylesheets'][] = $path;
+        }
+    }
+
+    function Get_Component_Stylesheets(): array {
+        return $GLOBALS['Absolute_Beta_Component_Stylesheets'] ?? [];
     }
