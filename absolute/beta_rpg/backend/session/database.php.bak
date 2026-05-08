@@ -1,0 +1,252 @@
+<?php
+
+class Database
+{
+    private static ?Database $instance = null;
+    private \PDO $pdo;
+
+    private function __construct(array $config)
+    {
+        $dsn = sprintf(
+            "mysql:host=%s;dbname=%s;charset=%s",
+            $config['host'],
+            $config['database'],
+            $config['charset'],
+        );
+
+        try {
+            $this->pdo = new PDO(
+                $dsn,
+                $config['user'],
+                $config['password'],
+                [
+                    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+                    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+                    PDO::ATTR_EMULATE_PREPARES   => false,
+                ]
+            );
+        } catch (PDOException $e) {
+            throw new Exception("Database connection failed: " . $e->getMessage());
+        }
+    }
+
+    /**
+     * Initialize singleton
+     */
+    public static function init(array $config): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self($config);
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Get instance
+     */
+    public static function get(): self
+    {
+        if (!self::$instance) {
+            throw new Exception("Database not initialized. Call Database::init() first.");
+        }
+
+        return self::$instance;
+    }
+
+    /**
+     * Raw PDO access (use carefully)
+     */
+    public function pdo(): PDO
+    {
+        return $this->pdo;
+    }
+
+    /* =========================================================
+     * CORE QUERY METHOD
+     * ========================================================= */
+
+    public function query(string $sql, array $params = []): \PDOStatement
+    {
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
+    }
+
+    /* =========================================================
+     * SELECT HELPERS
+     * ========================================================= */
+
+    public function select(string $sql, array $params = []): array
+    {
+        return $this->query($sql, $params)->fetchAll();
+    }
+
+    public function selectOne(string $sql, array $params = []): ?array
+    {
+        $result = $this->query($sql, $params)->fetch();
+        return $result ?: null;
+    }
+
+    /* =========================================================
+     * INSERT
+     * ========================================================= */
+
+    public function insert(string $table, array $data): int
+    {
+        $columns = array_keys($data);
+        $fields = implode(", ", $columns);
+        $placeholders = implode(", ", array_map(fn($c) => ":$c", $columns));
+
+        $sql = "INSERT INTO {$table} ({$fields}) VALUES ({$placeholders})";
+
+        $this->query($sql, $data);
+
+        return (int)$this->pdo->lastInsertId();
+    }
+
+    /* =========================================================
+     * UPDATE
+     * ========================================================= */
+
+    public function update(string $table, array $data, string $where, array $whereParams = []): int
+    {
+        $setParts = [];
+        $params = [];
+
+        foreach ($data as $key => $value) {
+            if (is_array($value) && count($value) === 3) {
+                [$column, $operator, $val] = $value;
+
+                $paramKey = "{$key}_expr";
+
+                $setParts[] = "{$key} = {$column} {$operator} :{$paramKey}";
+                $params[$paramKey] = $val;
+            } else {
+                $setParts[] = "{$key} = :{$key}";
+                $params[$key] = $value;
+            }
+        }
+
+        $sql = "UPDATE {$table} SET " . implode(", ", $setParts) . " WHERE {$where}";
+
+        $stmt = $this->query($sql, array_merge($params, $whereParams));
+
+        return $stmt->rowCount();
+    }
+
+    /* =========================================================
+     * DELETE
+     * ========================================================= */
+
+    public function delete(string $table, string $where, array $params = []): int
+    {
+        $sql = "DELETE FROM {$table} WHERE {$where}";
+        $stmt = $this->query($sql, $params);
+
+        return $stmt->rowCount();
+    }
+
+    /* =========================================================
+     * TRANSACTIONS
+     * ========================================================= */
+
+    public function beginTransaction(): void
+    {
+        $this->pdo->beginTransaction();
+    }
+
+    public function commit(): void
+    {
+        $this->pdo->commit();
+    }
+
+    public function rollBack(): void
+    {
+        if ($this->pdo->inTransaction()) {
+            $this->pdo->rollBack();
+        }
+    }
+
+    public function transaction(callable $callback)
+    {
+        try {
+            $this->beginTransaction();
+            $result = $callback($this);
+            $this->commit();
+            return $result;
+        } catch (\Throwable $e) {
+            $this->rollBack();
+            throw $e;
+        }
+    }
+}
+
+function HandleError
+(
+    PDOException $PDOException
+)
+{
+    if (empty($PDOException) )
+    {
+        return 'No PDOException was sent to the error handler.';
+    }
+
+    global $User_Data;
+
+    $Fetch_Date = date('m/d/y h:i A');
+
+    $SQL_ERROR_CODE = $PDOException->getCode();     // Code       :: 42S02
+    $TRIGGERED_BY_FILE = $PDOException->getFile();  // Filename   :: 'C:\xampp\htdocs\core\classes\shop.php'
+    $TRIGGERED_ON_LINE = $PDOException->getLine();  // Line       :: 111
+    $ERROR_MESSAGE = $PDOException->getMessage();   // Error Msg  :: Return a string of the error message
+    $TRACE_INFO = $PDOException->getTrace();        // Trace      :: Returns an array including filename, line number, function, and function args
+    $ORIGINATED_IN = $TRACE_INFO[count($TRACE_INFO) - 1];
+
+    $Custom_Error = $ERROR_MESSAGE;
+    switch ( $SQL_ERROR_CODE )
+    {
+        case '42S02':
+            $Custom_Error = str_replace('SQLSTATE[42S02]: Base table or view not found: 1146 ', '', $ERROR_MESSAGE);
+            break;
+
+        default:
+            $Custom_Error = $ERROR_MESSAGE;
+            break;
+    }
+
+    $Error_Message = "
+        [SQL Error: {$SQL_ERROR_CODE}] {$Custom_Error} in {$TRIGGERED_BY_FILE} on line {$TRIGGERED_ON_LINE} (Originated In: {$ORIGINATED_IN['file']})
+    ";
+
+    if ( !empty($User_Data) )
+    {
+        if ( empty($User_Data['Username']) )
+        {
+            $User_Dialogue = "User ID #{$User_Data} ||";
+        }
+        else
+        {
+            $User_Dialogue = "{$User_Data['Username']} #{$User_Data['ID']} ||";
+        }
+    }
+    else
+    {
+        $User_Dialogue = ' No User Data ||';
+    }
+
+    if ( !is_dir($_SERVER['DOCUMENT_ROOT'] . '/logs/absolute_beta') )
+    {
+        mkdir($_SERVER['DOCUMENT_ROOT'] . '/logs/absolute_beta', 0755, true);
+    }
+
+    $Absolute_Error_Log = fopen($_SERVER['DOCUMENT_ROOT'] . '/logs/absolute_beta/pdo_errors.log', 'a');
+    if ( $Absolute_Error_Log )
+    {
+        fwrite(
+            $Absolute_Error_Log,
+            "[ {$Fetch_Date} ] {$User_Dialogue} {$Error_Message}\n"
+        );
+        fclose($Absolute_Error_Log);
+    }
+}

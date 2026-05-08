@@ -14,12 +14,6 @@
     {
         $Stylesheets = array_merge($Stylesheets, $Page_Metadata['Styles']);
     }
-
-    $User_Data = [
-        'Username' => 'Jess',
-        'Rank' => 'Administrator',
-        'Avatar' => '/assets/images/Avatars/Custom/1.png',
-    ];
 ?>
 
 <!DOCTYPE html>
@@ -37,10 +31,10 @@
 
     <body>
         <!-- -->
-        <header <?= isset($_SESSION['Absolute_Beta']) ? '' : "class='logged-out'"; ?>>
+        <header <?= isset($_SESSION['Absolute_Beta']['Logged_In_As']) ? '' : "class='logged-out'"; ?>>
             <?php
                 $Stylesheets[] = component('header', [
-                    'User_Session' => isset($_SESSION['Absolute_Beta']) ? $_SESSION['Absolute_Beta'] : null,
+                    'User_Session' => isset($_SESSION['Absolute_Beta']['Logged_In_As']) ? $_SESSION['Absolute_Beta']['Logged_In_As'] : null,
                     'Absolute_Time' => $Absolute_Time,
                 ]);
             ?>
@@ -50,7 +44,7 @@
         <nav>
             <?php
                 $Stylesheets[] = component('site_nav', [
-                    'User_Session' => isset($_SESSION['Absolute_Beta']) ? $_SESSION['Absolute_Beta'] : null,
+                    'User_Session' => isset($_SESSION['Absolute_Beta']['Logged_In_As']) ? $_SESSION['Absolute_Beta']['Logged_In_As'] : null,
                 ]);
             ?>
         </nav>

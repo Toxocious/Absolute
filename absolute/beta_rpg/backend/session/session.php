@@ -9,26 +9,30 @@
         'Timestamp' => time(),
     ];
 
-    if ( isset($_SERVER['HTTP_HOST']) && session_status() !== PHP_SESSION_ACTIVE )
-    {
-        if ( $_SERVER['HTTP_HOST'] == "localhost" )
+    if ( session_status() !== PHP_SESSION_ACTIVE )
         {
+        $Request_Host = strtolower($_SERVER['HTTP_HOST'] ?? '');
+        $Request_Host = explode(':', $Request_Host)[0];
+
+        $Is_Local = in_array($Request_Host, ['localhost', 'beta.localhost', '127.0.0.1'], true);
+
+        if ($Is_Local) {
+            // Host-only cookie for local dev (no domain key)
             session_set_cookie_params([
                 'lifetime' => 0,
                 'path'     => '/',
-                'domain'   => 'localhost',
                 'secure'   => false,
                 'httponly' => true,
                 'samesite' => 'Lax',
             ]);
-        }
-        else
-        {
+        } else {
+            $Is_Https = !empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off';
+
             session_set_cookie_params([
                 'lifetime' => 0,
                 'path'     => '/',
-                'domain'   => 'absoluterpg.com',
-                'secure'   => true,
+                'domain'   => '.absoluterpg.com',
+                'secure'   => $Is_Https,
                 'httponly' => true,
                 'samesite' => 'Lax',
             ]);
@@ -38,7 +42,7 @@
     // No cache.
     header("Content-Type: text/html; charset=UTF-8");
     header("Expires: Tue, 03 Jul 2001 06:00:00 GMT");
-    header("Last-Modified: ".gmdate("D, d M Y H:i:s")." GMT");
+    header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
     header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
     header("Pragma: no-cache");
 

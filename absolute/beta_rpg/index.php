@@ -1,6 +1,8 @@
 <?php
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/session.php';
 
+    unset($_SESSION['Absolute_Beta']['Logged_In_As']);
+
     $Page_Metadata = [
         'Title' => 'Index',
         'Styles' => ['/themes/pages/index.css'],
@@ -10,10 +12,10 @@
 
     try
     {
-        $Count_Data = $db->count([
-            'users',
-            // 'pokemon',
-        ]);
+        $Count_Data = $db->select("SELECT
+            (SELECT COUNT(*) FROM `users`) AS users,
+            (SELECT COUNT(*) FROM `user_pokemon`) AS pokemon
+        ")[0];
     }
     catch ( PDOException $e )
     {

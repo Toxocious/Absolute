@@ -1,5 +1,5 @@
 <?php
-    if ( isset($_SESSION['Absolute_Beta']) )
+    if ( isset($_SESSION['Absolute_Beta']['Logged_In_As']) )
     {
 ?>
 

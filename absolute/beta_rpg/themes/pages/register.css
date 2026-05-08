@@ -1,7 +1,7 @@
 .login-page {
     text-align: center;
 
-    & > h2 {
+    & h2 {
         font-size: 1.25rem;
         font-weight: 700;
         color: var(--color-gradient-one);
@@ -91,6 +91,29 @@
                     & > section {
                         flex: 1;
                     }
+                }
+
+                &.starter-selection {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: center;
+                    gap: 1em;
+
+                    & > div {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                    }
+                }
+
+                div.form-error {
+                    background-color: var(--color-chat-pmsg);
+                    border: 2px solid var(--border-color-error);
+                    border-radius: var(--border-radius);
+
+                    margin-top: 4px;
+                    padding: 0.25em;
                 }
             }
 
