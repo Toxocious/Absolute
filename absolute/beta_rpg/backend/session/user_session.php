@@ -13,6 +13,16 @@
             ->where("id", '=', $_SESSION['Absolute_Beta']['Logged_In_As']['ID'])
             ->first();
 
+        $User_Roster = Database::get()
+            ->table('user_pokemon')
+            ->where('owner_current', '=', $User_Data['id'])
+            ->where('location', '=', 'roster')
+            ->get();
+
+        $User_Data = array_merge($User_Data, [
+            'roster' => $User_Roster,
+        ]);
+
         if ( !isset($_SESSION['Absolute_Beta']['playtime']) )
         {
             $_SESSION['Absolute_Beta']['playtime'] = $Time;

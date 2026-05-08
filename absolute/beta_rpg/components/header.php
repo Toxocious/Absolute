@@ -1,15 +1,11 @@
 <?php
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/user_session.php';
-
     /**
      * Header component that displays user information and social links if the user is logged in.
      *
      * Props:
-     *  - User_Session ($_SESSION['Absolute_Beta']['Logged_In_As']): The user's $_SESSION['Absolute_Beta']['Logged_In_As'] status or null if not logged in.
+     *  - User_Session: The user's $_SESSION['Absolute_Beta']['Logged_In_As'] status or null if not logged in.
      *  - Absolute_Time: An array containing the current in-game time information.
      */
-
-    // var_dump($_SESSION['Absolute_Beta']['Logged_In_As']);
 ?>
 
 <section class='user-bar <?= $User_Session ? 'logged-in' : 'logged-out'; ?>'>
@@ -36,44 +32,49 @@
     <div class='user-container'>
         <?php if ( $User_Session ): ?>
         <div class='user-avatar'>
-            <img src='<?= $User_Session['Avatar']; ?>' />
+            <img src='<?= $User_Session['avatar']; ?>' />
         </div>
 
         <div class='user-info'>
             <h2 class='username'>
-                <?= $User_Session['Username']; ?>
+                <?= $User_Session['username']; ?>
             </h2>
 
             <div class='user-roster'>
-                <div class='user-roster-slot'>
-                    <img src='https://localhost/images/Pokemon/Icons/Normal/359.png' alt='Absol' />
-                </div>
-                <div class='user-roster-slot'>
-                    <img src='https://sprites.tpkrpg.net/misc/empty.png' alt='Empty Slot' />
-                </div>
-                <div class='user-roster-slot'>
-                    <img src='https://sprites.tpkrpg.net/misc/empty.png' alt='Empty Slot' />
-                </div>
-                <div class='user-roster-slot'>
-                    <img src='https://sprites.tpkrpg.net/misc/empty.png' alt='Empty Slot' />
-                </div>
-                <div class='user-roster-slot'>
-                    <img src='https://sprites.tpkrpg.net/misc/empty.png' alt='Empty Slot' />
-                </div>
-                <div class='user-roster-slot'>
-                    <img src='https://sprites.tpkrpg.net/misc/empty.png' alt='Empty Slot' />
-                </div>
+                <?php
+                for ( $i = 0; $i < 6; $i++ )
+                {
+                    $Roster_Pokemon_Data = $User_Session['roster'][$i] ?? null;
+
+                    if ( $Roster_Pokemon_Data === null )
+                    {
+                        echo "
+                            <div class='user-roster-slot empty'>
+                                <img src='/assets/images/Pokemon/Empty.png' alt='Empty Slot' />
+                            </div>
+                        ";
+
+                        continue;
+                    }
+
+                    echo "
+                        <div class='user-roster-slot'>
+                            <img src='/assets/images/Pokemon/Icons/{$Roster_Pokemon_Data['type']}/{$Roster_Pokemon_Data['pokedex_id']}.png' alt='{$Roster_Pokemon_Data['name']}' />
+                        </div>
+                    ";
+                }
+                ?>
             </div>
         </div>
 
         <div class='user-currencies'>
             <div class='currency'>
                 <img src='https://localhost/images/Assets/Money.png' alt='Money' />
-                <span><?= number_format($User_Session['Money'] ?? 0); ?></span>
+                <span><?= number_format($User_Session['money'] ?? 0); ?></span>
             </div>
             <div class='currency'>
                 <img src='https://localhost/images/Assets/Abso_Coins.png' alt='Abso Coins' />
-                <span><?= number_format($User_Session['Abso_Coins'] ?? 0); ?></span>
+                <span><?= number_format($User_Session['abso_coins'] ?? 0); ?></span>
             </div>
         </div>
         <?php endif; ?>
