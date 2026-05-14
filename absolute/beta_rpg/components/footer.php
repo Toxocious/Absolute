@@ -4,7 +4,6 @@
 
 <div>
     <?php
-        // Echo current PHP version.
         echo "PHP Version: " . phpversion() . "<br />";
     ?>
     Pok&eacute;mon Absolute &copy; <?= date('Y'); ?> <a href='https://toxocious.dev' target='_blank' rel='noopener noreferrer'>Toxocious</a><br />

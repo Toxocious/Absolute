@@ -259,6 +259,7 @@ CREATE TABLE user_pokemon (
 
   created_at INT UNSIGNED NOT NULL,
   created_location VARCHAR(100) DEFAULT NULL,
+  created_level INT UNSIGNED NOT NULL DEFAULT 5,
 
   PRIMARY KEY (id),
 

@@ -9,6 +9,8 @@
         '/themes/main.css',
 
         '/themes/styles/absol.css',
+
+        '/themes/components/poke_viewer.css',
     ];
 
     if ( isset($Page_Metadata['Styles']) && is_array($Page_Metadata['Styles']) )
@@ -35,6 +37,8 @@
         <link href="https://fonts.googleapis.com/css2?family=Birthstone:wght@400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+
+        <script src="<?= '/js/components/poke_viewer.js'; ?>" defer></script>
     </head>
 
     <body>
@@ -98,7 +102,7 @@
                     echo "<link type='text/css' rel='stylesheet' href='{$Stylesheet}?v={$Stylesheet_Update_Time}' />";
                 }
             }
-?>
+        ?>
 
         <!-- Component and Page Scripts -->
          <?php
@@ -134,6 +138,6 @@
 
                 echo "<script{$Module_Attribute}{$Defer_Attribute} src='{$Script_Src}?v={$Version}'></script>";
             }
-        ?>
+         ?>
     </body>
 </html>

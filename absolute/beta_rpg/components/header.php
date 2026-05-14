@@ -6,6 +6,8 @@
      *  - User_Session: The user's $_SESSION['Absolute_Beta']['Logged_In_As'] status or null if not logged in.
      *  - Absolute_Time: An array containing the current in-game time information.
      */
+
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/pokemon/pokemon_data.php';
 ?>
 
 <section class='user-bar <?= $User_Session ? 'logged-in' : 'logged-out'; ?>'>
@@ -32,7 +34,7 @@
     <div class='user-container'>
         <?php if ( $User_Session ): ?>
         <div class='user-avatar'>
-            <img src='<?= $User_Session['avatar']; ?>' />
+            <img src='/assets/<?= $User_Session['avatar']; ?>' />
         </div>
 
         <div class='user-info'>
@@ -57,9 +59,17 @@
                         continue;
                     }
 
+                    $Pokemon_Images = PokemonData::FetchPokemonImages(
+                        $Roster_Pokemon_Data['pokedex_id'],
+                        $Roster_Pokemon_Data['alt_id'],
+                        $Roster_Pokemon_Data['type'],
+                        $Roster_Pokemon_Data['name'],
+                        $Roster_Pokemon_Data['forme']
+                    );
+
                     echo "
                         <div class='user-roster-slot'>
-                            <img src='/assets/images/Pokemon/Icons/{$Roster_Pokemon_Data['type']}/{$Roster_Pokemon_Data['pokedex_id']}.png' alt='{$Roster_Pokemon_Data['name']}' />
+                            <img src='{$Pokemon_Images['Icon']['Sprite_Path']}' alt='{$Pokemon_Images['Icon']['Alt_Text']}' onclick='PokemonViewer.open({$Roster_Pokemon_Data['id']})' />
                         </div>
                     ";
                 }
