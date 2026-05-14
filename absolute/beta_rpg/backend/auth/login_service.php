@@ -164,10 +164,9 @@ final class LoginService
         session_regenerate_id(true);
 
         $_SESSION['Absolute_Beta'] = [
-            'Logged_In_As' => (int)($payload['Logged_In_As'] ?? null),
+            'Logged_In_As' => ($payload['Logged_In_As'] ?? null),
         ];
 
-        // Optional: keep global CSRF bucket separate from auth bucket.
         if (!isset($_SESSION['CSRF']) || !is_array($_SESSION['CSRF'])) {
             $_SESSION['CSRF'] = [];
         }
@@ -260,8 +259,6 @@ final class LoginService
                 'Abso_Coins' => (int)($user['abso_coins'] ?? 0),
             ]
         ];
-
-        $_SESSION['Absolute_Beta'] = $Payload;
 
         return $Payload;
     }

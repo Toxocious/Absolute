@@ -17,7 +17,6 @@
     $Is_Logged_In = isset($_SESSION['Absolute_Beta']['Logged_In_As']);
 
     if (empty($_SESSION['Absolute_Beta']['CSRF']['Register'])) {
-        echo "<script>console.log('Generating new CSRF token for registration form.');</script>";
         $_SESSION['Absolute_Beta']['CSRF']['Register'] = bin2hex(random_bytes(32));
     }
 
@@ -108,8 +107,6 @@
                 : [];
 
             $General_Error = (string)($Register_Result['message'] ?? 'Registration failed. Please try again.');
-
-            var_dump($Register_Result);
         }
     }
 ?>

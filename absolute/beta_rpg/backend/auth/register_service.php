@@ -2,7 +2,9 @@
     declare(strict_types=1);
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/database.php';
+
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/pokemon/pokedex_data.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/pokemon/pokemon_data.php';
 
     /**
      * Registration service for beta_rpg.
@@ -102,7 +104,7 @@
                     $result['message'] = 'Please select a valid starter.';
                     return $result;
                 }
-                $Starter_Pokemon_IVs = PokedexData::GenerateRandomIVs();
+                $Starter_Pokemon_IVs = PokemonData::GenerateRandomIVs();
 
                 $registeredAt = time();
                 $authCode = bin2hex(random_bytes(20));
@@ -149,13 +151,13 @@
                         'slot' => 1,
                         'location' => 'Roster',
                         'experience' => 125,
-                        'ability' => PokedexData::GenerateRandomAbility([
+                        'ability' => PokemonData::GenerateRandomAbility([
                             $Starter_Pokemon_Data['ability_1'],
                             $Starter_Pokemon_Data['ability_2'],
                             $Starter_Pokemon_Data['ability_hidden']
                         ], true),
-                        'nature' => PokedexData::GenerateRandomNature(),
-                        'gender' => PokedexData::GenerateRandomGender(
+                        'nature' => PokemonData::GenerateRandomNature(),
+                        'gender' => PokemonData::GenerateRandomGender(
                             $Starter_Pokemon_Data['male_odds'],
                             $Starter_Pokemon_Data['female_odds'],
                             $Starter_Pokemon_Data['genderless_odds']

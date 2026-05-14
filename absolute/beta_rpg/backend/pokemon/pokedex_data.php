@@ -6,6 +6,14 @@
 
     final class PokedexData
     {
+        /**
+         * Fetches a single Pokedex entry by its Pokedex ID and optional Alt ID.
+         *
+         * @param int $pokedexId The Pokedex ID of the Pokemon.
+         * @param int $altId The alternative form ID of the Pokemon (default is 0).
+         *
+         * @return array|null An associative array of the Pokedex entry data, or null if not found.
+         */
         public static function fetch(int $pokedexId, int $altId = 0): ?array
         {
             $db = Database::get();
@@ -29,6 +37,13 @@
             return null;
         }
 
+        /**
+         * Fetches a single Pokedex entry by its unique database ID.
+         *
+         * @param int $id The unique database ID of the Pokedex entry.
+         *
+         * @return array|null An associative array of the Pokedex entry data, or null if not found.
+         */
         public static function fetchById(int $id): ?array
         {
             return Database::get()->selectOne(
@@ -40,6 +55,14 @@
             );
         }
 
+        /**
+         * Fetches multiple Pokedex entries by an array of Pokedex IDs and optional Alt ID.
+         *
+         * @param array $pokedexIds An array of Pokedex IDs to fetch.
+         * @param int $altId The alternative form ID of the Pokemon (default is 0).
+         *
+         * @return array An array of associative arrays, each representing a Pokedex entry.
+         */
         public static function fetchManyByDexIds(array $pokedexIds, int $altId = 0): array
         {
             $cleanIds = self::cleanDexIds($pokedexIds);
@@ -67,6 +90,15 @@
             return Database::get()->select($sql, $params);
         }
 
+        /**
+         * Searches for Pokedex entries by a name query, matching against the Pokemon name and forme.
+         *
+         * @param string $query The search query string.
+         * @param int $limit The maximum number of results to return (default is 25).
+         * @param int $offset The number of results to skip for pagination (default is 0).
+         *
+         * @return array An array of associative arrays, each representing a Pokedex entry that matches the search query.
+         */
         public static function searchByName(string $query, int $limit = 25, int $offset = 0): array
         {
             $db = Database::get();
@@ -90,6 +122,13 @@
             );
         }
 
+        /**
+         * Cleans an array of Pokedex IDs by ensuring they are valid integers within a reasonable range, removing duplicates, and sorting them.
+         *
+         * @param array $ids An array of Pokedex IDs to clean.
+         *
+         * @return array An array of cleaned, unique, and sorted Pokedex IDs.
+         */
         private static function cleanDexIds(array $ids): array
         {
             $clean = [];
@@ -114,65 +153,17 @@
             return $clean;
         }
 
-        public static function GenerateRandomAbility(array $abilities, bool $includeHidden = false): ?string
+        public static function GetPokemonBaseStats(int $pokedexId, int $altId = 0): ?array
         {
-            $BASE_ABILITY_WEIGHT = 100;
-            $HIDDEN_ABILITY_WEIGHT = 3;
-
-            if (empty($abilities)) {
-                return null;
-            }
-
-            $Ability_Weighter = new Weighter();
-            foreach ($abilities as $index => $ability) {
-                if (empty($ability)) {
-                    continue;
-                }
-
-                $weight = $BASE_ABILITY_WEIGHT;
-                if ($includeHidden && $index === 2 && isset($abilities[2])) {
-                    $weight = $HIDDEN_ABILITY_WEIGHT;
-                }
-
-                $Ability_Weighter->Add($ability, $weight);
-            }
-
-            return $Ability_Weighter->Pick();
-        }
-
-        public static function GenerateRandomGender(float $maleOdds, float $femaleOdds, float $genderlessOdds): string
-        {
-            $Gender_Weighter = new Weighter();
-
-            $Gender_Weighter->Add('male', (int)($maleOdds * 1000));
-            $Gender_Weighter->Add('female', (int)($femaleOdds * 1000));
-            $Gender_Weighter->Add('genderless', (int)($genderlessOdds * 1000));
-
-            return $Gender_Weighter->Pick();
-        }
-
-        public static function GenerateRandomIVs(): array
-        {
-            return [
-                'hp_iv' => mt_rand(0, 31),
-                'attack_iv' => mt_rand(0, 31),
-                'defense_iv' => mt_rand(0, 31),
-                'special_attack_iv' => mt_rand(0, 31),
-                'special_defense_iv' => mt_rand(0, 31),
-                'speed_iv' => mt_rand(0, 31),
-            ];
-        }
-
-        public static function GenerateRandomNature(): string
-        {
-            $Natures = [
-                'Hardy', 'Lonely', 'Brave', 'Adamant', 'Naughty',
-                'Bold', 'Docile', 'Relaxed', 'Impish', 'Lax',
-                'Timid', 'Hasty', 'Serious', 'Jolly', 'Naive',
-                'Modest', 'Mild', 'Quiet', 'Bashful', 'Rash',
-                'Calm', 'Gentle', 'Sassy', 'Careful', 'Quirky'
-            ];
-
-            return $Natures[array_rand($Natures)];
+            return Database::get()->selectOne(
+                'SELECT base_hp, base_attack, base_defense, base_sp_attack, base_sp_defense, base_speed
+                FROM pokedex
+                WHERE pokedex_id = :pokedex_id AND alt_id = :alt_id
+                LIMIT 1',
+                [
+                    'pokedex_id' => $pokedexId,
+                    'alt_id' => $altId,
+                ]
+             );
         }
     }

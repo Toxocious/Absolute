@@ -38,14 +38,14 @@
 
         $Login_Result = LoginService::attempt($Username, $Password);
 
-        var_dump($Login_Result);
-
         if ( !$Login_Result['ok'] ) {
             $Login_Message = [
                 'Type' => 'error',
                 'Text' => $Login_Result['message'] ?? 'An unknown error occurred during login.',
             ];
         } else {
+            LoginService::establishSession($Login_Result['session_payload']);
+
             header('Location: /news.php');
             exit;
         }
