@@ -19,6 +19,11 @@
             Add_Component_Stylesheet($Stylesheet);
         }
 
+        if ( file_exists($_SERVER['DOCUMENT_ROOT'] . "/js/components/{$name}.js") ) {
+            $Script = "/js/components/{$name}.js";
+            Add_Component_Script($Script);
+        }
+
         return $Stylesheet;
     }
 
@@ -36,6 +41,24 @@
         }
     }
 
+    function Add_Component_Script(?string $path): void {
+        if (!$path) {
+            return;
+        }
+
+        if (!isset($GLOBALS['Absolute_Beta_Component_Scripts'])) {
+            $GLOBALS['Absolute_Beta_Component_Scripts'] = [];
+        }
+
+        if (!in_array($path, $GLOBALS['Absolute_Beta_Component_Scripts'], true)) {
+            $GLOBALS['Absolute_Beta_Component_Scripts'][] = $path;
+        }
+    }
+
     function Get_Component_Stylesheets(): array {
         return $GLOBALS['Absolute_Beta_Component_Stylesheets'] ?? [];
+    }
+
+    function Get_Component_Scripts(): array {
+        return $GLOBALS['Absolute_Beta_Component_Scripts'] ?? [];
     }

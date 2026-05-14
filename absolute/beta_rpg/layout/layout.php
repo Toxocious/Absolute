@@ -15,6 +15,13 @@
     {
         $Stylesheets = array_merge($Stylesheets, $Page_Metadata['Styles']);
     }
+
+    $Scripts = [];
+
+    if ( isset($Page_Metadata['Scripts']) && is_array($Page_Metadata['Scripts']) )
+    {
+        $Scripts = $Page_Metadata['Scripts'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +84,7 @@
             component('peeker', []);
         ?>
 
-        <!-- -->
+        <!-- Component And Page Styles-->
         <?php
             $Stylesheets = array_values(array_unique(array_filter(array_merge(
                 $Stylesheets,
@@ -90,6 +97,42 @@
 
                     echo "<link type='text/css' rel='stylesheet' href='{$Stylesheet}?v={$Stylesheet_Update_Time}' />";
                 }
+            }
+?>
+
+        <!-- Component and Page Scripts -->
+         <?php
+            $Scripts = array_values(array_unique(array_filter(array_merge(
+                $Scripts,
+                Get_Component_Scripts()
+            ))));
+
+             foreach ( $Scripts as $Script ) {
+                $Script_Src = null;
+                $Script_Module = false;
+                $Script_Defer = true;
+
+                if ( is_string($Script) ) {
+                    $Script_Src = $Script;
+                } elseif ( is_array($Script) ) {
+                    $Script_Src = $Script['src'] ?? null;
+                    $Script_Module = !empty($Script['module']);
+                    $Script_Defer = !array_key_exists('defer', $Script) || (bool)$Script['defer'];
+                }
+
+                if ( !$Script_Src ) {
+                    continue;
+                }
+
+                $Version = time();
+                if ( str_starts_with($Script_Src, '/') && file_exists($_SERVER['DOCUMENT_ROOT'] . $Script_Src) ) {
+                    $Version = filemtime($_SERVER['DOCUMENT_ROOT'] . $Script_Src);
+                }
+
+                $Module_Attribute = $Script_Module ? " type='module'" : '';
+                $Defer_Attribute = $Script_Defer ? ' defer' : '';
+
+                echo "<script{$Module_Attribute}{$Defer_Attribute} src='{$Script_Src}?v={$Version}'></script>";
             }
         ?>
     </body>
