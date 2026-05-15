@@ -65,7 +65,6 @@ CREATE TABLE users (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   username VARCHAR(32) NOT NULL,
 
-  roster_hash INT(125) UNSIGNED DEFAULT 0,
 
   gender ENUM('Male','Female','Genderless') NOT NULL DEFAULT 'Genderless',
 
@@ -75,8 +74,10 @@ CREATE TABLE users (
 
   playtime INT(12) NOT NULL DEFAULT '0',
 
-  discord_id BIGINT UNSIGNED DEFAULT NULL,
+  roster_hash VARCHAR(32) DEFAULT NULL,
   auth_code VARCHAR(64) DEFAULT NULL,
+
+  discord_id BIGINT UNSIGNED DEFAULT NULL,
 
   date_registered INT UNSIGNED NOT NULL,
   last_active INT UNSIGNED DEFAULT NULL,

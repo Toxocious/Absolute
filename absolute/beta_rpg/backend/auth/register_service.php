@@ -5,6 +5,7 @@
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokedex_data.php';
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokemon_data.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/user_data.php';
 
     /**
      * Registration service for beta_rpg.
@@ -178,6 +179,8 @@
 
                     return $userId;
                 });
+
+                UserData::UpdateRosterHash($newUserId);
 
                 $result['ok'] = true;
                 $result['user_id'] = $newUserId;
