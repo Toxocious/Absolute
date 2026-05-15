@@ -65,7 +65,7 @@ CREATE TABLE users (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   username VARCHAR(32) NOT NULL,
 
-  roster SMALLINT UNSIGNED DEFAULT 0,
+  roster_hash INT(125) UNSIGNED DEFAULT 0,
 
   gender ENUM('Male','Female','Genderless') NOT NULL DEFAULT 'Genderless',
 

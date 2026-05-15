@@ -7,7 +7,7 @@
      *  - Absolute_Time: An array containing the current in-game time information.
      */
 
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/pokemon/pokemon_data.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokemon_data.php';
 ?>
 
 <section class='user-bar <?= $User_Session ? 'logged-in' : 'logged-out'; ?>'>

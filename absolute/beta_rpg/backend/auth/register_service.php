@@ -3,8 +3,8 @@
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/database.php';
 
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/pokemon/pokedex_data.php';
-    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/pokemon/pokemon_data.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokedex_data.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokemon_data.php';
 
     /**
      * Registration service for beta_rpg.
