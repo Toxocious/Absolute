@@ -70,7 +70,16 @@
 
             <!-- Page Content -->
             <main class='page-content'>
-                <?= $Content; ?>
+                <?php
+                    if ( isset($Page_Metadata['Requires_Session']) && $Page_Metadata['Requires_Session'] === true && !isset($User_Data) )
+                    {
+                        component('requires_session');
+                    }
+                    else
+                    {
+                        echo $Content;
+                    }
+                ?>
             </main>
         </section>
 
