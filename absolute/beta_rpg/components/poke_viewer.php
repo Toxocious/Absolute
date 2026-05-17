@@ -89,7 +89,11 @@
                         <?php
                             if ( $Pokemon['frozen'] )
                             {
-                                echo "<img src='/assets/images/Pokemon/Misc/Frozen.png' alt='This Pokemon is frozen and can not be sold, traded, or released.' title='This Pokemon is frozen and can not be sold, traded, or released.' tooltip='This Pokemon is frozen and can not be sold, traded, or released.' />";
+                                echo "
+                                    <div class='tooltip tooltip-below' data-tooltip='This Pokemon is frozen and can not be sold, traded, or released.'>
+                                        <img src='/assets/images/Pokemon/Misc/Frozen.png' alt='This Pokemon is frozen and can not be sold, traded, or released.' />
+                                    </div>
+                                ";
                             }
                         ?>
                     </div>

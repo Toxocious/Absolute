@@ -131,10 +131,66 @@ a:hover {
         border-color: var(--color-secondary);
 
         padding: 1em;
+
+        &.text-center {
+            text-align: center;
+        }
     }
 
     & > .panel-content:last-child {
         border-radius: var(--border-radius);
+    }
+
+    & > .panel-nav {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+
+        background: var(--color-tertiary);
+        border-bottom: 1px solid var(--color-primary);
+
+        border-radius: var(--border-radius-tl-tr);
+
+        & > button {
+            background: var(--color-secondary);
+            color: var(--color-white);
+
+            font-weight: bold;
+
+            border: none;
+            border-right: 1px solid var(--color-primary);
+
+            padding: 1em;
+
+            flex: 1;
+
+            transition: background 0.25s;
+
+            &:first-child {
+                border-radius: var(--border-radius-tl);
+            }
+
+            &:last-child {
+                border-radius: var(--border-radius-tr);
+                border-left: none;
+            }
+
+            &:hover {
+                background: var(--color-primary);
+
+                cursor: pointer;
+            }
+
+            &.active {
+                background: var(--color-primary);
+            }
+        }
+    }
+
+    &:has(.panel-nav) {
+        & > .panel-content {
+            border-radius: var(--border-radius-bl-br);
+        }
     }
 
     & > .panel-header {
@@ -219,51 +275,69 @@ h6 {
 .tooltip {
     position: relative;
     cursor: help;
-}
 
-/* Tooltip box */
-.tooltip::after {
-    content: attr(data-tooltip);
-    position: absolute;
-    left: 50%;
-    bottom: 100%;
-    /* directly above element */
-    transform: translateX(-50%) translateY(-8px);
+    /* Tooltip box */
+    &::after {
+        content: attr(data-tooltip);
+        position: absolute;
+        z-index: 2001;
+        left: 50%;
+        bottom: 100%;
+        transform: translateX(-50%) translateY(-8px);
 
-    background: #111827;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 6px;
-    font-size: 12px;
-    white-space: nowrap;
+        background: #111827;
+        color: #fff;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 12px;
+        white-space: nowrap;
 
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.15s ease, transform 0.15s ease;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.15s ease, transform 0.15s ease;
+    }
 
-    z-index: 1000;
-}
+    /* Arrow */
+    &::before {
+        content: "";
+        position: absolute;
+        z-index: 2001;
+        left: 50%;
+        bottom: 100%;
+        transform: translateX(-50%) translateY(2px);
 
-/* Arrow */
-.tooltip::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    bottom: 100%;
-    transform: translateX(-50%) translateY(2px);
+        border: 6px solid transparent;
+        border-top-color: #111827;
 
-    border: 6px solid transparent;
-    border-top-color: #111827;
+        opacity: 0;
+        transition: opacity 0.15s ease, transform 0.15s ease;
 
-    opacity: 0;
-    transition: opacity 0.15s ease, transform 0.15s ease;
+        pointer-events: none;
+    }
 
-    pointer-events: none;
-}
+    /* Show */
+    &:hover::after,
+    &:hover::before {
+        opacity: 1;
+        transform: translateX(-50%) translateY(-12px);
+    }
 
-/* Show */
-.tooltip:hover::after,
-.tooltip:hover::before {
-    opacity: 1;
-    transform: translateX(-50%) translateY(-12px);
+    &.tooltip-below::after {
+        bottom: auto;
+        top: 100%;
+        transform: translateX(-50%) translateY(8px);
+    }
+
+    &.tooltip-below::before {
+        bottom: auto;
+        top: 100%;
+        transform: translateX(-50%) translateY(-2px);
+        border-top-color: transparent;
+        border-bottom-color: #111827;
+    }
+
+    &.tooltip-below:hover::after,
+    &.tooltip-below:hover::before {
+        transform: translateX(-50%) translateY(12px);
+    }
 }
