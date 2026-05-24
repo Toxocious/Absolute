@@ -166,4 +166,13 @@
                 ]
              );
         }
+
+        public static function GetPokemonDropdownList(): array
+        {
+            return Database::get()->select(
+                'SELECT id, pokedex_id, alt_id, pokemon, forme
+                FROM pokedex
+                ORDER BY pokedex_id ASC, alt_id ASC'
+            );
+        }
     }

@@ -17,6 +17,8 @@
             ->table('user_pokemon')
             ->where('owner_current', '=', $User_Data['id'])
             ->where('location', '=', 'roster')
+            ->orderBy('slot', 'ASC')
+            ->limit(6)
             ->get();
 
         $User_Rpg_State = Database::get()

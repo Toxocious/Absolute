@@ -1,0 +1,100 @@
+.pokemon-center-roster-slot {
+    border: 2px solid var(--border-color);
+    border-right: none;
+    border-radius: var(--border-radius-tl-bl);
+
+    background: var(--background-gradient-light);
+    box-shadow: var(--box-shadow-nav);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    user-select: none;
+
+    min-height: 62px;
+    max-height: 62px;
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    .pokemon-data {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 0.5em;
+
+        padding: 0.5em;
+
+        width: 100%;
+
+        .pokemon-info,
+        .pokemon-center-box-card-info {
+            position: relative;
+            flex: 1;
+
+            .pokemon-name,
+            .pokemon-center-box-card-name {
+                font-weight: bold;
+                text-transform: capitalize;
+            }
+
+            .pokemon-nickname,
+            .pokemon-center-box-card-nickname {
+                font-size: 0.875em;
+                color: var(--color-light-grey);
+                letter-spacing: 0.5px;
+            }
+
+            .pokemon-level,
+            .pokemon-center-box-card-level {
+                font-size: 0.875em;
+            }
+
+            .pokemon-gender,
+            .pokemon-center-box-card-gender {
+                display: flex;
+                align-items: center;
+                height: 100%;
+
+                position: absolute;
+                width: 32px;
+                top: 0px;
+                right: 0px;
+
+                img {
+                    height: 32px;
+                    width: 32px;
+
+                    opacity: 0.4;
+                }
+            }
+        }
+    }
+
+    .pokemon-slots {
+        display: flex;
+        flex-direction: row;
+
+        width: 100%;
+
+        .pokemon-slot {
+            text-align: center;
+
+            padding: 0.5em 0.25em;
+            width: calc(100% / 7);
+
+            &:not(:last-child) {
+                border-right: none;
+            }
+
+            &.active {
+                background: var(--color-primary);
+                color: var(--color-white);
+                border-radius: var(--border-radius);
+            }
+        }
+    }
+}

@@ -17,6 +17,20 @@
         font-size: 12px;
     }
 
+    & > .login-message {
+        border: 1px solid;
+        border-radius: var(--border-radius);
+        padding: 1em;
+        max-width: 600px;
+        width: 600px;
+        justify-self: center;
+
+        &.error {
+            border-color: var(--border-color-error);
+            background-color: var(--color-chat-pmsg);
+        }
+    }
+
     & > .login-form {
         position: relative;
 

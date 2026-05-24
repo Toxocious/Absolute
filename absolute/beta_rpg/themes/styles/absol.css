@@ -5,6 +5,12 @@
 
     --background-gradient: radial-gradient(ellipse at top right, var(--background-color-start), var(--background-color-mid), var(--background-color-end));
 
+    --background-color-light-start: #253147;
+    --background-color-light-mid: #2c3a55;
+    --background-color-light-end: #3b4d72;
+
+    --background-gradient-light: radial-gradient(ellipse at top right, var(--background-color-light-start), var(--background-color-light-mid), var(--background-color-light-end));
+
     --color-primary: #4a618f;
     --color-secondary: #3b4d72;
     --color-tertiary: #2c3a55;

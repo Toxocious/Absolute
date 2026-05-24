@@ -66,6 +66,28 @@
         return $userId;
     }
 
+    function api_safe_int($value): int
+    {
+        if ( is_int($value) ) {
+            return $value;
+        } elseif ( is_string($value) && ctype_digit($value) ) {
+            return (int)$value;
+        } else {
+            return 0;
+        }
+    }
+
+    function api_query(string $name, ?string $default = null): ?string
+    {
+        $raw = $_GET[$name] ?? null;
+
+        if ( $raw === null || $raw === '' ) {
+            return $default;
+        }
+
+        return $raw;
+    }
+
     function api_query_int(
         string $name,
         int $default,

@@ -44,46 +44,46 @@
 
             <div class='user-roster'>
                 <?php
-                for ( $i = 0; $i < 6; $i++ )
-                {
-                    $Roster_Pokemon_Data = $User_Session['roster'][$i] ?? null;
-
-                    if ( $Roster_Pokemon_Data === null )
+                    for ( $i = 0; $i < 6; $i++ )
                     {
+                        $Roster_Pokemon_Data = $User_Session['roster'][$i] ?? null;
+
+                        if ( $Roster_Pokemon_Data === null )
+                        {
+                            echo "
+                                <div class='user-roster-slot empty'>
+                                    <img src='/assets/images/Pokemon/Empty.png' alt='Empty Slot' />
+                                </div>
+                            ";
+
+                            continue;
+                        }
+
+                        $Pokemon_Images = PokemonData::FetchPokemonImages(
+                            $Roster_Pokemon_Data['pokedex_id'],
+                            $Roster_Pokemon_Data['alt_id'],
+                            $Roster_Pokemon_Data['type'],
+                            $Roster_Pokemon_Data['name'],
+                            $Roster_Pokemon_Data['forme']
+                        );
+
                         echo "
-                            <div class='user-roster-slot empty'>
-                                <img src='/assets/images/Pokemon/Empty.png' alt='Empty Slot' />
+                            <div class='user-roster-slot'>
+                                <img src='{$Pokemon_Images['Icon']['Sprite_Path']}' alt='{$Pokemon_Images['Icon']['Alt_Text']}' onclick='PokemonViewer.open({$Roster_Pokemon_Data['id']})' />
                             </div>
                         ";
-
-                        continue;
                     }
-
-                    $Pokemon_Images = PokemonData::FetchPokemonImages(
-                        $Roster_Pokemon_Data['pokedex_id'],
-                        $Roster_Pokemon_Data['alt_id'],
-                        $Roster_Pokemon_Data['type'],
-                        $Roster_Pokemon_Data['name'],
-                        $Roster_Pokemon_Data['forme']
-                    );
-
-                    echo "
-                        <div class='user-roster-slot'>
-                            <img src='{$Pokemon_Images['Icon']['Sprite_Path']}' alt='{$Pokemon_Images['Icon']['Alt_Text']}' onclick='PokemonViewer.open({$Roster_Pokemon_Data['id']})' />
-                        </div>
-                    ";
-                }
                 ?>
             </div>
         </div>
 
         <div class='user-currencies'>
             <div class='currency'>
-                <img src='https://localhost/images/Assets/Money.png' alt='Money' />
+                <img src='/assets/images/Misc/Money.png' alt='Money' />
                 <span><?= number_format($User_Session['money'] ?? 0); ?></span>
             </div>
             <div class='currency'>
-                <img src='https://localhost/images/Assets/Abso_Coins.png' alt='Abso Coins' />
+                <img src='/assets/images/Misc/Abso_Coins.png' alt='Abso Coins' />
                 <span><?= number_format($User_Session['abso_coins'] ?? 0); ?></span>
             </div>
         </div>

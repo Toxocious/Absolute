@@ -59,9 +59,6 @@
         $Submitted_Csrf = (string)($_POST['csrf_token'] ?? '');
         $Expected_Csrf = (string)($_SESSION['Absolute_Beta']['CSRF']['Register'] ?? '');
 
-        echo "<script>console.log('Submitted CSRF: " . SafeString($Submitted_Csrf) . "');</script>";
-        echo "<script>console.log('Expected CSRF: " . SafeString($Expected_Csrf) . "');</script>";
-
         $Form_State['username'] = trim((string)($_POST['username'] ?? ''));
         $Form_State['gender'] = trim((string)($_POST['gender'] ?? ''));
         $Form_State['email'] = trim((string)($_POST['email'] ?? ''));
@@ -119,7 +116,6 @@
     <div class='panel-content login-page'>
         <h2>Begin Your Journey!</h2>
         <p>Create an account and become a legend.</p>
-        <p><?= $_SESSION['Absolute_Beta']['CSRF']['Register']; ?></p>
 
         <?php if ($General_Error !== ''): ?>
             <div class="form-error"><?= SafeString($General_Error); ?></div>
