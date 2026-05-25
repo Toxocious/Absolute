@@ -58,8 +58,77 @@
                 $Pokemon_Data['nature_modifier']
             );
 
+            $Pokemon_Data['moves'] = self::FetchPokemonMoveData($id);
 
             return $Pokemon_Data ?: null;
+        }
+
+        /**
+         * Fetches all moves of a Pokemon given its database ID.
+         *
+         * @param int $pokemonId The unique ID of the Pokemon to fetch moves for.
+         *
+         * @return array An array of all moves, each containing the id, name, type, category, base power, accuracy, PP, and short description of a move, or an empty array if no moves are found.
+         */
+        public static function FetchPokemonMoveData(int $pokemonId): array
+        {
+            return Database::get()->select(
+                'SELECT
+                    up.id AS pokemon_id,
+
+                    m1.id          AS move_1_id,
+                    m1.name        AS move_1_name,
+                    m1.type        AS move_1_type,
+                    m1.category    AS move_1_category,
+                    m1.basePower   AS move_1_base_power,
+                    m1.accuracy    AS move_1_accuracy,
+                    m1.pp          AS move_1_pp,
+                    m1.shortDesc   AS move_1_shortDesc,
+
+                    m2.id          AS move_2_id,
+                    m2.name        AS move_2_name,
+                    m2.type        AS move_2_type,
+                    m2.category    AS move_2_category,
+                    m2.basePower   AS move_2_base_power,
+                    m2.accuracy    AS move_2_accuracy,
+                    m2.pp          AS move_2_pp,
+                    m2.shortDesc   AS move_2_shortDesc,
+
+                    m3.id          AS move_3_id,
+                    m3.name        AS move_3_name,
+                    m3.type        AS move_3_type,
+                    m3.category    AS move_3_category,
+                    m3.basePower   AS move_3_base_power,
+                    m3.accuracy    AS move_3_accuracy,
+                    m3.pp          AS move_3_pp,
+                    m3.shortDesc   AS move_3_shortDesc,
+
+                    m4.id          AS move_4_id,
+                    m4.name        AS move_4_name,
+                    m4.type        AS move_4_type,
+                    m4.category    AS move_4_category,
+                    m4.basePower   AS move_4_base_power,
+                    m4.accuracy    AS move_4_accuracy,
+                    m4.pp          AS move_4_pp,
+                    m4.shortDesc   AS move_4_shortDesc
+
+                FROM user_pokemon up
+
+                LEFT JOIN api_moves m1
+                    ON m1.id = up.move_1
+
+                LEFT JOIN api_moves m2
+                    ON m2.id = up.move_2
+
+                LEFT JOIN api_moves m3
+                    ON m3.id = up.move_3
+
+                LEFT JOIN api_moves m4
+                    ON m4.id = up.move_4
+
+                WHERE up.id = :pokemon_id;',
+                ['pokemon_id' => $pokemonId]
+            );
         }
 
         /**
@@ -81,6 +150,16 @@
             );
         }
 
+        /**
+         * Fetch the display name of a Pokemon given its name, forme, type, and nickname.
+         *
+         * @param string $name The name of the Pokemon.
+         * @param string|null $forme The forme of the Pokemon (if applicable).
+         * @param string $type The type of the Pokemon (e.g., 'Normal', 'Shiny').
+         * @param string|null $nickname The nickname of the Pokemon (if applicable
+         *
+         * @return array An array containing the 'display_name' and 'nickname' strings of the pokemon.
+         */
         public static function GetDisplayName(string $name, ?string $forme, string $type, ?string $nickname): array
         {
             $displayName = ($type !== 'Normal' ? "{$type}" : '') . $name;
@@ -151,6 +230,18 @@
             return (int) $stat;
         }
 
+        /**
+         * Calculates all of a Pokemon's stats (HP, Attack, Defense, Special Attack, Special Defense, and Speed) based on the provided base stats, IVs, EVs, level, and nature modifier.
+         *
+         * @param array $baseStats An associative array containing the base stats for the Pokemon, with keys 'base_hp', 'base_attack', 'base_defense', 'base_sp_attack', 'base_sp_defense', and 'base_speed'.
+         *
+         * @param array $ivs An associative array containing the IVs for the Pokemon, with keys 'iv_hp', 'iv_attack', 'iv_defense', 'iv_special_attack', 'iv_special_defense', and 'iv_speed'.
+         * @param array $evs An associative array containing the EVs for the Pokemon, with keys 'ev_hp', 'ev_attack', 'ev_defense', 'ev_special_attack', 'ev_special_defense', and 'ev_speed'.
+         * @param int $level The level of the Pokemon, an integer greater than or equal to 1.
+         * @param array|null $natureModifier An associative array containing the nature's stat modifications, with keys 'plus' and 'minus' indicating which stats are increased or decreased by the nature, or null if the nature does not affect any stats.
+         *
+         * @return array An associative array containing the calculated stat values for each stat, with keys 'hp', 'attack', 'defense', 'special_attack', 'special_defense', and 'speed'.
+         */
         public static function CalculateAllStats(array $baseStats, array $ivs, array $evs, int $level, ?array $natureModifier): array
         {
             return [

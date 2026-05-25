@@ -186,8 +186,8 @@ const PokemonViewer = {
 
         return new FloatingWindow(pokemon_id, {
             url: `/components/poke_viewer.php?id=${pokemon_id}`,
-            width: options.width || 550,
-            height: options.height || 250,
+            width: options.width || 600,
+            height: options.height || 300,
             left: options.left,
             top: options.top,
         });

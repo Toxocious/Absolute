@@ -313,10 +313,12 @@
                         </div>
                         <!-- -->
 
-                        <div class='pokemon-iv-reroll'>
-                            <div>You may reroll your IVs for a chance at better stats.</div>
-                            <button id='reroll-ivs-button'>Reroll</button>
-                        </div>
+                        <?php if ( $Pokemon['owner_current'] == $User_Data['id'] ): ?>
+                            <div class='pokemon-iv-reroll'>
+                                <div>You may reroll your IVs for a chance at better stats.</div>
+                                <button id='reroll-ivs-button'>Reroll</button>
+                            </div>
+                        <?php endif; ?>
                     </div>
 
                     <div class='pokemon-info' id='pokemon-evs' style='display: none;'>
@@ -384,24 +386,26 @@
                         </div>
                         <!-- -->
 
-                        <div class='pokemon-ev-allocation'>
-                            <div>You may allocate or reset EVs.</div>
-                            <div>
-                                <button id='allocate-evs-button'>Reset</button>
-                                <button id='allocate-evs-button'>Apply</button>
+                        <?php if ( $Pokemon['owner_current'] == $User_Data['id'] ): ?>
+                            <div class='pokemon-ev-allocation'>
+                                <div>You may allocate or reset EVs.</div>
+                                <div>
+                                    <button id='allocate-evs-button'>Reset</button>
+                                    <button id='allocate-evs-button'>Apply</button>
+                                </div>
                             </div>
-                        </div>
+                        <?php endif; ?>
                     </div>
 
                     <div class='pokemon-info' id='pokemon-moves' style='display: none;'>
                         <?php
-                            for ( $i = 1; $i <= 4; $i++ )
+                            for ($i = 0; $i < 4; $i++)
                             {
-                                $Move_Name = $Pokemon['move_' . $i . '_name'] ?? 'Unknown';
-                                $Move_Power = mt_rand(50, 150);
-                                $Move_Category = ['Physical', 'Special', 'Status'][array_rand(['Physical', 'Special', 'Status'])];
-                                $Move_Type = ['Normal', 'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'][array_rand(['Normal', 'Fire', 'Water', 'Grass', 'Electric', 'Ice', 'Fighting', 'Poison', 'Ground', 'Flying', 'Psychic', 'Bug', 'Rock', 'Ghost', 'Dragon', 'Dark', 'Steel', 'Fairy'])];
-                                $Move_Accuracy = mt_rand(70, 100);
+                                $Move_Name = $Pokemon["moves"][0]["move_" . ($i + 1) . "_name"] ?? 'Unknown';
+                                $Move_Power = $Pokemon["moves"][0]["move_" . ($i + 1) . "_base_power"] ?? '—';
+                                $Move_Category = $Pokemon["moves"][0]["move_" . ($i + 1) . "_category"] ?? 'Unknown';
+                                $Move_Type = $Pokemon["moves"][0]["move_" . ($i + 1) . "_type"] ?? 'Normal';
+                                $Move_Accuracy = isset($Pokemon["moves"][0]["move_" . ($i + 1) . "_accuracy"]) ? ($Pokemon["moves"][0]["move_" . ($i + 1) . "_accuracy"] . '%') : '—';
 
                                 echo "
                                     <div class='pokemon-preview-move'>
@@ -416,10 +420,10 @@
                                         </div>
                                         <div>
                                             <div>
-                                                <b>Power</b>: <span>{$Move_Power}</span>
+                                                " . ($Move_Power > 0 ? "<b>Power</b>: <span>{$Move_Power}</span>" : '') . "
                                             </div>
                                             <div>
-                                                <b>Accuracy</b>: <span>{$Move_Accuracy}%</span>
+                                                <b>Accuracy</b>: <span>{$Move_Accuracy}</span>
                                             </div>
                                         </div>
                                     </div>

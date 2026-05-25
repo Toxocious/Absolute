@@ -81,7 +81,7 @@
         flex-direction: column;
 
         width: 192px;
-        height: 212px;
+        height: 263px;
 
         &::before {
             content: '';
@@ -89,7 +89,7 @@
             top: 0;
             left: 0;
             width: 192px;
-            height: 212px;
+            height: 263px;
 
             background: url('/assets/images/PopupBackgrounds/Forest.png') no-repeat center center;
             background-size: cover;
@@ -214,6 +214,10 @@
 
                     & > div {
                         flex: 1;
+
+                        display: flex;
+                        flex-direction: column;
+                        gap: 0.1em;
                     }
                 }
 
@@ -229,6 +233,13 @@
 
                     padding: 0.5em;
 
+                    & > div:last-child {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        gap: 0.25em;
+                    }
+
                     button {
                         padding: 0.5em;
                         border: none;
@@ -237,6 +248,8 @@
                         color: var(--color-white);
                         font-weight: bold;
                         transition: background 0.15s;
+
+                        flex: 1;
 
                         &:hover {
                             background: var(--color-gradient-one);
@@ -253,7 +266,7 @@
                     background-color: var(--color-tertiary);
                     border-radius: 2px;
 
-                    padding: 0 0.5em;
+                    padding: 0.475em;
 
                     & > div {
                         display: flex;
@@ -266,7 +279,7 @@
                             gap: 0.35em;
 
                             img.pokemon-move-type {
-                                max-width: 64px;
+                                max-width: 80px;
                             }
 
                             img.pokemon-move-category {
@@ -284,9 +297,12 @@
             }
 
             div.value {
+                display: flex;
+                justify-content: center;
+
                 font-size: 0.9em;
 
-                padding: 2px;
+                padding: 4px 2px 2px;
 
                 border: 1px solid var(--border-color);
                 filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
