@@ -513,6 +513,8 @@ async function loadTeam(root) {
         });
 
         list.innerHTML = slotted.map(renderRosterSlot).join('');
+
+        await UpdateHeaderRoster(slotted);
     } catch (error) {
         list.innerHTML = `<p class='pokemon-center-status error'>${escapeHtml(error.message)}</p>`;
     }

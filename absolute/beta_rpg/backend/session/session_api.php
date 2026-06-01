@@ -1,6 +1,11 @@
 <?php
     declare(strict_types=1);
 
+    header('Expires: Tue, 03 Jul 2001 06:00:00 GMT');
+    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
+    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+    header('Pragma: no-cache');
+
     if ( session_status() !== PHP_SESSION_ACTIVE )
     {
         $Request_Host = strtolower($_SERVER['HTTP_HOST'] ?? '');
@@ -28,15 +33,7 @@
                 'samesite' => 'Lax',
             ]);
         }
-    }
 
-    header('Expires: Tue, 03 Jul 2001 06:00:00 GMT');
-    header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT');
-    header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
-    header('Pragma: no-cache');
-
-    if ( session_status() !== PHP_SESSION_ACTIVE )
-    {
         session_start();
     }
 

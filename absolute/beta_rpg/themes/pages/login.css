@@ -57,7 +57,7 @@
             width: 64px;
             height: 64px;
 
-            background: url('https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fcdn.kibrispdr.org%2Fdata%2F804%2Fpokeball-icon-transparent-8.png&f=1&nofb=1&ipt=135357913cfb61ec9f0e079fc95b464f6d2be1bf2fac003471914ad958b3bd15') no-repeat center center;
+            background: url('/assets/images/Layout/Misc/Pokeball.png') no-repeat center center;
             background-size: cover;
 
             border-radius: 50%;

@@ -10,7 +10,7 @@
     function component(string $name, array $props = []): ?string {
         extract($props);
 
-        require __DIR__ . "/{$name}.php";
+        require $_SERVER['DOCUMENT_ROOT'] . "/components/{$name}.php";
 
         $Stylesheet = null;
 
