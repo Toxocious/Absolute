@@ -51,7 +51,10 @@
         }
 
         if (!in_array($path, $GLOBALS['Absolute_Beta_Component_Scripts'], true)) {
-            $GLOBALS['Absolute_Beta_Component_Scripts'][] = $path;
+            $GLOBALS['Absolute_Beta_Component_Scripts'][] = [
+                'src' => $path,
+                'module' => false,
+            ];
         }
     }
 

@@ -115,10 +115,10 @@
 
         <!-- Component and Page Scripts -->
          <?php
-            $Scripts = array_values(array_unique(array_filter(array_merge(
+            $Scripts = array_filter(array_merge(
                 $Scripts,
                 Get_Component_Scripts()
-            ))));
+            ));
 
              foreach ( $Scripts as $Script ) {
                 $Script_Src = null;
