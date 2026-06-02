@@ -2,6 +2,8 @@ import { apiGet } from '/js/api/client.js';
 
 const BOX_PER_PAGE = 21;
 
+let ActiveTab = 'roster';
+
 let FilterTypes = ['all', 'normal', 'shiny', 'event'];
 let FilterGenders = ['all', 'female', 'male', 'genderless', 'ungendered'];
 let BoxFilter = {
@@ -44,8 +46,6 @@ function UpdateBoxFilter(changedField, newValue) {
     if (changedField === 'species') {
         BoxFilter.species = newValue && newValue !== 'null' ? newValue : null;
     }
-
-    console.log('Updated BoxFilter:', BoxFilter);
 }
 
 function escapeHtml(value) {
@@ -419,10 +419,10 @@ function renderRosterSlot(pokemon) {
             ? `<div class='pokemon-nickname'>(${escapeHtml(pokemon.nickname)})</div>`
             : '';
 
-    const genderIcon = ['Female', 'Male'].includes(pokemon.gender)
+    const genderIcon = ['Female', 'Male', '(?)'].includes(pokemon.gender)
         ? `<div class='pokemon-gender'>
                     <img src='/assets/images/Pokemon/Misc/${escapeHtml(
-                        pokemon.gender
+                        pokemon.gender == '(?)' ? 'Ungendered' : pokemon.gender
                     )}.svg' alt='${escapeHtml(pokemon.gender)}' />
                 </div>`
         : '';
@@ -458,10 +458,10 @@ function renderBoxCard(pokemon) {
               )})</div>`
             : '';
 
-    const genderIcon = ['Female', 'Male'].includes(pokemon.gender)
+    const genderIcon = ['Female', 'Male', '(?)'].includes(pokemon.gender)
         ? `<div class='pokemon-gender'>
                     <img src='/assets/images/Pokemon/Misc/${escapeHtml(
-                        pokemon.gender
+                        pokemon.gender == '(?)' ? 'Ungendered' : pokemon.gender
                     )}.svg' alt='${escapeHtml(pokemon.gender)}' />
                 </div>`
         : '';
@@ -539,8 +539,6 @@ async function loadBox(root, page, filter) {
             per_page: BOX_PER_PAGE,
             filters: filter ? JSON.stringify(filter) : undefined,
         });
-
-        console.log('Box API response:', response);
 
         const pokemon = Array.isArray(response.data.pokemon) ? response.data.pokemon : [];
         const meta = response.meta || {};
@@ -655,22 +653,77 @@ function bindBoxFilterSearch(root) {
     });
 }
 
-window.addEventListener('DOMContentLoaded', () => {
+async function changeTab(tab) {
+    await fetch('/components/pokemon_center/' + tab + '_tab.php')
+        .then((response) => {
+            return response.text();
+        })
+        .then((html) => {
+            const contentContainer = document.querySelector('.pokemon-center-content');
+            if (contentContainer) {
+                contentContainer.innerHTML = html;
+            } else {
+                console.error('Content container not found for tab:', tab);
+            }
+        })
+        .catch((error) => {
+            console.error('Error loading tab content:', error);
+        });
+
+    // re-bind any dynamic elements in the newly loaded tab
+    setTimeout(() => {
+        if (tab === 'roster') {
+            setupBindings(tab == 'roster' ? true : false);
+        }
+    }, 100);
+}
+
+function bindTabChange() {
+    const tabButtons = document.querySelectorAll('[data-pokemon-center-api] .panel-nav button');
+    tabButtons.forEach((button) => {
+        const tabName = button.dataset.navSection;
+        button.addEventListener('click', () => {
+            if (tabName === ActiveTab) {
+                return;
+            }
+
+            button.classList.add('active');
+            tabButtons.forEach((btn) => {
+                if (btn !== button) {
+                    btn.classList.remove('active');
+                }
+            });
+
+            ActiveTab = tabName;
+
+            changeTab(tabName);
+        });
+    });
+}
+
+function setupBindings() {
     const root = document.querySelector('[data-pokemon-center-api]');
     if (!root) {
         return;
     }
 
-    bindBoxPagination(root);
-    bindBoxSelection(root);
-    bindBoxFilterToggle();
-    bindBoxFilterChange();
-    bindBoxFilterSearch(root);
+    bindTabChange();
 
-    setupRosterDragDrop(root);
-    setupBoxedPokemonToRosterDragDrop(root);
-    setupRosterToBoxDragDrop(root);
+    if (ActiveTab === 'roster') {
+        bindBoxPagination(root);
+        bindBoxSelection(root);
+        bindBoxFilterToggle();
+        bindBoxFilterChange();
+        bindBoxFilterSearch(root);
 
-    // loadTeam(root);
-    loadBox(root, 1);
+        setupRosterDragDrop(root);
+        setupBoxedPokemonToRosterDragDrop(root);
+        setupRosterToBoxDragDrop(root);
+
+        loadBox(root, 1);
+    }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+    setupBindings(false);
 });

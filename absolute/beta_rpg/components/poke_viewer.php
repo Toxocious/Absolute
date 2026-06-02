@@ -113,9 +113,9 @@
                     </div>
                     <div class='pokemon-gender'>
                         <?php
-                            if ( in_array($Pokemon['gender'], ['Female', 'Male']) )
+                            if ( in_array($Pokemon['gender'], ['Female', 'Male', '(?)']) )
                             {
-                                $Gender_Icon_Path = "/assets/images/Pokemon/Misc/{$Pokemon['gender']}.svg";
+                                $Gender_Icon_Path = "/assets/images/Pokemon/Misc/" . ($Pokemon['gender'] == '(?)' ? 'Ungendered' : $Pokemon['gender']) . ".svg";
                                 echo "<img src='{$Gender_Icon_Path}' alt='{$Pokemon['gender']}' />";
                             }
                         ?>

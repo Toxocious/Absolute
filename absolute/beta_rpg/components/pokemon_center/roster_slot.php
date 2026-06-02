@@ -64,9 +64,9 @@
                 </div>
             <?php endif; ?>
 
-            <?php if ( isset($Pokemon_Gender) && in_array($Pokemon_Gender, ['Female', 'Male']) ): ?>
+            <?php if ( isset($Pokemon_Gender) && in_array($Pokemon_Gender, ['Female', 'Male', '(?)']) ): ?>
                 <div class='pokemon-gender'>
-                    <img src='/assets/images/Pokemon/Misc/<?= $Pokemon_Gender; ?>.svg' alt='<?= $Pokemon_Gender ?>' />
+                    <img src='/assets/images/Pokemon/Misc/<?= $Pokemon_Gender == '(?)' ? 'Ungendered' : $Pokemon_Gender; ?>.svg' alt='<?= $Pokemon_Gender ?>' />
                 </div>
             <?php endif; ?>
         </div>
