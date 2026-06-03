@@ -18,11 +18,16 @@
         $Stylesheets = array_merge($Stylesheets, $Page_Metadata['Styles']);
     }
 
-    $Scripts = [];
+    $Scripts = [
+        [
+            'src' => '/js/utilities/toast_manager.js',
+            'module' => false,
+        ]
+    ];
 
     if ( isset($Page_Metadata['Scripts']) && is_array($Page_Metadata['Scripts']) )
     {
-        $Scripts = $Page_Metadata['Scripts'];
+        $Scripts = array_merge($Scripts, $Page_Metadata['Scripts']);
     }
 ?>
 
