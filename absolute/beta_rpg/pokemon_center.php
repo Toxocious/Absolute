@@ -23,7 +23,7 @@
     data-pokemon-center-api
     data-team-endpoint='/api/pokemon_center/team.php'
     data-box-endpoint='/api/pokemon_center/boxed.php'
-    data-pokemon-endpoint='/api/pokemon_center/pokemon_preview.php'
+    data-move-change-endpoint='/api/pokemon_center/move_change.php'
     data-current-page='1'
 >
     <div class='panel-header'>

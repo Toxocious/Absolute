@@ -63,6 +63,24 @@
             return $Pokemon_Data ?: null;
         }
 
+        public static function FetchPokemonNameById(int $id): ?array
+        {
+            $Pokemon_Data = Database::get()->selectOne(
+                'SELECT `name`, `forme`, `type`, `nickname`
+                FROM `user_pokemon`
+                WHERE `id` = :id
+                LIMIT 1',
+                ['id' => $id]
+            );
+
+            return self::GetDisplayName(
+                name: $Pokemon_Data['name'] ?? 'Unknown',
+                forme: $Pokemon_Data['forme'] ?? null,
+                type: $Pokemon_Data['type'] ?? 'Normal',
+                nickname:$Pokemon_Data['nickname'] ?? null
+            );
+        }
+
         /**
          * Fetches all moves of a Pokemon given its database ID.
          *

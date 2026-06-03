@@ -200,6 +200,55 @@
             }
         }
 
+        public static function ChangeMove(int $userId, int $pokemonId, string $moveId, int $moveSlot): void
+        {
+            if ( !self::VerifyOwnership($userId, $pokemonId) )
+            {
+                throw new RuntimeException('You do not own this Pokemon.');
+            }
+
+            $validMoveSlots = [1, 2, 3, 4];
+            if (!in_array($moveSlot, $validMoveSlots, true)) {
+                throw new InvalidArgumentException(
+                    'Invalid move slot specified. Valid slots are: ' . implode(', ', $validMoveSlots)
+                );
+            }
+
+             $Current_Moves = Database::get()->select(
+                'SELECT `id`, `move_1`, `move_2`, `move_3`, `move_4`
+                FROM `user_pokemon`
+                WHERE `id` = :pokemon_id
+                LIMIT 1',
+                ['pokemon_id' => $pokemonId]
+            );
+
+            foreach ($Current_Moves as $move) {
+                if ($move['id'] === $moveId) {
+                    throw new InvalidArgumentException(
+                        'This Pokemon already knows this move.'
+                    );
+                }
+            }
+
+             Database::get()->query(
+                'UPDATE `user_pokemon`
+                SET `move_' . $moveSlot . '` = :move_id
+                WHERE `id` = :pokemon_id',
+                [
+                    'move_id' => $moveId,
+                    'pokemon_id' => $pokemonId,
+                ]
+            );
+
+            Database::get()
+                ->table('user_pokemon')
+                ->where('id', '=', $pokemonId)
+                ->where('owner_current', '=', $userId)
+                ->update([
+                    "move_{$moveSlot}" => $moveId,
+                ]);
+        }
+
         public static function MovePokemon(int $userId, int $pokemonId, string $moveLocation, ?int $slot = null, ?int $swapSlot = null): void
         {
             $moveLocation = strtolower($moveLocation);

@@ -23,11 +23,11 @@
         $Pokemon_Type = 'Normal';
         $Pokemon_Images = [
             'Sprite' => [
-                'Sprite_Path' => '/assets/images/Pokemon/Empty.png',
+                'Sprite_Path' => '/assets/images/Pokemon/Icons/Empty.png',
                 'Alt_Text' => 'Empty Slot',
             ],
             'Icon' => [
-                'Sprite_Path' => '/assets/images/Pokemon/Empty.png',
+                'Sprite_Path' => '/assets/images/Pokemon/Icons/Empty.png',
                 'Alt_Text' => 'Empty Slot',
             ],
         ];

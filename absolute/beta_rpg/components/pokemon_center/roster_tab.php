@@ -1,9 +1,11 @@
 <?php
-    /**
-     *
-     */
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/session.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/user_session.php';
+
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/components/_component.php';
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokedex_data.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokemon_data.php';
 ?>
 
 <!-- Player's active roster -->
@@ -95,10 +97,6 @@
                                         ?>
                                     </select>
                                 </td>
-                                <!-- <td colspan='4'>
-                                    <a href='javascript:void(0);' data-box-filter-formes='include'
-                                    class='active'>Include Formes</a>
-                                </td> -->
                             </tr>
 
                             <tr id='pokemon-center-box-filter-type'>

@@ -401,7 +401,7 @@ function renderRosterSlot(pokemon) {
         return `
             <div class='pokemon-center-roster-slot' data-pokemon-id='empty'>
                 <div class='pokemon-data'>
-                    <img src='/assets/images/Pokemon/Empty.png' alt='Empty Slot' class='pokemon-image' />
+                    <img src='/assets/images/Pokemon/Icons/Empty.png' alt='Empty Slot' class='pokemon-image' />
                     <div class='pokemon-info'>
                         <div class='pokemon-name'>Empty Slot</div>
                     </div>
@@ -672,9 +672,7 @@ async function changeTab(tab) {
 
     // re-bind any dynamic elements in the newly loaded tab
     setTimeout(() => {
-        if (tab === 'roster') {
-            setupBindings(tab == 'roster' ? true : false);
-        }
+        setupBindings();
     }, 100);
 }
 
@@ -701,6 +699,48 @@ function bindTabChange() {
     });
 }
 
+function bindMoveChangeDropdowns() {
+    const dropdowns = document.querySelectorAll('.move-dropdown');
+
+    dropdowns.forEach((dropdown) => {
+        dropdown.addEventListener('change', (e) => {
+            handleMoveChange(e.target);
+        });
+    });
+}
+
+async function handleMoveChange(t) {
+    const root = document.querySelector('[data-pokemon-center-api]');
+
+    const endpoint = root.dataset.moveChangeEndpoint;
+
+    if (!endpoint) {
+        return;
+    }
+
+    try {
+        const response = await apiGet(endpoint, {
+            pokemon_id: t.dataset.pokemonId,
+            move_slot: t.dataset.moveSlot,
+            move_id: t.value,
+        });
+
+        if (response.ok) {
+            SpawnToast('Move Changed!', response.data.text, 'success', undefined, false);
+        } else {
+            SpawnToast(
+                'Move Change Failed!',
+                'Failed to change move: ' + response.error.message,
+                'error',
+                undefined,
+                false
+            );
+        }
+    } catch (error) {
+        console.error('Failed to change move:', error);
+    }
+}
+
 function setupBindings() {
     const root = document.querySelector('[data-pokemon-center-api]');
     if (!root) {
@@ -708,6 +748,31 @@ function setupBindings() {
     }
 
     bindTabChange();
+
+    switch (ActiveTab) {
+        case 'roster':
+            bindBoxPagination(root);
+            bindBoxSelection(root);
+            bindBoxFilterToggle();
+            bindBoxFilterChange();
+            bindBoxFilterSearch(root);
+
+            setupRosterDragDrop(root);
+            setupBoxedPokemonToRosterDragDrop(root);
+            setupRosterToBoxDragDrop(root);
+
+            loadBox(root, 1);
+
+            break;
+
+        case 'moves':
+            bindMoveChangeDropdowns();
+
+            break;
+
+        default:
+            break;
+    }
 
     if (ActiveTab === 'roster') {
         bindBoxPagination(root);

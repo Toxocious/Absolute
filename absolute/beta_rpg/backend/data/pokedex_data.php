@@ -153,6 +153,14 @@
             return $clean;
         }
 
+        /**
+         * Fetches the base stats for a Pokemon given its Pokedex ID and optional Alt ID.
+         *
+         * @param int $pokedexId The Pokedex ID of the Pokemon.
+         * @param int $altId The optional Alt ID of the Pokemon; defaults to 0.
+         *
+         * @return ?array An associative array containing the base stats, or null if not found.
+         */
         public static function GetPokemonBaseStats(int $pokedexId, int $altId = 0): ?array
         {
             return Database::get()->selectOne(
@@ -167,6 +175,11 @@
              );
         }
 
+        /**
+         * Fetches a list of Pokemon for populating a dropdown, including their ID, Pokedex ID, Alt ID, name, and forme.
+         *
+         * @return array An array of associative arrays, each representing a Pokemon for the dropdown.
+         */
         public static function GetPokemonDropdownList(): array
         {
             return Database::get()->select(
