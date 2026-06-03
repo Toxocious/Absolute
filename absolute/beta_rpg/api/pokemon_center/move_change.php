@@ -30,5 +30,5 @@
             HandleError($e);
         }
 
-        api_error('pokemon_center_move_change_failed', 'Failed to change this Pokemon\'s move.' . $e->getMessage(), 500);
+        api_error('pokemon_center_move_change_failed', 'Failed to change this Pokemon\'s move. ' . $e->getMessage(), 500);
     }

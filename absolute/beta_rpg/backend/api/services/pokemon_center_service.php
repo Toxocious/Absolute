@@ -222,12 +222,10 @@
                 ['pokemon_id' => $pokemonId]
             );
 
-            foreach ($Current_Moves as $move) {
-                if ($move['id'] === $moveId) {
-                    throw new InvalidArgumentException(
-                        'This Pokemon already knows this move.'
-                    );
-                }
+            if ( in_array($moveId, $Current_Moves[0], true) ) {
+                throw new InvalidArgumentException(
+                    'This Pokemon already knows this move.'
+                );
             }
 
              Database::get()->query(

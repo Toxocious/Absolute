@@ -725,17 +725,7 @@ async function handleMoveChange(t) {
             move_id: t.value,
         });
 
-        if (response.ok) {
-            SpawnToast('Move Changed!', response.data.text, 'success', undefined, false);
-        } else {
-            SpawnToast(
-                'Move Change Failed!',
-                'Failed to change move: ' + response.error.message,
-                'error',
-                undefined,
-                false
-            );
-        }
+        SpawnToast('Move Changed!', response.data.text, 'success', undefined, false);
     } catch (error) {
         console.error('Failed to change move:', error);
     }

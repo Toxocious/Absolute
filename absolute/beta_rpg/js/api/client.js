@@ -34,6 +34,9 @@ async function requestJson(url, options = {}) {
         error.status = response.status;
         error.code = payload?.error?.code || 'http_error';
         error.details = payload?.error?.details || {};
+
+        SpawnToast('Error', message, 'error', undefined, false);
+
         throw error;
     }
 
