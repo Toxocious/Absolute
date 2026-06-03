@@ -23,7 +23,10 @@ async function UpdateHeaderRoster(pokemon_payload) {
                 `PokemonViewer.open('${pokemon_payload[Index].id}')`
             );
         } else {
-            RosterSlot.firstElementChild.setAttribute('src', 'assets/images/Pokemon/Empty.png');
+            RosterSlot.firstElementChild.setAttribute(
+                'src',
+                'assets/images/Pokemon/Icons/Empty.png'
+            );
             RosterSlot.firstElementChild.setAttribute('alt', 'Empty Slot');
             RosterSlot.firstElementChild.removeAttribute('onclick');
         }

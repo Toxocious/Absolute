@@ -25,6 +25,7 @@
             ->table('user_rpg_state')
             ->where('user_id', '=', $User_Data['id'])
             ->first();
+
         unset($User_Rpg_State['user_id']);
 
         $User_Data = array_merge($User_Data, $User_Rpg_State, [
