@@ -709,6 +709,67 @@ function bindMoveChangeDropdowns() {
     });
 }
 
+function bindNicknameChangeInputs() {
+    const buttons = document.querySelectorAll('.nickname-buttons > button');
+
+    buttons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+            handleNicknameChange(e.target);
+        });
+    });
+}
+
+async function handleNicknameChange(button) {
+    const input = button.parentElement.parentElement.querySelector('input');
+    if (!input) {
+        return;
+    }
+
+    const newNickname = input.value.trim();
+    if (newNickname.length == 0 && button.dataset.action === 'set') {
+        SpawnToast(
+            'Nickname cannot be empty!',
+            'Please enter a nickname or click "Clear Nickname" to remove it.',
+            'error',
+            undefined,
+            false
+        );
+        return;
+    }
+
+    const pokemonId = button.dataset.pokemonId;
+    const nicknameAction = button.dataset.action;
+
+    if (!pokemonId) {
+        return;
+    }
+
+    const nicknameElement = document.querySelector(
+        `.pokemon-center-nicknames-slot[data-pokemon-id="${pokemonId}"] > .pokemon-name > .pokemon-nickname`
+    );
+
+    try {
+        const response = await apiGet('/api/pokemon_center/change_nickname.php', {
+            pokemon_id: pokemonId,
+            nickname: newNickname,
+            nickname_action: nicknameAction,
+        });
+
+        if (nicknameAction === 'set') {
+            SpawnToast('Nickname Changed!', response.data.text, 'success', undefined, false);
+        } else if (nicknameAction === 'remove') {
+            SpawnToast('Nickname Cleared!', response.data.text, 'success', undefined, false);
+        }
+
+        if (nicknameElement) {
+            nicknameElement.textContent =
+                response.data.new_nickname == null ? '' : `(${response.data.new_nickname})`;
+        }
+    } catch (error) {
+        SpawnToast('Nickname Error', error, 'error', undefined, false);
+    }
+}
+
 async function handleMoveChange(t) {
     const root = document.querySelector('[data-pokemon-center-api]');
 
@@ -727,7 +788,7 @@ async function handleMoveChange(t) {
 
         SpawnToast('Move Changed!', response.data.text, 'success', undefined, false);
     } catch (error) {
-        console.error('Failed to change move:', error);
+        SpawnToast('Move Change Failed', error, 'error', undefined, false);
     }
 }
 
@@ -757,6 +818,11 @@ function setupBindings() {
 
         case 'moves':
             bindMoveChangeDropdowns();
+
+            break;
+
+        case 'nickname':
+            bindNicknameChangeInputs();
 
             break;
 

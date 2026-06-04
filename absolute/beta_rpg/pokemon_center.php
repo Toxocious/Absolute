@@ -8,7 +8,15 @@
 
     $Page_Metadata = [
         'Title' => 'Pokemon Center',
-        'Styles' => ['/themes/pages/pokemon_center.css'],
+        'Styles' => [
+            '/themes/pages/pokemon_center.css',
+
+            '/themes/components/pokemon_center/roster_tab.css',
+            '/themes/components/pokemon_center/moves_tab.css',
+            // '/themes/components/pokemon_center/inventory_tab.css',
+            '/themes/components/pokemon_center/nickname_tab.css',
+            // '/themes/components/pokemon_center/release_tab.css',
+        ],
         'Scripts' => [[
             'src' => '/js/pages/pokemon_center.js',
             'module' => true,

@@ -200,6 +200,38 @@
             }
         }
 
+        public static function RemoveNickname(int $userId, int $pokemonId): void
+        {
+            if ( !self::VerifyOwnership($userId, $pokemonId) )
+            {
+                throw new RuntimeException('You do not own this Pokemon.');
+            }
+
+             Database::get()
+                ->table('user_pokemon')
+                ->where('owner_current', '=', $userId)
+                ->where('id', '=', $pokemonId)
+                ->update([
+                    'nickname' => NULL,
+                ]);
+        }
+
+        public static function ChangeNickname(int $userId, int $pokemonId, string $nickname): void
+        {
+            if ( !self::VerifyOwnership($userId, $pokemonId) )
+            {
+                throw new RuntimeException('You do not own this Pokemon.');
+            }
+
+             Database::get()
+                ->table('user_pokemon')
+                ->where('owner_current', '=', $userId)
+                ->where('id', '=', $pokemonId)
+                ->update([
+                    'nickname' => $nickname,
+                ]);
+        }
+
         public static function ChangeMove(int $userId, int $pokemonId, string $moveId, int $moveSlot): void
         {
             if ( !self::VerifyOwnership($userId, $pokemonId) )
