@@ -829,20 +829,6 @@ function setupBindings() {
         default:
             break;
     }
-
-    if (ActiveTab === 'roster') {
-        bindBoxPagination(root);
-        bindBoxSelection(root);
-        bindBoxFilterToggle();
-        bindBoxFilterChange();
-        bindBoxFilterSearch(root);
-
-        setupRosterDragDrop(root);
-        setupBoxedPokemonToRosterDragDrop(root);
-        setupRosterToBoxDragDrop(root);
-
-        loadBox(root, 1);
-    }
 }
 
 window.addEventListener('DOMContentLoaded', () => {
