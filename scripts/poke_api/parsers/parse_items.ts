@@ -109,6 +109,7 @@ async function build() {
   \`fling_power\` INT DEFAULT NULL,
   \`fling_effect_id\` SMALLINT UNSIGNED DEFAULT NULL,
   \`flavor_text\` TEXT DEFAULT NULL,
+  \`tradeable\` TINYINT(1) NOT NULL DEFAULT 1,
   PRIMARY KEY (\`identifier\`),
   KEY idx_api_items_name (\`name\`),
   KEY idx_api_items_category (\`category\`)
