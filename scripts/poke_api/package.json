@@ -1,0 +1,23 @@
+{
+  "name": "absolute-poke-api-parsers",
+  "version": "1.0.0",
+  "description": "Various scripts to parse PokeAPI CSV files for database operations.",
+  "author": {
+    "name": "Jess",
+    "email": "toxocious@gmail.com",
+    "url": "https://toxocious.dev"
+  },
+  "type": "module",
+  "scripts": {
+    "parse:abilities": "tsx ./parsers/parse_abilities.ts",
+    "parse:evolutions": "tsx ./parsers/parse_evolutions.ts",
+    "parse:natures": "tsx ./parsers/parse_natures.ts",
+    "parse:pokedex": "tsx ./parsers/parse_pokedex.ts",
+    "parse:items": "tsx ./parsers/parse_items.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.2",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  }
+}

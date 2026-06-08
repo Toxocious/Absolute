@@ -1,0 +1,328 @@
+encounter_condition_value_id,local_language_id,name
+1,6,Während eines Schwarms
+1,9,During a swarm
+1,5,Pendant une tempête
+2,6,Außerhalb eines Schwarms
+2,9,Not during a swarm
+2,5,Pas pendant une tempête
+3,6,Am Morgen
+3,9,In the morning
+3,5,Le matin
+4,6,Am Tag
+4,9,During the day
+4,5,La journée
+5,6,In der Nacht
+5,9,At night
+5,5,La nuit
+6,6,Durch Benutzung des Pokéradars
+6,9,Using PokéRadar
+6,5,En utilisant le PokéRadar
+7,6,Ohne Benutzung des Pokéradars
+7,9,Not using PokéRadar
+7,5,Sans utiliser le PokéRadar
+8,6,Kein Spiel in Slot 2
+8,9,No game in slot 2
+8,5,Sans jeu dans le slot 2
+9,6,Rubin in Slot 2
+9,9,Ruby in slot 2
+9,5,Rubis dans le slot 2
+10,6,Saphir in Slot 2
+10,9,Sapphire in slot 2
+10,5,Saphir dans le slot 2
+11,6,Smaragd in Slot 2
+11,9,Emerald in slot 2
+11,5,Émeraude dans le slot 2
+12,6,Feuerrot in slot 2
+12,9,FireRed in slot 2
+12,5,Rouge Feu dans le slot 2
+13,6,Blattgrün in slot 2
+13,9,LeafGreen in slot 2
+13,5,Vert Feuille dans le slot 2
+14,6,Radio aus
+14,9,Radio off
+14,5,Radio éteinte
+15,6,Hoenn-Sound im Radio
+15,9,Hoenn radio
+15,5,En écoutant Radio Hoenn
+16,6,Sinnoh-Sound im Radio
+16,9,Sinnoh radio
+16,5,En écoutant Radio Sinnoh
+17,6,Im Frühling
+17,9,During Spring
+17,5,Au printemps
+18,6,Im Sommer
+18,9,During Summer
+18,5,En été
+19,6,Im Herbst
+19,9,During Autumn
+19,5,En automne
+20,6,Im Winter
+20,9,During Winter
+20,5,En hiver
+21,9,Bulbasaur as starter
+21,5,Bulbizarre en starter
+22,9,Squirtle as starter
+22,5,Carapuce en starter
+23,9,Charmander as starter
+23,5,Salamèche en starter
+24,9,Chespin as starter
+24,5,Marisson en starter
+25,9,Fennekin as starter
+25,5,Feunnec en starter
+26,9,Froakie as starter
+26,5,Grenousse en starter
+27,9,Chose ‘Blue’ on the TV news report
+27,5,Choisi « bleu » à la télé
+28,9,Chose ‘Red’ on the TV news report
+28,5,Choisi « rouge » à la télé
+29,9,Awakened the legendary beasts at Burned Tower
+29,5,En ayant réveillé les légendaires à la Tour Cendrée
+30,9,Visited Lake Verity after defeating Team Galactic at Mt. Coronet
+30,5,En ayant visité le Lac Vérité après avoir vaincu la Team Galaxie au Mont Couronné
+31,9,Talked to Professor Oak at Eterna City
+31,5,Après avoir parlé au Prof. Chen à Vestigion
+32,9,Visited the Pokémon Fan Club with Copycat’s doll
+32,5,Après avoir visité le Fan Club Pokémon avec la poupée de Copieuse
+33,9,Met Tornadus or Thundurus in a cutscene
+33,5,Après avoir rencontré Boréas ou Fulguris lors d’une cinématique
+34,9,Beat the Elite 4 for the second time
+34,5,Après deux victoires sur le Conseil 4
+35,9,Enter the Hall of Fame
+35,5,Après l’entrée au Panthéon
+36,9,None
+36,5,Aucune
+37,9,Acquired National Pokédex
+37,5,En ayant le Pokédex National
+38,9,None
+38,5,Aucune
+39,9,Beat the Pokémon league after knocking out Snorlax at Route 11
+39,5,"Après avoir mis Ronflex KO sur la route 11, puis avoir battu la Ligue"
+40,9,Playing on the Virtual Console Release
+40,5,En jouant sur la version Virtual Console
+41,9,Cure the nightmares of Eldritch’s Son
+41,5,Après avoir soigné les cauchemars du fils d’Edern
+42,9,Talk to Cynthia’s grandmother
+42,5,Après avoir parlé à la grand-mère de Cynthia
+43,9,No item requirement
+43,5,Sans objet particulier
+44,9,Have Adamant Orb in bag
+44,5,En ayant un Orbe Adamant dans le sac
+45,9,Have Lustrous Orb in bag
+45,5,En ayant un Orbe Perlé dans le sac
+46,9,Have Helix Fossil in bag
+46,5,En ayant un Nautile dans le sac
+47,9,Have Dome Fossil in bag
+47,5,En ayant un Fossile Dôme dans le sac
+48,9,Have Old Amber in bag
+48,5,En ayant un Vieil Ambre dans le sac
+49,9,Have Root Fossil in bag
+49,5,En ayant un Fossile Racine dans le sac
+50,9,Have Claw Fossil in bag
+50,5,En ayant un Fossile Griffe dans le sac
+51,9,Defeat Jupiter
+51,5,Après avoir vaincu Jupiter
+52,9,Defeat Team Galactic at Iron Island
+52,5,Après avoir vaincu la Team Galaxie sur l’Île de Fer
+53,9,Input correct password
+53,5,Après avoir saisi le bon mot de passe
+54,9,Obtained Zephyr badge
+54,5,En ayant obtenu le badge Zéphir
+55,9,Defeat Red
+55,5,Après avoir vaincu Red
+56,9,Received a Kanto Starter
+56,5,Après avoir recu un starter de Kanto
+57,9,Received TM59 From Claire
+57,5,Après avoir reçu la CT59 de Claire
+58,9,"Have Regirock, Regice and Registeel in the party"
+58,5,"En ayant Regirock, Regice et Registeel dans l’équipe"
+59,9,Sunday
+59,5,Le dimanche
+60,9,Monday
+60,5,Le lundi
+61,9,Tuesday
+61,5,Le mardi
+62,9,Wednesday
+62,5,Le mercredi
+63,9,Thursday
+63,5,Le jeudi
+64,9,Friday
+64,5,Le vendredi
+65,9,Saturday
+65,5,Le samedi
+66,9,The first Pokémon in the player’s party has a high friendship stat
+66,5,Si le premier Pokémon de l’équipe a une stat d’amitié élevée
+67,9,Beat Mars for the first time
+67,5,Après deux victoires face à Mars
+68,9,Have Odd Keystone in bag
+68,5,En ayant une Clé de Voûte dans le sac
+69,9,Has talked to at least 32 people in the underground
+69,5,Après avoir parlé à 32 personnes dans les souterrains
+70,9,Returned Machine Part to Power Plant
+70,5,Après avoir rapporté la pièce de machine à la centrale
+71,9,Have an Event Arceus in the party
+71,5,En ayant un Arceus événementiel dans l’équipe
+72,9,This special Pokémon couldn’t be captured in previous encounters (either fainted or ran from battle)
+72,5,Ce Pokémon spécial ne pouvait pas être capturé auparavant (doit avoir été vaincu ou avoir fui le combat)
+73,9,Have Ice Key in bag
+73,5,Avoir la Clé Iceberg dans le sac
+74,9,Have Iron Key in bag
+74,5,Avoir la Clé Fer dans le sac
+75,9,Spoke to Professor Juniper in the Cave of Being
+75,5,Parler au Professeur Keteleeria dans la Caverne des Esprits
+76,9,Have Lunar Wing in bag
+76,5,Avoir la Plume Lune dans le sac
+77,9,Obtained Quake Badge
+77,5,Obtenir le Badge Sismique
+78,9,Have Light Stone in bag
+78,5,Avoir le Galet Blanc dans le sac
+79,9,Have Dark Stone in bag
+79,5,Avoir le Galet Noir dans le sac
+80,9,Captured Reshiram or Zekrom previously
+80,5,Avoir capturé Reshiram ou Zekrom précédemment
+81,9,Defeated Ghetsis
+81,5,Avoir battu Ghetis
+82,9,Has been unsuccesfully battled 11 times before
+82,5,A été combattu 11 fois avant sans succès
+83,9,The current minute is between 00 and 19
+83,5,La minute actuelle est entre 00 et 19
+84,9,The current minute is between 20 and 39
+84,5,La minute actuelle est entre 20 et 39
+85,9,The current minute is between 40 and 59
+85,5,La minute actuelle est entre 40 et 59
+86,9,The current time is between 04:00 and 19:59
+86,5,L'heure actuelle est entre 04:00 et 19:59
+87,9,The current time is between 20:00 and 21:59
+87,5,L'heure actuelle est entre 20:00 et 21:59
+88,9,The current time is between 22:00 and 03:59
+88,5,L'heure actuelle est entre 22:00 et 03:59
+89,9,Have Tidal Bell in bag
+89,5,Avoir le Glas Tempête dans le sac
+90,9,Have Clear Bell in bag
+90,5,Avoir le Glas Transparent dans le sac
+91,9,Defeated or captured Groudon or Kyogre
+91,5,Avoir battu ou capturé Groudon ou Kyogre
+92,9,"Have Uxie, Mesprit, and Azelf in the party"
+92,5,"Avoir Créhelf, Créfollet et Créfadet dans l'équipe"
+93,9,"After capturing the three regis in the game, have a nicknamed Regice holding a cold-based item, plus Regirock and Registeel in the party"
+93,5,"Après avoir capturé les trois Régis du jeu, avoir un Regice surnommé portant un objet relatif à la glace, plus Regirock et Registeel dans l'équipe"
+94,9,Have Dialga or Palkia in the party
+94,5,Avoir Dialga ou Palkia dans l'équipe
+95,9,Have Castform in party
+95,5,Avoir Morphéo dans l'équipe
+96,9,Have a Level 100 Pokémon in party
+96,5,Avoir un Pokémon Niveau 100 dans l'équipe
+97,9,Have Tornadus and Thundurus in party
+97,5,Avoir Boréas et Fulguris dans l'équipe
+98,9,Have Reshiram and Zekrom in party
+98,5,Avoir Reshiram et Zekrom dans l'équipe
+99,9,Captured all Ultra Beasts
+99,5,Avoir capturé toutes les Ultra-Chimères
+100,9,Finished Looker’s Sidequest
+100,5,Avoir fini la quête secondaire de Beladonis
+101,9,After finishing Olivia’s trial
+101,5,Après avoir fini l'Épreuve d'Alyxia
+102,9,Have Raikou and Entei in party
+102,5,Avoir Raikou et Entei dans l'équipe
+103,9,Have Groudon and Kyogre in party
+103,5,Avoir Groudon et Kyogre dans l'équipe
+104,9,Have Dialga and Palkia in party
+104,5,Avoir Dialga et Palkia dans l'équipe
+105,9,Scan a specific QR Code
+105,5,Scanner un code QR spécifique
+109,9,Give Togepi or Togetic in a Trade
+110,9,Give Trapunch in a Trade
+111,9,Give Surskit in a Trade
+112,9,Give Wooper in a Trade
+113,9,Catch all 82 Shadow Pokemon and Mirror B will appear in Gateon with a Shadow Dragonite
+114,9,Complete Mt. Battle to receive a special prize Pokemon
+115,9,Have at least 180 coins in your Coin Case
+116,9,Have at least 500 coins in your Coin Case
+117,9,Have at least 1200 coins in your Coin Case
+118,9,Have at least 2800 coins in your Coin Case
+119,9,Have at least 5500 coins in your Coin Case
+120,9,Have at least 9999 coins in your Coin Case
+121,9,Have at least 120 coins in your Coin Case
+122,9,Have at least 750 coins in your Coin Case
+123,9,Have at least 2500 coins in your Coin Case
+124,9,Have at least 4600 coins in your Coin Case
+125,9,Have at least 6500 coins in your Coin Case
+126,9,Have at least 230 coins in your Coin Case
+127,9,Have at least 1000 coins in your Coin Case
+128,9,Have at least 2680 coins in your Coin Case
+129,9,Have at least 3333 coins in your Coin Case
+130,9,Have at least 6666 coins in your Coin Case
+131,9,Have at least 200 coins in your Coin Case
+132,9,Have at least 700 coins in your Coin Case
+133,9,Have at least 2100 coins in your Coin Case
+134,9,Have at least 100 coins in your Coin Case
+135,9,Have at least 800 coins in your Coin Case
+136,9,Have at least 1500 coins in your Coin Case
+137,9,Have at least 2222 coins in your Coin Case
+138,9,Have at least 5555 coins in your Coin Case
+139,9,Have at least 8888 coins in your Coin Case
+140,9,Have at least 150 coins in your Coin Case
+141,9,Have at least 620 coins in your Coin Case
+142,9,Have at least 2880 coins in your Coin Case
+143,9,Have at least 5400 coins in your Coin Case
+144,9,Have at least 8300 coins in your Coin Case
+145,9,Give Abra in a Trade
+146,9,Give Nidoran-M in a Trade
+147,9,Give Nidorino in a Trade
+148,9,Give Slowbro in a Trade
+149,9,Give Poliwhirl in a Trade
+150,9,Give Spearow in a Trade
+151,9,Give Raichu in a Trade
+152,9,Give Venonat in a Trade
+153,9,Give Ponyta in a Trade
+154,9,Give Clefairy in a Trade
+155,9,Give Cubone in a Trade
+156,9,Give Lickitung in a Trade
+157,9,Give Tangela in a Trade
+158,9,Give Golduck in a Trade
+159,9,Give Growlithe in a Trade
+160,9,Give Kangaskhan in a Trade
+161,9,Give Bellsprout in a Trade
+162,9,Give Drowzee in a Trade
+163,9,Give Krabby in a Trade
+164,9,Give Dragonair in a Trade
+165,9,Give Chansey in a Trade
+166,9,Give Gloom in a Trade
+167,9,Give Haunter in a Trade
+168,9,Give Dugtrio in a Trade
+169,9,Give Slakoth in a Trade
+170,9,Give Pikachu in a Trade
+171,9,Give Bellossom in a Trade
+172,9,Give Ralts in a Trade
+173,9,Give Volbeat in a Trade
+174,9,Give Bagon in a Trade
+175,9,Give Skitty in a Trade
+176,9,Randomly assigned to Friend Safari Slot 1
+177,9,Randomly assigned to Friend Safari Slot 2
+178,9,Randomly assigned to Friend Safari Slot 3
+179,9,Have Skull Fossil in bag
+180,9,Have Armor Fossil in bag
+181,9,Great Marsh Daily Chance: None
+182,9,Great Marsh Daily Chance: 1 in 32
+183,9,Great Marsh Daily Chance: 2 in 32
+184,9,Great Marsh Daily Chance: 3 in 32
+185,9,Great Marsh Daily Chance: 5 in 32
+186,9,Before National Pokédex
+187,9,Great Marsh Daily Chance: 4 in 32
+188,9,Great Marsh Daily Chance: 15 in 32
+189,9,Honey Tree Group A (70% on normal trees / 20% on Munchlax trees)
+190,9,Honey Tree Group B (20% on normal trees / 70% on Munchlax trees)
+191,9,Honey Tree Group C (0% on normal trees / 1% on Munchlax trees)
+192,9,Headbutt Tree (Common)
+193,9,Headbutt Tree (Rare)
+194,9,Headbutt Tree (Secret)
+195,9,Give Cottonee in a Trade
+196,9,Give Petilil in a Trade
+197,9,Give Emolga in a Trade
+198,9,Give Mantine in a Trade
+199,9,Give Ditto in a Trade
+200,9,Give Excadrill in a Trade
+201,9,Give Hippowdon in a Trade
+202,9,Mr. Backlot hasn't mentioned any Pokemon
+203,9,Mr. Backlot has mentioned seeing this Pokemon in the garden
+204,9,Not during the Bug-Catching Contest
+205,9,During the Bug-Catching Contest

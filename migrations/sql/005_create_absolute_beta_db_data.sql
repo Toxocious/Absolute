@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS user_rpg_state;
 DROP TABLE IF EXISTS user_pokemon;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS clans;
-DROP TABLE IF EXISTS pokedex;
+DROP TABLE IF EXISTS api_pokedex;
 
 -- =========================================================
 -- CLANS
@@ -316,7 +316,7 @@ CREATE TABLE user_pokemon (
 -- =========================================================
 -- POKEDEX DATA ENTRIES
 -- =========================================================
-CREATE TABLE `pokedex` (
+CREATE TABLE `api_pokedex` (
   `id` int(11) NOT NULL,
   `pokedex_id` smallint(4) NOT NULL DEFAULT 0,
   `alt_id` smallint(2) NOT NULL DEFAULT 0,
@@ -366,7 +366,7 @@ CREATE TABLE `pokedex` (
   KEY idx_egg_groups (egg_group_1, egg_group_2)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
+INSERT INTO `api_pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
 (1, 1, 0, 'Bulbasaur', NULL, 'Grass', 'Poison', 'Overgrow', NULL, 'Chlorophyll', 45, 49, 49, 65, 65, 45, 0, 0, 0, 1, 0, 0, 87.5, 12.5, 0, 7, 69, 45, 20, 64, 70, 'Monster', 'Plant', 'False', 'False', 'False', '1'),
 (2, 2, 0, 'Ivysaur', NULL, 'Grass', 'Poison', 'Overgrow', NULL, 'Chlorophyll', 60, 62, 63, 80, 80, 60, 0, 0, 0, 1, 1, 0, 87.5, 12.5, 0, 10, 130, 45, 20, 142, 70, 'Monster', 'Plant', 'False', 'False', 'False', '2'),
 (3, 3, 0, 'Venusaur', NULL, 'Grass', 'Poison', 'Overgrow', NULL, 'Chlorophyll', 80, 82, 83, 100, 100, 80, 0, 0, 0, 2, 1, 0, 87.5, 12.5, 0, 20, 1000, 45, 20, 236, 70, 'Monster', 'Plant', 'False', 'False', 'False', '3'),
@@ -597,7 +597,7 @@ INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_p
 (228, 157, 0, 'Typhlosion', NULL, 'Fire', 'None', 'Blaze', NULL, 'Flash Fire', 78, 84, 78, 109, 85, 100, 0, 0, 0, 3, 0, 0, 87.5, 12.5, 0, 17, 795, 45, 20, 240, 70, 'Ground', '', 'False', 'False', 'False', '239'),
 (229, 158, 0, 'Totodile', NULL, 'Water', 'None', 'Torrent', NULL, 'Sheer Force', 50, 65, 64, 44, 48, 43, 0, 1, 0, 0, 0, 0, 87.5, 12.5, 0, 6, 95, 45, 20, 63, 70, 'Monster', 'Water1', 'False', 'False', 'False', '240'),
 (230, 159, 0, 'Croconaw', NULL, 'Water', 'None', 'Torrent', NULL, 'Sheer Force', 65, 80, 80, 59, 63, 58, 0, 1, 1, 0, 0, 0, 87.5, 12.5, 0, 11, 250, 45, 20, 142, 70, 'Monster', 'Water1', 'False', 'False', 'False', '241');
-INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
+INSERT INTO `api_pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
 (231, 160, 0, 'Feraligatr', NULL, 'Water', 'None', 'Torrent', NULL, 'Sheer Force', 85, 105, 100, 79, 83, 78, 0, 2, 1, 0, 0, 0, 87.5, 12.5, 0, 23, 888, 45, 20, 239, 70, 'Monster', 'Water1', 'False', 'False', 'False', '242'),
 (232, 161, 0, 'Sentret', NULL, 'Normal', 'None', 'Run Away', 'Keen Eye', 'Frisk', 35, 46, 34, 35, 45, 20, 0, 1, 0, 0, 0, 0, 50, 50, 0, 8, 60, 255, 15, 43, 70, 'Ground', '', 'False', 'False', 'False', '243'),
 (233, 162, 0, 'Furret', NULL, 'Normal', 'None', 'Run Away', 'Keen Eye', 'Frisk', 85, 76, 64, 45, 55, 90, 0, 0, 0, 0, 0, 2, 50, 50, 0, 18, 325, 90, 15, 145, 70, 'Ground', '', 'False', 'False', 'False', '244'),
@@ -830,7 +830,7 @@ INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_p
 (460, 362, 0, 'Glalie', NULL, 'Ice', 'None', 'Inner Focus', 'Ice Body', 'Moody', 80, 80, 80, 80, 80, 80, 2, 0, 0, 0, 0, 0, 50, 50, 0, 15, 2565, 75, 20, 168, 70, 'Fairy', 'Mineral', 'False', 'False', 'False', '463'),
 (461, 362, 1, 'Glalie', '(Mega)', 'Ice', 'None', 'Refrigerate', NULL, NULL, 80, 120, 80, 120, 80, 100, 2, 0, 0, 0, 0, 0, 50, 50, 0, 21, 3502, 75, 20, 203, 70, 'Fairy', 'Mineral', 'False', 'False', 'False', '464'),
 (462, 363, 0, 'Spheal', NULL, 'Ice', 'Water', 'Thick Fat', 'Ice Body', 'Oblivious', 70, 40, 50, 55, 50, 25, 1, 0, 0, 0, 0, 0, 50, 50, 0, 8, 395, 255, 20, 58, 70, 'Water1', 'Ground', 'False', 'False', 'False', '466');
-INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
+INSERT INTO `api_pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
 (463, 364, 0, 'Sealeo', NULL, 'Ice', 'Water', 'Thick Fat', 'Ice Body', 'Oblivious', 90, 60, 70, 75, 70, 45, 2, 0, 0, 0, 0, 0, 50, 50, 0, 11, 876, 120, 20, 144, 70, 'Water1', 'Ground', 'False', 'False', 'False', '467'),
 (464, 365, 0, 'Walrein', NULL, 'Ice', 'Water', 'Thick Fat', 'Ice Body', 'Oblivious', 110, 80, 90, 95, 90, 65, 3, 0, 0, 0, 0, 0, 50, 50, 0, 14, 1506, 45, 20, 239, 70, 'Water1', 'Ground', 'False', 'False', 'False', '468'),
 (465, 366, 0, 'Clamperl', NULL, 'Water', 'None', 'Shell Armor', NULL, 'Rattled', 35, 64, 85, 74, 55, 32, 0, 0, 1, 0, 0, 0, 50, 50, 0, 4, 525, 255, 20, 69, 70, 'Water1', '', 'False', 'False', 'False', '469'),
@@ -1062,7 +1062,7 @@ INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_p
 (691, 562, 0, 'Yamask', NULL, 'Ghost', 'None', 'Mummy', NULL, NULL, 38, 30, 85, 55, 65, 30, 0, 0, 1, 0, 0, 0, 50, 50, 0, 5, 15, 190, 25, 61, 70, 'Mineral', 'Indeterminate', 'False', 'False', 'False', '662'),
 (692, 562, 1, 'Yamask', '(Galar)', 'Ground', 'Ghost', 'Wandering Spirit', NULL, NULL, 38, 55, 85, 30, 65, 30, 0, 0, 1, 0, 0, 0, 50, 50, 0, 5, 15, 190, 25, 61, 70, 'Mineral', 'Indeterminate', 'False', 'False', 'False', '662'),
 (693, 563, 0, 'Cofagrigus', NULL, 'Ghost', 'None', 'Mummy', NULL, NULL, 58, 50, 145, 95, 105, 30, 0, 0, 2, 0, 0, 0, 50, 50, 0, 17, 765, 90, 25, 169, 70, 'Mineral', 'Indeterminate', 'False', 'False', 'False', '663');
-INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
+INSERT INTO `api_pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
 (694, 564, 0, 'Tirtouga', NULL, 'Water', 'Rock', 'Solid Rock', 'Sturdy', 'Swift Swim', 54, 78, 103, 53, 45, 22, 0, 0, 1, 0, 0, 0, 87.5, 12.5, 0, 7, 165, 45, 30, 71, 70, 'Water1', 'Water3', 'False', 'False', 'False', '664'),
 (695, 565, 0, 'Carracosta', NULL, 'Water', 'Rock', 'Solid Rock', 'Sturdy', 'Swift Swim', 74, 108, 133, 83, 65, 32, 0, 0, 2, 0, 0, 0, 87.5, 12.5, 0, 12, 810, 45, 30, 173, 70, 'Water1', 'Water3', 'False', 'False', 'False', '665'),
 (696, 566, 0, 'Archen', NULL, 'Rock', 'Flying', 'Defeatist', NULL, NULL, 55, 112, 45, 74, 45, 70, 0, 1, 0, 0, 0, 0, 87.5, 12.5, 0, 5, 95, 45, 30, 71, 70, 'Flying', 'Water3', 'False', 'False', 'False', '666'),
@@ -1295,7 +1295,7 @@ INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_p
 (923, 756, 0, 'Shiinotic', NULL, 'Grass', 'Fairy', 'Illuminate', 'Effect Spore', 'Rain Dish', 60, 45, 80, 90, 100, 30, 0, 0, 0, 0, 2, 0, 50, 50, 0, 10, 115, 75, 20, 142, 70, 'Plant', '', 'False', 'False', 'False', '890'),
 (924, 757, 0, 'Salandit', NULL, 'Poison', 'Fire', 'Corrosion', NULL, 'Oblivious', 48, 44, 40, 71, 40, 77, 0, 0, 0, 0, 0, 1, 87.5, 12.5, 0, 6, 48, 120, 20, 64, 70, 'Monster', 'Dragon', 'False', 'False', 'False', '891'),
 (925, 758, 0, 'Salazzle', NULL, 'Poison', 'Fire', 'Corrosion', NULL, 'Oblivious', 68, 64, 60, 111, 60, 117, 0, 0, 0, 0, 0, 2, 0, 100, 0, 12, 222, 45, 20, 168, 70, 'Monster', 'Dragon', 'False', 'False', 'False', '892');
-INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
+INSERT INTO `api_pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_primary`, `type_secondary`, `ability_1`, `ability_2`, `ability_hidden`, `base_hp`, `base_attack`, `base_defense`, `base_sp_attack`, `base_sp_defense`, `base_speed`, `hp_ev_yield`, `attack_ev_yield`, `defense_ev_yield`, `sp_attack_ev_yield`, `sp_defense_ev_yield`, `speed_ev_yield`, `male_odds`, `female_odds`, `genderless_odds`, `height`, `weight`, `catch_rate`, `egg_cycles`, `exp_yield`, `base_happiness`, `egg_group_1`, `egg_group_2`, `is_baby`, `is_mythical`, `is_legendary`, `sort_order`) VALUES
 (926, 758, 1, 'Salazzle', '(Totem)', 'Poison', 'Fire', 'Corrosion', NULL, 'Oblivious', 68, 64, 60, 111, 60, 117, 0, 0, 0, 0, 0, 2, 0, 100, 0, 21, 810, 45, 20, 168, 70, 'Monster', 'Dragon', 'False', 'False', 'False', '893'),
 (927, 759, 0, 'Stufful', NULL, 'Normal', 'Fighting', 'Fluffy', 'Klutz', 'Cute Charm', 70, 75, 50, 45, 50, 50, 0, 1, 0, 0, 0, 0, 50, 50, 0, 5, 68, 140, 15, 68, 70, 'Ground', '', 'False', 'False', 'False', '894'),
 (928, 760, 0, 'Bewear', NULL, 'Normal', 'Fighting', 'Fluffy', 'Klutz', 'Unnerve', 120, 125, 80, 55, 60, 60, 0, 2, 0, 0, 0, 0, 50, 50, 0, 21, 1350, 70, 15, 175, 70, 'Ground', '', 'False', 'False', 'False', '895'),
@@ -1491,9 +1491,9 @@ INSERT INTO `pokedex` (`id`, `pokedex_id`, `alt_id`, `pokemon`, `forme`, `type_p
 (1118, 898, 2, 'Calyrex', '(Shadow)', 'Psychic', 'Ghost', 'As One', NULL, NULL, 100, 85, 80, 165, 100, 150, 0, 0, 0, 3, 0, 0, 0, 0, 100, 24, 536, 3, 120, 340, 100, '', '', 'False', 'False', 'True', '-1');
 
 --
--- AUTO_INCREMENT for table `pokedex`
+-- AUTO_INCREMENT for table `api_pokedex`
 --
-ALTER TABLE `pokedex`
+ALTER TABLE `api_pokedex`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1119;
 COMMIT;
 

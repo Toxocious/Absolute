@@ -20,7 +20,7 @@
 
             $row = $db->selectOne(
                 'SELECT *
-                FROM pokedex
+                FROM api_pokedex
                 WHERE pokedex_id = :pokedex_id AND alt_id = :alt_id
                 LIMIT 1',
                 [
@@ -48,7 +48,7 @@
         {
             return Database::get()->selectOne(
                 'SELECT *
-                FROM pokedex
+                FROM api_pokedex
                 WHERE id = :id
                 LIMIT 1',
                 ['id' => $id]
@@ -81,7 +81,7 @@
 
             $sql = '
                 SELECT *
-                FROM pokedex
+                FROM api_pokedex
                 WHERE alt_id = :alt_id
                 AND pokedex_id IN (' . implode(', ', $placeholders) . ')
                 ORDER BY sort_order ASC, pokedex_id ASC
@@ -113,7 +113,7 @@
 
             return $db->select(
                 'SELECT *
-                FROM pokedex
+                FROM api_pokedex
                 WHERE pokemon LIKE :name
                     OR CONCAT(pokemon, " ", COALESCE(forme, "")) LIKE :name
                 ORDER BY sort_order ASC, pokedex_id ASC
@@ -165,7 +165,7 @@
         {
             return Database::get()->selectOne(
                 'SELECT base_hp, base_attack, base_defense, base_sp_attack, base_sp_defense, base_speed
-                FROM pokedex
+                FROM api_pokedex
                 WHERE pokedex_id = :pokedex_id AND alt_id = :alt_id
                 LIMIT 1',
                 [
@@ -184,7 +184,7 @@
         {
             return Database::get()->select(
                 'SELECT id, pokedex_id, alt_id, pokemon, forme
-                FROM pokedex
+                FROM api_pokedex
                 ORDER BY pokedex_id ASC, alt_id ASC'
             );
         }
