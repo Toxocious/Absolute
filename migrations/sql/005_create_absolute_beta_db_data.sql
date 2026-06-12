@@ -2516,6 +2516,28 @@ UPDATE `api_moves` SET `accuracy` = 100 WHERE `accuracy` = 1;
 
 
 -- =========================================================
+-- user_items - all items owned by all users
+-- =========================================================
+
+DROP TABLE IF EXISTS `user_items`;
+
+CREATE TABLE `user_items` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `item_identifier` VARCHAR(64) NOT NULL,
+  `name` VARCHAR(128) NOT NULL,
+  `owner_id` INT UNSIGNED NOT NULL,
+  `quantity` INT(11) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id`),
+  KEY idx_user_items_item_identifier (`item_identifier`),
+  KEY idx_user_items_owner_id (`owner_id`),
+  CONSTRAINT fk_api_item_identifier FOREIGN KEY (`item_identifier`)
+    REFERENCES `api_items`(`identifier`)
+    ON UPDATE CASCADE
+    ON DELETE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- =========================================================
 -- COMMIT
 -- =========================================================
 

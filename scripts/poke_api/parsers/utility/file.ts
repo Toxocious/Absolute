@@ -23,43 +23,63 @@ export function ReadCsvFile(filename: string) {
 }
 
 export function parseCSV(content: string): Row[] {
-    const lines = content.replace(/\r\n/g, '\n').split('\n').filter(Boolean);
-    if (lines.length === 0) return [];
-    const headers = splitCSVLine(lines[0]);
-    const rows: Row[] = [];
-    for (let i = 1; i < lines.length; i++) {
-        const cols = splitCSVLine(lines[i]);
-        const row: Row = {};
-        for (let j = 0; j < headers.length; j++) {
-            row[headers[j]] = cols[j] ?? '';
-        }
-        rows.push(row);
-    }
-    return rows;
-}
-
-function splitCSVLine(line: string): string[] {
-    const out: string[] = [];
-    let cur = '';
+    if (!content) return [];
+    const records: string[][] = [];
+    let curField = '';
+    let curRecord: string[] = [];
     let inQuotes = false;
-    for (let i = 0; i < line.length; i++) {
-        const ch = line[i];
+
+    for (let i = 0; i < content.length; i++) {
+        const ch = content[i];
+
         if (ch === '"') {
-            if (inQuotes && line[i + 1] === '"') {
-                cur += '"';
+            if (inQuotes && content[i + 1] === '"') {
+                curField += '"';
                 i++;
             } else {
                 inQuotes = !inQuotes;
             }
             continue;
         }
+
         if (ch === ',' && !inQuotes) {
-            out.push(cur);
-            cur = '';
+            curRecord.push(curField);
+            curField = '';
             continue;
         }
-        cur += ch;
+
+        // handle \r\n and \n as record separators, but only when not inside quotes
+        if ((ch === '\n' || ch === '\r') && !inQuotes) {
+            // consume optional \n after \r
+            if (ch === '\r' && content[i + 1] === '\n') i++;
+            curRecord.push(curField);
+            records.push(curRecord);
+            curRecord = [];
+            curField = '';
+            continue;
+        }
+
+        curField += ch;
     }
-    out.push(cur);
-    return out.map((s) => s.trim());
+
+    // push any trailing field/record
+    if (curField !== '' || curRecord.length > 0) {
+        curRecord.push(curField);
+        records.push(curRecord);
+    }
+
+    if (records.length === 0) return [];
+
+    const headers = records[0].map((h) => String(h).trim());
+    const rows: Row[] = [];
+    for (let r = 1; r < records.length; r++) {
+        const rec = records[r];
+        const row: Row = {};
+        for (let j = 0; j < headers.length; j++) {
+            // preserve inner newlines, normalize CRs
+            row[headers[j]] = rec[j] === undefined ? '' : String(rec[j]).replace(/\r/g, '').trim();
+        }
+        rows.push(row);
+    }
+    return rows;
 }

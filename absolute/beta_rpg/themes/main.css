@@ -226,6 +226,14 @@ a:hover {
 
         border-radius: var(--border-radius-tl-tr);
 
+        &.with-icons > button {
+            display: flex;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+            gap: 1em;
+        }
+
         & > button {
             background: var(--color-secondary);
             color: var(--color-white);

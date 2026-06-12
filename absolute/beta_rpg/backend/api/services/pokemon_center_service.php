@@ -29,6 +29,18 @@
             ];
         }
 
+        public static function FetchInventory(int $user_id, string $pocket): array
+        {
+            $Items = Database::get()
+                ->table('user_items')
+                ->where('quantity', '>', 0)
+                ->where('owner_id', '=', $user_id)
+                ->where('item_pocket', '=', $pocket)
+                ->get();
+
+            return $Items;
+        }
+
         public static function fetchTeam(int $userId): array
         {
             $rows = Database::get()

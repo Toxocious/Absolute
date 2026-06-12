@@ -1,0 +1,46 @@
+{
+  "buckets": [
+    "held items",
+    "battle items",
+    "medicine",
+    "pokeballs",
+    "key items",
+    "general items"
+  ],
+  "exact": {
+    "standard-balls": "pokeballs",
+    "special-balls": "pokeballs",
+    "apricorn-balls": "pokeballs",
+    "plates": "held items",
+    "jewels": "held items",
+    "mega-stones": "held items",
+    "memories": "held items",
+    "z-crystals": "held items",
+    "dynamax-crystals": "held items",
+    "stat-boosts": "battle items",
+    "all-machines": "battle items",
+    "tm-materials": "battle items",
+    "medicine": "medicine",
+    "healing": "medicine",
+    "pp-recovery": "medicine",
+    "revival": "medicine",
+    "status-cures": "medicine",
+    "vitamins": "medicine",
+    "all-mail": "key items",
+    "event-items": "key items",
+    "plot-advancement": "key items",
+    "apricorn-box": "key items",
+    "data-cards": "key items",
+    "dex-completion": "key items",
+    "loot": "key items",
+    "apricorn-box": "key items",
+    "apricorn-balls": "pokeballs"
+  },
+  "keywords": {
+    "pokeballs": ["ball"],
+    "held items": ["held", "hold", "berry", "plate", "gem", "jewel", "drive", "orb", "ring", "memory", "mega", "z-crystal", "dynamax"],
+    "battle items": ["tm", "hm", "machine", "tr", "gummi", "boost", "stat", "power", "damage"],
+    "medicine": ["potion", "revive", "elixir", "ether", "vitamin", "antidote", "heal", "pp"],
+    "key items": ["key", "fossil", "pass", "ticket", "plot", "event", "mail", "apricorn", "data", "dex", "loot", "box", "advancement"]
+  }
+}

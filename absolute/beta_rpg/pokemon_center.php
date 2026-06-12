@@ -3,6 +3,7 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/session/user_session.php';
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokemon_data.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/item_data.php';
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/components/_component.php';
 
@@ -13,7 +14,7 @@
 
             '/themes/components/pokemon_center/roster_tab.css',
             '/themes/components/pokemon_center/moves_tab.css',
-            // '/themes/components/pokemon_center/inventory_tab.css',
+            '/themes/components/pokemon_center/inventory_tab.css',
             '/themes/components/pokemon_center/nickname_tab.css',
             // '/themes/components/pokemon_center/release_tab.css',
         ],
@@ -25,13 +26,20 @@
     ];
 
     ob_start();
+
+    $t = ItemData::FetchByIdentifier('absolite');
+    $r = ItemData::FetchByIdentifier('ability-capsule');
+    // var_dump($t, $r);
+    // echo "<img src='{$t['sprite']}' alt='{$t['name']}' height='30' width='30' />";
+    // echo "<img src='{$r['sprite']}' alt='{$r['name']}' height='30' width='30' />";
 ?>
 
 <div class='panel'
     data-pokemon-center-api
+    data-inventory-endpoint='/api/pokemon_center/inventory.php'
+    data-move-change-endpoint='/api/pokemon_center/move_change.php'
     data-team-endpoint='/api/pokemon_center/team.php'
     data-box-endpoint='/api/pokemon_center/boxed.php'
-    data-move-change-endpoint='/api/pokemon_center/move_change.php'
     data-current-page='1'
 >
     <div class='panel-header'>

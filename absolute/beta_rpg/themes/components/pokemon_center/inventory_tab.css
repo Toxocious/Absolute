@@ -1,0 +1,15 @@
+.pokemon-center-content {
+    width: 100%;
+}
+
+.pokemon-center-inventory {
+    width: 100%;
+
+    & > .pokemon-center-inventory-selected-item {
+        display: none;
+    }
+
+    & > .pokemon-center-inventory-container {
+        width: 100%;
+    }
+}

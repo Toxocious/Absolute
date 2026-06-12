@@ -3,6 +3,7 @@ import { apiGet } from '/js/api/client.js';
 const BOX_PER_PAGE = 21;
 
 let ActiveTab = 'roster';
+let InventoryTab = 'battle';
 
 let FilterTypes = ['all', 'normal', 'shiny', 'event'];
 let FilterGenders = ['all', 'female', 'male', 'genderless', 'ungendered'];
@@ -492,6 +493,31 @@ function renderBoxCard(pokemon) {
     return pokemonBoxCard;
 }
 
+function renderItemSlot(item) {
+    const itemCard = `
+        <div class='pokemon-center-box-card  is-item' data-item-id='${escapeHtml(
+            item.item_identifier
+        )}'>
+            <div class='pokemon-data'>
+                <img class='pokemon-center-box-card-image' src='/assets/images/Items/${item.item_identifier.replace(
+                    '-',
+                    ' '
+                )}.png' alt='${item.name}' />
+            </div>
+            <div class='pokemon-center-box-card-info'>
+                <div class='pokemon-center-box-card-name'>
+                    ${escapeHtml(item.name)}
+                </div>
+                <div class='pokemon-center-box-card-level'>
+                    x${item.quantity}
+                </div>
+            </div>
+        </div>
+    `;
+
+    return itemCard;
+}
+
 async function loadTeam(root) {
     const endpoint = root.dataset.teamEndpoint;
     const list = root.querySelector('[data-team-list]');
@@ -653,52 +679,6 @@ function bindBoxFilterSearch(root) {
     });
 }
 
-async function changeTab(tab) {
-    await fetch('/components/pokemon_center/' + tab + '_tab.php')
-        .then((response) => {
-            return response.text();
-        })
-        .then((html) => {
-            const contentContainer = document.querySelector('.pokemon-center-content');
-            if (contentContainer) {
-                contentContainer.innerHTML = html;
-            } else {
-                console.error('Content container not found for tab:', tab);
-            }
-        })
-        .catch((error) => {
-            console.error('Error loading tab content:', error);
-        });
-
-    // re-bind any dynamic elements in the newly loaded tab
-    setTimeout(() => {
-        setupBindings();
-    }, 100);
-}
-
-function bindTabChange() {
-    const tabButtons = document.querySelectorAll('[data-pokemon-center-api] .panel-nav button');
-    tabButtons.forEach((button) => {
-        const tabName = button.dataset.navSection;
-        button.addEventListener('click', () => {
-            if (tabName === ActiveTab) {
-                return;
-            }
-
-            button.classList.add('active');
-            tabButtons.forEach((btn) => {
-                if (btn !== button) {
-                    btn.classList.remove('active');
-                }
-            });
-
-            ActiveTab = tabName;
-
-            changeTab(tabName);
-        });
-    });
-}
-
 function bindMoveChangeDropdowns() {
     const dropdowns = document.querySelectorAll('.move-dropdown');
 
@@ -792,6 +772,132 @@ async function handleMoveChange(t) {
     }
 }
 
+async function loadInventory(tab) {
+    const endpoint = document.querySelector('[data-pokemon-center-api]').dataset.inventoryEndpoint;
+    const inventoryContainer = document.querySelector('.pokemon-center-inventory-bag');
+    if (!endpoint || !inventoryContainer) {
+        return;
+    }
+
+    try {
+        const response = await apiGet(endpoint, {
+            category: tab,
+        });
+
+        console.log(response);
+
+        const items = Array.isArray(response.data.inventory) ? response.data.inventory : [];
+        if (items.length === 0) {
+            inventoryContainer.innerHTML = `
+                <p class='pokemon-center-status'>
+                    You have no items.
+                </p>
+            `;
+            return;
+        }
+
+        inventoryContainer.innerHTML = items.map(renderItemSlot).join('');
+    } catch (error) {
+        inventoryContainer.innerHTML = `<p class='pokemon-center-status error'>${escapeHtml(
+            error.message
+        )}</p>`;
+    }
+}
+
+async function changeInventoryTab(tab) {
+    console.log('Changing inventory tab to', tab);
+
+    const inventoryContainer = document.querySelector('.pokemon-center-inventory-bag');
+    if (inventoryContainer) {
+        inventoryContainer.innerHTML = '<p class="pokemon-center-status">Loading inventory..</p>';
+    }
+
+    await fetch(`/components/pokemon_center/inventory_sub_tab.php?tab=${tab}`)
+        .then((response) => {
+            return response.text();
+        })
+        .then((html) => {
+            if (inventoryContainer) {
+                inventoryContainer.innerHTML = html;
+
+                loadInventory(tab);
+            } else {
+                console.error('Inventory container not found.');
+            }
+        })
+        .catch((error) => console.error(`Error loading inventory tab content ${error}`));
+}
+
+async function changeTab(tab) {
+    await fetch(`/components/pokemon_center/${tab}_tab.php`)
+        .then((response) => {
+            return response.text();
+        })
+        .then((html) => {
+            const contentContainer = document.querySelector('.pokemon-center-content');
+            if (contentContainer) {
+                contentContainer.innerHTML = html;
+            } else {
+                console.error('Content container not found for tab:', tab);
+            }
+        })
+        .catch((error) => {
+            console.error('Error loading tab content:', error);
+        });
+
+    // re-bind any dynamic elements in the newly loaded tab
+    setTimeout(() => {
+        setupBindings();
+    }, 100);
+}
+
+function bindInventoryTabs() {
+    console.log('Bound inventory tabs');
+    const tabButtons = document.querySelectorAll('[data-inventory-nav]');
+    tabButtons.forEach((button) => {
+        const tabName = button.dataset.inventoryNav;
+        button.addEventListener('click', () => {
+            if (tabName === InventoryTab) {
+                return;
+            }
+
+            button.classList.add('active');
+            tabButtons.forEach((btn) => {
+                if (btn !== button) {
+                    btn.classList.remove('active');
+                }
+            });
+
+            InventoryTab = tabName;
+
+            changeInventoryTab(tabName);
+        });
+    });
+}
+
+function bindTabChange() {
+    const tabButtons = document.querySelectorAll('[data-pokemon-center-api] [data-nav-section]');
+    tabButtons.forEach((button) => {
+        const tabName = button.dataset.navSection;
+        button.addEventListener('click', () => {
+            if (tabName === ActiveTab) {
+                return;
+            }
+
+            button.classList.add('active');
+            tabButtons.forEach((btn) => {
+                if (btn !== button) {
+                    btn.classList.remove('active');
+                }
+            });
+
+            ActiveTab = tabName;
+
+            changeTab(tabName);
+        });
+    });
+}
+
 function setupBindings() {
     const root = document.querySelector('[data-pokemon-center-api]');
     if (!root) {
@@ -825,6 +931,10 @@ function setupBindings() {
             bindNicknameChangeInputs();
 
             break;
+
+        case 'inventory':
+            bindInventoryTabs();
+            changeInventoryTab(InventoryTab);
 
         default:
             break;
