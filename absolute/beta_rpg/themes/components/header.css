@@ -87,6 +87,8 @@ header {
 
                 height: 24px;
                 width: 24px;
+                max-height: 24px;
+                max-width: 24px;
 
                 & > a {
                     color: var(--color-success);
@@ -110,8 +112,11 @@ header {
                     }
 
                     & > svg {
+                        display: block;
                         height: 24px;
                         width: 24px;
+                        max-height: 24px;
+                        max-width: 24px;
                     }
                 }
             }
