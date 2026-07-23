@@ -44,16 +44,6 @@
         <?php endif; ?>
     </div>
 
-    <?php
-        $Move_Dropdown_Data = MoveData::GetMoveDropdownList();
-        $Move_Dropdown_Options = array_map(function($move) {
-            return [
-                'id' => $move['id'],
-                'name' => $move['name'],
-            ];
-        }, $Move_Dropdown_Data);
-    ?>
-
     <?php if ( $Pokemon_ID !== -1 ): ?>
         <div class='move-dropdowns'>
             <?php for ( $Move_Slot = 1; $Move_Slot <= 4; $Move_Slot++ ): ?>

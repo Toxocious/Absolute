@@ -5,6 +5,15 @@
     require_once $_SERVER['DOCUMENT_ROOT'] . '/components/_component.php';
 
     require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/pokemon_data.php';
+    require_once $_SERVER['DOCUMENT_ROOT'] . '/backend/data/move_data.php';
+
+    $Move_Dropdown_Data = MoveData::GetMoveDropdownList();
+    $Move_Dropdown_Options = array_map(function($move) {
+        return [
+            'id' => $move['id'],
+            'name' => $move['name'],
+        ];
+    }, $Move_Dropdown_Data);
 ?>
 
 <section class='pokemon-center-moves'>
@@ -19,6 +28,7 @@
                         'Pokemon_Name' => 'Empty Slot',
                         'Pokemon_Forme' => null,
                         'Pokemon_Slot' => $i + 1,
+                        'Move_Dropdown_Options' => $Move_Dropdown_Options,
                     ]);
 
                     continue;
@@ -41,6 +51,7 @@
                     'Pokemon_Move_2' => $Roster_Pokemon_Data['move_2'],
                     'Pokemon_Move_3' => $Roster_Pokemon_Data['move_3'],
                     'Pokemon_Move_4' => $Roster_Pokemon_Data['move_4'],
+                    'Move_Dropdown_Options' => $Move_Dropdown_Options,
                 ]);
             }
         ?>

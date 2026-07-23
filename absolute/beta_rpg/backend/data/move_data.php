@@ -5,6 +5,8 @@
 
     final class MoveData
     {
+        private static ?array $DropdownListCache = null;
+
         /**
          * Fetches a single move entry by its unique database ID.
          *
@@ -43,11 +45,17 @@
          */
         public static function GetMoveDropdownList(): array
         {
-            return Database::get()->select(
+            if ( self::$DropdownListCache !== null ) {
+                return self::$DropdownListCache;
+            }
+
+            self::$DropdownListCache = Database::get()->select(
                 'SELECT id, name
                 FROM api_moves
                 ORDER BY name ASC'
             );
+
+            return self::$DropdownListCache;
         }
     }
 
