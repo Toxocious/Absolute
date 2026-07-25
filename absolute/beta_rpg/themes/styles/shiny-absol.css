@@ -1,19 +1,17 @@
 :root {
-    --background-color-start: #c7d2fe;
-    --background-color-mid: #fecaca;
-    --background-color-end: #fef9c3;
+    --banner-image: url("../../assets/images/Layout/Banners/shiny-absol.png");
 
-    --background-gradient: radial-gradient(ellipse at top right, var(--background-color-start), var(--background-color-mid), var(--background-color-end));
+    --color-primary: #b2495b;
+    --color-secondary: #8a4251;
+    --color-tertiary: #6b2d39;
+    --color-quadternary: #52202a;
+    --color-quinary: #3d1820;
+    --color-sexary: #2a1016;
+    --color-septary: #17080c;
 
-    --color-primary: #4a618f;
-    --color-secondary: #3b4d72;
-    --color-tertiary: #2c3a55;
-    --color-quadternary: #253147;
-    --color-quinary: #1d2639;
-    --color-sexary: #161d2a;
-    --color-septary: #0e131c;
-    --color-gradient-one: #8090b0;
-    --color-gradient-two: #334364;
+    --color-gradient-one: #d48a94;
+    --color-gradient-two: #6b2d39;
+
     --color-black: #000;
     --color-white: #fff;
     --color-light-grey: #777;
@@ -21,17 +19,30 @@
     --color-dark-grey: #333;
     --color-chat-pmsg: #330000;
 
-    --border-color-success: #25e845;
-    --border-color-error: #c90e0e;
-    --border-color-warning: #fcbc19;
-    --border-color-description: #4A618F;
-    --border-color-notice: #4A618F;
+    --border-color-success: #2de06b;
+    --border-color-error: #d93030;
+    --border-color-warning: #e6b84a;
 
-    --bg-success: #2c3a55;
-    --bg-error: #2c3a55;
-    --bg-warning: #2c3a55;
-    --bg-description: #2c3a55;
-    --bg-notice: #2c3a55;
+    --border-color-description: #b2495b;
+    --border-color-notice: #b2495b;
+
+    --background-color-start: #c7d2fe;
+    --background-color-mid: #fecaca;
+    --background-color-end: #fef9c3;
+
+    --background-gradient: radial-gradient(ellipse at top right, var(--background-color-start), var(--background-color-mid), var(--background-color-end));
+
+    --background-color-light-start: var(--color-quadternary);
+    --background-color-light-mid: var(--color-tertiary);
+    --background-color-light-end: var(--color-secondary);
+
+    --background-gradient-light: radial-gradient(ellipse at top right, var(--background-color-light-start), var(--background-color-light-mid), var(--background-color-light-end));
+
+    --bg-success: #155927;
+    --bg-error: #5f1118;
+    --bg-warning: #6e4e11;
+    --bg-description: #52202a;
+    --bg-notice: #52202a;
 
     --color-success: #fff;
     --color-error: #fff;
@@ -39,8 +50,9 @@
     --color-description: #fff;
     --color-notice: #fff;
 
-    --border-color: #4a618f;
+    --border-color: #b2495b;
     --border-color-secondary: #000;
+
     --border-gradient: linear-gradient(180deg, var(--color-gradient-one) 0, var(--color-gradient-two));
 
     --box-shadow: 0px 1px 5px #000;
