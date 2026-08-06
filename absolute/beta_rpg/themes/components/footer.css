@@ -1,4 +1,6 @@
 footer {
+    color: var(--color-light-grey);
+
     font-size: 0.75em;
     text-align: center;
 

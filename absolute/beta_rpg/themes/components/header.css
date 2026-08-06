@@ -91,7 +91,7 @@ header {
                 max-width: 24px;
 
                 & > a {
-                    color: var(--color-success);
+                    color: var(--color-primary);
                     text-shadow: 0px 0px 5px rgba(0, 0, 0, 0.8);
                     font-size: 1.5em;
                     transition: all 200ms ease-in-out;
@@ -117,6 +117,8 @@ header {
                         width: 24px;
                         max-height: 24px;
                         max-width: 24px;
+
+                        color: var(--color-tertiary);
                     }
                 }
             }

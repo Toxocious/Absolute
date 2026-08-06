@@ -65,7 +65,6 @@ CREATE TABLE users (
   id INT UNSIGNED NOT NULL AUTO_INCREMENT,
   username VARCHAR(32) NOT NULL,
 
-
   gender ENUM('Male','Female','Genderless') NOT NULL DEFAULT 'Genderless',
 
   clan_id INT UNSIGNED DEFAULT NULL,
@@ -107,6 +106,8 @@ CREATE TABLE user_rpg_state (
   user_id INT UNSIGNED NOT NULL,
 
   playtime INT UNSIGNED DEFAULT 0,
+
+  theme VARCHAR(64) NOT NULL DEFAULT 'absol',
 
   money BIGINT UNSIGNED NOT NULL DEFAULT 0,
   abso_coins BIGINT UNSIGNED NOT NULL DEFAULT 0,

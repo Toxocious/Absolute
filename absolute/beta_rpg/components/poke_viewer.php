@@ -74,11 +74,8 @@
 		<link type='text/css' rel='stylesheet' href='/themes/root.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/main.css' />
 		<link type='text/css' rel='stylesheet' href='/themes/components/poke_viewer.css' />
-		<link type='text/css' rel='stylesheet' href='/themes/styles/<?= (isset($User_Data['Theme']) ? $User_Data['Theme'] : 'absol'); ?>.css' />
-	</head>
-
-	<body style='background-color: var(--color-quadternary);'>
-        <section class='pokemon-preview-container'>
+		<link type='text/css' rel='stylesheet' href='/themes/styles/<?= (isset($User_Data['theme']) ? $User_Data['theme'] : 'absol'); ?>.css' />
+ <section class='pokemon-preview-container'>
             <div class='pokemon-preview'>
                 <div class='pokemon-header'>
                     <div class='pokemon-metadata'>

@@ -8,7 +8,7 @@
         '/themes/root.css',
         '/themes/main.css',
 
-        '/themes/styles/absol.css',
+        '/themes/styles/' . (!empty($User_Data['theme']) ? $User_Data['theme'] : 'absol') . '.css',
 
         '/themes/components/poke_viewer.css',
     ];
@@ -37,7 +37,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title><?= isset($Page_Metadata['Title']) ? $Page_Metadata['Title'] : 'Layout Test'; ?> &mdash; Pok&eacute;mon Absolute</title>
+        <title><?= isset($Page_Metadata['Title']) ? $Page_Metadata['Title'] : 'Beta Test'; ?> &mdash; Pok&eacute;mon Absolute</title>
 
         <link href="https://fonts.googleapis.com/css2?family=Birthstone:wght@400;600;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
@@ -99,7 +99,9 @@
 
         <!-- -->
         <?php
-            component('peeker', []);
+            component('peeker', [
+                'User_Theme' => isset($User_Data['theme']) ? $User_Data['theme'] : 'absol',
+            ]);
         ?>
 
         <!-- Component And Page Styles-->
